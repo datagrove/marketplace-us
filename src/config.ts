@@ -8,7 +8,7 @@ const CONFIG = {
   
     defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
   
-    language: 'es',
+    language: 'en',
     textDirection: 'ltr',
   
     dateFormatter: new Intl.DateTimeFormat('en', {
