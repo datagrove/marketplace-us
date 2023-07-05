@@ -1,29 +1,18 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/BaseLayout.astro';
 import { headerData, footerData } from '../data';
 import Footer from "../components/common/Footer.astro";
 import Header from "../components/common/Header.astro";
 const {pageTitle, footer = true, header = true} = Astro.props
 ---
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width"/>
-    <link href='https://fonts.googleapis.com/css?family=Playfair Display' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'></link>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/>
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content = {Astro.generator} >
-    <title>{pageTitle}</title>
-    <link rel="shortcut icon" href="whiteLogo.png">
-  </head>
-  <body>
+<Layout>
+  <slot name="header">
     <Header {...headerData} />
-	<slot />
-    <Footer {...footerData}/>
-  </body>
-</html>
-
-<script>
-
-</script>
+  </slot>
+  <main>
+    <slot />
+  </main>
+  <slot name="footer">
+    <Footer {...footerData} />
+  </slot>
+</Layout>
