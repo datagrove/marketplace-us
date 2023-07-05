@@ -1,0 +1,71 @@
+---
+import { SITE } from "../../config";
+
+//Define types for items from config
+interface Link {
+  text?: string;
+  href?: string;
+  ariaLabel?: string;
+  icon?: string;
+}
+interface MenuLink extends Link {
+  links?: Array<Link>;
+}
+export interface Props {
+  links?: Array<MenuLink>;
+}
+
+const { 
+    links = [] 
+} = Astro.props;
+---
+
+<header id="container">
+  <!-- <a id="logo">{pageTitle}</a>               -->
+
+  <div id="container">
+    <div class="navLines" id="navLines">
+      <div class="all-logo">
+        <a id="logo" href="/"
+          ><img class="logo-image" src="../blackLogo.png" /></a>
+      </div>
+      <h1 class="logo">{SITE.title}</h1>
+    </div>
+    <nav class="flex content-center w-1/4">
+      <ul class="flex content-center">
+        {
+          links.map(({ text, href }) => (
+            <a
+              class="sm:text-xl md:text-2xl lg:text-4xl text-center hover:text-gray-900 dark:hover:text-white dark:text-gray-400 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href={href}
+            >
+              {text}
+            </a>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  @media screen and (max-width: 980px) {
+    #NavigationComponent {
+      display: none;
+    }
+
+    #ModalNalComponent {
+    }
+  }
+
+  .benefit {
+    display: inline-block;
+    margin: 1rem;
+  }
+
+  .benefit img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+  }
+</style>

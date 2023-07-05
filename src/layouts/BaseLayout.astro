@@ -1,0 +1,15 @@
+---
+import { SITE } from '.././config.js';
+
+---
+
+<!DOCTYPE html>
+<html lang={SITE.language} dir={SITE.textDirection} class="2xl:text-[20px]">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+  </head>
+
+  <body class="mx-4 text-page bg-gray-200 dark:bg-black dark:text-slate-400">
+    <slot />
+  </body>
+</html>
