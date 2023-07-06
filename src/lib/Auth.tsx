@@ -8,11 +8,8 @@ export const Auth: Component = (props) => {
   const [password, setPassword] = createSignal('')
   const [confirmPassword, setConfirmPassword] = createSignal('')
   const [passwordMatch, setPasswordMatch] = createSignal(false)
+  const match = () => password() === confirmPassword()
   const [authMode, setAuthMode] = createSignal<"sign_in"|"sign_up">(mode)
-
-  if (password() !== confirmPassword()) {
-    setPasswordMatch(false)
-  } else (setPasswordMatch(true))
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault()
@@ -34,20 +31,29 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault()
 
-    try {
-      setLoading(true)
-      const { error } = await supabase.auth.signUp({ email: email(), password: password() })
-      if (error) throw error
-      alert('Check your email for the confirmation link!')
-      location.href="/"
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(error.message)
+    if (password() === confirmPassword()) {
+      console.log(password(), confirmPassword())
+      setPasswordMatch(true)
+      try {
+        setLoading(true)
+        const { error } = await supabase.auth.signUp({ email: email(), password: password() })
+        if (error) throw error
+        alert('Check your email for the confirmation link!')
+        location.href="/"
+      } catch (error) {
+        if (error instanceof Error) {
+          alert(error.message)
+        }
+      } finally {
+        setLoading(false)
       }
-    } finally {
-      setLoading(false)
+    } else {
+      setPasswordMatch(false);
+      alert('Passwords do not match');
     }
   }
+
+    
 
   return (
     <div>
@@ -95,6 +101,9 @@ export const Auth: Component = (props) => {
           <div class="row flex-center flex">
       <div class="col-6 form-widget" aria-live="polite">
         <h1 class="header">Create an account</h1>
+        <div>
+          <p class="text-sm text-gray-600">Already have an account? Click here to <a class="text-blue-600 hover:underline dark:text-gray-200" href="/login">sign in</a></p>
+        </div>
         <form class="form-widget" onSubmit={handleSignUp}>
           <div>
             <label for="email">Email</label>
@@ -103,6 +112,7 @@ export const Auth: Component = (props) => {
               class="inputField"
               type="email"
               placeholder="Your email"
+              required
               value={email()}
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
@@ -114,9 +124,13 @@ export const Auth: Component = (props) => {
               class="inputField"
               type="password"
               placeholder="password"
+              required
               value={password()}
-              onChange={(e) => setPassword(e.currentTarget.value)}
+              oninput={(e) => setPassword(e.currentTarget.value)}
             />
+          </div>
+          <div>
+          {password().length>5 ? '' : <p class="text-sm text-gray-600"> Passwords must be at least 6 characters</p>}
           </div>
           <div>
             <label for="confirm password">Confirm Password</label>
@@ -125,13 +139,16 @@ export const Auth: Component = (props) => {
               class="inputField"
               type="password"
               placeholder="password"
+              required
               value={confirmPassword()}
-              onChange={(e) => setConfirmPassword(e.currentTarget.value)}
+              oninput={(e) => setConfirmPassword(e.currentTarget.value)}
             />
           </div>
           <div>
-            <button type="submit" class="button block" aria-live="polite" disabled={passwordMatch()}>
-              {passwordMatch() ? '' : <span>Passwords Do Not Match</span> }
+          {match() ? '' : <span>Passwords do not match</span>}
+          </div>
+          <div>
+            <button type="submit" class="button block" aria-live="polite" disabled={!match()}>
               {loading() ? <span>Loading</span> : <span>Sign Up</span>}
             </button>
           </div>
