@@ -1,0 +1,56 @@
+---
+interface ProductCategory {
+  name?: string;
+  description?: string;
+  icon?: string;
+  price?: string;
+  ariaLabel?: string;
+  currency?: string;
+  forward?: string;
+  id?: string;
+}
+
+interface ProductCategories extends ProductCategory {
+  categories?: Array<ProductCategory>;
+}
+
+export interface Props {
+  categories?: Array<ProductCategories>;
+}
+
+const { categories = [] } = Astro.props;
+---
+
+<div
+  class="product-carousel"
+  item-display-d="3"
+  item-display-t="2"
+  item-display-m="1"
+>
+  <button class="pre-btn"
+    ><img
+      src="https://cdn-icons-png.flaticon.com/512/45/45093.png"
+      alt=""
+    /></button
+  >
+  <button class="nxt-btn"
+    ><img
+      src="https://cdn-icons-png.flaticon.com/512/45/45093.png"
+      alt=""
+    /></button
+  >
+  <div class="product-container">
+    {
+      categories.map(({ icon, ariaLabel, name }) => (
+        <div class="carousel-product">
+          <div class="product-icon">
+            <img src={icon} alt={ariaLabel} />
+          </div>
+          <div class="product-info">
+            <p class="product-brand">{name}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

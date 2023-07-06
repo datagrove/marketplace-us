@@ -86,3 +86,18 @@ export const headerData = {
       Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
     `,
   };
+
+  export const productCategoryData = {
+    categories: [
+    { name: 'Gardening' , description:'Get help with your garden and landscaping.', ariaLabel:"Gardening",src:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
+    { name: 'Construction' , description:'New Construction, Additions, or Repair Services', ariaLabel: "Construction",src:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
+    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.', ariaLabel:"Beauty",src:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
+    { name: 'Gardening' , description:'Get help with your garden and landscaping.',ariaLabel:"Gardening",src:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
+    { name: 'Construction' , description:'New Construction, Additions, or Repair Services',ariaLabel: "Construction",src:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
+    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.',ariaLabel:"Beauty",src:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
+    { name: 'Gardening' , description:'Get help with your garden and landscaping.',ariaLabel:"Gardening",src:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
+    { name: 'Construction' , description:'New Construction, Additions, or Repair Services',ariaLabel: "Construction",src:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
+    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.',ariaLabel:"Beauty",src:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
+    // Add more products as needed
+    ],
+  }

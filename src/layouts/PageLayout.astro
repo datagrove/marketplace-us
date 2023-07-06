@@ -3,16 +3,16 @@ import Layout from '../layouts/BaseLayout.astro';
 import { headerData, footerData } from '../data';
 import Footer from "../components/common/Footer.astro";
 import Header from "../components/common/Header.astro";
-const {pageTitle, footer = true, header = true} = Astro.props
+const {pageTitle} = Astro.props
 ---
-<Layout>
-  <slot name="header">
+<Layout {pageTitle}>
+  <div class="header">
     <Header {...headerData} />
-  </slot>
+  </div>
   <main>
     <slot />
   </main>
-  <slot name="footer">
+  <div class="footer">
     <Footer {...footerData} />
-  </slot>
+  </div>
 </Layout>

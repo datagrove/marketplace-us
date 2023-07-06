@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/PageLayout.astro';
+import { productCategoryData } from '../data';
+import SearchBar from "../components/services/SearchBar.astro";
+import CategoryCarousel from '../components/services/CategoryCarousel.astro';
+
+const {pageTitle} = Astro.props
+---
+<Layout {pageTitle}>
+    <div>
+      <SearchBar />
+    </div>
+    <div>
+      <CategoryCarousel {...productCategoryData}/>
+    </div>
+    <main>
+      <slot />
+    </main>
+  </Layout>
+  
