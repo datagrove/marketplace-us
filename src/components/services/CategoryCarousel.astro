@@ -10,47 +10,39 @@ interface ProductCategory {
   id?: string;
 }
 
-interface ProductCategories extends ProductCategory {
-  categories?: Array<ProductCategory>;
-}
-
 export interface Props {
-  categories?: Array<ProductCategories>;
+  categories: Array<ProductCategory>;
 }
 
 const { categories = [] } = Astro.props;
 ---
 
-<div
-  class="product-carousel"
-  item-display-d="3"
-  item-display-t="2"
-  item-display-m="1"
->
-  <button class="pre-btn"
+<div class="product-carousel border-green-500 border-8 bg-white">
+  <div class="bg-gray-400 flex content-center">
+    <button class="pre-btn rotate-180"
     ><img
       src="https://cdn-icons-png.flaticon.com/512/45/45093.png"
       alt=""
     /></button
   >
-  <button class="nxt-btn"
-    ><img
-      src="https://cdn-icons-png.flaticon.com/512/45/45093.png"
-      alt=""
-    /></button
-  >
-  <div class="product-container">
-    {
-      categories.map(({ icon, ariaLabel, name }) => (
-        <div class="carousel-product">
-          <div class="product-icon">
-            <img src={icon} alt={ariaLabel} />
+    <ul class="flex content-center">
+    { categories?.map((item) => (
+        <div class="carousel-product ">
+          <div class="product-icon bg-white">
+            <img src={item.icon} alt={item.ariaLabel} />
           </div>
           <div class="product-info">
-            <p class="product-brand">{name}</p>
+            <p class="text-white">{item.name}</p>
           </div>
         </div>
       ))
     }
+    </ul>
+    <button class="nxt-btn"
+    ><img
+      src="https://cdn-icons-png.flaticon.com/512/45/45093.png"
+      alt=""
+    /></button
+  >
   </div>
 </div>
