@@ -1,4 +1,5 @@
 ---
+//Convert to Solid because needs to be client:load to access session store data??
 import { supabase } from "../../lib/supabaseClient";
 import { currentSession } from '../../lib/userSessionStore'
 
@@ -8,7 +9,7 @@ console.log(session)
 
 if (session){
   try {
-    const { data: countries , error} = await supabase.from('country').select('*').eq('user_id', session.id);
+    const { data: countries , error} = await supabase.from('country').select('*').eq('user_id', session.user.id);
     if (error) {
       console.log("supabase error: " + error)
     } else {

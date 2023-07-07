@@ -21,6 +21,7 @@ export const Auth: Component = (props) => {
       const { data, error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
       if (error) throw error
       currentSession.set(data.session)
+      console.log(currentSession.get())
       location.href="/"
     } catch (error) {
       if (error instanceof Error) {
