@@ -1,7 +1,9 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
+import { currentSession } from './userSessionStore'
 
 export const Auth: Component = (props) => {
+  // @ts-ignore
   const { mode = "sign_in" } = props;
   const [loading, setLoading] = createSignal(false)
   const [email, setEmail] = createSignal('')
@@ -16,8 +18,9 @@ export const Auth: Component = (props) => {
 
     try {
       setLoading(true)
-      const { error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
+      const { data, error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
       if (error) throw error
+      currentSession.set(data.session)
       location.href="/"
     } catch (error) {
       if (error instanceof Error) {
