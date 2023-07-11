@@ -5,26 +5,28 @@ import { useStore } from '@nanostores/solid'
 import type { AuthSession } from '@supabase/supabase-js'
 
 export const ProviderRegistration: Component = () => {
-    const [session, setSession] = createSignal<AuthSession | null | undefined>(null)
+    const [session, setSession] = createSignal<AuthSession | null>(null)
     const [country, setCountry] = createSignal('')
     const [count, setCount] = createSignal(0)
 
-    const sessionStore = currentSession.get()
+    const sessionStore = useStore(currentSession)
+    setSession(sessionStore)
 
-    createEffect(() => {
-        setSession(sessionStore)
-    }, [count])
 
-    console.log(sessionStore)
+    // createEffect(() => {
+    //     setSession(sessionStore)
+    // }, [currentSession])
+
+    console.log("SessionStore: " + sessionStore())
 
     // setSession(useStore(currentSession))
     
-    console.log(session()?.user.id)
+    console.log("Session Status: " + session()?.user.aud)
 
     createEffect(async () => {
-        if (session) {
+        if (session()) {
             try {
-                const { data: countries, error } = await supabase.from('country').select('*').eq('user_id', session()?.user.id);
+                const { data: countries, error } = await supabase.from('country').select('*');
                 if (error) {
                     console.log("supabase error: " + error.message)
                 } else {

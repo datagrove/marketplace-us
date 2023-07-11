@@ -1,6 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
 import { currentSession } from './userSessionStore'
+import { useStore } from '@nanostores/solid'
 
 export const Auth: Component = (props) => {
   // @ts-ignore
@@ -21,8 +22,8 @@ export const Auth: Component = (props) => {
       const { data, error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
       if (error) throw error
       currentSession.set(data.session)
-      const test = currentSession.get()
-      console.log("Current Session: " + test?.user.id)
+      const test = useStore(currentSession)
+      console.log("Current Session: " + test()?.user.aud)
       location.href="/"
     } catch (error) {
       if (error instanceof Error) {
