@@ -22,8 +22,8 @@ export const Auth: Component = (props) => {
       const { data, error } = await supabase.auth.signInWithPassword({ email: email(), password: password() })
       if (error) throw error
       currentSession.set(data.session)
-      const test = useStore(currentSession)
-      console.log("Current Session: " + test()?.user.aud)
+      // const test = useStore(currentSession)
+      // console.log("Current Session: " + test()?.user.aud)
       location.href="/"
     } catch (error) {
       if (error instanceof Error) {

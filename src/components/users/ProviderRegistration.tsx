@@ -8,6 +8,10 @@ async function postFormData(formData: FormData) {
         body: formData,
     });
     const data = await response.json();
+    if (data.redirect){
+        alert(data.message)
+        window.location.href = data.redirect;
+    }
     return data;
 }
 

@@ -1,7 +1,8 @@
 import { supabase } from '../../lib/supabaseClient'
 import type { APIRoute } from "astro";
+import type { APIContext } from 'astro';
 
-export const post: APIRoute = async ({ request }) => {
+export const post: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
 
   for (let pair of formData.entries()) {
@@ -43,7 +44,7 @@ export const post: APIRoute = async ({ request }) => {
       { status: 500 }
     );
   }
-  
+
   console.log(sessionData)
 
   if (!sessionData?.session) {
@@ -65,6 +66,21 @@ export const post: APIRoute = async ({ request }) => {
       { status: 500 }
     );
   }
+
+
+  const { data: profileExists, error: profileExistsError } = await supabase.from('providers').select('user_id').eq('user_id', user.id)
+  if (profileExistsError) {
+    console.log("supabase error: " + profileExistsError.message)
+  } else if (profileExists[0].user_id !== null) {
+    return new Response(
+      JSON.stringify({
+        message: "Provider Profile already exists",
+        redirect: "provider/profile",
+      }),
+      { status: 302 }
+    );
+  }
+
 
   const { data: countries, error: testCountryError } = await supabase.from('country').select('*');
   if (testCountryError) {
