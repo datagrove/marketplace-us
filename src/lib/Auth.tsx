@@ -38,7 +38,6 @@ export const Auth: Component = (props) => {
     e.preventDefault()
 
     if (password() === confirmPassword()) {
-      console.log(password(), confirmPassword())
       setPasswordMatch(true)
       try {
         setLoading(true)

@@ -12,14 +12,6 @@ export const headerData = {
         text: 'Provider Profile',
         href: '/provider/profile',
       },
-      {
-        text: 'Login',
-        href: '/login',
-      },
-      {
-        text: 'Signup',
-        href: '/signup',
-      },
     ],
     actions: [
       

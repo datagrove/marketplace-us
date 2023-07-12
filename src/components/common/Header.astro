@@ -1,5 +1,6 @@
 ---
 import { SITE } from "../../config";
+import { AuthMode } from "./AuthMode";
 
 //Define types for items from config
 interface Link {
@@ -45,6 +46,7 @@ const {
         }
       </ul>
     </nav>
+    <AuthMode client:load>
   </div>
 </header>
 

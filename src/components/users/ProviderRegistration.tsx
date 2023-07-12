@@ -19,7 +19,6 @@ export const ProviderRegistration: Component = () => {
     createEffect(async () => {
         const { data, error } = await supabase.auth.getSession()
         setSession(data.session)
-        console.log(session())
 
         if (session()) {
             //Country
@@ -28,7 +27,6 @@ export const ProviderRegistration: Component = () => {
                 if (error) {
                     console.log("supabase error: " + error.message)
                 } else {
-                    console.log(countries)
 
                     countries.forEach(country => {
                         let countryOption = new Option(country.country, country.id)
@@ -46,21 +44,13 @@ export const ProviderRegistration: Component = () => {
                 if (errorMajorMunicipality) {
                     console.log("supabase error: " + errorMajorMunicipality.message)
                 } else {
-                    console.log(majorMunicipality)
-
-                    // majorMunicipality.forEach(municipality => {
-                    //     let municipalityOption = new Option(municipality.major_municipality, municipality.id)
-                    //     document.getElementById("MajorMunicipality")?.append((municipalityOption))
-                    // })
 
                     document.getElementById("country")?.addEventListener('change', () => {
                         let municipalitySelect = document.getElementById("MajorMunicipality") as HTMLSelectElement
 
-                        console.log(municipalitySelect)
                         let length = municipalitySelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            console.log(i)
                             if (municipalitySelect.options[i].value !== "-1") {
                                 municipalitySelect.remove(i)
                             }
@@ -83,16 +73,13 @@ export const ProviderRegistration: Component = () => {
                 if (errorMinorMunicipality) {
                     console.log("supabase error: " + errorMinorMunicipality.message)
                 } else {
-                    console.log(minorMunicipality)
 
                     document.getElementById("MajorMunicipality")?.addEventListener('change', () => {
                         let municipalitySelect = document.getElementById("MinorMunicipality") as HTMLSelectElement
 
-                        console.log(municipalitySelect)
                         let length = municipalitySelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            console.log(i)
                             if (municipalitySelect.options[i].value !== "-1") {
                                 municipalitySelect.remove(i)
                             }
@@ -115,16 +102,13 @@ export const ProviderRegistration: Component = () => {
                 if (errorGoverningDistrict) {
                     console.log("supabase error: " + errorGoverningDistrict.message)
                 } else {
-                    console.log(governingDistrict)
 
                     document.getElementById("MinorMunicipality")?.addEventListener('change', () => {
                         let districtSelect = document.getElementById("GoverningDistrict") as HTMLSelectElement
 
-                        console.log(districtSelect)
                         let length = districtSelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            console.log(i)
                             if (districtSelect.options[i].value !== "-1") {
                                 districtSelect.remove(i)
                             }
@@ -142,7 +126,8 @@ export const ProviderRegistration: Component = () => {
             }
 
         } else {
-            console.log("No session")
+            alert("Please sign in to create a provider profile.")
+            location.href="/login"
         }
     })
 
