@@ -11,19 +11,18 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
-  const firstName = formData.get('FirstName');
-  const lastName = formData.get('LastName');
-  const providerName = formData.get('ProviderName');
-  const phone = formData.get('Phone');
+  const title = formData.get('Title');
+  const serviceCategory = formData.get('ServiceCategory');
+  const content = formData.get('Content');
   const country = formData.get('country');
   const majorMunicipality = formData.get('MajorMunicipality');
   const minorMunicipality = formData.get('MinorMunicipality');
   const governingDistrict = formData.get('GoverningDistrict');
-  const postalArea = formData.get('PostalArea');
+
 
 
   // Validate the formData - you'll probably want to do more than this
-  if (!firstName || !lastName || !providerName || !phone || !country || !majorMunicipality || !minorMunicipality || !governingDistrict) {
+  if (!title || !serviceCategory || !content || !country || !majorMunicipality || !minorMunicipality || !governingDistrict) {
     return new Response(
       JSON.stringify({
         message: "Missing required fields",
@@ -67,28 +66,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-
-  const { data: profileExists, error: profileExistsError } = await supabase.from('providers').select('user_id').eq('user_id', user.id)
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message)
-  } else if (profileExists[0].user_id !== null) {
-    return new Response(
-      JSON.stringify({
-        message: "Provider Profile already exists",
-        redirect: "provider/profile",
-      }),
-      { status: 302 }
-    );
-  }
-
-
-  const { data: countries, error: testCountryError } = await supabase.from('country').select('*');
-  if (testCountryError) {
-    console.log("supabase error: " + testCountryError.message)
-  } else {
-    console.log(countries)
-  }
-
   const { data: districtId, error: districtError } = await supabase.from('governing_district').select('id').eq('id', governingDistrict)
   if (districtError) {
     return new Response(
@@ -129,6 +106,16 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
+  const { data: categoryId, error: categoryError } = await supabase.from('post_category').select('id').eq('id', serviceCategory)
+  if (categoryError) {
+    return new Response(
+      JSON.stringify({
+        message: "Category not found",
+      }),
+      { status: 500 }
+    );
+  }
+
   console.log(districtId)
   console.log(minorMunicipalityId)
   console.log(majorMunicipalityId)
@@ -156,51 +143,36 @@ export const post: APIRoute = async ({ request, redirect }) => {
       { status: 500 }
     );
   }
+  
 
-  let submission = {
-    provider_name: providerName,
-    provider_phone: phone,
+  let postSubmission = {
+    title: title,
+    content: content,
     location: location[0].id,
+    service_category: categoryId[0].id,
     user_id: user.id,
   }
 
-  const { error, data } = await supabase.from('providers').insert([submission]).select()
+  const { error, data } = await supabase.from('provider_post').insert([postSubmission]).select()
 
   if (error) {
     console.log(error)
     return new Response(
       JSON.stringify({
-        message: "Error creating provider profile",
+        message: "Error creating post",
       }),
       { status: 500 }
     );
   } else if (!data) {
     return new Response(
       JSON.stringify({
-        message: "No profile Data returned",
+        message: "No post returned",
       }),
       { status: 500 }
     );
   } else {
-    console.log("Profile Data: " + JSON.stringify(data))
+    console.log("Post Data: " + JSON.stringify(data))
   }
-//TODO: Check if Profile Already Exists
-  let profileSubmission = {
-    user_id: user.id,
-    first_name: firstName,
-    last_name: lastName,
-  }
-
-  const { data: profileData, error: profileError } = await supabase.from('profiles').insert([profileSubmission]).select()
-  if (profileError) {
-    console.log(profileError)
-    return new Response(
-      JSON.stringify({
-        message: "Error creating profile",
-      }),
-      { status: 500 }
-    );
-  };
 
   // Do something with the formData, then return a success response
   return new Response(

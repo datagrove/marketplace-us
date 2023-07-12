@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/PageLayout.astro";
+import { CreateNewPost } from "../../components/posts/CreateNewPost";
+---
+
+<Layout>
+  <div>
+    <h1>Create Post</h1>
+  </div>
+  <CreateNewPost client:load />
+</Layout>
