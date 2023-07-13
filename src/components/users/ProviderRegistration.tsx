@@ -1,6 +1,7 @@
 import { Component, Suspense, createEffect, createResource, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import type { AuthSession } from '@supabase/supabase-js'
+import UserImage from './UserImage'
 
 async function postFormData(formData: FormData) {
     const response = await fetch("/api/providerProfileSubmit", {
@@ -8,7 +9,7 @@ async function postFormData(formData: FormData) {
         body: formData,
     });
     const data = await response.json();
-    if (data.redirect){
+    if (data.redirect) {
         alert(data.message)
         window.location.href = data.redirect;
     }
@@ -19,6 +20,7 @@ export const ProviderRegistration: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null)
     const [formData, setFormData] = createSignal<FormData>()
     const [response] = createResource(formData, postFormData)
+    const [imageUrl, setImageUrl] = createSignal<string | null>(null)
 
     createEffect(async () => {
         const { data, error } = await supabase.auth.getSession()
@@ -131,15 +133,15 @@ export const ProviderRegistration: Component = () => {
 
         } else {
             alert("Please sign in to create a provider profile.")
-            location.href="/login"
+            location.href = "/login"
         }
     })
 
     function submit(e: SubmitEvent) {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
-        formData.append("access_token",session()?.access_token!)
-        formData.append("refresh_token",session()?.refresh_token!)
+        formData.append("access_token", session()?.access_token!)
+        formData.append("refresh_token", session()?.refresh_token!)
         setFormData(formData)
     }
 
@@ -188,7 +190,15 @@ export const ProviderRegistration: Component = () => {
                     </select>
                 </label>
 
-                <button>Register</button>
+                <UserImage
+                    url={imageUrl()}
+                    size={150}
+                    onUpload={(e: Event, url: string) => {
+                        setImageUrl(url)
+                    }}
+                />
+
+                <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Register</button>
                 <Suspense>{response() && <p>{response().message}</p>}</Suspense>
             </form>
         </div>
