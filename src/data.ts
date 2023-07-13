@@ -8,10 +8,6 @@ export const headerData = {
         text: 'Services',
         href: '/services',
       },
-      {
-        text: 'Provider Profile',
-        href: '/provider/profile',
-      },
     ],
     actions: [
       

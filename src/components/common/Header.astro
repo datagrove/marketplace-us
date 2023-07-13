@@ -1,6 +1,7 @@
 ---
 import { SITE } from "../../config";
 import { AuthMode } from "./AuthMode";
+import { ProviderProfileButton } from "./ProviderProfileButton";
 
 //Define types for items from config
 interface Link {
@@ -16,9 +17,7 @@ export interface Props {
   links?: Array<MenuLink>;
 }
 
-const { 
-    links = [] 
-} = Astro.props;
+const { links = [] } = Astro.props;
 ---
 
 <header id="container">
@@ -28,7 +27,8 @@ const {
     <div class="navLines" id="navLines">
       <div class="all-logo">
         <a id="logo" href="/"
-          ><img class="logo-image" src="../blackLogo.png" /></a>
+          ><img class="logo-image" src="../blackLogo.png" /></a
+        >
       </div>
       <h1 class="logo">{SITE.title}</h1>
     </div>
@@ -46,28 +46,10 @@ const {
         }
       </ul>
     </nav>
-    <AuthMode client:load>
+
+    <AuthMode client:load />
+
+    <ProviderProfileButton client:load />
+    
   </div>
 </header>
-
-<style>
-  @media screen and (max-width: 980px) {
-    #NavigationComponent {
-      display: none;
-    }
-
-    #ModalNalComponent {
-    }
-  }
-
-  .benefit {
-    display: inline-block;
-    margin: 1rem;
-  }
-
-  .benefit img {
-    width: 20rem;
-    height: 20rem;
-    object-fit: cover;
-  }
-</style>
