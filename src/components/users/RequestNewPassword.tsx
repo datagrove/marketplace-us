@@ -1,5 +1,6 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
+import { SITE } from '../../config'
 
 export const NewPassword: Component = () => {
   const [loading, setLoading] = createSignal(false)
@@ -11,7 +12,7 @@ export const NewPassword: Component = () => {
 
     try {
         setLoading(true)
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: "http://localhost:3000/password_reset" })
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE + "/password_reset" })
         if (error) throw error
     } catch (error) {
         if (error instanceof Error) {
