@@ -19,3 +19,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Pages created by i18n-astro-aut integration
+astro_tmp_pages_*

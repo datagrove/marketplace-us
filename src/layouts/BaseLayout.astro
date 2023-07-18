@@ -1,16 +1,18 @@
 ---
 import { SITE } from '.././config.js';
+import { getLangFromUrl } from '../i18n/utils'
 
 const { pageTitle } = Astro.props;
 
-
+const lang = getLangFromUrl(Astro.url)
 ---
 
 <!DOCTYPE html>
-<html lang={SITE.language} dir={SITE.textDirection} class="2xl:text-[20px]">
+<html lang={lang} dir={SITE.textDirection} class="2xl:text-[20px]">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" /> 
     <meta name="generator" content = {Astro.generator} >
+    <meta charset="UTF-8">
     <link href='https://fonts.googleapis.com/css?family=Playfair Display' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'></link>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/>

@@ -1,6 +1,7 @@
 ---
 import { SITE } from "../../config";
 import { AuthMode } from "./AuthMode";
+import  { LanguagePicker } from "./LanguagePicker";
 import { ProviderProfileButton } from "./ProviderProfileButton";
 
 //Define types for items from config
@@ -50,6 +51,7 @@ const { links = [] } = Astro.props;
     <AuthMode client:load />
 
     <ProviderProfileButton client:load />
-    
+
+    <LanguagePicker client:load/>
   </div>
 </header>
