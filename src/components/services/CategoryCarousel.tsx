@@ -19,16 +19,6 @@ import leftArrow from '../../assets/categoryIcons/circled-left-arrow.svg'
 import beauty from '../../assets/categoryIcons/beauty-salon.svg'
 import finance from '../../assets/categoryIcons/banking-bank.svg'
 
-// async function postFormData(formData: FormData) {
-//     const response = await fetch("/api/filterPosts", {
-//         method: "POST",
-//         body: formData,
-//     });
-//     const data = await response.json();
-
-//     return data;
-// }
-
 let categories: Array<any> = []
 
 const { data, error } = await supabase.from('post_category').select('*');

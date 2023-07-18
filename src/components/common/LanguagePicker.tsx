@@ -2,6 +2,7 @@
 import { languages } from "../../i18n/ui";
 import { createSignal, createEffect, Component, onMount } from "solid-js";
 import { currentLanguage } from "../../lib/languageSelectionStore";
+import { useNavigate } from "@solidjs/router";
 
 
 export const LanguagePicker: Component = () => {
@@ -10,6 +11,11 @@ export const LanguagePicker: Component = () => {
   const handleLanguageChange = (e: Event) => {
     setSelectedLanguage((e.target as HTMLSelectElement).value);
     currentLanguage.set(selectedLanguage());
+    const path = window.location.pathname.split('/');
+    console.log(path)
+      path[0] = selectedLanguage();
+    console.log(path.join('/'))
+    window.location.href = path.join('/');
   }
 
   return (
