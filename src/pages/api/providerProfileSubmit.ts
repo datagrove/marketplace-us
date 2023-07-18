@@ -24,7 +24,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
-  if (!firstName || !lastName || !providerName || !phone || !country || !majorMunicipality || !minorMunicipality || !governingDistrict) {
+  if (!firstName || !lastName || !phone || !country || !majorMunicipality || !minorMunicipality || !governingDistrict) {
     return new Response(
       JSON.stringify({
         message: "Missing required fields",

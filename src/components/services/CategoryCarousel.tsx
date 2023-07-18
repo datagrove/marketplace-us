@@ -19,15 +19,15 @@ import leftArrow from '../../assets/categoryIcons/circled-left-arrow.svg'
 import beauty from '../../assets/categoryIcons/beauty-salon.svg'
 import finance from '../../assets/categoryIcons/banking-bank.svg'
 
-async function postFormData(formData: FormData) {
-    const response = await fetch("/api/filterPosts", {
-        method: "POST",
-        body: formData,
-    });
-    const data = await response.json();
+// async function postFormData(formData: FormData) {
+//     const response = await fetch("/api/filterPosts", {
+//         method: "POST",
+//         body: formData,
+//     });
+//     const data = await response.json();
 
-    return data;
-}
+//     return data;
+// }
 
 let categories: Array<any> = []
 
@@ -85,10 +85,17 @@ for (let i = 0; i < categoriesData.length; i++) {
     );
 }
 
+console.log(allCategoryInfo)
 
-export const CategoryCarousel: Component = () => {
+interface Props {
+    // Define the type for the filterPosts prop
+    filterPosts: (currentCategory: string) => void;
+  }
+
+export const CategoryCarousel: Component<Props> = (props) => {
     const [category, setCategory] = createSignal<string>('')
     const [formData, setFormData] = createSignal<FormData>()
+    const { filterPosts } = props
 
     function submit(e: SubmitEvent) {
         e.preventDefault()
@@ -117,8 +124,12 @@ export const CategoryCarousel: Component = () => {
                     </button>
                     <ul class="flex content-center border-yellow-500 m-4">
                         {allCategoryInfo?.map((item) => (
-                            <button data-value={item.id} class='bg-purple-700' type="submit">
-
+                            <button 
+                            class='bg-purple-700' 
+                            onClick={() => {
+                                filterPosts(item.id)
+                            }}
+                            >
                                 <img src={item.icon} alt={item.ariaLabel} title={item.description} />
                                 <p class="text-black">{item.name}</p>
 
