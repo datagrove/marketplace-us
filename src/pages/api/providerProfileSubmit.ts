@@ -1,14 +1,15 @@
 import { supabase } from '../../lib/supabaseClient'
 import type { APIRoute } from "astro";
-import type { APIContext } from 'astro';
 
 export const post: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
 
+  //Just console.log the formData for troubleshooting 
   for (let pair of formData.entries()) {
     console.log(pair[0] + ', ' + pair[1]);
   }
 
+  //set the formData fields to variables
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
   const firstName = formData.get('FirstName');
@@ -22,7 +23,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const postalArea = formData.get('PostalArea');
 
 
-  // Validate the formData - you'll probably want to do more than this
+  // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (!firstName || !lastName || !providerName || !phone || !country || !majorMunicipality || !minorMunicipality || !governingDistrict) {
     return new Response(
       JSON.stringify({
@@ -32,6 +33,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
+  //Get the session from supabase (for the server side) based on the access and refresh tokens
   const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
     refresh_token: refresh_token!.toString(),
     access_token: access_token!.toString(),
@@ -47,6 +49,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   console.log(sessionData)
 
+  //Make sure we have a session
   if (!sessionData?.session) {
     return new Response(
       JSON.stringify({
@@ -56,6 +59,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
+  //Get the user and make sure we have a user
   const user = sessionData?.session.user
 
   if (!user) {
@@ -67,7 +71,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-
+  //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
   const { data: profileExists, error: profileExistsError } = await supabase.from('providers').select('user_id').eq('user_id', user.id)
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message)
@@ -81,7 +85,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-
+  //Don't know if we need this anymore
   const { data: countries, error: testCountryError } = await supabase.from('country').select('*');
   if (testCountryError) {
     console.log("supabase error: " + testCountryError.message)
@@ -89,6 +93,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log(countries)
   }
 
+  /*Each of these retrieves the appropriate id from the database for the area level 
+  (governing district, minor municipality, major municipality, country) 
+  in order to make a proper submission to the location table */
   const { data: districtId, error: districtError } = await supabase.from('governing_district').select('id').eq('id', governingDistrict)
   if (districtError) {
     return new Response(
@@ -134,6 +141,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   console.log(majorMunicipalityId)
   console.log(countryId)
 
+  //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
     minor_municipality: minorMunicipalityId[0].id,
     major_municipality: majorMunicipalityId[0].id,
@@ -146,6 +154,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   console.log("user role: " + user.aud)
   console.log(locationSubmission)
 
+  //Insert the submission to the location table and select it back from the database
   const { error: locationError, data: location } = await supabase.from('location').insert([locationSubmission]).select('id')
   if (locationError) {
     console.log(locationError)
@@ -157,6 +166,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
+  //Build our submission to the providers table including the location id from the select from the location table on line 158
   let submission = {
     provider_name: providerName,
     provider_phone: phone,
@@ -164,6 +174,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     user_id: user.id,
   }
 
+  //submit to the providers table and select it back
   const { error, data } = await supabase.from('providers').insert([submission]).select()
 
   if (error) {
@@ -184,13 +195,18 @@ export const post: APIRoute = async ({ request, redirect }) => {
   } else {
     console.log("Profile Data: " + JSON.stringify(data))
   }
-//TODO: Check if Profile Already Exists
+
+  //TODO: Check if Profile Already Exists - Not sure we need to do this as attempts to submit another profile for a user that already has one will fail
+  //However we might not really want it to fail we may want it to skip the submission if there is already a profile for the user so we don't get back an error
+
+  //Build a submission to the profile table
   let profileSubmission = {
     user_id: user.id,
     first_name: firstName,
     last_name: lastName,
   }
 
+  //Submit to the profile table and select it back (the select back is not entirely necessary)
   const { data: profileData, error: profileError } = await supabase.from('profiles').insert([profileSubmission]).select()
   if (profileError) {
     console.log(profileError)
@@ -202,7 +218,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   };
 
-  // Do something with the formData, then return a success response
+  // If everything works send a success response
   return new Response(
     JSON.stringify({
       message: "Success!",

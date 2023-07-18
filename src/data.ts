@@ -77,15 +77,21 @@ export const headerData = {
 
   export const productCategoryData = {
     categories: [
-    { name: 'Gardening' , description:'Get help with your garden and landscaping.', ariaLabel:"Gardening",icon:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
-    { name: 'Construction' , description:'New Construction, Additions, or Repair Services', ariaLabel: "Construction",icon:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
-    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.', ariaLabel:"Beauty",icon:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
-    { name: 'Gardening' , description:'Get help with your garden and landscaping.',ariaLabel:"Gardening",icon:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
-    { name: 'Construction' , description:'New Construction, Additions, or Repair Services',ariaLabel: "Construction",icon:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
-    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.',ariaLabel:"Beauty",icon:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
-    { name: 'Gardening' , description:'Get help with your garden and landscaping.',ariaLabel:"Gardening",icon:"https://cdn-icons-png.flaticon.com/512/1518/1518863.png", price:10, currency:"$", forward:"#" ,id:"1" },
-    { name: 'Construction' , description:'New Construction, Additions, or Repair Services',ariaLabel: "Construction",icon:"https://cdn-icons-png.flaticon.com/512/4327/4327376.png", price:10, currency:"$", forward:"#" ,id:"2" },
-    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.',ariaLabel:"Beauty",icon:"https://cdn-icons-png.flaticon.com/512/2707/2707142.png", price:10, currency:"$", forward:"#" ,id:"3" },
+    { name: 'Gardening' , description:'Get help with your garden and landscaping.', ariaLabel:"Gardening", id:"1" },
+    { name: 'Construction' , description:'New Construction, Additions, or Repair Services', ariaLabel: "Construction",id:"3" },
+    { name: 'Beauty' , description:'Salons, Barbers, and other personal care.', ariaLabel:"Beauty",id:"2" },
+    { name: 'Automotive', description:'Automotive Services', ariaLabel:"Automotive",id:"5" },
+    { name: 'Computer', description:'Computer Repair and Services', ariaLabel:"Computer",id:"4" },
+    { name: 'Creative', description:'Creative Services', ariaLabel:"Creative", id:"6" },
+    { name: 'Financial', description:'Financial Services', ariaLabel:"Financial",id:"7" },
+    { name: 'Cleaning', description:'Cleaning Services', ariaLabel:"Cleaning",id:"8" },
+    { name: 'Pets', description:'Pet Services', ariaLabel:"Pets",id:"9" },
+    { name: 'Legal', description:'Legal Services', ariaLabel:"Legal",id:"10" },
+    { name: 'Health', description:'Health Services', ariaLabel:"Health",id:"11" },
+    { name: 'Labor', description:'Labor Services', ariaLabel:"Labor",id:"12" },
+    { name: 'Travel', description:'Travel Services', ariaLabel:"Travel", id:"13" },
+
+    
     // Add more products as needed
     ]
   };

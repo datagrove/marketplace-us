@@ -3,12 +3,14 @@ import { supabase } from '../../lib/supabaseClient'
 import type { AuthSession } from '@supabase/supabase-js'
 import UserImage from './UserImage'
 
+//Send the data to the APIRoute and wait for a JSON response see src/pages/api for APIRoute
 async function postFormData(formData: FormData) {
     const response = await fetch("/api/providerProfileSubmit", {
         method: "POST",
         body: formData,
     });
     const data = await response.json();
+    //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {
         alert(data.message)
         window.location.href = data.redirect;
@@ -16,6 +18,7 @@ async function postFormData(formData: FormData) {
     return data;
 }
 
+//Component that creates the form and collects the data
 export const ProviderRegistration: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null)
     const [formData, setFormData] = createSignal<FormData>()
@@ -26,8 +29,9 @@ export const ProviderRegistration: Component = () => {
         const { data, error } = await supabase.auth.getSession()
         setSession(data.session)
 
+        //Create/Fill dropdown options for the form based on each selection if there is a session (Meaning the user is signed in)
         if (session()) {
-            //Country
+            //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
             try {
                 const { data: countries, error } = await supabase.from('country').select('*');
                 if (error) {
@@ -44,7 +48,7 @@ export const ProviderRegistration: Component = () => {
                 console.log("Other error: " + error)
             }
 
-            //Major Municipality
+            //Will create a list of Major Municipalities based on the selected country
             try {
                 const { data: majorMunicipality, error: errorMajorMunicipality } = await supabase.from('major_municipality').select('*');
                 if (errorMajorMunicipality) {
@@ -73,7 +77,7 @@ export const ProviderRegistration: Component = () => {
                 console.log("Other error: " + error)
             }
 
-            //Minor Municipality
+            //Creates drop down options for Minor Municipality based on selected Major Municipality
             try {
                 const { data: minorMunicipality, error: errorMinorMunicipality } = await supabase.from('minor_municipality').select('*');
                 if (errorMinorMunicipality) {
@@ -102,7 +106,7 @@ export const ProviderRegistration: Component = () => {
                 console.log("Other error: " + error)
             }
 
-            //Governing District
+            //Creates filtered drop down options for Governing District base on selected Minor Municipality
             try {
                 const { data: governingDistrict, error: errorGoverningDistrict } = await supabase.from('governing_district').select('*');
                 if (errorGoverningDistrict) {
@@ -131,12 +135,15 @@ export const ProviderRegistration: Component = () => {
                 console.log("Other error: " + error)
             }
 
+        //If the user is not signed in then tell them to sign in and send them to the login page
         } else {
             alert("Please sign in to create a provider profile.")
             location.href = "/login"
         }
     })
 
+    //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
+    //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
     function submit(e: SubmitEvent) {
         e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
@@ -145,7 +152,7 @@ export const ProviderRegistration: Component = () => {
         setFormData(formData)
     }
 
-
+    //Actual Form that gets displayed for users to fill
     return (
         <div>
             <form onSubmit={submit}>
@@ -190,6 +197,7 @@ export const ProviderRegistration: Component = () => {
                     </select>
                 </label>
 
+                {/* Allows upload of profile picture using the UserImage component  */}
                 <UserImage
                     url={imageUrl()}
                     size={150}
@@ -199,6 +207,7 @@ export const ProviderRegistration: Component = () => {
                 />
 
                 <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Register</button>
+
                 <Suspense>{response() && <p>{response().message}</p>}</Suspense>
             </form>
         </div>
