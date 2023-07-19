@@ -3,16 +3,29 @@ export interface uiObject {
 
   pageTitles: {
     services: string,
-    signup: string,
+    signUp: string,
     login: string,
     home: string,
-    signin: string,
+    signIn: string,
   },
 
   buttons: {
     providerProfile: string,
     editProfile: string,
     register: string,
+    uploadImage: string,
+    uploading: string,
+    loading: string,
+    login: string,
+    signUp: string,
+    signIn: string,
+    signOut: string,
+  },
+
+  messages: {
+    noAccount: string,
+    passwordLength: string,
+    passwordMatch: string,
   },
 
   formLabels: {
@@ -28,6 +41,9 @@ export interface uiObject {
     lastName: string,
     providerName: string,
     phone: string,
+    email: string,
+    password: string,
+    confirmPassword: string,
   },
 
   headerData: {

@@ -1,8 +1,20 @@
 ---
 import Layout from '../layouts/BaseLayout.astro';
-import { headerData, footerData } from '../data';
+// import { headerData, footerData } from '../data';
 import Footer from "../components/common/Footer.astro";
 import Header from "../components/common/Header.astro";
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { ui } from '../i18n/ui'
+import type { uiObject } from '../i18n/uiType';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const values = ui[lang] as uiObject
+
+const headerData = values.headerData;
+const footerData = values.footerData
+
+
 const {pageTitle} = Astro.props
 ---
 <Layout {pageTitle}>

@@ -12,5 +12,5 @@ const AuthData = { mode: "sign_up"}
 		<h2 class="text-xl w-full italic">Sign Up</h2>
 	</div>
 	<!-- Call the auth form in sign up mode -->
-	<Auth client:load {...AuthData}/>
+	<Auth client:only="solid-js" {...AuthData}/>
 </PageLayout>

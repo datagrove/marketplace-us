@@ -3,16 +3,30 @@ export const English = {
 
   pageTitles: {
     services: 'Services',
-    signup: 'Sign Up',
+    signUp: 'Sign Up',
     login: 'Login',
     home: 'Home',
-    signin: 'Sign In',
+    signIn: 'Sign In',
   },
 
   buttons: {
     providerProfile: 'My Provider Profile',
     editProfile: 'Edit Profile',
     register: 'Register',
+    uploadImage: 'Upload Image',
+    uploading: 'Uploading ...',
+    loading: 'Loading...',
+    login: 'Login',
+    signUp: 'sign up',
+    signIn: 'sign in',
+    signOut: 'Sign Out',
+  },
+
+  messages: {
+    noAccount: "Don't have an account? Click here to",
+    passwordLength: 'Password must be at least 6 characters long',
+    passwordMatch: 'Passwords do not match',
+    alreadyAccount: 'Already have an account? Click here to',
   },
 
   formLabels: {
@@ -28,6 +42,9 @@ export const English = {
     lastName: 'Last Name',
     providerName: "Provider Name",
     phone: 'Phone Number',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
   },
 
   headerData: {
