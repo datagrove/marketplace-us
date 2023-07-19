@@ -7,7 +7,15 @@ export function getLangFromUrl(url: URL) {
 }
 
 export function useTranslations(lang: keyof typeof ui) {
-  return function t(key: keyof typeof ui[typeof defaultLang]) {
-    return ui[lang][key] || ui[defaultLang][key];
+  return function t(key: string) {
+    const keys = key.split('.');
+    let value:any = ui[lang];
+    for (const k of keys) {
+      value = value[k as keyof typeof value];
+      if (!value) {
+        break;
+      }
+    }
+    return value || ui[defaultLang][key as keyof typeof ui[typeof defaultLang]];
   }
 }

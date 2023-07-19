@@ -1,6 +1,13 @@
 export const English = {
   textDirection: 'ltr',
 
+  pageTitles: {
+    services: 'Services',
+    signup: 'Sign Up',
+    login: 'Login',
+    home: 'Home',
+  },
+
   headerData: {
     links: [
       {

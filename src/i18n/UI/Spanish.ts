@@ -1,6 +1,13 @@
 export const Spanish = {
     textDirection: 'ltr',
 
+    pageTitles: {
+      services: 'Servicios',
+      signup: 'Registrarse',
+      login: 'Iniciar sesión',
+      home: 'Inicio',
+    },
+
     headerData: {
       links: [
         {
@@ -72,10 +79,6 @@ export const Spanish = {
         { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
         { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
       ],
-      footNote: `
-        <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-        Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
-      `,
     },
   
   productCategoryData:{
