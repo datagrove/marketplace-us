@@ -9,6 +9,8 @@ export const Spanish = {
 
     buttons: {},
 
+    formLabels:{},
+
     headerData: {
       links: [
         {
@@ -82,9 +84,9 @@ export const Spanish = {
       ],
     },
   
-  productCategoryData:{
+  productCategoryInfo:{
       categories: [
-        { name: 'Gardening', description: 'Get help with your garden and landscaping.', ariaLabel: "Gardening", id: "1" },
+        { name: 'Jardinería', description: 'Get help with your garden and landscaping.', ariaLabel: "Gardening", id: "1" },
         { name: 'Construction', description: 'New Construction, Additions, or Repair Services', ariaLabel: "Construction", id: "3" },
         { name: 'Beauty', description: 'Salons, Barbers, and other personal care.', ariaLabel: "Beauty", id: "2" },
         { name: 'Automotive', description: 'Automotive Services', ariaLabel: "Automotive", id: "5" },

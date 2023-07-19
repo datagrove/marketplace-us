@@ -1,0 +1,125 @@
+export interface uiObject {
+  textDirection: string,
+
+  pageTitles: {
+    services: string,
+    signup: string,
+    login: string,
+    home: string,
+    signin: string,
+  },
+
+  buttons: {
+    providerProfile: string,
+    editProfile: string,
+    register: string,
+  },
+
+  formLabels: {
+    title: string,
+    serviceCategory: string,
+    postContent: string,
+    country: string,
+    majorMunicipality: string,
+    minorMunicipality: string,
+    governingDistrict: string,
+    search: string,
+    firstName: string,
+    lastName: string,
+    providerName: string,
+    phone: string,
+  },
+
+  headerData: {
+    links: [
+      {
+        text: string,
+        href: string,
+      },
+      {
+        text: string,
+        href: string,
+      },
+    ],
+    actions: [
+
+    ],
+  },
+
+  footerData: {
+    links: [
+      {
+        title: string,
+        links: [
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+        ],
+      },
+      {
+        title: string,
+        links: [
+          { text: string, href: string },
+          { text: string, href: string },
+        ],
+      },
+      {
+        title: string,
+        links: [
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+        ],
+      },
+      {
+        title: string,
+        links: [
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+          { text: string, href: string },
+        ],
+      },
+    ],
+    secondaryLinks: [
+      { text: string, href: string },
+      { text: string, href: string },
+    ],
+    socialLinks: [
+      { ariaLabel: string, icon: string, href: string },
+      { ariaLabel: string, icon: string, href: string },
+      { ariaLabel: string, icon: string, href: string },
+      { ariaLabel: string, icon: string, href: string },
+      { ariaLabel: string, icon: string, href: string },
+    ],
+    footNote: string,
+  },
+
+productCategoryInfo:{
+    categories: [
+      { name: string, description: string, ariaLabel: string, id: "1" },
+      { name: string, description: string, ariaLabel: string, id: "3" },
+      { name: string, description: string, ariaLabel: string, id: "2" },
+      { name: string, description: string, ariaLabel: string, id: "5" },
+      { name: string, description: string, ariaLabel: string, id: "4" },
+      { name: string, description: string, ariaLabel: string, id: "6" },
+      { name: string, description: string, ariaLabel: string, id: "7" },
+      { name: string, description: string, ariaLabel: string, id: "8" },
+      { name: string, description: string, ariaLabel: string, id: "9" },
+      { name: string, description: string, ariaLabel: string, id: "10" },
+      { name: string, description: string, ariaLabel: string, id: "11" },
+      { name: string, description: string, ariaLabel: string, id: "12" },
+      { name: string, description: string, ariaLabel: string, id: "13" },
+      // Add more products as needed
+    ]
+  }
+}

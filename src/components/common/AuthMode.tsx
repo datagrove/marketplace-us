@@ -5,7 +5,6 @@ import { useStore } from '@nanostores/solid'
 import { SignOut } from '../../lib/sign_out'
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
-
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 

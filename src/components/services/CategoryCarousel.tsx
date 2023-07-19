@@ -1,7 +1,14 @@
 import { Component, Suspense, createEffect, createResource, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
-import type { AuthSession } from '@supabase/supabase-js'
-import { productCategoryData } from '../../data'
+// import { productCategoryData } from '../../data'
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const values = ui[lang] as uiObject
+const productCategoryData = values.productCategoryInfo
+
 
 import travel from '../../assets/categoryIcons/travel.svg'
 import worker from '../../assets/categoryIcons/worker.svg'

@@ -11,6 +11,23 @@ export const English = {
 
   buttons: {
     providerProfile: 'My Provider Profile',
+    editProfile: 'Edit Profile',
+    register: 'Register',
+  },
+
+  formLabels: {
+    title: 'Title',
+    serviceCategory: 'Service Category',
+    postContent: 'Post Content',
+    country: 'Country',
+    majorMunicipality: 'Major Municipality',
+    minorMunicipality: 'Minor Municipality',
+    governingDistrict: 'Governing District',
+    search: 'Search',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    providerName: "Provider Name",
+    phone: 'Phone Number',
   },
 
   headerData: {
@@ -90,7 +107,7 @@ export const English = {
     `,
   },
 
-productCategoryData:{
+productCategoryInfo:{
     categories: [
       { name: 'Gardening', description: 'Get help with your garden and landscaping.', ariaLabel: "Gardening", id: "1" },
       { name: 'Construction', description: 'New Construction, Additions, or Repair Services', ariaLabel: "Construction", id: "3" },
