@@ -17,7 +17,6 @@
     "@lexical/react": "^0.11.2",
     "@nanostores/persistent": "^0.9.0",
     "@nanostores/solid": "^0.4.2",
-    "@solidjs/router": "^0.8.2",
     "@supabase/supabase-js": "^2.26.0",
     "astro": "^2.8.0",
     "astro-i18n-aut": "^0.1.15",

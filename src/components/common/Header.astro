@@ -48,10 +48,10 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <AuthMode client:load />
+    <AuthMode client:only="solid-js" />
 
-    <ProviderProfileButton client:load />
+    <ProviderProfileButton client:only="solid-js" />
 
-    <LanguagePicker client:load/>
+    <LanguagePicker client:only="solid-js"/>
   </div>
 </header>

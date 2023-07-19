@@ -1,4 +1,4 @@
-export const English = {
+export const French = {
   textDirection: 'ltr',
 
   pageTitles: {

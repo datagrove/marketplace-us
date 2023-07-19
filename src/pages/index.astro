@@ -5,9 +5,8 @@ import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-console.log(t('pageTitles.home'));
 ---
 
 <Layout pageTitle={t('pageTitles.home')}>
-	<h1>HOME</h1>
+	<h1>{t('pageTitles.home')}</h1>
 </Layout>

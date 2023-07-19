@@ -5,8 +5,9 @@ export const Spanish = {
       services: 'Servicios',
       signup: 'Registrarse',
       login: 'Iniciar sesión',
-      home: 'Inicio',
     },
+
+    buttons: {},
 
     headerData: {
       links: [

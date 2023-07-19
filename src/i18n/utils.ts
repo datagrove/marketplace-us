@@ -10,12 +10,14 @@ export function useTranslations(lang: keyof typeof ui) {
   return function t(key: string) {
     const keys = key.split('.');
     let value:any = ui[lang];
+    let defaultValue:any = ui[defaultLang];
     for (const k of keys) {
       value = value[k as keyof typeof value];
+      defaultValue = defaultValue[k as keyof typeof defaultValue];
       if (!value) {
         break;
       }
     }
-    return value || ui[defaultLang][key as keyof typeof ui[typeof defaultLang]];
+    return value || defaultValue;
   }
 }
