@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .reset-btn {
+        background-color: #D84727 !important;
+        border-radius: 5%;
+        padding: 0px 2em 0px 2em;
+        margin: 1em 0em 1em 0em;
+        border: 1px solid #CDEDF6;
+    }
+    
+    .reset-btn:hover {
+        background-color: #EF7B45 !important;
+    }
+}
+
