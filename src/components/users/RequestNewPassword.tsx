@@ -1,6 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import { SITE } from '../../config'
+import '../../styles/global.css';
 
 export const NewPassword: Component = () => {
   const [loading, setLoading] = createSignal(false)
@@ -28,23 +29,32 @@ export const NewPassword: Component = () => {
 
   return (
     <div>
-        <div class="row flex-center flex">
+      <div class="row flex flex-col">
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleReset}>
-            <div>
-              <label for="email">Email</label>
+            <div class="p-2 w-full">
+              <label 
+                for="email"
+                class="px-2 text-secondaryText"
+              >
+                Email
+              </label>
               <input
                 id="email"
-                class="inputField"
+                class="inputField rounded px-1"
                 type="email"
                 placeholder="Your email"
                 value={email()}
                 onChange={(e) => setEmail(e.currentTarget.value)}
               />
             </div>
-            <div>
-              <button type="submit" class="button block" aria-live="polite">
-                {loading() ? <span>Loading</span> : <span>Reset</span>}
+            <div class="flex justify-center">
+              <button 
+                type="submit" 
+                class="button block reset-btn" 
+                aria-live="polite"
+              >
+                {loading() ? <span>Loading</span> : <span class="text-secondaryText">Reset</span>}
               </button>
             </div>
           </form>
