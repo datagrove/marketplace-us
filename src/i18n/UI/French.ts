@@ -13,6 +13,14 @@ export const French = {
     providerProfile: 'My Provider Profile',
   },
 
+  messages: {
+    
+  },
+
+  formLabels: {
+    
+  },
+
   headerData: {
     links: [
       {
