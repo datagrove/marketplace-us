@@ -2,6 +2,10 @@ import { Component, Suspense, createEffect, createResource, createSignal } from 
 import { supabase } from '../../lib/supabaseClient'
 import type { AuthSession } from '@supabase/supabase-js'
 import UserImage from './UserImage'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 //Send the data to the APIRoute and wait for a JSON response see src/pages/api for APIRoute
 async function postFormData(formData: FormData) {
@@ -156,42 +160,42 @@ export const ProviderRegistration: Component = () => {
     return (
         <div>
             <form onSubmit={submit}>
-                <label for="FirstName">First Name:
+                <label for="FirstName">{t('formLabels.firstName')}:
                     <input type="text" id="FirstName" name="FirstName" required />
                 </label>
 
-                <label for="LastName">Last Name:
+                <label for="LastName">{t('formLabels.lastName')}:
                     <input type="text" id="LastName" name="LastName" required />
                 </label>
 
 
-                <label for="ProviderName">Provider Name:
+                <label for="ProviderName">{t('formLabels.providerName')}:
                     <input type="text" id="ProviderName" name="ProviderName" />
                 </label>
 
-                <label for="Phone">Phone Number:
+                <label for="Phone">{t('formLabels.phone')}:
                     <input type="text" id="Phone" name="Phone" required />
                 </label>
 
-                <label for="country">Country:
+                <label for="country">{t('formLabels.country')}:
                     <select id="country" name="country" required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="MajorMunicipality">Major Municipality:
+                <label for="MajorMunicipality">{t('formLabels.majorMunicipality')}:
                     <select id="MajorMunicipality" name="MajorMunicipality" required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="MinorMunicipality">Minor Municipality:
+                <label for="MinorMunicipality">{t('formLabels.minorMunicipality')}:
                     <select id="MinorMunicipality" name="MinorMunicipality" required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="GoverningDistrict">Governing District:
+                <label for="GoverningDistrict">{t('formLabels.governingDistrict')}:
                     <select id="GoverningDistrict" name="GoverningDistrict" required>
                         <option value="-1">-</option>
                     </select>
@@ -206,7 +210,7 @@ export const ProviderRegistration: Component = () => {
                     }}
                 />
 
-                <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Register</button>
+                <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{t('buttons.register')}</button>
 
                 <Suspense>{response() && <p>{response().message}</p>}</Suspense>
             </form>

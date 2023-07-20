@@ -2,13 +2,16 @@
 import SearchBar from '../components/services/SearchBar.astro';
 import PageLayout from '../layouts/ServicesLayout.astro';
 import { ServicesView } from '../components/services/ServicesMain';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <PageLayout pageTitle="Services">
     <div class="text-center mt-4 mb-8">
-        <h2 class="text-xl w-full italic">Services</h2>
+        <h2 class="text-xl w-full italic">{t('pageTitles.services')}</h2>
         <SearchBar />
-        <ServicesView client:load />
+        <ServicesView client:only="solid-js" />
     </div>
 </PageLayout>

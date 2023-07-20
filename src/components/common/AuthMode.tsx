@@ -3,6 +3,10 @@ import { supabase } from '../../lib/supabaseClient'
 import { currentSession } from '../../lib/userSessionStore'
 import { useStore } from '@nanostores/solid'
 import { SignOut } from '../../lib/sign_out'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const AuthMode: Component = () => {
     const [authMode, setAuthMode] = createSignal<"signed_in"|"signed_out">("signed_in")
@@ -32,7 +36,7 @@ export const AuthMode: Component = () => {
             authMode() === "signed_out" ? (
                 <div>
                 <form>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" formaction="/login">Sign In</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit" formaction="/login">{t('pageTitles.signIn')}</button>
                 </form>
             </div>
             ): (

@@ -1,6 +1,10 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
 import { currentSession } from './userSessionStore'
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const SignOut: Component = () => {
     const [loading, setLoading] = createSignal(false)
@@ -22,14 +26,14 @@ export const SignOut: Component = () => {
             }
         } finally {
             setLoading(false)
-            location.href = "/"
+            location.href = `/${lang}`
         }
     }
 
     return (
         <div>
             <form onSubmit={handleSignOut}>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Sign Out</button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">{t('buttons.signOut')}</button>
             </form>
         </div>
     )

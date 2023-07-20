@@ -1,5 +1,9 @@
 import { Component, createEffect, createSignal, JSX } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   size: number
@@ -77,7 +81,7 @@ const UserImage: Component<Props> = (props) => {
       )}
       <div style={{ width: `${props.size}px` }}>
         <label class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" for="single">
-          {uploading() ? 'Uploading ...' : 'Upload Image'}
+          {uploading() ? t('buttons.uploading') : t('buttons.uploadImage')}
         </label>
         <span style="display:none">
           <input
