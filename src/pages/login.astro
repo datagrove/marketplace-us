@@ -3,11 +3,15 @@ import { SITE } from "../config";
 import PageLayout from '../layouts/PageLayout.astro';
 import { Auth } from "../lib/Auth";
 import { PasswordReset } from "../lib/PasswordReset";
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <PageLayout>
 	<div class="text-center mt-4 mb-8">
-		<h2 class="text-xl w-full italic">Login</h2>
+		<h2 class="text-xl w-full italic">{t('pageTitles.login')}</h2>
 	</div>
 	<Auth client:only="solid-js"/>
 	<PasswordReset/>

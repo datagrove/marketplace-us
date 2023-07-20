@@ -7,6 +7,15 @@ export const English = {
     login: 'Login',
     home: 'Home',
     signIn: 'Sign In',
+    editClientAccount: 'Edit Client Account',
+    viewClientAccount: 'View Client Account',
+    createPost: 'Create Post',
+    createProviderAccount: 'Create Provider Account',
+    editProviderAccount: 'Edit Provider Account',
+    viewProviderAccount: 'Provider Profile Self View',
+    page404: '404 - Page Not Found',
+    requestPasswordReset: 'Request Password Reset',
+    resetPassword: 'Reset Password',
   },
 
   buttons: {
@@ -20,6 +29,7 @@ export const English = {
     signUp: 'sign up',
     signIn: 'sign in',
     signOut: 'Sign Out',
+    returnHome: 'Click to Return Home',
   },
 
   messages: {
@@ -27,6 +37,7 @@ export const English = {
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
     alreadyAccount: 'Already have an account? Click here to',
+    error404: 'Something went wrong'
   },
 
   formLabels: {

@@ -5,6 +5,7 @@ export const Spanish = {
       services: 'Servicios',
       signup: 'Registrarse',
       login: 'Iniciar sesión',
+      home: 'Inicio',
     },
 
     buttons: {},
@@ -15,11 +16,11 @@ export const Spanish = {
       links: [
         {
           text: 'Home',
-          href: '/',
+          href: '/es',
         },
         {
           text: 'Services',
-          href: '/services',
+          href: 'es/services',
         },
       ],
       actions: [

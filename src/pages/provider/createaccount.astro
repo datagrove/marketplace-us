@@ -1,10 +1,14 @@
 ---
 import Layout from "../../layouts/PageLayout.astro";
 import {ProviderRegistration} from "../../components/users/ProviderRegistration";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Layout>
-  <h1>Create Provider Account</h1>
+  <h1>{t('pageTitles.createProviderAccount')}</h1>
   <div>
     <ProviderRegistration client:only="solid-js" />
   </div>

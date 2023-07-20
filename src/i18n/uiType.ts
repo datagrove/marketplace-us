@@ -7,6 +7,15 @@ export interface uiObject {
     login: string,
     home: string,
     signIn: string,
+    editClientAccount: string,
+    viewClientAccount: string,
+    createPost: string,
+    createProviderAccount: string,
+    editProviderAccount: string,
+    viewProviderAccount: string,
+    page404: string,
+    requestPasswordReset: string
+    resetPassword: string
   },
 
   buttons: {
@@ -20,12 +29,14 @@ export interface uiObject {
     signUp: string,
     signIn: string,
     signOut: string,
+    returnHome: string,
   },
 
   messages: {
     noAccount: string,
     passwordLength: string,
     passwordMatch: string,
+    error404: string,
   },
 
   formLabels: {

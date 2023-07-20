@@ -1,11 +1,15 @@
 ---
 import Layout from "../../layouts/PageLayout.astro";
 import { EditProfileButton } from "../../components/users/EditProfileButton";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Layout>
   <div>
-    <h1>Provider Profile Self View</h1>
+    <h1>{t('pageTitles.viewProviderAccount')}</h1>
     <EditProfileButton client:only="solid-js"/>
   </div>
 </Layout>
