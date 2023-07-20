@@ -1,7 +1,7 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import { SITE } from '../../config'
-import '../../styles/global.css';
+// import '../../styles/global.css';
 
 export const NewPassword: Component = () => {
   const [loading, setLoading] = createSignal(false)
@@ -51,10 +51,10 @@ export const NewPassword: Component = () => {
             <div class="flex justify-center">
               <button 
                 type="submit" 
-                class="button block reset-btn" 
+                class="button block" 
                 aria-live="polite"
               >
-                {loading() ? <span>Loading</span> : <span class="text-secondaryText">Reset</span>}
+                {loading() ? <span>Loading</span> : <span class="text-text1">Reset</span>}
               </button>
             </div>
           </form>
