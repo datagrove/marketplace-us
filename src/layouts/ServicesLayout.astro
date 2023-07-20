@@ -1,4 +1,5 @@
 ---
+//Not sure we still need this layout
 import Layout from '../layouts/PageLayout.astro';
 import { productCategoryData } from '../data';
 import SearchBar from "../components/services/SearchBar.astro";
@@ -9,10 +10,6 @@ const {pageTitle} = Astro.props
 <Layout {pageTitle}>
     <div>
       <SearchBar />
-    </div>
-    <div>
-      <!-- @ts-ignore -->
-      <CategoryCarousel {...productCategoryData}/>
     </div>
     <main>
       <slot />

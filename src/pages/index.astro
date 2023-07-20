@@ -1,9 +1,13 @@
 ---
 import { SITE } from '../config';
 import Layout from '../layouts/PageLayout.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 import '../styles/global.css';
 ---
 
-<Layout>
-	<h1>HOME</h1>
+<Layout pageTitle={t('pageTitles.home')}>
+	<h1>{t('pageTitles.home')}</h1>
 </Layout>

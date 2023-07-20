@@ -1,7 +1,10 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from './supabaseClient'
 import { currentSession } from './userSessionStore'
-import { useStore } from '@nanostores/solid'
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const Auth: Component = (props) => {
   // @ts-ignore
@@ -24,7 +27,7 @@ export const Auth: Component = (props) => {
       currentSession.set(data.session)
       // const test = useStore(currentSession)
       // console.log("Current Session: " + test()?.user.aud)
-      location.href="/"
+      location.href=`/${lang}`
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
@@ -44,7 +47,7 @@ export const Auth: Component = (props) => {
         const { error } = await supabase.auth.signUp({ email: email(), password: password() })
         if (error) throw error
         alert('Check your email for the confirmation link!')
-        location.href="/"
+        location.href=`/${lang}`
       } catch (error) {
         if (error instanceof Error) {
           alert(error.message)
@@ -68,7 +71,7 @@ export const Auth: Component = (props) => {
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleLogin}>
             <div>
-              <label for="email">Email</label>
+              <label for="email">{t('formLabels.email')}</label>
               <input
                 id="email"
                 class="inputField"
@@ -79,7 +82,7 @@ export const Auth: Component = (props) => {
               />
             </div>
             <div>
-              <label for="password">Password</label>
+              <label for="password">{t('formLabels.password')}</label>
               <input
                 id="password"
                 class="inputField"
@@ -91,11 +94,11 @@ export const Auth: Component = (props) => {
             </div>
             <div>
               <button type="submit" class="button block" aria-live="polite">
-                {loading() ? <span>Loading</span> : <span>Login</span>}
+                {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.login')}</span>}
               </button>
             </div>
             <div>
-              <p class="text-sm text-gray-600"> Don't have an account? Click here to <a class="text-blue-600 hover:underline dark:text-gray-200" href="/signup">sign up</a></p>
+              <p class="text-sm text-gray-600"> {t('messages.noAccount')}<a class="text-blue-600 hover:underline dark:text-gray-200" href={`/${lang}/signup`}>{t('buttons.signUp')}</a></p>
             </div>
           </form>
         </div>
@@ -107,11 +110,11 @@ export const Auth: Component = (props) => {
       <div class="col-6 form-widget" aria-live="polite">
         <h1 class="header">Create an account</h1>
         <div>
-          <p class="text-sm text-gray-600">Already have an account? Click here to <a class="text-blue-600 hover:underline dark:text-gray-200" href="/login">sign in</a></p>
+          <p class="text-sm text-gray-600">{t('messages.alreadyAccount')} <a class="text-blue-600 hover:underline dark:text-gray-200" href={`/${lang}/login`}>{t('buttons.signIn')}</a></p>
         </div>
         <form class="form-widget" onSubmit={handleSignUp}>
           <div>
-            <label for="email">Email</label>
+            <label for="email">{t('formLabels.email')}</label>
             <input
               id="email"
               class="inputField"
@@ -123,7 +126,7 @@ export const Auth: Component = (props) => {
             />
           </div>
           <div>
-            <label for="password">Password</label>
+            <label for="password">{t('formLabels.password')}</label>
             <input
               id="password"
               class="inputField"
@@ -135,10 +138,10 @@ export const Auth: Component = (props) => {
             />
           </div>
           <div>
-          {password().length>5 ? '' : <p class="text-sm text-gray-600"> Passwords must be at least 6 characters</p>}
+          {password().length>5 ? '' : <p class="text-sm text-gray-600"> {t('messages.passwordLength')}</p>}
           </div>
           <div>
-            <label for="confirm password">Confirm Password</label>
+            <label for="confirm password">{t('formLabels.confirmPassword')}</label>
             <input
               id="confirm password"
               class="inputField"
@@ -150,11 +153,11 @@ export const Auth: Component = (props) => {
             />
           </div>
           <div>
-          {match() ? '' : <span>Passwords do not match</span>}
+          {match() ? '' : <span>{t('messages.passwordMatch')}</span>}
           </div>
           <div>
-            <button type="submit" class="button block" aria-live="polite" disabled={!match()}>
-              {loading() ? <span>Loading</span> : <span>Sign Up</span>}
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" aria-live="polite" disabled={!match()}>
+              {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('pageTitles.signUp')}</span>}
             </button>
           </div>
         </form>

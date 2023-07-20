@@ -1,6 +1,10 @@
 import { Component, Suspense, createEffect, createResource, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import type { AuthSession } from '@supabase/supabase-js'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 async function postFormData(formData: FormData) {
     const response = await fetch("/api/providerCreatePost", {
@@ -164,13 +168,13 @@ export const CreateNewPost: Component = () => {
         <div>
             <form onSubmit={submit}>
                 <div class="mb-6">
-                <label for="Title">Title
+                <label for="Title">{t('formLabels.title')}:
                     <input type="text" id="Title" name="Title" required />
                 </label>
                 </div>
 
                 <div class="mb-6">
-                <label for="ServiceCategory">Service Category:
+                <label for="ServiceCategory">{t('formLabels.serviceCategory')}:
                     <select id="ServiceCategory" name="ServiceCategory" required>
                         <option value="-1">-</option>
                     </select>
@@ -178,13 +182,13 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 <div class="mb-6">
-                <label for="Content">Post Content:
+                <label for="Content">{t('formLabels.postContent')}:
                 <textarea id="Content" name="Content" rows="5" required>Enter Post Content Here:</textarea>
                 </label>
                 </div>
 
                 <div class="mb-6">
-                <label for="country">Country:
+                <label for="country">{t('formLabels.country')}:
                     <select id="country" name="country" required>
                         <option value="-1">-</option>
                     </select>
@@ -192,7 +196,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 <div class="mb-6">
-                <label for="MajorMunicipality">Major Municipality:
+                <label for="MajorMunicipality">{t('formLabels.majorMunicipality')}:
                     <select id="MajorMunicipality" name="MajorMunicipality" required>
                         <option value="-1">-</option>
                     </select>
@@ -200,14 +204,14 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 <div class="mb-6">
-                <label for="MinorMunicipality">Minor Municipality:
+                <label for="MinorMunicipality">{t('formLabels.minorMunicipality')}:
                     <select id="MinorMunicipality" name="MinorMunicipality" required>
                         <option value="-1">-</option>
                     </select>
                 </label>
                 </div>
 
-                <label for="GoverningDistrict">Governing District:
+                <label for="GoverningDistrict">{t('formLabels.governingDistrict')}:
                     <select id="GoverningDistrict" name="GoverningDistrict" required>
                         <option value="-1">-</option>
                     </select>

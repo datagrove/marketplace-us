@@ -4,6 +4,10 @@ import { currentSession } from '../../lib/userSessionStore'
 import { useStore } from '@nanostores/solid'
 import type { AuthSession } from '@supabase/supabase-js'
 import { SITE }  from '../../config'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const EditProfileButton: Component = () => {
     const [profileType, setProfileType] = createSignal<"Client"|"Provider"|null>(null)
@@ -34,7 +38,7 @@ export const EditProfileButton: Component = () => {
     return (
         <div>
             <form onSubmit={editRedirect}>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Edit Profile</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">{t('buttons.editProfile')}</button>
             </form>
         </div>
     )
