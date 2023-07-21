@@ -1,4 +1,4 @@
-import { Component, Suspense, createEffect, createResource, createSignal } from 'solid-js'
+import type { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -88,27 +88,8 @@ interface Props {
   }
 
 export const CategoryCarousel: Component<Props> = (props) => {
-    const [category, setCategory] = createSignal<string>('')
-    const [formData, setFormData] = createSignal<FormData>()
-
-
-    function submit(e: SubmitEvent) {
-        e.preventDefault()
-
-        if ((e.submitter as HTMLElement).getAttribute("data-value") === null) {
-            setCategory('')
-        } else {
-            setCategory((e.submitter as HTMLElement)!.getAttribute("data-value")!)
-        }
-
-        const formData = new FormData(e.target as HTMLFormElement)
-        formData.append("category_id", category())
-
-        setFormData(formData)
-    }
 
     return (
-        <form onSubmit={submit}>
             <div class="product-carousel border-green-500 border-8 bg-white">
                 <div class="bg-gray-400 flex content-center">
                     <button>
@@ -132,7 +113,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         ))
                         }
                     </ul>
-                    <button type="submit">
+                    <button>
                         <img
                             src={rightArrow}
                             alt="Right Arrow"
@@ -140,6 +121,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
                     </button>
                 </div>
             </div>
-        </form>
+
     )
 }
