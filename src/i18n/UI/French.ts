@@ -2,34 +2,71 @@ export const French = {
   textDirection: 'ltr',
 
   pageTitles: {
-    services: 'Services',
-    signup: 'Sign Up',
-    login: 'Login',
-    home: 'Home',
-    signin: 'Sign In',
+    services: 'prestations de service',
+    signUp: "S'inscrire",
+    login: 'Connexion',
+    home: 'Maison',
+    signIn: "S'identifier",
+    editClientAccount: 'Modifier le compte client',
+    viewClientAccount: "Voir le compte client",
+    createPost: "Créer un article",
+    createProviderAccount: "Créer un compte fournisseur",
+    editProviderAccount: "Modifier le compte du fournisseur",
+    viewProviderAccount: "Afficher le compte du fournisseur",
+    page404: "404 - Page non trouvée",
+    requestPasswordReset: "Demander la réinitialisation du mot de passe",
+    resetPassword: "réinitialiser le mot de passe",
   },
 
   buttons: {
-    providerProfile: 'My Provider Profile',
+    providerProfile: "Mon profil fournisseur",
+    editProfile: "Editer le profil",
+    register: "Enregistrer",
+    uploadImage: "Télécharger l'image",
+    uploading: "Téléchargement ...",
+    loading: "Chargement ...",
+    login: 'Connexion',
+    signUp: "s'inscrire",
+    signIn: "s'identifier",
+    signOut: "se déconnecter",
+    returnHome: "Cliquez pour retourner à la maison",
   },
 
   messages: {
-    
+    noAccount: "Vous n'avez pas de compte ? Cliquez ici pour",
+    passwordLength: "Le mot de passe doit contenir au moins 6 caractères",
+    passwordMatch: "Les mots de passe ne correspondent pas",
+    alreadyAccount: "Vous avez déjà un compte ? Cliquez ici pour",
+    error404: "Une erreur est survenue",
   },
 
   formLabels: {
-    
+    title: "Titre",
+    serviceCategory: "Catégorie de services",
+    postContent: "Publier un contenu",
+    country: "Pays",
+    majorMunicipality: "Municipalité principale",
+    minorMunicipality: "Municipalité mineure",
+    governingDistrict: "District de gouvernement",
+    search: "Recherche",
+    firstName: "Prénom",
+    lastName: "Nom de famille",
+    providerName: "Nom du fournisseur",
+    phone: "Numéro de téléphone",
+    email: "E-mail",
+    password: "Mot de passe",
+    confirmPassword: "Confirmez le mot de passe",
   },
 
   headerData: {
     links: [
       {
-        text: 'Home',
-        href: '/',
+        text: "Maison",
+        href: "/fr",
       },
       {
-        text: 'Services',
-        href: '/services',
+        text: "Prestations de service",
+        href: "fr/services",
       },
     ],
     actions: [
@@ -40,50 +77,50 @@ export const French = {
   footerData: {
     links: [
       {
-        title: 'Product',
+        title: "Produit",
         links: [
-          // { text: 'Features', href: '#' },
-          // { text: 'Security', href: '#' },
-          // { text: 'Team', href: '#' },
-          // { text: 'Enterprise', href: '#' },
-          // { text: 'Customer stories', href: '#' },
-          // { text: 'Pricing', href: '#' },
-          // { text: 'Resources', href: '#' },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
       {
-        title: 'Platform',
+        title: "Plateforme",
         links: [
-          // { text: 'Developer API', href: '#' },
-          // { text: 'Partners', href: '#' },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
       {
-        title: 'Support',
+        title: "Soutien",
         links: [
-          // { text: 'Docs', href: '#' },
-          // { text: 'Community Forum', href: '#' },
-          // { text: 'Professional Services', href: '#' },
-          // { text: 'Skills', href: '#' },
-          // { text: 'Status', href: '#' },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
       {
-        title: 'Company',
+        title: "Entreprise",
         links: [
-          // { text: 'About', href: '#' },
-          // { text: 'Blog', href: '#' },
-          // { text: 'Careers', href: '#' },
-          // { text: 'Press', href: '#' },
-          // { text: 'Inclusion', href: '#' },
-          // { text: 'Social Impact', href: '#' },
-          // { text: 'Shop', href: '#' },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
     ],
     secondaryLinks: [
-      { text: 'Terms', href: '/terms' },
-      { text: 'Privacy Policy', href: '/privacy' },
+      { text: "Conditions ", href: 'fr/terms' },
+      { text: "politique de confidentialité", href: 'fr/privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
@@ -93,26 +130,26 @@ export const French = {
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],
     footNote: `
-      <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
-    `,
+    <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
+    Faite par <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> Tous les droits sont réservés.
+  `,
   },
 
-productCategoryData:{
+productCategoryInfo:{
     categories: [
-      { name: 'Gardening', description: 'Get help with your garden and landscaping.', ariaLabel: "Gardening", id: "1" },
-      { name: 'Construction', description: 'New Construction, Additions, or Repair Services', ariaLabel: "Construction", id: "3" },
-      { name: 'Beauty', description: 'Salons, Barbers, and other personal care.', ariaLabel: "Beauty", id: "2" },
-      { name: 'Automotive', description: 'Automotive Services', ariaLabel: "Automotive", id: "5" },
-      { name: 'Computer', description: 'Computer Repair and Services', ariaLabel: "Computer", id: "4" },
-      { name: 'Creative', description: 'Creative Services', ariaLabel: "Creative", id: "6" },
-      { name: 'Financial', description: 'Financial Services', ariaLabel: "Financial", id: "7" },
-      { name: 'Cleaning', description: 'Cleaning Services', ariaLabel: "Cleaning", id: "8" },
-      { name: 'Pets', description: 'Pet Services', ariaLabel: "Pets", id: "9" },
-      { name: 'Legal', description: 'Legal Services', ariaLabel: "Legal", id: "10" },
-      { name: 'Health', description: 'Health Services', ariaLabel: "Health", id: "11" },
-      { name: 'Labor', description: 'Labor Services', ariaLabel: "Labor", id: "12" },
-      { name: 'Travel', description: 'Travel Services', ariaLabel: "Travel", id: "13" },
+      { name: "Jardinage", description: '', ariaLabel: "Jardinage", id: "1" },
+      { name: "Construction", description: '', ariaLabel: "Construction", id: "3" },
+      { name: "Beauté", description: '', ariaLabel: "Beauté", id: "2" },
+      { name: "Automobile", description: '', ariaLabel: "Automobile", id: "5" },
+      { name: "Ordinateur", description: '', ariaLabel: "Ordinateur", id: "4" },
+      { name: "Créative", description: '', ariaLabel: "Créative", id: "6" },
+      { name: "Financière", description: '', ariaLabel: "Financière", id: "7" },
+      { name: "Nettoyage", description: '', ariaLabel: "Nettoyage", id: "8" },
+      { name: "Animaux domestiques", description: '', ariaLabel: "Animaux domestiques", id: "9" },
+      { name: "Juridique", description: '', ariaLabel: "Juridique", id: "10" },
+      { name: "Santé", description: '', ariaLabel: "Santé", id: "11" },
+      { name: "Travail", description: '', ariaLabel: "Travail", id: "12" },
+      { name: "Voyage", description: '', ariaLabel: "Voyage", id: "13" },
       // Add more products as needed
     ]
   }

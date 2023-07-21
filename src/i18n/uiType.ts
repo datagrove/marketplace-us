@@ -36,6 +36,7 @@ export interface uiObject {
     noAccount: string,
     passwordLength: string,
     passwordMatch: string,
+    alreadyAccount: string,
     error404: string,
   },
 
