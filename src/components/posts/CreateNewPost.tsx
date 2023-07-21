@@ -151,7 +151,7 @@ export const CreateNewPost: Component = () => {
 
         } else {
             alert("Please sign in to create a provider profile.")
-            location.href="/login"
+            location.href=`${lang}/login`
         }
     })
 
