@@ -2,6 +2,7 @@ import { Component, createComputed, createEffect, createMemo, createSignal } fro
 import { supabase } from '../../lib/supabaseClient'
 import { CategoryCarousel } from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
+import { LocationFilter } from './LocationFilter';
 
 interface ProviderPost {
     content: string;
@@ -78,9 +79,14 @@ export const ServicesView: Component = () => {
 
     return (
         <div class='border-8 border-click'>
+            <div>
             <CategoryCarousel
                 filterPosts={filterPosts}
             />
+            </div>
+            <div>
+            <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
+            </div>
             <ViewCard posts={currentPosts()} />
         </div>
     )

@@ -1,4 +1,4 @@
-import { Component, Suspense, createEffect, createResource, createSignal } from 'solid-js'
+import type { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -8,7 +8,7 @@ import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject
 
-let major_municipalities = [];
+let major_municipalities: Array<string> = [];
 
 const { data: major_municipality, error: major_municipality_error } = await supabase.from('major_municipality').select('major_municipality');
 
@@ -22,50 +22,33 @@ if (major_municipality_error) {
 
 interface Props {
     // Define the type for the filterPosts prop
-    filterPostsByLocation: (location: string) => void;
+    filterPostsByMajorMunicipality: (location: string) => void;
+    filterPostsByMinorMunicipality: (location: string) => void;
+    filterPostsByGoverningDistrict: (location: string) => void;
   }
 
-export const CategoryCarousel: Component<Props> = (props) => {
-    const [category, setCategory] = createSignal<string>('')
-    const [formData, setFormData] = createSignal<FormData>()
-
-
-    function submit(e: SubmitEvent) {
-        e.preventDefault()
-
-        if ((e.submitter as HTMLElement).getAttribute("data-value") === null) {
-            setCategory('')
-        } else {
-            setCategory((e.submitter as HTMLElement)!.getAttribute("data-value")!)
-        }
-
-        const formData = new FormData(e.target as HTMLFormElement)
-        formData.append("category_id", category())
-
-        setFormData(formData)
-    }
+export const LocationFilter: Component<Props> = (props) => {
 
     return (
-        <form onSubmit={submit}>
-            <div class="product-carousel border-green-500 border-8 bg-white">
+            <div class=" border-green-500 border-8 bg-white">
                 <div class="bg-gray-400 flex content-center">
                     <ul class="flex content-center border-yellow-500 m-4">
-                        {allCategoryInfo?.map((item) => (
-                            <button 
-                            class='bg-purple-700' 
-                            onClick={() => {
-                                props.filterPosts(item.category)
-                            }}
-                            >
-                                <img src={item.icon} alt={item.ariaLabel} title={item.description} />
-                                <p class="text-black">{item.name}</p>
+                        {major_municipalities?.map((item) => (
+                            <div>
+                                <input type="checkbox" 
 
-                            </button>
+                            onClick={() => {
+                                props.filterPostsByMinorMunicipality(item)
+                            }}
+                            />
+                                <p class="text-black">{item}</p>
+
+                            </div>
                         ))
                         }
                     </ul>
                 </div>
             </div>
-        </form>
+
     )
 }
