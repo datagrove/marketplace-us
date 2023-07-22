@@ -46,125 +46,120 @@ export const ServicesView: Component = () => {
 
         console.log("Category Filters: ")
         console.log(filters())
-
-        // if (!data) {
-        //     alert("No posts available.")
-        // } else {
-        //     //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
-        //     setPosts(data)
-        // }
     }
 
-    createMemo(() => {
-        console.log("Memo Triggered")
 
-        const filteredPosts = () => {
-            //Allows for a button for "clear filters" or "Show all posts" or something similar
-            if (filters().length === 0) {
-                return posts()
-            } else {
-                let filterPosts = filters().map((currentCategory) => {
-                    let tempPosts = posts().filter((post: any) => {
-                        return post.category === currentCategory
-                    })
-                    return tempPosts;
+    const filteredPosts = createComputed(() => {
+        console.log("Filtered Posts Memo")
+        if (filters().length === 0) {
+            return posts()
+        } else {
+            let filterPosts = filters().map((currentCategory) => {
+                let tempPosts = posts().filter((post: any) => {
+                    return post.category === currentCategory
                 })
-                return filterPosts.flat()
-            }
+                return tempPosts;
+            })
+            console.log("Filtered Posts: ")
+            console.log(filterPosts.flat())
+            setPosts(filterPosts.flat())
         }
-        console.log("Filtered Posts: ")
-        console.log(filteredPosts())
-        // setPosts(filteredPosts())
+    })
 
-        const filterByLocation = () => {
-            let filtered: ProviderPost[] = []
+    // console.log("Filtered Posts: ")
+    // console.log(filteredPosts())
+    // setPosts(filteredPosts())
 
-            if (locationFilters().length === 0 && minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-                return posts()
-            } else if (locationFilters().length !== 0) {
-                let majorMuniFilter = locationFilters().map((currentLocation) => {
-                    let tempPosts = filteredPosts().filter((post: any) => {
-                        return post.major_municipality === currentLocation
+    const filterByLocation = createComputed(() => {
+        console.log("Filter By Location Computed")
+        let filtered: ProviderPost[] = []
+
+        if (locationFilters().length === 0 && minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
+            return posts()
+        } else if (locationFilters().length !== 0) {
+            let majorMuniFilter = locationFilters().map((currentLocation) => {
+                let tempPosts = posts().filter((post: any) => {
+                    return post.major_municipality === currentLocation
+                })
+                return tempPosts
+            })
+            let filter2 = majorMuniFilter.flat()
+            if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
+                filtered = filter2
+                setPosts(filtered)
+            } else if (minorLocationFilters().length !== 0) {
+                let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
+                    let tempPosts = filter2.filter((post: any) => {
+                        return post.minor_municipality === currentLocation
                     })
                     return tempPosts
                 })
-                let filter2 = majorMuniFilter.flat()
-                if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-                    filtered = filter2
-                    return filtered
-                } else if (minorLocationFilters().length !== 0) {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filter2.filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter3 = minorMuniFilter.flat()
-                    if (governingLocationFilters().length === 0) {
-                        filtered = filter3
-                        return filtered
-                    } else {
-                        let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                            let tempPosts = filter3.filter((post: any) => {
-                                return post.governing_district === currentLocation
-                            })
-                            return tempPosts
-                        })
-                        let filter4 = governingMuniFilter.flat()
-                        filtered = filter4
-                        return filtered
-                    }
-                }
-                return filtered
-            } else if (minorLocationFilters().length !== 0) {
+                let filter3 = minorMuniFilter.flat()
                 if (governingLocationFilters().length === 0) {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filteredPosts().filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter5 = minorMuniFilter.flat()
-                    filtered = filter5
-                    return filtered
+                    filtered = filter3
+                    setPosts(filtered)
                 } else {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filteredPosts().filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter6 = minorMuniFilter.flat()
                     let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                        let tempPosts = filter6.filter((post: any) => {
+                        let tempPosts = filter3.filter((post: any) => {
                             return post.governing_district === currentLocation
                         })
                         return tempPosts
                     })
-                    let filter7 = governingMuniFilter.flat()
-                    filtered = filter7
-                    return filtered
+                    let filter4 = governingMuniFilter.flat()
+                    filtered = filter4
+                    setPosts(filtered)
                 }
-                // return filtered
-            } else if (governingLocationFilters().length !== 0) {
+            }
+            setPosts(filtered)
+        } else if (minorLocationFilters().length !== 0) {
+            if (governingLocationFilters().length === 0) {
+                let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
+                    let tempPosts = posts().filter((post: any) => {
+                        return post.minor_municipality === currentLocation
+                    })
+                    return tempPosts
+                })
+                let filter5 = minorMuniFilter.flat()
+                filtered = filter5
+                setPosts(filtered)
+            } else {
+                let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
+                    let tempPosts = posts().filter((post: any) => {
+                        return post.minor_municipality === currentLocation
+                    })
+                    return tempPosts
+                })
+                let filter6 = minorMuniFilter.flat()
                 let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                    let tempPosts = filteredPosts().filter((post: any) => {
+                    let tempPosts = filter6.filter((post: any) => {
                         return post.governing_district === currentLocation
                     })
                     return tempPosts
                 })
-                let filter8 = governingMuniFilter.flat()
-                filtered = filter8
-                return filtered
+                let filter7 = governingMuniFilter.flat()
+                filtered = filter7
+                setPosts(filtered)
             }
+            // return filtered
+        } else if (governingLocationFilters().length !== 0) {
+            let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
+                let tempPosts = posts().filter((post: any) => {
+                    return post.governing_district === currentLocation
+                })
+                return tempPosts
+            })
+            let filter8 = governingMuniFilter.flat()
+            filtered = filter8
+            setPosts(filtered)
         }
-        setPosts(filterByLocation()!)
-
-        console.log("Filter by Location: ")
-        console.log(filterByLocation())
-        console.log("Posts: ")
-        console.log(posts())
     })
+    // setPosts(filterByLocation()!)
+
+    // console.log("Filter by Location: ")
+    // console.log(filterByLocation())
+    // console.log("Posts: ")
+    // console.log(posts())
+
 
 
     const filterPostsByMajorMunicipality = (location: string) => {
@@ -177,24 +172,6 @@ export const ServicesView: Component = () => {
 
         console.log("Location Filters: ")
         console.log(locationFilters())
-
-        // const filteredPosts = () => {
-        //     //Allows for a button for "clear filters" and if unchecked removes the filter
-        //     if (locationFilters().length === 0) {
-        //         return posts()
-        //     } else {
-        //         let filterPosts = locationFilters().map((currentLocation) => {
-        //             let tempPosts = posts().filter((post: any) => {
-        //                 return post.major_municipality === currentLocation
-        //             })
-        //             return tempPosts;
-        //         })
-        //         return filterPosts.flat() //need some way of combining the filters
-        //     }
-        // }
-        // console.log("Filtered Posts: ")
-        // console.log(filteredPosts())
-        // setPosts(filteredPosts())
     }
 
     const filterPostsByMinorMunicipality = (location: string) => {
@@ -207,22 +184,6 @@ export const ServicesView: Component = () => {
 
         console.log("Minor Location Filters: ")
         console.log(minorLocationFilters())
-
-        // const filteredPosts = () => {
-        //     //Allows for a button for "clear filters" and if unchecked removes the filter
-        //     if (locationFilters().length === 0) {
-        //         return posts()
-        //     } else {
-        //         let filterPosts = minorLocationFilters().map((currentLocation) => {
-        //             let tempPosts = posts().filter((post: any) => {
-        //                 return post.minor_municipality === currentLocation
-        //             })
-        //             return tempPosts;
-        //         })
-        //         return filterPosts.flat() //need some way of combining the filters
-        //     }
-        // }
-        // setPosts(filteredPosts())
     }
 
     const filterPostsByGoverningDistrict = (location: string) => {
@@ -235,46 +196,11 @@ export const ServicesView: Component = () => {
 
         console.log("Governing Location Filters: ")
         console.log(governingLocationFilters())
-
-        // const filteredPosts = () => {
-        //     //Allows for a button for "clear filters" and if unchecked removes the filter
-        //     if (governingLocationFilters().length === 0) {
-        //         return posts()
-        //     } else {
-        //         let filterPosts = governingLocationFilters().map((currentLocation) => {
-        //             let tempPosts = posts().filter((post: any) => {
-        //                 return post.governing_district === currentLocation
-        //             })
-        //             return tempPosts;
-        //         })
-        //         return filterPosts.flat() //need some way of combining the filters
-        //     }
-        // }
-        // setPosts(filteredPosts())
     }
 
     createEffect(() => {
         setCurrentPosts(posts());
     },)
-
-    // createEffect(() => {
-    //     console.log("Effect Triggered")
-    //         if (!data) {
-    //             alert("No posts available.")
-    //         } else {
-    //             setPosts(data);
-    //             console.log("Posts: ")
-    //             console.log(posts())
-    //             console.log("Filtered Posts: ")
-    //             setPosts(filterByLocation()!);
-    //             console.log(posts())
-    //         }
-    // }, [filters(), locationFilters(), minorLocationFilters(), governingLocationFilters()])
-
-    // createComputed(() => {
-    //     const currentPostValue = currentPosts();
-    // })
-
 
     return (
         <div class='border-8 border-click'>
