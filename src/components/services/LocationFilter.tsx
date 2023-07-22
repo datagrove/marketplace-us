@@ -9,6 +9,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject
 
 let major_municipalities: Array<string> = [];
+let minor_municipalities: Array<string> = [];
 
 const { data: major_municipality, error: major_municipality_error } = await supabase.from('major_municipality').select('major_municipality');
 
@@ -17,6 +18,16 @@ if (major_municipality_error) {
 } else {
     major_municipality.forEach(location => {
         major_municipalities.push(location.major_municipality)
+    })
+}
+
+const { data: minor_municipality, error: minor_municipality_error } = await supabase.from('minor_municipality').select('minor_municipality');
+
+if (minor_municipality_error) {
+    console.log("supabase error: " + minor_municipality_error.message)
+} else {
+    minor_municipality.forEach(location => {
+        minor_municipalities.push(location.minor_municipality)
     })
 }
 
@@ -34,6 +45,23 @@ export const LocationFilter: Component<Props> = (props) => {
                 <div class="bg-gray-400 flex content-center">
                     <ul class="flex content-center border-yellow-500 m-4">
                         {major_municipalities?.map((item) => (
+                            <div>
+                                <input type="checkbox" 
+
+                            onClick={() => {
+                                props.filterPostsByMajorMunicipality(item)
+                            }}
+                            />
+                                <p class="text-black">{item}</p>
+
+                            </div>
+                        ))
+                        }
+                    </ul>
+                </div>
+                <div class="bg-gray-400 flex content-center">
+                    <ul class="flex content-center border-yellow-500 m-4">
+                        {minor_municipalities?.map((item) => (
                             <div>
                                 <input type="checkbox" 
 
