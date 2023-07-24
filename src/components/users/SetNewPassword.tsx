@@ -26,7 +26,7 @@ export const SetNewPassword: Component = () => {
     }
 
     return (
-        <div class="row flex-center flex">
+      <div class="row flex-center flex">
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleResetPassword}>
             <div>

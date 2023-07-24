@@ -14,26 +14,58 @@ export const Spanish = {
     editProviderAccount: 'Editar Cuenta de Proveedor',
     viewProviderAccount: 'Vista Propia del Perfil del Proveedor',
     page404: '404 - Página no Encontrada',
-    requestPasswordReset: 'Request Password Reset',
-    resetPassword: 'Reset Password',
+    requestPasswordReset: 'Petición para la Recuperación de Contraseña',
+    resetPassword: 'Restablecer la Contraseña',
   },
 
-  buttons: {},
+  buttons: {
+    providerProfile: 'Mi Perfil de Proveedor',
+    editProfile: 'Editar perfil',
+    register: 'Registro',
+    uploadImage: 'Cargar Imagen',
+    uploading: 'Cargando ...',
+    loading: 'Cargando...',
+    login: 'Acceso',
+    signUp: 'inscribirse',
+    signIn: 'iniciar sesión',
+    signOut: 'Desconectar',
+    returnHome: 'Haga clic para volver a casa',
+  },
 
   messages: {
-
+    noAccount: "¿No tienes una cuenta? Click aquí para",
+    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
+    passwordMatch: 'Las contraseñas no coinciden',
+    alreadyAccount: '¿Ya tienes una cuenta? Click aquí para',
+    error404: 'Algo salió mal'
   },
 
-  formLabels: {},
+  formLabels: {
+    title: 'Título',
+    serviceCategory: 'Categoría de servicio',
+    postContent: 'Publicar Contenido',
+    country: 'País',
+    majorMunicipality: 'Provincia',
+    minorMunicipality: 'Canton',
+    governingDistrict: 'Districto',
+    search: 'Buscar',
+    firstName: 'Nombre de pila',
+    lastName: 'Apellido',
+    providerName: "Nombre del proveedor",
+    phone: 'Número de teléfono',
+    email: 'Correo electrónico',
+    password: 'Contraseña',
+    confirmPassword: 'confirmar Contraseña',
+  },
 
   headerData: {
     links: [
       {
-        text: 'Home',
+        text: 'Inicio',
         href: '/es',
       },
       {
-        text: 'Services',
+        text: 'Servicios',
         href: 'es/services',
       },
     ],
@@ -45,50 +77,50 @@ export const Spanish = {
   footerData: {
     links: [
       {
-        title: 'Product',
+        title: 'Producto',
         links: [
-          { text: 'Features', href: '#' },
-          { text: 'Security', href: '#' },
-          { text: 'Team', href: '#' },
-          { text: 'Enterprise', href: '#' },
-          { text: 'Customer stories', href: '#' },
-          { text: 'Pricing', href: '#' },
-          { text: 'Resources', href: '#' },
+          // { text: 'Features', href: '#' },
+          // { text: 'Security', href: '#' },
+          // { text: 'Team', href: '#' },
+          // { text: 'Enterprise', href: '#' },
+          // { text: 'Customer stories', href: '#' },
+          // { text: 'Pricing', href: '#' },
+          // { text: 'Resources', href: '#' },
         ],
       },
       {
-        title: 'Platform',
+        title: 'Plataforma',
         links: [
-          { text: 'Developer API', href: '#' },
-          { text: 'Partners', href: '#' },
+          // { text: 'Developer API', href: '#' },
+          // { text: 'Partners', href: '#' },
         ],
       },
       {
-        title: 'Support',
+        title: 'Apoyo',
         links: [
-          { text: 'Docs', href: '#' },
-          { text: 'Community Forum', href: '#' },
-          { text: 'Professional Services', href: '#' },
-          { text: 'Skills', href: '#' },
-          { text: 'Status', href: '#' },
+          // { text: 'Docs', href: '#' },
+          // { text: 'Community Forum', href: '#' },
+          // { text: 'Professional Services', href: '#' },
+          // { text: 'Skills', href: '#' },
+          // { text: 'Status', href: '#' },
         ],
       },
       {
-        title: 'Company',
+        title: 'Compañía',
         links: [
-          { text: 'About', href: '#' },
-          { text: 'Blog', href: '#' },
-          { text: 'Careers', href: '#' },
-          { text: 'Press', href: '#' },
-          { text: 'Inclusion', href: '#' },
-          { text: 'Social Impact', href: '#' },
-          { text: 'Shop', href: '#' },
+          { text: 'Acerca', href: '#' },
+          // { text: 'Blog', href: '#' },
+          // { text: 'Careers', href: '#' },
+          // { text: 'Press', href: '#' },
+          // { text: 'Inclusion', href: '#' },
+          // { text: 'Social Impact', href: '#' },
+          // { text: 'Shop', href: '#' },
         ],
       },
     ],
     secondaryLinks: [
       { text: 'Términos', href: 'es/terms' },
-      { text: 'Privacy Policy', href: 'es/privacy' },
+      { text: 'política de privacidad', href: 'es/privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
@@ -97,28 +129,26 @@ export const Spanish = {
       { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],
+    footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
+      Hecho por <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> Todos los derechos reservados.`,
   },
 
   productCategoryInfo: {
     categories: [
-      { name: 'Jardinería', description: 'Get help with your garden and landscaping.', ariaLabel: "Gardening", id: "1" },
-      { name: 'Construction', description: 'New Construction, Additions, or Repair Services', ariaLabel: "Construction", id: "3" },
-      { name: 'Beauty', description: 'Salons, Barbers, and other personal care.', ariaLabel: "Beauty", id: "2" },
-      { name: 'Automotive', description: 'Automotive Services', ariaLabel: "Automotive", id: "5" },
-      { name: 'Computer', description: 'Computer Repair and Services', ariaLabel: "Computer", id: "4" },
-      { name: 'Creative', description: 'Creative Services', ariaLabel: "Creative", id: "6" },
-      { name: 'Financial', description: 'Financial Services', ariaLabel: "Financial", id: "7" },
-      { name: 'Cleaning', description: 'Cleaning Services', ariaLabel: "Cleaning", id: "8" },
-      { name: 'Pets', description: 'Pet Services', ariaLabel: "Pets", id: "9" },
-      { name: 'Legal', description: 'Legal Services', ariaLabel: "Legal", id: "10" },
-      { name: 'Health', description: 'Health Services', ariaLabel: "Health", id: "11" },
-      { name: 'Labor', description: 'Labor Services', ariaLabel: "Labor", id: "12" },
-      { name: 'Travel', description: 'Travel Services', ariaLabel: "Travel", id: "13" },
+      { name: 'Jardinería', description: 'Obtenga ayuda con su jardín y paisajismo.', ariaLabel: "Jardinería", id: "1" },
+      { name: 'Construcción', description: 'Nueva construcción, adiciones o servicios de reparación', ariaLabel: "Construcción", id: "3" },
+      { name: 'Belleza', description: 'Salones, Barberos, y otros cuidados personales.', ariaLabel: "Belleza", id: "2" },
+      { name: 'Automotor', description: 'Servicios Automotrices', ariaLabel: "Automotor", id: "5" },
+      { name: 'Computadora', description: 'Reparación y servicios de computadoras', ariaLabel: "Computadora", id: "4" },
+      { name: 'Creativa', description: 'Servicios creativos', ariaLabel: "Creativa", id: "6" },
+      { name: 'Financiera', description: 'Servicios financieros', ariaLabel: "Financiera", id: "7" },
+      { name: 'Limpieza', description: 'Servicios de Limpieza', ariaLabel: "Limpieza", id: "8" },
+      { name: 'Mascotas', description: 'Servicios para mascotas', ariaLabel: "Mascotas", id: "9" },
+      { name: 'Legal', description: 'Servicios Legales', ariaLabel: "Servicios Legales", id: "10" },
+      { name: 'Salud', description: 'Servicios de salud', ariaLabel: "Salud", id: "11" },
+      { name: 'Mano de obra', description: 'Servicios Laborales', ariaLabel: "Mano de obra", id: "12" },
+      { name: 'Viajar', description: 'Servicios de viaje', ariaLabel: "Viajar", id: "13" },
       // Add more products as needed
     ],
-    footNote: `
-      <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
-      `,
   }
 } as const;

@@ -3,6 +3,9 @@ import { SITE } from "../../config";
 import { AuthMode } from "./AuthMode";
 import  { LanguagePicker } from "./LanguagePicker";
 import { ProviderProfileButton } from "./ProviderProfileButton";
+import { getLangFromUrl} from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
 
 //Define types for items from config
 interface Link {
@@ -25,13 +28,13 @@ const { links = [] } = Astro.props;
   <!-- <a id="logo">{pageTitle}</a>               -->
 
   <div id="container">
-    <div class="navLines" id="navLines">
+    <div class="navLines flex" id="navLines">
       <div class="all-logo">
-        <a id="logo" href="/"
-          ><img class="logo-image" src="../blackLogo.png" /></a
+        <a id="logo" href=`/${lang}`
+          ><img class="logo-image w-32" src="../blackLogo.png" /></a
         >
       </div>
-      <h1 class="logo">{SITE.title}</h1>
+      <h1 class="logo text-5xl">{SITE.title}</h1>
     </div>
     <nav class="flex content-center w-1/4">
       <ul class="flex content-center">
