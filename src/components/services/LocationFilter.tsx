@@ -12,6 +12,7 @@ const values = ui[lang] as uiObject
 
 let major_municipalities: Array<{ major_municipality: string, id: number }> = [];
 let minor_municipalities: Array<{ minor_municipality: string, id: number, major_municipality: number }> = [];
+let governing_districts: Array<{ governing_district: string, id: number, minor_municipality: number }> = [];
 
 const { data: major_municipality, error: major_municipality_error } = await supabase.from('major_municipality').select('major_municipality, id');
 
@@ -33,6 +34,16 @@ if (minor_municipality_error) {
     })
 }
 
+const { data: governing_district, error: governingDistrictError } = await supabase.from('governing_district').select('governing_district, id, minor_municipality');
+
+if (governingDistrictError) {
+    console.log("supabase error: " + governingDistrictError.message)
+} else {
+    governing_district.forEach(location => {
+        governing_districts.push({ governing_district: location.governing_district, id: location.id, minor_municipality: location.minor_municipality })
+    })
+}
+
 interface Props {
     // Define the type for the filterPosts prop
     filterPostsByMajorMunicipality: (location: string) => void;
@@ -43,9 +54,13 @@ interface Props {
 export const LocationFilter: Component<Props> = (props) => {
     const [majorMunicipalities, setMajorMunicipalities] = createSignal<Array<{ major_municipality: string, id: number }>>(major_municipalities)
     const [minorMunicipalities, setMinorMunicipalities] = createSignal<Array<{ minor_municipality: string, id: number, major_municipality: number }>>(minor_municipalities)
+    const [governingDistricts, setGoverningDistricts] = createSignal<Array<{ governing_district: string, id: number, minor_municipality: number }>>(governing_districts)
     const [locationFilters, setLocationFilters] = createSignal<Array<{ major_municipality: string, id: number }>>([])
     const [minorLocationFilters, setMinorLocationFilters] = createSignal<Array<{ minor_municipality: string, id: number, major_municipality: number }>>([])
-    const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<string>>([])
+    const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<{ governing_district: string, id: number, minor_municipality: number }>>([])
+
+    let filteredMinorMunis: Array<{ minor_municipality: string, id: number, major_municipality: number }> = [];
+    let filteredGoverningDistricts: Array<{ governing_district: string, id: number, minor_municipality: number }> = [];
 
     const testFunction = (item: { major_municipality: string, id: number }) => {
         if (locationFilters().includes(item)) {
@@ -56,11 +71,19 @@ export const LocationFilter: Component<Props> = (props) => {
         }
         props.filterPostsByGoverningDistrict(item.major_municipality)
     }
+
     createEffect(() => {
+        filteredMinorMunis = [];
+
         locationFilters().forEach((item) => {
             let currentMinorMunis = minor_municipalities.filter((el) => el.major_municipality === item.id)
-            setMinorMunicipalities(currentMinorMunis)
+            filteredMinorMunis = [...filteredMinorMunis, ...currentMinorMunis]
         })
+
+        if(locationFilters().length === 0) {
+            filteredMinorMunis = minor_municipalities
+        }
+        setMinorMunicipalities(filteredMinorMunis)
     })
 
     const test2Function = (item: { minor_municipality: string, id: number, major_municipality: number }) => {
@@ -71,6 +94,30 @@ export const LocationFilter: Component<Props> = (props) => {
             setMinorLocationFilters([...minorLocationFilters(), item])
         }
         props.filterPostsByMinorMunicipality(item.minor_municipality)
+    }
+
+    createEffect(() => {
+        filteredGoverningDistricts = [];
+
+        minorLocationFilters().forEach((item) => {
+            let currentGoverningDistricts = governing_districts.filter((el) => el.minor_municipality === item.id)
+            filteredGoverningDistricts = [...filteredGoverningDistricts, ...currentGoverningDistricts]
+        })
+
+        if(minorLocationFilters().length === 0) {
+            filteredGoverningDistricts = governing_districts
+        }
+        setGoverningDistricts(filteredGoverningDistricts)
+    })
+    
+    const test3Function = (item: { governing_district: string, id: number, minor_municipality: number }) => {
+        if (governingLocationFilters().includes(item)) {
+            let currentGoverningLocationFilters = governingLocationFilters().filter((el) => el !== item)
+            setGoverningLocationFilters(currentGoverningLocationFilters)
+        } else {
+            setGoverningLocationFilters([...governingLocationFilters(), item])
+        }
+        props.filterPostsByMinorMunicipality(item.governing_district)
     }
 
     return (
@@ -89,25 +136,11 @@ export const LocationFilter: Component<Props> = (props) => {
 
                         </div>
                     }</For>
-
-                    {/* {major_municipalities?.map((item) => (
-                        <div>
-                            <input type="checkbox"
-
-                                onClick={() => {
-                                    testFunction(item)
-                                }}
-                            />
-                            <p class="text-black">{item.major_municipality}</p>
-
-                        </div>
-                    ))
-                    } */}
                 </ul>
             </div>
             <div class="bg-gray-400 flex content-center">
                 <ul class="flex content-center border-yellow-500 m-4">
-                <For each={minorMunicipalities()}>{(item) =>
+                    <For each={minorMunicipalities()}>{(item) =>
                         <div>
                             <input type="checkbox"
 
@@ -119,19 +152,22 @@ export const LocationFilter: Component<Props> = (props) => {
 
                         </div>
                     }</For>
-                    {/* {minor_municipalities?.map((item) => (
+                </ul>
+            </div>
+            <div class="bg-gray-400 flex content-center">
+                <ul class="flex content-center border-yellow-500 m-4">
+                    <For each={governingDistricts()}>{(item) =>
                         <div>
                             <input type="checkbox"
 
                                 onClick={() => {
-                                    test2Function(item)
+                                    test3Function(item)
                                 }}
                             />
-                            <p class="text-black">{item.minor_municipality}</p>
+                            <p class="text-black">{item.governing_district}</p>
 
                         </div>
-                    ))
-                    } */}
+                    }</For>
                 </ul>
             </div>
         </div>
