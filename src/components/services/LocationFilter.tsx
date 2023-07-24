@@ -1,3 +1,4 @@
+//Need to add a Country filter for future phases
 import type { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
