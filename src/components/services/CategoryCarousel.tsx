@@ -82,8 +82,6 @@ for (let i = 0; i < categoriesData.length; i++) {
     );
 }
 
-console.log(allCategoryInfo)
-
 interface Props {
     // Define the type for the filterPosts prop
     filterPosts: (currentCategory: string) => void;
@@ -92,7 +90,7 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
     const [category, setCategory] = createSignal<string>('')
     const [formData, setFormData] = createSignal<FormData>()
-    const { filterPosts } = props
+
 
     function submit(e: SubmitEvent) {
         e.preventDefault()
@@ -124,7 +122,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             <button 
                             class='bg-purple-700' 
                             onClick={() => {
-                                filterPosts(item.id)
+                                props.filterPosts(item.category)
                             }}
                             >
                                 <img src={item.icon} alt={item.ariaLabel} title={item.description} />

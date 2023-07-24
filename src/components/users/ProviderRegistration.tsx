@@ -142,7 +142,7 @@ export const ProviderRegistration: Component = () => {
         //If the user is not signed in then tell them to sign in and send them to the login page
         } else {
             alert("Please sign in to create a provider profile.")
-            location.href = "/login"
+            location.href = `${lang}/login`
         }
     })
 
