@@ -77,21 +77,24 @@ export const post: APIRoute = async ({ request, redirect }) => {
   }
 
   //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
-  const { data: profileExists, error: profileExistsError } = await supabase
-    .from("providers")
-    .select("user_id")
-    .eq("user_id", user.id);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0].user_id !== null) {
-    return new Response(
-      JSON.stringify({
-        message: "Provider Profile already exists",
-        redirect: "provider/profile",
-      }),
-      { status: 302 }
-    );
-  }
+
+  // This check should be unnecessary as the client can be a provider and a client too
+
+  // const { data: profileExists, error: profileExistsError } = await supabase
+  //   .from("providers")
+  //   .select("user_id")
+  //   .eq("user_id", user.id);
+  // if (profileExistsError) {
+  //   console.log("supabase error: " + profileExistsError.message);
+  // } else if (profileExists[0].user_id !== null) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: "Provider Profile already exists",
+  //       redirect: "provider/profile",
+  //     }),
+  //     { status: 302 }
+  //   );
+  // }
 
   //Don't know if we need this anymore
   const { data: countries, error: testCountryError } = await supabase
@@ -196,7 +199,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //Build our submission to the providers table including the location id from the select from the location table on line 158
   let submission = {
     display_name: displayName,
-    provider_phone: phone,
+    client_phone: phone,
     location: location[0].id,
     user_id: user.id,
   };
