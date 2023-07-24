@@ -1,4 +1,4 @@
-import { Component, createComputed, createEffect, createMemo, createSignal } from 'solid-js'
+import { Component, createEffect, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import { CategoryCarousel } from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
@@ -51,28 +51,6 @@ export const ServicesView: Component = () => {
         filterPosts()
     }
 
-
-    // const filteredPosts = createComputed(() => {
-    //     console.log("Filtered Posts Memo")
-    //     if (filters().length === 0) {
-    //         return posts()
-    //     } else {
-    //         let filterPosts = filters().map((currentCategory) => {
-    //             let tempPosts = posts().filter((post: any) => {
-    //                 return post.category === currentCategory
-    //             })
-    //             return tempPosts;
-    //         })
-    //         console.log("Filtered Posts: ")
-    //         console.log(filterPosts.flat())
-    //         setPosts(filterPosts.flat())
-    //     }
-    // })
-
-    // console.log("Filtered Posts: ")
-    // console.log(filteredPosts())
-    // setPosts(filteredPosts())
-
     const filterPosts = () => {
 
         if (!data) {
@@ -86,11 +64,6 @@ export const ServicesView: Component = () => {
 
         console.log("Posts: ")
         console.log(posts())
-
-        console.log(filters().length)
-        console.log(locationFilters().length)
-        console.log(minorLocationFilters().length)
-        console.log(governingLocationFilters().length)
 
         let filtered: ProviderPost[] = []
 
@@ -189,14 +162,6 @@ export const ServicesView: Component = () => {
                 }
             }
         }
-        // setPosts(filterByLocation()!)
-
-        // console.log("Filter by Location: ")
-        // console.log(filterByLocation())
-        // console.log("Posts: ")
-        // console.log(posts())
-
-
 
         const filterPostsByMajorMunicipality = (location: string) => {
             if (locationFilters().includes(location)) {

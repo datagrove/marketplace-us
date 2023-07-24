@@ -1,4 +1,4 @@
-//Need to add a Country filter for future phases
+//TODO: Need to add a Country filter for future phases
 import type { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
@@ -41,6 +41,11 @@ interface Props {
 
 export const LocationFilter: Component<Props> = (props) => {
 
+    const testFunction = (item: string) => {
+        console.log(item)
+        props.filterPostsByGoverningDistrict(item)
+    }
+
     return (
             <div class=" border-green-500 border-8 bg-white">
                 <div class="bg-gray-400 flex content-center">
@@ -50,7 +55,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                 <input type="checkbox" 
 
                             onClick={() => {
-                                props.filterPostsByMajorMunicipality(item)
+                                testFunction(item)
                             }}
                             />
                                 <p class="text-black">{item}</p>
