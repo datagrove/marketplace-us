@@ -24,24 +24,47 @@ export interface Props {
 const { links = [] } = Astro.props;
 ---
 
-<header id="container">
+<header id="container" class="py-4">
   <!-- <a id="logo">{pageTitle}</a>               -->
 
-  <div id="container">
-    <div class="navLines flex" id="navLines">
+  <div id="container" class="flex align-middle justify-between">
+    <div class="navLines flex items-center" id="navLines">
       <div class="all-logo">
-        <a id="logo" href=`/${lang}`
-          ><img class="logo-image w-32" src="../blackLogo.png" /></a
-        >
+
+        <a id="logo" href=`/${lang}`>
+          <?xml version='1.0' encoding='iso-8859-1'?>
+          <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+          <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+          <svg 
+            class="fill-logo dark:fill-logo-DM"
+            height="50px" 
+            width="50px" 
+            version="1.1" 
+            viewBox="0 0 460 460" 
+            enable-background="new 0 0 460 460"
+          >
+            <g>
+              <path d="m157.015,428.383c4.185,0 7.577-3.392 7.577-7.577v-176.505c30.38-1.581 65.837,1.515 77.272,20.268 22.734,37.285 36.991,155.934 37.132,157.128 0.452,3.813 3.685,6.686 7.524,6.686h41.041c2.826,0 5.418-1.574 6.722-4.082 1.359-2.613 31.256-61.15 58.404-194.928 2.983-2.356 6.002-4.798 9.029-7.323 11.264-9.399 20.075-19.304 28.914-27.196 0,0 29.37-29.469 29.37-57.286 0-50.934-53.248-101.154-118.7-101.154-16.56,0-32.337,2.909-46.669,8.152-16.669-4.195-56.057-12.722-101.541-12.945-34.947-0.158-66.228,4.668-92.883,14.384-33.808,12.323-60.247,32.516-78.581,60.019-18.47,27.704-25.157,62.04-19.876,102.054 4.137,31.334 15.614,66.242 34.115,103.752 31.27,63.4 71.295,111.794 72.984,113.823 1.439,1.73 3.573,2.73 5.824,2.73h42.342zm272.542-281.127c2.593,4.85 2.989,9.554 1.118,13.247-4.116,8.122-18.275,9.569-30.923,3.161-9.061-4.592-17.448-10.03-23.009-14.919-5.65-4.968-8.436-9.484-7.27-11.785 3.652-7.206 31.442-10.366 45.466-3.262 6.519,3.304 11.71,8.119 14.618,13.558zm-69.095-14.862c-3.603,7.109-0.369,15.163 9.611,23.938 8.765,7.707 20.483,13.998 25.113,16.344 6.904,3.498 14.011,5.181 20.544,5.181 5.09,0 9.823-1.032 13.846-3.013-12.628,17.723-50.207,25.814-87.517,25.814-37.308,0-74.887-8.091-87.515-25.813 4.022,1.98 8.755,3.012 13.846,3.012 6.532,0 13.642-1.683 20.544-5.181 4.631-2.346 16.348-8.637 25.113-16.344 9.98-8.775 13.214-16.828 9.611-23.938-6.718-13.258-38.654-16.219-56.6-8.811 0.855-0.764 1.747-1.519 2.686-2.264 15.883-12.588 40.889-19.241 72.315-19.241 32.375,0 56.863,6.466 72.783,19.217 1.078,0.863 2.093,1.744 3.058,2.636-17.77-7.853-50.613-5.002-57.438,8.463zm-105.9,14.862c2.908-5.44 8.099-10.255 14.619-13.559 5.508-2.791 13.14-3.998 20.599-3.998 11.531,0 22.649,2.885 24.867,7.26 1.166,2.301-1.62,6.816-7.27,11.785-5.561,4.889-13.948,10.327-23.009,14.919-12.646,6.409-26.808,4.961-30.923-3.161-1.872-3.691-1.475-8.396 1.117-13.246zm87.497,68.555c17.841,0 34.719-1.729 49.397-4.963-18.273,15.253-37.321,28.387-50.158,36.399-12.974-8.093-32.293-21.413-50.743-36.871 15.158,3.541 32.807,5.435 51.504,5.435zm102.785-78.42c-4.107-10.78-11.046-20.328-20.528-27.923-18.676-14.958-46.352-22.543-82.257-22.543-64.321,0-94.92,25.473-104.064,54.342-0.148-1.247-0.243-2.482-0.243-3.699 0-47.421 46.451-86.001 103.547-86.001 57.025,2.13163e-14 103.429,38.484 103.545,85.824zm-295.405,269.386l-16.94-159.047c4.905-0.807 10.665-1.597 16.94-2.246v161.293zm28.388-177.956c-28.452,0.121-54.042,5.069-55.094,5.28-3.841,0.769-6.463,4.337-6.048,8.232l18.203,170.897h-16.599c-8.86-11.107-42.592-54.822-68.953-108.344-27.538-55.912-52.513-134.34-15.102-190.457 29.933-44.901 82.749-67.659 157.006-67.659 0.475-7.10543e-15 0.956,0.001 1.431,0.002 31.368,0.123 60.179,4.485 79.835,8.406-30.188,18.358-49.907,46.899-49.907,82.389 0,16.816 14.902,42.272 24.922,52.291 9.554,9.554 19.933,20.985 33.362,32.191 27.908,23.288 55.355,39.882 56.509,40.577 1.203,0.724 2.555,1.085 3.908,1.085 1.353,0 2.705-0.362 3.908-1.085 0.76-0.457 12.915-7.807 29.093-19.418-21.838,101.364-44.787,155.443-51.509,170.021h-6.801l22.681-135.641c0.69-4.127-2.096-8.032-6.223-8.722-4.129-0.688-8.033,2.096-8.723,6.224l-23.098,138.14h-7.42c-3.423-26.346-16.98-121.413-38.405-156.55-11.276-18.489-37.524-27.859-76.976-27.859z"/>
+              <path d="m292.283,156.083c2.001,0 3.95-0.808 5.365-2.212 1.404-1.415 2.212-3.374 2.212-5.364 0-1.99-0.808-3.94-2.212-5.354-1.415-1.414-3.364-2.222-5.365-2.222-1.99,0-3.939,0.808-5.354,2.222-1.414,1.415-2.223,3.364-2.223,5.354 0,2 0.809,3.95 2.223,5.364 1.415,1.404 3.365,2.212 5.354,2.212z"/>
+              <path d="m391.83,140.93c-1.99,0-3.95,0.808-5.354,2.222-1.415,1.404-2.223,3.364-2.223,5.354 0,1.99 0.808,3.95 2.223,5.354 1.404,1.414 3.364,2.223 5.354,2.223 1.991,0 3.95-0.808 5.354-2.223 1.415-1.404 2.223-3.364 2.223-5.354 0-1.99-0.808-3.95-2.223-5.354-1.404-1.414-3.363-2.222-5.354-2.222z"/>
+              <path d="m321.595,156.72c0,3.71 2.498,6.925 6.573,9.134h-3.527c-2.79,0-5.051,2.262-5.051,5.051 0,2.789 2.261,5.051 5.051,5.051h34.84c2.79,0 5.051-2.262 5.051-5.051 0-2.789-2.261-5.051-5.051-5.051h-3.527c4.075-2.209 6.573-5.424 6.573-9.134 0-6.986-8.798-12.253-20.466-12.253-11.669,2.84217e-14-20.466,5.268-20.466,12.253z"/>
+            </g>
+          </svg>
+        </a>
       </div>
-      <h1 class="logo text-5xl">{SITE.title}</h1>
+
+      <div>
+        <h1 class="logo text-3xl md:text-5xl text-text1 dark:text-text1-DM pl-2">{SITE.title}</h1>
+      </div>
+      
     </div>
-    <nav class="flex content-center w-1/4">
+
+    <nav class="hidden md:flex md:items-center md:justify-center md:w-1/4">
       <ul class="flex content-center">
         {
           links.map(({ text, href }) => (
             <a
-              class="sm:text-xl md:text-2xl lg:text-4xl text-center hover:text-gray-900 dark:hover:text-white dark:text-gray-400 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              class="text-xl text-center text-link1 hover:underline hover:underline-offset-8 hover:decoration-btn1 dark:text-link1-DM dark:hover:link2-DM px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href={href}
             >
               {text}
@@ -51,10 +74,72 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <AuthMode client:only="solid-js" />
+    <div class="hidden md:flex md:items-center md:justify-between md:w-1/4">
+      <div class="">
+        <AuthMode client:only="solid-js"/>
+      </div>
+      
+      <div class="">
+        <ProviderProfileButton client:only="solid-js" />
+      </div>
 
-    <ProviderProfileButton client:only="solid-js" />
+      <div class="">
+        <LanguagePicker client:only="solid-js"/>
+      </div>
+    </div>
 
-    <LanguagePicker client:only="solid-js"/>
+    <div class="flex items-center relative md:hidden fill-logo dark:fill-logo-DM">
+      <svg 
+        id="menu-icon" 
+        width="30px" 
+        height="30px" 
+        viewBox="0 0 24.75 24.75" 
+        xml:space="preserve"
+      >
+        <g>
+          <path d="M0,3.875c0-1.104,0.896-2,2-2h20.75c1.104,0,2,0.896,2,2s-0.896,2-2,2H2C0.896,5.875,0,4.979,0,3.875z M22.75,10.375H2   c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2h20.75c1.104,0,2-0.896,2-2C24.75,11.271,23.855,10.375,22.75,10.375z M22.75,18.875H2   c-1.104,0-2,0.896-2,2s0.896,2,2,2h20.75c1.104,0,2-0.896,2-2S23.855,18.875,22.75,18.875z"/>
+        </g>
+        </svg>
+    </div>
+
+    <div id="menu" class="hidden absolute top-16 right-1 w-full flex flex-col items-center justify-center bg-background1 dark:bg-background2-DM">
+        {
+          links.map(({ text, href }) => (
+            <a
+              class="text-xl text-center text-link1 hover:underline hover:underline-offset-8 hover:decoration-btn1 dark:text-link1-DM dark:hover:link2-DM px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              href={href}
+            >
+              {text}
+            </a>
+          ))
+        }
+      <div class="px-4 py-3">
+        <AuthMode client:only="solid-js"/>
+      </div>
+      
+      <div class="px-4 py-3">
+        <ProviderProfileButton client:only="solid-js" />
+      </div>
+
+      <div class="px-4 py-3">
+        <LanguagePicker client:only="solid-js"/>
+      </div>
+    </div>
+
+    <!-- <div class="flex items-center">
+    </div>
+
+    <div class="flex items-center">
+    </div> -->
   </div>
 </header>
+
+
+<script>
+  const button = document.querySelector('#menu-icon');
+  const menu = document.querySelector('#menu');
+
+  button?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>
