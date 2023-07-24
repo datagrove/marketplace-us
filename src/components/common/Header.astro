@@ -24,11 +24,11 @@ export interface Props {
 const { links = [] } = Astro.props;
 ---
 
-<header id="container">
+<header id="container" class="py-4">
   <!-- <a id="logo">{pageTitle}</a>               -->
 
-  <div id="container">
-    <div class="navLines flex" id="navLines">
+  <div id="container" class="flex align-middle justify-between">
+    <div class="navLines flex items-center" id="navLines">
       <div class="all-logo">
 
         <a id="logo" href=`/${lang}`>
@@ -52,14 +52,19 @@ const { links = [] } = Astro.props;
           </svg>
         </a>
       </div>
-      <h1 class="logo text-5xl text-text1 dark:text-text1-DM">{SITE.title}</h1>
+
+      <div>
+        <h1 class="logo text-3xl md:text-5xl text-text1 dark:text-text1-DM pl-2">{SITE.title}</h1>
+      </div>
+      
     </div>
-    <nav class="flex content-center w-1/4">
+
+    <nav class="hidden md:flex md:items-center md:justify-center md:w-1/4">
       <ul class="flex content-center">
         {
           links.map(({ text, href }) => (
             <a
-              class="sm:text-xl md:text-2xl lg:text-4xl text-center text-text1 dark:text-text1-DM hover:text-gray-900 dark:hover:text-white px-4 py-3 flex items-center transition duration-150 ease-in-out"
+              class="text-xl text-center text-link1 hover:underline hover:underline-offset-8 hover:decoration-btn1 dark:text-link1-DM dark:hover:link2-DM px-4 py-3 flex items-center transition duration-150 ease-in-out"
               href={href}
             >
               {text}
@@ -69,10 +74,38 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <AuthMode client:only="solid-js" />
+    <div class="hidden md:flex md:items-center md:justify-between md:w-1/4">
+      <div class="">
+        <AuthMode client:only="solid-js"/>
+      </div>
+      
+      <div class="">
+        <ProviderProfileButton client:only="solid-js" />
+      </div>
 
-    <ProviderProfileButton client:only="solid-js" />
+      <div class="">
+        <LanguagePicker client:only="solid-js"/>
+      </div>
+    </div>
 
-    <LanguagePicker client:only="solid-js"/>
+    <div class="flex items-center md:hidden fill-logo dark:fill-logo-DM">
+      <svg 
+        id="Capa_1" 
+        width="30px" 
+        height="30px" 
+        viewBox="0 0 24.75 24.75" 
+        xml:space="preserve"
+      >
+        <g>
+          <path d="M0,3.875c0-1.104,0.896-2,2-2h20.75c1.104,0,2,0.896,2,2s-0.896,2-2,2H2C0.896,5.875,0,4.979,0,3.875z M22.75,10.375H2   c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2h20.75c1.104,0,2-0.896,2-2C24.75,11.271,23.855,10.375,22.75,10.375z M22.75,18.875H2   c-1.104,0-2,0.896-2,2s0.896,2,2,2h20.75c1.104,0,2-0.896,2-2S23.855,18.875,22.75,18.875z"/>
+        </g>
+        </svg>
+    </div>
+
+    <!-- <div class="flex items-center">
+    </div>
+
+    <div class="flex items-center">
+    </div> -->
   </div>
 </header>
