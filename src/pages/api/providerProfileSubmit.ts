@@ -75,7 +75,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const { data: providerExists, error: providerExistsError } = await supabase.from('providers').select('user_id').eq('user_id', user.id)
   if (providerExistsError) {
     console.log("supabase error: " + providerExistsError.message)
-  } else if (providerExists[0].user_id !== null) {
+  } else if (providerExists[0] !== undefined) {
     return new Response(
       JSON.stringify({
         message: "Provider Profile already exists",
@@ -202,9 +202,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const { data: profileExists, error: profileExistsError } = await supabase.from('profiles').select('user_id').eq('user_id', user.id)
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message)
-  } else if (profileExists[0].user_id !== null) {
+  } else if (profileExists[0] !== undefined) {
     console.log("Profile already exists")
-  } else if (profileExists[0].user_id === null) {
+  } else if (profileExists[0] === undefined) {
     //Build a submission to the profile table
     let profileSubmission = {
       user_id: user.id,
