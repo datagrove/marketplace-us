@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/PageLayout.astro";
+import { ClientRegistration } from "../../components/users/ClientRegistration";
+---
+
+<Layout>
+  <h1>Create Provider Account</h1>
+  <div>
+    <ClientRegistration client:load />
+  </div>
+</Layout>

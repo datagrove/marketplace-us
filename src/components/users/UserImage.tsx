@@ -1,75 +1,77 @@
-import { Component, createEffect, createSignal, JSX } from 'solid-js'
-import { supabase } from '../../lib/supabaseClient'
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
-
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
+import { Component, createEffect, createSignal, JSX } from "solid-js";
+import { supabase } from "../../lib/supabaseClient";
 
 interface Props {
-  size: number
-  url: string | null
-  onUpload: (event: Event, filePath: string) => void
+  size: number;
+  url: string | null;
+  onUpload: (event: Event, filePath: string) => void;
 }
 
 const UserImage: Component<Props> = (props) => {
-  const [imageUrl, setImageUrl] = createSignal<string | null>(null)
-  const [uploading, setUploading] = createSignal(false)
+  const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+  const [uploading, setUploading] = createSignal(false);
 
   createEffect(() => {
-    if (props.url) downloadImage(props.url)
-  })
+    if (props.url) downloadImage(props.url);
+  });
 
   const downloadImage = async (path: string) => {
     try {
-      const { data, error } = await supabase.storage.from('user.image').download(path)
+      const { data, error } = await supabase.storage
+        .from("user.image")
+        .download(path);
       if (error) {
-        throw error
+        throw error;
       }
-      const url = URL.createObjectURL(data)
-      setImageUrl(url)
+      const url = URL.createObjectURL(data);
+      setImageUrl(url);
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error downloading image: ', error.message)
+        console.log("Error downloading image: ", error.message);
       }
     }
-  }
+  };
 
-  const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (event) => {
+  const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (
+    event
+  ) => {
     try {
-      setUploading(true)
+      setUploading(true);
 
-      const target = event.currentTarget
+      const target = event.currentTarget;
       if (!target?.files || target.files.length === 0) {
-        throw new Error('You must select an image to upload.')
+        throw new Error("You must select an image to upload.");
       }
 
-      const file = target.files[0]
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${Math.random()}.${fileExt}`
-      const filePath = `${fileName}`
+      const file = target.files[0];
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
 
-      let { error: uploadError } = await supabase.storage.from('user.image').upload(filePath, file)
+      let { error: uploadError } = await supabase.storage
+        .from("user.image")
+        .upload(filePath, file);
 
       if (uploadError) {
-        throw uploadError
+        throw uploadError;
       }
 
-      props.onUpload(event, filePath)
+      props.onUpload(event, filePath);
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message)
+        alert(error.message);
       }
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   return (
-    <div style={{ width: `${props.size}px`}} aria-live="polite">
+    <div style={{ width: `${props.size}px` }} aria-live="polite">
       {imageUrl() ? (
         <img
           src={imageUrl()!}
-          alt={imageUrl() ? 'Image' : 'No image'}
+          alt={imageUrl() ? "Image" : "No image"}
           class="user image"
           style={{ height: `${props.size}px`, width: `${props.size}px` }}
         />
@@ -80,8 +82,11 @@ const UserImage: Component<Props> = (props) => {
         />
       )}
       <div style={{ width: `${props.size}px` }}>
-        <label class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" for="single">
-          {uploading() ? t('buttons.uploading') : t('buttons.uploadImage')}
+        <label
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          for="single"
+        >
+          {uploading() ? "Uploading ..." : "Upload Image"}
         </label>
         <span style="display:none">
           <input
@@ -94,7 +99,7 @@ const UserImage: Component<Props> = (props) => {
         </span>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserImage
+export default UserImage;
