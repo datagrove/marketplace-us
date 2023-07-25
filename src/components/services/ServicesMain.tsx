@@ -208,7 +208,7 @@ export const ServicesView: Component = () => {
         },)
 
         return (
-            <div class='border-8 border-click'>
+            <div class=''>
                 <div>
                     <CategoryCarousel
                         filterPosts={setCategoryFilter}
