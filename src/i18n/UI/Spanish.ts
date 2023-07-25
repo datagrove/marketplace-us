@@ -37,7 +37,9 @@ export const Spanish = {
     passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
     passwordMatch: 'Las contraseñas no coinciden',
     alreadyAccount: '¿Ya tienes una cuenta? Click aquí para',
-    error404: 'Algo salió mal'
+    error404: 'Algo salió mal',
+    onlyProvider: 'Solo las proveedoras pueden crear publicaciones.',
+    signInAsProvider: 'Inicie sesión en una cuenta de proveedor antes de publicar.',
   },
 
   formLabels: {
@@ -66,7 +68,7 @@ export const Spanish = {
       },
       {
         text: 'Servicios',
-        href: 'es/services',
+        href: '/es/services',
       },
     ],
     actions: [

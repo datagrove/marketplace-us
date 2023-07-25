@@ -37,7 +37,9 @@ export const English = {
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
     alreadyAccount: 'Already have an account? Click here to',
-    error404: 'Something went wrong'
+    error404: 'Something went wrong',
+    onlyProvider: "Only providers can create posts.",
+    signInAsProvider: "Please sign in to a provider account before posting.",
   },
 
   formLabels: {

@@ -38,6 +38,8 @@ export interface uiObject {
     passwordMatch: string,
     alreadyAccount: string,
     error404: string,
+    onlyProvider: string,
+    signInAsProvider: string,
   },
 
   formLabels: {

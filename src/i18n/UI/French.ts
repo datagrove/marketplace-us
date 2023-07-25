@@ -38,6 +38,8 @@ export const French = {
     passwordMatch: "Les mots de passe ne correspondent pas",
     alreadyAccount: "Vous avez déjà un compte ? Cliquez ici pour",
     error404: "Une erreur est survenue",
+    onlyProvider: 'Seuls les fournisseurs peuvent créer des publications.',
+    signInAsProvider: "Veuillez vous connecter à un compte de fournisseur avant de publier.",
   },
 
   formLabels: {
