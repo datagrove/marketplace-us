@@ -200,14 +200,24 @@ export const ClientRegistration: Component = () => {
   return (
     <div>
       <form onSubmit={submit}>
+        <label for="First Name">
+          First Name:
+          <input type="text" id="FirstName" name="FirstName" required />
+        </label>
+
+        <label for="Last Name">
+          Last Name:
+          <input type="text" id="LastName" name="LastName" required />
+        </label>
+
         <label for="DisplayName">
           Display Name:
-          <input type="text" id="DisplayName" name="DisplayName" required />
+          <input type="text" id="DisplayName" name="DisplayName" />
         </label>
 
         <label for="Phone">
           Phone Number:
-          <input type="text" id="Phone" name="Phone" required />
+          <input type="text" id="Phone" name="Phone" />
         </label>
 
         <label for="country">

@@ -12,6 +12,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //set the formData fields to variables
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
+  const firstName = formData.get("FirstName");
+  const lastName = formData.get("LastName");
   const displayName = formData.get("DisplayName");
   const phone = formData.get("Phone");
   const country = formData.get("country");
@@ -78,17 +80,20 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
 
-  const { data: profileExists, error: profileExistsError } = await supabase
+  const { data: clientExists, error: clientExistsError } = await supabase
     .from("clients")
-    .select("user_id")
+    .select("user_id)
     .eq("user_id", user.id);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0].user_id !== null) {
+
+  if (clientExistsError) {
+    console.log("supabase error: " + clientExistsError.message);
+  }
+
+  if (clientExists[0]?.user_id !== undefined) {
     return new Response(
       JSON.stringify({
-        message: "Provider Profile already exists",
-        redirect: "provider/profile",
+        message: "Client already exists",
+        redirect: "client/profile",
       }),
       { status: 302 }
     );
