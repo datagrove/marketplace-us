@@ -12,7 +12,7 @@ export const PasswordReset: Component = () => {
 
     return (
         <div class="bg-primaryBackground">
-            <p class="text-sm text-gray-600"> Forgot your password? Click here to <a class="text-blue-600 hover:underline dark:text-gray-200" href={`/${lang}/password_reset_request`}>Reset</a></p>
+            <p class="text-sm text-gray-600"> {t('messages.forgotPassword')} <a class="text-blue-600 hover:underline dark:text-gray-200" href={`/${lang}/password_reset_request`}>{t('buttons.reset')}</a></p>
         </div>
     )
 }

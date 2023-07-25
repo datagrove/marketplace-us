@@ -46,7 +46,7 @@ export const Auth: Component = (props) => {
         setLoading(true)
         const { error } = await supabase.auth.signUp({ email: email(), password: password() })
         if (error) throw error
-        alert('Check your email for the confirmation link!')
+        alert(t('messages.checkConfirmEmail'))
         location.href=`/${lang}`
       } catch (error) {
         if (error instanceof Error) {
@@ -57,7 +57,7 @@ export const Auth: Component = (props) => {
       }
     } else {
       setPasswordMatch(false);
-      alert('Passwords do not match');
+      alert(t('messages.passwordMatch'));
     }
   }
 
@@ -76,7 +76,7 @@ export const Auth: Component = (props) => {
                 id="email"
                 class="inputField"
                 type="email"
-                placeholder="Your email"
+                placeholder={t('formLabels.email')}
                 value={email()}
                 onChange={(e) => setEmail(e.currentTarget.value)}
               />
@@ -87,7 +87,7 @@ export const Auth: Component = (props) => {
                 id="password"
                 class="inputField"
                 type="password"
-                placeholder="password"
+                placeholder={t('formLabels.password')}
                 value={password()}
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
@@ -119,7 +119,7 @@ export const Auth: Component = (props) => {
               id="email"
               class="inputField"
               type="email"
-              placeholder="Your email"
+              placeholder={t('formLabels.email')}
               required
               value={email()}
               onChange={(e) => setEmail(e.currentTarget.value)}
@@ -131,7 +131,7 @@ export const Auth: Component = (props) => {
               id="password"
               class="inputField"
               type="password"
-              placeholder="password"
+              placeholder={t('formLabels.password')}
               required
               value={password()}
               oninput={(e) => setPassword(e.currentTarget.value)}
@@ -146,7 +146,7 @@ export const Auth: Component = (props) => {
               id="confirm password"
               class="inputField"
               type="password"
-              placeholder="password"
+              placeholder={t('formLabels.confirmPassword')}
               required
               value={confirmPassword()}
               oninput={(e) => setConfirmPassword(e.currentTarget.value)}

@@ -19,14 +19,14 @@ export const ProviderProfileButton: Component = () => {
             setUser(useStore(currentSession)())
 
             if (user() === null) {
-                alert("Please sign in to access this page.")
+                alert(t('messages.signIn'))
                 location.href = `/${lang}/login`
             } else {
                 const { data: provider, error: providerError } = await supabase.from('providers').select('*').eq('user_id', user()!.user.id)
                 if (providerError) {
                     console.log("Error: " + providerError.message)
                 } else if (!provider.length) {
-                    alert("You do not have a provider account please create one to view your provider profile.")
+                    alert(t('messages.viewProviderAccount'))
                     location.href = `/${lang}/provider/createaccount`
                 } else {
                     location.href = `/${lang}/provider/profile`
