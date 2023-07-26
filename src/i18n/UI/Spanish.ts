@@ -30,14 +30,25 @@ export const Spanish = {
     signIn: 'iniciar sesión',
     signOut: 'Desconectar',
     returnHome: 'Haga clic para volver a casa',
+    reset: 'Reiniciar',
   },
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para",
     passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
     passwordMatch: 'Las contraseñas no coinciden',
+    passwordReset: 'Restablecimiento de contraseña',
+    forgotPassword: '¿Olvidaste tu contraseña? Click aquí para',
     alreadyAccount: '¿Ya tienes una cuenta? Click aquí para',
-    error404: 'Algo salió mal'
+    error404: 'Algo salió mal',
+    onlyProvider: 'Solo las proveedoras pueden crear publicaciones.',
+    signInAsProvider: 'Inicie sesión en una cuenta de proveedor antes de publicar.',
+    checkEmail: "¡Revise su correo electrónico para ver el enlace de reinicio!",
+    checkConfirmEmail: '¡Revisa tu correo electrónico para el link de confirmación!',
+    signIn: "Inicia sesión para acceder a esta página",
+    createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
+    viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
+    noPosts: "No hay publicaciones disponibles",
   },
 
   formLabels: {
@@ -66,7 +77,7 @@ export const Spanish = {
       },
       {
         text: 'Servicios',
-        href: 'es/services',
+        href: '/es/services',
       },
     ],
     actions: [

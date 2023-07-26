@@ -30,14 +30,25 @@ export const French = {
     signIn: "s'identifier",
     signOut: "se déconnecter",
     returnHome: "Cliquez pour retourner à la maison",
+    reset: 'Réinitialiser',
   },
 
   messages: {
     noAccount: "Vous n'avez pas de compte ? Cliquez ici pour",
     passwordLength: "Le mot de passe doit contenir au moins 6 caractères",
     passwordMatch: "Les mots de passe ne correspondent pas",
+    passwordReset: 'Réinitialisation du mot de passe',
+    forgotPassword: 'Mot de passe oublié? Cliquez ici pour',
     alreadyAccount: "Vous avez déjà un compte ? Cliquez ici pour",
     error404: "Une erreur est survenue",
+    onlyProvider: 'Seuls les fournisseurs peuvent créer des publications.',
+    signInAsProvider: "Veuillez vous connecter à un compte de fournisseur avant de publier.",
+    checkEmail: "Vérifiez votre e-mail pour le lien de réinitialisation !",
+    checkConfirmEmail: 'Vérifiez votre e-mail pour le lien de confirmation !',
+    signIn: "Veuillez vous connecter pour accéder à cette page.",
+    createProviderAccount: "Veuillez vous connecter pour créer un profil de fournisseur.",
+    viewProviderAccount: "Vous n'avez pas de compte fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
+    noPosts: "Aucune publication disponible.",
   },
 
   formLabels: {

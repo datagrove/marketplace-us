@@ -28,11 +28,13 @@ export const LanguagePicker: Component = () => {
       console.log(path)
       path[1] = selectedLanguage();
       console.log(path.join('/'))
-      window.location.href = path.join('/');
+      window.location.href = '/' + path.join('/');
     } else {
       console.log("Path Index 1 doesn't contain a language")
+      console.log(path)
       path[0] = selectedLanguage();
-      window.location.href = path.join('/')
+      console.log(path.join('/'))
+      window.location.href = '/' + path.join('/')
     }
   }
 

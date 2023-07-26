@@ -17,7 +17,7 @@ async function postFormData(formData: FormData) {
     //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {
         alert(data.message)
-        window.location.href = data.redirect;
+        window.location.href = `/${lang}` + data.redirect;
     }
     return data;
 }
@@ -141,8 +141,8 @@ export const ProviderRegistration: Component = () => {
 
         //If the user is not signed in then tell them to sign in and send them to the login page
         } else {
-            alert("Please sign in to create a provider profile.")
-            location.href = `${lang}/login`
+            alert(t('messages.createProviderAccount'))
+            location.href = `/${lang}/login`
         }
     })
 

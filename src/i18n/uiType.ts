@@ -30,14 +30,25 @@ export interface uiObject {
     signIn: string,
     signOut: string,
     returnHome: string,
+    reset: string,
   },
 
   messages: {
     noAccount: string,
     passwordLength: string,
     passwordMatch: string,
+    passwordReset: string,
+    forgotPassword: string,
     alreadyAccount: string,
     error404: string,
+    onlyProvider: string,
+    signInAsProvider: string,
+    checkEmail: string,
+    checkConfirmEmail: string,
+    signIn: string,
+    createProviderAccount: string,
+    viewProviderAccount: string,
+    noPosts: string,
   },
 
   formLabels: {
