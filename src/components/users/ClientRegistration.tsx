@@ -190,6 +190,9 @@ export const ClientRegistration: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
+    if(imageUrl() !== null){
+      formData.append("image_url", imageUrl()!)
+  } 
     setFormData(formData);
     console.log(formData);
   }
