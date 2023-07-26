@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+	darkMode: 'class',
 	theme: {
 		extend: {
 			colors: {
@@ -11,7 +12,9 @@ module.exports = {
 				'btn2': '#BCBCBC',
 				'btn2hov': '#999999',
 				'link1': '#000000',
+				'link1hov': '',
 				'link2': '#999999',
+				'link2hov': '',
 				'text1': '#000000',
 				'text2': '#073116',
 				'border': '#7E9E85',

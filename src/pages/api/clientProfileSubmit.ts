@@ -21,6 +21,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
+  const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
@@ -216,6 +217,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     client_phone: phone,
     location: location[0].id,
     user_id: user.id,
+    image_url: imageUrl,
   };
 
   //submit to the providers table and select it back
@@ -269,10 +271,11 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  // // If everything works send a success response
+  // If everything works send a success response
   return new Response(
     JSON.stringify({
       message: "Success!",
+      redirect: "/client/profile",
     }),
     { status: 200 }
   );

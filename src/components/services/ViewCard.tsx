@@ -24,11 +24,13 @@ export const ViewCard: Component<Props> = (props) => {
         {
           props.posts.map((post: any) => (
             <li>
+              <div class='border-8 border-red-500'>
               <p>{post.title}</p>
               <p>{post.content}</p>
               <p>Provider: {post.provider_name}</p>
               <p>Location: {post.major_municipality}/{post.minor_municipality}/{post.governing_district}</p>
               <p>Category: {post.category}</p>
+              </div>
             </li>
           ))
         }

@@ -12,6 +12,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //set the formData fields to variables
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
+<<<<<<< HEAD
   const firstName = formData.get("FirstName");
   const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
@@ -21,6 +22,20 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
+=======
+  const firstName = formData.get('FirstName');
+  const lastName = formData.get('LastName');
+  const providerName = formData.get('ProviderName');
+  const phone = formData.get('Phone');
+  const country = formData.get('country');
+  const majorMunicipality = formData.get('MajorMunicipality');
+  const minorMunicipality = formData.get('MinorMunicipality');
+  const governingDistrict = formData.get('GoverningDistrict');
+  const postalArea = formData.get('PostalArea');
+  const imageUrl = ((formData.get('image_url')) ? formData.get('image_url') : null);
+  console.log("imageURL: " + imageUrl)
+
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
@@ -80,17 +95,15 @@ export const post: APIRoute = async ({ request, redirect }) => {
   }
 
   //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
-  const { data: profileExists, error: profileExistsError } = await supabase
-    .from("providers")
-    .select("user_id")
-    .eq("user_id", user.id);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0].user_id !== undefined) {
+
+  const { data: providerExists, error: providerExistsError } = await supabase.from('providers').select('user_id').eq('user_id', user.id)
+  if (providerExistsError) {
+    console.log("supabase error: " + providerExistsError.message)
+  } else if (providerExists[0] !== undefined) {
     return new Response(
       JSON.stringify({
         message: "Provider Profile already exists",
-        redirect: "provider/profile",
+        redirect: "/provider/profile",
       }),
       { status: 302 }
     );
@@ -202,7 +215,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
     provider_phone: phone,
     location: location[0].id,
     user_id: user.id,
-  };
+    image_url: imageUrl,
+  }
 
   //submit to the providers table and select it back
   const { error, data } = await supabase
@@ -233,31 +247,38 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //However we might not really want it to fail we may want it to skip the submission if there is already a profile for the user so we don't get back an error
 
   //Build a submission to the profile table
-  let profileSubmission = {
-    user_id: user.id,
-    first_name: firstName,
-    last_name: lastName,
-  };
+  const { data: profileExists, error: profileExistsError } = await supabase.from('profiles').select('user_id').eq('user_id', user.id)
+  if (profileExistsError) {
+    console.log("supabase error: " + profileExistsError.message)
+  } else if (profileExists[0] !== undefined) {
+    console.log("Profile already exists")
+  } else if (profileExists[0] === undefined) {
+    //Build a submission to the profile table
+    let profileSubmission = {
+      user_id: user.id,
+      first_name: firstName,
+      last_name: lastName,
+    }
 
-  //Submit to the profile table and select it back (the select back is not entirely necessary)
-  const { data: profileData, error: profileError } = await supabase
-    .from("profiles")
-    .insert([profileSubmission])
-    .select();
-  if (profileError) {
-    console.log(profileError);
-    return new Response(
-      JSON.stringify({
-        message: "Error creating profile",
-      }),
-      { status: 500 }
-    );
+    //Submit to the profile table and select it back (the select back is not entirely necessary)
+    const { data: profileData, error: profileError } = await supabase.from('profiles').insert([profileSubmission]).select()
+    if (profileError) {
+      console.log(profileError)
+      return new Response(
+        JSON.stringify({
+          message: "Error creating profile",
+        }),
+        { status: 500 }
+      );
+    };
+
   }
 
   // If everything works send a success response
   return new Response(
     JSON.stringify({
       message: "Success!",
+      redirect: "/provider/profile",
     }),
     { status: 200 }
   );

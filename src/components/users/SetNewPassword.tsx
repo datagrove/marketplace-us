@@ -1,5 +1,9 @@
 import { supabase } from '../../lib/supabaseClient'
 import { Component, createSignal } from 'solid-js'
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const SetNewPassword: Component = () => {
     const [loading, setLoading] = createSignal(false)
@@ -13,8 +17,8 @@ export const SetNewPassword: Component = () => {
             const { data, error } = await supabase.auth.updateUser({password: password()})
             if (error) throw error
             if (data) {
-              alert("Password Reset")
-              location.href="/"
+              alert(t('messages.passwordReset'))
+              location.href=`/${lang}`
             }
         } catch (error) {
             if (error instanceof Error) {
@@ -30,19 +34,19 @@ export const SetNewPassword: Component = () => {
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleResetPassword}>
             <div>
-              <label for="password">Password</label>
+              <label for="password">{t('formLabels.password')}</label>
               <input
                 id="password"
                 class="inputField"
                 type="password"
-                placeholder="password"
+                placeholder={t('formLabels.password')}
                 value={password()}
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </div>
             <div>
               <button type="submit" class="button block" aria-live="polite">
-                {loading() ? <span>Loading</span> : <span>Reset</span>}
+                {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.reset')}</span>}
               </button>
             </div>
           </form>

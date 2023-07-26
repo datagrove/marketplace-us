@@ -1,13 +1,11 @@
-import {
-  Component,
-  Suspense,
-  createEffect,
-  createResource,
-  createSignal,
-} from "solid-js";
+import { Component, Suspense, createEffect, createResource, createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 async function postFormData(formData: FormData) {
   const response = await fetch("/api/clientProfileSubmit", {
@@ -18,7 +16,7 @@ async function postFormData(formData: FormData) {
   const data = await response.json();
   if (data.redirect) {
     alert(data.message);
-    window.location.href = data.redirect;
+    window.location.href = `/${lang}` + data.redirect;;
   }
   return data;
 }
@@ -183,7 +181,7 @@ export const ClientRegistration: Component = () => {
         console.log("Other error: " + error);
       }
     } else {
-      alert("Please sign in to create a provider profile.");
+      alert(t('messages.createClientAccount'));
       location.href = "/login";
     }
   });
@@ -193,11 +191,15 @@ export const ClientRegistration: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
+    if(imageUrl() !== null){
+      formData.append("image_url", imageUrl()!)
+  } 
     setFormData(formData);
     console.log(formData);
   }
 
   return (
+<<<<<<< HEAD
     <div class="w-1/3 mx-auto bg-white">
       <form class="flex flex-col w-full  mx-auto p-4  " onSubmit={submit}>
         <h1 class="text-2xl text-center">Client Registration</h1>
@@ -239,36 +241,114 @@ export const ClientRegistration: Component = () => {
         <label class="flex flex-col mx-auto w-full bg-slate-500 " for="country">
           Country:
           <select id="country" name="country" required>
+=======
+    <div class="">
+      <form onSubmit={submit} class="">
+        <label for="DisplayName" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.displayName')}
+          <input
+            type="text"
+            id="DisplayName"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="DisplayName"
+            required
+          />
+        </label>
+
+        <br />
+
+        <label for="Phone" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.phone')}:
+          <br />
+          <input
+            type="text"
+            id="Phone"
+            class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="Phone"
+            required
+          />
+        </label>
+
+        <br />
+
+        <label for="country" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.country')}:
+          <select
+            id="country"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="country"
+            required
+          >
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
             <option value="-1">-</option>
           </select>
         </label>
 
+<<<<<<< HEAD
         <label
           class="flex flex-col mx-auto w-full bg-slate-500 "
           for="MajorMunicipality"
         >
           Major Municipality:
           <select id="MajorMunicipality" name="MajorMunicipality" required>
+=======
+        <br />
+
+        <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.majorMunicipality')}:
+          <select
+            id="MajorMunicipality"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MajorMunicipality"
+            required
+          >
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
             <option value="-1">-</option>
           </select>
         </label>
 
+<<<<<<< HEAD
         <label
           class="flex flex-col mx-auto w-full bg-slate-500 "
           for="MinorMunicipality"
         >
           Minor Municipality:
           <select id="MinorMunicipality" name="MinorMunicipality" required>
+=======
+        <br />
+
+        <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.minorMunicipality')}:
+          <select
+            id="MinorMunicipality"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MinorMunicipality"
+            required
+          >
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
             <option value="-1">-</option>
           </select>
         </label>
 
+<<<<<<< HEAD
         <label
           class="flex flex-col mx-auto w-full bg-slate-500 "
           for="GoverningDistrict"
         >
           Governing District:
           <select id="GoverningDistrict" name="GoverningDistrict" required>
+=======
+        <br />
+
+        <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
+          {t('formLabels.governingDistrict')}:
+          <select
+            id="GoverningDistrict"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="GoverningDistrict"
+            required
+          >
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
             <option value="-1">-</option>
           </select>
         </label>
@@ -281,8 +361,13 @@ export const ClientRegistration: Component = () => {
           }}
         />
 
+<<<<<<< HEAD
         <button class="my-4 bg-btn1 font-bold py-2 px-4 rounded dark:bg-btn1-DM">
           Register
+=======
+        <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {t('buttons.register')}
+>>>>>>> d2e6bdbca5fb67a254f011c8a892b276fc0079e1
         </button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
