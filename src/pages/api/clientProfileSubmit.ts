@@ -88,14 +88,14 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   if (clientExistsError) {
     console.log("supabase error: " + clientExistsError.message);
-  }
-  // fix this to redirect to client profile
-  if (clientExists[0]?.user_id !== undefined) {
+  } else if (clientExists[0] !== undefined) {
+    // fix this to redirect to client profile
     return new Response(
       JSON.stringify({
         message: "Client already exists",
         redirect: "/client/profile",
       }),
+
       { status: 302 }
     );
   }
