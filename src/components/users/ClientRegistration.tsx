@@ -198,50 +198,75 @@ export const ClientRegistration: Component = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <label for="First Name">
+    <div class="w-1/3 mx-auto bg-white">
+      <form class="flex flex-col w-full  mx-auto p-4  " onSubmit={submit}>
+        <h1 class="text-2xl text-center">Client Registration</h1>
+        <label
+          class="flex flex-col mx-auto w-full  my-3 text-lg  "
+          for="First Name"
+        >
           First Name:
-          <input type="text" id="FirstName" name="FirstName" required />
+          <input
+            class="w-full my-1 text-lg"
+            type="text"
+            id="FirstName"
+            name="FirstName"
+            required
+          />
         </label>
 
-        <label for="Last Name">
+        <label
+          class="flex flex-col mx-auto w-full bg-slate-500 "
+          for="Last Name"
+        >
           Last Name:
-          <input type="text" id="LastName" name="LastName" required />
+          <input class="" type="text" id="LastName" name="LastName" required />
         </label>
 
-        <label for="DisplayName">
+        <label
+          class="flex flex-col mx-auto w-full bg-slate-500 "
+          for="DisplayName"
+        >
           Display Name:
-          <input type="text" id="DisplayName" name="DisplayName" />
+          <input class="" type="text" id="DisplayName" name="DisplayName" />
         </label>
 
-        <label for="Phone">
+        <label class="flex flex-col mx-auto w-full bg-slate-500 " for="Phone">
           Phone Number:
           <input type="text" id="Phone" name="Phone" />
         </label>
 
-        <label for="country">
+        <label class="flex flex-col mx-auto w-full bg-slate-500 " for="country">
           Country:
           <select id="country" name="country" required>
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="MajorMunicipality">
+        <label
+          class="flex flex-col mx-auto w-full bg-slate-500 "
+          for="MajorMunicipality"
+        >
           Major Municipality:
           <select id="MajorMunicipality" name="MajorMunicipality" required>
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="MinorMunicipality">
+        <label
+          class="flex flex-col mx-auto w-full bg-slate-500 "
+          for="MinorMunicipality"
+        >
           Minor Municipality:
           <select id="MinorMunicipality" name="MinorMunicipality" required>
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="GoverningDistrict">
+        <label
+          class="flex flex-col mx-auto w-full bg-slate-500 "
+          for="GoverningDistrict"
+        >
           Governing District:
           <select id="GoverningDistrict" name="GoverningDistrict" required>
             <option value="-1">-</option>
@@ -256,7 +281,7 @@ export const ClientRegistration: Component = () => {
           }}
         />
 
-        <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button class="my-4 bg-btn1 font-bold py-2 px-4 rounded dark:bg-btn1-DM">
           Register
         </button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
