@@ -1,8 +1,14 @@
-import { Component, Suspense, createEffect, createResource, createSignal } from "solid-js";
+import {
+  Component,
+  Suspense,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -12,10 +18,11 @@ async function postFormData(formData: FormData) {
     method: "POST",
     body: formData,
   });
+
   const data = await response.json();
   if (data.redirect) {
     alert(data.message);
-    window.location.href = `/${lang}` + data.redirect;;
+    window.location.href = `/${lang}` + data.redirect;
   }
   return data;
 }
@@ -180,7 +187,7 @@ export const ClientRegistration: Component = () => {
         console.log("Other error: " + error);
       }
     } else {
-      alert(t('messages.createClientAccount'));
+      alert(t("messages.createClientAccount"));
       location.href = "/login";
     }
   });
@@ -190,9 +197,9 @@ export const ClientRegistration: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
-    if(imageUrl() !== null){
-      formData.append("image_url", imageUrl()!)
-  } 
+    if (imageUrl() !== null) {
+      formData.append("image_url", imageUrl()!);
+    }
     setFormData(formData);
     console.log(formData);
   }
@@ -201,7 +208,7 @@ export const ClientRegistration: Component = () => {
     <div class="">
       <form onSubmit={submit} class="">
         <label for="DisplayName" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.displayName')}
+          {t("formLabels.displayName")}
           <input
             type="text"
             id="DisplayName"
@@ -214,7 +221,7 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="Phone" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.phone')}:
+          {t("formLabels.phone")}:
           <br />
           <input
             type="text"
@@ -228,7 +235,7 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="country" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.country')}:
+          {t("formLabels.country")}:
           <select
             id="country"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -242,7 +249,7 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.majorMunicipality')}:
+          {t("formLabels.majorMunicipality")}:
           <select
             id="MajorMunicipality"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -256,7 +263,7 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.minorMunicipality')}:
+          {t("formLabels.minorMunicipality")}:
           <select
             id="MinorMunicipality"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -270,7 +277,7 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
-          {t('formLabels.governingDistrict')}:
+          {t("formLabels.governingDistrict")}:
           <select
             id="GoverningDistrict"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -290,7 +297,7 @@ export const ClientRegistration: Component = () => {
         />
 
         <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          {t('buttons.register')}
+          {t("buttons.register")}
         </button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>

@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/PageLayout.astro";
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -8,6 +8,6 @@ const t = useTranslations(lang);
 
 <Layout>
   <div>
-    <h1>{t('pageTitles.editClientAccount')}</h1> 
+    <h1>{t("pageTitles.editClientAccount")}</h1>
   </div>
 </Layout>
