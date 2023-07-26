@@ -14,5 +14,5 @@ const t = useTranslations(lang);
 		<h2 class="text-xl w-full italic">{t('pageTitles.login')}</h2>
 	</div>
 	<Auth client:only="solid-js"/>
-	<PasswordReset/>
+	<PasswordReset client:only="solid-js"/>
 </PageLayout>

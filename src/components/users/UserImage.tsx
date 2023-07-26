@@ -77,7 +77,7 @@ const UserImage: Component<Props> = (props) => {
         />
       ) : (
         <div
-          class="user no-image"
+          class="user no-image bg-red-300 mb-4"
           style={{ height: `${props.size}px`, width: `${props.size}px` }}
         />
       )}
