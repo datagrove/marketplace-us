@@ -47,6 +47,7 @@ export const French = {
     checkConfirmEmail: 'Vérifiez votre e-mail pour le lien de confirmation !',
     signIn: "Veuillez vous connecter pour accéder à cette page.",
     createProviderAccount: "Veuillez vous connecter pour créer un profil de fournisseur.",
+    createClientAccount: "Veuillez vous connecter pour créer un profil client.",
     viewProviderAccount: "Vous n'avez pas de compte fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
     noPosts: "Aucune publication disponible.",
   },
@@ -67,6 +68,7 @@ export const French = {
     email: "E-mail",
     password: "Mot de passe",
     confirmPassword: "Confirmez le mot de passe",
+    displayName: 'Afficher un nom',
   },
 
   headerData: {

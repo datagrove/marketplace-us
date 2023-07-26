@@ -47,6 +47,7 @@ export interface uiObject {
     checkConfirmEmail: string,
     signIn: string,
     createProviderAccount: string,
+    createClientAccount: string,
     viewProviderAccount: string,
     noPosts: string,
   },
@@ -67,6 +68,7 @@ export interface uiObject {
     email: string,
     password: string,
     confirmPassword: string,
+    displayName: string,
   },
 
   headerData: {
