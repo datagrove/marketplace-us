@@ -1,5 +1,4 @@
 //TODO: Need to add a Country filter for future phases
-//TODO: Sort Lists Alphabetically
 import { Component, createEffect, createSignal, For } from 'solid-js';
 
 import { supabase } from '../../lib/supabaseClient'

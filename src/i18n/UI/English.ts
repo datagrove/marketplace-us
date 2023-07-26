@@ -15,7 +15,7 @@ export const English = {
     viewProviderAccount: 'Provider Profile Self View',
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
-    resetPassword: 'Reset Password',
+    resetPassword: 'Set New Password',
   },
 
   buttons: {
@@ -30,14 +30,25 @@ export const English = {
     signIn: 'sign in',
     signOut: 'Sign Out',
     returnHome: 'Click to Return Home',
+    reset: 'Reset',
   },
 
   messages: {
     noAccount: "Don't have an account? Click here to",
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
+    passwordReset: 'Password Reset',
+    forgotPassword: 'Forgot your password? Click here to',
     alreadyAccount: 'Already have an account? Click here to',
-    error404: 'Something went wrong'
+    error404: 'Something went wrong',
+    onlyProvider: "Only providers can create posts.",
+    signInAsProvider: "Please sign in to a provider account before posting.",
+    checkEmail: "Check your email for the reset link!",
+    checkConfirmEmail: 'Check your email for the confirmation link!',
+    signIn: "Please sign in to access this page.",
+    createProviderAccount: "Please sign in to create a provider profile.",
+    viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
+    noPosts: "No posts available.",
   },
 
   formLabels: {

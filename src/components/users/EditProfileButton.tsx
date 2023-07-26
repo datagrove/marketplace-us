@@ -21,11 +21,11 @@ export const EditProfileButton: Component = () => {
         try {
             setUser(useStore(currentSession)())
             console.log("window.location.href: " + window.location.href)
-            console.log(SITE.url + `${lang}/client/profile`)
-            if (window.location.href === SITE.url + `${lang}/provider/profile`) {
-                location.href = `${lang}/provider/editaccount`
-            } else if (window.location.href === SITE.url + `${lang}/client/profile`) {
-                location.href = `${lang}/client/editaccount`
+            console.log(SITE.url + `/${lang}/client/profile`)
+            if (window.location.href === SITE.url + `/${lang}/provider/profile`) {
+                location.href = `/${lang}/provider/editaccount`
+            } else if (window.location.href === SITE.url + `/${lang}/client/profile`) {
+                location.href = `/${lang}/client/editaccount`
             } else {
                 console.log(window.location.href)
             }

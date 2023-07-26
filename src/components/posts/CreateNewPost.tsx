@@ -14,7 +14,7 @@ async function postFormData(formData: FormData) {
     const data = await response.json();
     if (data.redirect){
         alert(data.message)
-        window.location.href = data.redirect;
+        window.location.href = `/${lang}` + data.redirect;
     }
     return data;
 }
@@ -29,6 +29,22 @@ export const CreateNewPost: Component = () => {
         setSession(data.session)
 
         if (session()) {
+            //Check if they are a provider
+            try {
+                const { data: providers, error: errorProviders } = await supabase.from('providers').select('*').eq('user_id', session()!.user.id);
+                if (errorProviders) {
+                    console.log("supabase error: " + errorProviders.message)
+                } else {
+                    if(providers.length === 0) {
+                        alert(t('messages.onlyProvider'))
+                        window.location.href = `/${lang}/provider/createaccount`;
+                    } else {}
+                }
+            }
+            catch (error) {
+                console.log("Other error: " + error)
+            }
+
             //Post Category
             try {
                 const { data: postCategory, error: errorPostCategory } = await supabase.from('post_category').select('*');
@@ -150,8 +166,8 @@ export const CreateNewPost: Component = () => {
             }
 
         } else {
-            alert("Please sign in to create a provider profile.")
-            location.href=`${lang}/login`
+            alert(t('messages.signInAsProvider')) 
+            location.href=`/${lang}/login`
         }
     })
 
