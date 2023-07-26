@@ -90,36 +90,59 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
-            <div class="product-carousel border-green-500 border-8 bg-white">
-                <div class="bg-gray-400 flex content-center">
-                    <button>
+            <div class="product-carousel my-2">
+                <div class="flex justify-between">
+                    <button class="w-12">
                         <img
                             src={leftArrow}
                             alt="Left Arrow"
                         />
                     </button>
-                    <ul class="flex content-center border-yellow-500 m-4">
-                        {allCategoryInfo?.map((item) => (
-                            <button 
-                            class='bg-purple-700' 
-                            onClick={() => {
-                                props.filterPosts(item.category)
-                            }}
-                            >
-                                <img src={item.icon} alt={item.ariaLabel} title={item.description} />
-                                <p class="text-black">{item.name}</p>
 
-                            </button>
-                        ))
-                        }
-                    </ul>
-                    <button>
+                    <div class="overflow-scroll w-3/4">
+                        <ul class="flex">
+                            {allCategoryInfo?.map((item) => (
+                                <button 
+                                class='m-2 w-12 rounded-full border-4 border-border' 
+                                onClick={() => {
+                                    props.filterPosts(item.category)
+                                }}
+                                >
+                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-48" />
+                                    <p class="text-text1 dark:text-text1-DM text-center text-xs">{item.name}</p>
+
+                                </button>
+                            ))
+                            }
+                        </ul>
+                    </div>
+
+                    <button class="w-12">
                         <img
                             src={rightArrow}
                             alt="Right Arrow"
                         />
                     </button>
                 </div>
+
+
+                <div class="h-16 overflow-scroll w-full">
+                        <ul class="flex flex-col items-center">
+                            {allCategoryInfo?.map((item) => (
+                                <button 
+                                class='flex items-center h-12 py-1' 
+                                onClick={() => {
+                                    props.filterPosts(item.category)
+                                }}
+                                >
+                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="pr-4" />
+                                    <p class="text-text1 dark:text-text1-DM text-center">{item.name}</p>
+
+                                </button>
+                            ))
+                            }
+                        </ul>
+                    </div>
             </div>
 
     )

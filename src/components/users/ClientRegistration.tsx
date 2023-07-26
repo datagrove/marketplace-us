@@ -197,42 +197,85 @@ export const ClientRegistration: Component = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <label for="DisplayName">
+    <div class="">
+      <form onSubmit={submit} class="">
+        <label for="DisplayName" class="text-text1 dark:text-text1-DM">
           Display Name:
-          <input type="text" id="DisplayName" name="DisplayName" required />
+          <input 
+            type="text" 
+            id="DisplayName" 
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="DisplayName" 
+            required 
+          />
         </label>
 
-        <label for="Phone">
+        <br />
+
+        <label for="Phone" class="text-text1 dark:text-text1-DM">
           Phone Number:
-          <input type="text" id="Phone" name="Phone" required />
+          <br />
+          <input 
+            type="text" 
+            id="Phone" 
+            class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="Phone" 
+            required 
+          />
         </label>
 
-        <label for="country">
+        <br />
+
+        <label for="country" class="text-text1 dark:text-text1-DM">
           Country:
-          <select id="country" name="country" required>
+          <select 
+            id="country" 
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="country" 
+            required
+          >
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="MajorMunicipality">
+        <br />
+
+        <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
           Major Municipality:
-          <select id="MajorMunicipality" name="MajorMunicipality" required>
+          <select 
+            id="MajorMunicipality" 
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MajorMunicipality" 
+            required
+          >
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="MinorMunicipality">
+        <br />
+
+        <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
           Minor Municipality:
-          <select id="MinorMunicipality" name="MinorMunicipality" required>
+          <select 
+            id="MinorMunicipality" 
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MinorMunicipality" 
+            required
+          >
             <option value="-1">-</option>
           </select>
         </label>
 
-        <label for="GoverningDistrict">
+        <br />
+
+        <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
           Governing District:
-          <select id="GoverningDistrict" name="GoverningDistrict" required>
+          <select 
+            id="GoverningDistrict" 
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="GoverningDistrict" 
+            required
+          >
             <option value="-1">-</option>
           </select>
         </label>
