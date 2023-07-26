@@ -218,7 +218,7 @@ export const ClientRegistration: Component = () => {
           <input 
             type="text" 
             id="Phone" 
-            class="rounded w-full mb-4"
+            class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone" 
             required 
           />
@@ -230,7 +230,7 @@ export const ClientRegistration: Component = () => {
           Country:
           <select 
             id="country" 
-            class="ml-2 rounded mb-4 dark:text-black"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="country" 
             required
           >
@@ -244,7 +244,7 @@ export const ClientRegistration: Component = () => {
           Major Municipality:
           <select 
             id="MajorMunicipality" 
-            class="ml-2 rounded mb-4 dark:text-black"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="MajorMunicipality" 
             required
           >
@@ -258,7 +258,7 @@ export const ClientRegistration: Component = () => {
           Minor Municipality:
           <select 
             id="MinorMunicipality" 
-            class="ml-2 rounded mb-4 dark:text-black"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="MinorMunicipality" 
             required
           >
@@ -272,7 +272,7 @@ export const ClientRegistration: Component = () => {
           Governing District:
           <select 
             id="GoverningDistrict" 
-            class="ml-2 rounded mb-4 dark:text-black"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="GoverningDistrict" 
             required
           >
