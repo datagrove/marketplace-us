@@ -211,8 +211,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Build our submission to the providers table including the location id from the select from the location table on line 158
   let submission = {
-    first_name: firstName,
-    last_name: lastName,
     display_name: displayName,
     client_phone: phone,
     location: location[0].id,
