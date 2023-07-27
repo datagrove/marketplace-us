@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/PageLayout.astro";
 import { CreateNewPost } from "../../components/posts/CreateNewPost";
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -9,7 +9,8 @@ const t = useTranslations(lang);
 
 <Layout>
   <div>
-    <h1>{t('pageTitles.createPost')}</h1>
+    <h1>{t("pageTitles.createPost")}</h1>
   </div>
+
   <CreateNewPost client:only="solid-js" />
 </Layout>

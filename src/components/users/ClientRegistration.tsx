@@ -7,16 +7,18 @@ import {
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
+import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 async function postFormData(formData: FormData) {
-  const response = await fetch("/api/providerCreatePost", {
+  const response = await fetch("/api/clientProfileSubmit", {
     method: "POST",
     body: formData,
   });
+
   const data = await response.json();
   if (data.redirect) {
     alert(data.message);
@@ -25,52 +27,18 @@ async function postFormData(formData: FormData) {
   return data;
 }
 
-export const CreateNewPost: Component = () => {
+export const ClientRegistration: Component = () => {
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
+  const [imageUrl, setImageUrl] = createSignal<string | null>(null);
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
+    console.log(data);
     setSession(data.session);
 
     if (session()) {
-      //Check if they are a provider
-      try {
-        const { data: providers, error: errorProviders } = await supabase
-          .from("providers")
-          .select("*")
-          .eq("user_id", session()!.user.id);
-        if (errorProviders) {
-          console.log("supabase error: " + errorProviders.message);
-        } else {
-          if (providers.length === 0) {
-            alert(t("messages.onlyProvider"));
-            window.location.href = `/${lang}/provider/createaccount`;
-          } else {
-          }
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
-      //Post Category
-      try {
-        const { data: postCategory, error: errorPostCategory } = await supabase
-          .from("post_category")
-          .select("*");
-        if (errorPostCategory) {
-          console.log("supabase error: " + errorPostCategory.message);
-        } else {
-          postCategory.forEach((category) => {
-            let categoryOption = new Option(category.category, category.id);
-            document.getElementById("ServiceCategory")?.append(categoryOption);
-          });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
       //Country
       try {
         const { data: countries, error } = await supabase
@@ -219,8 +187,8 @@ export const CreateNewPost: Component = () => {
         console.log("Other error: " + error);
       }
     } else {
-      alert(t("messages.signInAsProvider"));
-      location.href = `/${lang}/login`;
+      alert(t("messages.createClientAccount"));
+      location.href = "/login";
     }
   });
 
@@ -229,72 +197,108 @@ export const CreateNewPost: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
+    if (imageUrl() !== null) {
+      formData.append("image_url", imageUrl()!);
+    }
     setFormData(formData);
+    console.log(formData);
   }
 
   return (
-    <div>
-      <form onSubmit={submit}>
-        <div class="mb-6">
-          <label for="Title">
-            {t("formLabels.title")}:
-            <input type="text" id="Title" name="Title" required />
-          </label>
-        </div>
+    <div class="">
+      <form onSubmit={submit} class="">
+        <label for="DisplayName" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.displayName")}
+          <input
+            type="text"
+            id="DisplayName"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="DisplayName"
+            required
+          />
+        </label>
 
-        <div class="mb-6">
-          <label for="ServiceCategory">
-            {t("formLabels.serviceCategory")}:
-            <select id="ServiceCategory" name="ServiceCategory" required>
-              <option value="-1">-</option>
-            </select>
-          </label>
-        </div>
+        <br />
 
-        <div class="mb-6">
-          <label for="Content">
-            {t("formLabels.postContent")}:
-            <textarea id="Content" name="Content" rows="5" required>
-              Enter Post Content Here:
-            </textarea>
-          </label>
-        </div>
+        <label for="Phone" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.phone")}:
+          <br />
+          <input
+            type="text"
+            id="Phone"
+            class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="Phone"
+            required
+          />
+        </label>
 
-        <div class="mb-6">
-          <label for="country">
-            {t("formLabels.country")}:
-            <select id="country" name="country" required>
-              <option value="-1">-</option>
-            </select>
-          </label>
-        </div>
+        <br />
 
-        <div class="mb-6">
-          <label for="MajorMunicipality">
-            {t("formLabels.majorMunicipality")}:
-            <select id="MajorMunicipality" name="MajorMunicipality" required>
-              <option value="-1">-</option>
-            </select>
-          </label>
-        </div>
-
-        <div class="mb-6">
-          <label for="MinorMunicipality">
-            {t("formLabels.minorMunicipality")}:
-            <select id="MinorMunicipality" name="MinorMunicipality" required>
-              <option value="-1">-</option>
-            </select>
-          </label>
-        </div>
-
-        <label for="GoverningDistrict">
-          {t("formLabels.governingDistrict")}:
-          <select id="GoverningDistrict" name="GoverningDistrict" required>
+        <label for="country" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.country")}:
+          <select
+            id="country"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="country"
+            required
+          >
             <option value="-1">-</option>
           </select>
         </label>
 
-        <button>Post</button>
+        <br />
+
+        <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.majorMunicipality")}:
+          <select
+            id="MajorMunicipality"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MajorMunicipality"
+            required
+          >
+            <option value="-1">-</option>
+          </select>
+        </label>
+
+        <br />
+
+        <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.minorMunicipality")}:
+          <select
+            id="MinorMunicipality"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="MinorMunicipality"
+            required
+          >
+            <option value="-1">-</option>
+          </select>
+        </label>
+
+        <br />
+
+        <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.governingDistrict")}:
+          <select
+            id="GoverningDistrict"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            name="GoverningDistrict"
+            required
+          >
+            <option value="-1">-</option>
+          </select>
+        </label>
+
+        <UserImage
+          url={imageUrl()}
+          size={150}
+          onUpload={(e: Event, url: string) => {
+            setImageUrl(url);
+          }}
+        />
+
+        <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          {t("buttons.register")}
+        </button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
     </div>

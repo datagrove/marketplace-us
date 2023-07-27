@@ -4,6 +4,7 @@ import { AuthMode } from "./AuthMode";
 import  { LanguagePicker } from "./LanguagePicker";
 import { ProviderProfileButton } from "./ProviderProfileButton";
 import { getLangFromUrl} from '../../i18n/utils';
+import ThemeIcon from "./ThemeIcon.astro";
 
 const lang = getLangFromUrl(Astro.url);
 
@@ -76,6 +77,10 @@ const { links = [] } = Astro.props;
 
     <div class="hidden md:flex md:items-center md:justify-between md:w-1/4">
       <div class="">
+        <ThemeIcon/>
+      </div>
+
+      <div class="">
         <AuthMode client:only="solid-js"/>
       </div>
       
@@ -86,6 +91,7 @@ const { links = [] } = Astro.props;
       <div class="">
         <LanguagePicker client:only="solid-js"/>
       </div>
+
     </div>
 
     <div class="flex items-center relative md:hidden fill-logo dark:fill-logo-DM">

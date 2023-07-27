@@ -1,7 +1,10 @@
 import { Component, createSignal } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import { SITE } from '../../config'
-// import '../../styles/global.css';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const NewPassword: Component = () => {
   const [loading, setLoading] = createSignal(false)
@@ -13,7 +16,7 @@ export const NewPassword: Component = () => {
 
     try {
         setLoading(true)
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE + "/password_reset" })
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE.url + `/${lang}/password_reset` })
         if (error) throw error
     } catch (error) {
         if (error instanceof Error) {
@@ -21,7 +24,7 @@ export const NewPassword: Component = () => {
         }
     } finally {
         setLoading(false)
-        alert("Check your email for the reset link!")
+        alert(t('messages.checkEmail'))
     }
 }
 
@@ -37,13 +40,13 @@ export const NewPassword: Component = () => {
                 for="email"
                 class="px-2 text-text1 dark:text-text1-DM"
               >
-                Email
+                {t('formLabels.email')}
               </label>
               <input
                 id="email"
                 class="inputField border border-border dark:border-border-DM rounded px-1"
                 type="email"
-                placeholder="Your email"
+                placeholder={t('formLabels.email')}
                 value={email()}
                 onChange={(e) => setEmail(e.currentTarget.value)}
               />
@@ -54,7 +57,7 @@ export const NewPassword: Component = () => {
                 class="button block border border-border dark:border-border-DM bg-btn1 dark:bg-btn1-DM px-4 rounded-full my-2 hover:bg-btn1hov dark:hover:bg-btn1hov-DM" 
                 aria-live="polite"
               >
-                {loading() ? <span>Loading</span> : <span class="text-text2 dark:text-text2-DM">Reset</span>}
+                {loading() ? <span>{t('buttons.loading')}</span> : <span class="text-text2 dark:text-text2-DM">{t('buttons.reset')}</span>}
               </button>
             </div>
           </form>
