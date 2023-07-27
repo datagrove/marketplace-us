@@ -67,7 +67,7 @@ export const Auth: Component = (props) => {
     <div class='bg-background1 border-border max-w-md max-h-max p-5 m-0 m-auto rounded-md dark:bg-background1-DM border-border-DM'>
       {/* If the auth mode is sign in then return the sign in form */}
       {authMode() === "sign_in" ? (
-        <div class="brow flex-center flex">
+        <div class="row flex-center flex">
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleLogin}>
             <div class="mb-4">
