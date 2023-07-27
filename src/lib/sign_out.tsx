@@ -33,7 +33,7 @@ export const SignOut: Component = () => {
     return (
         <div>
             <form onSubmit={handleSignOut}>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">{t('buttons.signOut')}</button>
+            <button class="bg-btn1 hover:bg-btn1hov text-white font-bold py-2 px-4 rounded" type="submit">{t('buttons.signOut')}</button>
             </form>
         </div>
     )

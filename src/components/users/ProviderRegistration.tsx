@@ -162,7 +162,7 @@ export const ProviderRegistration: Component = () => {
 
     //Actual Form that gets displayed for users to fill
     return (
-        <div>
+        <div class='bg-background1 max-w-md'>
             <form onSubmit={submit}>
                 <label for="FirstName">{t('formLabels.firstName')}:
                     <input type="text" id="FirstName" name="FirstName" required />
