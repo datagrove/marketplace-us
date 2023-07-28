@@ -3,6 +3,7 @@ import { languages } from "../../i18n/ui";
 import { createSignal, createEffect, Component, onMount } from "solid-js";
 import { currentLanguage } from "../../lib/languageSelectionStore";
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { SITE } from '../../config';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
@@ -28,7 +29,7 @@ export const LanguagePicker: Component = () => {
       console.log(path)
       path[1] = selectedLanguage();
       console.log(path.join('/'))
-      window.location.href = '/' + path.join('/');
+      window.location.href = SITE.url + path.join('/');
     } else {
       console.log("Path Index 1 doesn't contain a language")
       console.log(path)
