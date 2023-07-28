@@ -36,11 +36,5 @@ export default defineConfig({
   trailingSlash: 'never',
   build: {
     format: 'file'
-  },
-  vite: {
-    define: {
-      'process.env.API_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
-      'process.env.anon_key': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
-    }
-  }  
+  }
 });
