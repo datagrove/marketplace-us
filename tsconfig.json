@@ -1,9 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "ignoreDeprecations": "5.0",
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "module": "esnext",
   }
 }

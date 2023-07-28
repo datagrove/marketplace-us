@@ -1,5 +1,5 @@
 ---
-//This should probably be re-writted in Solid or something but for now I think it
+//This should probably be re-writted in Solid or something but for now I think it works
 import { Icon } from 'astro-icon';
 
 import { SITE } from '../../config';
@@ -23,7 +23,7 @@ const {
 {
   !(SITE?.defaultTheme && SITE.defaultTheme.endsWith(':only')) && (
     <button id="themeToggle" type="button" class={className} aria-label={label} data-aw-toggle-color-scheme>
-      {/*<Icon name={iconName} class={iconClass} />*/}
+      <Icon name={iconName} class={iconClass} />
     </button>
   )
 }

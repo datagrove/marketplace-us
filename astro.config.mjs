@@ -15,7 +15,6 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  platform: 'node',
   integrations: [solid(), tailwind(), i18n({
     locales,
     defaultLocale
@@ -28,7 +27,7 @@ export default defineConfig({
       defaultLocale
     })
   })],
-  adapter: cloudflare({mode: 'directory'}),
+  adapter: cloudflare(),
   experimental: {
     redirects: true
   },
