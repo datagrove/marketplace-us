@@ -15,6 +15,7 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  platform: 'node',
   integrations: [solid(), tailwind(), i18n({
     locales,
     defaultLocale
@@ -27,7 +28,7 @@ export default defineConfig({
       defaultLocale
     })
   })],
-  adapter: cloudflare(),
+  adapter: cloudflare({mode: 'directory'}),
   experimental: {
     redirects: true
   },
@@ -38,11 +39,8 @@ export default defineConfig({
   },
   vite: {
     define: {
-      'process.env.API_URL': JSON.stringify(process.env.API_URL),
-      'process.env.anon_key': JSON.stringify(process.env.anon_key),
-      'process.env.PUBLIC_STRIPE_API': JSON.stringify(process.env.PUBLIC_STRIPE_API),
-      'process.env.PRIVATE_STRIPE_API': JSON.stringify(process.env.PRIVATE_STRIPE_API),
-      'process.env.PRIVATE_STRIPE_ENDPOINT': JSON.stringify(process.env.PRIVATE_STRIPE_ENDPOINT),
+      'process.env.API_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
+      'process.env.anon_key': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
     }
   }  
 });
