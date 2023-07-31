@@ -13,33 +13,36 @@ interface ProviderPost {
   minor_municipality: string;
   governing_district: string;
 }
+const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
+const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
+const [session, setSession] = createSignal<AuthSession | null>(null);
+
 const { data: User, error: UserError } = await supabase.auth.getSession();
-
-export const DeleteProviderPosts: Component = async () => {
-  const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
-  const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
-  const [session, setSession] = createSignal<AuthSession | null>(null);
+if (UserError) {
+  console.log("User Error: " + UserError.message);
+} else {
+  setSession(User.session);
   console.log(User);
-  if (UserError) {
-    console.log("User Error: " + UserError.message);
-  } else {
-    setSession(User.session);
+}
+
+createEffect(async () => {
+  const { data, error } = await supabase
+    .from("providerposts")
+    .select("*")
+    .eq("user_id", session()!.user.id);
+  if (!data) {
+    alert("No posts available.");
   }
+  if (error) {
+    console.log("supabase error: " + error.message);
+  } else {
+    setPosts(data);
+    setCurrentPosts(data);
+    console.log("got posts", currentPosts());
+  }
+});
 
-  createEffect(async () => {
-    const { data, error } = await supabase
-      .from("providerposts")
-      .select("*")
-      .eq("user_id", session()!.user.id);
-    if (!data) {
-      alert("No posts available.");
-    } else {
-      setPosts(data);
-      setCurrentPosts(data);
-      console.log("got posts", currentPosts());
-    }
-  });
-
+export const DeleteProviderPosts: Component = () => {
   return (
     <div>
       <h1>chau</h1>
