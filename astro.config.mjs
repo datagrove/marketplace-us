@@ -15,10 +15,12 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  integrations: [solid(), tailwind(), i18n({
+  integrations: [solid(), tailwind(), 
+    i18n({
     locales,
     defaultLocale
-  }), sitemap({
+  }), 
+  sitemap({
     i18n: {
       locales,
       defaultLocale
