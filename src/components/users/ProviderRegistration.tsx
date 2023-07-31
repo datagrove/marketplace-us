@@ -16,6 +16,7 @@ async function postFormData(formData: FormData) {
     const data = await response.json();
     //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {
+        //TODO: Not sure how to deal with internationalization here
         alert(data.message)
         window.location.href = `/${lang}` + data.redirect;
     }
@@ -153,12 +154,15 @@ export const ProviderRegistration: Component = () => {
         const formData = new FormData(e.target as HTMLFormElement)
         formData.append("access_token", session()?.access_token!)
         formData.append("refresh_token", session()?.refresh_token!)
+        if(imageUrl() !== null){
+            formData.append("image_url", imageUrl()!)
+        } 
         setFormData(formData)
     }
 
     //Actual Form that gets displayed for users to fill
     return (
-        <div>
+        <div class='bg-background1 max-w-md'>
             <form onSubmit={submit}>
                 <label for="FirstName">{t('formLabels.firstName')}:
                     <input type="text" id="FirstName" name="FirstName" required />

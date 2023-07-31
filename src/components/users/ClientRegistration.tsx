@@ -8,16 +8,21 @@ import {
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 async function postFormData(formData: FormData) {
   const response = await fetch("/api/clientProfileSubmit", {
     method: "POST",
     body: formData,
   });
+
   const data = await response.json();
   if (data.redirect) {
     alert(data.message);
-    window.location.href = data.redirect;
+    window.location.href = `/${lang}` + data.redirect;
   }
   return data;
 }
@@ -182,7 +187,7 @@ export const ClientRegistration: Component = () => {
         console.log("Other error: " + error);
       }
     } else {
-      alert("Please sign in to create a provider profile.");
+      alert(t("messages.createClientAccount"));
       location.href = "/login";
     }
   });
@@ -192,6 +197,9 @@ export const ClientRegistration: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
+    if (imageUrl() !== null) {
+      formData.append("image_url", imageUrl()!);
+    }
     setFormData(formData);
     console.log(formData);
   }
@@ -200,38 +208,38 @@ export const ClientRegistration: Component = () => {
     <div class="">
       <form onSubmit={submit} class="">
         <label for="DisplayName" class="text-text1 dark:text-text1-DM">
-          Display Name:
-          <input 
-            type="text" 
-            id="DisplayName" 
+          {t("formLabels.displayName")}
+          <input
+            type="text"
+            id="DisplayName"
             class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="DisplayName" 
-            required 
+            name="DisplayName"
+            required
           />
         </label>
 
         <br />
 
         <label for="Phone" class="text-text1 dark:text-text1-DM">
-          Phone Number:
+          {t("formLabels.phone")}:
           <br />
-          <input 
-            type="text" 
-            id="Phone" 
+          <input
+            type="text"
+            id="Phone"
             class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="Phone" 
-            required 
+            name="Phone"
+            required
           />
         </label>
 
         <br />
 
         <label for="country" class="text-text1 dark:text-text1-DM">
-          Country:
-          <select 
-            id="country" 
+          {t("formLabels.country")}:
+          <select
+            id="country"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="country" 
+            name="country"
             required
           >
             <option value="-1">-</option>
@@ -241,11 +249,11 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
-          Major Municipality:
-          <select 
-            id="MajorMunicipality" 
+          {t("formLabels.majorMunicipality")}:
+          <select
+            id="MajorMunicipality"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="MajorMunicipality" 
+            name="MajorMunicipality"
             required
           >
             <option value="-1">-</option>
@@ -255,11 +263,11 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
-          Minor Municipality:
-          <select 
-            id="MinorMunicipality" 
+          {t("formLabels.minorMunicipality")}:
+          <select
+            id="MinorMunicipality"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="MinorMunicipality" 
+            name="MinorMunicipality"
             required
           >
             <option value="-1">-</option>
@@ -269,11 +277,11 @@ export const ClientRegistration: Component = () => {
         <br />
 
         <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
-          Governing District:
-          <select 
-            id="GoverningDistrict" 
+          {t("formLabels.governingDistrict")}:
+          <select
+            id="GoverningDistrict"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            name="GoverningDistrict" 
+            name="GoverningDistrict"
             required
           >
             <option value="-1">-</option>
@@ -289,7 +297,7 @@ export const ClientRegistration: Component = () => {
         />
 
         <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Register
+          {t("buttons.register")}
         </button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>

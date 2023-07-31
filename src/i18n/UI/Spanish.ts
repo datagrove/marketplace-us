@@ -47,6 +47,7 @@ export const Spanish = {
     checkConfirmEmail: '¡Revisa tu correo electrónico para el link de confirmación!',
     signIn: "Inicia sesión para acceder a esta página",
     createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
+    createClientAccount: "Inicie sesión para crear un perfil de cliente",
     viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
     noPosts: "No hay publicaciones disponibles",
   },
@@ -67,6 +68,7 @@ export const Spanish = {
     email: 'Correo electrónico',
     password: 'Contraseña',
     confirmPassword: 'confirmar Contraseña',
+    displayName: 'Nombre para mostrar',
   },
 
   headerData: {

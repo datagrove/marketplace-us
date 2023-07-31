@@ -47,6 +47,7 @@ export const English = {
     checkConfirmEmail: 'Check your email for the confirmation link!',
     signIn: "Please sign in to access this page.",
     createProviderAccount: "Please sign in to create a provider profile.",
+    createClientAccount: "Please sign in to create a client profile.",
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
   },
@@ -67,6 +68,7 @@ export const English = {
     email: 'Email',
     password: 'Password',
     confirmPassword: 'Confirm Password',
+    displayName: 'Display Name',
   },
 
   headerData: {
