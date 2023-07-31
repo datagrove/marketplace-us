@@ -93,7 +93,7 @@ export const Auth: Component = (props) => {
               />
             </div>
             <div class='bg-btn1 mb-4'>
-              <button type="submit" class="button block" aria-live="polite">
+              <button type="submit" class="btn-primary" aria-live="polite">
                 {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.login')}</span>}
               </button>
             </div>
@@ -156,7 +156,7 @@ export const Auth: Component = (props) => {
           {match() ? '' : <span>{t('messages.passwordMatch')}</span>}
           </div>
           <div>
-            <button type="submit" class="mt-3 bg-btn1 hover:bg-btn1hov text-white font-bold py-2 px-4 rounded dark:bg-btn1-DM" aria-live="polite" disabled={!match()}>
+            <button type="submit" class="mt-3 btn-primary dark:bg-btn1-DM" aria-live="polite" disabled={!match()}>
               {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('pageTitles.signUp')}</span>}
             </button>
           </div>
