@@ -19,7 +19,7 @@
     "@nanostores/solid": "^0.4.2",
     "@supabase/supabase-js": "^2.26.0",
     "astro": "^2.8.0",
-    "astro-i18n-aut": "^0.1.15",
+    "astro-i18n-aut": "^0.3.2",
     "astro-icon": "^1.0.0-next.2",
     "babel-preset-solid": "^1.7.7",
     "i18next": "^23.2.11",
