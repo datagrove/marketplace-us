@@ -19,6 +19,9 @@ export default defineConfig({
   integrations: [solid(), tailwind(), 
     icon({
       iconDir: "src/assets",
+      include: {
+        tabler: ["*"],
+      }
     }), 
     i18n({
     locales,
