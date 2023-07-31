@@ -1,11 +1,12 @@
 import { defineConfig } from 'astro/config';
 import solid from '@astrojs/solid-js';
 import tailwind from "@astrojs/tailwind";
-import { i18n, defaultLocaleSitemapFilter } from 'astro-i18n-aut';
+import { i18n, defaultLocaleSitemapFilter } from 'astro-i18n-aut/integration';
 import sitemap from '@astrojs/sitemap';
 import cloudflare from "@astrojs/cloudflare";
 import { defaultLang, languages } from './src/i18n/ui';
 import { SITE } from './src/config';
+import icon from "astro-icon"
 
 
 const locales = languages;
@@ -16,6 +17,9 @@ const defaultLocale = defaultLang;
 export default defineConfig({
   output: 'server',
   integrations: [solid(), tailwind(), 
+    icon({
+      iconDir: "src/assets",
+    }), 
     i18n({
     locales,
     defaultLocale
@@ -30,9 +34,6 @@ export default defineConfig({
     })
   })],
   adapter: cloudflare(),
-  experimental: {
-    redirects: true
-  },
   site: SITE.url,
   trailingSlash: 'never',
   build: {
