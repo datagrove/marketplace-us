@@ -45,7 +45,7 @@ export const SetNewPassword: Component = () => {
               />
             </div>
             <div>
-              <button type="submit" class="button block" aria-live="polite">
+              <button type="submit" class="btn-primary" aria-live="polite">
                 {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.reset')}</span>}
               </button>
             </div>

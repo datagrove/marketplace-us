@@ -25,6 +25,7 @@ export const NewPassword: Component = () => {
     } finally {
         setLoading(false)
         alert(t('messages.checkEmail'))
+        location.href=`/${lang}`
     }
 }
 

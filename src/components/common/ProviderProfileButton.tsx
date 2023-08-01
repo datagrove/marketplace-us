@@ -2,6 +2,7 @@ import { Component, createSignal, createEffect } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import { currentSession } from '../../lib/userSessionStore'
 import { useStore } from '@nanostores/solid'
+
 import type { AuthSession } from '@supabase/supabase-js'
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
@@ -41,7 +42,7 @@ export const ProviderProfileButton: Component = () => {
     return (
         <div>
             <form onSubmit={providerRedirect}>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">{t("buttons.providerProfile")}</button>
+                <button class="btn-primary" type="submit">{t("buttons.providerProfile")}</button>
             </form>
         </div>
     )

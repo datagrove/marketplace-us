@@ -178,6 +178,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: "Success!",
+      redirect: "/provider/profile",
     }),
     { status: 200 }
   );

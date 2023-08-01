@@ -7,10 +7,14 @@ import {
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+const values = ui[lang] as uiObject
+const productCategoryData = values.productCategoryInfo
 
 async function postFormData(formData: FormData) {
   const response = await fetch("/api/providerCreatePost", {
@@ -19,7 +23,7 @@ async function postFormData(formData: FormData) {
   });
   const data = await response.json();
   if (data.redirect) {
-    alert(data.message);
+    alert(data.message); //TODO: Not sure how to internationalize these 
     window.location.href = `/${lang}` + data.redirect;
   }
   return data;
@@ -54,22 +58,22 @@ export const CreateNewPost: Component = () => {
         console.log("Other error: " + error);
       }
 
-      //Post Category
-      try {
-        const { data: postCategory, error: errorPostCategory } = await supabase
-          .from("post_category")
-          .select("*");
-        if (errorPostCategory) {
-          console.log("supabase error: " + errorPostCategory.message);
-        } else {
-          postCategory.forEach((category) => {
-            let categoryOption = new Option(category.category, category.id);
-            document.getElementById("ServiceCategory")?.append(categoryOption);
-          });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      // //Post Category
+      // try {
+      //   const { data: postCategory, error: errorPostCategory } = await supabase
+      //     .from("post_category")
+      //     .select("*");
+      //   if (errorPostCategory) {
+      //     console.log("supabase error: " + errorPostCategory.message);
+      //   } else {
+      //     postCategory.forEach((category) => {
+      //       let categoryOption = new Option(category.category, category.id);
+      //       document.getElementById("ServiceCategory")?.append(categoryOption);
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
 
       //Country
       try {
@@ -247,6 +251,9 @@ export const CreateNewPost: Component = () => {
             {t("formLabels.serviceCategory")}:
             <select id="ServiceCategory" name="ServiceCategory" required>
               <option value="-1">-</option>
+              {productCategoryData.categories.map((category) => (
+                <option value={category.id}>{category.name}</option>
+              ))}
             </select>
           </label>
         </div>
@@ -294,7 +301,7 @@ export const CreateNewPost: Component = () => {
           </select>
         </label>
 
-        <button>Post</button>
+        <button class="btn-primary">Post</button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
     </div>

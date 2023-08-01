@@ -214,7 +214,7 @@ export const ProviderRegistration: Component = () => {
                     }}
                 />
 
-                <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{t('buttons.register')}</button>
+                <button class="btn-primary">{t('buttons.register')}</button>
 
                 <Suspense>{response() && <p>{response().message}</p>}</Suspense>
             </form>

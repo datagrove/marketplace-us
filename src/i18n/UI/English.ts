@@ -7,6 +7,7 @@ export const English = {
     login: 'Login',
     home: 'Home',
     signIn: 'Sign In',
+    createClientAccount: 'Create Client Account',
     editClientAccount: 'Edit Client Account',
     viewClientAccount: 'View Client Account',
     createPost: 'Create Post',
