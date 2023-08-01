@@ -294,7 +294,7 @@ export const CreateNewPost: Component = () => {
           </select>
         </label>
 
-        <button>Post</button>
+        <button class="btn-primary">Post</button>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
     </div>
