@@ -7,6 +7,7 @@ export interface uiObject {
     login: string,
     home: string,
     signIn: string,
+    createClientAccount: string,
     editClientAccount: string,
     viewClientAccount: string,
     createPost: string,

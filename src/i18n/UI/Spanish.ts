@@ -7,6 +7,7 @@ export const Spanish = {
     login: 'Iniciar sesión',
     home: 'Inicio',
     signIn: 'Iniciar sesión',
+    createClientAccount: 'Crear cuenta de cliente',
     editClientAccount: 'Editar Cuenta de Cliente',
     viewClientAccount: 'Ver Cuenta de Cliente',
     createPost: 'Crear Publicación',
