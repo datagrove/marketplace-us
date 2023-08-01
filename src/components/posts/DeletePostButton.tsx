@@ -3,17 +3,18 @@ import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 
 interface Props {
-  // Define the type for the filterPosts prop
+  // Define the type of the prop
   Id: number;
   UserId: string;
 }
 
 // (Id, UserId)
 
-export const DeletePostButton: Component<Props> = async (props) => {
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
+export const DeletePostButton: Component<Props> = (props) => {
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
-  const { data: User, error: UserError } = await supabase.auth.getSession();
   if (UserError) {
     console.log("User Error: " + UserError.message);
   } else {

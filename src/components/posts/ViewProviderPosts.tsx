@@ -15,9 +15,9 @@ interface ProviderPost {
   governing_district: string;
 }
 
-export const ViewProviderPosts: Component = async () => {
-  const { data: User, error: UserError } = await supabase.auth.getSession();
+const { data: User, error: UserError } = await supabase.auth.getSession();
 
+export const ViewProviderPosts: Component = () => {
   const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
