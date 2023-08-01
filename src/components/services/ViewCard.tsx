@@ -33,7 +33,7 @@ export const ViewCard: Component<Props> = (props) => {
                 {post.governing_district}
               </p>
               <p>Category: {post.category}</p>
-              {DeletePostButton(post.id, post.user_id)}
+              <DeletePostButton Id={post.id} UserId={post.user_id} />
             </div>
           </li>
         ))}

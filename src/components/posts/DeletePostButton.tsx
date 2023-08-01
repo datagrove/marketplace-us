@@ -2,17 +2,24 @@ import { Component, Show, createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 
-const [session, setSession] = createSignal<AuthSession | null>(null);
-
-const { data: User, error: UserError } = await supabase.auth.getSession();
-if (UserError) {
-  console.log("User Error: " + UserError.message);
-} else {
-  setSession(User.session);
-  console.log(User);
+interface Props {
+  // Define the type for the filterPosts prop
+  Id: number;
+  UserId: string;
 }
 
-export function DeletePostButton(Id, propsUserId) {
+// (Id, UserId)
+
+export const DeletePostButton: Component<Props> = async (props) => {
+  const [session, setSession] = createSignal<AuthSession | null>(null);
+
+  const { data: User, error: UserError } = await supabase.auth.getSession();
+  if (UserError) {
+    console.log("User Error: " + UserError.message);
+  } else {
+    setSession(User.session);
+    console.log(User);
+  }
   const deletePost = async (e: SubmitEvent) => {
     e.preventDefault();
     function hello() {
@@ -20,19 +27,19 @@ export function DeletePostButton(Id, propsUserId) {
     }
 
     function checkIfUserIsProvider() {
-      if (session()!.user.id === propsUserId) {
+      if (session()!.user.id === props.UserId) {
         return true;
       } else {
         return false;
       }
     }
-    if (propsUserId === session()!.user.id) {
+    if (props.UserId === session()!.user.id) {
       try {
         const { error } = await supabase
           .from("provider_post")
           .delete()
-          .eq("id", Id);
-        console.log("deleted post", Id);
+          .eq("id", props.Id);
+        console.log("deleted post", props.Id);
       } catch (error) {
         console.log(error);
       }
@@ -42,7 +49,7 @@ export function DeletePostButton(Id, propsUserId) {
   };
 
   return (
-    <Show when={session()!.user.id === propsUserId}>
+    <Show when={session()!.user.id === props.UserId}>
       <div>
         <form onSubmit={deletePost}>
           <button
@@ -55,4 +62,4 @@ export function DeletePostButton(Id, propsUserId) {
       </div>
     </Show>
   );
-}
+};
