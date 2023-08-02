@@ -42,7 +42,7 @@ const UserImage: Component<Props> = (props) => {
 
       const target = event.currentTarget;
       if (!target?.files || target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
+        throw new Error("You must select an image to upload."); //TODO: Internationalize
       }
 
       const file = target.files[0];
@@ -95,7 +95,7 @@ const UserImage: Component<Props> = (props) => {
       )}
       <div style={{ width: `${props.size}px` }}>
         <label
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-primary"
           for="single"
         >
           {uploading() ? "Uploading ..." : "Upload Image"}
