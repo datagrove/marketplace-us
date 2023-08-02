@@ -64,41 +64,41 @@ export const Auth: Component = (props) => {
     
 
   return (
-    <div class='bg-background1 border-border max-w-md max-h-max p-5 m-0 m-auto rounded-md dark:bg-background1-DM border-border-DM'>
+    <div>
       {/* If the auth mode is sign in then return the sign in form */}
       {authMode() === "sign_in" ? (
         <div class="row flex-center flex">
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleLogin}>
-            <div class="mb-4">
-              <label for="email">{t('formLabels.email')}</label>
+            <div class="mb-4 flex justify-center">
+              <label class="hidden" for="email">{t('formLabels.email')}: </label>
               <input
                 id="email"
-                class="inputField"
+                class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
                 type="email"
                 placeholder={t('formLabels.email')}
                 value={email()}
                 onChange={(e) => setEmail(e.currentTarget.value)}
               />
             </div>
-            <div class='mb-4'>
-              <label for="password">{t('formLabels.password')}</label>
+            <div class='mb-4 flex justify-center'>
+              <label class="hidden" for="password">{t('formLabels.password')}: </label>
               <input
                 id="password"
-                class="inputField"
+                class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
                 type="password"
                 placeholder={t('formLabels.password')}
                 value={password()}
                 onChange={(e) => setPassword(e.currentTarget.value)}
               />
             </div>
-            <div class='bg-btn1 mb-4'>
+            <div class='mb-4 flex justify-center'>
               <button type="submit" class="btn-primary" aria-live="polite">
                 {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.login')}</span>}
               </button>
             </div>
             <div>
-              <p class="text-sm text-text1"> {t('messages.noAccount')}<a class="text-link2 hover:underline dark:text-gray-200" href={`/${lang}/signup`}>{t('buttons.signUp')}</a></p>
+              <p class="text-sm text-text1 dark:text-text1-DM"> {t('messages.noAccount')}<a class="text-link2 hover:underline dark:text-link2-DM" href={`/${lang}/signup`}>{t('buttons.signUp')}</a></p>
             </div>
           </form>
         </div>
@@ -108,16 +108,12 @@ export const Auth: Component = (props) => {
         authMode() === "sign_up" ? (
           <div class="row flex-center flex">
       <div class="col-6 form-widget" aria-live="polite">
-        <h1 class="header">Create an account</h1>
-        <div>
-          <p class="text-text2 dark:text-text2-DM">{t('messages.alreadyAccount')} <a class="text-link2 hover:underline dark:text-link2-DM" href={`/${lang}/login`}>{t('buttons.signIn')}</a></p>
-        </div>
         <form class="form-widget" onSubmit={handleSignUp}>
-          <div class='mb-3'>
-            <label for="email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}</label>
+          <div class='mb-4 flex justify-center'>
+            <label class="hidden" for="email">{t('formLabels.email')}</label>
             <input
               id="email"
-              class="inputField ml-2 rounded-md pl-2 bg-background1 dark:bg-background2-DM"
+              class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
               type="email"
               placeholder={t('formLabels.email')}
               required
@@ -125,41 +121,46 @@ export const Auth: Component = (props) => {
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
           </div>
-          <div class='mb-3'>
-            <label for="password" class="text-text1 dark:text-text1-DM">{t('formLabels.password')}</label>
+          <div class='mb-1 flex justify-center'>
+            <label for="password" class="hidden">{t('formLabels.password')}</label>
             <input
               id="password"
-              class="inputField ml-2 rounded-md pl-2 bg-background1 dark:bg-background2-DM"
+              class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
               type="password"
               placeholder={t('formLabels.password')}
               required
               value={password()}
               oninput={(e) => setPassword(e.currentTarget.value)}
+              aria-describedby='pwlength'
             />
           </div>
-          <div>
-          {password().length>5 ? '' : <p class="text-sm text-gray-600"> {t('messages.passwordLength')}</p>}
+          <div class="mb-4 flex justify-center">
+          {password().length>5 ? '' : <span id='pwlength' class="text-sm text-text1 dark:text-text1-DM"> {t('messages.passwordLength')}</span>}
           </div>
-          <div>
-            <label for="confirm password" class="text-text1 dark:text-text1-DM">{t('formLabels.confirmPassword')}</label>
+          <div class="mb-1 flex justify-center">
+            <label for="confirm password" class="hidden">{t('formLabels.confirmPassword')}</label>
             <input
               id="confirm password"
-              class="inputField ml-2 rounded-md pl-2 bg-background1 dark:bg-background2-DM"
+              class="inputField ml-2 ml-2 rounded-md pl-2 w-5/6 border border-border"
               type="password"
               placeholder={t('formLabels.confirmPassword')}
               required
               value={confirmPassword()}
               oninput={(e) => setConfirmPassword(e.currentTarget.value)}
+              aria-describedby='pwconfirm'
             />
           </div>
-          <div>
-          {match() ? '' : <span>{t('messages.passwordMatch')}</span>}
+          <div class="mb-4 flex justify-center">
+          {match() ? '' : <span id="pwconfirm" class="text-sm text-text1 dark:text-text1-DM">{t('messages.passwordMatch')}</span>}
           </div>
-          <div>
+          <div class='mb-4 flex justify-center'>
             <button type="submit" class="mt-3 btn-primary dark:bg-btn1-DM" aria-live="polite" disabled={!match()}>
               {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('pageTitles.signUp')}</span>}
             </button>
           </div>
+          <div class="my-2">
+          <p class="text-text1 dark:text-text1-DM">{t('messages.alreadyAccount')} <a class="text-link2 hover:underline dark:text-link2-DM" href={`/${lang}/login`}>{t('buttons.signIn')}</a></p>
+        </div>
         </form>
       </div>
     </div>

@@ -1,20 +1,26 @@
 ---
 import { SITE } from "../config";
 import type BaseLayout from "../layouts/BaseLayout.astro";
-import PageLayout from '../layouts/PageLayout.astro';
+import PageLayout from "../layouts/PageLayout.astro";
 import { Auth } from "../lib/Auth";
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const AuthData = { mode: "sign_up"}
+const AuthData = { mode: "sign_up" };
 ---
 
 <PageLayout>
-	<div class="text-center mt-4 mb-8">
-		<h2 class="text-xl w-full italic">{t('pageTitles.signUp')}</h2>
-	</div>
-	<!-- Call the auth form in sign up mode -->
-	<Auth client:only="solid-js" {...AuthData}/>
+  <div>
+    <div class="text-center mt-4 mb-8">
+      <h2 class="text-xl w-full italic">{t("pageTitles.signUp")}</h2>
+    </div>
+    <div
+      class="bg-background1 border-border border max-w-md max-h-max p-5 m-auto rounded-md dark:bg-background1-DM dark:border-border-DM"
+    >
+      <!-- Call the auth form in sign up mode -->
+      <Auth client:only="solid-js" {...AuthData} />
+    </div>
+  </div>
 </PageLayout>
