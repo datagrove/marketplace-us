@@ -13,9 +13,11 @@ interface ProviderPost {
     major_municipality: string;
     minor_municipality: string;
     governing_district: string;
+    user_id: string;
 }
 
 const { data, error } = await supabase.from('providerposts').select('*');
+console.log(data)
 
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([])

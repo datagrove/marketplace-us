@@ -9,6 +9,7 @@ interface Post {
   major_municipality: string;
   minor_municipality: string;
   governing_district: string;
+  user_id: string;
 }
 
 interface Props {
