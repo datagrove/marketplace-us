@@ -188,7 +188,7 @@ export const ClientRegistration: Component = () => {
       }
     } else {
       alert(t("messages.createClientAccount"));
-      location.href = "/login";
+      location.href = `${lang}/login`;
     }
   });
 
@@ -207,6 +207,26 @@ export const ClientRegistration: Component = () => {
   return (
     <div class="">
       <form onSubmit={submit} class="">
+        <label for="FirstName" class="text-text1 dark:text-text1-DM">{t('formLabels.firstName')}:
+          <input
+            type="text"
+            id="FirstName"
+            name="FirstName"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required
+          />
+        </label>
+
+        <label for="LastName" class="text-text1 dark:text-text1-DM">{t('formLabels.lastName')}:
+          <input
+            type="text"
+            id="LastName"
+            name="LastName"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required
+          />
+        </label>
+
         <label for="DisplayName" class="text-text1 dark:text-text1-DM">
           {t("formLabels.displayName")}
           <input
@@ -214,15 +234,11 @@ export const ClientRegistration: Component = () => {
             id="DisplayName"
             class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="DisplayName"
-            required
           />
         </label>
 
-        <br />
-
         <label for="Phone" class="text-text1 dark:text-text1-DM">
           {t("formLabels.phone")}:
-          <br />
           <input
             type="text"
             id="Phone"
@@ -231,8 +247,6 @@ export const ClientRegistration: Component = () => {
             required
           />
         </label>
-
-        <br />
 
         <label for="country" class="text-text1 dark:text-text1-DM">
           {t("formLabels.country")}:
@@ -288,17 +302,22 @@ export const ClientRegistration: Component = () => {
           </select>
         </label>
 
-        <UserImage
-          url={imageUrl()}
-          size={150}
-          onUpload={(e: Event, url: string) => {
-            setImageUrl(url);
-          }}
-        />
+        <div class="mb-4 flex justify-center">
+          <UserImage
+            url={imageUrl()}
+            size={150}
+            onUpload={(e: Event, url: string) => {
+              setImageUrl(url);
+            }}
+          />
+        </div>
 
-        <button class="btn-primary">
-          {t("buttons.register")}
-        </button>
+        <div class="flex justify-center">
+          <button class="btn-primary">
+            {t("buttons.register")}
+          </button>
+        </div>
+
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
     </div>

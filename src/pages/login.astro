@@ -14,10 +14,12 @@ const t = useTranslations(lang);
     <div class="text-center mt-4 mb-8">
       <h2 class="text-xl w-full italic">{t("pageTitles.login")}</h2>
     </div>
-	<div class='bg-background1 border-border border max-w-md max-h-max p-5 m-auto rounded-md dark:bg-background1-DM dark:border-border-DM'>
-    <Auth client:only="solid-js" />
-	<div class="m-2"></div>
-    <PasswordReset client:only="solid-js" />
-	</div>
+    <div
+      class="bg-background1 border-border border max-w-md max-h-max p-5 m-auto rounded-md dark:bg-background1-DM dark:border-border-DM"
+    >
+      <Auth client:only="solid-js" />
+      <div class="m-2"></div>
+      <PasswordReset client:only="solid-js" />
+    </div>
   </div>
 </PageLayout>
