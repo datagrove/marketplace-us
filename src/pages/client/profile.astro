@@ -2,7 +2,6 @@
 import Layout from "../../layouts/PageLayout.astro";
 import { EditProfileButton } from "../../components/users/EditProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -12,6 +11,5 @@ const t = useTranslations(lang);
   <div>
     <h1>{t("pageTitles.viewClientAccount")}</h1>
     <EditProfileButton client:only="solid-js" />
-    <ViewProviderPosts client:only="solid-js" />
   </div>
 </Layout>
