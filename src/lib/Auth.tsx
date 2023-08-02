@@ -141,7 +141,7 @@ export const Auth: Component = (props) => {
                   <label for="confirm password" class="hidden">{t('formLabels.confirmPassword')}</label>
                   <input
                     id="confirm password"
-                    class="inputField ml-2 ml-2 rounded-md pl-2 w-5/6 border border-border"
+                    class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
                     type="password"
                     placeholder={t('formLabels.confirmPassword')}
                     required
