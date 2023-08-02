@@ -35,7 +35,7 @@ export const English = {
   },
 
   messages: {
-    noAccount: "Don't have an account? Click here to",
+    noAccount: "Don't have an account? Click here to ",
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
     passwordReset: 'Password Reset',
