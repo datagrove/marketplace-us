@@ -20,7 +20,7 @@ const PostImage: Component<Props> = (props) => {
   const downloadImage = async (path: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from("user.image")
+        .from("post.image")
         .download(path);
       if (error) {
         throw error;
@@ -51,7 +51,7 @@ const PostImage: Component<Props> = (props) => {
       const filePath = `${fileName}`;
 
       let { error: uploadError } = await supabase.storage
-        .from("user.image")
+        .from("post.image")
         .upload(filePath, file);
 
       if (uploadError) {
