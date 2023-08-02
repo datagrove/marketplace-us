@@ -43,6 +43,8 @@ export const DeletePostButton: Component<Props> = (props) => {
         console.log("deleted post", props.Id);
       } catch (error) {
         console.log(error);
+      } finally {
+        window.location.reload();
       }
     } else {
       console.log("You can't delete this post because it is not yours.");
