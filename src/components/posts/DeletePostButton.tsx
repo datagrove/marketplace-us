@@ -4,15 +4,15 @@ import type { AuthSession } from "@supabase/supabase-js";
 
 interface Props {
   // Define the type of the prop
+  // (Id, UserId)
   Id: number;
   UserId: string;
 }
 
-// (Id, UserId)
-
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const DeletePostButton: Component<Props> = (props) => {
+  // initialize session
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
   if (UserError) {
@@ -21,6 +21,9 @@ export const DeletePostButton: Component<Props> = (props) => {
     setSession(User.session);
     console.log(User);
   }
+
+  //Pre: User is logged in, there is a click to delete a post
+  //Post: The post is deleted from the database
   const deletePost = async (e: SubmitEvent) => {
     e.preventDefault();
     function hello() {
@@ -34,6 +37,9 @@ export const DeletePostButton: Component<Props> = (props) => {
         return false;
       }
     }
+
+    // check if user is provider and if they are the owner of the post
+    // if they are, delete the post
     if (props.UserId === session()!.user.id) {
       try {
         const { error } = await supabase
@@ -44,6 +50,7 @@ export const DeletePostButton: Component<Props> = (props) => {
       } catch (error) {
         console.log(error);
       } finally {
+        // refresh the page
         window.location.reload();
       }
     } else {
