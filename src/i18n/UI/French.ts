@@ -32,6 +32,7 @@ export const French = {
     signOut: "se déconnecter",
     returnHome: "Cliquez pour retourner à la maison",
     reset: 'Réinitialiser',
+    post: 'Poste',
   },
 
   messages: {
@@ -70,6 +71,7 @@ export const French = {
     password: "Mot de passe",
     confirmPassword: "Confirmez le mot de passe",
     displayName: 'Afficher un nom',
+    enterPostContent: 'Entrez le contenu du message ici',
   },
 
   headerData: {
