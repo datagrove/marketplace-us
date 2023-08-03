@@ -224,56 +224,56 @@ export const CreateNewPost: Component = () => {
   return (
     <div>
       <form onSubmit={submit}>
-          <label for="Title" class= "text-text1 dark:text-text1-DM">
-            {t("formLabels.title")}:
-            <input 
-            type="text" 
-            id="Title" 
-            name="Title" 
+        <label for="Title" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.title")}:
+          <input
+            type="text"
+            id="Title"
+            name="Title"
             class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            required 
-            />
-          </label>
+            required
+          />
+        </label>
 
 
-          <label for="ServiceCategory" class="text-text1 dark:text-text1-DM">
-            {t("formLabels.serviceCategory")}:
-            <select 
-            id="ServiceCategory" 
-            name="ServiceCategory" 
+        <label for="ServiceCategory" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.serviceCategory")}:
+          <select
+            id="ServiceCategory"
+            name="ServiceCategory"
             class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required>
-              <option value="-1">-</option>
-              {productCategoryData.categories.map((category) => (
-                <option value={category.id}>{category.name}</option>
-              ))}
-            </select>
-          </label>
+            <option value="-1">-</option>
+            {productCategoryData.categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))}
+          </select>
+        </label>
 
-          <br/>
+        <br />
 
 
-          <label for="Content" class="text-text1 dark:text-text1-DM">
-            {t("formLabels.postContent")}:
-            <textarea 
-            id="Content" 
-            name="Content" 
+        <label for="Content" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.postContent")}:
+          <textarea
+            id="Content"
+            name="Content"
             class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             placeholder={t('formLabels.enterPostContent')}
-            rows="10" 
+            rows="10"
             required>
-            </textarea>
-          </label>
+          </textarea>
+        </label>
 
 
         <div class="mb-6">
           <label for="country" class="text-text1 dark:text-text1-DM">
             {t("formLabels.country")}:
-            <select 
-            id="country" 
-            name="country"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none" 
-            required>
+            <select
+              id="country"
+              name="country"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
@@ -282,11 +282,11 @@ export const CreateNewPost: Component = () => {
         <div class="mb-6">
           <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
             {t("formLabels.majorMunicipality")}:
-            <select 
-            id="MajorMunicipality" 
-            name="MajorMunicipality" 
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            required>
+            <select
+              id="MajorMunicipality"
+              name="MajorMunicipality"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
@@ -295,11 +295,11 @@ export const CreateNewPost: Component = () => {
         <div class="mb-6">
           <label for="MinorMunicipality">
             {t("formLabels.minorMunicipality")}:
-            <select 
-            id="MinorMunicipality" 
-            name="MinorMunicipality" 
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-            required>
+            <select
+              id="MinorMunicipality"
+              name="MinorMunicipality"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
@@ -307,20 +307,20 @@ export const CreateNewPost: Component = () => {
 
         <label for="GoverningDistrict">
           {t("formLabels.governingDistrict")}:
-          <select 
-          id="GoverningDistrict" 
-          name="GoverningDistrict" 
-          class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-          required>
+          <select
+            id="GoverningDistrict"
+            name="GoverningDistrict"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required>
             <option value="-1">-</option>
           </select>
         </label>
-        
-        <br/>
+
+        <br />
         <div class="flex justify-center">
-        <button class="btn-primary">
-          {t('buttons.post')}
-        </button>
+          <button class="btn-primary">
+            {t('buttons.post')}
+          </button>
         </div>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
