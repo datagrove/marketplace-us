@@ -4,6 +4,8 @@ import { EditProfileButton } from "../../components/users/EditProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { DeletePostButton } from "../../components/posts/DeletePostButton";
 
+import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
+
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
@@ -12,6 +14,6 @@ const t = useTranslations(lang);
   <div>
     <h1>{t("pageTitles.viewProviderAccount")}</h1>
     <EditProfileButton client:only="solid-js" />
-    <DeletePostButton client:only="solid-js" />
+    <ViewProviderPosts client:only="solid-js" />
   </div>
 </Layout>
