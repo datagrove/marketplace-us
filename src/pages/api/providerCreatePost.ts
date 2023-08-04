@@ -18,6 +18,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const majorMunicipality = formData.get('MajorMunicipality');
   const minorMunicipality = formData.get('MinorMunicipality');
   const governingDistrict = formData.get('GoverningDistrict');
+  const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
+  console.log("imageURL: " + imageUrl);
 
 
 
@@ -150,6 +152,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     content: content,
     location: location[0].id,
     service_category: categoryId[0].id,
+    image_urls: imageUrl,
     user_id: user.id,
   }
 
