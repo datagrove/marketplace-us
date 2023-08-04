@@ -44,7 +44,7 @@ export const LanguagePicker: Component = () => {
       <img src={icon} alt="language icon" class="bg-background2 rounded-l-lg pl-2" />
       <select 
       id="language" 
-      class='bg-background2 rounded-r-lg'
+      class='bg-background2 rounded-r-lg '
       value={selectedLanguage()} 
       onChange={handleLanguageChange}
       >

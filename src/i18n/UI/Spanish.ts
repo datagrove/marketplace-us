@@ -32,6 +32,7 @@ export const Spanish = {
     signOut: 'Desconectar',
     returnHome: 'Haga clic para volver a casa',
     reset: 'Reiniciar',
+    post: 'Correo',
   },
 
   messages: {
@@ -70,6 +71,7 @@ export const Spanish = {
     password: 'Contraseña',
     confirmPassword: 'confirmar Contraseña',
     displayName: 'Nombre para mostrar',
+    enterPostContent: 'Ingrese el contenido de la publicación aquí',
   },
 
   headerData: {
