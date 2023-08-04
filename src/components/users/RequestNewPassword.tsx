@@ -16,7 +16,7 @@ export const NewPassword: Component = () => {
 
     try {
         setLoading(true)
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE.url + `/${lang}/password_reset` })
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE.url + `/${lang}/password/reset` })
         if (error) throw error
     } catch (error) {
         if (error instanceof Error) {
@@ -33,19 +33,19 @@ export const NewPassword: Component = () => {
 
   return (
     <div>
-      <div class="row flex flex-col bg-background1 dark:bg-background1-DM">
+      <div class="row flex flex-col">
         <div class="col-6 form-widget" aria-live="polite">
           <form class="form-widget" onSubmit={handleReset}>
-            <div class="p-2 w-full">
+            <div class="mb-4 flex justify-center">
               <label 
                 for="email"
-                class="px-2 text-text1 dark:text-text1-DM"
+                class="hidden"
               >
                 {t('formLabels.email')}
               </label>
               <input
                 id="email"
-                class="inputField border border-border dark:border-border-DM rounded px-1"
+                class="inputField  ml-2 rounded-md pl-2 w-5/6 border border-border"
                 type="email"
                 placeholder={t('formLabels.email')}
                 value={email()}
@@ -55,10 +55,10 @@ export const NewPassword: Component = () => {
             <div class="flex justify-center">
               <button 
                 type="submit" 
-                class="button block border border-border dark:border-border-DM bg-btn1 dark:bg-btn1-DM px-4 rounded-full my-2 hover:bg-btn1hov dark:hover:bg-btn1hov-DM" 
+                class="btn-primary" 
                 aria-live="polite"
               >
-                {loading() ? <span>{t('buttons.loading')}</span> : <span class="text-text2 dark:text-text2-DM">{t('buttons.reset')}</span>}
+                {loading() ? <span>{t('buttons.loading')}</span> : <span>{t('buttons.reset')}</span>}
               </button>
             </div>
           </form>

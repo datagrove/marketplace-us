@@ -1,4 +1,5 @@
-import type { Component } from 'solid-js';
+import type { Component } from "solid-js";
+import { DeletePostButton } from "../posts/DeletePostButton";
 
 interface Post {
   content: string;
@@ -18,24 +19,25 @@ interface Props {
 }
 
 export const ViewCard: Component<Props> = (props) => {
-
   return (
     <div>
       <ul>
-        {
-          props.posts.map((post: any) => (
-            <li>
-              <div class='border-8 border-red-500'>
+        {props.posts.map((post: any) => (
+          <li>
+            <div class="border-8 border-red-500">
               <p>{post.title}</p>
               <p>{post.content}</p>
               <p>Provider: {post.provider_name}</p>
-              <p>Location: {post.major_municipality}/{post.minor_municipality}/{post.governing_district}</p>
+              <p>
+                Location: {post.major_municipality}/{post.minor_municipality}/
+                {post.governing_district}
+              </p>
               <p>Category: {post.category}</p>
-              </div>
-            </li>
-          ))
-        }
+              <DeletePostButton Id={post.id} UserId={post.user_id} />
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
-  )
-}
+  );
+};

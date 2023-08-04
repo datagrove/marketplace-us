@@ -69,7 +69,7 @@ const UserImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite">
+    <div style={{ width: `${props.size}px` }} aria-live="polite" class="flex-row text-center justify-center">
       {imageUrl() ? (
         <img
           src={imageUrl()!}
@@ -78,6 +78,7 @@ const UserImage: Component<Props> = (props) => {
           style={{ height: `${props.size}px`, width: `${props.size}px` }}
         />
       ) : (
+        <div class="flex justify-center">
         <svg
             width="120px" 
             height="120px" 
@@ -92,6 +93,7 @@ const UserImage: Component<Props> = (props) => {
                 </g>
             </g>
         </svg>
+        </div>
       )}
       <div style={{ width: `${props.size}px` }}>
         <label

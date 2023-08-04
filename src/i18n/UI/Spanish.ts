@@ -32,10 +32,11 @@ export const Spanish = {
     signOut: 'Desconectar',
     returnHome: 'Haga clic para volver a casa',
     reset: 'Reiniciar',
+    post: 'Correo',
   },
 
   messages: {
-    noAccount: "¿No tienes una cuenta? Click aquí para",
+    noAccount: "¿No tienes una cuenta? Click aquí para ",
     passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
@@ -70,6 +71,7 @@ export const Spanish = {
     password: 'Contraseña',
     confirmPassword: 'confirmar Contraseña',
     displayName: 'Nombre para mostrar',
+    enterPostContent: 'Ingrese el contenido de la publicación aquí',
   },
 
   headerData: {

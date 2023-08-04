@@ -76,22 +76,24 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <div class="hidden md:flex md:items-center md:justify-between md:w-1/4">
+    <div class="hidden md:flex md:items-center md:justify-between md:w-[35%]">
+      <div class="flex rounded-lg border border-border dark:border-border-DM bg-background2">
+        <LanguagePicker client:only="solid-js"/>
+      </div>
+      
       <div class="">
         <ThemeIcon/>
       </div>
 
-      <div class="">
+      <div class="mx-2">
         <AuthMode client:only="solid-js"/>
       </div>
       
-      <div class="">
+      <div class="mx-2">
         <ProviderProfileButton client:only="solid-js" />
       </div>
 
-      <div class="">
-        <LanguagePicker client:only="solid-js"/>
-      </div>
+
 
     </div>
 

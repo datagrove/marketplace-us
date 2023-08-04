@@ -32,10 +32,11 @@ export const English = {
     signOut: 'Sign Out',
     returnHome: 'Click to Return Home',
     reset: 'Reset',
+    post: 'Post',
   },
 
   messages: {
-    noAccount: "Don't have an account? Click here to",
+    noAccount: "Don't have an account? Click here to ",
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
     passwordReset: 'Password Reset',
@@ -51,6 +52,7 @@ export const English = {
     createClientAccount: "Please sign in to create a client profile.",
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
+
   },
 
   formLabels: {
@@ -70,6 +72,7 @@ export const English = {
     password: 'Password',
     confirmPassword: 'Confirm Password',
     displayName: 'Display Name',
+    enterPostContent: 'Enter Post Content Here',
   },
 
   headerData: {

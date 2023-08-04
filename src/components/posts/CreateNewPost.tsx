@@ -14,6 +14,8 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 const values = ui[lang] as uiObject
+
+//get the categories from the language files so they translate with changes in the language picker
 const productCategoryData = values.productCategoryInfo
 
 async function postFormData(formData: FormData) {
@@ -57,23 +59,6 @@ export const CreateNewPost: Component = () => {
       } catch (error) {
         console.log("Other error: " + error);
       }
-
-      // //Post Category
-      // try {
-      //   const { data: postCategory, error: errorPostCategory } = await supabase
-      //     .from("post_category")
-      //     .select("*");
-      //   if (errorPostCategory) {
-      //     console.log("supabase error: " + errorPostCategory.message);
-      //   } else {
-      //     postCategory.forEach((category) => {
-      //       let categoryOption = new Option(category.category, category.id);
-      //       document.getElementById("ServiceCategory")?.append(categoryOption);
-      //     });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
 
       //Country
       try {
@@ -239,47 +224,69 @@ export const CreateNewPost: Component = () => {
   return (
     <div>
       <form onSubmit={submit}>
-        <div class="mb-6">
-          <label for="Title">
-            {t("formLabels.title")}:
-            <input type="text" id="Title" name="Title" required />
-          </label>
-        </div>
+        <label for="Title" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.title")}:
+          <input
+            type="text"
+            id="Title"
+            name="Title"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required
+          />
+        </label>
+
+
+        <label for="ServiceCategory" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.serviceCategory")}:
+          <select
+            id="ServiceCategory"
+            name="ServiceCategory"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required>
+            <option value="-1">-</option>
+            {productCategoryData.categories.map((category) => (
+              <option value={category.id}>{category.name}</option>
+            ))}
+          </select>
+        </label>
+
+        <br />
+
+
+        <label for="Content" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.postContent")}:
+          <textarea
+            id="Content"
+            name="Content"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            placeholder={t('formLabels.enterPostContent')}
+            rows="10"
+            required>
+          </textarea>
+        </label>
+
 
         <div class="mb-6">
-          <label for="ServiceCategory">
-            {t("formLabels.serviceCategory")}:
-            <select id="ServiceCategory" name="ServiceCategory" required>
-              <option value="-1">-</option>
-              {productCategoryData.categories.map((category) => (
-                <option value={category.id}>{category.name}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        <div class="mb-6">
-          <label for="Content">
-            {t("formLabels.postContent")}:
-            <textarea id="Content" name="Content" rows="5" required>
-              Enter Post Content Here:
-            </textarea>
-          </label>
-        </div>
-
-        <div class="mb-6">
-          <label for="country">
+          <label for="country" class="text-text1 dark:text-text1-DM">
             {t("formLabels.country")}:
-            <select id="country" name="country" required>
+            <select
+              id="country"
+              name="country"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
         </div>
 
         <div class="mb-6">
-          <label for="MajorMunicipality">
+          <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
             {t("formLabels.majorMunicipality")}:
-            <select id="MajorMunicipality" name="MajorMunicipality" required>
+            <select
+              id="MajorMunicipality"
+              name="MajorMunicipality"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
@@ -288,7 +295,11 @@ export const CreateNewPost: Component = () => {
         <div class="mb-6">
           <label for="MinorMunicipality">
             {t("formLabels.minorMunicipality")}:
-            <select id="MinorMunicipality" name="MinorMunicipality" required>
+            <select
+              id="MinorMunicipality"
+              name="MinorMunicipality"
+              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              required>
               <option value="-1">-</option>
             </select>
           </label>
@@ -296,12 +307,21 @@ export const CreateNewPost: Component = () => {
 
         <label for="GoverningDistrict">
           {t("formLabels.governingDistrict")}:
-          <select id="GoverningDistrict" name="GoverningDistrict" required>
+          <select
+            id="GoverningDistrict"
+            name="GoverningDistrict"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            required>
             <option value="-1">-</option>
           </select>
         </label>
 
-        <button class="btn-primary">Post</button>
+        <br />
+        <div class="flex justify-center">
+          <button class="btn-primary">
+            {t('buttons.post')}
+          </button>
+        </div>
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
       </form>
     </div>

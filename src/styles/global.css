@@ -4,7 +4,7 @@
 
 @layer components {
     .btn-primary {
-        @apply bg-btn1 hover:bg-btn1hov text-white dark:bg-btn1-DM dark:hover:bg-btn1hov-DM dark:text-text1 font-bold py-2 px-4 rounded;
+        @apply bg-btn1 hover:bg-btn1hov text-white dark:bg-btn1-DM dark:hover:bg-btn1hov-DM dark:text-text1 font-bold py-2 px-4 rounded max-h-14 drop-shadow-md md:text-[1.2vw];
     }
 }
 

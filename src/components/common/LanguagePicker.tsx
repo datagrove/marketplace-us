@@ -1,12 +1,12 @@
 
 import { languages } from "../../i18n/ui";
 import { createSignal, createEffect, Component, onMount } from "solid-js";
-import { currentLanguage } from "../../lib/languageSelectionStore";
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
-import { SITE } from '../../config';
+import language from '../../assets/language.svg'
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
+const icon = language
 export const LanguagePicker: Component = () => {
   const [selectedLanguage, setSelectedLanguage] = createSignal<string>(lang);
   const [selectedValue, setSelectedValue] = createSignal('');
@@ -40,8 +40,14 @@ export const LanguagePicker: Component = () => {
   }
 
   return (
-    <div>
-      <select id="language" value={selectedLanguage()} onChange={handleLanguageChange}>
+    <div class="flex rounded-lg dark:text-black focus:border-btn1 dark:focus:border-btn1-DM  focus:outline-none mr-4">
+      <img src={icon} alt="language icon" class="bg-background2 rounded-l-lg pl-2" />
+      <select 
+      id="language" 
+      class='bg-background2 rounded-r-lg '
+      value={selectedLanguage()} 
+      onChange={handleLanguageChange}
+      >
         {Object.entries(languages).map(([lang, label]) => (
           <option value={lang}>{label}</option>
         ))}

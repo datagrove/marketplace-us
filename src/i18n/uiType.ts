@@ -32,6 +32,7 @@ export interface uiObject {
     signOut: string,
     returnHome: string,
     reset: string,
+    post: string,
   },
 
   messages: {
@@ -51,6 +52,7 @@ export interface uiObject {
     createClientAccount: string,
     viewProviderAccount: string,
     noPosts: string,
+    
   },
 
   formLabels: {
@@ -70,6 +72,7 @@ export interface uiObject {
     password: string,
     confirmPassword: string,
     displayName: string,
+    enterPostContent: string,
   },
 
   headerData: {
