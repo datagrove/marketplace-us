@@ -14,6 +14,7 @@ interface ProviderPost {
     minor_municipality: string;
     governing_district: string;
     user_id: string;
+    image_urls: string;
 }
 
 const { data, error } = await supabase.from('providerposts').select('*');

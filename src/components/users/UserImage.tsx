@@ -42,7 +42,7 @@ const UserImage: Component<Props> = (props) => {
 
       const target = event.currentTarget;
       if (!target?.files || target.files.length === 0) {
-        throw new Error("You must select an image to upload.");
+        throw new Error("You must select an image to upload."); //TODO: Internationalize
       }
 
       const file = target.files[0];
