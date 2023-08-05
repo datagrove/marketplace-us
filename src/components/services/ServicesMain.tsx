@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabaseClient'
 import { CategoryCarousel } from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
 import { LocationFilter } from './LocationFilter';
+import { SearchBar } from './SearchBar'
 
 interface ProviderPost {
     content: string;
@@ -212,6 +213,9 @@ export const ServicesView: Component = () => {
 
         return (
             <div class=''>
+                <div>
+                    <SearchBar />
+                </div>
                 <div>
                     <CategoryCarousel
                         filterPosts={setCategoryFilter}

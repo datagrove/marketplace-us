@@ -32,11 +32,10 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     createEffect(() => {
         if (props.id === undefined) {
-            alert(t('messages')) //TODO: Post does not exist
             location.href = `/${lang}/404`
         } else if(props.id) {
-            fetchPost(+props.id); 
             setSession(User.session);
+            fetchPost(+props.id); 
         }
     });
 
@@ -46,26 +45,29 @@ export const ViewFullPost: Component<Props> = (props) => {
                 const { data, error } = await supabase
                     .from("providerposts")
                     .select("*")
-                    .eq("id", props.id);
+                    .eq("id", id);
 
                 if (error) {
                     console.log(error);
-                } else if (data === null) {
-                    console.log("Post not found");
+                } else if (data[0] === undefined) {
+                    console.log("Post not found"); //TODO: Change to alert message
+                    location.href = `/${lang}/404` //TODO: Redirect to Services Page
                 } else {
                     setPost(data[0]);
+                    console.log(post())
                 }
             } catch (error) {
                 console.log(error);
             }
         } else {
-            alert(t('messages'))
+            alert(t('messages.signIn'))
             location.href = `/${lang}/login`
         }
     }
 
         return (
             <div>
+                <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : ("")) } />
                 <h1>{post()?.title}</h1>
                 <p>{post()?.content}</p>
             </div>
