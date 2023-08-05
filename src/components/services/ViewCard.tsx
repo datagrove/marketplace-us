@@ -64,6 +64,7 @@ export const ViewCard: Component<Props> = (props) => {
       <ul>
         {newPosts().map((post: any) => (
           <li>
+            <a href={`/posts/${post.id}`}>
             <div class="border-8 border-red-500 flex justify-center">
               <div>
                 {post.image_url ? (
@@ -104,6 +105,7 @@ export const ViewCard: Component<Props> = (props) => {
                 <DeletePostButton Id={post.id} UserId={post.user_id} />
               </div>
             </div>
+            </a>
           </li>
         ))}
       </ul>
