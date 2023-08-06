@@ -96,7 +96,7 @@ export const ViewCard: Component<Props> = (props) => {
               <div>
                 <p>{post.title}</p>
                 <p>{post.content}</p>
-                <p>Provider: {post.provider_name}</p>
+                <p>Provider: {post.provider_name}</p> {/*TODO: Internationalize this*/}
                 <p>
                   Location: {post.major_municipality}/{post.minor_municipality}/
                   {post.governing_district}
