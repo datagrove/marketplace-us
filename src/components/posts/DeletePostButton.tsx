@@ -19,7 +19,6 @@ export const DeletePostButton: Component<Props> = (props) => {
     console.log("User Error: " + UserError.message);
   } else {
     setSession(User.session);
-    console.log(User);
   }
 
   //Pre: User is logged in, there is a click to delete a post

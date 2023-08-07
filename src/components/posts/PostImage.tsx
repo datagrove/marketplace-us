@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PostImage: Component<Props> = (props) => {
-  const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+  const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
   // const [imageUrl, setImageUrl] = createSignal({ placeholderImg });
   const [uploading, setUploading] = createSignal(false);
 
@@ -26,7 +26,7 @@ const PostImage: Component<Props> = (props) => {
         throw error;
       }
       const url = URL.createObjectURL(data);
-      setImageUrl(url);
+      setImageUrl([...imageUrl(), url]);
     } catch (error) {
       if (error instanceof Error) {
         console.log("Error downloading image: ", error.message);
@@ -70,13 +70,15 @@ const PostImage: Component<Props> = (props) => {
 
   return (
     <div style={{ width: `${props.size}px` }} aria-live="polite">
-      {imageUrl() ? (
-        <img
-          src={imageUrl()!}
-          alt={imageUrl() ? "Image" : "No image"}
-          class="user image border-2"
-          style={{ height: `${props.size}px`, width: `${props.size}px` }}
-        />
+      {imageUrl().length > 0 ? (
+        imageUrl().map((image) => (
+          <img
+            src={image}
+            alt={imageUrl() ? "Image" : "No image"}
+            class="user image border-2"
+            style={{ height: `${props.size}px`, width: `${props.size}px` }}
+          />
+        ))
       ) : (
         <svg
             width="120px" 
@@ -95,7 +97,7 @@ const PostImage: Component<Props> = (props) => {
       )}
       <div style={{ width: `${props.size}px` }}>
         <label
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          class="btn-primary"
           for="single"
         >
           {uploading() ? "Uploading ..." : "Upload Image"}
@@ -105,6 +107,7 @@ const PostImage: Component<Props> = (props) => {
             type="file"
             id="single"
             accept="image/*"
+            multiple
             onChange={uploadImage}
             disabled={uploading()}
           />
