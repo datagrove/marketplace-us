@@ -139,7 +139,10 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
 
         for (i = 0; i < dots.length; i++) {
-            dots[i].classList.remove('border');
+            dots[i].classList.remove(`bg-white`);
+            dots[i].classList.remove(`dark:bg-gray-600`);
+            dots[i].classList.add(`bg-slate-300`);
+            dots[i].classList.add(`dark:bg-gray-800`);
         }
 
         //show the active slide
@@ -149,7 +152,10 @@ export const ViewFullPost: Component<Props> = (props) => {
 
         //show the active dot
         if (dots.length > 0) {
-            dots[slideIndex - 1].classList.add('border'); //TODO: Make active dot more obvious
+            dots[slideIndex - 1].classList.remove(`bg-slate-300`);
+            dots[slideIndex - 1].classList.remove(`dark:bg-gray-800`);
+            dots[slideIndex - 1].classList.add(`bg-white`);
+            dots[slideIndex - 1].classList.add(`dark:bg-gray-600`); //TODO: Make active dot more obvious
         }
 
     }
@@ -183,7 +189,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
                             <button
                                 type="button"
-                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-600 dark:border-gray-400"
+                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-600"
                                 aria-label={`${t('postLabels.slide')} 1`}
                                 onClick={() => currentSlide(1)}
                             >
@@ -191,7 +197,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {postImages().slice(1).map((image: string, index: number) => (
                                 <button
                                     type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border-gray-600 dark:border-white"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-slate-300 dark:bg-gray-800"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
                                     onClick={() => currentSlide(index + 1)}
                                 >
