@@ -90,8 +90,8 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
-            <div class="product-carousel my-2 border border-red-300">
-                <div class="flex justify-between">
+            <div class="product-carousel my-2 border border-blue-300 w-screen">
+                <div class="flex flex-start justify-between">
                     <button class="w-12">
                         <img
                             src={leftArrow}
@@ -99,22 +99,22 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
 
-                    <div class="overflow-scroll">
-                        <ul class="flex">
-                            {allCategoryInfo?.map((item) => (
-                                <button 
-                                class='flex flex-col justify-center items-center m-2 w-24 h-24 border-4 border-border' 
+                    <div class="border border-orange-400 flex justify-center items-center w-screen overflow-scroll">
+                        { allCategoryInfo?.map((item) => (
+                            <button 
+                                // class='flex flex-col justify-center items-center m-2 h-24 w-24 border-4 border-border' 
+                                class='border-4 border-border flex flex-col flex-none justify-center items-center w-24 h-24' 
                                 onClick={() => {
                                     props.filterPosts(item.category)
                                 }}
-                                >
-                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-12" />
-                                    <p class="text-text1 dark:text-text1-DM text-center text-xs">{item.name} </p>
+                            >
+                                <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-1/2" />
+                                <p class=" text-text1 dark:text-text1-DM my-2 text-center text-xs">{item.name} </p>
 
-                                </button>
+                            </button>
                             ))
-                            }
-                        </ul>
+                        }
+
                     </div>
 
                     <button class="w-12">
