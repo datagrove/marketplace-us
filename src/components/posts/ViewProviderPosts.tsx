@@ -13,6 +13,7 @@ interface ProviderPost {
   major_municipality: string;
   minor_municipality: string;
   governing_district: string;
+  image_urls: string;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();

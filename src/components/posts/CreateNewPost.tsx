@@ -7,6 +7,7 @@ import {
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
+import PostImage from "./PostImage";
 import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -35,6 +36,7 @@ export const CreateNewPost: Component = () => {
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
+  const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -218,6 +220,9 @@ export const CreateNewPost: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
+    if (imageUrl() !== null) {
+      formData.append("image_url", imageUrl()!.toString());
+    }
     setFormData(formData);
   }
 
@@ -315,6 +320,16 @@ export const CreateNewPost: Component = () => {
             <option value="-1">-</option>
           </select>
         </label>
+
+        <div class="mb-4 flex justify-center">
+          <PostImage
+            url={imageUrl()[imageUrl().length -1]}
+            size={150}
+            onUpload={(e: Event, url: string) => {
+              setImageUrl([...imageUrl(), url]);
+            }}
+          />
+        </div>
 
         <br />
         <div class="flex justify-center">

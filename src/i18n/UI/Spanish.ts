@@ -33,6 +33,8 @@ export const Spanish = {
     returnHome: 'Haga clic para volver a casa',
     reset: 'Reiniciar',
     post: 'Correo',
+    next: 'Próxima',
+    previous: 'Previa',
   },
 
   messages: {
@@ -72,6 +74,14 @@ export const Spanish = {
     confirmPassword: 'confirmar Contraseña',
     displayName: 'Nombre para mostrar',
     enterPostContent: 'Ingrese el contenido de la publicación aquí',
+  },
+
+  postLabels: {
+    provider: 'Proveedora: ',
+    location: 'Ubicación: ',
+    category: 'Categoría: ',
+    image: 'Publicar imagen',
+    slide: 'Diapositiva',
   },
 
   headerData: {

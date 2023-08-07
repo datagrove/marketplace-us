@@ -19,7 +19,6 @@ export const DeletePostButton: Component<Props> = (props) => {
     console.log("User Error: " + UserError.message);
   } else {
     setSession(User.session);
-    console.log(User);
   }
   const deletePost = async (e: SubmitEvent) => {
     e.preventDefault();
