@@ -149,7 +149,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
         //show the active dot
         if (dots.length > 0) {
-            dots[slideIndex - 1].classList.add('border');
+            dots[slideIndex - 1].classList.add('border'); //TODO: Make active dot more obvious
         }
 
     }
@@ -191,7 +191,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {postImages().slice(1).map((image: string, index: number) => (
                                 <button
                                     type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border-gray-600"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border-gray-600 dark:border-white"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
                                     onClick={() => currentSlide(index + 1)}
                                 >
@@ -203,8 +203,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                             class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                             onclick={() => moveSlide(-1)}
                         >
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-white/50 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
                                 </svg>
                                 <span class="sr-only">{t('buttons.previous')}</span>
@@ -214,8 +214,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                             type="button"
                             class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                             onclick={() => moveSlide(1)}>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-white/50 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
                                 </svg>
                                 <span class="sr-only">{t('buttons.next')}</span>
