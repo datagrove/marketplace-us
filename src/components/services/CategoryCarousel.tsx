@@ -90,7 +90,7 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
-            <div class="product-carousel my-2">
+            <div class="product-carousel my-2 border border-red-300">
                 <div class="flex justify-between">
                     <button class="w-12">
                         <img
@@ -99,17 +99,17 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
 
-                    <div class="overflow-scroll w-3/4">
+                    <div class="overflow-scroll">
                         <ul class="flex">
                             {allCategoryInfo?.map((item) => (
                                 <button 
-                                class='m-2 w-12 rounded-full border-4 border-border' 
+                                class='flex flex-col justify-center items-center m-2 w-24 h-24 border-4 border-border' 
                                 onClick={() => {
                                     props.filterPosts(item.category)
                                 }}
                                 >
-                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-48" />
-                                    <p class="text-text1 dark:text-text1-DM text-center text-xs">{item.name}</p>
+                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-12" />
+                                    <p class="text-text1 dark:text-text1-DM text-center text-xs">{item.name} </p>
 
                                 </button>
                             ))
@@ -126,7 +126,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                 </div>
 
 
-                <div class="h-16 overflow-scroll w-full">
+                {/* <div class="h-16 overflow-scroll w-full">
                         <ul class="flex flex-col items-center">
                             {allCategoryInfo?.map((item) => (
                                 <button 
@@ -142,7 +142,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             ))
                             }
                         </ul>
-                    </div>
+                    </div> */}
             </div>
 
     )
