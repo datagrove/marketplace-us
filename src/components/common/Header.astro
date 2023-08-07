@@ -5,8 +5,9 @@ import { LanguagePicker } from "./LanguagePicker";
 import { ProviderProfileButton } from "./ProviderProfileButton";
 import { getLangFromUrl } from "../../i18n/utils";
 import ThemeIcon from "./ThemeIcon.astro";
-import { CreatePostsRouting } from "../posts/CreatePostsRouting";
 
+import { CreatePostsRouting } from "../posts/CreatePostsRouting";
+import { ClientRouting } from "../users/ClientRouting";
 const lang = getLangFromUrl(Astro.url);
 
 //Define types for items from config
@@ -107,6 +108,9 @@ const { links = [] } = Astro.props;
 
       <div>
         <CreatePostsRouting client:only="solid-js" />
+      </div>
+      <div>
+        <ClientRouting client:only="solid-js" />
       </div>
     </div>
 

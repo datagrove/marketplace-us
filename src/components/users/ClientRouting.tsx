@@ -1,0 +1,42 @@
+import { Show, createSignal } from "solid-js";
+import { supabase } from "../../lib/supabaseClient";
+
+const { data: User, error: UserError } = await supabase.auth.getSession();
+export const ClientRouting = () => {
+  const isUser = User.session!.user.role === "authenticated";
+  const [isUserClient, setIsUserClient] = createSignal<boolean>(false);
+  const [createText, setCreateText] = createSignal<string>(
+    "Create Client Account"
+  );
+
+  const isClient = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("clients")
+        .select("*")
+        .eq("user_id", User.session!.user.id);
+      setIsUserClient(true);
+      setCreateText("Edit Client Account");
+      console.log(isUserClient());
+      console.log(User.session!);
+      if (error) {
+        console.log(error);
+      } else if (data[0] === undefined) {
+        console.log("User is not a client");
+      } else {
+        console.log("User is a client");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  isClient();
+  return (
+    <Show when={isUser}>
+      <div>
+        <a href="../../client/createaccount">{createText()}</a>
+      </div>
+    </Show>
+  );
+};
