@@ -99,7 +99,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
 
-                    <div class="border border-orange-400 flex justify-center items-center w-screen overflow-scroll">
+                    <div class="border border-orange-400 flex justify-between items-center w-screen overflow-scroll">
                         { allCategoryInfo?.map((item) => (
                             <button 
                                 // class='flex flex-col justify-center items-center m-2 h-24 w-24 border-4 border-border' 
