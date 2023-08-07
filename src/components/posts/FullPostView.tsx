@@ -138,12 +138,17 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
 
         for (i = 0; i < dots.length; i++) {
-            dots[i].classList.remove('active');
+            dots[i].classList.remove('border');
         }
 
         //show the active slide
         if (slides.length > 0) {
             slides[slideIndex - 1].classList.remove("hidden");
+        }
+
+        //show the active dot
+        if (dots.length > 0) {
+            dots[slideIndex - 1].classList.add('border');
         }
 
     }
@@ -175,10 +180,17 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </div>
                     <Show when={postImages().length > 1}>
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                            {postImages().map((image: string, index: number) => (
                                 <button
                                     type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-600 dark:border-gray-400"
+                                    aria-label={`${t('postLabels.slide')} 1`}
+                                    onClick={() => currentSlide(1)}
+                                >
+                                </button>
+                            {postImages().slice(1).map((image: string, index: number) => (
+                                <button
+                                    type="button"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border-gray-600"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
                                     onClick={() => currentSlide(index + 1)}
                                 >
