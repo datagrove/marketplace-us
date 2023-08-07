@@ -4,6 +4,20 @@ import { CategoryCarousel } from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
 import { LocationFilter } from './LocationFilter';
 import { SearchBar } from './SearchBar'
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
+
+//get the categories from the language files so they translate with changes in the language picker
+const values = ui[lang] as uiObject
+const productCategoryData = values.productCategoryInfo
+
+
+const { data, error } = await supabase.from('providerposts').select('*');
+console.log(data)
 
 interface ProviderPost {
     content: string;
@@ -17,9 +31,6 @@ interface ProviderPost {
     user_id: string;
     image_urls: string;
 }
-
-const { data, error } = await supabase.from('providerposts').select('*');
-console.log(data)
 
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([])
