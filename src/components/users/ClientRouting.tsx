@@ -8,6 +8,9 @@ export const ClientRouting = () => {
   const [createText, setCreateText] = createSignal<string>(
     "Create Client Account"
   );
+  const [routing, setRouting] = createSignal<string>(
+    "../../client/createaccount"
+  );
 
   const isClient = async () => {
     try {
@@ -17,6 +20,7 @@ export const ClientRouting = () => {
         .eq("user_id", User.session!.user.id);
       setIsUserClient(true);
       setCreateText("Edit Client Account");
+      setRouting("../../client/editaccount");
       console.log(isUserClient());
       console.log(User.session!);
       if (error) {
@@ -35,7 +39,7 @@ export const ClientRouting = () => {
   return (
     <Show when={isUser}>
       <div>
-        <a href="../../client/createaccount">{createText()}</a>
+        <a href={routing()}>{createText()}</a>
       </div>
     </Show>
   );
