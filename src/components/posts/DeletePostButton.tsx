@@ -25,10 +25,6 @@ export const DeletePostButton: Component<Props> = (props) => {
   //Post: The post is deleted from the database
   const deletePost = async (e: SubmitEvent) => {
     e.preventDefault();
-    function hello() {
-      console.log("hello");
-    }
-
     function checkIfUserIsProvider() {
       if (session()!.user.id === props.UserId) {
         return true;
