@@ -1,6 +1,10 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   size: number;
@@ -42,7 +46,7 @@ const UserImage: Component<Props> = (props) => {
 
       const target = event.currentTarget;
       if (!target?.files || target.files.length === 0) {
-        throw new Error("You must select an image to upload."); //TODO: Internationalize
+        throw new Error(t('messages.selectAnImage'));
       }
 
       const file = target.files[0];

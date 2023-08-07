@@ -56,6 +56,7 @@ export const English = {
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
     noPost: "Post Not Found",
+    selectAnImage: 'You must select an image to upload.',
   },
 
   formLabels: {

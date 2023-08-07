@@ -56,6 +56,7 @@ export const Spanish = {
     viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
     noPosts: "No hay publicaciones disponibles",
     noPost: 'Publicación no encontrada',
+    selectAnImage: 'Debe seleccionar una imagen para cargar.',
   },
 
   formLabels: {

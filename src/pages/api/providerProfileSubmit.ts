@@ -234,10 +234,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log("Profile Data: " + JSON.stringify(data));
   }
 
-  //TODO: Check if Profile Already Exists - Not sure we need to do this as attempts to submit another profile for a user that already has one will fail
-  //However we might not really want it to fail we may want it to skip the submission if there is already a profile for the user so we don't get back an error
-
-  //Build a submission to the profile table
+  //Check if a profile exists
   const { data: profileExists, error: profileExistsError } = await supabase
     .from("profiles")
     .select("user_id")

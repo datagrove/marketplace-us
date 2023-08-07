@@ -56,6 +56,7 @@ export interface uiObject {
     viewProviderAccount: string,
     noPosts: string,
     noPost: string,
+    selectAnImage: string,
   },
 
   formLabels: {

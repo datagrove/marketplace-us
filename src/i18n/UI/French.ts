@@ -56,6 +56,7 @@ export const French = {
     viewProviderAccount: "Vous n'avez pas de compte fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
     noPosts: "Aucune publication disponible.",
     noPost: "Message introuvable",
+    selectAnImage: 'Vous devez sélectionner une image à télécharger.',
   },
 
   formLabels: {

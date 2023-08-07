@@ -155,7 +155,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             dots[slideIndex - 1].classList.remove(`bg-slate-300`);
             dots[slideIndex - 1].classList.remove(`dark:bg-gray-800`);
             dots[slideIndex - 1].classList.add(`bg-white`);
-            dots[slideIndex - 1].classList.add(`dark:bg-gray-600`); //TODO: Make active dot more obvious
+            dots[slideIndex - 1].classList.add(`dark:bg-gray-600`);
         }
 
     }
