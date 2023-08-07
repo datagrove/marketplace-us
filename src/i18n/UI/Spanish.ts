@@ -74,6 +74,12 @@ export const Spanish = {
     enterPostContent: 'Ingrese el contenido de la publicación aquí',
   },
 
+  postLabels: {
+    provider: 'Proveedora: ',
+    location: 'Ubicación: ',
+    category: 'Categoría: ',
+  },
+
   headerData: {
     links: [
       {

@@ -193,15 +193,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </span>
                 </button>
             </div>
-
-            <h1 class="text-xl w-full font-bold">{post()?.title}</h1>
-            <p>Provider: {post()?.provider_name}</p>
+            <p>{t('postLabels.provider')}{post()?.provider_name}</p>
             <p>
-                Location: {post()?.major_municipality}/{post()?.minor_municipality}/
+                {t('postLabels.location')}{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}
             </p>
-            <p>Category: {post()?.category}</p>
-            <p>{post()?.content}</p>
+            <p>{t('postLabels.category')}{post()?.category}</p>
+            <p class="my-10">{post()?.content}</p>
             <div class="flex justify-center mt-4">
                 <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} />
             </div>

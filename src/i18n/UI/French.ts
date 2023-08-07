@@ -74,6 +74,12 @@ export const French = {
     enterPostContent: 'Entrez le contenu du message ici',
   },
 
+  postLabels: {
+    provider: 'Fournisseuse: ',
+    location: 'Emplacement: ',
+    category: 'Catégorie: ',
+  },
+
   headerData: {
     links: [
       {

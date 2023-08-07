@@ -75,6 +75,12 @@ export const English = {
     enterPostContent: 'Enter Post Content Here',
   },
 
+  postLabels: {
+    provider: 'Provider: ',
+    location: 'Location: ',
+    category: 'Category: ',
+  },
+
   headerData: {
     links: [
       {

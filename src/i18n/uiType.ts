@@ -75,6 +75,12 @@ export interface uiObject {
     enterPostContent: string,
   },
 
+  postLabels: {
+    provider: string,
+    location: string,
+    category: string,
+  },
+
   headerData: {
     links: [
       {
