@@ -24,6 +24,7 @@ interface Post {
     governing_district: string;
     user_id: string;
     image_urls: string | null;
+    email: string;
 }
 
 interface Props {
@@ -60,7 +61,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                     alert(t('messages.noPost'));
                     location.href = `/${lang}/services`
                 } else {
-                    data?.map(item => {
+                    console.log(data)
+                    data?.map(async (item) => {
                         productCategories.forEach(productCategories => {
                             if (item.service_category.toString() === productCategories.id) {
                                 item.category = productCategories.name
@@ -70,7 +72,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                     })
                     setPost(data[0]);
                     console.log(post())
-                    console.log(post()?.content)
                 }
             } catch (error) {
                 console.log(error);
@@ -237,6 +238,9 @@ export const ViewFullPost: Component<Props> = (props) => {
             </p>
             <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.category}</p>
             <p class="my-10 whitespace-pre-line" id="post-content">{post()?.content}</p>
+            <div class="mt-4">
+                <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
+            </div>
             <div class="flex justify-center mt-4">
                 <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} />
             </div>

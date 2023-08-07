@@ -36,6 +36,7 @@ export const French = {
     next: 'Suivante',
     previous: 'Précédente',
     delete: "Supprimer",
+    contact: 'Contact',
   },
 
   messages: {
@@ -57,6 +58,7 @@ export const French = {
     noPosts: "Aucune publication disponible.",
     noPost: "Message introuvable",
     selectAnImage: 'Vous devez sélectionner une image à télécharger.',
+    noProvider: 'Aucun contact trouvé.',
   },
 
   formLabels: {
