@@ -68,7 +68,7 @@ export const ViewCard: Component<Props> = (props) => {
       <ul>
         {newPosts().map((post: any) => (
           <li>
-            <a href={`/posts/${post.id}`}>
+            <a href={`/${lang}/posts/${post.id}`}>
             <div class="border-8 border-red-500 flex justify-center">
               <div>
                 {post.image_url ? (
@@ -100,7 +100,7 @@ export const ViewCard: Component<Props> = (props) => {
               <div>
                 <p>{post.title}</p>
                 <p>{post.content}</p>
-                <p>{t('postLabels.provider')}{post.provider_name}</p> {/*TODO: Internationalize this*/}
+                <p>{t('postLabels.provider')}{post.provider_name}</p>
                 <p>
                 {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/
                   {post.governing_district}

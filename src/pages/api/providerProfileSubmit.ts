@@ -100,15 +100,49 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  //Don't know if we need this anymore
-  const { data: countries, error: testCountryError } = await supabase
-    .from("country")
-    .select("*");
-  if (testCountryError) {
-    console.log("supabase error: " + testCountryError.message);
-  } else {
-    console.log(countries);
+    //Check if a profile exists
+    const { data: profileExists, error: profileExistsError } = await supabase
+    .from("profiles")
+    .select("user_id")
+    .eq("user_id", user.id);
+  if (profileExistsError) {
+    console.log("supabase error: " + profileExistsError.message);
+  } else if (profileExists[0] !== undefined) {
+    console.log("Profile already exists");
+  } else if (profileExists[0] === undefined) {
+    //Build a submission to the profile table
+    let profileSubmission = {
+      user_id: user.id,
+      first_name: firstName,
+      last_name: lastName,
+      email: user.email,
+    };
+
+    //Submit to the profile table and select it back (the select back is not entirely necessary)
+    const { data: profileData, error: profileError } = await supabase
+      .from("profiles")
+      .insert([profileSubmission])
+      .select();
+    if (profileError) {
+      console.log(profileError);
+      return new Response(
+        JSON.stringify({
+          message: "Error creating profile",
+        }),
+        { status: 500 }
+      );
+    }
   }
+
+  //Don't know if we need this anymore
+  // const { data: countries, error: testCountryError } = await supabase
+  //   .from("country")
+  //   .select("*");
+  // if (testCountryError) {
+  //   console.log("supabase error: " + testCountryError.message);
+  // } else {
+  //   console.log(countries);
+  // }
 
   /*Each of these retrieves the appropriate id from the database for the area level
   (governing district, minor municipality, major municipality, country)
@@ -234,41 +268,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log("Profile Data: " + JSON.stringify(data));
   }
 
-  //TODO: Check if Profile Already Exists - Not sure we need to do this as attempts to submit another profile for a user that already has one will fail
-  //However we might not really want it to fail we may want it to skip the submission if there is already a profile for the user so we don't get back an error
 
-  //Build a submission to the profile table
-  const { data: profileExists, error: profileExistsError } = await supabase
-    .from("profiles")
-    .select("user_id")
-    .eq("user_id", user.id);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0] !== undefined) {
-    console.log("Profile already exists");
-  } else if (profileExists[0] === undefined) {
-    //Build a submission to the profile table
-    let profileSubmission = {
-      user_id: user.id,
-      first_name: firstName,
-      last_name: lastName,
-    };
-
-    //Submit to the profile table and select it back (the select back is not entirely necessary)
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .insert([profileSubmission])
-      .select();
-    if (profileError) {
-      console.log(profileError);
-      return new Response(
-        JSON.stringify({
-          message: "Error creating profile",
-        }),
-        { status: 500 }
-      );
-    }
-  }
 
   // If everything works send a success response
   return new Response(

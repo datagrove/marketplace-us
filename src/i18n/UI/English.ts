@@ -35,6 +35,8 @@ export const English = {
     post: 'Post',
     next: 'Next',
     previous: 'Previous',
+    delete: 'Delete',
+    contact: 'Contact',
   },
 
   messages: {
@@ -54,7 +56,9 @@ export const English = {
     createClientAccount: "Please sign in to create a client profile.",
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
-
+    noPost: "Post Not Found",
+    selectAnImage: 'You must select an image to upload.',
+    noProvider: "No contact found.",
   },
 
   formLabels: {
