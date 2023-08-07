@@ -33,6 +33,8 @@ export interface uiObject {
     returnHome: string,
     reset: string,
     post: string,
+    next: string,
+    previous: string,
   },
 
   messages: {
@@ -73,6 +75,14 @@ export interface uiObject {
     confirmPassword: string,
     displayName: string,
     enterPostContent: string,
+  },
+
+  postLabels: {
+    provider: string,
+    location: string,
+    category: string,
+    image: string,
+    slide: string,
   },
 
   headerData: {
