@@ -2,10 +2,16 @@ import { Component, createSignal, createEffect, Show } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import type { AuthSession } from "@supabase/supabase-js";
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+
+//get the categories from the language files so they translate with changes in the language picker
+const values = ui[lang] as uiObject
+const productCategories = values.productCategoryInfo.categories
 
 interface Post {
     content: string;
@@ -54,6 +60,14 @@ export const ViewFullPost: Component<Props> = (props) => {
                     console.log("Post not found"); //TODO: Change to alert message
                     location.href = `/${lang}/404` //TODO: Redirect to Services Page
                 } else {
+                    data?.map(item => {
+                        productCategories.forEach(productCategories =>{
+                            if(item.service_category.toString() === productCategories.id){
+                                item.category = productCategories.name
+                            }
+                        })
+                        delete item.service_category
+                    })
                     setPost(data[0]);
                     console.log(post())
                 }
