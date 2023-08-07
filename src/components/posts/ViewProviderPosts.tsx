@@ -14,6 +14,7 @@ interface ProviderPost {
   major_municipality: string;
   minor_municipality: string;
   governing_district: string;
+  image_urls: string;
 }
 
 // Get the user session

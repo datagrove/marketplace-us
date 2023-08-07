@@ -33,6 +33,8 @@ export const English = {
     returnHome: 'Click to Return Home',
     reset: 'Reset',
     post: 'Post',
+    next: 'Next',
+    previous: 'Previous',
   },
 
   messages: {
@@ -73,6 +75,14 @@ export const English = {
     confirmPassword: 'Confirm Password',
     displayName: 'Display Name',
     enterPostContent: 'Enter Post Content Here',
+  },
+
+  postLabels: {
+    provider: 'Provider: ',
+    location: 'Location: ',
+    category: 'Category: ',
+    image: 'Post Image',
+    slide: 'Slide',
   },
 
   headerData: {

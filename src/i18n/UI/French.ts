@@ -33,6 +33,8 @@ export const French = {
     returnHome: "Cliquez pour retourner à la maison",
     reset: 'Réinitialiser',
     post: 'Poste',
+    next: 'Suivante',
+    previous: 'Précédente',
   },
 
   messages: {
@@ -72,6 +74,14 @@ export const French = {
     confirmPassword: "Confirmez le mot de passe",
     displayName: 'Afficher un nom',
     enterPostContent: 'Entrez le contenu du message ici',
+  },
+
+  postLabels: {
+    provider: 'Fournisseuse: ',
+    location: 'Emplacement: ',
+    category: 'Catégorie: ',
+    image: 'Publier une image',
+    slide: 'Diapositive',
   },
 
   headerData: {

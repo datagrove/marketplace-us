@@ -1,6 +1,10 @@
 import { Component, createSignal, createEffect } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { supabase } from "../../lib/supabaseClient";
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Post {
   content: string;
@@ -64,6 +68,7 @@ export const ViewCard: Component<Props> = (props) => {
       <ul>
         {newPosts().map((post: any) => (
           <li>
+            <a href={`/posts/${post.id}`}>
             <div class="border-8 border-red-500 flex justify-center">
               <div>
                 {post.image_url ? (
@@ -95,15 +100,16 @@ export const ViewCard: Component<Props> = (props) => {
               <div>
                 <p>{post.title}</p>
                 <p>{post.content}</p>
-                <p>Provider: {post.provider_name}</p>
+                <p>{t('postLabels.provider')}{post.provider_name}</p> {/*TODO: Internationalize this*/}
                 <p>
-                  Location: {post.major_municipality}/{post.minor_municipality}/
+                {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/
                   {post.governing_district}
                 </p>
-                <p>Category: {post.category}</p>
+                <p>{t('postLabels.category')}{post.category}</p>
                 <DeletePostButton Id={post.id} UserId={post.user_id} />
               </div>
             </div>
+            </a>
           </li>
         ))}
       </ul>
