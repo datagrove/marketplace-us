@@ -55,7 +55,7 @@ export interface uiObject {
     createClientAccount: string,
     viewProviderAccount: string,
     noPosts: string,
-    
+    noPost: string,
   },
 
   formLabels: {

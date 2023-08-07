@@ -55,6 +55,7 @@ export const Spanish = {
     createClientAccount: "Inicie sesión para crear un perfil de cliente",
     viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
     noPosts: "No hay publicaciones disponibles",
+    noPost: 'Publicación no encontrada',
   },
 
   formLabels: {

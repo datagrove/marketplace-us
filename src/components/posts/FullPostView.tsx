@@ -57,8 +57,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                 if (error) {
                     console.log(error);
                 } else if (data[0] === undefined) {
-                    console.log("Post not found"); //TODO: Change to alert message
-                    location.href = `/${lang}/404` //TODO: Redirect to Services Page
+                    alert(t('messages.noPost'));
+                    location.href = `/${lang}/services`
                 } else {
                     data?.map(item => {
                         productCategories.forEach(productCategories => {
@@ -80,16 +80,6 @@ export const ViewFullPost: Component<Props> = (props) => {
             location.href = `/${lang}/login`
         }
     }
-
-    // createEffect(() => {
-    //     const contentElement = document.getElementById("post-content");
-    //     const postValue = post();
-    //     if (postValue && postValue.content) {
-    //         if (contentElement) {
-    //             contentElement.textContent = postValue.content.replace(/\\r\\n/g, '\n');
-    //         }
-    //     }
-    // })
 
     createEffect(async () => {
         console.log("downloading images")
@@ -175,7 +165,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         <div class="slide duration-700 ease-in-out">
                             <img
                                 src={postImages()[0]}
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
                                 alt={`${t('postLabels.image')} 1`} />
                         </div>
                         <Show when={postImages().length > 1}>
@@ -183,7 +173,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 <div class="hidden slide duration-700 ease-in-out">
                                     <img
                                         src={image}
-                                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
                                         alt={`${t('postLabels.image')} ${index + 1}`} />
                                 </div>
                             ))}
