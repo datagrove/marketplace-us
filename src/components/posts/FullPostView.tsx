@@ -61,8 +61,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                     location.href = `/${lang}/404` //TODO: Redirect to Services Page
                 } else {
                     data?.map(item => {
-                        productCategories.forEach(productCategories =>{
-                            if(item.service_category.toString() === productCategories.id){
+                        productCategories.forEach(productCategories => {
+                            if (item.service_category.toString() === productCategories.id) {
                                 item.category = productCategories.name
                             }
                         })
@@ -70,6 +70,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     })
                     setPost(data[0]);
                     console.log(post())
+                    console.log(post()?.content)
                 }
             } catch (error) {
                 console.log(error);
@@ -79,6 +80,16 @@ export const ViewFullPost: Component<Props> = (props) => {
             location.href = `/${lang}/login`
         }
     }
+
+    // createEffect(() => {
+    //     const contentElement = document.getElementById("post-content");
+    //     const postValue = post();
+    //     if (postValue && postValue.content) {
+    //         if (contentElement) {
+    //             contentElement.textContent = postValue.content.replace(/\\r\\n/g, '\n');
+    //         }
+    //     }
+    // })
 
     createEffect(async () => {
         console.log("downloading images")
@@ -180,13 +191,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </div>
                     <Show when={postImages().length > 1}>
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                                <button
-                                    type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-600 dark:border-gray-400"
-                                    aria-label={`${t('postLabels.slide')} 1`}
-                                    onClick={() => currentSlide(1)}
-                                >
-                                </button>
+                            <button
+                                type="button"
+                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800 border border-gray-600 dark:border-gray-400"
+                                aria-label={`${t('postLabels.slide')} 1`}
+                                onClick={() => currentSlide(1)}
+                            >
+                            </button>
                             {postImages().slice(1).map((image: string, index: number) => (
                                 <button
                                     type="button"
@@ -225,11 +236,11 @@ export const ViewFullPost: Component<Props> = (props) => {
             </Show>
             <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span>{post()?.provider_name}</p>
             <p class="my-1">
-            <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
+                <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}
             </p>
             <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.category}</p>
-            <p class="my-10">{post()?.content}</p>
+            <p class="my-10 whitespace-pre-line" id="post-content">{post()?.content}</p>
             <div class="flex justify-center mt-4">
                 <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} />
             </div>
