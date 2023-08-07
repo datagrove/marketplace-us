@@ -33,6 +33,8 @@ export const English = {
     returnHome: 'Click to Return Home',
     reset: 'Reset',
     post: 'Post',
+    next: 'Next',
+    previous: 'Previous',
   },
 
   messages: {
@@ -79,6 +81,8 @@ export const English = {
     provider: 'Provider: ',
     location: 'Location: ',
     category: 'Category: ',
+    image: 'Post Image',
+    slide: 'Slide',
   },
 
   headerData: {

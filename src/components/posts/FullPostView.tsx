@@ -1,4 +1,4 @@
-import { Component, createSignal, createEffect } from "solid-js";
+import { Component, createSignal, createEffect, Show } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -139,60 +139,61 @@ export const ViewFullPost: Component<Props> = (props) => {
             <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
                 {post()?.title}
             </h2>
-            
-            <div class="relative w-full">
-                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                    <div class="slide duration-700 ease-in-out">
-                        <img
-                            src={postImages()[0]}
-                            class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                            alt={`Post Image 1`} />
-                    </div>
-                    {postImages().slice(1).map((image: string, index: number) => (
-                        <div class="hidden slide duration-700 ease-in-out">
+            <Show when={postImages().length > 0}>
+                <div class="relative w-full">
+                    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                        <div class="slide duration-700 ease-in-out">
                             <img
-                                src={image}
+                                src={postImages()[0]}
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt={`Post Image ${index + 1}`} />
+                                alt={`${t('postLabels.image')} 1`} />
                         </div>
-                    ))}
+                        {postImages().slice(1).map((image: string, index: number) => (
+                            <div class="hidden slide duration-700 ease-in-out">
+                                <img
+                                    src={image}
+                                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                    alt={`${t('postLabels.image')} ${index + 1}`} />
+                            </div>
+                        ))}
 
+                    </div>
+                    <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+                        {postImages().map((image: string, index: number) => (
+                            <button
+                                type="button"
+                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800"
+                                aria-label={`${t('postLabels.slide')} ${index + 1}`}
+                                onClick={() => currentSlide(index + 1)}
+                            >
+                            </button>
+                        ))}
+                    </div>
+                    <button
+                        type="button"
+                        class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        onclick={() => moveSlide(-1)}
+                    >
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+                            </svg>
+                            <span class="sr-only">{t('buttons.previous')}</span>
+                        </span>
+                    </button>
+                    <button
+                        type="button"
+                        class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                        onclick={() => moveSlide(1)}>
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg>
+                            <span class="sr-only">{t('buttons.next')}</span>
+                        </span>
+                    </button>
                 </div>
-                <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                    {postImages().map((image: string, index: number) => (
-                        <button
-                            type="button"
-                            class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800"
-                            aria-label={`Slide ${index + 1}`}
-                            onClick={() => currentSlide(index + 1)}
-                        >
-                        </button>
-                    ))}
-                </div>
-                <button
-                    type="button"
-                    class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                    onclick={() => moveSlide(-1)}
-                >
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                        </svg>
-                        <span class="sr-only">Previous</span>
-                    </span>
-                </button>
-                <button
-                    type="button"
-                    class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                    onclick={() => moveSlide(1)}>
-                    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                        </svg>
-                        <span class="sr-only">Next</span>
-                    </span>
-                </button>
-            </div>
+            </Show>
             <p>{t('postLabels.provider')}{post()?.provider_name}</p>
             <p>
                 {t('postLabels.location')}{post()?.major_municipality}/{post()?.minor_municipality}/
