@@ -35,6 +35,7 @@ export const French = {
     post: 'Poste',
     next: 'Suivante',
     previous: 'Précédente',
+    delete: "Supprimer",
   },
 
   messages: {

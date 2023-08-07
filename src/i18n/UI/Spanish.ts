@@ -35,6 +35,7 @@ export const Spanish = {
     post: 'Correo',
     next: 'Próxima',
     previous: 'Previa',
+    delete: 'Borrar',
   },
 
   messages: {

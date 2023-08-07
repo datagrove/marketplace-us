@@ -35,6 +35,7 @@ export interface uiObject {
     post: string,
     next: string,
     previous: string,
+    delete: string,
   },
 
   messages: {

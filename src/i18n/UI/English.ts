@@ -35,6 +35,7 @@ export const English = {
     post: 'Post',
     next: 'Next',
     previous: 'Previous',
+    delete: 'Delete',
   },
 
   messages: {
