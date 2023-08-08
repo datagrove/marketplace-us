@@ -37,6 +37,7 @@ export const Spanish = {
     previous: 'Previa',
     delete: 'Borrar',
     contact: 'Contacto',
+    phone: 'Llamada',
   },
 
   messages: {
@@ -58,7 +59,7 @@ export const Spanish = {
     noPosts: "No hay publicaciones disponibles",
     noPost: 'Publicación no encontrada',
     selectAnImage: 'Debe seleccionar una imagen para cargar.',
-    noProvider: 'No se encontró ningún contacto.',
+    noProvider: 'No se encontró ningún proveedor.',
   },
 
   formLabels: {

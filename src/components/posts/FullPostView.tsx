@@ -25,6 +25,8 @@ interface Post {
     user_id: string;
     image_urls: string | null;
     email: string;
+    provider_id: number;
+    provider_url: string;
 }
 
 interface Props {
@@ -69,6 +71,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             }
                         })
                         delete item.service_category
+                        item.provider_url = `/${lang}/provider/${item.provider_id}`
                     })
                     setPost(data[0]);
                     console.log(post())
@@ -169,19 +172,19 @@ export const ViewFullPost: Component<Props> = (props) => {
             <Show when={postImages().length > 0}>
                 <div class="relative w-full">
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <div class="slide duration-700 ease-in-out">
+                        <div class="slide">
                             <img
                                 src={postImages()[0]}
-                                class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
+                                class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
                                 alt={`${t('postLabels.image')} 1`} />
                         </div>
                         <Show when={postImages().length > 1}>
                             {postImages().slice(1).map((image: string, index: number) => (
-                                <div class="hidden slide duration-700 ease-in-out">
+                                <div class="hidden slide">
                                     <img
                                         src={image}
-                                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
-                                        alt={`${t('postLabels.image')} ${index + 1}`} />
+                                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
+                                        alt={`${t('postLabels.image')} ${index + 2}`} />
                                 </div>
                             ))}
                         </Show>
@@ -200,7 +203,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     type="button"
                                     class="dot w-3 h-3 rounded-full cursor-pointer bg-slate-300 dark:bg-gray-800"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
-                                    onClick={() => currentSlide(index + 1)}
+                                    onClick={() => currentSlide(index + 2)}
                                 >
                                 </button>
                             ))}
@@ -231,7 +234,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </Show>
                 </div>
             </Show>
-            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span>{post()?.provider_name}</p>
+            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.provider_url} class="text-link2 dark:text-link2-DM underline">{post()?.provider_name}</a></p>
             <p class="my-1">
                 <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}
