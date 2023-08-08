@@ -91,33 +91,32 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
             <div class="product-carousel my-2">
-                <div class="flex justify-between">
-                    <button class="w-12">
+                <div class="flex flex-start justify-between">
+                    <button class="w-12 hidden">
                         <img
                             src={leftArrow}
                             alt="Left Arrow"
                         />
                     </button>
 
-                    <div class="overflow-scroll w-3/4">
-                        <ul class="flex">
-                            {allCategoryInfo?.map((item) => (
-                                <button 
-                                class='m-2 w-12 rounded-full border-4 border-border' 
+                    <div class="flex justify-between items-center w-full overflow-auto">
+                        { allCategoryInfo?.map((item) => (
+                            <button 
+                                // class='flex flex-col justify-center items-center m-2 h-24 w-24 border-4 border-border' 
+                                class='flex flex-col flex-none justify-center items-center w-20 h-20' 
                                 onClick={() => {
                                     props.filterPosts(item.category)
                                 }}
-                                >
-                                    <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-48" />
-                                    <p class="text-text1 dark:text-text1-DM text-center text-xs">{item.name}</p>
+                            >
+                                <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-8" />
+                                <p class=" text-text1 dark:text-text1-DM my-2 text-center text-xs">{item.name} </p>
 
-                                </button>
+                            </button>
                             ))
-                            }
-                        </ul>
+                        }
                     </div>
 
-                    <button class="w-12">
+                    <button class="w-12 hidden">
                         <img
                             src={rightArrow}
                             alt="Right Arrow"
@@ -126,7 +125,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                 </div>
 
 
-                <div class="h-16 overflow-scroll w-full">
+                {/* <div class="h-16 overflow-scroll w-full">
                         <ul class="flex flex-col items-center">
                             {allCategoryInfo?.map((item) => (
                                 <button 
@@ -142,7 +141,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             ))
                             }
                         </ul>
-                    </div>
+                    </div> */}
             </div>
 
     )
