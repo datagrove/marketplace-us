@@ -110,7 +110,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                 <div class="relative w-full h-56 overflow-hidden rounded-lg md:h-96">
                     <img
                         src={providerImage()}
-                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
+                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
                         alt={`${t('postLabels.image')} 1`} />
                 </div>
             </Show>
