@@ -111,7 +111,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     <img
                         src={providerImage()}
                         class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
-                        alt={`${t('postLabels.image')} 1`} />
+                        alt={`${t('postLabels.ProviderProfileImage')} 1`} />
                 </div>
             </Show>
             <p class="my-1">

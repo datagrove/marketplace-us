@@ -88,6 +88,7 @@ export const Spanish = {
     category: 'Categoría: ',
     image: 'Publicar imagen',
     slide: 'Diapositiva',
+    providerProfileImage: 'Imagen de perfil del proveedor',
   },
 
   headerData: {
