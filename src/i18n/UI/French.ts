@@ -35,6 +35,9 @@ export const French = {
     post: 'Poste',
     next: 'Suivante',
     previous: 'Précédente',
+    delete: "Supprimer",
+    contact: 'Contact',
+    phone: 'Appel',
   },
 
   messages: {
@@ -54,6 +57,9 @@ export const French = {
     createClientAccount: "Veuillez vous connecter pour créer un profil client.",
     viewProviderAccount: "Vous n'avez pas de compte fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
     noPosts: "Aucune publication disponible.",
+    noPost: "Message introuvable",
+    selectAnImage: 'Vous devez sélectionner une image à télécharger.',
+    noProvider: 'Aucun fournisseur trouvé.',
   },
 
   formLabels: {
@@ -82,6 +88,7 @@ export const French = {
     category: 'Catégorie: ',
     image: 'Publier une image',
     slide: 'Diapositive',
+    providerProfileImage: 'Image du profil du fournisseur',
   },
 
   headerData: {

@@ -2,10 +2,16 @@ import { Component, createSignal, createEffect, Show } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import type { AuthSession } from "@supabase/supabase-js";
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+
+//get the categories from the language files so they translate with changes in the language picker
+const values = ui[lang] as uiObject
+const productCategories = values.productCategoryInfo.categories
 
 interface Post {
     content: string;
@@ -18,6 +24,9 @@ interface Post {
     governing_district: string;
     user_id: string;
     image_urls: string | null;
+    email: string;
+    provider_id: number;
+    provider_url: string;
 }
 
 interface Props {
@@ -51,9 +60,19 @@ export const ViewFullPost: Component<Props> = (props) => {
                 if (error) {
                     console.log(error);
                 } else if (data[0] === undefined) {
-                    console.log("Post not found"); //TODO: Change to alert message
-                    location.href = `/${lang}/404` //TODO: Redirect to Services Page
+                    alert(t('messages.noPost'));
+                    location.href = `/${lang}/services`
                 } else {
+                    console.log(data)
+                    data?.map(async (item) => {
+                        productCategories.forEach(productCategories => {
+                            if (item.service_category.toString() === productCategories.id) {
+                                item.category = productCategories.name
+                            }
+                        })
+                        delete item.service_category
+                        item.provider_url = `/${lang}/provider/${item.provider_id}`
+                    })
                     setPost(data[0]);
                     console.log(post())
                 }
@@ -124,12 +143,23 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
 
         for (i = 0; i < dots.length; i++) {
-            dots[i].classList.remove('active');
+            dots[i].classList.remove(`bg-white`);
+            dots[i].classList.remove(`dark:bg-gray-600`);
+            dots[i].classList.add(`bg-slate-300`);
+            dots[i].classList.add(`dark:bg-gray-800`);
         }
 
         //show the active slide
         if (slides.length > 0) {
             slides[slideIndex - 1].classList.remove("hidden");
+        }
+
+        //show the active dot
+        if (dots.length > 0) {
+            dots[slideIndex - 1].classList.remove(`bg-slate-300`);
+            dots[slideIndex - 1].classList.remove(`dark:bg-gray-800`);
+            dots[slideIndex - 1].classList.add(`bg-white`);
+            dots[slideIndex - 1].classList.add(`dark:bg-gray-600`);
         }
 
     }
@@ -142,31 +172,38 @@ export const ViewFullPost: Component<Props> = (props) => {
             <Show when={postImages().length > 0}>
                 <div class="relative w-full">
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <div class="slide duration-700 ease-in-out">
+                        <div class="slide">
                             <img
                                 src={postImages()[0]}
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                                class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
                                 alt={`${t('postLabels.image')} 1`} />
                         </div>
                         <Show when={postImages().length > 1}>
                             {postImages().slice(1).map((image: string, index: number) => (
-                                <div class="hidden slide duration-700 ease-in-out">
+                                <div class="hidden slide">
                                     <img
                                         src={image}
-                                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                        alt={`${t('postLabels.image')} ${index + 1}`} />
+                                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
+                                        alt={`${t('postLabels.image')} ${index + 2}`} />
                                 </div>
                             ))}
                         </Show>
                     </div>
                     <Show when={postImages().length > 1}>
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-                            {postImages().map((image: string, index: number) => (
+                            <button
+                                type="button"
+                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-600"
+                                aria-label={`${t('postLabels.slide')} 1`}
+                                onClick={() => currentSlide(1)}
+                            >
+                            </button>
+                            {postImages().slice(1).map((image: string, index: number) => (
                                 <button
                                     type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-800"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-slate-300 dark:bg-gray-800"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
-                                    onClick={() => currentSlide(index + 1)}
+                                    onClick={() => currentSlide(index + 2)}
                                 >
                                 </button>
                             ))}
@@ -176,8 +213,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                             class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                             onclick={() => moveSlide(-1)}
                         >
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-white/50 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
                                 </svg>
                                 <span class="sr-only">{t('buttons.previous')}</span>
@@ -187,8 +224,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                             type="button"
                             class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                             onclick={() => moveSlide(1)}>
-                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-white/50 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
                                 </svg>
                                 <span class="sr-only">{t('buttons.next')}</span>
@@ -197,13 +234,16 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </Show>
                 </div>
             </Show>
-            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span>{post()?.provider_name}</p>
+            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.provider_url} class="text-link2 dark:text-link2-DM underline">{post()?.provider_name}</a></p>
             <p class="my-1">
-            <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
+                <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}
             </p>
             <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.category}</p>
-            <p class="my-10">{post()?.content}</p>
+            <p class="my-10 whitespace-pre-line" id="post-content">{post()?.content}</p>
+            <div class="mt-4">
+                <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
+            </div>
             <div class="flex justify-center mt-4">
                 <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} />
             </div>
