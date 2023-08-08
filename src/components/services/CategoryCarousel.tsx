@@ -92,7 +92,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
     return (
             <div class="product-carousel my-2 w-full">
                 <div class="flex flex-start justify-between">
-                    <button class="w-12 hidden md:block">
+                    <button class="w-12 hidden">
                         <img
                             src={leftArrow}
                             alt="Left Arrow"
@@ -117,7 +117,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
                     </div>
 
-                    <button class="w-12 hidden md:block">
+                    <button class="w-12 hidden">
                         <img
                             src={rightArrow}
                             alt="Right Arrow"
