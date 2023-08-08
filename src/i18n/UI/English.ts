@@ -88,6 +88,7 @@ export const English = {
     category: 'Category: ',
     image: 'Post Image',
     slide: 'Slide',
+    providerProfileImage: 'Provider Profile Image',
   },
 
   headerData: {

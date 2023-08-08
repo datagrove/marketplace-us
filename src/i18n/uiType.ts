@@ -88,6 +88,7 @@ export interface uiObject {
     category: string,
     image: string,
     slide: string,
+    providerProfileImage: string,
   },
 
   headerData: {
