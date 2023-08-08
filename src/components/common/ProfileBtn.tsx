@@ -48,18 +48,17 @@ export const ProfileBtn = () => {
 
   return (
     <div>
-      <button onClick={clickHandler} class="rounded border mx-5">
+      <button onClick={clickHandler} class="rounded border px-3 py-2 mx-5">
         Click Me
       </button>
       <ul id="profileItems" class="hidden absolute">
         <div class="mx-2">
-          <AuthMode />
-        </div>
-
-        <div class="mx-2">
           <ProviderProfileButton />
         </div>
         {renderWhenUser()}
+        <div class="mx-2">
+          <AuthMode />
+        </div>
       </ul>
     </div>
   );

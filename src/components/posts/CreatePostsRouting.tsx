@@ -44,10 +44,9 @@ export const CreatePostsRouting = () => {
 
   return (
     <Show when={isUserProvider()}>
-      <a href="../../posts/createpost" class=" w-full  btn-primary text-sm  ">
+      <a href="../../posts/createpost" class=" w-full   text-sm  ">
         Create Posts
       </a>
-      <p>qsy</p>
     </Show>
   );
 };
