@@ -90,7 +90,7 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
-            <div class="product-carousel my-2 w-full">
+            <div class="product-carousel my-2">
                 <div class="flex flex-start justify-between">
                     <button class="w-12 hidden">
                         <img
@@ -114,7 +114,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             </button>
                             ))
                         }
-
                     </div>
 
                     <button class="w-12 hidden">
