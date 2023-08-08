@@ -231,7 +231,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </Show>
                 </div>
             </Show>
-            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span>{post()?.provider_name}</p>
+            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href="#" class="text-link2 dark:text-link2-DM underline">{post()?.provider_name}</a></p>
             <p class="my-1">
                 <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}
