@@ -7,11 +7,12 @@ import { Auth } from "../../lib/Auth";
 import { Show, createSignal } from "solid-js";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
-
 export const ProfileBtn = () => {
   const [isUser, setIsUser] = createSignal<boolean | null>(false);
 
-  if (User !== null) {
+  if (User.session === null) {
+    console.log("User dont exist");
+  } else {
     setIsUser(User.session!.user.role === "authenticated");
   }
 
@@ -47,9 +48,10 @@ export const ProfileBtn = () => {
 
   return (
     <div>
-      <button onClick={clickHandler}>Click Me</button>
-      <ul id="profileItems" class="">
-        <li>Profile</li>
+      <button onClick={clickHandler} class="rounded border mx-5">
+        Click Me
+      </button>
+      <ul id="profileItems" class="hidden absolute">
         <div class="mx-2">
           <AuthMode />
         </div>
@@ -57,6 +59,7 @@ export const ProfileBtn = () => {
         <div class="mx-2">
           <ProviderProfileButton />
         </div>
+        {renderWhenUser()}
       </ul>
     </div>
   );
