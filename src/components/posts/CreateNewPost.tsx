@@ -235,7 +235,7 @@ export const CreateNewPost: Component = () => {
             type="text"
             id="Title"
             name="Title"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none text-text1"
             required
           />
         </label>
@@ -263,7 +263,7 @@ export const CreateNewPost: Component = () => {
           <textarea
             id="Content"
             name="Content"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none text-text1"
             placeholder={t('formLabels.enterPostContent')}
             rows="10"
             required>

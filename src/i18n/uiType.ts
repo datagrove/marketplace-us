@@ -35,6 +35,8 @@ export interface uiObject {
     post: string,
     next: string,
     previous: string,
+    delete: string,
+    contact: string,
   },
 
   messages: {
@@ -54,7 +56,9 @@ export interface uiObject {
     createClientAccount: string,
     viewProviderAccount: string,
     noPosts: string,
-    
+    noPost: string,
+    selectAnImage: string,
+    noProvider: string,
   },
 
   formLabels: {

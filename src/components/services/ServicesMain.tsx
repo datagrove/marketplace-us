@@ -13,11 +13,24 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject
-const productCategoryData = values.productCategoryInfo
+const productCategories = values.productCategoryInfo.categories
 
 
 const { data, error } = await supabase.from('providerposts').select('*');
 console.log(data)
+console.log(productCategories)
+
+data?.map(item => {
+    productCategories.forEach(productCategories =>{
+        if(item.service_category.toString() === productCategories.id){
+            item.category = productCategories.name
+        }
+    })
+    delete item.service_category
+})
+
+console.log (data)
+
 
 interface ProviderPost {
     content: string;

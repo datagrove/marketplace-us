@@ -35,6 +35,8 @@ export const Spanish = {
     post: 'Correo',
     next: 'Próxima',
     previous: 'Previa',
+    delete: 'Borrar',
+    contact: 'Contacto',
   },
 
   messages: {
@@ -54,6 +56,9 @@ export const Spanish = {
     createClientAccount: "Inicie sesión para crear un perfil de cliente",
     viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
     noPosts: "No hay publicaciones disponibles",
+    noPost: 'Publicación no encontrada',
+    selectAnImage: 'Debe seleccionar una imagen para cargar.',
+    noProvider: 'No se encontró ningún contacto.',
   },
 
   formLabels: {
