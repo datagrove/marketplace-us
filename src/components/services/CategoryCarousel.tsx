@@ -129,13 +129,13 @@ export const CategoryCarousel: Component<Props> = (props) => {
                                 }}
                             >
 
-
+{/* 
                                 { light && <img src={ item.icon } alt={item.ariaLabel} title={item.description} class="w-8" /> }
-                                { dark && <img src={ item.iconDM } alt={item.ariaLabel} title={item.description} class="w-8" /> }
+                                { dark && <img src={ item.iconDM } alt={item.ariaLabel} title={item.description} class="w-8" /> } */}
                                
                                 {/* <img src={ item.iconDM } /> */}
-                                {/* <img src={ item.icon } alt={item.ariaLabel} title={item.description} class="w-8" />
-                                <img src={ item.iconDM } alt={item.ariaLabel} title={item.description} class="w-8" /> */}
+                                {/* {/* <img src={ item.icon } alt={item.ariaLabel} title={item.description} class="w-8" /> */}
+                                <img src={ item.icon } alt={item.ariaLabel} title={item.description} class="w-16 dark:bg-background2 dark:rounded-full p-1" /> 
                                 <p class=" text-text1 dark:text-text1-DM my-2 text-center text-xs">{item.name} </p>
 
                                 {/* <svg width="800px" height="800px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" class="fill-logo dark:fill-logo-DM">
