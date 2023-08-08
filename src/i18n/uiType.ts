@@ -37,6 +37,7 @@ export interface uiObject {
     previous: string,
     delete: string,
     contact: string,
+    phone: string,
   },
 
   messages: {

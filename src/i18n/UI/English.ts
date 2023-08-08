@@ -37,6 +37,7 @@ export const English = {
     previous: 'Previous',
     delete: 'Delete',
     contact: 'Contact',
+    phone: 'Call',
   },
 
   messages: {
@@ -58,7 +59,7 @@ export const English = {
     noPosts: "No posts available.",
     noPost: "Post Not Found",
     selectAnImage: 'You must select an image to upload.',
-    noProvider: "No contact found.",
+    noProvider: "No Provider found.",
   },
 
   formLabels: {

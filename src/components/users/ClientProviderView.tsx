@@ -57,18 +57,10 @@ export const ClientProviderView: Component<Props> = (props) => {
                 if (error) {
                     console.log(error);
                 } else if (data[0] === undefined) {
-                    alert(t('messages.noPost')); //TODO change this message
+                    alert(t('messages.noProvider'));
                     location.href = `/${lang}/services`
                 } else {
                     console.log(data)
-                    // data?.map(async (item) => {
-                    //     productCategories.forEach(productCategories => {
-                    //         if (item.service_category.toString() === productCategories.id) {
-                    //             item.category = productCategories.name
-                    //         }
-                    //     })
-                    //     delete item.service_category
-                    // })
                     setProvider(data[0]);
                     console.log(provider())
                 }
@@ -86,6 +78,7 @@ export const ClientProviderView: Component<Props> = (props) => {
         if (provider() !== undefined) {
             if (provider()?.image_url === undefined || provider()?.image_url === null) {
                 console.log("No Image")
+                console.log(providerImage())
             } else {
                 await downloadImage(provider()?.image_url!)
             }
@@ -113,16 +106,14 @@ export const ClientProviderView: Component<Props> = (props) => {
             <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
                 {provider()?.provider_name}
             </h2>
-            <div class="relative w-full">
-                <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                    <div class="slide duration-700 ease-in-out">
-                        <img
-                            src={providerImage()}
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
-                            alt={`${t('postLabels.image')} 1`} />
-                    </div>
+            <Show when={typeof providerImage() !== "undefined"}>
+                <div class="relative w-full h-56 overflow-hidden rounded-lg md:h-96">
+                    <img
+                        src={providerImage()}
+                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain"
+                        alt={`${t('postLabels.image')} 1`} />
                 </div>
-            </div>
+            </Show>
             <p class="my-1">
                 <span class="font-bold">{t('postLabels.location')}</span>{provider()?.major_municipality}/{provider()?.minor_municipality}/
                 {provider()?.governing_district}
@@ -131,8 +122,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                 <a href={`mailto:${provider()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
             <div class="mt-4">
-                <a href={`mailto:${provider()?.provider_phone}`} class="btn-primary">{t('buttons.contact')}</a>
-                {/* TODO switch label to Call */}
+                <a href={`tel:${provider()?.provider_phone}`} class="btn-primary">{t('buttons.phone')}</a>
             </div>
         </div>
     );
