@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js';
+import { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -25,6 +25,7 @@ import rightArrow from '../../assets/categoryIcons/circled-right-arrow.svg'
 import leftArrow from '../../assets/categoryIcons/circled-left-arrow.svg'
 import beauty from '../../assets/categoryIcons/beauty-salon.svg'
 import finance from '../../assets/categoryIcons/banking-bank.svg'
+import { currentLanguage } from '../../lib/languageSelectionStore';
 
 let categories: Array<any> = []
 
@@ -87,6 +88,8 @@ interface Props {
     filterPosts: (currentCategory: string) => void;
   }
 
+// const [selected, setSelected] = createSignal(false);
+
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
@@ -99,18 +102,28 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
 
-                    <div class="flex justify-between items-center w-full overflow-auto">
+                    <div class="flex justify-between items-center w-full overflow-auto pb-4">
                         { allCategoryInfo?.map((item) => (
+                            
                             <button 
-                                // class='flex flex-col justify-center items-center m-2 h-24 w-24 border-4 border-border' 
+                                id={ item.id }
                                 class='flex flex-col flex-none justify-center items-center w-20 h-20' 
-                                onClick={() => {
+                                onClick={(e) => {
                                     props.filterPosts(item.category)
+
+                                    let currBtn = e.target;
+
+                                    if (!currBtn.classList.contains('selected')) {
+                                        currBtn.classList.add('selected')
+                                    } else {
+                                        currBtn.classList.remove('selected')
+                                    }
+
                                 }}
                             >
                                 <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-8" />
                                 <p class=" text-text1 dark:text-text1-DM my-2 text-center text-xs">{item.name} </p>
-
+                                <img src=" " alt="line" class="hidden"/>
                             </button>
                             ))
                         }

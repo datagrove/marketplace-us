@@ -31,6 +31,7 @@ module.exports = {
 				'text2-DM': '#2E2E2E',
 				'border-DM': '#F0F0F0',
 				'logo-DM': '#F0F0F0',
+				'selected': 'bg-red-400',
 			}
 		},
 	},
