@@ -3,6 +3,34 @@ import { supabase } from '../../lib/supabaseClient'
 import { CategoryCarousel } from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
 import { LocationFilter } from './LocationFilter';
+import { SearchBar } from './SearchBar'
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
+
+//get the categories from the language files so they translate with changes in the language picker
+const values = ui[lang] as uiObject
+const productCategories = values.productCategoryInfo.categories
+
+
+const { data, error } = await supabase.from('providerposts').select('*');
+console.log(data)
+console.log(productCategories)
+
+data?.map(item => {
+    productCategories.forEach(productCategories =>{
+        if(item.service_category.toString() === productCategories.id){
+            item.category = productCategories.name
+        }
+    })
+    delete item.service_category
+})
+
+console.log (data)
+
 
 interface ProviderPost {
     content: string;
@@ -13,9 +41,9 @@ interface ProviderPost {
     major_municipality: string;
     minor_municipality: string;
     governing_district: string;
+    user_id: string;
+    image_urls: string;
 }
-
-const { data, error } = await supabase.from('providerposts').select('*');
 
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([])
@@ -59,20 +87,19 @@ export const ServicesView: Component = () => {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
             console.log(data)
             setPosts(data)
-            setCurrentPosts(data)
         }
 
         console.log("Posts: ")
         console.log(posts())
 
-        let filtered: ProviderPost[] = []
+        let filtered: ProviderPost[] = posts()
 
         if (filters().length === 0 && locationFilters().length === 0 && minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-            return posts()
+            setCurrentPosts(filtered)
         } else {
             if (filters().length !== 0) {
                 let filterPosts = filters().map((currentCategory) => {
-                    let tempPosts = posts().filter((post: any) => {
+                    let tempPosts = filtered.filter((post: any) => {
                         return post.category === currentCategory
                     })
                     return tempPosts;
@@ -81,12 +108,12 @@ export const ServicesView: Component = () => {
                 console.log(filterPosts.flat())
                 let filter1 = filterPosts.flat()
                 filtered = filter1
-                setPosts(filtered)
+                setCurrentPosts(filtered)
             } 
             
             if (locationFilters().length !== 0) {
                     let majorMuniFilter = locationFilters().map((currentLocation) => {
-                        let tempPosts = posts().filter((post: any) => {
+                        let tempPosts = filtered.filter((post: any) => {
                             return post.major_municipality === currentLocation
                         })
                         return tempPosts
@@ -94,7 +121,7 @@ export const ServicesView: Component = () => {
                     let filter2 = majorMuniFilter.flat()
                     if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
                         filtered = filter2
-                        setPosts(filtered)
+                        setCurrentPosts(filtered)
                     } else if (minorLocationFilters().length !== 0) {
                         let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
                             let tempPosts = filter2.filter((post: any) => {
@@ -105,7 +132,7 @@ export const ServicesView: Component = () => {
                         let filter3 = minorMuniFilter.flat()
                         if (governingLocationFilters().length === 0) {
                             filtered = filter3
-                            setPosts(filtered)
+                            setCurrentPosts(filtered)
                         } else {
                             let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
                                 let tempPosts = filter3.filter((post: any) => {
@@ -115,24 +142,23 @@ export const ServicesView: Component = () => {
                             })
                             let filter4 = governingMuniFilter.flat()
                             filtered = filter4
-                            setPosts(filtered)
+                            setCurrentPosts(filtered)
                         }
                     }
-                    setPosts(filtered)
                 } else if (minorLocationFilters().length !== 0) {
                     if (governingLocationFilters().length === 0) {
                         let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                            let tempPosts = posts().filter((post: any) => {
+                            let tempPosts = filtered.filter((post: any) => {
                                 return post.minor_municipality === currentLocation
                             })
                             return tempPosts
                         })
                         let filter5 = minorMuniFilter.flat()
                         filtered = filter5
-                        setPosts(filtered)
+                        setCurrentPosts(filtered)
                     } else {
                         let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                            let tempPosts = posts().filter((post: any) => {
+                            let tempPosts = filtered.filter((post: any) => {
                                 return post.minor_municipality === currentLocation
                             })
                             return tempPosts
@@ -146,19 +172,19 @@ export const ServicesView: Component = () => {
                         })
                         let filter7 = governingMuniFilter.flat()
                         filtered = filter7
-                        setPosts(filtered)
+                        setCurrentPosts(filtered)
                     }
                     // return filtered
                 } else if (governingLocationFilters().length !== 0) {
                     let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                        let tempPosts = posts().filter((post: any) => {
+                        let tempPosts = filtered.filter((post: any) => {
                             return post.governing_district === currentLocation
                         })
                         return tempPosts
                     })
                     let filter8 = governingMuniFilter.flat()
                     filtered = filter8
-                    setPosts(filtered)
+                    setCurrentPosts(filtered)
                 }
             }
         }
@@ -203,12 +229,11 @@ export const ServicesView: Component = () => {
             filterPosts()
         }
 
-        createEffect(() => {
-            setCurrentPosts(posts());
-        },)
-
         return (
             <div class=''>
+                <div>
+                    <SearchBar />
+                </div>
                 <div>
                     <CategoryCarousel
                         filterPosts={setCategoryFilter}

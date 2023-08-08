@@ -7,6 +7,7 @@ export const English = {
     login: 'Login',
     home: 'Home',
     signIn: 'Sign In',
+    createClientAccount: 'Create Client Account',
     editClientAccount: 'Edit Client Account',
     viewClientAccount: 'View Client Account',
     createPost: 'Create Post',
@@ -31,10 +32,16 @@ export const English = {
     signOut: 'Sign Out',
     returnHome: 'Click to Return Home',
     reset: 'Reset',
+    post: 'Post',
+    next: 'Next',
+    previous: 'Previous',
+    delete: 'Delete',
+    contact: 'Contact',
+    phone: 'Call',
   },
 
   messages: {
-    noAccount: "Don't have an account? Click here to",
+    noAccount: "Don't have an account? Click here to ",
     passwordLength: 'Password must be at least 6 characters long',
     passwordMatch: 'Passwords do not match',
     passwordReset: 'Password Reset',
@@ -47,8 +54,12 @@ export const English = {
     checkConfirmEmail: 'Check your email for the confirmation link!',
     signIn: "Please sign in to access this page.",
     createProviderAccount: "Please sign in to create a provider profile.",
+    createClientAccount: "Please sign in to create a client profile.",
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
+    noPost: "Post Not Found",
+    selectAnImage: 'You must select an image to upload.',
+    noProvider: "No Provider found.",
   },
 
   formLabels: {
@@ -67,6 +78,17 @@ export const English = {
     email: 'Email',
     password: 'Password',
     confirmPassword: 'Confirm Password',
+    displayName: 'Display Name',
+    enterPostContent: 'Enter Post Content Here',
+  },
+
+  postLabels: {
+    provider: 'Provider: ',
+    location: 'Location: ',
+    category: 'Category: ',
+    image: 'Post Image',
+    slide: 'Slide',
+    providerProfileImage: 'Provider Profile Image',
   },
 
   headerData: {

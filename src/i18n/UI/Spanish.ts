@@ -7,6 +7,7 @@ export const Spanish = {
     login: 'Iniciar sesión',
     home: 'Inicio',
     signIn: 'Iniciar sesión',
+    createClientAccount: 'Crear cuenta de cliente',
     editClientAccount: 'Editar Cuenta de Cliente',
     viewClientAccount: 'Ver Cuenta de Cliente',
     createPost: 'Crear Publicación',
@@ -31,10 +32,16 @@ export const Spanish = {
     signOut: 'Desconectar',
     returnHome: 'Haga clic para volver a casa',
     reset: 'Reiniciar',
+    post: 'Correo',
+    next: 'Próxima',
+    previous: 'Previa',
+    delete: 'Borrar',
+    contact: 'Contacto',
+    phone: 'Llamada',
   },
 
   messages: {
-    noAccount: "¿No tienes una cuenta? Click aquí para",
+    noAccount: "¿No tienes una cuenta? Click aquí para ",
     passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
@@ -47,8 +54,12 @@ export const Spanish = {
     checkConfirmEmail: '¡Revisa tu correo electrónico para el link de confirmación!',
     signIn: "Inicia sesión para acceder a esta página",
     createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
+    createClientAccount: "Inicie sesión para crear un perfil de cliente",
     viewProviderAccount: "No tiene una cuenta de proveedor, cree una para ver su perfil de proveedor",
     noPosts: "No hay publicaciones disponibles",
+    noPost: 'Publicación no encontrada',
+    selectAnImage: 'Debe seleccionar una imagen para cargar.',
+    noProvider: 'No se encontró ningún proveedor.',
   },
 
   formLabels: {
@@ -67,6 +78,17 @@ export const Spanish = {
     email: 'Correo electrónico',
     password: 'Contraseña',
     confirmPassword: 'confirmar Contraseña',
+    displayName: 'Nombre para mostrar',
+    enterPostContent: 'Ingrese el contenido de la publicación aquí',
+  },
+
+  postLabels: {
+    provider: 'Proveedora: ',
+    location: 'Ubicación: ',
+    category: 'Categoría: ',
+    image: 'Publicar imagen',
+    slide: 'Diapositiva',
+    providerProfileImage: 'Imagen de perfil del proveedor',
   },
 
   headerData: {

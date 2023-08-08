@@ -16,6 +16,7 @@ async function postFormData(formData: FormData) {
     const data = await response.json();
     //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {
+        //TODO: Not sure how to deal with internationalization here
         alert(data.message)
         window.location.href = `/${lang}` + data.redirect;
     }
@@ -139,7 +140,7 @@ export const ProviderRegistration: Component = () => {
                 console.log("Other error: " + error)
             }
 
-        //If the user is not signed in then tell them to sign in and send them to the login page
+            //If the user is not signed in then tell them to sign in and send them to the login page
         } else {
             alert(t('messages.createProviderAccount'))
             location.href = `/${lang}/login`
@@ -153,64 +154,118 @@ export const ProviderRegistration: Component = () => {
         const formData = new FormData(e.target as HTMLFormElement)
         formData.append("access_token", session()?.access_token!)
         formData.append("refresh_token", session()?.refresh_token!)
+        if (imageUrl() !== null) {
+            formData.append("image_url", imageUrl()!)
+        }
         setFormData(formData)
     }
 
     //Actual Form that gets displayed for users to fill
     return (
-        <div>
+        <div class=''>
             <form onSubmit={submit}>
-                <label for="FirstName">{t('formLabels.firstName')}:
-                    <input type="text" id="FirstName" name="FirstName" required />
+                <label for="FirstName" class="text-text1 dark:text-text1-DM">{t('formLabels.firstName')}:
+                    <input
+                        type="text"
+                        id="FirstName"
+                        name="FirstName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        required
+                    />
                 </label>
 
-                <label for="LastName">{t('formLabels.lastName')}:
-                    <input type="text" id="LastName" name="LastName" required />
+                <label for="LastName" class="text-text1 dark:text-text1-DM">{t('formLabels.lastName')}:
+                    <input
+                        type="text"
+                        id="LastName"
+                        name="LastName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        required
+                    />
                 </label>
 
 
-                <label for="ProviderName">{t('formLabels.providerName')}:
-                    <input type="text" id="ProviderName" name="ProviderName" />
+                <label for="ProviderName" class="text-text1 dark:text-text1-DM">{t('formLabels.providerName')}:
+                    <input
+                        type="text"
+                        id="ProviderName"
+                        name="ProviderName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    />
                 </label>
 
-                <label for="Phone">{t('formLabels.phone')}:
-                    <input type="text" id="Phone" name="Phone" required />
+                <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
+                    <input
+                        type="text"
+                        id="Phone"
+                        class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="Phone"
+                        required
+                    />
                 </label>
 
-                <label for="country">{t('formLabels.country')}:
-                    <select id="country" name="country" required>
+                <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
+                    <select 
+                    id="country" 
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="country" 
+                    required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="MajorMunicipality">{t('formLabels.majorMunicipality')}:
-                    <select id="MajorMunicipality" name="MajorMunicipality" required>
+                <br />
+
+                <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}:
+                    <select 
+                    id="MajorMunicipality" 
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="MajorMunicipality" 
+                    required
+                    >
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="MinorMunicipality">{t('formLabels.minorMunicipality')}:
-                    <select id="MinorMunicipality" name="MinorMunicipality" required>
+                <br />
+
+                <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}:
+                    <select 
+                    id="MinorMunicipality" 
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="MinorMunicipality" 
+                    required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                <label for="GoverningDistrict">{t('formLabels.governingDistrict')}:
-                    <select id="GoverningDistrict" name="GoverningDistrict" required>
+                <br />
+
+                <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}:
+                    <select 
+                    id="GoverningDistrict" 
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="GoverningDistrict" 
+                    required>
                         <option value="-1">-</option>
                     </select>
                 </label>
 
-                {/* Allows upload of profile picture using the UserImage component  */}
-                <UserImage
-                    url={imageUrl()}
-                    size={150}
-                    onUpload={(e: Event, url: string) => {
-                        setImageUrl(url)
-                    }}
-                />
 
-                <button class="my-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">{t('buttons.register')}</button>
+                <div class="mb-4 flex justify-center">
+                    {/* Allows upload of profile picture using the UserImage component  */}
+                    <UserImage
+                        url={imageUrl()}
+                        size={150}
+                        onUpload={(e: Event, url: string) => {
+                            setImageUrl(url)
+                        }}
+                    />
+                </div>
+
+                <div class="flex justify-center">
+                    <button class="btn-primary">{t('buttons.register')}</button>
+                </div>
 
                 <Suspense>{response() && <p>{response().message}</p>}</Suspense>
             </form>

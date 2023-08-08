@@ -15,11 +15,12 @@ const lang = getLangFromUrl(Astro.url)
     <meta charset="UTF-8">
     <link href='https://fonts.googleapis.com/css?family=Playfair Display' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'></link>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/>
+    <!-- TODO: Is this still something that should be here? -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/> 
     <title>{pageTitle}</title>
   </head>
 
-  <body class="mx-4 text-page bg-gray-200 dark:bg-black dark:text-slate-400">
+  <body class="md:mx-4 text-page bg-gray-200 dark:bg-black dark:text-slate-400">
     <slot />
   </body>
 </html>

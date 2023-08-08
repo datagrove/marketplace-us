@@ -1,10 +1,6 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
-
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
 
 interface Props {
   size: number;
@@ -12,8 +8,8 @@ interface Props {
   onUpload: (event: Event, filePath: string) => void;
 }
 
-const UserImage: Component<Props> = (props) => {
-  const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+const PostImage: Component<Props> = (props) => {
+  const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
   // const [imageUrl, setImageUrl] = createSignal({ placeholderImg });
   const [uploading, setUploading] = createSignal(false);
 
@@ -24,13 +20,13 @@ const UserImage: Component<Props> = (props) => {
   const downloadImage = async (path: string) => {
     try {
       const { data, error } = await supabase.storage
-        .from("user.image")
+        .from("post.image")
         .download(path);
       if (error) {
         throw error;
       }
       const url = URL.createObjectURL(data);
-      setImageUrl(url);
+      setImageUrl([...imageUrl(), url]);
     } catch (error) {
       if (error instanceof Error) {
         console.log("Error downloading image: ", error.message);
@@ -46,7 +42,7 @@ const UserImage: Component<Props> = (props) => {
 
       const target = event.currentTarget;
       if (!target?.files || target.files.length === 0) {
-        throw new Error(t('messages.selectAnImage'));
+        throw new Error("You must select an image to upload.");
       }
 
       const file = target.files[0];
@@ -55,7 +51,7 @@ const UserImage: Component<Props> = (props) => {
       const filePath = `${fileName}`;
 
       let { error: uploadError } = await supabase.storage
-        .from("user.image")
+        .from("post.image")
         .upload(filePath, file);
 
       if (uploadError) {
@@ -73,16 +69,17 @@ const UserImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite" class="flex-row text-center justify-center">
-      {imageUrl() ? (
-        <img
-          src={imageUrl()!}
-          alt={imageUrl() ? "Image" : "No image"}
-          class="user image border-2"
-          style={{ height: `${props.size}px`, width: `${props.size}px` }}
-        />
+    <div style={{ width: `${props.size}px` }} aria-live="polite">
+      {imageUrl().length > 0 ? (
+        imageUrl().map((image) => (
+          <img
+            src={image}
+            alt={imageUrl() ? "Image" : "No image"}
+            class="user image border-2"
+            style={{ height: `${props.size}px`, width: `${props.size}px` }}
+          />
+        ))
       ) : (
-        <div class="flex justify-center">
         <svg
             width="120px" 
             height="120px" 
@@ -97,7 +94,6 @@ const UserImage: Component<Props> = (props) => {
                 </g>
             </g>
         </svg>
-        </div>
       )}
       <div style={{ width: `${props.size}px` }}>
         <label
@@ -111,6 +107,7 @@ const UserImage: Component<Props> = (props) => {
             type="file"
             id="single"
             accept="image/*"
+            multiple
             onChange={uploadImage}
             disabled={uploading()}
           />
@@ -120,4 +117,4 @@ const UserImage: Component<Props> = (props) => {
   );
 };
 
-export default UserImage;
+export default PostImage;

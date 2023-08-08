@@ -7,6 +7,7 @@ export interface uiObject {
     login: string,
     home: string,
     signIn: string,
+    createClientAccount: string,
     editClientAccount: string,
     viewClientAccount: string,
     createPost: string,
@@ -31,6 +32,12 @@ export interface uiObject {
     signOut: string,
     returnHome: string,
     reset: string,
+    post: string,
+    next: string,
+    previous: string,
+    delete: string,
+    contact: string,
+    phone: string,
   },
 
   messages: {
@@ -47,8 +54,12 @@ export interface uiObject {
     checkConfirmEmail: string,
     signIn: string,
     createProviderAccount: string,
+    createClientAccount: string,
     viewProviderAccount: string,
     noPosts: string,
+    noPost: string,
+    selectAnImage: string,
+    noProvider: string,
   },
 
   formLabels: {
@@ -67,6 +78,17 @@ export interface uiObject {
     email: string,
     password: string,
     confirmPassword: string,
+    displayName: string,
+    enterPostContent: string,
+  },
+
+  postLabels: {
+    provider: string,
+    location: string,
+    category: string,
+    image: string,
+    slide: string,
+    providerProfileImage: string,
   },
 
   headerData: {

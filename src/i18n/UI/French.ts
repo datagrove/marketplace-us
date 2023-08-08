@@ -7,6 +7,7 @@ export const French = {
     login: 'Connexion',
     home: 'Maison',
     signIn: "S'identifier",
+    createClientAccount: 'Créer un compte client',
     editClientAccount: 'Modifier le compte client',
     viewClientAccount: "Voir le compte client",
     createPost: "Créer un article",
@@ -31,10 +32,16 @@ export const French = {
     signOut: "se déconnecter",
     returnHome: "Cliquez pour retourner à la maison",
     reset: 'Réinitialiser',
+    post: 'Poste',
+    next: 'Suivante',
+    previous: 'Précédente',
+    delete: "Supprimer",
+    contact: 'Contact',
+    phone: 'Appel',
   },
 
   messages: {
-    noAccount: "Vous n'avez pas de compte ? Cliquez ici pour",
+    noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
     passwordLength: "Le mot de passe doit contenir au moins 6 caractères",
     passwordMatch: "Les mots de passe ne correspondent pas",
     passwordReset: 'Réinitialisation du mot de passe',
@@ -47,8 +54,12 @@ export const French = {
     checkConfirmEmail: 'Vérifiez votre e-mail pour le lien de confirmation !',
     signIn: "Veuillez vous connecter pour accéder à cette page.",
     createProviderAccount: "Veuillez vous connecter pour créer un profil de fournisseur.",
+    createClientAccount: "Veuillez vous connecter pour créer un profil client.",
     viewProviderAccount: "Vous n'avez pas de compte fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
     noPosts: "Aucune publication disponible.",
+    noPost: "Message introuvable",
+    selectAnImage: 'Vous devez sélectionner une image à télécharger.',
+    noProvider: 'Aucun fournisseur trouvé.',
   },
 
   formLabels: {
@@ -67,6 +78,17 @@ export const French = {
     email: "E-mail",
     password: "Mot de passe",
     confirmPassword: "Confirmez le mot de passe",
+    displayName: 'Afficher un nom',
+    enterPostContent: 'Entrez le contenu du message ici',
+  },
+
+  postLabels: {
+    provider: 'Fournisseuse: ',
+    location: 'Emplacement: ',
+    category: 'Catégorie: ',
+    image: 'Publier une image',
+    slide: 'Diapositive',
+    providerProfileImage: 'Image du profil du fournisseur',
   },
 
   headerData: {
