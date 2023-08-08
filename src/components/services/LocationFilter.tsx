@@ -124,7 +124,7 @@ export const LocationFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div class=" border-green-500 border-8 bg-white w-screen overflow-auto">
+        <div class=" border-green-500 border-8 bg-white w-full overflow-auto">
             <div class="bg-gray-400 flex content-center">
                 <ul class="flex content-center border-yellow-500 m-4">
                     <For each={majorMunicipalities()}>{(item) =>
