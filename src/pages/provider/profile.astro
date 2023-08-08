@@ -2,12 +2,11 @@
 import Layout from "../../layouts/PageLayout.astro";
 import { EditProfileButton } from "../../components/users/EditProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { DeletePostButton } from "../../components/posts/DeletePostButton";
-
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
 ---
 
 <Layout>

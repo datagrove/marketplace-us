@@ -37,6 +37,7 @@ export interface uiObject {
     previous: string,
     delete: string,
     contact: string,
+    phone: string,
   },
 
   messages: {
@@ -87,6 +88,7 @@ export interface uiObject {
     category: string,
     image: string,
     slide: string,
+    providerProfileImage: string,
   },
 
   headerData: {

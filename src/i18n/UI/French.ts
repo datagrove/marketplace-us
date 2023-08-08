@@ -37,6 +37,7 @@ export const French = {
     previous: 'Précédente',
     delete: "Supprimer",
     contact: 'Contact',
+    phone: 'Appel',
   },
 
   messages: {
@@ -58,7 +59,7 @@ export const French = {
     noPosts: "Aucune publication disponible.",
     noPost: "Message introuvable",
     selectAnImage: 'Vous devez sélectionner une image à télécharger.',
-    noProvider: 'Aucun contact trouvé.',
+    noProvider: 'Aucun fournisseur trouvé.',
   },
 
   formLabels: {
@@ -87,6 +88,7 @@ export const French = {
     category: 'Catégorie: ',
     image: 'Publier une image',
     slide: 'Diapositive',
+    providerProfileImage: 'Image du profil du fournisseur',
   },
 
   headerData: {
