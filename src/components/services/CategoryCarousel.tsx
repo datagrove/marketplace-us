@@ -90,25 +90,25 @@ interface Props {
 export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
-            <div class="product-carousel my-2 border border-blue-300 w-screen">
+            <div class="product-carousel my-2 w-full">
                 <div class="flex flex-start justify-between">
-                    <button class="w-12">
+                    <button class="w-12 hidden md:block">
                         <img
                             src={leftArrow}
                             alt="Left Arrow"
                         />
                     </button>
 
-                    <div class="border border-orange-400 flex justify-between items-center w-screen overflow-scroll">
+                    <div class="flex justify-between items-center w-full overflow-auto">
                         { allCategoryInfo?.map((item) => (
                             <button 
                                 // class='flex flex-col justify-center items-center m-2 h-24 w-24 border-4 border-border' 
-                                class='border-4 border-border flex flex-col flex-none justify-center items-center w-24 h-24' 
+                                class='flex flex-col flex-none justify-center items-center w-20 h-20' 
                                 onClick={() => {
                                     props.filterPosts(item.category)
                                 }}
                             >
-                                <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-1/2" />
+                                <img src={item.icon} alt={item.ariaLabel} title={item.description} class="w-8" />
                                 <p class=" text-text1 dark:text-text1-DM my-2 text-center text-xs">{item.name} </p>
 
                             </button>
@@ -117,7 +117,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
                     </div>
 
-                    <button class="w-12">
+                    <button class="w-12 hidden md:block">
                         <img
                             src={rightArrow}
                             alt="Right Arrow"
