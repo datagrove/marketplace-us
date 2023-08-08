@@ -3,7 +3,7 @@ import { supabase } from "../../lib/supabaseClient";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ClientRouting = () => {
-  const isUser = User.session!.user.role === "authenticated";
+  const [isUser, setIsUser] = createSignal<boolean>(false);
   const [isUserClient, setIsUserClient] = createSignal<boolean>(false);
   const [createText, setCreateText] = createSignal<string>(
     "Create Client Account"
@@ -11,6 +11,7 @@ export const ClientRouting = () => {
   const [routing, setRouting] = createSignal<string>(
     "../../client/createaccount"
   );
+  setIsUser(User.session!.user.role === "authenticated");
 
   const isClient = async () => {
     try {
@@ -19,7 +20,7 @@ export const ClientRouting = () => {
         .select("*")
         .eq("user_id", User.session!.user.id);
       setIsUserClient(true);
-      setCreateText("Edit Client Account");
+      setCreateText("Edit Client");
       setRouting("../../client/editaccount");
       console.log(isUserClient());
       console.log(User.session!);
@@ -35,12 +36,25 @@ export const ClientRouting = () => {
     }
   };
 
+  if (UserError) {
+    console.log("User Error: " + UserError.message);
+  }
   isClient();
+
+  // function clickHandler() {
+  //   const listShow = document.getElementById("clientList");
+  //   if (listShow?.classList.contains("hidden")) {
+  //     listShow?.classList.remove("hidden");
+  //   } else {
+  //     listShow?.classList.add("hidden");
+  //   }
+  // }
+
   return (
     <Show when={isUser}>
-      <div>
-        <a href={routing()}>{createText()}</a>
-      </div>
+      <a class="text-sm  " href={routing()}>
+        {createText()}
+      </a>
     </Show>
   );
 };

@@ -33,11 +33,21 @@ export const CreatePostsRouting = () => {
 
   isProvider();
 
+  // function clickHandler() {
+  //   const listShow = document.getElementById("providerList");
+  //   if (listShow?.classList.contains("hidden")) {
+  //     listShow?.classList.remove("hidden");
+  //   } else {
+  //     listShow?.classList.add("hidden");
+  //   }
+  // }
+
   return (
     <Show when={isUserProvider()}>
-      <div>
-        <a href="../../posts/createpost.astro">Create Posts</a>
-      </div>
+      <a href="../../posts/createpost" class=" w-full  btn-primary text-sm  ">
+        Create Posts
+      </a>
+      <p>qsy</p>
     </Show>
   );
 };
