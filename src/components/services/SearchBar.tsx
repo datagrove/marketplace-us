@@ -14,36 +14,25 @@ interface Props {
 export const SearchBar: Component<Props> = (props) => {
   const [searchString, setSearchString] = createSignal<string>('');
 
-  // const searchPosts = async () => {
-  //   console.log(searchString());
-  //   if (searchString() === '') {
-  //     const { data, error } = await supabase
-  //       .from('providerposts')
-  //       .select()
-  //     if (error) {
-  //       console.log("supabase error: " + error.message);
-  //     } else {
-  //       console.log(data)
-  //     }
-  //   } else {
-  //     const { data, error } = await supabase
-  //       .from('providerposts')
-  //       .select()
-  //       .textSearch('title_content', searchString());
-
-  //     if (error) {
-  //       console.log("supabase error: " + error.message);
-  //     } else {
-  //       console.log(data)
-  //     }
-  //   }
-  // }
+  // Execute a function when the user presses a key on the keyboard
+  document.getElementById("search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+    console.log("Search Input Event:")
+    console.log(e)
+    e.preventDefault();
+    // If the user presses the "Enter" key on the keyboard
+    if (e.code === "Enter") {
+      // // Cancel the default action, if needed
+      // e.preventDefault();
+      // Trigger the button element with a click
+      document.getElementById("searchButton")?.click();
+    }
+  });
 
   return (
     <div class="search-form">
       <div class="form">
-        <input type="text" name="query" placeholder={t('formLabels.search')} oninput={(e) => setSearchString(e.target.value)} />
-        <button class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button>
+        <input type="text" name="query" id="search" placeholder={t('formLabels.search')} oninput={(e) => setSearchString(e.target.value)} />
+        <button id="searchButton" class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button>
       </div>
     </div>
   )
