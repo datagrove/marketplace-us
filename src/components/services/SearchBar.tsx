@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js'
+import { Component, createSignal, createEffect } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
 import type { AuthSession } from '@supabase/supabase-js'
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
@@ -14,19 +14,23 @@ interface Props {
 export const SearchBar: Component<Props> = (props) => {
   const [searchString, setSearchString] = createSignal<string>('');
 
-  // Execute a function when the user presses a key on the keyboard
-  document.getElementById("search")?.addEventListener("keydown", (e: KeyboardEvent) => {
-    console.log("Search Input Event:")
-    console.log(e)
-    e.preventDefault();
-    // If the user presses the "Enter" key on the keyboard
-    if (e.code === "Enter") {
-      // // Cancel the default action, if needed
-      // e.preventDefault();
-      // Trigger the button element with a click
-      document.getElementById("searchButton")?.click();
-    }
-  });
+  createEffect(() => {
+    // Execute a function when the user presses a key on the keyboard
+    document.getElementById("search")?.addEventListener("keydown", (e: KeyboardEvent) => {
+      console.log("Search Input Event:")
+      console.log(e)
+      // If the user presses the "Enter" key on the keyboard
+      if (e.code === "Enter") {
+        // // Cancel the default action, if needed
+        // e.preventDefault();
+        // Trigger the button element with a click
+        console.log("button click")
+        document.getElementById("searchButton")?.click();
+      }
+    });
+  })
+
+  
 
   return (
     <div class="search-form">
