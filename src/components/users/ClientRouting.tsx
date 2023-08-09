@@ -20,7 +20,7 @@ export const ClientRouting = () => {
         .select("*")
         .eq("user_id", User.session!.user.id);
       setIsUserClient(true);
-      setCreateText("Edit Client");
+      setCreateText("Edit Client Profile");
       setRouting("../../client/editaccount");
       console.log(isUserClient());
       console.log(User.session!);
@@ -52,7 +52,7 @@ export const ClientRouting = () => {
 
   return (
     <Show when={isUser}>
-      <a class="text-sm  " href={routing()}>
+      <a class="  " href={routing()}>
         {createText()}
       </a>
     </Show>

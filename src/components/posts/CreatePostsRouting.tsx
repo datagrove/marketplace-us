@@ -44,7 +44,7 @@ export const CreatePostsRouting = () => {
 
   return (
     <Show when={isUserProvider()}>
-      <a href="../../posts/createpost" class=" w-full   text-sm  ">
+      <a href="../../posts/createpost" class=" ">
         Create Posts
       </a>
     </Show>

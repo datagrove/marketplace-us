@@ -35,10 +35,13 @@ export const ProfileBtn = () => {
     if (isUser()) {
       return (
         <div>
-          <div class="mx-2">
+          <div class="">
+            <ProviderProfileButton />
+          </div>
+          <div class="">
             <CreatePostsRouting />
           </div>
-          <div class="mx-2">
+          <div class="">
             <ClientRouting />
           </div>
         </div>
@@ -52,11 +55,8 @@ export const ProfileBtn = () => {
         Click Me
       </button>
       <ul id="profileItems" class="hidden absolute">
-        <div class="mx-2">
-          <ProviderProfileButton />
-        </div>
         {renderWhenUser()}
-        <div class="mx-2">
+        <div class="">
           <AuthMode />
         </div>
       </ul>
