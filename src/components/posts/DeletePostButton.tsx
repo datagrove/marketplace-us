@@ -1,6 +1,10 @@
 import { Component, Show, createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   // Define the type of the prop
@@ -58,10 +62,10 @@ export const DeletePostButton: Component<Props> = (props) => {
       <div>
         <form onSubmit={deletePost}>
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            class="bg-[#B21010] dark:bg-[#F56B6B] text-white dark:text-black font-bold py-2 px-4 rounded"
             type="submit"
           >
-            Delete
+            {t("buttons.delete")}
           </button>
         </form>
       </div>

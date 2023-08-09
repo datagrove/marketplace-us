@@ -35,6 +35,9 @@ export const English = {
     post: 'Post',
     next: 'Next',
     previous: 'Previous',
+    delete: 'Delete',
+    contact: 'Contact',
+    phone: 'Call',
   },
 
   messages: {
@@ -54,7 +57,9 @@ export const English = {
     createClientAccount: "Please sign in to create a client profile.",
     viewProviderAccount: "You do not have a provider account please create one to view your provider profile.",
     noPosts: "No posts available.",
-
+    noPost: "Post Not Found",
+    selectAnImage: 'You must select an image to upload.',
+    noProvider: "No Provider found.",
   },
 
   formLabels: {
@@ -75,6 +80,7 @@ export const English = {
     confirmPassword: 'Confirm Password',
     displayName: 'Display Name',
     enterPostContent: 'Enter Post Content Here',
+    noValue: 'Not Provided',
   },
 
   postLabels: {
@@ -83,6 +89,7 @@ export const English = {
     category: 'Category: ',
     image: 'Post Image',
     slide: 'Slide',
+    providerProfileImage: 'Provider Profile Image',
   },
 
   headerData: {
