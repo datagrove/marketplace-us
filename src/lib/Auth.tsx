@@ -98,8 +98,12 @@ export const Auth: Component = (props) => {
                   placeholder={t("formLabels.password")}
                   value={password()}
                   onChange={(e) => {
-                    console.log(e.currentTarget.value);
-                    return setPassword(e.currentTarget.value);
+
+                    if (e.currentTarget.value.length > 5) {
+                      console.log("Password length is greater than 5");
+                      return setPassword(e.currentTarget.value);
+                    }
+
                   }}
                 />
               </div>
