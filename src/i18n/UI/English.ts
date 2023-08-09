@@ -80,6 +80,7 @@ export const English = {
     confirmPassword: 'Confirm Password',
     displayName: 'Display Name',
     enterPostContent: 'Enter Post Content Here',
+    noValue: 'Not Provided',
   },
 
   postLabels: {
@@ -88,6 +89,7 @@ export const English = {
     category: 'Category: ',
     image: 'Post Image',
     slide: 'Slide',
+    providerProfileImage: 'Provider Profile Image',
   },
 
   headerData: {

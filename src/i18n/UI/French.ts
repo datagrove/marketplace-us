@@ -80,6 +80,7 @@ export const French = {
     confirmPassword: "Confirmez le mot de passe",
     displayName: 'Afficher un nom',
     enterPostContent: 'Entrez le contenu du message ici',
+    noValue: 'Non fourni',
   },
 
   postLabels: {
@@ -88,6 +89,7 @@ export const French = {
     category: 'Catégorie: ',
     image: 'Publier une image',
     slide: 'Diapositive',
+    providerProfileImage: 'Image du profil du fournisseur',
   },
 
   headerData: {
