@@ -80,6 +80,7 @@ export const French = {
     confirmPassword: "Confirmez le mot de passe",
     displayName: 'Afficher un nom',
     enterPostContent: 'Entrez le contenu du message ici',
+    noValue: 'Non fourni',
   },
 
   postLabels: {

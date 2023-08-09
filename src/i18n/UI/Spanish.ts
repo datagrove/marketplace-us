@@ -60,6 +60,7 @@ export const Spanish = {
     noPost: 'Publicación no encontrada',
     selectAnImage: 'Debe seleccionar una imagen para cargar.',
     noProvider: 'No se encontró ningún proveedor.',
+    noValue: 'No proporcionada',
   },
 
   formLabels: {
