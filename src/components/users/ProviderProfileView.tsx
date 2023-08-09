@@ -107,14 +107,16 @@ export const ProviderProfileView: Component = () => {
                 <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
                     {provider()?.provider_name}
                 </h2>
+                <div class="flex justify-center mb-3">
                 <Show when={typeof providerImage() !== "undefined"}>
-                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 object-contain justify-center border border-red-500">
+                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-24 md:w-24 lg:h-36 lg:w-36 object-contain justify-center border border-red-500">
                         <img
                             src={providerImage()}
                             class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
                             alt={`${t('postLabels.ProviderProfileImage')} 1`} />
                     </div>
                 </Show>
+                </div>
 
                 <label for="FirstName" class="text-text2 dark:text-text1-DM">{t('formLabels.firstName')}:
                     <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.first_name}</p>
@@ -130,10 +132,12 @@ export const ProviderProfileView: Component = () => {
                     <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_name ? provider()?.provider_name : t('formLabels.noValue')}</p>
                 </label>
 
-                <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
-                    {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
-                    <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.email}</p>
-                </label>
+                <div class="flex flex-wrap break-words w-fit">
+                    <label for="Email" class="text-text1 dark:text-text1-DM border border-red-600 break-words w-fit">{t('formLabels.email')}:
+                        {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                        <p class="rounded w-fit mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none break-words">{provider()?.email}</p>
+                    </label>
+                </div>
 
                 <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
                     <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_phone}</p>
