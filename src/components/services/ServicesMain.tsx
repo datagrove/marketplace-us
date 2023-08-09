@@ -21,15 +21,15 @@ console.log(data)
 console.log(productCategories)
 
 data?.map(item => {
-    productCategories.forEach(productCategories =>{
-        if(item.service_category.toString() === productCategories.id){
+    productCategories.forEach(productCategories => {
+        if (item.service_category.toString() === productCategories.id) {
             item.category = productCategories.name
         }
     })
     delete item.service_category
 })
 
-console.log (data)
+console.log(data)
 
 
 interface ProviderPost {
@@ -47,6 +47,7 @@ interface ProviderPost {
 
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([])
+    const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([])
     const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([])
     const [filters, setFilters] = createSignal<Array<string>>([])
     const [locationFilters, setLocationFilters] = createSignal<Array<string>>([])
@@ -57,9 +58,39 @@ export const ServicesView: Component = () => {
     if (!data) {
         alert("No posts available.")
     } else {
-
         setPosts(data)
         setCurrentPosts(data)
+    }
+
+    const searchPosts = async (searchString: string) => {
+        console.log(searchString);
+        if (searchString === '') {
+            console.log("Data: ")
+            console.log(data)
+            setSearchPost(data!)
+        } else {
+            const { data: searchResults, error: searchError } = await supabase
+                .from('providerposts')
+                .select()
+                .textSearch('title_content', searchString);
+
+            if (searchError) {
+                console.log("supabase error: " + searchError.message);
+            } else {
+                console.log(searchResults)
+                searchResults?.map(item => {
+                    productCategories.forEach(productCategories => {
+                        if (item.service_category.toString() === productCategories.id) {
+                            item.category = productCategories.name
+                        }
+                    })
+                    delete item.service_category
+                })
+                setSearchPost(searchResults)
+            }
+        }
+
+        filterPosts()
     }
 
     const setCategoryFilter = (currentCategory: string) => {
@@ -83,11 +114,13 @@ export const ServicesView: Component = () => {
 
         if (!data) {
             alert("No posts available.")
-        } else {
+        } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
             console.log(data)
             setPosts(data)
-        }
+        } else (
+            setPosts(searchPost())
+        )
 
         console.log("Posts: ")
         console.log(posts())
@@ -109,140 +142,140 @@ export const ServicesView: Component = () => {
                 let filter1 = filterPosts.flat()
                 filtered = filter1
                 setCurrentPosts(filtered)
-            } 
-            
+            }
+
             if (locationFilters().length !== 0) {
-                    let majorMuniFilter = locationFilters().map((currentLocation) => {
-                        let tempPosts = filtered.filter((post: any) => {
-                            return post.major_municipality === currentLocation
+                let majorMuniFilter = locationFilters().map((currentLocation) => {
+                    let tempPosts = filtered.filter((post: any) => {
+                        return post.major_municipality === currentLocation
+                    })
+                    return tempPosts
+                })
+                let filter2 = majorMuniFilter.flat()
+                if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
+                    filtered = filter2
+                    setCurrentPosts(filtered)
+                } else if (minorLocationFilters().length !== 0) {
+                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
+                        let tempPosts = filter2.filter((post: any) => {
+                            return post.minor_municipality === currentLocation
                         })
                         return tempPosts
                     })
-                    let filter2 = majorMuniFilter.flat()
-                    if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-                        filtered = filter2
-                        setCurrentPosts(filtered)
-                    } else if (minorLocationFilters().length !== 0) {
-                        let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                            let tempPosts = filter2.filter((post: any) => {
-                                return post.minor_municipality === currentLocation
-                            })
-                            return tempPosts
-                        })
-                        let filter3 = minorMuniFilter.flat()
-                        if (governingLocationFilters().length === 0) {
-                            filtered = filter3
-                            setCurrentPosts(filtered)
-                        } else {
-                            let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                                let tempPosts = filter3.filter((post: any) => {
-                                    return post.governing_district === currentLocation
-                                })
-                                return tempPosts
-                            })
-                            let filter4 = governingMuniFilter.flat()
-                            filtered = filter4
-                            setCurrentPosts(filtered)
-                        }
-                    }
-                } else if (minorLocationFilters().length !== 0) {
+                    let filter3 = minorMuniFilter.flat()
                     if (governingLocationFilters().length === 0) {
-                        let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                            let tempPosts = filtered.filter((post: any) => {
-                                return post.minor_municipality === currentLocation
-                            })
-                            return tempPosts
-                        })
-                        let filter5 = minorMuniFilter.flat()
-                        filtered = filter5
+                        filtered = filter3
                         setCurrentPosts(filtered)
                     } else {
-                        let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                            let tempPosts = filtered.filter((post: any) => {
-                                return post.minor_municipality === currentLocation
-                            })
-                            return tempPosts
-                        })
-                        let filter6 = minorMuniFilter.flat()
                         let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                            let tempPosts = filter6.filter((post: any) => {
+                            let tempPosts = filter3.filter((post: any) => {
                                 return post.governing_district === currentLocation
                             })
                             return tempPosts
                         })
-                        let filter7 = governingMuniFilter.flat()
-                        filtered = filter7
+                        let filter4 = governingMuniFilter.flat()
+                        filtered = filter4
                         setCurrentPosts(filtered)
                     }
-                    // return filtered
-                } else if (governingLocationFilters().length !== 0) {
-                    let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
+                }
+            } else if (minorLocationFilters().length !== 0) {
+                if (governingLocationFilters().length === 0) {
+                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
                         let tempPosts = filtered.filter((post: any) => {
+                            return post.minor_municipality === currentLocation
+                        })
+                        return tempPosts
+                    })
+                    let filter5 = minorMuniFilter.flat()
+                    filtered = filter5
+                    setCurrentPosts(filtered)
+                } else {
+                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
+                        let tempPosts = filtered.filter((post: any) => {
+                            return post.minor_municipality === currentLocation
+                        })
+                        return tempPosts
+                    })
+                    let filter6 = minorMuniFilter.flat()
+                    let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
+                        let tempPosts = filter6.filter((post: any) => {
                             return post.governing_district === currentLocation
                         })
                         return tempPosts
                     })
-                    let filter8 = governingMuniFilter.flat()
-                    filtered = filter8
+                    let filter7 = governingMuniFilter.flat()
+                    filtered = filter7
                     setCurrentPosts(filtered)
                 }
+                // return filtered
+            } else if (governingLocationFilters().length !== 0) {
+                let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
+                    let tempPosts = filtered.filter((post: any) => {
+                        return post.governing_district === currentLocation
+                    })
+                    return tempPosts
+                })
+                let filter8 = governingMuniFilter.flat()
+                filtered = filter8
+                setCurrentPosts(filtered)
             }
         }
-
-        const filterPostsByMajorMunicipality = (location: string) => {
-            if (locationFilters().includes(location)) {
-                let currentLocationFilters = locationFilters().filter((el) => el !== location)
-                setLocationFilters(currentLocationFilters)
-            } else {
-                setLocationFilters([...locationFilters(), location])
-            }
-
-            console.log("Location Filters: ")
-            console.log(locationFilters())
-
-            filterPosts()
-        }
-
-        const filterPostsByMinorMunicipality = (location: string) => {
-            if (minorLocationFilters().includes(location)) {
-                let currentLocationFilters = minorLocationFilters().filter((el) => el !== location)
-                setMinorLocationFilters(currentLocationFilters)
-            } else {
-                setMinorLocationFilters([...minorLocationFilters(), location])
-            }
-
-            console.log("Minor Location Filters: ")
-            console.log(minorLocationFilters())
-            filterPosts()
-        }
-
-        const filterPostsByGoverningDistrict = (location: string) => {
-            if (governingLocationFilters().includes(location)) {
-                let currentLocationFilters = governingLocationFilters().filter((el) => el !== location)
-                setGoverningLocationFilters(currentLocationFilters)
-            } else {
-                setGoverningLocationFilters([...governingLocationFilters(), location])
-            }
-
-            console.log("Governing Location Filters: ")
-            console.log(governingLocationFilters())
-            filterPosts()
-        }
-
-        return (
-            <div class=''>
-                <div>
-                    <SearchBar />
-                </div>
-                <div>
-                    <CategoryCarousel
-                        filterPosts={setCategoryFilter}
-                    />
-                </div>
-                <div>
-                    <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
-                </div>
-                <ViewCard posts={currentPosts()} />
-            </div>
-        )
     }
+
+    const filterPostsByMajorMunicipality = (location: string) => {
+        if (locationFilters().includes(location)) {
+            let currentLocationFilters = locationFilters().filter((el) => el !== location)
+            setLocationFilters(currentLocationFilters)
+        } else {
+            setLocationFilters([...locationFilters(), location])
+        }
+
+        console.log("Location Filters: ")
+        console.log(locationFilters())
+
+        filterPosts()
+    }
+
+    const filterPostsByMinorMunicipality = (location: string) => {
+        if (minorLocationFilters().includes(location)) {
+            let currentLocationFilters = minorLocationFilters().filter((el) => el !== location)
+            setMinorLocationFilters(currentLocationFilters)
+        } else {
+            setMinorLocationFilters([...minorLocationFilters(), location])
+        }
+
+        console.log("Minor Location Filters: ")
+        console.log(minorLocationFilters())
+        filterPosts()
+    }
+
+    const filterPostsByGoverningDistrict = (location: string) => {
+        if (governingLocationFilters().includes(location)) {
+            let currentLocationFilters = governingLocationFilters().filter((el) => el !== location)
+            setGoverningLocationFilters(currentLocationFilters)
+        } else {
+            setGoverningLocationFilters([...governingLocationFilters(), location])
+        }
+
+        console.log("Governing Location Filters: ")
+        console.log(governingLocationFilters())
+        filterPosts()
+    }
+
+    return (
+        <div class=''>
+            <div>
+                <SearchBar search={searchPosts} />
+            </div>
+            <div>
+                <CategoryCarousel
+                    filterPosts={setCategoryFilter}
+                />
+            </div>
+            <div>
+                <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
+            </div>
+            <ViewCard posts={currentPosts()} />
+        </div>
+    )
+}
