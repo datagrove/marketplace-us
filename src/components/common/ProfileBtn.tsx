@@ -30,8 +30,6 @@ export const ProfileBtn = () => {
   }
 
   function renderWhenUser() {
-    console.log("User is authenticated");
-    console.log(isUser(), "holaaaaa");
     if (isUser()) {
       return (
         <div>
