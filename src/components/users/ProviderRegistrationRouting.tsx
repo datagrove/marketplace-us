@@ -1,14 +1,13 @@
-import { Show, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
-export const CreatePostsRouting = () => {
+export const ProviderRegistrationRouting = () => {
   const [isUserProvider, setIsUserProvider] = createSignal<boolean>(false);
-  if (UserError) {
-    console.log("User Error: " + UserError.message);
-  }
-
+  const createProviderProfileLink = document.getElementById(
+    "createProviderProfile"
+  );
   const isProvider = async () => {
     try {
       const { data, error } = await supabase
@@ -16,7 +15,7 @@ export const CreatePostsRouting = () => {
         .select("*")
         .eq("user_id", User.session!.user.id);
       setIsUserProvider(true);
-      console.log(isUserProvider());
+      createProviderProfileLink?.classList.add("hidden");
 
       if (error) {
         console.log(error);
@@ -32,20 +31,11 @@ export const CreatePostsRouting = () => {
 
   isProvider();
 
-  // function clickHandler() {
-  //   const listShow = document.getElementById("providerList");
-  //   if (listShow?.classList.contains("hidden")) {
-  //     listShow?.classList.remove("hidden");
-  //   } else {
-  //     listShow?.classList.add("hidden");
-  //   }
-  // }
+  console.log(isUserProvider(), "provider profile routing");
 
   return (
-    <Show when={isUserProvider()}>
-      <a href="../../posts/createpost" class=" ">
-        Create Posts
-      </a>
-    </Show>
+    <a href="../../provider/createaccount" class="" id="createProviderProfile">
+      Create Provider Profile
+    </a>
   );
 };
