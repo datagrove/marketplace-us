@@ -80,6 +80,7 @@ export const English = {
     confirmPassword: 'Confirm Password',
     displayName: 'Display Name',
     enterPostContent: 'Enter Post Content Here',
+    noValue: 'Not Provided',
   },
 
   postLabels: {
