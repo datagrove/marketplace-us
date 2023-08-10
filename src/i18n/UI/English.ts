@@ -36,7 +36,7 @@ export const English = {
     next: 'Next',
     previous: 'Previous',
     delete: 'Delete',
-    contact: 'Contact',
+    contact: 'Email',
     phone: 'Call',
   },
 
@@ -81,6 +81,8 @@ export const English = {
     displayName: 'Display Name',
     enterPostContent: 'Enter Post Content Here',
     noValue: 'Not Provided',
+    providerInfo: 'Provider Information',
+    posts: 'Provider Posts',
   },
 
   postLabels: {

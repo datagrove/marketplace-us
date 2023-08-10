@@ -100,10 +100,13 @@ export const ProviderProfileView: Component = () => {
         }
     }
 
+    //TODO: Style improvement - when posts section is opened in mobile view, it takes up full screen width some margin might be nice not sure but this might be due to current card styling
+    //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size 
 
     return (
         <div class="m-6 md:grid md:grid-cols-5 md:gap-6">
 
+            {/* Left column for md+ View */}
             <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
 
                 {/* Container for Mobile View */}
@@ -126,7 +129,7 @@ export const ProviderProfileView: Component = () => {
                             </h2>
                             <div class="flex justify-center mb-3">
                                 <Show when={typeof providerImage() !== "undefined"}>
-                                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-red-500">
+                                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
                                         <img
                                             src={providerImage()}
                                             class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
@@ -215,11 +218,11 @@ export const ProviderProfileView: Component = () => {
                 {/* Profile Information for md+ View */}
                 <div class="hidden md:block">
                     <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
-                        {provider()?.provider_name}
+                    {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
                     </h2>
                     <div class="flex justify-center mb-3">
                         <Show when={typeof providerImage() !== "undefined"}>
-                            <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-red-500">
+                            <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
                                 <img
                                     src={providerImage()}
                                     class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
@@ -284,13 +287,17 @@ export const ProviderProfileView: Component = () => {
                 </div>
             </div>
 
-            {/* Post View and Buttons for md+ View */}
+            {/* Right Column Post View and Buttons for md+ View */}
             <div class="md:col-span-3">
                 <div class="hidden md:block">
                     <div class="justify-end hidden md:flex">
+                        {/* Create Post Button*/}
                         <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
+                        {/* Edit Profile Button*/}
                         <EditProfileButton />
                     </div>
+
+                    {/* View Post Cards*/}
                     <div class="my-6">
                         <ViewProviderPosts />
                     </div>

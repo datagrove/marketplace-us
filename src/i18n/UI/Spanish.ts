@@ -36,7 +36,7 @@ export const Spanish = {
     next: 'Próxima',
     previous: 'Previa',
     delete: 'Borrar',
-    contact: 'Contacto',
+    contact: 'Correo electrónicotacto',
     phone: 'Llamada',
   },
 
@@ -81,6 +81,9 @@ export const Spanish = {
     confirmPassword: 'confirmar Contraseña',
     displayName: 'Nombre para mostrar',
     enterPostContent: 'Ingrese el contenido de la publicación aquí',
+    noValue: 'No proporcionada',
+    providerInfo: 'Información del proveedor',
+    posts: 'Publicaciones de proveedores',
   },
 
   postLabels: {

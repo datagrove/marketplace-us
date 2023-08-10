@@ -36,7 +36,7 @@ export const French = {
     next: 'Suivante',
     previous: 'Précédente',
     delete: "Supprimer",
-    contact: 'Contact',
+    contact: 'E-mail',
     phone: 'Appel',
   },
 
@@ -81,6 +81,8 @@ export const French = {
     displayName: 'Afficher un nom',
     enterPostContent: 'Entrez le contenu du message ici',
     noValue: 'Non fourni',
+    providerInfo: "Informations sur le fournisseur",
+    posts: 'Messages du fournisseur',
   },
 
   postLabels: {

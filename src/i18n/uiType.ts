@@ -80,7 +80,10 @@ export interface uiObject {
     confirmPassword: string,
     displayName: string,
     enterPostContent: string,
-    noValue: string
+    noValue: string,
+    providerInfo: string,
+    providerPosts: string,
+    posts: string,
   },
 
   postLabels: {
