@@ -88,7 +88,7 @@ const UserImage: Component<Props> = (props) => {
             height="120px" 
             viewBox="0 0 512 512" 
             version="1.1"
-            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM mb-4"
+            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM"
         >
             <title>image-filled</title>
             <g id="Page-1" stroke="none" stroke-width="1">
@@ -99,7 +99,7 @@ const UserImage: Component<Props> = (props) => {
         </svg>
         </div>
       )}
-      <div style={{ width: `${props.size}px` }}>
+      <div style={{ width: `${props.size}px` }} class="mt-3">
         <label
           class="btn-primary"
           for="single"
