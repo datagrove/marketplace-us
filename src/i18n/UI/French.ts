@@ -83,6 +83,8 @@ export const French = {
     noValue: 'Non fourni',
     providerInfo: "Informations sur le fournisseur",
     posts: 'Messages du fournisseur',
+    profileInfo: 'Informations sur le profil',
+    yourPosts: 'Vos Publications',
   },
 
   postLabels: {

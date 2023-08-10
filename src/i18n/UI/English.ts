@@ -83,6 +83,8 @@ export const English = {
     noValue: 'Not Provided',
     providerInfo: 'Provider Information',
     posts: 'Provider Posts',
+    profileInfo: 'Profile Information',
+    yourPosts: 'Your Posts',
   },
 
   postLabels: {

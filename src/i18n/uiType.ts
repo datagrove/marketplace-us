@@ -84,6 +84,8 @@ export interface uiObject {
     providerInfo: string,
     providerPosts: string,
     posts: string,
+    profileInfo: string,
+    yourPosts: string,
   },
 
   postLabels: {

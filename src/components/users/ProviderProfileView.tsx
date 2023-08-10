@@ -115,7 +115,7 @@ export const ProviderProfileView: Component = () => {
                     {/* Profile Information for Mobile View */}
                     <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                            <h2 class="flex flex-1 p-4 font-bold">Profile Information</h2>
+                            <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.profileInfo')}</h2>
                             <div class="flex w-10 items-center justify-center">
                                 <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
                             </div>
@@ -196,7 +196,7 @@ export const ProviderProfileView: Component = () => {
                     {/* View Posts for Mobile View */}
                     <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                            <h2 class="flex flex-1 p-4 font-bold">Your Posts</h2>
+                            <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.yourPosts')}</h2>
                             <div class="flex w-10 items-center justify-center">
                                 <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
                             </div>
