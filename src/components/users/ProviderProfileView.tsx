@@ -104,9 +104,12 @@ export const ProviderProfileView: Component = () => {
     return (
         <div class="m-6 md:grid md:grid-cols-5 md:gap-6">
 
-
             <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
+
+                {/* Container for Mobile View */}
                 <div class="container">
+
+                    {/* Profile Information for Mobile View */}
                     <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                             <h2 class="flex flex-1 p-4 font-bold">Profile Information</h2>
@@ -187,6 +190,7 @@ export const ProviderProfileView: Component = () => {
                         </div>
                     </details>
 
+                    {/* View Posts for Mobile View */}
                     <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                             <h2 class="flex flex-1 p-4 font-bold">Your Posts</h2>
@@ -205,8 +209,11 @@ export const ProviderProfileView: Component = () => {
                             </div>
                         </div>
                     </details>
+
                 </div>
-                <div class="hidden md:grid">
+
+                {/* Profile Information for md+ View */}
+                <div class="hidden md:block">
                     <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
                         {provider()?.provider_name}
                     </h2>
@@ -277,8 +284,9 @@ export const ProviderProfileView: Component = () => {
                 </div>
             </div>
 
+            {/* Post View and Buttons for md+ View */}
             <div class="md:col-span-3">
-                <div class="hidden md:grid">
+                <div class="hidden md:block">
                     <div class="justify-end hidden md:flex">
                         <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
                         <EditProfileButton />
