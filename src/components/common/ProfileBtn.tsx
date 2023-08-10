@@ -14,7 +14,7 @@ export const ProfileBtn = () => {
   const [isUser, setIsUser] = createSignal<boolean | null>(false);
 
   if (User.session === null) {
-    console.log("User dont exist");
+    console.log("User don't exist");
   } else {
     setIsUser(User.session!.user.role === "authenticated");
   }

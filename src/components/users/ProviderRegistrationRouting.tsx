@@ -21,7 +21,7 @@ export const ProviderRegistrationRouting = () => {
         .from("providers")
         .select("*")
         .eq("user_id", User.session!.user.id);
-      console.log(data);
+
       setIsUserProvider(true);
       if (data![0]) {
         setCreateText("My Provider Profile");

@@ -17,7 +17,7 @@ export const CreatePostsRouting = () => {
         .from("providers")
         .select("*")
         .eq("user_id", User.session!.user.id);
-      console.log(data);
+
       if (data![0]) {
         setIsUserProvider(true);
       }
@@ -27,15 +27,6 @@ export const CreatePostsRouting = () => {
   };
 
   isProvider();
-
-  // function clickHandler() {
-  //   const listShow = document.getElementById("providerList");
-  //   if (listShow?.classList.contains("hidden")) {
-  //     listShow?.classList.remove("hidden");
-  //   } else {
-  //     listShow?.classList.add("hidden");
-  //   }
-  // }
 
   return (
     <Show when={isUserProvider()}>

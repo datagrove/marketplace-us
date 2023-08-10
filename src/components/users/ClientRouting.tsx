@@ -34,7 +34,7 @@ export const ClientRouting = () => {
       } else {
         setCreateText("Edit Client Profile");
         setRouting("../../client/editaccount");
-        console.log("user is a client");
+        // console.log("user is a client");
         setIsUserClient(true);
       }
     } catch (error) {
@@ -43,15 +43,6 @@ export const ClientRouting = () => {
   };
 
   isClient();
-
-  // function clickHandler() {
-  //   const listShow = document.getElementById("clientList");
-  //   if (listShow?.classList.contains("hidden")) {
-  //     listShow?.classList.remove("hidden");
-  //   } else {
-  //     listShow?.classList.add("hidden");
-  //   }
-  // }
 
   return (
     <Show when={isUser}>
