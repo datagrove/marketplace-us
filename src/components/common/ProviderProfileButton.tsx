@@ -12,6 +12,7 @@ const t = useTranslations(lang);
 export const ProviderProfileButton: Component = () => {
   const [providerProfile, setProviderProfile] = createSignal(null);
   const [user, setUser] = createSignal<AuthSession | null>(null);
+  const [hidden, setHidden] = createSignal("");
 
   const ProviderProfileLink = document.getElementById("providerProfileLink");
 
@@ -29,14 +30,16 @@ export const ProviderProfileButton: Component = () => {
           .from("providers")
           .select("*")
           .eq("user_id", user()!.user.id);
+        console.log(provider);
+        setHidden("hidden");
 
-        if (provider![0] === undefined) {
-          console.log("User is not a provider");
+        if (!provider) {
           ProviderProfileLink?.classList.add("hidden");
         }
         if (providerError) {
           console.log("Error: " + providerError.message);
         } else if (!provider.length) {
+          console.log("User is not a providerrrrrrrr");
           alert(t("messages.viewProviderAccount"));
           location.href = `/${lang}/provider/createaccount`;
         } else {
@@ -47,11 +50,11 @@ export const ProviderProfileButton: Component = () => {
       console.log(error);
     }
   };
-
+  console.log(ProviderProfileLink);
   return (
     <div>
       <form onSubmit={providerRedirect}>
-        <button class="" type="submit" id="providerProfileLink">
+        <button class={hidden()} type="submit" id="providerProfileLink">
           {t("buttons.providerProfile")}
         </button>
       </form>

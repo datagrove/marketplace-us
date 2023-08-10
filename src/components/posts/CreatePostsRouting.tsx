@@ -17,15 +17,9 @@ export const CreatePostsRouting = () => {
         .from("providers")
         .select("*")
         .eq("user_id", User.session!.user.id);
-      setIsUserProvider(true);
-      postLink?.classList.remove("hidden");
-
-      if (error) {
-        console.log(error);
-      } else if (data[0] === undefined) {
-        console.log("User is not a provider");
-      } else {
-        console.log("User is a provider");
+      console.log(data);
+      if (data![0]) {
+        setIsUserProvider(true);
       }
     } catch (error) {
       console.log(error);
@@ -45,7 +39,7 @@ export const CreatePostsRouting = () => {
 
   return (
     <Show when={isUserProvider()}>
-      <a href="../../posts/createpost" class="hidden " id="createPostLink">
+      <a href="../../posts/createpost" class=" " id="createPostLink">
         Create Posts
       </a>
     </Show>

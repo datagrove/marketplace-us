@@ -42,9 +42,7 @@ export const ProfileBtn = () => {
           <div>
             <ProviderRegistrationRouting />
           </div>
-          <div class="">
-            <ProviderProfileButton />
-          </div>
+
           <div class="">
             <CreatePostsRouting />
           </div>
@@ -56,7 +54,7 @@ export const ProfileBtn = () => {
   return (
     <div>
       <button onClick={clickHandler} class="rounded border px-3 py-2 mx-5">
-        Click Me
+        Home
       </button>
       <ul id="profileItems" class="hidden absolute">
         {renderWhenUser()}
