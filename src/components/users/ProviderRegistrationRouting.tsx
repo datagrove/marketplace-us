@@ -15,14 +15,11 @@ export const ProviderRegistrationRouting = () => {
         .select("*")
         .eq("user_id", User.session!.user.id);
       setIsUserProvider(true);
+
       createProviderProfileLink?.classList.add("hidden");
 
-      if (error) {
-        console.log(error);
-      } else if (data[0] === undefined) {
-        console.log("User is not a provider");
-      } else {
-        console.log("User is a provider");
+      if (data![0] === undefined) {
+        createProviderProfileLink?.classList.remove("hidden");
       }
     } catch (error) {
       console.log(error);
@@ -30,8 +27,6 @@ export const ProviderRegistrationRouting = () => {
   };
 
   isProvider();
-
-  console.log(isUserProvider(), "provider profile routing");
 
   return (
     <a href="../../provider/createaccount" class="" id="createProviderProfile">

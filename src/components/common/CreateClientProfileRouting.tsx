@@ -34,5 +34,5 @@ export const CreateClientProfileRouting = () => {
 
   console.log(isUserClient(), "client profile routing");
 
-  return <a href="">Create Client Profile</a>;
+  return <a href="client/createaccount">Create Client Profile</a>;
 };

@@ -37,7 +37,7 @@ export const ProfileBtn = () => {
       return (
         <div>
           <div>
-            <CreateClientProfileRouting />
+            <ClientRouting />
           </div>
           <div>
             <ProviderRegistrationRouting />
@@ -47,9 +47,6 @@ export const ProfileBtn = () => {
           </div>
           <div class="">
             <CreatePostsRouting />
-          </div>
-          <div class="">
-            <ClientRouting />
           </div>
         </div>
       );

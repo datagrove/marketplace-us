@@ -9,6 +9,8 @@ export const CreatePostsRouting = () => {
     console.log("User Error: " + UserError.message);
   }
 
+  const postLink = document.getElementById("createPostLink");
+
   const isProvider = async () => {
     try {
       const { data, error } = await supabase
@@ -16,7 +18,7 @@ export const CreatePostsRouting = () => {
         .select("*")
         .eq("user_id", User.session!.user.id);
       setIsUserProvider(true);
-      console.log(isUserProvider());
+      postLink?.classList.remove("hidden");
 
       if (error) {
         console.log(error);
@@ -43,7 +45,7 @@ export const CreatePostsRouting = () => {
 
   return (
     <Show when={isUserProvider()}>
-      <a href="../../posts/createpost" class=" ">
+      <a href="../../posts/createpost" class="hidden " id="createPostLink">
         Create Posts
       </a>
     </Show>

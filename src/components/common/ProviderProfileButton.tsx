@@ -13,6 +13,8 @@ export const ProviderProfileButton: Component = () => {
   const [providerProfile, setProviderProfile] = createSignal(null);
   const [user, setUser] = createSignal<AuthSession | null>(null);
 
+  const ProviderProfileLink = document.getElementById("providerProfileLink");
+
   const providerRedirect = async (e: SubmitEvent) => {
     e.preventDefault();
 
@@ -27,6 +29,11 @@ export const ProviderProfileButton: Component = () => {
           .from("providers")
           .select("*")
           .eq("user_id", user()!.user.id);
+
+        if (provider![0] === undefined) {
+          console.log("User is not a provider");
+          ProviderProfileLink?.classList.add("hidden");
+        }
         if (providerError) {
           console.log("Error: " + providerError.message);
         } else if (!provider.length) {
@@ -44,7 +51,7 @@ export const ProviderProfileButton: Component = () => {
   return (
     <div>
       <form onSubmit={providerRedirect}>
-        <button class="" type="submit">
+        <button class="" type="submit" id="providerProfileLink">
           {t("buttons.providerProfile")}
         </button>
       </form>
