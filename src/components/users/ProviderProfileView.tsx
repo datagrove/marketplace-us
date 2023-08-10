@@ -100,72 +100,204 @@ export const ProviderProfileView: Component = () => {
         }
     }
 
+    //TODO: Style improvement - when posts section is opened in mobile view, it takes up full screen width some margin might be nice not sure but this might be due to current card styling
+    //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size 
 
     return (
-        <div class="mb-6">
-            <div class="flex justify-end">
-                <EditProfileButton />
-            </div>
-            <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
-                {provider()?.provider_name}
-            </h2>
-            <Show when={typeof providerImage() !== "undefined"}>
-                <div class="relative w-full h-56 overflow-hidden rounded-lg md:h-96">
-                    <img
-                        src={providerImage()}
-                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain h-56 md:h-96"
-                        alt={`${t('postLabels.ProviderProfileImage')} 1`} />
+        <div class="m-6 md:grid md:grid-cols-5 md:gap-6">
+
+            {/* Left column for md+ View */}
+            <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
+
+                {/* Container for Mobile View */}
+                <div class="container">
+
+                    {/* Profile Information for Mobile View */}
+                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                        <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                            <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.profileInfo')}</h2>
+                            <div class="flex w-10 items-center justify-center">
+                                <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                            </div>
+                        </summary>
+                        <div class='p-4'>
+                            <div class="mb-2 flex justify-center items-center align-items-center">
+                                <EditProfileButton />
+                            </div>
+                            <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+                                {provider()?.provider_name}
+                            </h2>
+                            <div class="flex justify-center mb-3">
+                                <Show when={typeof providerImage() !== "undefined"}>
+                                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                                        <img
+                                            src={providerImage()}
+                                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                                            alt={`${t('postLabels.ProviderProfileImage')} 1`} />
+                                    </div>
+                                </Show>
+                            </div>
+                            <label for="FirstName" class="text-text2 dark:text-text1-DM">{t('formLabels.firstName')}:
+                                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.first_name}</p>
+
+                            </label>
+
+                            <label for="LastName" class="text-text2 dark:text-text1-DM">{t('formLabels.lastName')}:
+                                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.last_name}</p>
+                            </label>
+
+
+                            <label for="ProviderName" class="text-text1 dark:text-text1-DM">{t('formLabels.providerName')}:
+                                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_name ? provider()?.provider_name : t('formLabels.noValue')}</p>
+                            </label>
+
+                            <div class="w-full overflow-auto mb-4">
+                                <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
+                                    {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                                    <p class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.email}</p>
+                                </label>
+                            </div>
+
+                            <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
+                                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_phone}</p>
+                            </label>
+
+                            <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
+                                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.country}</p>
+                            </label>
+
+                            <br />
+
+                            <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}:
+                                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.major_municipality}</p>
+                            </label>
+
+                            <br />
+
+                            <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}:
+                                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.minor_municipality}</p>
+                            </label>
+
+                            <br />
+
+                            <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}:
+                                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.governing_district}</p>
+                            </label>
+                        </div>
+                    </details>
+
+                    {/* View Posts for Mobile View */}
+                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                        <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                            <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.yourPosts')}</h2>
+                            <div class="flex w-10 items-center justify-center">
+                                <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                            </div>
+                        </summary>
+                        <div class='p-4'>
+                            <div class="justify-center flex">
+                                <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
+                            </div>
+                            <div class="md:col-span-3">
+                                <div class="my-6">
+                                    <ViewProviderPosts />
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
                 </div>
-            </Show>
 
-            <label for="FirstName" class="text-text2 dark:text-text1-DM">{t('formLabels.firstName')}:
-                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.first_name}</p>
+                {/* Profile Information for md+ View */}
+                <div class="hidden md:block">
+                    <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+                    {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
+                    </h2>
+                    <div class="flex justify-center mb-3">
+                        <Show when={typeof providerImage() !== "undefined"}>
+                            <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                                <img
+                                    src={providerImage()}
+                                    class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                                    alt={`${t('postLabels.ProviderProfileImage')} 1`} />
+                            </div>
+                        </Show>
+                    </div>
 
-            </label>
+                    <label for="FirstName" class="text-text2 dark:text-text1-DM">{t('formLabels.firstName')}:
+                        <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.first_name}</p>
 
-            <label for="LastName" class="text-text2 dark:text-text1-DM">{t('formLabels.lastName')}:
-                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.last_name}</p>
-            </label>
+                    </label>
+
+                    <label for="LastName" class="text-text2 dark:text-text1-DM">{t('formLabels.lastName')}:
+                        <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.last_name}</p>
+                    </label>
 
 
-            <label for="ProviderName" class="text-text1 dark:text-text1-DM">{t('formLabels.providerName')}:
-                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_name ? provider()?.provider_name : t('formLabels.noValue')}</p>
-            </label>
+                    <label for="ProviderName" class="text-text1 dark:text-text1-DM">{t('formLabels.providerName')}:
+                        <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_name ? provider()?.provider_name : t('formLabels.noValue')}</p>
+                    </label>
 
-            <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
-                {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
-                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.email}</p>
-            </label>
+                    <div class="">
+                        <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
+                            {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                            <p class="w-full rounded mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none break-words">{provider()?.email}</p>
+                        </label>
+                    </div>
 
-            <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
-                <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_phone}</p>
-            </label>
+                    <div class="w-full overflow-auto mb-4">
+                        <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
+                            {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                            <p class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.email}</p>
+                        </label>
+                    </div>
 
-            <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
-                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.country}</p>
-            </label>
+                    <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
+                        <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_phone}</p>
+                    </label>
 
-            <br />
+                    <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.country}</p>
+                    </label>
 
-            <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}:
-                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.major_municipality}</p>
-            </label>
+                    <br />
 
-            <br />
+                    <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.major_municipality}</p>
+                    </label>
 
-            <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}:
-                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.minor_municipality}</p>
-            </label>
+                    <br />
 
-            <br />
+                    <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.minor_municipality}</p>
+                    </label>
 
-            <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}:
-                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.governing_district}</p>
-            </label>
-            <div class="my-6">
-                <ViewProviderPosts />
+                    <br />
+
+                    <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.governing_district}</p>
+                    </label>
+                </div>
+            </div>
+
+            {/* Right Column Post View and Buttons for md+ View */}
+            <div class="md:col-span-3">
+                <div class="hidden md:block">
+                    <div class="justify-end hidden md:flex">
+                        {/* Create Post Button*/}
+                        <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
+                        {/* Edit Profile Button*/}
+                        <EditProfileButton />
+                    </div>
+
+                    {/* View Post Cards*/}
+                    <div class="my-6">
+                        <ViewProviderPosts />
+                    </div>
+                </div>
             </div>
         </div>
+
     );
 
 };

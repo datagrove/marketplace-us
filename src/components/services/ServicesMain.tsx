@@ -56,7 +56,7 @@ export const ServicesView: Component = () => {
 
     //start the page as displaying all posts
     if (!data) {
-        alert("No posts available.")
+        alert(t('messages.noPosts'))
     } else {
         setPosts(data)
         setCurrentPosts(data)
@@ -113,7 +113,7 @@ export const ServicesView: Component = () => {
     const filterPosts = () => {
 
         if (!data) {
-            alert("No posts available.")
+            alert(t('messages.noPosts'))
         } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
             console.log(data)
