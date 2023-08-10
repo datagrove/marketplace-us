@@ -151,13 +151,6 @@ export const ProviderProfileView: Component = () => {
                                 <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">{provider()?.provider_name ? provider()?.provider_name : t('formLabels.noValue')}</p>
                             </label>
 
-                            <div class="">
-                                <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
-                                    {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
-                                    <p class="w-full rounded mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none break-words">{provider()?.email}</p>
-                                </label>
-                            </div>
-
                             <div class="w-full overflow-auto mb-4">
                                 <label for="Email" class="text-text1 dark:text-text1-DM">{t('formLabels.email')}:
                                     {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
