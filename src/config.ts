@@ -1,7 +1,7 @@
 const CONFIG = {
-    name: 'Laboroso',
+    name: 'TodoServis',
   
-    title: 'Laboroso',
+    title: 'TodoServis',
     description:
       '',
     url: 'http://localhost:3000',
