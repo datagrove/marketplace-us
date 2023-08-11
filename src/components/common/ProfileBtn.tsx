@@ -7,7 +7,6 @@ import { Auth } from "../../lib/Auth";
 import { Show, createSignal } from "solid-js";
 import { ProviderRegistration } from "../users/ProviderRegistration";
 import { ProviderRegistrationRouting } from "../users/ProviderRegistrationRouting";
-import { CreateClientProfileRouting } from "./CreateClientProfileRouting";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ProfileBtn = () => {

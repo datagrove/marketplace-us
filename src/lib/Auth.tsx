@@ -89,7 +89,7 @@ export const Auth: Component = (props) => {
               </div>
               <div class="mb-4 flex justify-center">
                 <label class="hidden" for="password">
-                  {t("formLabels.password")}:{" "}
+                  {t("formLabels.password")}
                 </label>
                 <input
                   id="password"
@@ -98,12 +98,10 @@ export const Auth: Component = (props) => {
                   placeholder={t("formLabels.password")}
                   value={password()}
                   onChange={(e) => {
-
                     if (e.currentTarget.value.length > 5) {
                       console.log("Password length is greater than 5");
                       return setPassword(e.currentTarget.value);
                     }
-
                   }}
                 />
               </div>
@@ -173,7 +171,6 @@ export const Auth: Component = (props) => {
                     id="pwlength"
                     class="text-sm text-text1 dark:text-text1-DM"
                   >
-                    {" "}
                     {t("messages.passwordLength")}
                   </span>
                 )}
@@ -221,7 +218,7 @@ export const Auth: Component = (props) => {
               </div>
               <div class="my-2">
                 <p class="text-text1 dark:text-text1-DM">
-                  {t("messages.alreadyAccount")}{" "}
+                  {t("messages.alreadyAccount")}
                   <a
                     class="text-link2 hover:underline dark:text-link2-DM"
                     href={`/${lang}/login`}

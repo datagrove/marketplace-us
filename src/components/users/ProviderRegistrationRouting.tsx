@@ -1,7 +1,13 @@
 import { createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
+// Internationalization
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const ProviderRegistrationRouting = () => {
   const [isUserProvider, setIsUserProvider] = createSignal<boolean>(false);
@@ -9,11 +15,11 @@ export const ProviderRegistrationRouting = () => {
     "../../provider/createaccount"
   );
   const [createText, setCreateText] = createSignal<string>(
-    "Create Provider Profile"
+    t("pageTitles.createProviderAccount")
   );
 
   const createProviderProfileLink = document.getElementById(
-    "createProviderProfile"
+    "createProviderAccount"
   );
   const isProvider = async () => {
     try {
@@ -24,7 +30,7 @@ export const ProviderRegistrationRouting = () => {
 
       setIsUserProvider(true);
       if (data![0]) {
-        setCreateText("My Provider Profile");
+        setCreateText(t("pageTitles.editProviderAccount"));
         setProviderRouting("../../provider/profile");
       }
     } catch (error) {

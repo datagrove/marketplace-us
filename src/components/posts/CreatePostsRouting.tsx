@@ -1,7 +1,13 @@
 import { Show, createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
+// Internationalization
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 export const CreatePostsRouting = () => {
   const [isUserProvider, setIsUserProvider] = createSignal<boolean>(false);
@@ -31,7 +37,7 @@ export const CreatePostsRouting = () => {
   return (
     <Show when={isUserProvider()}>
       <a href="../../posts/createpost" class=" " id="createPostLink">
-        Create Posts
+        {t("pageTitles.createPost")}
       </a>
     </Show>
   );
