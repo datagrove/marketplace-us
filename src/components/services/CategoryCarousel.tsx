@@ -1,4 +1,4 @@
-import { Component } from 'solid-js';
+import type { Component } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -107,7 +107,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
 
-                    <div class="flex justify-between items-center w-full overflow-auto py-4">
+                    <div class="flex justify-between items-center w-full overflow-x-scroll py-4">
                         { allCategoryInfo?.map((item) => (
                             
                             <button 

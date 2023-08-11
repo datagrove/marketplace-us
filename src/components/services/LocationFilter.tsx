@@ -44,7 +44,7 @@ if (governingDistrictError) {
     governing_district.forEach(location => {
         governing_districts.push({ governing_district: location.governing_district, id: location.id, minor_municipality: location.minor_municipality })
     })
-    governing_districts.sort((a,b) => a.governing_district > b.governing_district ? 0 : -1)
+    governing_districts.sort((a, b) => a.governing_district > b.governing_district ? 0 : -1)
 }
 
 interface Props {
@@ -83,7 +83,7 @@ export const LocationFilter: Component<Props> = (props) => {
             filteredMinorMunis = [...filteredMinorMunis, ...currentMinorMunis]
         })
 
-        if(locationFilters().length === 0) {
+        if (locationFilters().length === 0) {
             filteredMinorMunis = minor_municipalities
         }
         setMinorMunicipalities(filteredMinorMunis)
@@ -107,7 +107,7 @@ export const LocationFilter: Component<Props> = (props) => {
             filteredGoverningDistricts = [...filteredGoverningDistricts, ...currentGoverningDistricts]
         })
 
-        if(minorLocationFilters().length === 0) {
+        if (minorLocationFilters().length === 0) {
             filteredGoverningDistricts = governing_districts
         }
         setGoverningDistricts(filteredGoverningDistricts)
@@ -124,50 +124,53 @@ export const LocationFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div class=" border-green-500 border-8 bg-white w-full overflow-auto">
-            <div class="bg-gray-400 flex content-center">
-                <ul class="flex content-center border-yellow-500 m-4">
+        <div class="bg-background1 dark:bg-black w-full md:rounded-lg md:border">
+            <div class="md:h-56 md:flex-column md:text-left border border-red-500">
+                <div class="mt-2 ml-8">Major Municipality</div> {/*TODO:Internationalize */}
+                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-fit md:overflow-auto">
                     <For each={majorMunicipalities()}>{(item) =>
-                        <div>
+                        <li>
                             <input type="checkbox"
-
+                                class="leading-tight mr-4"
                                 onClick={() => {
                                     testFunction(item)
                                 }}
                             />
-                            <p class="text-black">{item.major_municipality}</p>
+                            <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
 
-                        </div>
+                        </li>
                     }</For>
                 </ul>
             </div>
-            <div class="bg-gray-400 flex content-center">
-                <ul class="flex content-center border-yellow-500 m-4">
+            <div class="md:h-56 md:flex-column md:text-left border border-purple-500">
+                <div class="mt-2 ml-8">Minor Municipality</div> {/*TODO:Internationalize */}
+                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-full md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
                     <For each={minorMunicipalities()}>{(item) =>
                         <div>
                             <input type="checkbox"
-
+                                class="leading-tight mr-4"
                                 onClick={() => {
                                     test2Function(item)
                                 }}
                             />
-                            <p class="text-black">{item.minor_municipality}</p>
+                            <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
 
                         </div>
                     }</For>
                 </ul>
             </div>
-            <div class="bg-gray-400 flex content-center">
-                <ul class="flex content-center border-yellow-500 m-4">
+            <div class="md:h-56 md:overflow-auto md:flex md:content-center border border-yellow-500">
+                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-full md:overflow-auto">
+                    <p class="mb-2">Governing District</p> {/*TODO:Internationalize */}
                     <For each={governingDistricts()}>{(item) =>
                         <div>
                             <input type="checkbox"
-
+                                class="leading-tight mr-4"
                                 onClick={() => {
                                     test3Function(item)
                                 }}
                             />
-                            <p class="text-black">{item.governing_district}</p>
+                            <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
 
                         </div>
                     }</For>
