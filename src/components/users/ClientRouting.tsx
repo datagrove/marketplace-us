@@ -1,15 +1,22 @@
 import { Show, createSignal } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+// Internationalization
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
+
+//
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ClientRouting = () => {
   const [isUser, setIsUser] = createSignal<boolean>(false);
   const [isUserClient, setIsUserClient] = createSignal<boolean>(false);
   const [createText, setCreateText] = createSignal<string>(
-    "Create Client Account"
+    t("pageTitles.createClientAccount")
   );
   const [routing, setRouting] = createSignal<string>(
-    "../../client/createaccount"
+    `${lang}/../../client/createaccount`
   );
 
   const CreateEditClientProfilelink = document.getElementById(
@@ -32,8 +39,8 @@ export const ClientRouting = () => {
       if (data![0] === undefined) {
         console.log("user is not a client");
       } else {
-        setCreateText("Edit Client Profile");
-        setRouting("../../client/editaccount");
+        setCreateText(t("pageTitles.editClientAccount"));
+        setRouting(`${lang}/../../client/editaccount`);
         // console.log("user is a client");
         setIsUserClient(true);
       }

@@ -45,6 +45,7 @@ export const DeletePostButton: Component<Props> = (props) => {
           .from("provider_post")
           .delete()
           .eq("id", props.Id);
+
         console.log("deleted post", props.Id);
       } catch (error) {
         console.log(error);
