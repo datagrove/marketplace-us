@@ -1,4 +1,4 @@
-import { Component } from 'solid-js';
+import type { Component } from 'solid-js';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { supabase } from '../../lib/supabaseClient'
 import { useStore } from '@nanostores/solid'
@@ -9,7 +9,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const signup = () => {
-    window.location.href = "/signup"
+    location.href = `/${lang}/signup`
 }
 
 export const SignUpBtn: Component = () => {

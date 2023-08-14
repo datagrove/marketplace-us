@@ -188,5 +188,11 @@ productCategoryInfo:{
       { name: string, description: string, ariaLabel: string, id: "13" },
       // Add more products as needed
     ]
+  },
+  
+  homePageText: {
+    headline: string,
+    subHeadline: string,
+    ariaLabel: string,
   }
 }

@@ -190,5 +190,12 @@ productCategoryInfo:{
       { name: "Voyage", description: '', ariaLabel: "Voyage", id: "13" },
       // Add more products as needed
     ]
-  }
+  },
+
+  homePageText: {
+    headline: "Tout ce dont vous avez besoin pour faire le travail.",
+    subHeadline: "Les fournisseurs publient des services. Les clients recherchent des messages. Le travail est fait.",
+    ariaLabel: "Image d'information d'espace réservé",
+  },
+
 } as const;
