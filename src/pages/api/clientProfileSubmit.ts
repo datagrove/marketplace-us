@@ -267,12 +267,12 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log("Profile Data: " + JSON.stringify(data));
   }
 
-    // If everything works send a success response
-    return new Response(
-      JSON.stringify({
-        message: "Success!",
-        redirect: "/client/profile",
-      }),
-      { status: 200 }
-    );
-  };
+  // If everything works send a success response
+  return new Response(
+    JSON.stringify({
+      message: "Success!",
+      redirect: "/client/profile",
+    }),
+    { status: 200 }
+  );
+};

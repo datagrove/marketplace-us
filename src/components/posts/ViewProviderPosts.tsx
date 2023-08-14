@@ -3,6 +3,7 @@ import { ViewCard } from "../services/ViewCard";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 
+// Define the type for the ProviderPost interface
 interface ProviderPost {
   user_id: string;
   content: string;
@@ -16,9 +17,11 @@ interface ProviderPost {
   image_urls: string;
 }
 
+// Get the user session
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewProviderPosts: Component = () => {
+  // initialize posts and session
   const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
@@ -29,6 +32,8 @@ export const ViewProviderPosts: Component = () => {
     console.log(User);
   }
 
+  // get posts from supabase that match with the user id and set them to posts. After that render them through ViewCard.
+  // if there is a modification to the posts table, the page will refresh and the posts will be updated.
   createEffect(async () => {
     const { data, error } = await supabase
       .from("providerposts")

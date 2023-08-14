@@ -207,7 +207,8 @@ export const ClientRegistration: Component = () => {
   return (
     <div class="">
       <form onSubmit={submit} class="">
-        <label for="FirstName" class="text-text1 dark:text-text1-DM">{t('formLabels.firstName')}:
+        <label for="FirstName" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.firstName")}:
           <input
             type="text"
             id="FirstName"
@@ -217,7 +218,8 @@ export const ClientRegistration: Component = () => {
           />
         </label>
 
-        <label for="LastName" class="text-text1 dark:text-text1-DM">{t('formLabels.lastName')}:
+        <label for="LastName" class="text-text1 dark:text-text1-DM">
+          {t("formLabels.lastName")}:
           <input
             type="text"
             id="LastName"
@@ -313,9 +315,7 @@ export const ClientRegistration: Component = () => {
         </div>
 
         <div class="flex justify-center">
-          <button class="btn-primary">
-            {t("buttons.register")}
-          </button>
+          <button class="btn-primary">{t("buttons.register")}</button>
         </div>
 
         <Suspense>{response() && <p>{response().message}</p>}</Suspense>
