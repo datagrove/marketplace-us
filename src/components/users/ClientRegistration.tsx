@@ -213,7 +213,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="FirstName"
             name="FirstName"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
         </label>
@@ -224,7 +224,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="LastName"
             name="LastName"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
         </label>
@@ -234,7 +234,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="DisplayName"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="DisplayName"
           />
         </label>
@@ -244,7 +244,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="Phone"
-            class="rounded w-full mb-4 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone"
             required
           />
