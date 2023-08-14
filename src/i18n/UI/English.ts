@@ -190,5 +190,12 @@ productCategoryInfo:{
       { name: 'Travel', description: 'Travel Services', ariaLabel: "Travel", id: "13" },
       // Add more products as needed
     ]
-  }
+  },
+
+  homePageText: {
+    headline: "Everything you need to get the job done.",
+    subHeadline: "Providers post services. Customers search posts. Work gets done.",
+    ariaLabel: "Placeholder info image",
+  },
+
 } as const;
