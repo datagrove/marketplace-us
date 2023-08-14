@@ -124,8 +124,8 @@ export const LocationFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div class="bg-background1 dark:bg-black w-full md:rounded-lg md:border">
-            <div class="md:h-56 md:flex-column md:text-left border border-red-500">
+        <div class="bg-background1 dark:bg-black w-full md:rounded-lg">
+            <div class="md:h-56 md:flex-column md:text-left border-2 rounded border-gray-300 mb-8">
                 <div class="mt-2 ml-8">Major Municipality</div> {/*TODO:Internationalize */}
                 <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-fit md:overflow-auto">
                     <For each={majorMunicipalities()}>{(item) =>
@@ -142,9 +142,9 @@ export const LocationFilter: Component<Props> = (props) => {
                     }</For>
                 </ul>
             </div>
-            <div class="md:h-56 md:flex-column md:text-left border border-purple-500">
-                <div class="mt-2 ml-8">Minor Municipality</div> {/*TODO:Internationalize */}
-                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-full md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
+            <div class="md:h-56 md:flex-column md:text-left border-2 rounded border-gray-300 box-border mb-8">
+                <div class="mt-2 mb-2 ml-8">Minor Municipality</div> {/*TODO:Internationalize */}
+                <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
                     <For each={minorMunicipalities()}>{(item) =>
                         <div>
                             <input type="checkbox"
@@ -159,7 +159,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     }</For>
                 </ul>
             </div>
-            <div class="md:h-56 md:overflow-auto md:flex md:content-center border border-yellow-500">
+            <div class="md:h-56 md:overflow-auto border-2 border-gray-300 rounded md:flex md:content-center ">
                 <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-full md:overflow-auto">
                     <p class="mb-2">Governing District</p> {/*TODO:Internationalize */}
                     <For each={governingDistricts()}>{(item) =>
