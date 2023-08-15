@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 export const ProviderRegistrationRouting = () => {
   const [isUserProvider, setIsUserProvider] = createSignal<boolean>(false);
   const [providerRouting, setProviderRouting] = createSignal<string>(
-    `${lang}/provider/createaccount`
+    `/${lang}/provider/createaccount`
   );
   const [createText, setCreateText] = createSignal<string>(
     t("pageTitles.createProviderAccount")
@@ -31,7 +31,7 @@ export const ProviderRegistrationRouting = () => {
       setIsUserProvider(true);
       if (data![0]) {
         setCreateText(t("pageTitles.viewProviderAccount"));
-        setProviderRouting(`${lang}/provider/profile`);
+        setProviderRouting(`/${lang}/provider/profile`);
       }
     } catch (error) {
       console.log(error);

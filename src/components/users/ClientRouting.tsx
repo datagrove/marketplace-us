@@ -16,7 +16,7 @@ export const ClientRouting = () => {
     t("pageTitles.createClientAccount")
   );
   const [routing, setRouting] = createSignal<string>(
-    `${lang}/client/createaccount`
+    `/${lang}/client/createaccount`
   );
 
   const CreateEditClientProfilelink = document.getElementById(
@@ -40,7 +40,7 @@ export const ClientRouting = () => {
         console.log("user is not a client");
       } else {
         setCreateText(t("pageTitles.editClientAccount"));
-        setRouting(`${lang}/client/profile`);
+        setRouting(`/${lang}/client/profile`);
         // console.log("user is a client");
         setIsUserClient(true);
       }
