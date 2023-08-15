@@ -30,7 +30,7 @@ export const ProviderRegistrationRouting = () => {
 
       setIsUserProvider(true);
       if (data![0]) {
-        setCreateText(t("pageTitles.editProviderAccount"));
+        setCreateText(t("pageTitles.viewProviderAccount"));
         setProviderRouting(`${lang}/provider/profile`);
       }
     } catch (error) {

@@ -13,7 +13,7 @@ export const English = {
     createPost: 'Create Post',
     createProviderAccount: 'Create Provider Account',
     editProviderAccount: 'Edit Provider Account',
-    viewProviderAccount: 'Provider Profile Self View',
+    viewProviderAccount: 'My Provider Profile',
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',

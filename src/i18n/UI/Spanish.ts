@@ -13,7 +13,7 @@ export const Spanish = {
     createPost: 'Crear Publicación',
     createProviderAccount: 'Crear Cuenta de Proveedor',
     editProviderAccount: 'Editar Cuenta de Proveedor',
-    viewProviderAccount: 'Vista Propia del Perfil del Proveedor',
+    viewProviderAccount: 'Mi cuenta de proveedor',
     page404: '404 - Página no Encontrada',
     requestPasswordReset: 'Solicitud para Recuperar la Contraseña',
     resetPassword: 'Resetear la Contraseña',
