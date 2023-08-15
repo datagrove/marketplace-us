@@ -17,6 +17,8 @@ export const French = {
     page404: "404 - Page non trouvée",
     requestPasswordReset: "Demander la réinitialisation du mot de passe",
     resetPassword: "réinitialiser le mot de passe",
+    terms: 'Termes et Conditions',
+    privacy: "Politique de Confidentialité",
   },
 
   buttons: {
@@ -157,8 +159,8 @@ export const French = {
       },
     ],
     secondaryLinks: [
-      { text: "Conditions ", href: 'fr/terms' },
-      { text: "politique de confidentialité", href: 'fr/privacy' },
+      { text: "Conditions ", href: 'terms' },
+      { text: "politique de confidentialité", href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
