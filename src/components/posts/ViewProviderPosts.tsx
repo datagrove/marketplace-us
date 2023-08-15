@@ -2,6 +2,15 @@ import { Component, createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
+import { ui } from '../../i18n/ui'
+import type { uiObject } from '../../i18n/uiType';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+
+//get the categories from the language files so they translate with changes in the language picker
+const values = ui[lang] as uiObject
+const productCategories = values.productCategoryInfo.categories
 
 // Define the type for the ProviderPost interface
 interface ProviderPost {
@@ -45,6 +54,14 @@ export const ViewProviderPosts: Component = () => {
     if (error) {
       console.log("supabase error: " + error.message);
     } else {
+      data?.map(item => {
+        productCategories.forEach(productCategories => {
+          if (item.service_category.toString() === productCategories.id) {
+            item.category = productCategories.name
+          }
+        })
+        delete item.service_category
+      })
       setPosts(data);
       console.log("got posts", posts());
     }
