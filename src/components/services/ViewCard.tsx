@@ -50,6 +50,7 @@ export const ViewCard: Component<Props> = (props) => {
       const { data, error } = await supabase.storage
         .from("post.image")
         .download(path);
+
       if (error) {
         throw error;
       }
@@ -106,7 +107,7 @@ export const ViewCard: Component<Props> = (props) => {
                   {post.governing_district}
                 </p>
                 <p>{t('postLabels.category')}{post.category}</p>
-                <DeletePostButton Id={post.id} UserId={post.user_id} />
+                <DeletePostButton Id={post.id} UserId={post.user_id} IdPhoto={post.image_urls} />
               </div>
             </div>
             </a>

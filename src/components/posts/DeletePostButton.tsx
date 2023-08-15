@@ -11,6 +11,7 @@ interface Props {
   // (Id, UserId)
   Id: number;
   UserId: string;
+  IdPhoto: any;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -18,6 +19,8 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 export const DeletePostButton: Component<Props> = (props) => {
   // initialize session
   const [session, setSession] = createSignal<AuthSession | null>(null);
+
+
 
   if (UserError) {
     console.log("User Error: " + UserError.message);
@@ -44,7 +47,9 @@ export const DeletePostButton: Component<Props> = (props) => {
         const { error } = await supabase
           .from("provider_post")
           .delete()
-          .eq("id", props.Id);
+          .eq("id", props.Id)
+
+          
 
         console.log("deleted post", props.Id);
       } catch (error) {
@@ -53,8 +58,17 @@ export const DeletePostButton: Component<Props> = (props) => {
         // refresh the page
         window.location.reload();
       }
+
+      try {
+        const { error } = await supabase
+          .storage
+          .from("post.image")
+          .remove([props.IdPhoto]);
+      } catch (error) {
+        
+      }
     } else {
-      console.log("You can't delete this post because it is not yours.");
+      console.log("Image not deleted");
     }
   };
 
