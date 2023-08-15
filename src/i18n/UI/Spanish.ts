@@ -18,6 +18,7 @@ export const Spanish = {
     requestPasswordReset: 'Solicitud para Recuperar la Contraseña',
     resetPassword: 'Resetear la Contraseña',
     terms: 'Términos y Condiciones',
+    privacy: "Política de Privacidad",
   },
 
   buttons: {
