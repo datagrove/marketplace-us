@@ -62,6 +62,8 @@ export const French = {
     noPost: "Message introuvable",
     selectAnImage: 'Vous devez sélectionner une image à télécharger.',
     noProvider: 'Aucun fournisseur trouvé.',
+    translation: "Traductions",
+    translations: " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
   },
 
   formLabels: {

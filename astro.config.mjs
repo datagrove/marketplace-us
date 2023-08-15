@@ -9,6 +9,8 @@ import { SITE } from './src/config';
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import remarkToc from "remark-toc";
+import rehypeSlug from 'rehype-slug';
 
 const locales = languages;
 const defaultLocale = defaultLang;
@@ -17,6 +19,16 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  adapter: cloudflare(),
+  site: SITE.url,
+  trailingSlash: 'never',
+  build: {
+    format: 'file'
+  },
+  markdown: {
+    remarkPlugins: [remarkToc],
+    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'append' }]],
+  },
   integrations: [solid(), tailwind(), icon({
     iconDir: "src/assets",
     include: {
@@ -34,15 +46,4 @@ export default defineConfig({
       defaultLocale
     })
   }), mdx()],
-  adapter: cloudflare(),
-  site: SITE.url,
-  trailingSlash: 'never',
-  build: {
-    format: 'file'
-  },
-  markdown: {
-    rehypePlugins: [
-      rehypeAutolinkHeadings,
-    ]
-  }
 });
