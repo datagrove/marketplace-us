@@ -3,25 +3,25 @@ export const Spanish = {
 
   pageTitles: {
     services: 'Servicios',
-    signup: 'Registrarse',
+    signUp: 'Registrarse',
     login: 'Iniciar sesión',
     home: 'Inicio',
     signIn: 'Iniciar sesión',
-    createClientAccount: 'Crear Cuenta de cliente',
+    createClientAccount: 'Crear Cuenta de Cliente',
     editClientAccount: 'Editar Cuenta de Cliente',
     viewClientAccount: 'Ver Cuenta de Cliente',
     createPost: 'Crear Publicación',
     createProviderAccount: 'Crear Cuenta de Proveedor',
     editProviderAccount: 'Editar Cuenta de Proveedor',
-    viewProviderAccount: 'Vista Propia del Perfil del Proveedor',
+    viewProviderAccount: 'Mi cuenta de proveedor',
     page404: '404 - Página no Encontrada',
-    requestPasswordReset: 'Petición para la Recuperación de Contraseña',
-    resetPassword: 'Restablecer la Contraseña',
+    requestPasswordReset: 'Solicitud para Recuperar la Contraseña',
+    resetPassword: 'Resetear la Contraseña',
   },
 
   buttons: {
     providerProfile: 'Mi Perfil de Proveedor',
-    editProfile: 'Editar perfil',
+    editProfile: 'Editar Perfil',
     register: 'Registro',
     uploadImage: 'Cargar Imagen',
     uploading: 'Cargando ...',
@@ -32,11 +32,11 @@ export const Spanish = {
     signOut: 'Desconectar',
     returnHome: 'Haga clic para volver a casa',
     reset: 'Reiniciar',
-    post: 'Correo',
+    post: 'Publicar',
     next: 'Próxima',
     previous: 'Previa',
     delete: 'Borrar',
-    contact: 'Correo electrónicotacto',
+    contact: 'Correo electrónico',
     phone: 'Llamada',
   },
 
@@ -189,5 +189,12 @@ export const Spanish = {
       { name: 'Viajar', description: 'Servicios de viaje', ariaLabel: "Viajar", id: "13" },
       // Add more products as needed
     ],
-  }
+  },
+
+  homePageText: {
+    headline: "Todo lo que necesita para hacer el trabajo.",
+    subHeadline: "Los proveedores publican servicios. Publicaciones de búsqueda de clientes. El trabajo se hace.",
+    ariaLabel: "Imagen de información de marcador de posición",
+  },
+
 } as const;

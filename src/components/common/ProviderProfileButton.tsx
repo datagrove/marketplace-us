@@ -1,49 +1,63 @@
-import { Component, createSignal, createEffect } from 'solid-js'
-import { supabase } from '../../lib/supabaseClient'
-import { currentSession } from '../../lib/userSessionStore'
-import { useStore } from '@nanostores/solid'
+import { Component, createSignal, createEffect } from "solid-js";
+import { supabase } from "../../lib/supabaseClient";
+import { currentSession } from "../../lib/userSessionStore";
+import { useStore } from "@nanostores/solid";
 
-import type { AuthSession } from '@supabase/supabase-js'
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import type { AuthSession } from "@supabase/supabase-js";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const ProviderProfileButton: Component = () => {
-    const [providerProfile, setProviderProfile] = createSignal(null)
-    const [user, setUser] = createSignal<AuthSession | null>(null)
+  const [providerProfile, setProviderProfile] = createSignal(null);
+  const [user, setUser] = createSignal<AuthSession | null>(null);
+  const [hidden, setHidden] = createSignal("");
 
-    const providerRedirect = async (e: SubmitEvent) => {
-        e.preventDefault()
+  const ProviderProfileLink = document.getElementById("providerProfileLink");
 
-        try {
-            setUser(useStore(currentSession)())
+  const providerRedirect = async (e: SubmitEvent) => {
+    e.preventDefault();
 
-            if (user() === null) {
-                alert(t('messages.signIn'))
-                location.href = `/${lang}/login`
-            } else {
-                const { data: provider, error: providerError } = await supabase.from('providers').select('*').eq('user_id', user()!.user.id)
-                if (providerError) {
-                    console.log("Error: " + providerError.message)
-                } else if (!provider.length) {
-                    alert(t('messages.viewProviderAccount'))
-                    location.href = `/${lang}/provider/createaccount`
-                } else {
-                    location.href = `/${lang}/provider/profile`
-                }
+    try {
+      setUser(useStore(currentSession)());
 
-            }
-        } catch (error) {
-            console.log(error)
+      if (user() === null) {
+        alert(t("messages.signIn"));
+        location.href = `/${lang}/login`;
+      } else {
+        const { data: provider, error: providerError } = await supabase
+          .from("providers")
+          .select("*")
+          .eq("user_id", user()!.user.id);
+        console.log(provider);
+        setHidden("hidden");
+
+        if (!provider) {
+          ProviderProfileLink?.classList.add("hidden");
         }
+        if (providerError) {
+          console.log("Error: " + providerError.message);
+        } else if (!provider.length) {
+          console.log("User is not a providerrrrrrrr");
+          alert(t("messages.viewProviderAccount"));
+          location.href = `/${lang}/provider/createaccount`;
+        } else {
+          location.href = `/${lang}/provider/profile`;
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
-
-    return (
-        <div>
-            <form onSubmit={providerRedirect}>
-                <button class="btn-primary" type="submit">{t("buttons.providerProfile")}</button>
-            </form>
-        </div>
-    )
-}
+  };
+  console.log(ProviderProfileLink);
+  return (
+    <div>
+      <form onSubmit={providerRedirect}>
+        <button class={hidden()} type="submit" id="providerProfileLink">
+          {t("buttons.providerProfile")}
+        </button>
+      </form>
+    </div>
+  );
+};

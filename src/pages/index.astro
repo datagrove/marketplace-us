@@ -1,6 +1,8 @@
 ---
 import { SITE } from '../config';
 import Layout from '../layouts/PageLayout.astro';
+import { AuthMode } from '../components/common/AuthMode';
+import { SignUpBtn } from '../components/common/SignUpButton';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
@@ -9,5 +11,45 @@ const t = useTranslations(lang);
 ---
 
 <Layout pageTitle={t('pageTitles.home')}>
-	<h1>{t('pageTitles.home')}</h1>
+	<!-- <h1>{t('pageTitles.home')}</h1> -->
+	<div class="flex flex-col px-2 md:px-0 md:flex-row">
+		<div class="mt-6 mb-6 md:mb-0">
+			<div>
+				<h1 class="text-3xl font-bold">{t(`homePageText.headline`)}</h1>
+				<p class="text-lg my-6">{t(`homePageText.subHeadline`)}</p>
+			</div>
+
+			<!-- <a href="/login?">Log In</a> -->
+
+
+			<div class="flex justify-start md:justify-end">
+				<AuthMode client:only="solid-js"/>
+				<SignUpBtn client:only="solid-js" />
+
+				<!-- <button class="btn-primary mx-1">Sign Up</button> -->
+			</div>
+		</div>
+
+		<div class="flex justify-center items-center md:w-1/2">
+			<svg class="fill-logo dark:fill-gray-300" width="200px" height="200px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+				<g clip-path="url(#clip0_429_11160)">
+				<circle class="stroke-gray-300 dark:stroke-logo-DM" cx="12" cy="11.9999" r="9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+				<rect class="stroke-gray-300 dark:stroke-gray-700" x="12" y="8" width="0.01" height="0.01" stroke-width="3.75" stroke-linejoin="round"/>
+				<path class="stroke-gray-300 dark:stroke-gray-700" d="M12 12V16" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+				</g>
+				<defs>
+					
+				<clipPath id="clip0_429_11160">
+				<rect class="fill-white dark:fill-gray-400" width="24" height="24" />
+				</clipPath>
+				</defs>
+			</svg>
+		</div>
+	</div>
 </Layout>
+
+<script>
+	const redirectLogin = () => {
+		alert("Test")
+	}
+</script>
