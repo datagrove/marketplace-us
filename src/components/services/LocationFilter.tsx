@@ -8,6 +8,7 @@ import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 const values = ui[lang] as uiObject
 
 let major_municipalities: Array<{ major_municipality: string, id: number }> = [];
@@ -126,7 +127,7 @@ export const LocationFilter: Component<Props> = (props) => {
     return (
         <div class="bg-background1 dark:bg-black w-full md:rounded-lg">
             <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:mb-8">
-                <div class="mt-2 ml-8">Major Municipality</div> {/*TODO:Internationalize */}
+                <div class="mt-2 ml-8">{t('formLabels.majorMunicipality')}</div>
                 <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-fit md:overflow-auto">
                     <For each={majorMunicipalities()}>{(item) =>
                         <li>
@@ -143,7 +144,7 @@ export const LocationFilter: Component<Props> = (props) => {
                 </ul>
             </div>
             <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:box-border md:mb-8">
-                <div class="mt-2 mb-2 ml-8">Minor Municipality</div> {/*TODO:Internationalize */}
+                <div class="mt-2 mb-2 ml-8">{t('formLabels.minorMunicipality')}</div>
                 <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
                     <For each={minorMunicipalities()}>{(item) =>
                         <div>
@@ -159,9 +160,9 @@ export const LocationFilter: Component<Props> = (props) => {
                     }</For>
                 </ul>
             </div>
-            <div class="md:h-56 md:overflow-auto md:border-2 md:border-gray-300 md:rounded md:flex md:content-center ">
-                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-full md:overflow-auto">
-                    <p class="mb-2">Governing District</p> {/*TODO:Internationalize */}
+            <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:box-border md:mb-8">
+                <div class="mt-2 mb-2 ml-8">{t('formLabels.governingDistrict')}</div>
+                <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
                     <For each={governingDistricts()}>{(item) =>
                         <div>
                             <input type="checkbox"
