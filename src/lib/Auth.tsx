@@ -46,7 +46,6 @@ export const Auth: Component = (props) => {
 
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
-    console.log(password())
 
     if(regularExpressionPassword.test(password())) {
 
@@ -72,7 +71,7 @@ export const Auth: Component = (props) => {
       setPasswordMatch(false);
       alert(t("messages.passwordMatch"));
     }}else {
-      alert("hola")
+      alert(t("messages.passwordLackRequirements"));
     }
   };
 
@@ -142,7 +141,7 @@ export const Auth: Component = (props) => {
       authMode() === "sign_up" ? (
         <div class="row flex-center flex">
           <div class="col-6 form-widget" aria-live="polite">
-            <form class="form-widget" onSubmit={()=>{console.log(1)}}>
+            <form class="form-widget" onSubmit={handleSignUp}>
               <div class="mb-4 flex justify-center">
                 <label class="hidden" for="email">
                   {t("formLabels.email")}
@@ -173,8 +172,13 @@ export const Auth: Component = (props) => {
                 />
               </div>
               <div class="mb-4 flex justify-center">
-                {password().length > 5 ? (
-                  ""
+                {regularExpressionPassword.test(password()) ? (
+                  <span
+                  id="pwlength"
+                  class="text-sm text-text1 dark:text-text1-DM"
+                >
+                  {t("messages.passwordValid")}
+                </span>
                 ) : (
                   <span
                     id="pwlength"
