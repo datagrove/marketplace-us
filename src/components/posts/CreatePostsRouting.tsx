@@ -36,7 +36,7 @@ export const CreatePostsRouting = () => {
 
   return (
     <Show when={isUserProvider()}>
-      <a href={`${lang}/../../posts/createpost`} class=" " id="createPostLink">
+      <a href={`${lang}/posts/createpost`} class=" " id="createPostLink">
         {t("pageTitles.createPost")}
       </a>
     </Show>

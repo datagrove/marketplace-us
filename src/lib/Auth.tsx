@@ -76,7 +76,7 @@ export const Auth: Component = (props) => {
             <form class="form-widget" onSubmit={handleLogin}>
               <div class="mb-4 flex justify-center">
                 <label class="hidden" for="email">
-                  {t("formLabels.email")}:{" "}
+                  {t("formLabels.email")}
                 </label>
                 <input
                   id="email"
