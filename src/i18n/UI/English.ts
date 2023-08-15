@@ -18,6 +18,7 @@ export const English = {
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',
     terms: 'Terms and Conditions',
+    privacy: "Privacy Policy",
   },
 
   buttons: {

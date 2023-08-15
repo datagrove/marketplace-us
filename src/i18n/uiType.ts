@@ -18,6 +18,7 @@ export interface uiObject {
     requestPasswordReset: string,
     resetPassword: string,
     terms: string,
+    privacy: string,
   },
 
   buttons: {
