@@ -63,6 +63,8 @@ export const Spanish = {
     selectAnImage: 'Debe seleccionar una imagen para cargar.',
     noProvider: 'No se encontró ningún proveedor.',
     noValue: 'Sin valor',
+    translation: 'Las traducciones',
+    translations: ' se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.',
   },
 
   formLabels: {

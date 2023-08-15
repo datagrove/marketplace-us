@@ -62,6 +62,8 @@ export interface uiObject {
     noPost: string,
     selectAnImage: string,
     noProvider: string,
+    translation: string,
+    translations: string,
   },
 
   formLabels: {
