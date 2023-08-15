@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/PageLayout.astro";
+import { Content } from "../content/policies/terms.mdx";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -7,22 +8,10 @@ const t = useTranslations(lang);
 ---
 
 <Layout>
-    <div>
-        <h1 class="font-bold text-3xl">{t("pageTitles.terms")}</h1>
-        <div>
-            <h2 class="font-bold text-xl mt-8 mb-4">Your Consent</h2>
-            <p>Please take a few minutes to review this Policy before using this Site. By using this Site you are consenting to the collection, use, and disclosure of your Personal Information as set forth in this Policy. If you do not agree to be bound by this Policy, you may not access or use this Site.
-            </p>
-        </div>
-        <div>
-            <h2 class="font-bold text-xl mt-8 mb-4">This Policy is Part of Our Terms of Use</h2>
-            <p>This Policy is part of the Terms of Use that govern your use of this Site. A link to our Terms of Use is provided at the bottom of each page of this Site.
-            </p>
-        </div>
-        <div>
-            <h2 class="font-bold text-xl mt-8 mb-4">Privacy Notices</h2>
-            <p>This Policy may be supplemented or amended from time to time by Privacy Notices posted on this Site. These Privacy Notices provide a level of detail that we cannot provide in this more general description of our privacy practices. For example, certain pages of this Site may contain Privacy Notices providing details about the Personal Information we collect on those pages, why we need that information, and choices you may have about the ways we use that information.
-            </p>
-        </div>
-    </div>
+  <div>
+    <h1 class="font-bold text-3xl mb-8">{t("pageTitles.terms")}</h1>
+    <article class="prose dark:prose-invert">
+      <Content />
+    </article>
+  </div>
 </Layout>
