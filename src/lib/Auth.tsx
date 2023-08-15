@@ -6,8 +6,6 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-
 export const Auth: Component = (props) => {
   // @ts-ignore
   const { mode = "sign_in" } = props;
@@ -44,7 +42,7 @@ export const Auth: Component = (props) => {
 
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
-    if(regularExpressionPassword.test(password())){  
+
     if (password() === confirmPassword()) {
       setPasswordMatch(true);
       try {
@@ -67,10 +65,7 @@ export const Auth: Component = (props) => {
       setPasswordMatch(false);
       alert(t("messages.passwordMatch"));
     }
-  }else{
-      alert(t("messages.passwordMatch"));
     }
-  };
 
   return (
     <div>
