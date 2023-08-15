@@ -44,7 +44,7 @@ export const Spanish = {
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para ",
-    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
+    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo, 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial dentro de los siguientes: !@#$%^&*',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
     passwordMatch: 'Las contraseñas no coinciden',
