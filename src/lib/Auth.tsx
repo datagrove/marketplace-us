@@ -6,6 +6,9 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
+const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+
 export const Auth: Component = (props) => {
   // @ts-ignore
   const { mode = "sign_in" } = props;
@@ -42,7 +45,7 @@ export const Auth: Component = (props) => {
 
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
-
+    if(regularExpressionPassword.test(password())){  
     if (password() === confirmPassword()) {
       setPasswordMatch(true);
       try {
@@ -63,6 +66,9 @@ export const Auth: Component = (props) => {
       }
     } else {
       setPasswordMatch(false);
+      alert(t("messages.passwordMatch"));
+    }
+  }else{
       alert(t("messages.passwordMatch"));
     }
   };
@@ -164,16 +170,16 @@ export const Auth: Component = (props) => {
                 />
               </div>
               <div class="mb-4 flex justify-center">
-                {password().length > 5 ? (
+                {/* {password().length > 5 ? (
                   ""
-                ) : (
+                ) : ( */}
                   <span
                     id="pwlength"
                     class="text-sm text-text1 dark:text-text1-DM"
                   >
                     {t("messages.passwordLength")}
                   </span>
-                )}
+                {/* )} */}
               </div>
               <div class="mb-1 flex justify-center">
                 <label for="confirm password" class="hidden">
