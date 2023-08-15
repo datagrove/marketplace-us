@@ -25,7 +25,7 @@ export const EditProfileButton: Component = () => {
             if (window.location.href === SITE.url + `/${lang}/provider/profile`) {
                 location.href = `/${lang}/provider/editaccount`
             } else if (window.location.href === SITE.url + `/${lang}/client/profile`) {
-                location.href = `/${lang}/client/editaccount`
+                location.href = `/${lang}/client/profile`
             } else {
                 console.log(window.location.href)
             }

@@ -40,7 +40,7 @@ export const ClientRouting = () => {
         console.log("user is not a client");
       } else {
         setCreateText(t("pageTitles.editClientAccount"));
-        setRouting(`${lang}/client/editaccount`);
+        setRouting(`${lang}/client/profile`);
         // console.log("user is a client");
         setIsUserClient(true);
       }
