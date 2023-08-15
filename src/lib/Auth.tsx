@@ -6,9 +6,6 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-
-
 export const Auth: Component = (props) => {
   // @ts-ignore
   const { mode = "sign_in" } = props;
@@ -19,6 +16,10 @@ export const Auth: Component = (props) => {
   const [passwordMatch, setPasswordMatch] = createSignal(false);
   const match = () => password() === confirmPassword();
   const [authMode, setAuthMode] = createSignal<"sign_in" | "sign_up">(mode);
+  const lang = getLangFromUrl(new URL(window.location.href));
+  const t = useTranslations(lang);
+  const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -45,7 +46,10 @@ export const Auth: Component = (props) => {
 
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
-    if(regularExpressionPassword.test(password())){  
+    console.log(password())
+
+    if(regularExpressionPassword.test(password())) {
+
     if (password() === confirmPassword()) {
       setPasswordMatch(true);
       try {
@@ -67,9 +71,8 @@ export const Auth: Component = (props) => {
     } else {
       setPasswordMatch(false);
       alert(t("messages.passwordMatch"));
-    }
-  }else{
-      alert(t("messages.passwordMatch"));
+    }}else {
+      alert("hola")
     }
   };
 
@@ -139,7 +142,7 @@ export const Auth: Component = (props) => {
       authMode() === "sign_up" ? (
         <div class="row flex-center flex">
           <div class="col-6 form-widget" aria-live="polite">
-            <form class="form-widget" onSubmit={handleSignUp}>
+            <form class="form-widget" onSubmit={()=>{console.log(1)}}>
               <div class="mb-4 flex justify-center">
                 <label class="hidden" for="email">
                   {t("formLabels.email")}
@@ -170,16 +173,16 @@ export const Auth: Component = (props) => {
                 />
               </div>
               <div class="mb-4 flex justify-center">
-                {/* {password().length > 5 ? (
+                {password().length > 5 ? (
                   ""
-                ) : ( */}
+                ) : (
                   <span
                     id="pwlength"
                     class="text-sm text-text1 dark:text-text1-DM"
                   >
                     {t("messages.passwordLength")}
                   </span>
-                {/* )} */}
+                )}
               </div>
               <div class="mb-1 flex justify-center">
                 <label for="confirm password" class="hidden">
