@@ -65,7 +65,7 @@ export const Auth: Component = (props) => {
       setPasswordMatch(false);
       alert(t("messages.passwordMatch"));
     }
-    }
+    };
 
   return (
     <div>
