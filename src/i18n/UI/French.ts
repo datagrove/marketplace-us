@@ -18,6 +18,7 @@ export const French = {
     requestPasswordReset: "Demander la réinitialisation du mot de passe",
     resetPassword: "réinitialiser le mot de passe",
     terms: 'Termes et Conditions',
+    privacy: "Politique de Confidentialité",
   },
 
   buttons: {
