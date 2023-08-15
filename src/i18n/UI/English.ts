@@ -13,10 +13,12 @@ export const English = {
     createPost: 'Create Post',
     createProviderAccount: 'Create Provider Account',
     editProviderAccount: 'Edit Provider Account',
-    viewProviderAccount: 'Provider Profile Self View',
+    viewProviderAccount: 'My Provider Profile',
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',
+    terms: 'Terms and Conditions',
+    privacy: "Privacy Policy",
   },
 
   buttons: {
@@ -157,13 +159,13 @@ export const English = {
       },
     ],
     secondaryLinks: [
-      { text: 'Terms', href: '/terms' },
-      { text: 'Privacy Policy', href: '/privacy' },
+      { text: 'Terms', href: 'terms' },
+      { text: 'Privacy Policy', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
-      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
+      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
+      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],
@@ -190,5 +192,12 @@ productCategoryInfo:{
       { name: 'Travel', description: 'Travel Services', ariaLabel: "Travel", id: "13" },
       // Add more products as needed
     ]
-  }
+  },
+
+  homePageText: {
+    headline: "Everything you need to get the job done.",
+    subHeadline: "Providers post services. Customers search posts. Work gets done.",
+    ariaLabel: "Placeholder info image",
+  },
+
 } as const;

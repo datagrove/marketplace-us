@@ -15,8 +15,10 @@ export interface uiObject {
     editProviderAccount: string,
     viewProviderAccount: string,
     page404: string,
-    requestPasswordReset: string
-    resetPassword: string
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
   },
 
   buttons: {
@@ -188,5 +190,11 @@ productCategoryInfo:{
       { name: string, description: string, ariaLabel: string, id: "13" },
       // Add more products as needed
     ]
+  },
+  
+  homePageText: {
+    headline: string,
+    subHeadline: string,
+    ariaLabel: string,
   }
 }

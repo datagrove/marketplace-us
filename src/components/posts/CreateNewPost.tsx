@@ -224,7 +224,6 @@ export const CreateNewPost: Component = () => {
       formData.append("image_url", imageUrl()!.toString());
     }
     setFormData(formData);
-    console.log(formData)
   }
 
   return (

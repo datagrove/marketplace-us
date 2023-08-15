@@ -6,8 +6,9 @@ import sitemap from '@astrojs/sitemap';
 import cloudflare from "@astrojs/cloudflare";
 import { defaultLang, languages } from './src/i18n/ui';
 import { SITE } from './src/config';
-import icon from "astro-icon"
-
+import icon from "astro-icon";
+import mdx from "@astrojs/mdx";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const locales = languages;
 const defaultLocale = defaultLang;
@@ -16,18 +17,15 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  integrations: [solid(), tailwind(), 
-    icon({
-      iconDir: "src/assets",
-      include: {
-        tabler: ["*"],
-      }
-    }), 
-    i18n({
+  integrations: [solid(), tailwind(), icon({
+    iconDir: "src/assets",
+    include: {
+      tabler: ["*"]
+    }
+  }), i18n({
     locales,
     defaultLocale
-  }), 
-  sitemap({
+  }), sitemap({
     i18n: {
       locales,
       defaultLocale
@@ -35,11 +33,16 @@ export default defineConfig({
     filter: defaultLocaleSitemapFilter({
       defaultLocale
     })
-  })],
+  }), mdx()],
   adapter: cloudflare(),
   site: SITE.url,
   trailingSlash: 'never',
   build: {
     format: 'file'
+  },
+  markdown: {
+    rehypePlugins: [
+      rehypeAutolinkHeadings,
+    ]
   }
 });
