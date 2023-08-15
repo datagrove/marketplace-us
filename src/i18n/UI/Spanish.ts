@@ -17,6 +17,7 @@ export const Spanish = {
     page404: '404 - Página no Encontrada',
     requestPasswordReset: 'Solicitud para Recuperar la Contraseña',
     resetPassword: 'Resetear la Contraseña',
+    terms: 'Términos y Condiciones',
   },
 
   buttons: {
@@ -158,8 +159,8 @@ export const Spanish = {
       },
     ],
     secondaryLinks: [
-      { text: 'Términos', href: 'es/terms' },
-      { text: 'política de privacidad', href: 'es/privacy' },
+      { text: 'Términos', href: 'terms' },
+      { text: 'política de privacidad', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
