@@ -64,6 +64,8 @@ export const English = {
     noPost: "Post Not Found",
     selectAnImage: 'You must select an image to upload.',
     noProvider: "No Provider found.",
+    translation: `Translations`,
+    translations: " are provided for convenience only. The official binding language is Spanish.",
   },
 
   formLabels: {
