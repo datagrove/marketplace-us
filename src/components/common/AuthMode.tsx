@@ -36,7 +36,7 @@ export const AuthMode: Component = () => {
       authMode() === "signed_out" ? (
         <div>
           <form>
-            <button class="" type="submit" formaction="/login">
+            <button class="" type="submit" formaction={`/${lang}/login`}>
               {t("pageTitles.signIn")}
             </button>
           </form>
