@@ -3,7 +3,7 @@ export const Spanish = {
 
   pageTitles: {
     services: 'Servicios',
-    signup: 'Registrarse',
+    signUp: 'Registrarse',
     login: 'Iniciar sesión',
     home: 'Inicio',
     signIn: 'Iniciar sesión',
