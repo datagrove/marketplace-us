@@ -17,6 +17,7 @@ export const English = {
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',
+    terms: 'Terms and Conditions',
   },
 
   buttons: {
@@ -157,8 +158,8 @@ export const English = {
       },
     ],
     secondaryLinks: [
-      { text: 'Terms', href: '/terms' },
-      { text: 'Privacy Policy', href: '/privacy' },
+      { text: 'Terms', href: 'terms' },
+      { text: 'Privacy Policy', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
