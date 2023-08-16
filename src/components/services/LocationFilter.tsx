@@ -125,59 +125,165 @@ export const LocationFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div class="bg-background1 dark:bg-black w-full md:rounded-lg">
-            <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:mb-8">
-                <div class="mt-2 ml-8">{t('formLabels.majorMunicipality')}</div>
-                <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:mt-2 md:h-fit md:overflow-auto">
-                    <For each={majorMunicipalities()}>{(item) =>
-                        <li>
-                            <input type="checkbox"
-                                class="leading-tight mr-4"
-                                onClick={() => {
-                                    testFunction(item)
-                                }}
-                            />
-                            <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
-
-                        </li>
-                    }</For>
-                </ul>
-            </div>
-            <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:box-border md:mb-8">
-                <div class="mt-2 mb-2 ml-8">{t('formLabels.minorMunicipality')}</div>
-                <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
-                    <For each={minorMunicipalities()}>{(item) =>
-                        <div>
-                            <input type="checkbox"
-                                class="leading-tight mr-4"
-                                onClick={() => {
-                                    test2Function(item)
-                                }}
-                            />
-                            <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
-
+        <div>
+            {/* Container for Mobile View */}
+            <div class="container">
+                {/*Filters Main Group*/}
+                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden mx-10 border">
+                    <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                        <h2 class="flex flex-1 p-2 font-bold">Filters</h2> {/* TODO:Internationalize this */}
+                        {/*Creates the Dropdown Arrow*/}
+                        <div class="flex w-10 items-center justify-center">
+                            <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
                         </div>
-                    }</For>
-                </ul>
-            </div>
-            <div class="md:h-56 md:flex-column md:text-left md:border-2 md:rounded md:border-gray-300 md:box-border md:mb-8">
-                <div class="mt-2 mb-2 ml-8">{t('formLabels.governingDistrict')}</div>
-                <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
-                    <For each={governingDistricts()}>{(item) =>
-                        <div>
-                            <input type="checkbox"
-                                class="leading-tight mr-4"
-                                onClick={() => {
-                                    test3Function(item)
-                                }}
-                            />
-                            <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
+                    </summary>
+                    {/*Major Municipality*/}
+                    <div class="px-4">
+                        <details class="bg-background1 dark:bg-black shadow rounded group/majorMunicipality md:hidden">
+                            <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
+                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.majorMunicipality')}</h2>
+                                {/*Creates the Dropdown Arrow*/}
+                                <div class="flex w-10 items-center justify-center">
+                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
+                                </div>
+                            </summary>
+                            <div class="px-4">
+                                <div class="h-42 flex-column text-left rounded">
+                                    <ul class="grid text-left mr-4 ml-8 h-42 overflow-auto">
+                                        <For each={majorMunicipalities()}>{(item) =>
+                                            <li>
+                                                <input type="checkbox"
+                                                    class="leading-tight mr-4"
+                                                    onClick={() => {
+                                                        testFunction(item)
+                                                    }}
+                                                />
+                                                <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
 
-                        </div>
-                    }</For>
-                </ul>
-            </div>
-        </div>
+                                            </li>
+                                        }</For>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    {/*Minor Municipality*/}
+                    <div class="px-4">
+                        <details class="bg-background1 dark:bg-black shadow rounded group/minorMunicipality md:hidden">
+                            <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
+                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.minorMunicipality')}</h2>
+                                {/*Creates the Dropdown Arrow*/}
+                                <div class="flex w-10 items-center justify-center">
+                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
+                                </div>
+                            </summary>
+                            <div class="px-4 pb-2">
+                                <div class="h-42 flex-column text-left rounded">
+                                    <ul class="grid text-left mr-4 ml-8 h-40 overflow-auto">
+                                        <For each={minorMunicipalities()}>{(item) =>
+                                            <div>
+                                                <input type="checkbox"
+                                                    class="leading-tight mr-4"
+                                                    onClick={() => {
+                                                        test2Function(item)
+                                                    }}
+                                                />
+                                                <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
+
+                                            </div>
+                                        }</For>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                    {/*Governing District*/}
+                    <div class="px-4">
+                        <details class="bg-background1 dark:bg-black shadow rounded group/governingDistrict md:hidden">
+                            <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
+                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.governingDistrict')}</h2>
+                                {/*Creates the Dropdown Arrow*/}
+                                <div class="flex w-10 items-center justify-center">
+                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
+                                </div>
+                            </summary>
+                            <div class="px-4 pb-2">
+                                <div class="h-42 flex-column text-left rounded">
+                                    <ul class="grid text-left mr-4 ml-8 h-36 overflow-auto">
+                                        <For each={governingDistricts()}>{(item) =>
+                                            <div>
+                                                <input type="checkbox"
+                                                    class="leading-tight mr-4"
+                                                    onClick={() => {
+                                                        test3Function(item)
+                                                    }}
+                                                />
+                                                <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
+
+                                            </div>
+                                        }</For>
+                                    </ul>
+                                </div>
+                            </div>
+                        </details>
+                    </div>
+                </details>
+            </div >
+            {/* Filter Menus for md+ view */}
+            < div class="hidden md:block bg-background1 dark:bg-black w-full md:rounded-lg md:border-2 md:border-gray-300" >
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300">
+                    <div class="mt-2 ml-8">{t('formLabels.majorMunicipality')}</div>
+                    <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
+                        <For each={majorMunicipalities()}>{(item) =>
+                            <li>
+                                <input type="checkbox"
+                                    class="leading-tight mr-4"
+                                    onClick={() => {
+                                        testFunction(item)
+                                    }}
+                                />
+                                <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
+
+                            </li>
+                        }</For>
+                    </ul>
+                </div>
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border">
+                    <div class="mt-2 mb-2 ml-8">{t('formLabels.minorMunicipality')}</div>
+                    <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
+                        <For each={minorMunicipalities()}>{(item) =>
+                            <div>
+                                <input type="checkbox"
+                                    class="leading-tight mr-4"
+                                    onClick={() => {
+                                        test2Function(item)
+                                    }}
+                                />
+                                <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
+
+                            </div>
+                        }</For>
+                    </ul>
+                </div>
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border"> {/*TODO: Set this to a website color */}
+                    <div class="mt-2 mb-2 ml-8">{t('formLabels.governingDistrict')}</div>
+                    <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
+                        <For each={governingDistricts()}>{(item) =>
+                            <div>
+                                <input type="checkbox"
+                                    class="leading-tight mr-4"
+                                    onClick={() => {
+                                        test3Function(item)
+                                    }}
+                                />
+                                <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
+
+                            </div>
+                        }</For>
+                    </ul>
+                </div>
+            </div >
+        </div >
 
     )
 }
