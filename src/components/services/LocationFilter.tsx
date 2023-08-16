@@ -128,7 +128,7 @@ export const LocationFilter: Component<Props> = (props) => {
         <div>
             {/* Container for Mobile View */}
             <div class="container">
-                {/*Filters Main Group*/}
+                {/*Mobile Filters Main Group*/}
                 <details class="bg-background1 dark:bg-black shadow rounded group md:hidden mx-10 border">
                     <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                         <h2 class="flex flex-1 p-2 font-bold">Filters</h2> {/* TODO:Internationalize this */}
@@ -232,7 +232,7 @@ export const LocationFilter: Component<Props> = (props) => {
             {/* Filter Menus for md+ view */}
             < div class="hidden md:block bg-background1 dark:bg-black w-full md:rounded-lg md:border-2 md:border-gray-300" >
                 <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300">
-                    <div class="mt-2 ml-8">{t('formLabels.majorMunicipality')}</div>
+                    <div class="mt-2 ml-4">{t('formLabels.majorMunicipality')}</div>
                     <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
                         <For each={majorMunicipalities()}>{(item) =>
                             <li>
@@ -249,7 +249,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     </ul>
                 </div>
                 <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border">
-                    <div class="mt-2 mb-2 ml-8">{t('formLabels.minorMunicipality')}</div>
+                    <div class="mt-2 mb-2 ml-4">{t('formLabels.minorMunicipality')}</div>
                     <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
                         <For each={minorMunicipalities()}>{(item) =>
                             <div>
@@ -266,7 +266,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     </ul>
                 </div>
                 <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border"> {/*TODO: Set this to a website color */}
-                    <div class="mt-2 mb-2 ml-8">{t('formLabels.governingDistrict')}</div>
+                    <div class="mt-2 mb-2 ml-4">{t('formLabels.governingDistrict')}</div>
                     <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
                         <For each={governingDistricts()}>{(item) =>
                             <div>

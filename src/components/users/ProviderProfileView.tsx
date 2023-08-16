@@ -104,7 +104,7 @@ export const ProviderProfileView: Component = () => {
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size 
 
     return (
-        <div class="m-6 md:grid md:grid-cols-5 md:gap-6">
+        <div class="m-2 md:grid md:grid-cols-5">
 
             {/* Left column for md+ View */}
             <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
@@ -283,7 +283,7 @@ export const ProviderProfileView: Component = () => {
             {/* Right Column Post View and Buttons for md+ View */}
             <div class="md:col-span-3">
                 <div class="hidden md:block">
-                    <div class="justify-end hidden md:flex">
+                    <div class="justify-end hidden md:flex mr-4">
                         {/* Create Post Button*/}
                         <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
                         {/* Edit Profile Button*/}

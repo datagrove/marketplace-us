@@ -67,48 +67,52 @@ export const ViewCard: Component<Props> = (props) => {
     <div class="flex justify-center">
       <ul class="md:flex md:flex-wrap md:justify-center">
         {newPosts().map((post: any) => (
-          <li>
+          <li class="mx-4 w-full">
             <a href={`/${lang}/posts/${post.id}`}>
-            <div class="my-8 mx-4 flex flex-col md:flex-row justify-center items-center rounded-lg w-80 md:w-[650px] md:h-48 shadow-lg dark:shadow-gray-700">
-              <div class="image-div md:w-auto md:h-auto md:mr-2">
-                {post.image_url ? (
-                  <img
-                    src={post.image_url}
-                    alt={post.image_urls.split(',')[0] ? "User Image" : "No image"}
-                    class="dark:bg-background1 user image rounded-lg md:shadow-lg dark:shadow-2xl w-80 h-80 md:h-48 md:w-48 object-fit md:object-cover"
+              <div class="mb-2 flex flex-col md:flex-row justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700">
+                <div class="flex md:w-48 w-80 h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg">
+                  {post.image_url ? (
+                    <img
+                      src={post.image_url}
+                      alt={post.image_urls.split(',')[0] ? "User Image" : "No image"}
+                      class="dark:bg-background1 rounded-lg md:shadow-lg dark:shadow-2xl w-80 h-80 md:h-48 md:w-48 object-cover"
                     // style={{height: `120px`, width: `120px`}}
-                  />
-                ) : (
-                  <svg
-                    width="120px"
-                    height="120px"
-                    viewBox="0 0 512 512"
-                    version="1.1"
-                    class="fill-logo rounded-lg shadow-lg dark:shadow-2xl dark:fill-logo-DM bg-background2 dark:bg-background2-DM w-80 h-80 md:h-48 md:w-48 md:object-cover"
-                  >
-                    <title>image-filled</title>
-                    <g id="Page-1" stroke="none" stroke-width="1">
-                      <g id="icon" transform="translate(64.000000, 64.000000)">
-                        <path d="M384,1.42108547e-14 L384,384 L1.42108547e-14,384 L1.42108547e-14,1.42108547e-14 L384,1.42108547e-14 Z M109.226667,142.933333 L42.666,249.881 L42.666,341.333 L341.333,341.333 L341.333,264.746 L277.333333,200.746667 L211.84,266.24 L109.226667,142.933333 Z M245.333333,85.3333333 C227.660221,85.3333333 213.333333,99.6602213 213.333333,117.333333 C213.333333,135.006445 227.660221,149.333333 245.333333,149.333333 C263.006445,149.333333 277.333333,135.006445 277.333333,117.333333 C277.333333,99.6602213 263.006445,85.3333333 245.333333,85.3333333 Z" id="Combined-Shape"></path>
+                    />
+                  ) : (
+                    <svg
+                      viewBox="0 0 512 512"
+                      version="1.1"
+                      class="fill-logo rounded-lg dark:fill-logo-DM bg-background2 dark:bg-background2-DM object-cover"
+                    >
+                      <g id="Page-1" stroke="none" stroke-width="1">
+                        <g id="icon" transform="translate(64.000000, 64.000000)">
+                          <path d="M384,1.42108547e-14 L384,384 L1.42108547e-14,384 L1.42108547e-14,1.42108547e-14 L384,1.42108547e-14 Z M109.226667,142.933333 L42.666,249.881 L42.666,341.333 L341.333,341.333 L341.333,264.746 L277.333333,200.746667 L211.84,266.24 L109.226667,142.933333 Z M245.333333,85.3333333 C227.660221,85.3333333 213.333333,99.6602213 213.333333,117.333333 C213.333333,135.006445 227.660221,149.333333 245.333333,149.333333 C263.006445,149.333333 277.333333,135.006445 277.333333,117.333333 C277.333333,99.6602213 263.006445,85.3333333 245.333333,85.3333333 Z" id="Combined-Shape"></path>
+                        </g>
                       </g>
-                    </g>
-                  </svg>
-                )}
-              </div>
+                    </svg>
+                  )}
+                </div>
 
-              {/* <br /> */}
-              <div class="px-1 pt-1 text-justify w-full md:w-3/4 md:h-full">
-                <p class="text-lg font-bold mb-2 text-text1 dark:text-text1-DM overflow-hidden">{post.title}</p>
-                <p class=" text-text1 dark:text-text1-DM text-xs max-h-12 md:h-12 overflow-auto mb-2 border-b-2 border-gray-400">{post.content}</p>
-                <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">{t('postLabels.provider')}{post.provider_name}</p>
-                <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">
-                {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/
-                  {post.governing_district}
-                </p>
-                <p class="overflow-hidden text-text1 dark:text-text1-DM pt-1 text-lg">{t('postLabels.category')}{post.category}</p>
-                <DeletePostButton id={post.id} userId={post.user_id} postImage={post.image_urls}/>
+                {/* <br /> */}
+                <div id="cardContent" class="px-1 pt-1 text-left w-full md:w-3/4 md:h-full">
+                  <div class="grid grid-cols-4">
+                    <p class="text-lg font-bold mb-2 text-text1 dark:text-text1-DM overflow-hidden max-h-14 col-span-3">
+                      {post.title}
+                    </p>
+                    <div class="justify-self-end pt-2 pr-4">
+                      <DeletePostButton id={post.id} userId={post.user_id} postImage={post.image_urls} />
+                    </div>
+                  </div>
+                  <p class=" text-text1 dark:text-text1-DM text-xs max-h-12 md:h-12 overflow-hidden mb-2 border-b-2 border-gray-400 mr-4">{post.content}</p>
+                  <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">{t('postLabels.provider')}{post.provider_name}</p>
+                  <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">
+                    {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/
+                    {post.governing_district}
+                  </p>
+                  <p class="overflow-hidden text-text1 dark:text-text1-DM pt-1 text-lg">{t('postLabels.category')}{post.category}</p>
+
+                </div>
               </div>
-            </div>
             </a>
           </li>
         ))}
