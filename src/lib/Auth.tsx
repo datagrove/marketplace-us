@@ -73,7 +73,7 @@ export const Auth: Component = (props) => {
     }}else {
       alert(t("messages.passwordLackRequirements"));
     }
-  };
+    };
 
   return (
     <div>

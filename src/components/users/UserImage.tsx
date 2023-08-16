@@ -53,6 +53,7 @@ const UserImage: Component<Props> = (props) => {
       const fileExt = file.name.split(".").pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
+      console.log(filePath);
 
       let { error: uploadError } = await supabase.storage
         .from("user.image")
@@ -60,6 +61,21 @@ const UserImage: Component<Props> = (props) => {
 
       if (uploadError) {
         throw uploadError;
+      }
+
+      if (imageUrl()){
+        const { error } = await supabase
+            .storage
+            .from("user.image")
+            .remove([props.url!]);
+
+        if (error) {
+          console.log("supabase errror: " + error.message);
+          console.log(error)
+        } else {
+          console.log("deleted images", [props.url!]);
+          setImageUrl(null);
+        }
       }
 
       props.onUpload(event, filePath);
