@@ -9,9 +9,9 @@ const t = useTranslations(lang);
 interface Props {
   // Define the type of the prop
   // (Id, UserId)
-  Id: number;
-  UserId: string;
-  IdPhoto: any;
+  id: number;
+  userId: string;
+  postImage: string | null | undefined;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -19,8 +19,6 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 export const DeletePostButton: Component<Props> = (props) => {
   // initialize session
   const [session, setSession] = createSignal<AuthSession | null>(null);
-
-
 
   if (UserError) {
     console.log("User Error: " + UserError.message);
@@ -32,26 +30,38 @@ export const DeletePostButton: Component<Props> = (props) => {
   //Post: The post is deleted from the database
   const deletePost = async (e: SubmitEvent) => {
     e.preventDefault();
-    function checkIfUserIsProvider() {
-      if (session()!.user.id === props.UserId) {
-        return true;
-      } else {
-        return false;
-      }
-    }
 
     // check if user is provider and if they are the owner of the post
     // if they are, delete the post
-    if (props.UserId === session()!.user.id) {
+    if (props.userId === session()!.user.id) {
       try {
         const { error } = await supabase
           .from("provider_post")
           .delete()
-          .eq("id", props.Id)
+          .eq("id", props.id)
 
-          
+        if (props.postImage) {
+          console.log(props.postImage?.split(","));
+          const { error } = await supabase
+            .storage
+            .from("post.image")
+            .remove(props.postImage?.split(","));
+          if (error) {
+            console.log("supabase errror: " + error.message);
+            console.log(error)
+          } else {
+            console.log("deleted images", props.postImage?.split(","));
+          }
+        }
 
-        console.log("deleted post", props.Id);
+        if (error) {
+          console.log(error)
+        } else {
+          console.log("deleted post", props.id);
+        }
+
+
+        // console.log("deleted post", props.Id);
       } catch (error) {
         console.log(error);
       } finally {
@@ -59,21 +69,16 @@ export const DeletePostButton: Component<Props> = (props) => {
         window.location.reload();
       }
 
-      try {
-        const { error } = await supabase
-          .storage
-          .from("post.image")
-          .remove([props.IdPhoto]);
-      } catch (error) {
-        
-      }
     } else {
-      console.log("Image not deleted");
+      console.log("Not your post");
     }
   };
 
+  // const {data, error} = await supabase.storage.listBuckets();
+  //         console.log(data)
+
   return (
-    <Show when={session()!.user.id === props.UserId}>
+    <Show when={session()!.user.id === props.userId}>
       <div>
         <form onSubmit={deletePost}>
           <button
