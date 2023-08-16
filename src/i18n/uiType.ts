@@ -45,6 +45,8 @@ export interface uiObject {
   messages: {
     noAccount: string,
     passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
     passwordMatch: string,
     passwordReset: string,
     forgotPassword: string,

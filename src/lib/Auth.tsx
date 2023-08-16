@@ -16,6 +16,10 @@ export const Auth: Component = (props) => {
   const [passwordMatch, setPasswordMatch] = createSignal(false);
   const match = () => password() === confirmPassword();
   const [authMode, setAuthMode] = createSignal<"sign_in" | "sign_up">(mode);
+  const lang = getLangFromUrl(new URL(window.location.href));
+  const t = useTranslations(lang);
+  const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -43,6 +47,8 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
+    if(regularExpressionPassword.test(password())) {
+
     if (password() === confirmPassword()) {
       setPasswordMatch(true);
       try {
@@ -64,6 +70,8 @@ export const Auth: Component = (props) => {
     } else {
       setPasswordMatch(false);
       alert(t("messages.passwordMatch"));
+    }}else {
+      alert(t("messages.passwordLackRequirements"));
     }
   };
 
@@ -164,8 +172,13 @@ export const Auth: Component = (props) => {
                 />
               </div>
               <div class="mb-4 flex justify-center">
-                {password().length > 5 ? (
-                  ""
+                {regularExpressionPassword.test(password()) ? (
+                  <span
+                  id="pwlength"
+                  class="text-sm text-text1 dark:text-text1-DM"
+                >
+                  {t("messages.passwordValid")}
+                </span>
                 ) : (
                   <span
                     id="pwlength"

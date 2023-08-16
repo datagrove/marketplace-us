@@ -44,7 +44,9 @@ export const French = {
 
   messages: {
     noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
-    passwordLength: "Le mot de passe doit contenir au moins 6 caractères",
+    passwordLength: "Le mot de passe doit contenir au moins 6 caractères, 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial parmi les suivants : !@#$%^&*",
+    passwordValid: 'Mot de passe valide',
+    passwordLackRequirements: 'Le mot de passe ne répond pas aux exigences', 
     passwordMatch: "Les mots de passe ne correspondent pas",
     passwordReset: 'Réinitialisation du mot de passe',
     forgotPassword: 'Mot de passe oublié? Cliquez ici pour',
