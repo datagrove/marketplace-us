@@ -40,6 +40,7 @@ export const DeletePostButton: Component<Props> = (props) => {
           .delete()
           .eq("id", props.id)
 
+        //if there are post images delete them from storage
         if (props.postImage) {
           console.log(props.postImage?.split(","));
           const { error } = await supabase
