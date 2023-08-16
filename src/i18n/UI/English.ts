@@ -17,6 +17,8 @@ export const English = {
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',
+    terms: 'Terms and Conditions',
+    privacy: "Privacy Policy",
   },
 
   buttons: {
@@ -42,7 +44,9 @@ export const English = {
 
   messages: {
     noAccount: "Don't have an account? Click here to ",
-    passwordLength: 'Password must be at least 6 characters long',
+    passwordLength: 'Password must be at least 6 characters long, contain at least one number, one uppercase letter and one of the followings special characters: !@#$%^&*',
+    passwordValid: 'Valid password',
+    passwordLackRequirements: 'Password does not meet requirements',  
     passwordMatch: 'Passwords do not match',
     passwordReset: 'Password Reset',
     forgotPassword: 'Forgot your password? Click here to',
@@ -60,6 +64,8 @@ export const English = {
     noPost: "Post Not Found",
     selectAnImage: 'You must select an image to upload.',
     noProvider: "No Provider found.",
+    translation: `Translations`,
+    translations: " are provided for convenience only. The official binding language is Spanish.",
   },
 
   formLabels: {
@@ -157,13 +163,13 @@ export const English = {
       },
     ],
     secondaryLinks: [
-      { text: 'Terms', href: '/terms' },
-      { text: 'Privacy Policy', href: '/privacy' },
+      { text: 'Terms', href: 'terms' },
+      { text: 'Privacy Policy', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
-      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
+      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
+      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],

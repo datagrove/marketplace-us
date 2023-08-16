@@ -17,6 +17,8 @@ export const Spanish = {
     page404: '404 - Página no Encontrada',
     requestPasswordReset: 'Solicitud para Recuperar la Contraseña',
     resetPassword: 'Resetear la Contraseña',
+    terms: 'Términos y Condiciones',
+    privacy: "Política de Privacidad",
   },
 
   buttons: {
@@ -42,7 +44,9 @@ export const Spanish = {
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para ",
-    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo',
+    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo, 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial dentro de los siguientes: !@#$%^&*',
+    passwordValid: 'Contraseña valida',
+    passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
     forgotPassword: '¿Olvidaste tu contraseña? Click aquí para',
@@ -61,6 +65,8 @@ export const Spanish = {
     selectAnImage: 'Debe seleccionar una imagen para cargar.',
     noProvider: 'No se encontró ningún proveedor.',
     noValue: 'Sin valor',
+    translation: 'Las traducciones',
+    translations: ' se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.',
   },
 
   formLabels: {
@@ -158,13 +164,13 @@ export const Spanish = {
       },
     ],
     secondaryLinks: [
-      { text: 'Términos', href: 'es/terms' },
-      { text: 'política de privacidad', href: 'es/privacy' },
+      { text: 'Términos', href: 'terms' },
+      { text: 'política de privacidad', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
-      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: '#' },
-      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: '#' },
+      { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
+      { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],

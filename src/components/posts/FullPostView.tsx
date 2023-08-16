@@ -245,7 +245,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
             <div class="flex justify-center mt-4">
-                <DeletePostButton Id={+props.id!} UserId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} />
+                <DeletePostButton id={+props.id!} userId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} postImage={post()?.image_urls} />
             </div>
         </div>
     );

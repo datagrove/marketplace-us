@@ -15,8 +15,10 @@ export interface uiObject {
     editProviderAccount: string,
     viewProviderAccount: string,
     page404: string,
-    requestPasswordReset: string
-    resetPassword: string
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
   },
 
   buttons: {
@@ -43,6 +45,8 @@ export interface uiObject {
   messages: {
     noAccount: string,
     passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
     passwordMatch: string,
     passwordReset: string,
     forgotPassword: string,
@@ -60,6 +64,8 @@ export interface uiObject {
     noPost: string,
     selectAnImage: string,
     noProvider: string,
+    translation: string,
+    translations: string,
   },
 
   formLabels: {

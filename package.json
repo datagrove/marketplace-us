@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^6.6.0",
+    "@astrojs/mdx": "^0.19.7",
     "@astrojs/sitemap": "^2.0.0",
     "@astrojs/solid-js": "^2.2.0",
     "@astrojs/tailwind": "^4.0.0",
@@ -27,14 +28,21 @@
     "lexical": "^0.11.3",
     "nanostores": "^0.9.3",
     "react": "^18.2.0",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-slug": "^5.1.0",
+    "remark-toc": "^8.0.1",
     "solid-js": "^1.7.7",
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "@iconify-json/tabler": "^1.1.86",
+    "@iconify-json/tabler": "^1.1.87",
+    "@tailwindcss/typography": "^0.5.9",
     "@types/jquery": "^3.5.16",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
+    "prettier": "^3.0.1",
+    "prettier-plugin-astro": "^0.11.0",
+    "prettier-plugin-tailwindcss": "^0.5.3",
     "wrangler": "^3.4.0"
   }
 }

@@ -188,7 +188,7 @@ export const ClientRegistration: Component = () => {
       }
     } else {
       alert(t("messages.createClientAccount"));
-      location.href = `${lang}/login`;
+      location.href = `/${lang}/login`;
     }
   });
 

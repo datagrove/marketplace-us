@@ -106,7 +106,7 @@ export const ViewCard: Component<Props> = (props) => {
                   {post.governing_district}
                 </p>
                 <p class="overflow-hidden text-text1 dark:text-text1-DM pt-1 text-lg">{t('postLabels.category')}{post.category}</p>
-                <DeletePostButton Id={post.id} UserId={post.user_id} />
+                <DeletePostButton id={post.id} userId={post.user_id} postImage={post.image_urls}/>
               </div>
             </div>
             </a>

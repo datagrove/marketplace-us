@@ -1,6 +1,9 @@
 ---
 import { SITE } from "../../config";
 import { Icon } from 'astro-icon/components';
+import { getLangFromUrl } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
 
 
 //Defines the types for the items from the config file
@@ -35,7 +38,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
           secondaryLinks.map(({ text, href }) => (
             <a
               class="text-muted hover:text-gray-700 dark:text-gray-400 hover:underline transition duration-150 ease-in-out mr-2"
-              href={href}
+              href={`/${lang}/${href}`}
               set:html={text}
             />
           ))
