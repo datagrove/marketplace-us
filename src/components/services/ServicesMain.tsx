@@ -276,7 +276,7 @@ export const ServicesView: Component = () => {
                 <div class="md:w-48 md:mr-4">
                     <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
                 </div>
-                <div class="md:flex-1 md:w-11/12 items-center border border-blue-600">
+                <div class="md:flex-1 md:w-11/12 items-center">
                     <ViewCard posts={currentPosts()} />
                 </div>
             </div>

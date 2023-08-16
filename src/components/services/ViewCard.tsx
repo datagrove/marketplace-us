@@ -64,13 +64,13 @@ export const ViewCard: Component<Props> = (props) => {
 
 
   return (
-    <div class="flex justify-center w-full border border-yellow-500">
-      <ul class="md:flex md:flex-wrap md:justify-center border border-purple-500">
+    <div class="flex justify-center w-full">
+      <ul class="md:flex md:flex-wrap md:justify-center">
         {newPosts().map((post: any) => (
           <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700 border border-green-700">
-                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg border border-red-500">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700">
+                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg">
                   {post.image_url ? (
                     <img
                       src={post.image_url}
