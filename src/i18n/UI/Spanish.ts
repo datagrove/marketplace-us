@@ -199,8 +199,8 @@ export const Spanish = {
 
   homePageText: {
     headline: "Todo lo que necesita para hacer el trabajo.",
-    subHeadline: "Los proveedores publican servicios. Publicaciones de búsqueda de clientes. El trabajo se hace.",
-    ariaLabel: "Imagen de información de marcador de posición",
+    subHeadline: "Los proveedores publican servicios. Clientes pueden buscar los servicios. El trabajo se hace.",
+    ariaLabel: "Marcador de posición para el imagen de info",
   },
 
 } as const;
