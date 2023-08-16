@@ -64,25 +64,25 @@ export const ViewCard: Component<Props> = (props) => {
 
 
   return (
-    <div class="flex justify-center">
-      <ul class="md:flex md:flex-wrap md:justify-center">
+    <div class="flex justify-center w-full border border-yellow-500">
+      <ul class="md:flex md:flex-wrap md:justify-center border border-purple-500">
         {newPosts().map((post: any) => (
-          <li class="mx-4 w-full">
+          <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700">
-                <div class="flex md:w-48 w-80 h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700 border border-green-700">
+                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg border border-red-500">
                   {post.image_url ? (
                     <img
                       src={post.image_url}
                       alt={post.image_urls.split(',')[0] ? "User Image" : "No image"}
-                      class="dark:bg-background1 rounded-lg md:shadow-lg dark:shadow-2xl w-80 h-80 md:h-48 md:w-48 object-cover"
+                      class="dark:bg-background1 rounded-lg md:shadow-lg dark:shadow-2xl w-full h-full object-cover"
                     // style={{height: `120px`, width: `120px`}}
                     />
                   ) : (
                     <svg
                       viewBox="0 0 512 512"
                       version="1.1"
-                      class="fill-logo rounded-lg dark:fill-logo-DM bg-background2 dark:bg-background2-DM object-cover"
+                      class="fill-logo rounded-lg dark:fill-logo-DM bg-background2 dark:bg-background2-DM w-full h-full object-cover"
                     >
                       <g id="Page-1" stroke="none" stroke-width="1">
                         <g id="icon" transform="translate(64.000000, 64.000000)">
@@ -94,7 +94,7 @@ export const ViewCard: Component<Props> = (props) => {
                 </div>
 
                 {/* <br /> */}
-                <div id="cardContent" class="px-1 pt-1 text-left w-full md:w-3/4 md:h-full">
+                <div id="cardContent" class="px-1 pt-1 text-left w-full md:w-5/6 md:h-full">
                   <div class="grid grid-cols-4">
                     <p class="text-lg font-bold mb-2 text-text1 dark:text-text1-DM overflow-hidden max-h-14 col-span-3">
                       {post.title}

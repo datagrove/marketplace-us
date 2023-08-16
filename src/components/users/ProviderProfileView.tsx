@@ -104,7 +104,7 @@ export const ProviderProfileView: Component = () => {
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size 
 
     return (
-        <div class="m-2 md:grid md:grid-cols-5">
+        <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
 
             {/* Left column for md+ View */}
             <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
@@ -187,19 +187,19 @@ export const ProviderProfileView: Component = () => {
                     </details>
 
                     {/* View Posts for Mobile View */}
-                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden" open>
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                             <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.yourPosts')}</h2>
                             <div class="flex w-10 items-center justify-center">
                                 <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
                             </div>
                         </summary>
-                        <div class='p-4'>
+                        <div class='p-2'>
                             <div class="justify-center flex">
-                                <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
+                                <a class="btn-primary mx-6 mb-4" href={`/${lang}/posts/createpost`}>{t('pageTitles.createPost')}</a>
                             </div>
                             <div class="md:col-span-3">
-                                <div class="my-6">
+                                <div class="">
                                     <ViewProviderPosts />
                                 </div>
                             </div>

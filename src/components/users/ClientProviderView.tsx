@@ -104,7 +104,7 @@ export const ClientProviderView: Component<Props> = (props) => {
 
 
     return (
-        <div class="m-2 md:grid md:grid-cols-5">
+        <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
 
             {/* Left column for md+ View */}
             <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
