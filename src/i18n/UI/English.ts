@@ -9,7 +9,7 @@ export const English = {
     signIn: 'Sign In',
     createClientAccount: 'Create Client Account',
     editClientAccount: 'Edit Client Account',
-    viewClientAccount: 'View Client Account',
+    viewClientAccount: 'My Client Account',
     createPost: 'Create Post',
     createProviderAccount: 'Create Provider Account',
     editProviderAccount: 'Edit Provider Account',

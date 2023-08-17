@@ -39,7 +39,7 @@ export const ClientRouting = () => {
       if (data![0] === undefined) {
         console.log("user is not a client");
       } else {
-        setCreateText(t("pageTitles.editClientAccount"));
+        setCreateText(t("pageTitles.viewClientAccount"));
         setRouting(`/${lang}/client/profile`);
         // console.log("user is a client");
         setIsUserClient(true);
