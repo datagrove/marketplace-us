@@ -8,6 +8,10 @@ import { Show, createSignal } from "solid-js";
 import { ProviderRegistration } from "../users/ProviderRegistration";
 import { ProviderRegistrationRouting } from "../users/ProviderRegistrationRouting";
 import { LanguagePicker } from "./LanguagePicker";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ProfileBtn = () => {
@@ -61,6 +65,9 @@ export const ProfileBtn = () => {
       <ul id="profileItems" class="hidden fixed z-50 right-2 bg-background1 dark:bg-black m-2 p-2 rounded-lg justify-start">
         {renderWhenUser()}
         <div class="mt-2">
+        <div>
+          <a>{t('pageTitles.home')}</a>
+        </div>
           <AuthMode />
         </div>
         <div class="md:hidden mt-2">
