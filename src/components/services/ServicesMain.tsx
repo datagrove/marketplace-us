@@ -280,11 +280,11 @@ export const ServicesView: Component = () => {
                     filterPosts={setCategoryFilter}
                 />
             </div>
-            <div class="md:flex md:h-full">
-                <div class="md:w-48 md:mr-4">
+            <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
+                <div class="md:w-48 md:mr-4 w-11/12">
                     <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
                 </div>
-                <div class="md:flex-1 md:w-11/12 items-center">
+                <div class="md:flex-1 w-11/12 items-center">
                     <ViewCard posts={currentPosts()} />
                 </div>
             </div>
