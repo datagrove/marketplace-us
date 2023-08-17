@@ -2,9 +2,21 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import { ServicesView } from '../components/services/ServicesMain';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import { supabase } from "../lib/supabaseClient";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const { data: session, error: sessionError } = await supabase.auth.getSession();
+
+if (sessionError) {
+    console.log(sessionError);
+}
+
+if (session.session === null || session.session === undefined) {
+    alert(t('messages.signIn'));
+    return Astro.redirect(`${lang}/login`);
+}
 ---
 
 <PageLayout pageTitle={t('pageTitles.services')} >
