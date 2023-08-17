@@ -88,9 +88,9 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <div class="hidden md:flex md:items-center md:justify-between md:w-[35%]">
+    <div class="flex items-center md:justify-between md:w-[35%]">
       <div
-        class="flex rounded-lg border border-border dark:border-border-DM bg-background2"
+        class="hidden md:flex rounded-lg border border-border dark:border-border-DM bg-background2"
       >
         <LanguagePicker client:only="solid-js" />
       </div>
@@ -104,11 +104,6 @@ const { links = [] } = Astro.props;
       </div>
     </div>
 
-    <div class="flex md:hidden">
-      <div class="">
-        <ProfileBtn client:only="solid-js" />
-      </div>
-    </div>
+   
   </div>
-
 </header>
