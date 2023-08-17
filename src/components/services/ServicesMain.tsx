@@ -15,7 +15,14 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject
 const productCategories = values.productCategoryInfo.categories
 
-// TODO: Redirect to login page if user is not logged in
+const { data: user, error: userError } = await supabase.auth.getSession();
+if(userError){
+    console.log(userError)
+}
+if (user.session === null || user.session === undefined) {
+    alert(t('messages.signIn'));
+    location.href = `/${lang}/login`;
+}
 
 const { data, error } = await supabase.from('providerposts').select('*');
 console.log(data)
