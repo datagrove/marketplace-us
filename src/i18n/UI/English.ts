@@ -66,6 +66,11 @@ export const English = {
     noProvider: "No Provider found.",
     translation: `Translations`,
     translations: " are provided for convenience only. The official binding language is Spanish.",
+    clickWrap1: 'By clicking',
+    clickWrap2: 'you are indicating that you have read and agree to the',
+    fetch: 'Fetch Services',
+    todoFetch: 'Todo the service dog will fetch you the services you need!',
+    mustSignIn: 'You must be signed in to view available services.',
   },
 
   formLabels: {

@@ -56,11 +56,12 @@ const t = useTranslations(lang);
           </div>
           <br />
           <div class="text-black text-xs text-center p-2">
-            Fetch Services {/* TODO:Internationalize */}
+            {t('messages.fetch')}
           </div>
         </a>
-        <div class="md:col-span-6 col-span-5 flex items-center justify-center">
-          Todo our service dog will fetch you the services you need! {/* TODO:Internationalize */}
+        <div class="md:col-span-6 col-span-5 flex flex-col items-start justify-center">
+          <p class="mb-4">{t('messages.todoFetch')}</p>
+          <p class="text-xs italic">*{t('messages.mustSignIn')}</p>
         </div>
       </div>
 

@@ -215,10 +215,11 @@ export const Auth: Component = (props) => {
                   </span>
                 )}
               </div>
+              <div>{t("messages.clickWrap1")} <span class="font-medium">{t("pageTitles.signUp")}</span> {t("messages.clickWrap2")} <a class="text-link2-DM hover:underline">{t("pageTitles.terms")}</a> & <a class="text-link2-DM hover:underline">{t("pageTitles.privacy")}</a></div>
               <div class="mb-4 flex justify-center">
                 <button
                   type="submit"
-                  class="mt-3 btn-primary dark:bg-btn1-DM"
+                  class=" btn-primary dark:bg-btn1-DM"
                   aria-live="polite"
                   disabled={!match()}
                 >
@@ -229,9 +230,10 @@ export const Auth: Component = (props) => {
                   )}
                 </button>
               </div>
+            
               <div class="my-2">
                 <p class="text-text1 dark:text-text1-DM">
-                  {t("messages.alreadyAccount")}
+                  {t("messages.alreadyAccount")}<span> </span> 
                   <a
                     class="text-link2 hover:underline dark:text-link2-DM"
                     href={`/${lang}/login`}

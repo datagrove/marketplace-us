@@ -67,6 +67,11 @@ export const Spanish = {
     noValue: 'Sin valor',
     translation: 'Las traducciones',
     translations: ' se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.',
+    clickWrap1: 'Al hacer clic en',
+    clickWrap2: 'estás indicando que has leído y estás de acuerdo con los',
+    fetch: 'Obtener Servicios',
+    todoFetch: '¡Todo el perro de servicio te traerá los servicios que necesitas!',
+    mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
   },
 
   formLabels: {

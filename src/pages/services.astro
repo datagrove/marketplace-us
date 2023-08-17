@@ -14,7 +14,7 @@ if (sessionError) {
 }
 
 if (session.session === null || session.session === undefined) {
-    alert(t('messages.signIn'));
+    alert(t('messages.signIn')); //TODO: This only redenders on the server, add explanation for client
     return Astro.redirect(`${lang}/login`);
 }
 ---

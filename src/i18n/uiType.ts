@@ -66,6 +66,11 @@ export interface uiObject {
     noProvider: string,
     translation: string,
     translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
   },
 
   formLabels: {

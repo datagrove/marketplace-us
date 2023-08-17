@@ -66,6 +66,11 @@ export const French = {
     noProvider: 'Aucun fournisseur trouvé.',
     translation: "Traductions",
     translations: " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+    clickWrap1: 'En cliquant sur',
+    clickWrap2: 'vous indiquez que vous avez lu et accepté les',
+    fetch: 'Récupérer des services',
+    todoFetch: "Todo le chien d'assistance ira vous chercher les services dont vous avez besoin !",
+    mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
   },
 
   formLabels: {
