@@ -34,7 +34,7 @@ export const Auth: Component = (props) => {
       currentSession.set(data.session);
       // const test = useStore(currentSession)
       // console.log("Current Session: " + test()?.user.aud)
-      location.href = `/${lang}`;
+      location.href = `/${lang}/services`;
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
