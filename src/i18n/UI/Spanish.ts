@@ -44,7 +44,7 @@ export const Spanish = {
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para ",
-    passwordLength: 'La contraseña debe contener 6 caracteres como mínimo, 1 letra mayúscula, 1 letra minúscula, 1 número y 1 carácter especial dentro de los siguientes: !@#$%^&*',
+    passwordLength: 'La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
     passwordMatch: 'Las contraseñas no coinciden',
@@ -67,6 +67,11 @@ export const Spanish = {
     noValue: 'Sin valor',
     translation: 'Las traducciones',
     translations: ' se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.',
+    clickWrap1: 'Al hacer clic en',
+    clickWrap2: 'estás indicando que has leído y estás de acuerdo con los',
+    fetch: 'Obtener Servicios',
+    todoFetch: '¡Todo el perro de servicio te traerá los servicios que necesitas!',
+    mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
   },
 
   formLabels: {

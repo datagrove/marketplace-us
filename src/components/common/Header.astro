@@ -88,9 +88,9 @@ const { links = [] } = Astro.props;
       </ul>
     </nav>
 
-    <div class="hidden md:flex md:items-center md:justify-between md:w-[35%]">
+    <div class="flex items-center md:justify-between md:w-[35%]">
       <div
-        class="flex rounded-lg border border-border dark:border-border-DM bg-background2"
+        class="hidden md:flex rounded-lg border border-border dark:border-border-DM bg-background2"
       >
         <LanguagePicker client:only="solid-js" />
       </div>
@@ -99,88 +99,11 @@ const { links = [] } = Astro.props;
         <ThemeIcon />
       </div>
 
-      <div>
+      <div class="">
         <ProfileBtn client:only="solid-js" />
       </div>
-
-      <!-- <div class="mx-2">
-        <AuthMode client:only="solid-js" />
-      </div>
-
-      <div class="mx-2">
-        <ProviderProfileButton client:only="solid-js" />
-      </div>
-
-      <div class="mx-2">
-        <CreatePostsRouting client:only="solid-js" />
-      </div>
-      <div class="">
-        <ClientRouting client:only="solid-js" />
-      </div>
-    </div> -->
-
-      <div
-        class="flex items-center relative md:hidden fill-logo dark:fill-logo-DM"
-      >
-        <svg
-          id="menu-icon"
-          width="30px"
-          height="30px"
-          viewBox="0 0 24.75 24.75"
-          xml:space="preserve"
-        >
-          <g>
-            <path
-              d="M0,3.875c0-1.104,0.896-2,2-2h20.75c1.104,0,2,0.896,2,2s-0.896,2-2,2H2C0.896,5.875,0,4.979,0,3.875z M22.75,10.375H2   c-1.104,0-2,0.896-2,2c0,1.104,0.896,2,2,2h20.75c1.104,0,2-0.896,2-2C24.75,11.271,23.855,10.375,22.75,10.375z M22.75,18.875H2   c-1.104,0-2,0.896-2,2s0.896,2,2,2h20.75c1.104,0,2-0.896,2-2S23.855,18.875,22.75,18.875z"
-            ></path>
-          </g>
-        </svg>
-      </div>
-
-      <div
-        id="menu"
-        class="hidden absolute top-16 right-1 w-full flex flex-col items-center justify-center bg-background1 dark:bg-background2-DM"
-      >
-        {
-          links.map(({ text, href }) => (
-            <a
-              class="text-xl text-center text-link1 hover:underline hover:underline-offset-8 hover:decoration-btn1 dark:text-link1-DM dark:hover:link2-DM px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href={href}
-            >
-              {text}
-            </a>
-          ))
-        }
-        <div>
-          <ProfileBtn client:only="solid-js" />
-        </div>
-        <div class="px-4 py-3">
-          <AuthMode client:only="solid-js" />
-        </div>
-
-        <div class="px-4 py-3">
-          <ProviderProfileButton client:only="solid-js" />
-        </div>
-
-        <div class="px-4 py-3">
-          <LanguagePicker client:only="solid-js" />
-        </div>
-      </div>
-
-      <!-- <div class="flex items-center">
     </div>
 
-    <div class="flex items-center">
-    </div> -->
-    </div>
+   
   </div>
-
-  <script>
-    const button = document.querySelector("#menu-icon");
-    const menu = document.querySelector("#menu");
-
-    button?.addEventListener("click", () => {
-      menu?.classList.toggle("hidden");
-    });
-  </script>
 </header>

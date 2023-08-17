@@ -44,7 +44,7 @@ export const French = {
 
   messages: {
     noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
-    passwordLength: "Le mot de passe doit contenir au moins 6 caractères, 1 lettre majuscule, 1 lettre minuscule, 1 chiffre et 1 caractère spécial parmi les suivants : !@#$%^&*",
+    passwordLength: "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
     passwordValid: 'Mot de passe valide',
     passwordLackRequirements: 'Le mot de passe ne répond pas aux exigences', 
     passwordMatch: "Les mots de passe ne correspondent pas",
@@ -66,6 +66,11 @@ export const French = {
     noProvider: 'Aucun fournisseur trouvé.',
     translation: "Traductions",
     translations: " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+    clickWrap1: 'En cliquant sur',
+    clickWrap2: 'vous indiquez que vous avez lu et accepté les',
+    fetch: 'Récupérer des services',
+    todoFetch: "Todo le chien d'assistance ira vous chercher les services dont vous avez besoin !",
+    mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
   },
 
   formLabels: {
