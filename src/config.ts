@@ -3,7 +3,7 @@ const CONFIG = {
   
     title: 'TodoServis',
     description:
-      '',
+      'Everything you need to get the job done.',
     url: 'http://localhost:3000',
   
     defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
