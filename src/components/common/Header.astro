@@ -3,13 +3,15 @@ import { SITE } from "../../config";
 import { AuthMode } from "./AuthMode";
 import { LanguagePicker } from "./LanguagePicker";
 import { ProviderProfileButton } from "./ProviderProfileButton";
-import { getLangFromUrl } from "../../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ThemeIcon from "./ThemeIcon.astro";
 
 import { ProfileBtn } from "./ProfileBtn";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
 import { ClientRouting } from "../users/ClientRouting";
+
 const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 //Define types for items from config
 interface Link {
@@ -61,22 +63,16 @@ const { links = [] } = Astro.props;
       </div>
     </div>
 
-    <nav class="hidden md:flex md:items-center md:justify-center md:w-1/4">
-      <ul class="flex content-center">
-        {
-          links.map(({ text, href }) => (
-            <a
-              class="text-xl text-center text-link1 hover:underline hover:underline-offset-8 hover:decoration-btn1 dark:text-link1-DM dark:hover:link2-DM px-4 py-3 flex items-center transition duration-150 ease-in-out"
-              href={href}
-            >
-              {text}
-            </a>
-          ))
-        }
-      </ul>
-    </nav>
+    
 
-    <div class="flex items-center md:justify-around md:w-[35%] lg:w-[25%]">
+    <div class="flex items-center md:justify-around md:w-[50%] lg:w-[40%] xl:w-[35%]">
+      <div class="hidden md:block mr-2 w-fit">
+        <a href={`/${lang}/services`}>
+        <button class="btn-primary w-fit whitespace-nowrap">
+          {t("menus.services")}
+        </button>
+      </a>
+      </div>
       <div
         class="hidden md:flex rounded-lg border border-border dark:border-border-DM bg-background2"
       >
