@@ -108,6 +108,16 @@ export interface uiObject {
     providerProfileImage: string,
   },
 
+  homePageText: {
+    headline: string,
+    subHeadline: string,
+    ariaLabel: string,
+  },
+
+  menus: {
+    services: string,
+  },
+
   headerData: {
     links: [
       {
@@ -200,10 +210,4 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
-  
-  homePageText: {
-    headline: string,
-    subHeadline: string,
-    ariaLabel: string,
-  }
 }

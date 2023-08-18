@@ -108,6 +108,16 @@ export const Spanish = {
     providerProfileImage: 'Imagen de perfil del proveedor',
   },
 
+  homePageText: {
+    headline: "Todo lo que necesita para hacer el trabajo.",
+    subHeadline: "Los proveedores publican servicios. Publicaciones de búsqueda de clientes. El trabajo se hace.",
+    ariaLabel: "Imagen de información de marcador de posición",
+  },
+
+  menus: {
+    services: 'Buscar Servicios',
+  },
+
   headerData: {
     links: [
       {
@@ -200,12 +210,6 @@ export const Spanish = {
       { name: 'Viajar', description: 'Servicios de viaje', ariaLabel: "Viajar", id: "13" },
       // Add more products as needed
     ],
-  },
-
-  homePageText: {
-    headline: "Todo lo que necesita para hacer el trabajo.",
-    subHeadline: "Los proveedores publican servicios. Publicaciones de búsqueda de clientes. El trabajo se hace.",
-    ariaLabel: "Imagen de información de marcador de posición",
   },
 
 } as const;

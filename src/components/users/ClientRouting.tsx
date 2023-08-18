@@ -53,6 +53,11 @@ export const ClientRouting = () => {
 
   return (
     <Show when={isUser}>
+      <div>
+      <a href={`/${lang}/services`} class=" ">
+        {t("menus.services")}
+      </a>
+      </div>
       <a class=" " id="createEditClientProfileLink" href={routing()}>
         {createText()}
       </a>
