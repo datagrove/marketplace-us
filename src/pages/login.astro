@@ -9,7 +9,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<PageLayout>
+<PageLayout pageTitle={t("pageTitles.login")}>
   <div>
     <div class="text-center mt-4 mb-8">
       <h2 class="text-xl w-full italic">{t("pageTitles.login")}</h2>

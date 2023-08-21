@@ -55,7 +55,7 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
     }
   });
   return (
-    <div>
+    <div class="">
       <ViewCard posts={posts()} />
     </div>
   );

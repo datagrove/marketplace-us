@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout>
+<Layout pageTitle={t("pageTitles.createProviderAccount")}>
   <div>
     <div class="border border-border dark:border-border-DM rounded flex flex-col items-center max-w-md">
       <h1 class="text-xl text-text1 dark:text-text1-DM py-4">

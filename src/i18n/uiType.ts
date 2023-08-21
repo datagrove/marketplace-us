@@ -66,6 +66,11 @@ export interface uiObject {
     noProvider: string,
     translation: string,
     translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
   },
 
   formLabels: {
@@ -101,6 +106,16 @@ export interface uiObject {
     image: string,
     slide: string,
     providerProfileImage: string,
+  },
+
+  homePageText: {
+    headline: string,
+    subHeadline: string,
+    ariaLabel: string,
+  },
+
+  menus: {
+    services: string,
   },
 
   headerData: {
@@ -195,10 +210,4 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
-  
-  homePageText: {
-    headline: string,
-    subHeadline: string,
-    ariaLabel: string,
-  }
 }

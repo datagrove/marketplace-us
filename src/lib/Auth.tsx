@@ -34,7 +34,7 @@ export const Auth: Component = (props) => {
       currentSession.set(data.session);
       // const test = useStore(currentSession)
       // console.log("Current Session: " + test()?.user.aud)
-      location.href = `/${lang}`;
+      location.href = `/${lang}/services`;
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -47,33 +47,34 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    if(regularExpressionPassword.test(password())) {
+    if (regularExpressionPassword.test(password())) {
 
-    if (password() === confirmPassword()) {
-      setPasswordMatch(true);
-      try {
-        setLoading(true);
-        const { error } = await supabase.auth.signUp({
-          email: email(),
-          password: password(),
-        });
-        if (error) throw error;
-        alert(t("messages.checkConfirmEmail"));
-        location.href = `/${lang}`;
-      } catch (error) {
-        if (error instanceof Error) {
-          alert(error.message);
+      if (password() === confirmPassword()) {
+        setPasswordMatch(true);
+        try {
+          setLoading(true);
+          const { error } = await supabase.auth.signUp({
+            email: email(),
+            password: password(),
+          });
+          if (error) throw error;
+          alert(t("messages.checkConfirmEmail"));
+          location.href = `/${lang}`;
+        } catch (error) {
+          if (error instanceof Error) {
+            alert(error.message);
+          }
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
+      } else {
+        setPasswordMatch(false);
+        alert(t("messages.passwordMatch"));
       }
     } else {
-      setPasswordMatch(false);
-      alert(t("messages.passwordMatch"));
-    }}else {
       alert(t("messages.passwordLackRequirements"));
     }
-    };
+  };
 
   return (
     <div>
@@ -138,115 +139,117 @@ export const Auth: Component = (props) => {
           </div>
         </div>
       ) : //Else if the auth mode is sign up then return the sign up form
-      authMode() === "sign_up" ? (
-        <div class="row flex-center flex">
-          <div class="col-6 form-widget" aria-live="polite">
-            <form class="form-widget" onSubmit={handleSignUp}>
-              <div class="mb-4 flex justify-center">
-                <label class="hidden" for="email">
-                  {t("formLabels.email")}
-                </label>
-                <input
-                  id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                  type="email"
-                  placeholder={t("formLabels.email")}
-                  required
-                  value={email()}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
-                />
-              </div>
-              <div class="mb-1 flex justify-center">
-                <label for="password" class="hidden">
-                  {t("formLabels.password")}
-                </label>
-                <input
-                  id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                  type="password"
-                  placeholder={t("formLabels.password")}
-                  required
-                  value={password()}
-                  oninput={(e) => setPassword(e.currentTarget.value)}
-                  aria-describedby="pwlength"
-                />
-              </div>
-              <div class="mb-4 flex justify-center">
-                {regularExpressionPassword.test(password()) ? (
-                  <span
-                  id="pwlength"
-                  class="text-sm text-text1 dark:text-text1-DM"
-                >
-                  {t("messages.passwordValid")}
-                </span>
-                ) : (
-                  <span
-                    id="pwlength"
-                    class="text-sm text-text1 dark:text-text1-DM"
-                  >
-                    {t("messages.passwordLength")}
-                  </span>
-                )}
-              </div>
-              <div class="mb-1 flex justify-center">
-                <label for="confirm password" class="hidden">
-                  {t("formLabels.confirmPassword")}
-                </label>
-                <input
-                  id="confirm password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                  type="password"
-                  placeholder={t("formLabels.confirmPassword")}
-                  required
-                  value={confirmPassword()}
-                  oninput={(e) => setConfirmPassword(e.currentTarget.value)}
-                  aria-describedby="pwconfirm"
-                />
-              </div>
-              <div class="mb-4 flex justify-center">
-                {match() ? (
-                  ""
-                ) : (
-                  <span
-                    id="pwconfirm"
-                    class="text-sm text-text1 dark:text-text1-DM"
-                  >
-                    {t("messages.passwordMatch")}
-                  </span>
-                )}
-              </div>
-              <div class="mb-4 flex justify-center">
-                <button
-                  type="submit"
-                  class="mt-3 btn-primary dark:bg-btn1-DM"
-                  aria-live="polite"
-                  disabled={!match()}
-                >
-                  {loading() ? (
-                    <span>{t("buttons.loading")}</span>
+        authMode() === "sign_up" ? (
+          <div class="row flex-center flex">
+            <div class="col-6 form-widget" aria-live="polite">
+              <form class="form-widget" onSubmit={handleSignUp}>
+                <div class="mb-4 flex justify-center">
+                  <label class="hidden" for="email">
+                    {t("formLabels.email")}
+                  </label>
+                  <input
+                    id="email"
+                    class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                    type="email"
+                    placeholder={t("formLabels.email")}
+                    required
+                    value={email()}
+                    onChange={(e) => setEmail(e.currentTarget.value)}
+                  />
+                </div>
+                <div class="mb-1 flex justify-center">
+                  <label for="password" class="hidden">
+                    {t("formLabels.password")}
+                  </label>
+                  <input
+                    id="password"
+                    class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                    type="password"
+                    placeholder={t("formLabels.password")}
+                    required
+                    value={password()}
+                    oninput={(e) => setPassword(e.currentTarget.value)}
+                    aria-describedby="pwlength"
+                  />
+                </div>
+                <div class="mb-4 flex justify-center">
+                  {regularExpressionPassword.test(password()) ? (
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM "
+                    >
+                      {t("messages.passwordValid")}
+                    </span>
                   ) : (
-                    <span>{t("pageTitles.signUp")}</span>
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
+                    >
+                      {t("messages.passwordLength")}
+                    </span>
                   )}
-                </button>
-              </div>
-              <div class="my-2">
-                <p class="text-text1 dark:text-text1-DM">
-                  {t("messages.alreadyAccount")}
-                  <a
-                    class="text-link2 hover:underline dark:text-link2-DM"
-                    href={`/${lang}/login`}
+                </div>
+                <div class="mb-1 flex justify-center">
+                  <label for="confirm password" class="hidden">
+                    {t("formLabels.confirmPassword")}
+                  </label>
+                  <input
+                    id="confirm password"
+                    class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                    type="password"
+                    placeholder={t("formLabels.confirmPassword")}
+                    required
+                    value={confirmPassword()}
+                    oninput={(e) => setConfirmPassword(e.currentTarget.value)}
+                    aria-describedby="pwconfirm"
+                  />
+                </div>
+                <div class="mb-4 flex justify-center">
+                  {match() ? (
+                    ""
+                  ) : (
+                    <span
+                      id="pwconfirm"
+                      class="text-sm text-text1 dark:text-text1-DM"
+                    >
+                      {t("messages.passwordMatch")}
+                    </span>
+                  )}
+                </div>
+                <div class="px-10">{t("messages.clickWrap1")} <span class="font-medium">{t("pageTitles.signUp")}</span> {t("messages.clickWrap2")} <a class="text-link2-DM hover:underline">{t("pageTitles.terms")}</a> & <a class="text-link2-DM hover:underline">{t("pageTitles.privacy")}</a></div>
+                <div class="mb-4 flex justify-center">
+                  <button
+                    type="submit"
+                    class="mt-4 btn-primary dark:bg-btn1-DM"
+                    aria-live="polite"
+                    disabled={!match()}
                   >
-                    {t("buttons.signIn")}
-                  </a>
-                </p>
-              </div>
-            </form>
+                    {loading() ? (
+                      <span>{t("buttons.loading")}</span>
+                    ) : (
+                      <span>{t("pageTitles.signUp")}</span>
+                    )}
+                  </button>
+                </div>
+
+                <div class="my-2">
+                  <p class="text-text1 dark:text-text1-DM">
+                    {t("messages.alreadyAccount")}<span> </span>
+                    <a
+                      class="text-link2 hover:underline dark:text-link2-DM"
+                      href={`/${lang}/login`}
+                    >
+                      {t("buttons.signIn")}
+                    </a>
+                  </p>
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      ) : (
-        // Else return an error if it is neither auth mode
-        "Error"
-      )}
+        ) : (
+          // Else return an error if it is neither auth mode
+          "Error"
+        )}
     </div>
   );
 };

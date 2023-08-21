@@ -6,7 +6,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout>
+<Layout pageTitle={t("pageTitles.page404")}>
     <div class="flex-col place-content-center m-8 font-bold">
 	    <h1 class="text-5xl text-center m-4 text-text1 dark:text-text1-DM">{t('pageTitles.page404')}</h1>
         <h2 class="text-3xl text-center m-2 text-text1 dark:text-text1-DM">{t('messages.error404')}</h2>

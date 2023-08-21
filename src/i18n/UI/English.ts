@@ -9,7 +9,7 @@ export const English = {
     signIn: 'Sign In',
     createClientAccount: 'Create Client Account',
     editClientAccount: 'Edit Client Account',
-    viewClientAccount: 'View Client Account',
+    viewClientAccount: 'My Client Account',
     createPost: 'Create Post',
     createProviderAccount: 'Create Provider Account',
     editProviderAccount: 'Edit Provider Account',
@@ -44,7 +44,7 @@ export const English = {
 
   messages: {
     noAccount: "Don't have an account? Click here to ",
-    passwordLength: 'Password must be at least 6 characters long, contain at least one number, one uppercase letter and one of the followings special characters: !@#$%^&*',
+    passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
     passwordValid: 'Valid password',
     passwordLackRequirements: 'Password does not meet requirements',  
     passwordMatch: 'Passwords do not match',
@@ -66,6 +66,11 @@ export const English = {
     noProvider: "No Provider found.",
     translation: `Translations`,
     translations: " are provided for convenience only. The official binding language is Spanish.",
+    clickWrap1: 'By clicking',
+    clickWrap2: 'you are indicating that you have read and agree to the',
+    fetch: 'Fetch Services',
+    todoFetch: 'Todo the service dog will fetch you the services you need!',
+    mustSignIn: 'You must be signed in to view available services.',
   },
 
   formLabels: {
@@ -100,6 +105,16 @@ export const English = {
     image: 'Post Image',
     slide: 'Slide',
     providerProfileImage: 'Provider Profile Image',
+  },
+
+  homePageText: {
+    headline: "Everything you need to get the job done.",
+    subHeadline: "Providers post services. Customers search posts. Work gets done.",
+    ariaLabel: "Placeholder info image",
+  },
+
+  menus: {
+    services: 'Find Services',
   },
 
   headerData: {
@@ -196,12 +211,6 @@ productCategoryInfo:{
       { name: 'Travel', description: 'Travel Services', ariaLabel: "Travel", id: "13" },
       // Add more products as needed
     ]
-  },
-
-  homePageText: {
-    headline: "Everything you need to get the job done.",
-    subHeadline: "Providers post services. Customers search posts. Work gets done.",
-    ariaLabel: "Placeholder info image",
   },
 
 } as const;
