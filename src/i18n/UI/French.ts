@@ -55,7 +55,7 @@ export const French = {
     onlyProvider: 'Seuls les fournisseurs peuvent créer des publications.',
     signInAsProvider: "Veuillez vous connecter à un compte de fournisseur avant de publier.",
     checkEmail: "Vérifiez votre e-mail pour le lien de réinitialisation !",
-    checkConfirmEmail: 'Vérifiez votre e-mail pour le lien de confirmation !',
+    checkConfirmEmail: "Si cet e-mail n'est pas déjà enregistré, vous recevrez un lien de confirmation par e-mail.",
     signIn: "Veuillez vous connecter pour accéder à cette page.",
     createProviderAccount: "Veuillez vous connecter pour créer un profil de fournisseur.",
     createClientAccount: "Veuillez vous connecter pour créer un profil client.",
