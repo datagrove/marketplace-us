@@ -53,12 +53,21 @@ export const Auth: Component = (props) => {
         setPasswordMatch(true);
         try {
           setLoading(true);
-          const { error } = await supabase.auth.signUp({
+          const { data, error } = await supabase.auth.signUp({
             email: email(),
             password: password(),
           });
           if (error) throw error;
           alert(t("messages.checkConfirmEmail"));
+          if (data && data.user){
+            if (data.user.identities && data.user.identities.length > 0 && data.session === null) {
+              const { error } = await supabase.auth.resend({
+                type: 'signup',
+                email: email(),
+              })
+              if (error) throw error
+            }
+          }
           location.href = `/${lang}`;
         } catch (error) {
           if (error instanceof Error) {
