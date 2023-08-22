@@ -65,7 +65,7 @@ export const Auth: Component = (props) => {
                 type: 'signup',
                 email: email(),
               })
-              if (error) throw error
+              if (error) console.log(error)
             }
           }
           location.href = `/${lang}`;
