@@ -35,7 +35,6 @@ export const ClientRegistration: Component = () => {
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
-    console.log(data);
     setSession(data.session);
 
     if (session()) {
@@ -201,7 +200,6 @@ export const ClientRegistration: Component = () => {
       formData.append("image_url", imageUrl()!);
     }
     setFormData(formData);
-    console.log(formData);
   }
 
   return (

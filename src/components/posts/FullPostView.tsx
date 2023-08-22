@@ -63,7 +63,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     alert(t('messages.noPost'));
                     location.href = `/${lang}/services`
                 } else {
-                    console.log(data)
+                    // console.log(data)
                     data?.map(async (item) => {
                         productCategories.forEach(productCategories => {
                             if (item.service_category.toString() === productCategories.id) {
@@ -74,7 +74,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         item.provider_url = `/${lang}/provider/${item.provider_id}`
                     })
                     setPost(data[0]);
-                    console.log(post())
+                    // console.log(post())
                 }
             } catch (error) {
                 console.log(error);

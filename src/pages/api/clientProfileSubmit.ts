@@ -55,7 +55,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  console.log(sessionData);
 
   //Make sure we have a session
   if (!sessionData?.session) {
@@ -200,10 +199,10 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  console.log(districtId);
-  console.log(minorMunicipalityId);
-  console.log(majorMunicipalityId);
-  console.log(countryId);
+  // console.log(districtId);
+  // console.log(minorMunicipalityId);
+  // console.log(majorMunicipalityId);
+  // console.log(countryId);
 
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
@@ -214,9 +213,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
     user_id: user.id,
   };
 
-  console.log("User: " + user);
-  console.log("user role: " + user.aud);
-  console.log(locationSubmission);
+  // console.log("User: " + user);
+  // console.log("user role: " + user.aud);
+  // console.log(locationSubmission);
 
   //Insert the submission to the location table and select it back from the database
   const { error: locationError, data: location } = await supabase
