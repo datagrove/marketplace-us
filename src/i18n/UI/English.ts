@@ -105,6 +105,7 @@ export const English = {
     image: 'Post Image',
     slide: 'Slide',
     providerProfileImage: 'Provider Profile Image',
+    clientProfileImage: 'Client Profile Image',
   },
 
   homePageText: {

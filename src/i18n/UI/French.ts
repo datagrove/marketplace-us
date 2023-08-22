@@ -105,6 +105,7 @@ export const French = {
     image: 'Publier une image',
     slide: 'Diapositive',
     providerProfileImage: 'Image du profil du fournisseur',
+    clientProfileImage: "Image du profil du client",
   },
 
   homePageText: {

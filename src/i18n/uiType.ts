@@ -106,6 +106,7 @@ export interface uiObject {
     image: string,
     slide: string,
     providerProfileImage: string,
+    clientProfileImage: string,
   },
 
   homePageText: {

@@ -106,6 +106,7 @@ export const Spanish = {
     image: 'Publicar imagen',
     slide: 'Diapositiva',
     providerProfileImage: 'Imagen de perfil del proveedor',
+    clientProfileImage: "Imagen de perfil de cliente",
   },
 
   homePageText: {
