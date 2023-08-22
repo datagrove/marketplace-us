@@ -117,6 +117,15 @@ export const English = {
     services: 'Find Services',
   },
 
+  toolTips: {
+    providerPhone: 'We require all users to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number will be available to clients in order to  contact you regarding your services.',
+    clientPhone: 'We require clients to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number may be used by providers to contact you regarding quotes for requested services.',
+    firstName: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.',
+    lastName: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.',
+    displayName: "This is the name that will be displayed on your profile. If you do not provide one then your first and last name will be used for display purposes.",
+    profileImage: 'This image will be displayed on your profile and any of your posts/communications through the site.',
+  },
+
   headerData: {
     links: [
       {

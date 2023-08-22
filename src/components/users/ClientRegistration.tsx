@@ -207,8 +207,36 @@ export const ClientRegistration: Component = () => {
   return (
     <div class="">
       <form onSubmit={submit} class="">
-        <label for="FirstName" class="text-text1 dark:text-text1-DM">
-          {t("formLabels.firstName")}:
+
+        <div class="">
+          <div class="flex flex-row justify-between">
+            <label for="FirstName" class="text-text1 dark:text-text1-DM">
+              {t("formLabels.firstName")}:
+            </label>
+            <div class="group flex items-center relative mr-2">
+              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <g>
+                  <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                      C314.716,152.979,297.039,174.043,273.169,176.123z"/>
+                </g>
+              </svg>
+
+              <span
+                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                {t("toolTips.firstName")}
+              </span>
+
+            </div>
+          </div>
           <input
             type="text"
             id="FirstName"
@@ -216,10 +244,37 @@ export const ClientRegistration: Component = () => {
             class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
-        </label>
+        </div>
 
-        <label for="LastName" class="text-text1 dark:text-text1-DM">
-          {t("formLabels.lastName")}:
+        <div class="">
+          <div class="flex flex-row justify-between">
+            <label for="LastName" class="text-text1 dark:text-text1-DM">
+              {t("formLabels.lastName")}:
+            </label>
+            <div class="group flex items-center relative mr-2">
+              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <g>
+                  <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                      C314.716,152.979,297.039,174.043,273.169,176.123z"/>
+                </g>
+              </svg>
+
+              <span
+                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                {t("toolTips.lastName")}
+              </span>
+
+            </div>
+          </div>
           <input
             type="text"
             id="LastName"
@@ -227,20 +282,74 @@ export const ClientRegistration: Component = () => {
             class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
-        </label>
+        </div>
 
-        <label for="DisplayName" class="text-text1 dark:text-text1-DM">
-          {t("formLabels.displayName")}
+        <div class="">
+          <div class="flex flex-row justify-between">
+            <label for="DisplayName" class="text-text1 dark:text-text1-DM">
+              {t("formLabels.displayName")}
+            </label>
+            <div class="group flex items-center relative mr-2">
+              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <g>
+                  <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                      C314.716,152.979,297.039,174.043,273.169,176.123z"/>
+                </g>
+              </svg>
+
+              <span
+                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                {t("toolTips.displayName")}
+              </span>
+
+            </div>
+          </div>
           <input
             type="text"
             id="DisplayName"
             class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="DisplayName"
           />
-        </label>
+        </div>
 
-        <label for="Phone" class="text-text1 dark:text-text1-DM">
-          {t("formLabels.phone")}:
+        <div class="">
+          <div class="flex flex-row justify-between">
+            <label for="Phone" class="text-text1 dark:text-text1-DM">
+              {t("formLabels.phone")}:
+            </label>
+            <div class="group flex items-center relative mr-2">
+              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <g>
+                  <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                      C314.716,152.979,297.039,174.043,273.169,176.123z"/>
+                </g>
+              </svg>
+
+              <span
+                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                {t("toolTips.clientPhone")}
+              </span>
+
+            </div>
+          </div>
           <input
             type="text"
             id="Phone"
@@ -248,7 +357,7 @@ export const ClientRegistration: Component = () => {
             name="Phone"
             required
           />
-        </label>
+        </div>
 
         <label for="country" class="text-text1 dark:text-text1-DM">
           {t("formLabels.country")}:
@@ -305,13 +414,41 @@ export const ClientRegistration: Component = () => {
         </label>
 
         <div class="mb-4 flex justify-center">
-          <UserImage
-            url={imageUrl()}
-            size={150}
-            onUpload={(e: Event, url: string) => {
-              setImageUrl(url);
-            }}
-          />
+          <div class="">
+            <div class="flex flex-row justify-end">
+              <div class="group flex items-center relative mr-2">
+                <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512">
+                  <g>
+                    <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                      C314.716,152.979,297.039,174.043,273.169,176.123z"/>
+                  </g>
+                </svg>
+
+                <span
+                  class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                  {t("toolTips.profileImage")}
+                </span>
+
+              </div>
+            </div>
+            <UserImage
+              url={imageUrl()}
+              size={150}
+              onUpload={(e: Event, url: string) => {
+                setImageUrl(url);
+              }}
+            />
+          </div>
+
         </div>
 
         <div class="flex justify-center">

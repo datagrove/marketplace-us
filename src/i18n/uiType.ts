@@ -118,6 +118,15 @@ export interface uiObject {
     services: string,
   },
 
+  toolTips: {
+    providerPhone: string,
+    clientPhone: string,
+    firstName: string,
+    lastName: string,
+    displayName: string,
+    profileImage: string,
+  },
+
   headerData: {
     links: [
       {
