@@ -118,6 +118,15 @@ export const Spanish = {
     services: 'Buscar Servicios',
   },
 
+  toolTips: {
+    providerPhone: 'Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número estará a disposición de los clientes para contactarlo con respecto a sus servicios.',
+    clientPhone: "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
+    firstName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
+    lastName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
+    displayName: "Este es el nombre que se mostrará en su perfil. Si no proporciona uno, su nombre y apellido se utilizarán con fines de visualización.",
+    profileImage: "Esta imagen se mostrará en su perfil y en cualquiera de sus publicaciones/comunicaciones a través del sitio.",
+  },
+
   headerData: {
     links: [
       {

@@ -232,7 +232,7 @@ export const ClientRegistration: Component = () => {
               <span
                 class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
-                This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.
+                {t("toolTips.firstName")}
               </span>
 
             </div>
@@ -270,7 +270,7 @@ export const ClientRegistration: Component = () => {
               <span
                 class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
-                This should be your legal last name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.
+                {t("toolTips.lastName")}
               </span>
 
             </div>
@@ -308,7 +308,7 @@ export const ClientRegistration: Component = () => {
               <span
                 class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
-                This is the name that will be displayed on your profile. If you do not provide one then your first and last name will be used for display purposes.
+                {t("toolTips.displayName")}
               </span>
 
             </div>
@@ -347,7 +347,7 @@ export const ClientRegistration: Component = () => {
               <span
                 class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
-                We require clients to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number may be used by providers to contact you regarding quotes for requested services.
+                {t("toolTips.clientPhone")}
               </span>
 
             </div>
@@ -437,7 +437,7 @@ export const ClientRegistration: Component = () => {
               <span
                 class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
-                This image will be displayed on your profile and any of your posts/communications through the site.
+                {t("toolTips.profileImage")}
               </span>
 
             </div>
