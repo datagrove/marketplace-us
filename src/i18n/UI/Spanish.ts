@@ -55,7 +55,7 @@ export const Spanish = {
     onlyProvider: 'Solo las proveedoras pueden crear publicaciones.',
     signInAsProvider: 'Inicie sesión en una cuenta de proveedor antes de publicar.',
     checkEmail: "¡Revise su correo electrónico para ver el enlace de reinicio!",
-    checkConfirmEmail: '¡Revisa tu correo electrónico para el link de confirmación!',
+    checkConfirmEmail: 'Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico.',
     signIn: "Inicia sesión para acceder a esta página",
     createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
     createClientAccount: "Inicie sesión para crear un perfil de cliente",

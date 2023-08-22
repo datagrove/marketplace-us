@@ -55,7 +55,7 @@ export const English = {
     onlyProvider: "Only providers can create posts.",
     signInAsProvider: "Please sign in to a provider account before posting.",
     checkEmail: "Check your email for the reset link!",
-    checkConfirmEmail: 'Check your email for the confirmation link!',
+    checkConfirmEmail: 'If this email is not already registered, you will receive an email confirmation link.',
     signIn: "Please sign in to access this page.",
     createProviderAccount: "Please sign in to create a provider profile.",
     createClientAccount: "Please sign in to create a client profile.",
