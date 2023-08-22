@@ -133,7 +133,6 @@ export const ClientProfileView: Component = () => {
                                             src={clientImage()}
                                             class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
                                             alt={`${t('postLabels.clientProfileImage')} 1`} /> 
-                                            {/* TODO: fix internationalization */}
                                     </div>
                                 </Show>
                             </div>
@@ -201,7 +200,6 @@ export const ClientProfileView: Component = () => {
                                     src={clientImage()}
                                     class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
                                     alt={`${t('postLabels.clientProfileImage')} 1`} />
-                                    {/* TODO: Fix Internationalization */}
                             </div>
                         </Show>
                     </div>
