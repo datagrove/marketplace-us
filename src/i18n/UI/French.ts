@@ -117,6 +117,15 @@ export const French = {
     services: 'Trouver des Services',
   },
 
+  toolTips: {
+    providerPhone: "Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro sera mis à la disposition des clients afin de vous contacter au sujet de vos services.",
+    clientPhone: "Nous demandons aux clients de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro peut être utilisé par les fournisseurs pour vous contacter concernant les devis des services demandés.",
+    firstName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
+    lastName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
+    displayName: "C'est le nom qui sera affiché sur votre profil. Si vous n'en fournissez pas, votre prénom et votre nom seront utilisés à des fins d'affichage.",
+    profileImage: "Cette image sera affichée sur votre profil et sur toutes vos publications/communications via le site.",
+  },
+
   headerData: {
     links: [
       {
@@ -135,12 +144,29 @@ export const French = {
 
   footerData: {
     links: [
+      // {
+      //   title: "Produit",
+      //   links: [
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //   ],
+      // },
+      // {
+      //   title: "Plateforme",
+      //   links: [
+      //     // { text: string, href: string },
+      //     // { text: string, href: string },
+      //   ],
+      // },
       {
-        title: "Produit",
+        // title: "Soutien",
         links: [
-          // { text: string, href: string },
-          // { text: string, href: string },
-          // { text: string, href: string },
+          { text: "Documentation", href: '#' },
           // { text: string, href: string },
           // { text: string, href: string },
           // { text: string, href: string },
@@ -148,26 +174,9 @@ export const French = {
         ],
       },
       {
-        title: "Plateforme",
+        // title: "Entreprise",
         links: [
-          // { text: string, href: string },
-          // { text: string, href: string },
-        ],
-      },
-      {
-        title: "Soutien",
-        links: [
-          // { text: string, href: string },
-          // { text: string, href: string },
-          // { text: string, href: string },
-          // { text: string, href: string },
-          // { text: string, href: string },
-        ],
-      },
-      {
-        title: "Entreprise",
-        links: [
-          // { text: string, href: string },
+          { text: "À Propos", href: '#'},
           // { text: string, href: string },
           // { text: string, href: string },
           // { text: string, href: string },
@@ -179,18 +188,20 @@ export const French = {
     ],
     secondaryLinks: [
       { text: "Conditions ", href: 'terms' },
-      { text: "politique de confidentialité", href: 'privacy' },
+      { text: "Politique de Confidentialité", href: 'privacy' },
     ],
     socialLinks: [
-      { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
+      // { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
-      { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
+      // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
-    <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-    Faite par <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> Tous les droits sont réservés.
+    <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover rounded-sm"></span>
+    <span class="text-text1-DM">Faite par</span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> Tous les droits sont réservés.</span>
   `,
   },
 

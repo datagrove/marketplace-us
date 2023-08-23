@@ -62,7 +62,6 @@ export const ViewProviderPosts: Component = () => {
         delete item.service_category
       })
       setPosts(data);
-      console.log("got posts", posts());
     }
   });
   return (

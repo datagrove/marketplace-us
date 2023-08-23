@@ -72,11 +72,10 @@ export const ProviderProfileView: Component = () => {
     }
 
     createEffect(async () => {
-        console.log("downloading images")
         if (provider() !== undefined) {
             if (provider()?.image_url === undefined || provider()?.image_url === null) {
-                console.log("No Image")
-                console.log(providerImage())
+                // console.log("No Image")
+                // console.log(providerImage())
             } else {
                 await downloadImage(provider()?.image_url!)
             }

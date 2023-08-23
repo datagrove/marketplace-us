@@ -118,6 +118,15 @@ export const Spanish = {
     services: 'Buscar Servicios',
   },
 
+  toolTips: {
+    providerPhone: 'Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número estará a disposición de los clientes para contactarlo con respecto a sus servicios.',
+    clientPhone: "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
+    firstName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
+    lastName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
+    displayName: "Este es el nombre que se mostrará en su perfil. Si no proporciona uno, su nombre y apellido se utilizarán con fines de visualización.",
+    profileImage: "Esta imagen se mostrará en su perfil y en cualquiera de sus publicaciones/comunicaciones a través del sitio.",
+  },
+
   headerData: {
     links: [
       {
@@ -136,29 +145,29 @@ export const Spanish = {
 
   footerData: {
     links: [
+      // {
+      //   title: 'Producto',
+      //   links: [
+      //     // { text: 'Features', href: '#' },
+      //     // { text: 'Security', href: '#' },
+      //     // { text: 'Team', href: '#' },
+      //     // { text: 'Enterprise', href: '#' },
+      //     // { text: 'Customer stories', href: '#' },
+      //     // { text: 'Pricing', href: '#' },
+      //     // { text: 'Resources', href: '#' },
+      //   ],
+      // },
+      // {
+      //   title: 'Plataforma',
+      //   links: [
+      //     // { text: 'Developer API', href: '#' },
+      //     // { text: 'Partners', href: '#' },
+      //   ],
+      // },
       {
-        title: 'Producto',
+        // title: 'Apoyo',
         links: [
-          // { text: 'Features', href: '#' },
-          // { text: 'Security', href: '#' },
-          // { text: 'Team', href: '#' },
-          // { text: 'Enterprise', href: '#' },
-          // { text: 'Customer stories', href: '#' },
-          // { text: 'Pricing', href: '#' },
-          // { text: 'Resources', href: '#' },
-        ],
-      },
-      {
-        title: 'Plataforma',
-        links: [
-          // { text: 'Developer API', href: '#' },
-          // { text: 'Partners', href: '#' },
-        ],
-      },
-      {
-        title: 'Apoyo',
-        links: [
-          // { text: 'Docs', href: '#' },
+          { text: 'Documentación', href: '#' },
           // { text: 'Community Forum', href: '#' },
           // { text: 'Professional Services', href: '#' },
           // { text: 'Skills', href: '#' },
@@ -166,7 +175,7 @@ export const Spanish = {
         ],
       },
       {
-        title: 'Empresa',
+        // title: 'Empresa',
         links: [
           { text: 'Acerca', href: '#' },
           // { text: 'Blog', href: '#' },
@@ -180,17 +189,19 @@ export const Spanish = {
     ],
     secondaryLinks: [
       { text: 'Términos', href: 'terms' },
-      { text: 'política de privacidad', href: 'privacy' },
+      { text: 'Política de Privacidad', href: 'privacy' },
     ],
     socialLinks: [
-      { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
+      // { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
-      { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
+      // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1' },
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Hecho por <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> Todos los derechos reservados.`,
+      <span class="text-text1-DM">Hecho por </span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> Todos los derechos reservados.</span>`,
   },
 
   productCategoryInfo: {

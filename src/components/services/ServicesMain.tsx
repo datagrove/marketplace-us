@@ -25,8 +25,6 @@ if (user.session === null || user.session === undefined) {
 }
 
 const { data, error } = await supabase.from('providerposts').select('*');
-console.log(data)
-console.log(productCategories)
 
 data?.map(item => {
     productCategories.forEach(productCategories => {
@@ -37,7 +35,6 @@ data?.map(item => {
     delete item.service_category
 })
 
-console.log(data)
 
 
 interface ProviderPost {
