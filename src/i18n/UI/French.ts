@@ -174,7 +174,7 @@ export const French = {
         ],
       },
       {
-        title: "Entreprise",
+        // title: "Entreprise",
         links: [
           { text: "À Propos", href: '#'},
           // { text: string, href: string },
