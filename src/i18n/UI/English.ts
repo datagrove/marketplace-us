@@ -199,8 +199,8 @@ export const English = {
       { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: '#'},
     ],
     footNote: `
-      <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
+      <span class="w-5 h-5 md:w-6 md:h-6 bg-cover rounded-sm text-text1-DM"></span>
+      <span class="text-text1-DM">Made by</span><a class="text-link2-DM hover:underline dark:text-link2-DM" href="https://datagrove.com/"> Datagrove </a><span class="text-text1-DM"> All rights reserved.</span>
     `,
   },
 
