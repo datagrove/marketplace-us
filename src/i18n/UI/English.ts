@@ -201,7 +201,7 @@ export const English = {
     ],
     footNote: `
       <span class="w-5 h-5 md:w-6 md:h-6 bg-cover rounded-sm text-text1-DM"></span>
-      <span class="text-text1-DM">Made by</span><a class="text-link2-DM hover:underline dark:text-link2-DM" href="https://datagrove.com/"> Datagrove. </a><span class="text-text1-DM"> All rights reserved.</span>
+      <span class="text-text1-DM">Made by</span><a class="text-link2-DM hover:underline dark:text-link2-DM" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> All rights reserved.</span>
     `,
   },
 
