@@ -38,7 +38,7 @@ export const ProviderProfileView: Component = () => {
   const [provider, setProvider] = createSignal<Provider>();
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [providerImage, setProviderImage] = createSignal<string>("");
-  const [editMode, setEditMode] = createSignal<boolean>(false);
+  const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
 
   createEffect(() => {
@@ -141,7 +141,7 @@ export const ProviderProfileView: Component = () => {
             let length = municipalitySelect?.length;
 
             for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "-1") {
+              if (municipalitySelect.options[i].value !== "") {
                 municipalitySelect.remove(i);
               }
             }
@@ -182,7 +182,7 @@ export const ProviderProfileView: Component = () => {
               let length = municipalitySelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "-1") {
+                if (municipalitySelect.options[i].value !== "") {
                   municipalitySelect.remove(i);
                 }
               }
@@ -228,7 +228,7 @@ export const ProviderProfileView: Component = () => {
               let length = districtSelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "-1") {
+                if (districtSelect.options[i].value !== "") {
                   districtSelect.remove(i);
                 }
               }
@@ -258,9 +258,45 @@ export const ProviderProfileView: Component = () => {
       }
 
       //If the user is not signed in then tell them to sign in and send them to the login page
-    } else {
     }
   });
+
+  const required = (e: Event) => {
+    e.preventDefault();
+
+    const country = document.getElementById("country") as HTMLSelectElement;
+    const majorMunicipality = document.getElementById(
+      "MajorMunicipality"
+    ) as HTMLSelectElement;
+    const minorMunicipality = document.getElementById(
+      "MinorMunicipality"
+    ) as HTMLSelectElement;
+    const governingDistrict = document.getElementById(
+      "GoverningDistrict"
+    ) as HTMLSelectElement;
+
+    if (
+      country.value !== "" ||
+      majorMunicipality.value !== "" ||
+      minorMunicipality.value !== "" ||
+      governingDistrict.value !== ""
+    ) {
+      country.required = true;
+      majorMunicipality.required = true;
+      minorMunicipality.required = true;
+      governingDistrict.required = true;
+    } else if (
+      country.value === "" &&
+      majorMunicipality.value === "" &&
+      minorMunicipality.value === "" &&
+      governingDistrict.value === ""
+    ) {
+      country.required = false;
+      majorMunicipality.required = false;
+      minorMunicipality.required = false;
+      governingDistrict.required = false;
+    }
+  };
 
   function submit(e: SubmitEvent) {
     e.preventDefault();
@@ -291,7 +327,10 @@ export const ProviderProfileView: Component = () => {
             {/* Container for Mobile View */}
             <div class="container">
               {/* Profile Information for Mobile View */}
-              <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+              <details
+                class="bg-background1 dark:bg-black shadow rounded group md:hidden"
+                open
+              >
                 <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                   <h2 class="flex flex-1 p-4 font-bold">
                     {t("formLabels.profileInfo")}
@@ -354,7 +393,6 @@ export const ProviderProfileView: Component = () => {
                       name="FirstName"
                       class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       value={provider()?.first_name}
-                      required
                     />
                   </Show>
 
@@ -376,7 +414,6 @@ export const ProviderProfileView: Component = () => {
                       name="LastName"
                       class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       value={provider()?.last_name}
-                      required
                     />
                   </Show>
 
@@ -448,7 +485,6 @@ export const ProviderProfileView: Component = () => {
                       class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       name="Phone"
                       value={provider()?.provider_phone}
-                      required
                     />
                   </Show>
 
@@ -468,10 +504,18 @@ export const ProviderProfileView: Component = () => {
                       id="country"
                       class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       name="country"
-                      required
+                      oninput={required}
                     >
-                      <option value="-1">-</option>
+                      <option value="">-</option>
                     </select>
+                    <div>
+                      <label class="text-text1 dark:text-text1-DM">
+                        {t("formLabels.country")}
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                          {provider()?.country}
+                        </p>
+                      </label>
+                    </div>
                   </Show>
 
                   <br />
@@ -495,10 +539,18 @@ export const ProviderProfileView: Component = () => {
                       id="MajorMunicipality"
                       class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       name="MajorMunicipality"
-                      required
+                      oninput={required}
                     >
-                      <option value="-1">-</option>
+                      <option value="">-</option>
                     </select>
+                    <div>
+                      <label class="text-text1 dark:text-text1-DM">
+                        {t("formLabels.majorMunicipality")}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                          {provider()?.major_municipality}
+                        </p>
+                      </label>
+                    </div>
                   </Show>
 
                   <br />
@@ -522,10 +574,18 @@ export const ProviderProfileView: Component = () => {
                       id="MinorMunicipality"
                       class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       name="MinorMunicipality"
-                      required
+                      oninput={required}
                     >
-                      <option value="-1">-</option>
+                      <option value="">-</option>
                     </select>
+                    <div>
+                      <label class="text-text1 dark:text-text1-DM">
+                        {t("formLabels.minorMunicipality")}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                          {provider()?.minor_municipality}
+                        </p>
+                      </label>
+                    </div>
                   </Show>
 
                   <br />
@@ -546,24 +606,31 @@ export const ProviderProfileView: Component = () => {
                       id="GoverningDistrict"
                       class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                       name="GoverningDistrict"
-                      required
+                      oninput={required}
                     >
-                      <option value="-1">-</option>
+                      <option value="">-</option>
                     </select>
+                    <div>
+                      <label class="text-text1 dark:text-text1-DM">
+                        {t("formLabels.governingDistrict")}:
+                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                          {provider()?.governing_district}
+                        </p>
+                      </label>
+                    </div>
                   </Show>
-                  <div class="mb-2 flex justify-center items-center align-items-center">
-                  <Show when={editMode() === true}>
-                    <button
-                      class="btn-primary"
-                      type="submit"
-                      form="editProfile"
-                    >
-                      {t("buttons.saveProfile")}
-                    </button>
-                  </Show>
+                  <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
+                    <Show when={editMode() === true}>
+                      <button
+                        class="btn-primary"
+                        type="submit"
+                        form="editProfile"
+                      >
+                        {t("buttons.saveProfile")}
+                      </button>
+                    </Show>
+                  </div>
                 </div>
-                </div>
-                
               </details>
 
               {/* View Posts for Mobile View */}
@@ -642,7 +709,6 @@ export const ProviderProfileView: Component = () => {
                   name="FirstName"
                   class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   value={provider()?.first_name}
-                  required
                 />
               </Show>
 
@@ -664,7 +730,6 @@ export const ProviderProfileView: Component = () => {
                   name="LastName"
                   class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   value={provider()?.last_name}
-                  required
                 />
               </Show>
 
@@ -733,7 +798,6 @@ export const ProviderProfileView: Component = () => {
                   class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   name="Phone"
                   value={provider()?.provider_phone}
-                  required
                 />
               </Show>
 
@@ -753,9 +817,9 @@ export const ProviderProfileView: Component = () => {
                   id="country"
                   class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   name="country"
-                  required
+                  oninput={required}
                 >
-                  <option value="-1">-</option>
+                  <option value="">-</option>
                 </select>
               </Show>
 
@@ -780,9 +844,9 @@ export const ProviderProfileView: Component = () => {
                   id="MajorMunicipality"
                   class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   name="MajorMunicipality"
-                  required
+                  oninput={required}
                 >
-                  <option value="-1">-</option>
+                  <option value="">-</option>
                 </select>
               </Show>
 
@@ -807,9 +871,9 @@ export const ProviderProfileView: Component = () => {
                   id="MinorMunicipality"
                   class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   name="MinorMunicipality"
-                  required
+                  oninput={required}
                 >
-                  <option value="-1">-</option>
+                  <option value="">-</option>
                 </select>
               </Show>
 
@@ -831,9 +895,9 @@ export const ProviderProfileView: Component = () => {
                   id="GoverningDistrict"
                   class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                   name="GoverningDistrict"
-                  required
+                  oninput={required}
                 >
-                  <option value="-1">-</option>
+                  <option value="">-</option>
                 </select>
               </Show>
             </div>
