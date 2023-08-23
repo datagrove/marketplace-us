@@ -38,7 +38,6 @@ export const ViewProviderPosts: Component = () => {
     console.log("User Error: " + UserError.message);
   } else {
     setSession(User.session);
-    console.log(User);
   }
 
   // get posts from supabase that match with the user id and set them to posts. After that render them through ViewCard.
@@ -63,7 +62,6 @@ export const ViewProviderPosts: Component = () => {
         delete item.service_category
       })
       setPosts(data);
-      console.log("got posts", posts());
     }
   });
   return (

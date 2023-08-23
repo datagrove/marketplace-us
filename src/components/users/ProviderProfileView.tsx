@@ -60,9 +60,7 @@ export const ProviderProfileView: Component = () => {
                     alert(t('messages.noProvider'));
                     location.href = `/${lang}/services`
                 } else {
-                    console.log(data)
                     setProvider(data[0]);
-                    console.log(provider())
                 }
             } catch (error) {
                 console.log(error);
@@ -74,11 +72,10 @@ export const ProviderProfileView: Component = () => {
     }
 
     createEffect(async () => {
-        console.log("downloading images")
         if (provider() !== undefined) {
             if (provider()?.image_url === undefined || provider()?.image_url === null) {
-                console.log("No Image")
-                console.log(providerImage())
+                // console.log("No Image")
+                // console.log(providerImage())
             } else {
                 await downloadImage(provider()?.image_url!)
             }

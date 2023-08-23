@@ -39,8 +39,7 @@ export const ViewCard: Component<Props> = (props) => {
           return post;
         })
       );
-      console.log("Updated Posts:")
-      console.log(updatedPosts)
+      
       setNewPosts(updatedPosts);
     };
   });

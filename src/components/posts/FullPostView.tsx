@@ -63,7 +63,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                     alert(t('messages.noPost'));
                     location.href = `/${lang}/services`
                 } else {
-                    console.log(data)
                     data?.map(async (item) => {
                         productCategories.forEach(productCategories => {
                             if (item.service_category.toString() === productCategories.id) {
@@ -74,7 +73,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                         item.provider_url = `/${lang}/provider/${item.provider_id}`
                     })
                     setPost(data[0]);
-                    console.log(post())
                 }
             } catch (error) {
                 console.log(error);
@@ -86,10 +84,8 @@ export const ViewFullPost: Component<Props> = (props) => {
     }
 
     createEffect(async () => {
-        console.log("downloading images")
         if (post() !== undefined) {
             if (post()?.image_urls === undefined || post()?.image_urls === null) {
-                console.log("No Images")
             } else {
                 await downloadImages(post()?.image_urls!)
             }
@@ -128,7 +124,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     function showSlide(n: number) {
         let i;
         const slides = document.getElementsByClassName("slide");
-        console.log(slides)
+        // console.log(slides)
         const dots = document.getElementsByClassName("dot");
 
         if (n > slides.length) {
