@@ -191,11 +191,13 @@ export const French = {
       { text: "Politique de Confidentialité", href: 'privacy' },
     ],
     socialLinks: [
-      { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
+      // { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
-      { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
+      // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: '#'},
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
     <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover rounded-sm"></span>
