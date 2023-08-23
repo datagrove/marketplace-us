@@ -51,7 +51,6 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
         delete item.service_category
       })
       setPosts(data);
-      console.log("got posts", posts());
     }
   });
   return (

@@ -17,7 +17,6 @@ export const AuthMode: Component = () => {
   createEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
       currentSession.set(session);
-      console.log(authMode());
     });
 
     if (useStore(currentSession)() === null) {

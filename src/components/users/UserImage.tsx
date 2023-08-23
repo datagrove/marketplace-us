@@ -71,7 +71,6 @@ const UserImage: Component<Props> = (props) => {
 
         if (error) {
           console.log("supabase errror: " + error.message);
-          console.log(error)
         } else {
           console.log("deleted images", [props.url!]);
           setImageUrl(null);

@@ -30,7 +30,6 @@ export const ProviderProfileButton: Component = () => {
           .from("providers")
           .select("*")
           .eq("user_id", user()!.user.id);
-        console.log(provider);
         setHidden("hidden");
 
         if (!provider) {
@@ -39,7 +38,6 @@ export const ProviderProfileButton: Component = () => {
         if (providerError) {
           console.log("Error: " + providerError.message);
         } else if (!provider.length) {
-          console.log("User is not a providerrrrrrrr");
           alert(t("messages.viewProviderAccount"));
           location.href = `/${lang}/provider/createaccount`;
         } else {
@@ -50,7 +48,7 @@ export const ProviderProfileButton: Component = () => {
       console.log(error);
     }
   };
-  console.log(ProviderProfileLink);
+  // console.log(ProviderProfileLink);
   return (
     <div>
       <form onSubmit={providerRedirect}>
