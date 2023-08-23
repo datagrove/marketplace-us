@@ -197,6 +197,7 @@ export interface uiObject {
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
+      { ariaLabel: string, icon: string, href: string },
     ],
     footNote: string,
   },
