@@ -148,29 +148,29 @@ export const Spanish = {
 
   footerData: {
     links: [
+      // {
+      //   title: 'Producto',
+      //   links: [
+      //     // { text: 'Features', href: '#' },
+      //     // { text: 'Security', href: '#' },
+      //     // { text: 'Team', href: '#' },
+      //     // { text: 'Enterprise', href: '#' },
+      //     // { text: 'Customer stories', href: '#' },
+      //     // { text: 'Pricing', href: '#' },
+      //     // { text: 'Resources', href: '#' },
+      //   ],
+      // },
+      // {
+      //   title: 'Plataforma',
+      //   links: [
+      //     // { text: 'Developer API', href: '#' },
+      //     // { text: 'Partners', href: '#' },
+      //   ],
+      // },
       {
-        title: 'Producto',
+        // title: 'Apoyo',
         links: [
-          // { text: 'Features', href: '#' },
-          // { text: 'Security', href: '#' },
-          // { text: 'Team', href: '#' },
-          // { text: 'Enterprise', href: '#' },
-          // { text: 'Customer stories', href: '#' },
-          // { text: 'Pricing', href: '#' },
-          // { text: 'Resources', href: '#' },
-        ],
-      },
-      {
-        title: 'Plataforma',
-        links: [
-          // { text: 'Developer API', href: '#' },
-          // { text: 'Partners', href: '#' },
-        ],
-      },
-      {
-        title: 'Apoyo',
-        links: [
-          // { text: 'Docs', href: '#' },
+          { text: 'Documentación', href: '#' },
           // { text: 'Community Forum', href: '#' },
           // { text: 'Professional Services', href: '#' },
           // { text: 'Skills', href: '#' },
@@ -178,7 +178,7 @@ export const Spanish = {
         ],
       },
       {
-        title: 'Empresa',
+        // title: 'Empresa',
         links: [
           { text: 'Acerca', href: '#' },
           // { text: 'Blog', href: '#' },
@@ -192,7 +192,7 @@ export const Spanish = {
     ],
     secondaryLinks: [
       { text: 'Términos', href: 'terms' },
-      { text: 'política de privacidad', href: 'privacy' },
+      { text: 'Política de Privacidad', href: 'privacy' },
     ],
     socialLinks: [
       { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
@@ -202,7 +202,7 @@ export const Spanish = {
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
     ],
     footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Hecho por <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> Todos los derechos reservados.`,
+      <span class="text-text1-DM">Hecho por </span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove. </a><span class="text-text1-DM">Todos los derechos reservados.</span>`,
   },
 
   productCategoryInfo: {
