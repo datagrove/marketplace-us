@@ -40,6 +40,7 @@ export const Spanish = {
     delete: 'Borrar',
     contact: 'Correo electrónico',
     phone: 'Llamada',
+    saveProfile: 'Guardar Perfil',
   },
 
   messages: {
@@ -72,6 +73,7 @@ export const Spanish = {
     fetch: 'Obtener Servicios',
     todoFetch: '¡Todo el perro de servicio te traerá los servicios que necesitas!',
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
+    profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
   },
 
   formLabels: {

@@ -40,6 +40,7 @@ export interface uiObject {
     delete: string,
     contact: string,
     phone: string,
+    saveProfile: string,
   },
 
   messages: {
@@ -71,6 +72,7 @@ export interface uiObject {
     fetch: string,
     todoFetch: string,
     mustSignIn: string,
+    profileEdits: string,
   },
 
   formLabels: {

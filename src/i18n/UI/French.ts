@@ -40,6 +40,7 @@ export const French = {
     delete: "Supprimer",
     contact: 'E-mail',
     phone: 'Appel',
+    saveProfile: "Enregistrer le profil",
   },
 
   messages: {
@@ -71,6 +72,7 @@ export const French = {
     fetch: 'Récupérer des services',
     todoFetch: "Todo le chien d'assistance ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
+    profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
   },
 
   formLabels: {

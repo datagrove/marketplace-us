@@ -40,6 +40,7 @@ export const English = {
     delete: 'Delete',
     contact: 'Email',
     phone: 'Call',
+    saveProfile: 'Save Profile',
   },
 
   messages: {
@@ -71,6 +72,7 @@ export const English = {
     fetch: 'Fetch Services',
     todoFetch: 'Todo the service dog will fetch you the services you need!',
     mustSignIn: 'You must be signed in to view available services.',
+    profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
   },
 
   formLabels: {
