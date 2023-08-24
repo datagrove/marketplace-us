@@ -33,7 +33,6 @@ export const ClientRegistration: Component = () => {
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [phone, setPhone] = createSignal<string>("");
-  const [meetsRequirements,setMeetsRequirements] = createSignal<number>(0);
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -197,7 +196,7 @@ export const ClientRegistration: Component = () => {
 
   function submit(e: SubmitEvent) {
     e.preventDefault();
-
+    // this might not be the best way to do this but it works and we can also have more control over the form input data
     if(regularExpressionPhone.test(phone())){
 
       const formData = new FormData(e.target as HTMLFormElement);
@@ -373,14 +372,14 @@ export const ClientRegistration: Component = () => {
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM "
                     >
-                      {/* {t("messages.passwordValid")} */ "Correct Phone Number"} 
+                      {t("messages.phoneValid")}  
                     </span>
                   ) : (
                     <span
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
                     >
-                      {"Phone number must have 8 digits"}
+                      {t("messages.phoneLackRequirements")}
                     </span>
                   )}
         </div>

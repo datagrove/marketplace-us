@@ -47,6 +47,8 @@ export const English = {
     passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
     passwordValid: 'Valid password',
     passwordLackRequirements: 'Password does not meet requirements',  
+    phoneLackRequirements: 'Phone number must be 8 digits long',
+    phoneValid: 'Valid phone number',
     passwordMatch: 'Passwords do not match',
     passwordReset: 'Password Reset',
     forgotPassword: 'Forgot your password? Click here to',

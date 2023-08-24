@@ -47,6 +47,8 @@ export interface uiObject {
     passwordLength: string,
     passwordValid: string,
     passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
     passwordMatch: string,
     passwordReset: string,
     forgotPassword: string,

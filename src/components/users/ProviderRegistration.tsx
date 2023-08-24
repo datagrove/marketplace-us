@@ -328,14 +328,14 @@ export const ProviderRegistration: Component = () => {
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM "
                     >
-                      {/* {t("messages.passwordValid")} */ "Correct Phone Number"} 
+                      {t("messages.phoneValid")}  
                     </span>
                   ) : (
                     <span
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
                     >
-                      {"Phone number must have 8 digits"}
+                        {t("messages.phoneLackRequirements")}
                     </span>
                   )}
         </div>
