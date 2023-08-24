@@ -177,7 +177,7 @@ export const French = {
         ],
       },
       {
-        title: "Entreprise",
+        // title: "Entreprise",
         links: [
           { text: "À Propos", href: '#'},
           // { text: string, href: string },
@@ -194,15 +194,17 @@ export const French = {
       { text: "Politique de Confidentialité", href: 'privacy' },
     ],
     socialLinks: [
-      { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
+      // { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
-      { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
+      // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
     <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover rounded-sm"></span>
-    <span class="text-text1-DM">Faite par</span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove. </a><span class="text-text1-DM">Tous les droits sont réservés.</span>
+    <span class="text-text1-DM">Faite par</span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> Tous les droits sont réservés.</span>
   `,
   },
 

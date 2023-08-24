@@ -148,45 +148,45 @@ export interface uiObject {
 
   footerData: {
     links: [
+      // {
+      //   title: string,
+      //   links: [
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //   ],
+      // },
+      // {
+      //   title: string,
+      //   links: [
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //   ],
+      // },
       {
-        title: string,
+        // title: string,
         links: [
           { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
       {
-        title: string,
+        // title: string,
         links: [
           { text: string, href: string },
-          { text: string, href: string },
-        ],
-      },
-      {
-        title: string,
-        links: [
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-        ],
-      },
-      {
-        title: string,
-        links: [
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
     ],
@@ -195,9 +195,10 @@ export interface uiObject {
       { text: string, href: string },
     ],
     socialLinks: [
+      // { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
-      { ariaLabel: string, icon: string, href: string },
+      // { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },

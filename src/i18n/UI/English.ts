@@ -198,12 +198,13 @@ export const English = {
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
-      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: '#'},
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
       <span class="w-5 h-5 md:w-6 md:h-6 bg-cover rounded-sm text-text1-DM"></span>
-      <span class="text-text1-DM">Made by</span><a class="text-link2-DM hover:underline dark:text-link2-DM" href="https://datagrove.com/"> Datagrove. </a><span class="text-text1-DM"> All rights reserved.</span>
+      <span class="text-text1-DM">Made by</span><a class="text-link2-DM hover:underline dark:text-link2-DM" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> All rights reserved.</span>
     `,
   },
 
