@@ -44,6 +44,8 @@ export interface uiObject {
 
   messages: {
     noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
     passwordLength: string,
     passwordValid: string,
     passwordLackRequirements: string, 

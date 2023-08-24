@@ -44,6 +44,8 @@ export const English = {
 
   messages: {
     noAccount: "Don't have an account? Click here to ",
+    emailValid: 'Valid email address',
+    emailLackRequirements: 'Email does not meet requirements',
     passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
     passwordValid: 'Valid password',
     passwordLackRequirements: 'Password does not meet requirements',  
