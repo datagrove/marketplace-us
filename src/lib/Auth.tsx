@@ -19,6 +19,7 @@ export const Auth: Component = (props) => {
   const lang = getLangFromUrl(new URL(window.location.href));
   const t = useTranslations(lang);
   const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 
   const handleLogin = async (e: SubmitEvent) => {
@@ -47,7 +48,7 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    if (regularExpressionPassword.test(password())) {
+    if (regularExpressionPassword.test(password()) && regularExpressionEmail.test(email())) {
 
       if (password() === confirmPassword()) {
         setPasswordMatch(true);
@@ -166,6 +167,23 @@ export const Auth: Component = (props) => {
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
                 </div>
+                <div class="mb-4 flex justify-center">
+                  {regularExpressionEmail.test(email()  ) ? (
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM "
+                    >
+                      {t("messages.phoneValid")}  
+                    </span>
+                  ) : (
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
+                    >
+                      {t("messages.phoneLackRequirements")}
+                    </span>
+                  )}
+        </div>
                 <div class="mb-1 flex justify-center">
                   <label for="password" class="hidden">
                     {t("formLabels.password")}
