@@ -189,7 +189,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
                             <button
                                 type="button"
-                                class="dot w-3 h-3 rounded-full cursor-pointer bg-white dark:bg-gray-600"
+                                class="dot w-3 h-3 rounded-full cursor-pointer bg-background1 dark:bg-background1-DM"
                                 aria-label={`${t('postLabels.slide')} 1`}
                                 onClick={() => currentSlide(1)}
                             >
@@ -197,7 +197,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {postImages().slice(1).map((image: string, index: number) => (
                                 <button
                                     type="button"
-                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-slate-300 dark:bg-gray-800"
+                                    class="dot w-3 h-3 rounded-full cursor-pointer bg-background1 dark:bg-background1-DM"
                                     aria-label={`${t('postLabels.slide')} ${index + 1}`}
                                     onClick={() => currentSlide(index + 2)}
                                 >
@@ -230,7 +230,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </Show>
                 </div>
             </Show>
-            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.provider_url} class="text-link2 dark:text-link2-DM underline">{post()?.provider_name}</a></p>
+            <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.provider_url} class="text-link1 hover:text-link1Hov dark:text-link1-DM dark:hover:bg-link1Hov-DM">{post()?.provider_name}</a></p>
             <p class="my-1">
                 <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                 {post()?.governing_district}

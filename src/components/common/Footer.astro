@@ -27,10 +27,10 @@ export interface Props {
 
 const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astro.props;
 ---
-<footer class="flex flex-col bg-black dark:bg-gray-800 mt-4 py-4 -mx-4">
+<footer class="flex flex-col bg-background2 dark:bg-background2-DM mt-4 py-4 -mx-4">
   <div class="w-full flex flex-col items-center">
       <div class="">
-        <div class="mb-2 text-center text-text1-DM  md:w-full">
+        <div class="mb-2 text-center text-text2 dark:text-text2-DM  md:w-full">
           <a class="inline-block font-bold text-xl" href={SITE.url}>{SITE?.name}</a>
         </div>
       </div>
@@ -39,10 +39,10 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
         <!-- <div class="border-4 border-purple-800 flex justify-center items-center text-sm text-muted text-center text-text1-DM "> -->
           {
             secondaryLinks.map(({ text, href }) => (
-            <div class="flex text-center items-center justify-center w-1/4 text-text1-DM"> 
+            <div class="flex text-center items-center justify-center w-1/4 text-text2 dark:text-text2-DM"> 
               <div class="flex justify-center items-center">
                 <a
-                  class="text-muted text-center text-sm hover:text-gray-700 dark:text-text1-DM hover:underline transition duration-150 ease-in-out"
+                  class="text-muted text-center text-sm text-link2 hover:text-link2Hov dark:text-link2 dark:hover:text-link2Hov transition duration-150 ease-in-out"
                   href={`/${lang}/${href}`}
                   set:html={text}
                 />
@@ -57,9 +57,9 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
               {links && Array.isArray(links) && links.length > 0 && (
                 <ul class="text-sm">
                   {links.map(({ text, href, ariaLabel }) => (
-                    <li class="text-text1-DM">
+                    <li class="text-link2 dark:text-link2-DM">
                       <a
-                        class="text-muted hover:text-gray-700 hover:underline dark:text-text1-DM transition duration-150 ease-in-out"
+                        class="text-muted text-link2 hover:text-link2Hov dark:text-link2-DM dark:hover:text-link2Hov-DM transition duration-150 ease-in-out"
                         href={href}
                         aria-label={ariaLabel}
                       >
@@ -75,14 +75,14 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
       </div>
     </div>
     
-    <div class="text-center text-text1-DM">
+    <div class="text-center text-text2 dark:text-text2-DM">
       {
         socialLinks?.length ? (
           <ul class="flex justify-center mb-2">
             {socialLinks.map(({ ariaLabel, href, text, icon }) => (
               <li>
                 <a
-                  class="text-muted text-text1-DM dark:text-text1-DM hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2 inline-flex items-center"
+                  class="text-muted dark:text-icon2-DM text-icon2 hover:bg-red-700 focus:outline-none focus:ring-4 rounded-lg text-sm p-2 inline-flex items-center"
                   aria-label={ariaLabel}
                   href={href}
                 >
@@ -97,7 +97,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
         )
       }
 
-      <div class="text-sm dark:text-slate-400 text-text1-DM">
+      <div class="text-sm dark:text-text2-DM text-text2">
         <Fragment set:html={footNote} />
       </div>
     </div>

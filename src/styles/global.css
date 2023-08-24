@@ -4,7 +4,7 @@
 
 @layer components {
     .btn-primary {
-        @apply bg-btn1 hover:translate-y-0.5 text-white dark:bg-btn1-DM dark:text-text1 font-bold py-2 px-4 border-b-2 border-link2 shadow-link2 rounded max-h-14 shadow-md md:text-[1.2vw];
+        @apply bg-btn1 hover:translate-y-0.5 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text font-bold py-2 px-4 border-b-2 border-link2 shadow-link2 rounded max-h-14 shadow-md md:text-[1.2vw];
     }
 
     button > * {
@@ -12,7 +12,7 @@
     }
 
     .selected {
-        @apply border-b-4 border-btn1 dark:border-btn1-DM
+        @apply border-b-4 border-highlight1 dark:border-highlight1-DM
     }
 
 }
