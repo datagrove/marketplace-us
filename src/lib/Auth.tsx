@@ -173,14 +173,14 @@ export const Auth: Component = (props) => {
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM "
                     >
-                      {t("messages.phoneValid")}  
+                      {t("messages.emailValid")}  
                     </span>
                   ) : (
                     <span
                       id="pwlength"
                       class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
                     >
-                      {t("messages.phoneLackRequirements")}
+                      {t("messages.emailLackRequirements")}
                     </span>
                   )}
         </div>
