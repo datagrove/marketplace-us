@@ -1,4 +1,13 @@
-import { Component, createSignal, createEffect, Show } from "solid-js";
+import {
+  Component,
+  createSignal,
+  createEffect,
+  Show,
+  Suspense,
+  onMount,
+  onCleanup,
+  createResource,
+} from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
 import { EditProfileButton } from "../../components/users/EditProfileButton";
@@ -32,6 +41,22 @@ interface Provider {
   country: string | null;
 }
 
+//TODO: Deal with possibly blank locations
+async function postFormData(formData: FormData) {
+  const response = await fetch("/api/providerProfileEdit", {
+    method: "POST",
+    body: formData,
+  });
+  const data = await response.json();
+  //Checks the API response for the redirect and sends them to the redirect page if there is one
+  if (data.redirect) {
+    //TODO: Not sure how to deal with internationalization here
+    alert(data.message);
+    window.location.href = `/${lang}` + data.redirect;
+  }
+  return data;
+}
+
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ProviderProfileView: Component = () => {
@@ -40,6 +65,44 @@ export const ProviderProfileView: Component = () => {
   const [providerImage, setProviderImage] = createSignal<string>("");
   const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+  const [screenSize, setScreenSize] = createSignal<
+    "sm" | "md" | "lg" | "xl" | "2xl"
+  >();
+  const [formData, setFormData] = createSignal<FormData>();
+  const [response] = createResource(formData, postFormData);
+
+  const setSize = (e: Event) => {
+    if (window.innerWidth <= 640) {
+      setScreenSize("sm");
+    } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+      setScreenSize("md");
+    } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
+      setScreenSize("lg");
+    } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
+      setScreenSize("xl");
+    } else {
+      setScreenSize("2xl");
+    }
+  };
+
+  onMount(() => {
+    window.addEventListener("resize", setSize);
+    if (window.innerWidth <= 640) {
+      setScreenSize("sm");
+    } else if (window.innerWidth >= 768 && window.innerWidth < 1024) {
+      setScreenSize("md");
+    } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
+      setScreenSize("lg");
+    } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
+      setScreenSize("xl");
+    } else {
+      setScreenSize("2xl");
+    }
+  });
+
+  onCleanup(() => {
+    window.removeEventListener("resize", setSize);
+  });
 
   createEffect(() => {
     setSession(User.session);
@@ -301,13 +364,13 @@ export const ProviderProfileView: Component = () => {
   function submit(e: SubmitEvent) {
     e.preventDefault();
     console.log("Submitted!");
-    // const formData = new FormData(e.target as HTMLFormElement);
-    // formData.append("access_token", session()?.access_token!);
-    // formData.append("refresh_token", session()?.refresh_token!);
-    // if (imageUrl() !== null) {
-    //   formData.append("image_url", imageUrl()!);
-    // }
-    // setFormData(formData);
+    const formData = new FormData(e.target as HTMLFormElement);
+    formData.append("access_token", session()?.access_token!);
+    formData.append("refresh_token", session()?.refresh_token!);
+    if (imageUrl() !== null) {
+      formData.append("image_url", imageUrl()!);
+    }
+    setFormData(formData);
   }
 
   //TODO: Style improvement - when posts section is opened in mobile view, it takes up full screen width some margin might be nice not sure but this might be due to current card styling
@@ -325,582 +388,590 @@ export const ProviderProfileView: Component = () => {
         <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
           <form onSubmit={submit} id="editProfile">
             {/* Container for Mobile View */}
-            <div class="container">
-              {/* Profile Information for Mobile View */}
-              <details
-                class="bg-background1 dark:bg-black shadow rounded group md:hidden"
-                open
-              >
-                <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                  <h2 class="flex flex-1 p-4 font-bold">
-                    {t("formLabels.profileInfo")}
-                  </h2>
-                  <div class="flex w-10 items-center justify-center">
-                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
-                  </div>
-                </summary>
-                <div class="p-4">
-                  <div class="mb-2 flex justify-center items-center align-items-center">
-                    <Show when={editMode() === false}>
-                      <button class="btn-primary" onclick={enableEditMode}>
-                        {t("buttons.editProfile")}
-                      </button>
-                    </Show>
-                  </div>
-                  <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
-                    {provider()?.provider_name == ""
-                      ? provider()?.first_name + " " + provider()?.last_name
-                      : provider()?.provider_name}
-                  </h2>
-
-                  <div class="flex justify-center mb-3">
-                    <Show when={editMode() === false}>
-                      <Show when={typeof providerImage() !== "undefined"}>
-                        <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
-                          <img
-                            src={providerImage()}
-                            class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
-                            alt={`${t("postLabels.providerProfileImage")} 1`}
-                          />
-                        </div>
+            <Show when={screenSize() === "sm"}>
+              <div class="container">
+                {/* Profile Information for Mobile View */}
+                <details
+                  class="bg-background1 dark:bg-black shadow rounded group md:hidden"
+                  open
+                >
+                  <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                    <h2 class="flex flex-1 p-4 font-bold">
+                      {t("formLabels.profileInfo")}
+                    </h2>
+                    <div class="flex w-10 items-center justify-center">
+                      <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                    </div>
+                  </summary>
+                  <div class="p-4">
+                    <div class="mb-2 flex justify-center items-center align-items-center">
+                      <Show when={editMode() === false}>
+                        <button class="btn-primary" onclick={enableEditMode}>
+                          {t("buttons.editProfile")}
+                        </button>
                       </Show>
-                    </Show>
-                    <Show when={editMode() === true}>
-                      <UserImage
-                        url={imageUrl()}
-                        size={150}
-                        onUpload={(e: Event, url: string) => {
-                          setImageUrl(url);
-                        }}
-                      />
-                    </Show>
-                  </div>
-                  <label for="FirstName" class="text-text2 dark:text-text1-DM">
-                    {t("formLabels.firstName")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="FirstName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.first_name}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <input
-                      type="text"
-                      id="FirstName"
-                      name="FirstName"
-                      class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      value={provider()?.first_name}
-                    />
-                  </Show>
+                    </div>
+                    <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+                      {provider()?.provider_name == ""
+                        ? provider()?.first_name + " " + provider()?.last_name
+                        : provider()?.provider_name}
+                    </h2>
 
-                  <label for="LastName" class="text-text2 dark:text-text1-DM">
-                    {t("formLabels.lastName")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="LastName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    <div class="flex justify-center mb-3">
+                      <Show when={editMode() === false}>
+                        <Show when={typeof providerImage() !== "undefined"}>
+                          <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                            <img
+                              src={providerImage()}
+                              class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                              alt={`${t("postLabels.providerProfileImage")} 1`}
+                            />
+                          </div>
+                        </Show>
+                      </Show>
+                      <Show when={editMode() === true}>
+                        <UserImage
+                          url={imageUrl()}
+                          size={150}
+                          onUpload={(e: Event, url: string) => {
+                            setImageUrl(url);
+                          }}
+                        />
+                      </Show>
+                    </div>
+                    <label
+                      for="FirstName"
+                      class="text-text2 dark:text-text1-DM"
                     >
-                      {provider()?.last_name}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <input
-                      type="text"
-                      id="LastName"
-                      name="LastName"
-                      class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      value={provider()?.last_name}
-                    />
-                  </Show>
-
-                  <label
-                    for="ProviderName"
-                    class="text-text1 dark:text-text1-DM"
-                  >
-                    {t("formLabels.providerName")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="ProviderName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.provider_name
-                        ? provider()?.provider_name
-                        : t("formLabels.noValue")}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <input
-                      type="text"
-                      id="ProviderName"
-                      name="ProviderName"
-                      class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      value={provider()?.provider_name}
-                    />
-                  </Show>
-
-                  <div class="w-full overflow-auto mb-4">
-                    <label for="email" class="text-text1 dark:text-text1-DM">
-                      {t("formLabels.email")}:
-                      {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                      {t("formLabels.firstName")}:
                     </label>
                     <Show when={editMode() === false}>
                       <p
-                        id="email"
-                        class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                        id="FirstName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
                       >
-                        {provider()?.email}
+                        {provider()?.first_name}
                       </p>
                     </Show>
                     <Show when={editMode() === true}>
                       <input
-                        id="email"
-                        class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                        type="email"
-                        placeholder={t("formLabels.email")}
-                        value={provider()?.email}
+                        type="text"
+                        id="FirstName"
+                        name="FirstName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.first_name}
                       />
                     </Show>
-                  </div>
 
-                  <label for="Phone" class="text-text1 dark:text-text1-DM">
-                    {t("formLabels.phone")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="Phone"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.provider_phone}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <input
-                      type="text"
-                      id="Phone"
-                      class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      name="Phone"
-                      value={provider()?.provider_phone}
-                    />
-                  </Show>
-
-                  <label for="country" class="text-text1 dark:text-text1-DM">
-                    {t("formLabels.country")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="country"
-                      class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.country}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <select
-                      id="country"
-                      class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      name="country"
-                      oninput={required}
-                    >
-                      <option value="">-</option>
-                    </select>
-                    <div>
-                      <label class="text-text1 dark:text-text1-DM">
-                        {t("formLabels.country")}
-                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                          {provider()?.country}
-                        </p>
-                      </label>
-                    </div>
-                  </Show>
-
-                  <br />
-
-                  <label
-                    for="MajorMunicipality"
-                    class="text-text1 dark:text-text1-DM"
-                  >
-                    {t("formLabels.majorMunicipality")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="MajorMunicipality"
-                      class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.major_municipality}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <select
-                      id="MajorMunicipality"
-                      class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      name="MajorMunicipality"
-                      oninput={required}
-                    >
-                      <option value="">-</option>
-                    </select>
-                    <div>
-                      <label class="text-text1 dark:text-text1-DM">
-                        {t("formLabels.majorMunicipality")}:
-                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                          {provider()?.major_municipality}
-                        </p>
-                      </label>
-                    </div>
-                  </Show>
-
-                  <br />
-
-                  <label
-                    for="MinorMunicipality"
-                    class="text-text1 dark:text-text1-DM"
-                  >
-                    {t("formLabels.minorMunicipality")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p
-                      id="MinorMunicipality"
-                      class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.minor_municipality}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <select
-                      id="MinorMunicipality"
-                      class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      name="MinorMunicipality"
-                      oninput={required}
-                    >
-                      <option value="">-</option>
-                    </select>
-                    <div>
-                      <label class="text-text1 dark:text-text1-DM">
-                        {t("formLabels.minorMunicipality")}:
-                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                          {provider()?.minor_municipality}
-                        </p>
-                      </label>
-                    </div>
-                  </Show>
-
-                  <br />
-
-                  <label
-                    for="GoverningDistrict"
-                    class="text-text1 dark:text-text1-DM"
-                  >
-                    {t("formLabels.governingDistrict")}:
-                  </label>
-                  <Show when={editMode() === false}>
-                    <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                      {provider()?.governing_district}
-                    </p>
-                  </Show>
-                  <Show when={editMode() === true}>
-                    <select
-                      id="GoverningDistrict"
-                      class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                      name="GoverningDistrict"
-                      oninput={required}
-                    >
-                      <option value="">-</option>
-                    </select>
-                    <div>
-                      <label class="text-text1 dark:text-text1-DM">
-                        {t("formLabels.governingDistrict")}:
-                        <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                          {provider()?.governing_district}
-                        </p>
-                      </label>
-                    </div>
-                  </Show>
-                  <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
-                    <Show when={editMode() === true}>
-                      <button
-                        class="btn-primary"
-                        type="submit"
-                        form="editProfile"
+                    <label for="LastName" class="text-text2 dark:text-text1-DM">
+                      {t("formLabels.lastName")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="LastName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
                       >
-                        {t("buttons.saveProfile")}
-                      </button>
+                        {provider()?.last_name}
+                      </p>
                     </Show>
-                  </div>
-                </div>
-              </details>
+                    <Show when={editMode() === true}>
+                      <input
+                        type="text"
+                        id="LastName"
+                        name="LastName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.last_name}
+                      />
+                    </Show>
 
-              {/* View Posts for Mobile View */}
-              <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
-                <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                  <h2 class="flex flex-1 p-4 font-bold">
-                    {t("formLabels.yourPosts")}
-                  </h2>
-                  <div class="flex w-10 items-center justify-center">
-                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
-                  </div>
-                </summary>
-                <div class="p-2">
-                  <div class="justify-center flex">
-                    <a
-                      class="btn-primary mx-6 mb-4"
-                      href={`/${lang}/posts/createpost`}
+                    <label
+                      for="ProviderName"
+                      class="text-text1 dark:text-text1-DM"
                     >
-                      {t("pageTitles.createPost")}
-                    </a>
-                  </div>
-                  <div class="md:col-span-3">
-                    <div class="">
-                      <ViewProviderPosts />
+                      {t("formLabels.providerName")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="ProviderName"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.provider_name
+                          ? provider()?.provider_name
+                          : t("formLabels.noValue")}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <input
+                        type="text"
+                        id="ProviderName"
+                        name="ProviderName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.provider_name}
+                      />
+                    </Show>
+
+                    <div class="w-full overflow-auto mb-4">
+                      <label for="email" class="text-text1 dark:text-text1-DM">
+                        {t("formLabels.email")}:
+                        {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                      </label>
+                      <Show when={editMode() === false}>
+                        <p
+                          id="email"
+                          class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                        >
+                          {provider()?.email}
+                        </p>
+                      </Show>
+                      <Show when={editMode() === true}>
+                        <input
+                          id="email"
+                          class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                          type="email"
+                          placeholder={t("formLabels.email")}
+                          value={provider()?.email}
+                        />
+                      </Show>
+                    </div>
+
+                    <label for="Phone" class="text-text1 dark:text-text1-DM">
+                      {t("formLabels.phone")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="Phone"
+                        class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.provider_phone}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <input
+                        type="text"
+                        id="Phone"
+                        class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="Phone"
+                        value={provider()?.provider_phone}
+                      />
+                    </Show>
+
+                    <label for="country" class="text-text1 dark:text-text1-DM">
+                      {t("formLabels.country")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="country"
+                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.country}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <select
+                        id="country"
+                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="country"
+                        oninput={required}
+                      >
+                        <option value="">-</option>
+                      </select>
+                      <div>
+                        <label class="text-text1 dark:text-text1-DM">
+                          {t("formLabels.country")}
+                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                            {provider()?.country}
+                          </p>
+                        </label>
+                      </div>
+                    </Show>
+
+                    <br />
+
+                    <label
+                      for="MajorMunicipality"
+                      class="text-text1 dark:text-text1-DM"
+                    >
+                      {t("formLabels.majorMunicipality")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="MajorMunicipality"
+                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.major_municipality}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <select
+                        id="MajorMunicipality"
+                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="MajorMunicipality"
+                        oninput={required}
+                      >
+                        <option value="">-</option>
+                      </select>
+                      <div>
+                        <label class="text-text1 dark:text-text1-DM">
+                          {t("formLabels.majorMunicipality")}:
+                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                            {provider()?.major_municipality}
+                          </p>
+                        </label>
+                      </div>
+                    </Show>
+
+                    <br />
+
+                    <label
+                      for="MinorMunicipality"
+                      class="text-text1 dark:text-text1-DM"
+                    >
+                      {t("formLabels.minorMunicipality")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p
+                        id="MinorMunicipality"
+                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.minor_municipality}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <select
+                        id="MinorMunicipality"
+                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="MinorMunicipality"
+                        oninput={required}
+                      >
+                        <option value="">-</option>
+                      </select>
+                      <div>
+                        <label class="text-text1 dark:text-text1-DM">
+                          {t("formLabels.minorMunicipality")}:
+                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                            {provider()?.minor_municipality}
+                          </p>
+                        </label>
+                      </div>
+                    </Show>
+
+                    <br />
+
+                    <label
+                      for="GoverningDistrict"
+                      class="text-text1 dark:text-text1-DM"
+                    >
+                      {t("formLabels.governingDistrict")}:
+                    </label>
+                    <Show when={editMode() === false}>
+                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                        {provider()?.governing_district}
+                      </p>
+                    </Show>
+                    <Show when={editMode() === true}>
+                      <select
+                        id="GoverningDistrict"
+                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="GoverningDistrict"
+                        oninput={required}
+                      >
+                        <option value="">-</option>
+                      </select>
+                      <div>
+                        <label class="text-text1 dark:text-text1-DM">
+                          {t("formLabels.governingDistrict")}:
+                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                            {provider()?.governing_district}
+                          </p>
+                        </label>
+                      </div>
+                    </Show>
+                    <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
+                      <Show when={editMode() === true}>
+                        <button
+                          class="btn-primary"
+                          type="submit"
+                          form="editProfile"
+                        >
+                          {t("buttons.saveProfile")}
+                        </button>
+                      </Show>
                     </div>
                   </div>
-                </div>
-              </details>
-            </div>
+                </details>
+
+                {/* View Posts for Mobile View */}
+                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                  <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                    <h2 class="flex flex-1 p-4 font-bold">
+                      {t("formLabels.yourPosts")}
+                    </h2>
+                    <div class="flex w-10 items-center justify-center">
+                      <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                    </div>
+                  </summary>
+                  <div class="p-2">
+                    <div class="justify-center flex">
+                      <a
+                        class="btn-primary mx-6 mb-4"
+                        href={`/${lang}/posts/createpost`}
+                      >
+                        {t("pageTitles.createPost")}
+                      </a>
+                    </div>
+                    <div class="md:col-span-3">
+                      <div class="">
+                        <ViewProviderPosts />
+                      </div>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </Show>
 
             {/* Profile Information for md+ View */}
-            <div class="hidden md:block">
-              <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
-                {provider()?.provider_name == ""
-                  ? provider()?.first_name + " " + provider()?.last_name
-                  : provider()?.provider_name}
-              </h2>
-              <div class="flex justify-center mb-3">
-                <Show when={editMode() === false}>
-                  <Show when={typeof providerImage() !== "undefined"}>
-                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
-                      <img
-                        src={providerImage()}
-                        class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
-                        alt={`${t("postLabels.providerProfileImage")} 1`}
-                      />
-                    </div>
+            <Show when={screenSize() !== "sm"}>
+              <div class="hidden md:block">
+                <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+                  {provider()?.provider_name == ""
+                    ? provider()?.first_name + " " + provider()?.last_name
+                    : provider()?.provider_name}
+                </h2>
+                <div class="flex justify-center mb-3">
+                  <Show when={editMode() === false}>
+                    <Show when={typeof providerImage() !== "undefined"}>
+                      <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                        <img
+                          src={providerImage()}
+                          class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                          alt={`${t("postLabels.providerProfileImage")} 1`}
+                        />
+                      </div>
+                    </Show>
                   </Show>
-                </Show>
-                <Show when={editMode() === true}>
-                  <UserImage
-                    url={imageUrl()}
-                    size={150}
-                    onUpload={(e: Event, url: string) => {
-                      setImageUrl(url);
-                    }}
-                  />
-                </Show>
-              </div>
+                  <Show when={editMode() === true}>
+                    <UserImage
+                      url={imageUrl()}
+                      size={150}
+                      onUpload={(e: Event, url: string) => {
+                        setImageUrl(url);
+                      }}
+                    />
+                  </Show>
+                </div>
 
-              <label for="FirstName" class="text-text2 dark:text-text1-DM">
-                {t("formLabels.firstName")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="FirstName"
-                  class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.first_name}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <input
-                  type="text"
-                  id="FirstName"
-                  name="FirstName"
-                  class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  value={provider()?.first_name}
-                />
-              </Show>
-
-              <label for="LastName" class="text-text2 dark:text-text1-DM">
-                {t("formLabels.lastName")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="LastName"
-                  class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.last_name}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <input
-                  type="text"
-                  id="LastName"
-                  name="LastName"
-                  class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  value={provider()?.last_name}
-                />
-              </Show>
-
-              <label for="ProviderName" class="text-text1 dark:text-text1-DM">
-                {t("formLabels.providerName")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="ProviderName"
-                  class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.provider_name
-                    ? provider()?.provider_name
-                    : t("formLabels.noValue")}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <input
-                  type="text"
-                  id="ProviderName"
-                  name="ProviderName"
-                  class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  value={provider()?.provider_name}
-                />
-              </Show>
-
-              <div class="w-full overflow-auto mb-4">
-                <label for="email" class="text-text1 dark:text-text1-DM">
-                  {t("formLabels.email")}:
-                  {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                <label for="FirstName" class="text-text2 dark:text-text1-DM">
+                  {t("formLabels.firstName")}:
                 </label>
                 <Show when={editMode() === false}>
                   <p
-                    id="email"
-                    class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    id="FirstName"
+                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
                   >
-                    {provider()?.email}
+                    {provider()?.first_name}
                   </p>
                 </Show>
                 <Show when={editMode() === true}>
                   <input
-                    id="email"
-                    class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                    type="email"
-                    placeholder={t("formLabels.email")}
-                    value={provider()?.email}
+                    type="text"
+                    id="FirstName"
+                    name="FirstName"
+                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    value={provider()?.first_name}
                   />
                 </Show>
+
+                <label for="LastName" class="text-text2 dark:text-text1-DM">
+                  {t("formLabels.lastName")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="LastName"
+                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.last_name}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <input
+                    type="text"
+                    id="LastName"
+                    name="LastName"
+                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    value={provider()?.last_name}
+                  />
+                </Show>
+
+                <label for="ProviderName" class="text-text1 dark:text-text1-DM">
+                  {t("formLabels.providerName")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="ProviderName"
+                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.provider_name
+                      ? provider()?.provider_name
+                      : t("formLabels.noValue")}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <input
+                    type="text"
+                    id="ProviderName"
+                    name="ProviderName"
+                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    value={provider()?.provider_name}
+                  />
+                </Show>
+
+                <div class="w-full overflow-auto mb-4">
+                  <label for="email" class="text-text1 dark:text-text1-DM">
+                    {t("formLabels.email")}:
+                    {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
+                  </label>
+                  <Show when={editMode() === false}>
+                    <p
+                      id="email"
+                      class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    >
+                      {provider()?.email}
+                    </p>
+                  </Show>
+                  <Show when={editMode() === true}>
+                    <input
+                      id="email"
+                      class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                      type="email"
+                      placeholder={t("formLabels.email")}
+                      value={provider()?.email}
+                    />
+                  </Show>
+                </div>
+
+                <label for="Phone" class="text-text1 dark:text-text1-DM">
+                  {t("formLabels.phone")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="Phone"
+                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.provider_phone}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <input
+                    type="text"
+                    id="Phone"
+                    class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="Phone"
+                    value={provider()?.provider_phone}
+                  />
+                </Show>
+
+                <label for="country" class="text-text1 dark:text-text1-DM">
+                  {t("formLabels.country")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="country"
+                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.country}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <select
+                    id="country"
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="country"
+                    oninput={required}
+                  >
+                    <option value="">-</option>
+                  </select>
+                </Show>
+
+                <br />
+
+                <label
+                  for="MajorMunicipality"
+                  class="text-text1 dark:text-text1-DM"
+                >
+                  {t("formLabels.majorMunicipality")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="MajorMunicipality"
+                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.major_municipality}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <select
+                    id="MajorMunicipality"
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="MajorMunicipality"
+                    oninput={required}
+                  >
+                    <option value="">-</option>
+                  </select>
+                </Show>
+
+                <br />
+
+                <label
+                  for="MinorMunicipality"
+                  class="text-text1 dark:text-text1-DM"
+                >
+                  {t("formLabels.minorMunicipality")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p
+                    id="MinorMunicipality"
+                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                  >
+                    {provider()?.minor_municipality}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <select
+                    id="MinorMunicipality"
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="MinorMunicipality"
+                    oninput={required}
+                  >
+                    <option value="">-</option>
+                  </select>
+                </Show>
+
+                <br />
+
+                <label
+                  for="GoverningDistrict"
+                  class="text-text1 dark:text-text1-DM"
+                >
+                  {t("formLabels.governingDistrict")}:
+                </label>
+                <Show when={editMode() === false}>
+                  <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
+                    {provider()?.governing_district}
+                  </p>
+                </Show>
+                <Show when={editMode() === true}>
+                  <select
+                    id="GoverningDistrict"
+                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    name="GoverningDistrict"
+                    oninput={required}
+                  >
+                    <option value="">-</option>
+                  </select>
+                </Show>
               </div>
-
-              <label for="Phone" class="text-text1 dark:text-text1-DM">
-                {t("formLabels.phone")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="Phone"
-                  class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.provider_phone}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <input
-                  type="text"
-                  id="Phone"
-                  class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  name="Phone"
-                  value={provider()?.provider_phone}
-                />
-              </Show>
-
-              <label for="country" class="text-text1 dark:text-text1-DM">
-                {t("formLabels.country")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="country"
-                  class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.country}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <select
-                  id="country"
-                  class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  name="country"
-                  oninput={required}
-                >
-                  <option value="">-</option>
-                </select>
-              </Show>
-
-              <br />
-
-              <label
-                for="MajorMunicipality"
-                class="text-text1 dark:text-text1-DM"
-              >
-                {t("formLabels.majorMunicipality")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="MajorMunicipality"
-                  class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.major_municipality}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <select
-                  id="MajorMunicipality"
-                  class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  name="MajorMunicipality"
-                  oninput={required}
-                >
-                  <option value="">-</option>
-                </select>
-              </Show>
-
-              <br />
-
-              <label
-                for="MinorMunicipality"
-                class="text-text1 dark:text-text1-DM"
-              >
-                {t("formLabels.minorMunicipality")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p
-                  id="MinorMunicipality"
-                  class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                >
-                  {provider()?.minor_municipality}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <select
-                  id="MinorMunicipality"
-                  class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  name="MinorMunicipality"
-                  oninput={required}
-                >
-                  <option value="">-</option>
-                </select>
-              </Show>
-
-              <br />
-
-              <label
-                for="GoverningDistrict"
-                class="text-text1 dark:text-text1-DM"
-              >
-                {t("formLabels.governingDistrict")}:
-              </label>
-              <Show when={editMode() === false}>
-                <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none">
-                  {provider()?.governing_district}
-                </p>
-              </Show>
-              <Show when={editMode() === true}>
-                <select
-                  id="GoverningDistrict"
-                  class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                  name="GoverningDistrict"
-                  oninput={required}
-                >
-                  <option value="">-</option>
-                </select>
-              </Show>
-            </div>
+            </Show>
+            <Suspense>{response() && <p>{response().message}</p>}</Suspense>
           </form>
         </div>
 
