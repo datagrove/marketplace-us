@@ -63,25 +63,25 @@ export const ViewCard: Component<Props> = (props) => {
 
 
   return (
-    <div class="flex justify-center w-full">
+    <div class="flex justify-center w-full border-4 border-red-500">
       <ul class="md:flex md:flex-wrap md:justify-center">
         {newPosts().map((post: any) => (
           <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-gray-700">
-                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background2 dark:bg-background2-DM rounded-lg">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-red">
+                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                   {post.image_url ? (
                     <img
                       src={post.image_url}
                       alt={post.image_urls.split(',')[0] ? "User Image" : "No image"}
-                      class="dark:bg-background1 rounded-lg md:shadow-lg dark:shadow-2xl w-full h-full object-cover"
+                      class="dark:bg-background1-DM rounded-lg md:shadow-lg dark:shadow-2xl w-full h-full object-cover"
                     // style={{height: `120px`, width: `120px`}}
                     />
                   ) : (
                     <svg
                       viewBox="0 0 512 512"
                       version="1.1"
-                      class="fill-logo rounded-lg dark:fill-logo-DM bg-background2 dark:bg-background2-DM w-full h-full object-cover"
+                      class="fill-logo rounded-lg dark:fill-logo-DM bg-bg1-icon dark:bg-icon1-DM w-full h-full object-cover"
                     >
                       <g id="Page-1" stroke="none" stroke-width="1">
                         <g id="icon" transform="translate(64.000000, 64.000000)">
@@ -102,7 +102,7 @@ export const ViewCard: Component<Props> = (props) => {
                       <DeletePostButton id={post.id} userId={post.user_id} postImage={post.image_urls} />
                     </div>
                   </div>
-                  <p class=" text-text1 dark:text-text1-DM text-xs max-h-12 md:h-12 overflow-hidden mb-2 border-b-2 border-gray-400 mr-4">{post.content}</p>
+                  <p class=" text-text1 dark:text-text1-DM text-xs max-h-12 md:h-12 overflow-hidden mb-2 border-2 border-border1 dark:border-border1-DM mr-4">{post.content}</p>
                   <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">{t('postLabels.provider')}{post.provider_name}</p>
                   <p class="overflow-hidden text-text1 dark:text-text1-DM text-xs">
                     {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/

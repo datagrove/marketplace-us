@@ -49,6 +49,8 @@ module.exports = {
 				'icon2': '#F0F0F0',
 				'logo2': '#F0F0F0',
 				'highlight2': '#25DA49',
+				'shadow-LM': '#9E9E9E',
+				'shadow-DM': '#616161',
 			},
 		},
 	},
