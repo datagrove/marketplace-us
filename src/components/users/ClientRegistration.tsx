@@ -32,6 +32,10 @@ export const ClientRegistration: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+  const [phone, setPhone] = createSignal<string>("");
+  const [meetsRequirements,setMeetsRequirements] = createSignal<number>(0);
+
+  const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -193,13 +197,17 @@ export const ClientRegistration: Component = () => {
 
   function submit(e: SubmitEvent) {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    formData.append("access_token", session()?.access_token!);
-    formData.append("refresh_token", session()?.refresh_token!);
-    if (imageUrl() !== null) {
-      formData.append("image_url", imageUrl()!);
+
+    if(regularExpressionPhone.test(phone())){
+
+      const formData = new FormData(e.target as HTMLFormElement);
+      formData.append("access_token", session()?.access_token!);
+      formData.append("refresh_token", session()?.refresh_token!);
+      if (imageUrl() !== null) {
+        formData.append("image_url", imageUrl()!);
+      }
+      setFormData(formData);
     }
-    setFormData(formData);
   }
 
   return (
@@ -353,8 +361,28 @@ export const ClientRegistration: Component = () => {
             id="Phone"
             class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone"
+            value={phone()}
             required
+            onChange={(e) => setPhone(e.currentTarget.value)}
           />
+        </div>
+
+        <div class="mb-4 flex justify-center">
+                  {regularExpressionPhone.test(phone()  ) ? (
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM "
+                    >
+                      {/* {t("messages.passwordValid")} */ "Correct Phone Number"} 
+                    </span>
+                  ) : (
+                    <span
+                      id="pwlength"
+                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
+                    >
+                      {"Phone number must have 8 digits"}
+                    </span>
+                  )}
         </div>
 
         <label for="country" class="text-text1 dark:text-text1-DM">
