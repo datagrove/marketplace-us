@@ -17,6 +17,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
   const phone = formData.get("Phone");
+  const email = formData.get("email");
   const country = formData.get("country");
   const majorMunicipality = formData.get("MajorMunicipality");
   const minorMunicipality = formData.get("MinorMunicipality");
@@ -29,11 +30,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (
     !firstName ||
     !lastName ||
-    !phone ||
-    !country ||
-    !majorMunicipality ||
-    !minorMunicipality ||
-    !governingDistrict
+    !phone
   ) {
     return new Response(
       JSON.stringify({
@@ -82,21 +79,38 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-    //Check if a profile exists
-    const { data: profileExists, error: profileExistsError } = await supabase
+  //TODO: Add tooltip to confirm at both email addresses
+
+  if (user.email !== email) {
+    const { data, error } = await supabase.auth.updateUser({ email: email!.toString() });
+    if (error) {
+      return new Response(
+        JSON.stringify({
+          message: "Error updating email",
+        }),
+        { status: 500 }
+      );
+    }
+    console.log(data);
+  }
+
+
+  //Check if a profile exists
+  const { data: profileExists, error: profileExistsError } = await supabase
     .from("profiles")
     .select("user_id")
     .eq("user_id", user.id);
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0] !== undefined) {
-    console.log("Profile already exists");
   } else if (profileExists[0] === undefined) {
+    console.log("Profile doesn't exists");
+  } else if (profileExists[0] !== undefined) {
+    console.log("Profile updating");
     //Build a submission to the profile table
     let profileSubmission = {
       first_name: firstName,
       last_name: lastName,
-      email: user.email,
+      email: email,
     };
 
 
@@ -118,96 +132,119 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log(profileData);
   }
 
-  //TODO: Only send location to database if the user has selected a location
 
-  /*Each of these retrieves the appropriate id from the database for the area level
-  (governing district, minor municipality, major municipality, country)
-  in order to make a proper submission to the location table */
-  const { data: districtId, error: districtError } = await supabase
-    .from("governing_district")
-    .select("id")
-    .eq("governing_district", governingDistrict);
-  if (districtError) {
-    return new Response(
-      JSON.stringify({
-        message: "District not found",
-      }),
-      { status: 500 }
-    );
-  }
+  let location;
 
-  const { data: minorMunicipalityId, error: minorMunicipalityError } =
-    await supabase
-      .from("minor_municipality")
+  //If any location fields are blank then set location to null
+  if (!country ||
+    !majorMunicipality ||
+    !minorMunicipality ||
+    !governingDistrict) {
+    location = null;
+  } else {
+    //Make a new location submission to the location table
+
+    /*Each of these retrieves the appropriate id from the database for the area level
+    (governing district, minor municipality, major municipality, country)
+    in order to make a proper submission to the location table */
+    const { data: districtId, error: districtError } = await supabase
+      .from("governing_district")
       .select("id")
-      .eq("minor_municipality", minorMunicipality);
-  if (minorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: "Minor Municipality not found",
-      }),
-      { status: 500 }
-    );
-  }
+      .eq("governing_district", governingDistrict);
+    if (districtError) {
+      return new Response(
+        JSON.stringify({
+          message: "District not found",
+        }),
+        { status: 500 }
+      );
+    }
 
-  const { data: majorMunicipalityId, error: majorMunicipalityError } =
-    await supabase
-      .from("major_municipality")
+    const { data: minorMunicipalityId, error: minorMunicipalityError } =
+      await supabase
+        .from("minor_municipality")
+        .select("id")
+        .eq("minor_municipality", minorMunicipality);
+    if (minorMunicipalityError) {
+      return new Response(
+        JSON.stringify({
+          message: "Minor Municipality not found",
+        }),
+        { status: 500 }
+      );
+    }
+
+    const { data: majorMunicipalityId, error: majorMunicipalityError } =
+      await supabase
+        .from("major_municipality")
+        .select("id")
+        .eq("major_municipality", majorMunicipality);
+    if (majorMunicipalityError) {
+      return new Response(
+        JSON.stringify({
+          message: "Major Municipality not found",
+        }),
+        { status: 500 }
+      );
+    }
+
+    const { data: countryId, error: countryError } = await supabase
+      .from("country")
       .select("id")
-      .eq("major_municipality", majorMunicipality);
-  if (majorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: "Major Municipality not found",
-      }),
-      { status: 500 }
-    );
+      .eq("country", country);
+    if (countryError) {
+      return new Response(
+        JSON.stringify({
+          message: "Country not found",
+        }),
+        { status: 500 }
+      );
+    }
+
+    //Build our submission to the location table keys need to match the field in the database you are trying to fill.
+    let locationSubmission = {
+      minor_municipality: minorMunicipalityId[0].id,
+      major_municipality: majorMunicipalityId[0].id,
+      governing_district: districtId[0].id,
+      country: countryId[0].id,
+      user_id: user.id,
+    };
+
+
+    //Insert the submission to the location table and select it back from the database
+    const { error: locationError, data: locationData } = await supabase
+      .from("location")
+      .insert([locationSubmission])
+      .select("id");
+    if (locationError) {
+      console.log(locationError);
+      return new Response(
+        JSON.stringify({
+          message: "Location not submitted",
+        }),
+        { status: 500 }
+      );
+    }
+    location = locationData[0];
   }
-
-  const { data: countryId, error: countryError } = await supabase
-    .from("country")
-    .select("id")
-    .eq("country", country);
-  if (countryError) {
-    return new Response(
-      JSON.stringify({
-        message: "Country not found",
-      }),
-      { status: 500 }
-    );
-  }
-
-  //Build our submission to the location table keys need to match the field in the database you are trying to fill.
-  let locationSubmission = {
-    minor_municipality: minorMunicipalityId[0].id,
-    major_municipality: majorMunicipalityId[0].id,
-    governing_district: districtId[0].id,
-    country: countryId[0].id,
-    user_id: user.id,
-  };
-
-
-  //Insert the submission to the location table and select it back from the database
-  const { error: locationError, data: location } = await supabase
-    .from("location")
-    .insert([locationSubmission])
-    .select("id");
-  if (locationError) {
-    console.log(locationError);
-    return new Response(
-      JSON.stringify({
-        message: "Location not submitted",
-      }),
-      { status: 500 }
-    );
-  }
-
   //Build our submission to the providers table including the location id from the select from the location table on line 158
-  let submission = {
-    provider_name: providerName,
-    provider_phone: phone,
-    location: location[0].id,
-    image_url: imageUrl,
+  let submission;
+
+  //If the location is null then leave the current value for location
+  if (location === null) {
+    submission = {
+      provider_name: providerName,
+      provider_phone: phone,
+      image_url: imageUrl,
+    };
+  } else {
+    //Update the location with the new location
+    submission = {
+      provider_name: providerName,
+      provider_phone: phone,
+      location: location.id,
+      image_url: imageUrl,
+    };
   };
 
   //submit to the providers table and select it back
@@ -233,7 +270,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       { status: 500 }
     );
   } else {
-    console.log("Profile Data: " + JSON.stringify(data));
+    console.log("Profile Data: " + JSON.stringify(data[0]));
   }
 
 

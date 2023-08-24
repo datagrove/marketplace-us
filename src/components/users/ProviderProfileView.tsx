@@ -365,6 +365,9 @@ export const ProviderProfileView: Component = () => {
     e.preventDefault();
     console.log("Submitted!");
     const formData = new FormData(e.target as HTMLFormElement);
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
     if (imageUrl() !== null) {
@@ -526,6 +529,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <input
                           id="email"
+                          name="email"
                           class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
                           type="email"
                           placeholder={t("formLabels.email")}
@@ -841,6 +845,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <input
                       id="email"
+                      name="email"
                       class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
                       type="email"
                       placeholder={t("formLabels.email")}
