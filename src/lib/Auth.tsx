@@ -81,8 +81,10 @@ export const Auth: Component = (props) => {
         setPasswordMatch(false);
         alert(t("messages.passwordMatch"));
       }
-    } else {
+    } else if(!regularExpressionEmail.test(password())) {
       alert(t("messages.passwordLackRequirements"));
+    }else if(!regularExpressionPassword.test(email())) {
+      alert(t("messages.emailLackRequirements"));
     }
   };
 
@@ -170,14 +172,14 @@ export const Auth: Component = (props) => {
                 <div class="mb-4 flex justify-center">
                   {regularExpressionEmail.test(email()  ) ? (
                     <span
-                      id="pwlength"
+                      id="emailCheck"
                       class="text-sm text-text1 dark:text-text1-DM "
                     >
                       {t("messages.emailValid")}  
                     </span>
                   ) : (
                     <span
-                      id="pwlength"
+                      id="emailCheck"
                       class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
                     >
                       {t("messages.emailLackRequirements")}

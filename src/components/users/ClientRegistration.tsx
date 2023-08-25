@@ -206,8 +206,11 @@ export const ClientRegistration: Component = () => {
         formData.append("image_url", imageUrl()!);
       }
       setFormData(formData);
-    }
+    }else if(!regularExpressionPhone.test(phone())) {  {
+      alert(t("messages.phoneLackRequirements"));
+}
   }
+}
 
   return (
     <div class="">
@@ -365,24 +368,7 @@ export const ClientRegistration: Component = () => {
             onChange={(e) => setPhone(e.currentTarget.value)}
           />
         </div>
-
-        <div class="mb-4 flex justify-center">
-                  {regularExpressionPhone.test(phone()  ) ? (
-                    <span
-                      id="phoneValidClient"
-                      class="text-sm text-text1 dark:text-text1-DM "
-                    >
-                      {t("messages.phoneValid")}  
-                    </span>
-                  ) : (
-                    <span
-                      id="phoneValidClient"
-                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
-                    >
-                      {t("messages.phoneLackRequirements")}
-                    </span>
-                  )}
-        </div>
+ 
 
         <label for="country" class="text-text1 dark:text-text1-DM">
           {t("formLabels.country")}:

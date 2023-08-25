@@ -153,9 +153,9 @@ export const ProviderRegistration: Component = () => {
     //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
     //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
     function submit(e: SubmitEvent) {
+        e.preventDefault();
 
         if(regularExpressionPhone.test(phone())){
-        e.preventDefault();
         const formData = new FormData(e.target as HTMLFormElement)
         formData.append("access_token", session()?.access_token!)
         formData.append("refresh_token", session()?.refresh_token!)
@@ -163,8 +163,12 @@ export const ProviderRegistration: Component = () => {
             formData.append("image_url", imageUrl()!)
         }
         setFormData(formData)
-        }
+        } else if(!regularExpressionPhone.test(phone())) {  {
+            alert(t("messages.phoneLackRequirements"));
     }
+
+    }
+}
 
     //Actual Form that gets displayed for users to fill
     return (
@@ -322,23 +326,7 @@ export const ProviderRegistration: Component = () => {
           />
         </div>
 
-        <div class="mb-4 flex justify-center">
-                  {regularExpressionPhone.test(phone()  ) ? (
-                    <span
-                      id="phoneValidProvider"
-                      class="text-sm text-text1 dark:text-text1-DM "
-                    >
-                      {t("messages.phoneValid")}  
-                    </span>
-                  ) : (
-                    <span
-                      id="phoneValidProvider"
-                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
-                    >
-                        {t("messages.phoneLackRequirements")}
-                    </span>
-                  )}
-        </div>
+                  
 
                 <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
                     <select
