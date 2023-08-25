@@ -363,7 +363,6 @@ export const ClientRegistration: Component = () => {
             id="Phone"
             class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone"
-            value={phone()}
             required
             onChange={(e) => setPhone(e.currentTarget.value)}
           />

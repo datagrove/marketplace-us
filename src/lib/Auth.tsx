@@ -81,7 +81,10 @@ export const Auth: Component = (props) => {
         setPasswordMatch(false);
         alert(t("messages.passwordMatch"));
       }
-    } else if(!regularExpressionEmail.test(password())) {
+    }else if(!regularExpressionEmail.test(password())&& !regularExpressionPassword.test(email())) {
+      alert(t("messages.passwordLackRequirements")); 
+    alert(t("messages.emailLackRequirements"));
+    }else if(!regularExpressionEmail.test(password())) { 
       alert(t("messages.passwordLackRequirements"));
     }else if(!regularExpressionPassword.test(email())) {
       alert(t("messages.emailLackRequirements"));
@@ -169,23 +172,7 @@ export const Auth: Component = (props) => {
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
                 </div>
-                <div class="mb-4 flex justify-center">
-                  {regularExpressionEmail.test(email()  ) ? (
-                    <span
-                      id="emailCheck"
-                      class="text-sm text-text1 dark:text-text1-DM "
-                    >
-                      {t("messages.emailValid")}  
-                    </span>
-                  ) : (
-                    <span
-                      id="emailCheck"
-                      class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
-                    >
-                      {t("messages.emailLackRequirements")}
-                    </span>
-                  )}
-        </div>
+                
                 <div class="mb-1 flex justify-center">
                   <label for="password" class="hidden">
                     {t("formLabels.password")}
