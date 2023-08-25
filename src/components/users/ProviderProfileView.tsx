@@ -146,6 +146,7 @@ export const ProviderProfileView: Component = () => {
       } else {
         await downloadImage(provider()?.image_url!);
         setImageUrl(provider()?.image_url!);
+        console.log(imageUrl());
       }
     }
   });
@@ -481,7 +482,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.firstName")}
@@ -540,7 +541,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.lastName")}
@@ -600,7 +601,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.displayName")}
@@ -656,7 +657,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.changeEmail")}
@@ -712,7 +713,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.providerPhone")}
@@ -759,7 +760,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 translate-x-1/4 -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.locationUpdate")}
