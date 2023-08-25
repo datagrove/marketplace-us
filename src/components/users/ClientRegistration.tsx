@@ -369,14 +369,14 @@ export const ClientRegistration: Component = () => {
         <div class="mb-4 flex justify-center">
                   {regularExpressionPhone.test(phone()  ) ? (
                     <span
-                      id="pwlength"
+                      id="phoneValidClient"
                       class="text-sm text-text1 dark:text-text1-DM "
                     >
                       {t("messages.phoneValid")}  
                     </span>
                   ) : (
                     <span
-                      id="pwlength"
+                      id="phoneValidClient"
                       class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
                     >
                       {t("messages.phoneLackRequirements")}
