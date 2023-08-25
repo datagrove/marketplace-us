@@ -129,22 +129,22 @@ export const LocationFilter: Component<Props> = (props) => {
             {/* Container for Mobile View */}
             <div class="container">
                 {/*Mobile Filters Main Group*/}
-                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden mx-1 mb-4 border border-border dark:border-border-DM">
+                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
                     <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                         <h2 class="flex flex-1 p-2 font-bold">Filters</h2> {/* TODO:Internationalize this */}
                         {/*Creates the Dropdown Arrow*/}
                         <div class="flex w-10 items-center justify-center">
-                            <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                            <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                         </div>
                     </summary>
                     {/*Major Municipality*/}
                     <div class="px-4">
-                        <details class="bg-background1 dark:bg-black shadow rounded group/majorMunicipality md:hidden">
+                        <details class="bg-background1 dark:bg-background1-DM shadow rounded group/majorMunicipality md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.majorMunicipality')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
-                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
+                                    <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
                                 </div>
                             </summary>
                             <div class="px-4">
@@ -169,12 +169,12 @@ export const LocationFilter: Component<Props> = (props) => {
                     </div>
                     {/*Minor Municipality*/}
                     <div class="px-4">
-                        <details class="bg-background1 dark:bg-black shadow rounded group/minorMunicipality md:hidden">
+                        <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/minorMunicipality md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.minorMunicipality')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
-                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
+                                    <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
                                 </div>
                             </summary>
                             <div class="px-4 pb-2">
@@ -199,12 +199,12 @@ export const LocationFilter: Component<Props> = (props) => {
                     </div>
                     {/*Governing District*/}
                     <div class="px-4">
-                        <details class="bg-background1 dark:bg-black shadow rounded group/governingDistrict md:hidden">
+                        <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/governingDistrict md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold">{t('formLabels.governingDistrict')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
-                                    <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
+                                    <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
                                 </div>
                             </summary>
                             <div class="px-4 pb-2">
@@ -230,8 +230,8 @@ export const LocationFilter: Component<Props> = (props) => {
                 </details>
             </div >
             {/* Filter Menus for md+ view */}
-            < div class="hidden md:block bg-background1 dark:bg-black w-full md:rounded-lg md:border-2 md:border-gray-300" >
-                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300">
+            < div class="hidden md:block bg-background1 dark:bg-background1-DM w-full md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM" >
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
                     <div class="mt-2 ml-4">{t('formLabels.majorMunicipality')}</div>
                     <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
                         <For each={majorMunicipalities()}>{(item) =>
@@ -248,7 +248,7 @@ export const LocationFilter: Component<Props> = (props) => {
                         }</For>
                     </ul>
                 </div>
-                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border">
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
                     <div class="mt-2 mb-2 ml-4">{t('formLabels.minorMunicipality')}</div>
                     <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto"> {/*Combination of h-full and overflow auto causing weird behavior */}
                         <For each={minorMunicipalities()}>{(item) =>
@@ -265,7 +265,7 @@ export const LocationFilter: Component<Props> = (props) => {
                         }</For>
                     </ul>
                 </div>
-                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-gray-300 md:box-border"> {/*TODO: Set this to a website color */}
+                <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border"> {/*TODO: Set this to a website color */}
                     <div class="mt-2 mb-2 ml-4">{t('formLabels.governingDistrict')}</div>
                     <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
                         <For each={governingDistricts()}>{(item) =>

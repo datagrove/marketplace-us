@@ -51,7 +51,7 @@ export const SetNewPassword: Component = () => {
             </label>
             <input
               id="password"
-              class="inputField  ml-2 rounded-md pl-2 w-5/6 border border-border"
+              class="inputField  ml-2 rounded-md pl-2 w-5/6 border border-border1 dark:border-border1-DM"
               type="password"
               placeholder={t('formLabels.password')}
               value={password()}
@@ -66,7 +66,7 @@ export const SetNewPassword: Component = () => {
             <label for="confirm password" class="hidden">{t('formLabels.confirmPassword')}</label>
             <input
               id="confirm password"
-              class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+              class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1 dark:border-border1-DM"
               type="password"
               placeholder={t('formLabels.confirmPassword')}
               required

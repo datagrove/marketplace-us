@@ -75,7 +75,7 @@ const PostImage: Component<Props> = (props) => {
           <img
             src={image}
             alt={imageUrl() ? "Image" : "No image"}
-            class="user image border-2"
+            class="user image border-2 border-border1 dark:border-border1-DM"
             style={{ height: `${props.size}px`, width: `${props.size}px` }}
           />
         ))
@@ -85,7 +85,7 @@ const PostImage: Component<Props> = (props) => {
             height="120px" 
             viewBox="0 0 512 512" 
             version="1.1"
-            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM mb-4"
+            class="fill-logo1 dark:fill-logo1-DM bg-background2 dark:bg-background2-DM mb-4"
         >
             <title>image-filled</title>
             <g id="Page-1" stroke="none" stroke-width="1">
