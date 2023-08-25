@@ -34,7 +34,7 @@ module.exports = {
 				'link1': '#1B5C74',
 				'link1Hov': '#202A44',
 				'alert1': '#A11286',
-				'border1': '#E5E7EB',
+				'border1': '#212121',
 				'icon1': '#000000',
 				'logo1': '#000000',
 				'highlight1': '#296312',
