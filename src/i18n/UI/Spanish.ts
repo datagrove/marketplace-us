@@ -44,9 +44,13 @@ export const Spanish = {
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para ",
+    emailValid: 'Dirección de correo electrónico válida',
+    emailLackRequirements: 'El correo electrónico no cumple con los requisitos',
     passwordLength: 'La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
+    phoneLackRequirements: 'El numero de telefono tiene que tener 8 digitos',
+    phoneValid: 'Número de teléfono válido',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
     forgotPassword: '¿Olvidaste tu contraseña? Click aquí para',

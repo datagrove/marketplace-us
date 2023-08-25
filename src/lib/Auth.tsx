@@ -19,6 +19,7 @@ export const Auth: Component = (props) => {
   const lang = getLangFromUrl(new URL(window.location.href));
   const t = useTranslations(lang);
   const regularExpressionPassword = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 
   const handleLogin = async (e: SubmitEvent) => {
@@ -47,7 +48,7 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    if (regularExpressionPassword.test(password())) {
+    if (regularExpressionPassword.test(password()) && regularExpressionEmail.test(email())) {
 
       if (password() === confirmPassword()) {
         setPasswordMatch(true);
@@ -80,8 +81,13 @@ export const Auth: Component = (props) => {
         setPasswordMatch(false);
         alert(t("messages.passwordMatch"));
       }
-    } else {
+    }else if(!regularExpressionEmail.test(password())&& !regularExpressionPassword.test(email())) {
+      alert(t("messages.passwordLackRequirements")); 
+    alert(t("messages.emailLackRequirements"));
+    }else if(!regularExpressionEmail.test(password())) { 
       alert(t("messages.passwordLackRequirements"));
+    }else if(!regularExpressionPassword.test(email())) {
+      alert(t("messages.emailLackRequirements"));
     }
   };
 
@@ -166,6 +172,7 @@ export const Auth: Component = (props) => {
                     onChange={(e) => setEmail(e.currentTarget.value)}
                   />
                 </div>
+                
                 <div class="mb-1 flex justify-center">
                   <label for="password" class="hidden">
                     {t("formLabels.password")}
