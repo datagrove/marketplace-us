@@ -200,8 +200,8 @@ export const Spanish = {
       { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1' },
       { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
-    footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      <span class="text-text1-DM">Hecho por </span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> Todos los derechos reservados.</span>`,
+    footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm"></span>
+      <span class="text-text2 dark:text-text2-DM">Hecho por </span><a class="text-link2 dark:text-link2-DM hover:text-link2Hov dark:hover:text-link2Hov-DM" href="https://datagrove.com/"> Datagrove.</a><span class="text-text2 dark:text-text2-DM"> Todos los derechos reservados.</span>`,
   },
 
   productCategoryInfo: {
