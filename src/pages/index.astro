@@ -18,10 +18,10 @@ const t = useTranslations(lang);
         <h1 class="text-3xl font-bold">{t(`homePageText.headline`)}</h1>
         <p class="text-lg my-6">{t(`homePageText.subHeadline`)}</p>
       </div>
-      <div class="text-2xl font-bold text-link2-DM justify-center items-center grid grid-cols-8 gap-2 pb-6">
+      <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-center grid grid-cols-8 gap-2 pb-6">
         <a
           href={`/${lang}/services`}
-          class="flex flex-col justify-center items-center rounded-xl bg-btn1 drop-shadow-md shadow-md border-b-2 border-link2 shadow-link2 col-span-3 md:col-span-2 -space-y-8 h-28 w-28 hover:translate-y-0.5"
+          class="flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM col-span-3 md:col-span-2 -space-y-8 h-28 w-28 hover:translate-y-0.5"
         >
           <div class="flex">
             <svg
@@ -32,7 +32,7 @@ const t = useTranslations(lang);
               viewBox="0 0 512 512"
               xml:space="preserve"
               fill="currentColor"
-              class="w-12 h-12"
+              class="w-12 h-12 fill-logo1"
             >
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 
@@ -42,11 +42,6 @@ const t = useTranslations(lang);
                 stroke-linejoin="round"></g>
 
               <g id="SVGRepo_iconCarrier">
-                <style type="text/css">
-                  .st0 {
-                    fill: #000000;
-                  }
-                </style>
                 <g>
                   <path
                     class="st0"
@@ -57,13 +52,13 @@ const t = useTranslations(lang);
             </svg>
           </div>
           <br />
-          <div class="text-black text-xs text-center p-2">
+          <div class="text-btn1Text text-xs text-center p-2">
             {t('messages.fetch')}
           </div>
         </a>
         <div class="md:col-span-6 col-span-5 flex flex-col items-start justify-center">
-          <p class="mb-4">{t('messages.todoFetch')}</p>
-          <p class="text-xs italic">*{t('messages.mustSignIn')}</p>
+          <p class="mb-4 text-text1 dark:text-text1-DM">{t('messages.todoFetch')}</p>
+          <p class="text-xs italic text-text1 dark:text-text1-DM">*{t('messages.mustSignIn')}</p>
         </div>
       </div>
 

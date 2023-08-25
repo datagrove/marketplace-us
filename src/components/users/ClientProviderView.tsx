@@ -62,9 +62,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     alert(t('messages.noProvider'));
                     location.href = `/${lang}/services`
                 } else {
-                    console.log(data)
                     setProvider(data[0]);
-                    console.log(provider())
                 }
             } catch (error) {
                 console.log(error);

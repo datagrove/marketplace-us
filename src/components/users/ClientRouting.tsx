@@ -41,7 +41,6 @@ export const ClientRouting = () => {
       } else {
         setCreateText(t("pageTitles.viewClientAccount"));
         setRouting(`/${lang}/client/profile`);
-        // console.log("user is a client");
         setIsUserClient(true);
       }
     } catch (error) {

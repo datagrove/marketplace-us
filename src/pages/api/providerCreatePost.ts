@@ -46,7 +46,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  console.log(sessionData)
+  // console.log(sessionData)
 
   if (!sessionData?.session) {
     return new Response(
@@ -118,10 +118,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  console.log(districtId)
-  console.log(minorMunicipalityId)
-  console.log(majorMunicipalityId)
-  console.log(countryId)
+ 
 
   let locationSubmission = {
     minor_municipality: minorMunicipalityId[0].id,
@@ -131,9 +128,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     user_id: user.id,
   }
 
-  console.log("User: " + user)
-  console.log("user role: " + user.aud)
-  console.log(locationSubmission)
+
 
   const { error: locationError, data: location } = await supabase.from('location').insert([locationSubmission]).select('id')
   if (locationError) {

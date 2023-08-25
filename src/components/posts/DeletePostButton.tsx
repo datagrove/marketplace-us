@@ -49,7 +49,6 @@ export const DeletePostButton: Component<Props> = (props) => {
             .remove(props.postImage?.split(","));
           if (error) {
             console.log("supabase errror: " + error.message);
-            console.log(error)
           } else {
             console.log("deleted images", props.postImage?.split(","));
           }

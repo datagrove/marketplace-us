@@ -144,45 +144,45 @@ export const English = {
 
   footerData: {
     links: [
+      // {
+      //   title: 'Product',
+      //   links: [
+      //     // { text: 'Features', href: '#' },
+      //     // { text: 'Security', href: '#' },
+      //     // { text: 'Team', href: '#' },
+      //     // { text: 'Enterprise', href: '#' },
+      //     // { text: 'Customer stories', href: '#' },
+      //     // { text: 'Pricing', href: '#' },
+      //     // { text: 'Resources', href: '#' },
+      //   ],
+      // },
+      // {
+      //   title: 'Platform',
+      //   links: [
+      //     // { text: 'Developer API', href: '#' },
+      //     // { text: 'Partners', href: '#' },
+      //   ],
+      // },
       {
-        title: 'Product',
-        links: [
-          { text: 'Features', href: '#' },
-          { text: 'Security', href: '#' },
-          { text: 'Team', href: '#' },
-          { text: 'Enterprise', href: '#' },
-          { text: 'Customer stories', href: '#' },
-          { text: 'Pricing', href: '#' },
-          { text: 'Resources', href: '#' },
-        ],
-      },
-      {
-        title: 'Platform',
-        links: [
-          { text: 'Developer API', href: '#' },
-          { text: 'Partners', href: '#' },
-        ],
-      },
-      {
-        title: 'Support',
+        // title: 'Support',
         links: [
           { text: 'Docs', href: '#' },
-          { text: 'Community Forum', href: '#' },
-          { text: 'Professional Services', href: '#' },
-          { text: 'Skills', href: '#' },
-          { text: 'Status', href: '#' },
+          // { text: 'Community Forum', href: '#' },
+          // { text: 'Professional Services', href: '#' },
+          // { text: 'Skills', href: '#' },
+          // { text: 'Status', href: '#' },
         ],
       },
       {
-        title: 'Company',
+        // title: 'Company',
         links: [
           { text: 'About', href: '#' },
-          { text: 'Blog', href: '#' },
-          { text: 'Careers', href: '#' },
-          { text: 'Press', href: '#' },
-          { text: 'Inclusion', href: '#' },
-          { text: 'Social Impact', href: '#' },
-          { text: 'Shop', href: '#' },
+          // { text: 'Blog', href: '#' },
+          // { text: 'Careers', href: '#' },
+          // { text: 'Press', href: '#' },
+          // { text: 'Inclusion', href: '#' },
+          // { text: 'Social Impact', href: '#' },
+          // { text: 'Shop', href: '#' },
         ],
       },
     ],
@@ -191,15 +191,17 @@ export const English = {
       { text: 'Privacy Policy', href: 'privacy' },
     ],
     socialLinks: [
-      { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
+      // { ariaLabel: 'Twitter', icon: 'tabler:brand-twitter', href: '#' },
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
-      { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: '#' },
+      // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
+      { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
-      <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm bg-[]"></span>
-      Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://datagrove.com/"> Datagrove </a> All rights reserved.
+      <span class="w-5 h-5 md:w-6 md:h-6 bg-cover rounded-sm text-text2 dark:text-text2-DM"></span>
+      <span class="text-text2 dark:text-text2-DM">Made by</span><a class="text-link2 dark:text-link2-DM hover:text-link2Hov dark:hover:text-link2Hov-DM" href="https://datagrove.com/"> Datagrove.</a><span class="text-text2 dark:text-text2-DM"> All rights reserved.</span>
     `,
   },
 
