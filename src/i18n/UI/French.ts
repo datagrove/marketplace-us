@@ -203,8 +203,8 @@ export const French = {
       { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
-    <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover rounded-sm"></span>
-    <span class="text-text1-DM">Faite par</span><a class="text-link2-DM hover:underline" href="https://datagrove.com/"> Datagrove.</a><span class="text-text1-DM"> Tous les droits sont réservés.</span>
+    <span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover rounded-sm text-text2 dark:text-text2-DM"></span>
+    <span class="text-text2 dark:text-text2-DM">Faite par</span><a class="text-link2 dark:text-link2-DM hover:text-link2Hov dark:hover:text-link2Hov-DM" href="https://datagrove.com/"> Datagrove.</a><span class="text-text2 dark:text-text2-DM"> Tous les droits sont réservés.</span>
   `,
   },
 
