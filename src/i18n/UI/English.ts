@@ -127,6 +127,8 @@ export const English = {
     lastName: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.',
     displayName: "This is the name that will be displayed on your profile. If you do not provide one then your first and last name will be used for display purposes.",
     profileImage: 'This image will be displayed on your profile and any of your posts/communications through the site.',
+    changeEmail: 'If you update your email you must confirm the change at the old email address and the new email address to complete the change.',
+    locationUpdate: 'If you update your location all fields must be completed.',
   },
 
   headerData: {

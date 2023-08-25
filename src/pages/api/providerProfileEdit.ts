@@ -79,8 +79,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  //TODO: Add tooltip to confirm at both email addresses
-
   if (user.email !== email) {
     const { data, error } = await supabase.auth.updateUser({ email: email!.toString() });
     if (error) {

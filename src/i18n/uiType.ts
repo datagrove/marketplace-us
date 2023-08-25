@@ -128,6 +128,8 @@ export interface uiObject {
     lastName: string,
     displayName: string,
     profileImage: string,
+    changeEmail: string,
+    locationUpdate: string,
   },
 
   headerData: {

@@ -127,6 +127,8 @@ export const French = {
     lastName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
     displayName: "C'est le nom qui sera affiché sur votre profil. Si vous n'en fournissez pas, votre prénom et votre nom seront utilisés à des fins d'affichage.",
     profileImage: "Cette image sera affichée sur votre profil et sur toutes vos publications/communications via le site.",
+    changeEmail: "Si vous mettez à jour votre adresse e-mail, vous devez confirmer le changement à l'ancienne adresse e-mail et à la nouvelle adresse e-mail pour finaliser la modification.",
+    locationUpdate: "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
   },
 
   headerData: {
