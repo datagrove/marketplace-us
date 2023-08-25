@@ -82,7 +82,7 @@ export const DeletePostButton: Component<Props> = (props) => {
       <div class="w-fit h-fit">
         <form onSubmit={deletePost}>
           <button
-            class="bg-[#B21010] dark:bg-[#F56B6B] text-white dark:text-black font-bold p-1 rounded"
+            class="bg-alert1-DM dark:bg-alert2-DM text-text1 dark:text-text1-DM font-bold p-1 rounded"
             type="submit"
             aria-label={t("buttons.delete")}
           >
