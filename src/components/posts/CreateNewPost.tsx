@@ -235,7 +235,7 @@ export const CreateNewPost: Component = () => {
             type="text"
             id="Title"
             name="Title"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none text-text1"
+            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-text1 dark:text-text1-DM"
             required
           />
         </label>
@@ -246,7 +246,7 @@ export const CreateNewPost: Component = () => {
           <select
             id="ServiceCategory"
             name="ServiceCategory"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 dark:text-black focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
             required>
             <option value="-1">-</option>
             {productCategoryData.categories.map((category) => (
@@ -263,7 +263,7 @@ export const CreateNewPost: Component = () => {
           <textarea
             id="Content"
             name="Content"
-            class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none text-text1"
+            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-text1  dark:text-text1-DM"
             placeholder={t('formLabels.enterPostContent')}
             rows="10"
             required>
@@ -277,7 +277,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="country"
               name="country"
-              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
               <option value="-1">-</option>
             </select>
@@ -290,7 +290,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="MajorMunicipality"
               name="MajorMunicipality"
-              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
               <option value="-1">-</option>
             </select>
@@ -303,7 +303,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="MinorMunicipality"
               name="MinorMunicipality"
-              class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
               <option value="-1">-</option>
             </select>
@@ -315,7 +315,7 @@ export const CreateNewPost: Component = () => {
           <select
             id="GoverningDistrict"
             name="GoverningDistrict"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
             required>
             <option value="-1">-</option>
           </select>
