@@ -45,9 +45,13 @@ export const French = {
 
   messages: {
     noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
+    emailValid: 'Adresse e-mail valide',
+    emailLackRequirements: "L'e-mail ne répond pas aux exigences",
     passwordLength: "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
     passwordValid: 'Mot de passe valide',
     passwordLackRequirements: 'Le mot de passe ne répond pas aux exigences', 
+    phoneLackRequirements: 'Le numéro de téléphone doit comporter 8 chiffres',
+    phoneValid: 'Numéro de téléphone valide',
     passwordMatch: "Les mots de passe ne correspondent pas",
     passwordReset: 'Réinitialisation du mot de passe',
     forgotPassword: 'Mot de passe oublié? Cliquez ici pour',

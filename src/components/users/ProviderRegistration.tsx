@@ -29,6 +29,9 @@ export const ProviderRegistration: Component = () => {
     const [formData, setFormData] = createSignal<FormData>()
     const [response] = createResource(formData, postFormData)
     const [imageUrl, setImageUrl] = createSignal<string | null>(null)
+    const [phone,setPhone] = createSignal<string>("")
+
+    const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
     createEffect(async () => {
         const { data, error } = await supabase.auth.getSession()
@@ -151,6 +154,8 @@ export const ProviderRegistration: Component = () => {
     //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
     function submit(e: SubmitEvent) {
         e.preventDefault();
+
+        if(regularExpressionPhone.test(phone())){
         const formData = new FormData(e.target as HTMLFormElement)
         formData.append("access_token", session()?.access_token!)
         formData.append("refresh_token", session()?.refresh_token!)
@@ -158,7 +163,12 @@ export const ProviderRegistration: Component = () => {
             formData.append("image_url", imageUrl()!)
         }
         setFormData(formData)
+        } else if(!regularExpressionPhone.test(phone())) {  {
+            alert(t("messages.phoneLackRequirements"));
     }
+
+    }
+}
 
     //Actual Form that gets displayed for users to fill
     return (
@@ -310,9 +320,13 @@ export const ProviderRegistration: Component = () => {
                         id="Phone"
                         class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="Phone"
+                        value={phone()}
                         required
-                    />
-                </div>
+                        onChange={(e) => setPhone(e.currentTarget.value)}
+          />
+        </div>
+
+                  
 
                 <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
                     <select

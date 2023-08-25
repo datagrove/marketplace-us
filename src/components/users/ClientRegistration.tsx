@@ -32,6 +32,9 @@ export const ClientRegistration: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
+  const [phone, setPhone] = createSignal<string>("");
+
+  const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -193,14 +196,21 @@ export const ClientRegistration: Component = () => {
 
   function submit(e: SubmitEvent) {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    formData.append("access_token", session()?.access_token!);
-    formData.append("refresh_token", session()?.refresh_token!);
-    if (imageUrl() !== null) {
-      formData.append("image_url", imageUrl()!);
-    }
-    setFormData(formData);
+    // this might not be the best way to do this but it works and we can also have more control over the form input data
+    if(regularExpressionPhone.test(phone())){
+
+      const formData = new FormData(e.target as HTMLFormElement);
+      formData.append("access_token", session()?.access_token!);
+      formData.append("refresh_token", session()?.refresh_token!);
+      if (imageUrl() !== null) {
+        formData.append("image_url", imageUrl()!);
+      }
+      setFormData(formData);
+    }else if(!regularExpressionPhone.test(phone())) {  {
+      alert(t("messages.phoneLackRequirements"));
+}
   }
+}
 
   return (
     <div class="">
@@ -354,8 +364,10 @@ export const ClientRegistration: Component = () => {
             class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone"
             required
+            onChange={(e) => setPhone(e.currentTarget.value)}
           />
         </div>
+ 
 
         <label for="country" class="text-text1 dark:text-text1-DM">
           {t("formLabels.country")}:
