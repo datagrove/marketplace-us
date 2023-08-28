@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 
 export const post: APIRoute = async ({ request, redirect }) => {
@@ -105,12 +105,12 @@ export const post: APIRoute = async ({ request, redirect }) => {
     .from("profiles")
     .select("user_id")
     .eq("user_id", user.id);
-    console.log("Profile exists data: " + profileExists);
+    console.log(profileExists!.length);
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message);
-  } else if (Object.keys(profileExists).length === 0) {
+  } else if (profileExists.length !== 0) {
     console.log("Profile already exists");
-  } else if (profileExists[0] === undefined) {
+  } else if (profileExists.length === 0) {
     //Build a submission to the profile table
     let profileSubmission = {
       user_id: user.id,
