@@ -5,6 +5,7 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				//Dark Mode
 				'background1-DM': '#000000',
 				'text1-DM': '#94A3B8',
 				'btn1-DM':	'#1DD762',
@@ -27,6 +28,8 @@ module.exports = {
 				'icon2-DM': '#F0F0F0',
 				'logo2-DM': '#F0F0F0',
 				'highlight2-DM': '#1DD762',
+
+				//Light Mode
 				'background1': '#FFFFFF',
 				'text1': '#000000',
 				'btn1': '#296312',
