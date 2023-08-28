@@ -88,7 +88,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
     .from("providers")
     .select("user_id")
     .eq("user_id", user.id);
-    console.log(providerExists);
   if (providerExistsError) {
     console.log("supabase error: " + providerExistsError.message);
   } else if (providerExists[0] !== undefined) {
@@ -106,6 +105,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     .from("profiles")
     .select("user_id")
     .eq("user_id", user.id);
+    console.log(profileExists);
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message);
   } else if (profileExists[0] !== undefined) {
