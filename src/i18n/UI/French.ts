@@ -133,6 +133,7 @@ export const French = {
     profileImage: "Cette image sera affichée sur votre profil et sur toutes vos publications/communications via le site.",
     changeEmail: "Si vous mettez à jour votre adresse e-mail, vous devez confirmer le changement à l'ancienne adresse e-mail et à la nouvelle adresse e-mail pour finaliser la modification.",
     locationUpdate: "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
+    postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
   },
 
   headerData: {

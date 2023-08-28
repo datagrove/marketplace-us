@@ -1,6 +1,10 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   size: number;
@@ -102,7 +106,7 @@ const PostImage: Component<Props> = (props) => {
           class="btn-primary"
           for="single"
         >
-          {uploading() ? "Uploading ..." : "Upload Image"}
+          {uploading() ? t("buttons.uploading") : t("buttons.uploadImage")}
         </label>
         <span style="display:none">
           <input
