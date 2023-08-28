@@ -26,7 +26,7 @@ async function postFormData(formData: FormData) {
 //Component that creates the form and collects the data
 export const ProviderRegistration: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null)
-    const [formData, setFormData] = createSignal<FormData>()
+    const [formData, setFormData] = createSignal<FormData | null>(null)
     const [response] = createResource(formData, postFormData)
     const [imageUrl, setImageUrl] = createSignal<string | null>(null)
     const [phone,setPhone] = createSignal<string>("")
@@ -157,12 +157,15 @@ export const ProviderRegistration: Component = () => {
 
         if(regularExpressionPhone.test(phone())){
         const formData = new FormData(e.target as HTMLFormElement)
+        console.log(session()?.access_token!)
         formData.append("access_token", session()?.access_token!)
+        console.log(session()?.refresh_token!)
         formData.append("refresh_token", session()?.refresh_token!)
         if (imageUrl() !== null) {
             formData.append("image_url", imageUrl()!)
         }
         setFormData(formData)
+
         } else if(!regularExpressionPhone.test(phone())) {  {
             alert(t("messages.phoneLackRequirements"));
     }
