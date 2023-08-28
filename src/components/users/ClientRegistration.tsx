@@ -73,7 +73,7 @@ export const ClientRegistration: Component = () => {
             let length = municipalitySelect?.length;
 
             for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "-1") {
+              if (municipalitySelect.options[i].value !== "") {
                 municipalitySelect.remove(i);
               }
             }
@@ -114,7 +114,7 @@ export const ClientRegistration: Component = () => {
               let length = municipalitySelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "-1") {
+                if (municipalitySelect.options[i].value !== "") {
                   municipalitySelect.remove(i);
                 }
               }
@@ -160,7 +160,7 @@ export const ClientRegistration: Component = () => {
               let length = districtSelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "-1") {
+                if (districtSelect.options[i].value !== "") {
                   districtSelect.remove(i);
                 }
               }
@@ -377,7 +377,7 @@ export const ClientRegistration: Component = () => {
             name="country"
             required
           >
-            <option value="-1">-</option>
+            <option value="">-</option>
           </select>
         </label>
 
@@ -391,7 +391,7 @@ export const ClientRegistration: Component = () => {
             name="MajorMunicipality"
             required
           >
-            <option value="-1">-</option>
+            <option value="">-</option>
           </select>
         </label>
 
@@ -405,7 +405,7 @@ export const ClientRegistration: Component = () => {
             name="MinorMunicipality"
             required
           >
-            <option value="-1">-</option>
+            <option value="">-</option>
           </select>
         </label>
 
@@ -419,7 +419,7 @@ export const ClientRegistration: Component = () => {
             name="GoverningDistrict"
             required
           >
-            <option value="-1">-</option>
+            <option value="">-</option>
           </select>
         </label>
 

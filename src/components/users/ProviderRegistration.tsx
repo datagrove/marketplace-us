@@ -69,7 +69,7 @@ export const ProviderRegistration: Component = () => {
                         let length = municipalitySelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            if (municipalitySelect.options[i].value !== "-1") {
+                            if (municipalitySelect.options[i].value !== "") {
                                 municipalitySelect.remove(i)
                             }
                         }
@@ -98,7 +98,7 @@ export const ProviderRegistration: Component = () => {
                         let length = municipalitySelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            if (municipalitySelect.options[i].value !== "-1") {
+                            if (municipalitySelect.options[i].value !== "") {
                                 municipalitySelect.remove(i)
                             }
                         }
@@ -127,7 +127,7 @@ export const ProviderRegistration: Component = () => {
                         let length = districtSelect?.length
 
                         for (let i = length - 1; i > -1; i--) {
-                            if (districtSelect.options[i].value !== "-1") {
+                            if (districtSelect.options[i].value !== "") {
                                 districtSelect.remove(i)
                             }
                         }
@@ -334,7 +334,7 @@ export const ProviderRegistration: Component = () => {
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="country"
                         required>
-                        <option value="-1">-</option>
+                        <option value="">-</option>
                     </select>
                 </label>
 
@@ -347,7 +347,7 @@ export const ProviderRegistration: Component = () => {
                         name="MajorMunicipality"
                         required
                     >
-                        <option value="-1">-</option>
+                        <option value="">-</option>
                     </select>
                 </label>
 
@@ -359,7 +359,7 @@ export const ProviderRegistration: Component = () => {
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="MinorMunicipality"
                         required>
-                        <option value="-1">-</option>
+                        <option value="">-</option>
                     </select>
                 </label>
 
@@ -371,7 +371,7 @@ export const ProviderRegistration: Component = () => {
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="GoverningDistrict"
                         required>
-                        <option value="-1">-</option>
+                        <option value="">-</option>
                     </select>
                 </label>
 

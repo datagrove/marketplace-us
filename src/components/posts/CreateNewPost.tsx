@@ -94,7 +94,7 @@ export const CreateNewPost: Component = () => {
             let length = municipalitySelect?.length;
 
             for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "-1") {
+              if (municipalitySelect.options[i].value !== "") {
                 municipalitySelect.remove(i);
               }
             }
@@ -135,7 +135,7 @@ export const CreateNewPost: Component = () => {
               let length = municipalitySelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "-1") {
+                if (municipalitySelect.options[i].value !== "") {
                   municipalitySelect.remove(i);
                 }
               }
@@ -181,7 +181,7 @@ export const CreateNewPost: Component = () => {
               let length = districtSelect?.length;
 
               for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "-1") {
+                if (districtSelect.options[i].value !== "") {
                   districtSelect.remove(i);
                 }
               }
@@ -248,7 +248,7 @@ export const CreateNewPost: Component = () => {
             name="ServiceCategory"
             class="ml-2 rounded mb-4 dark:text-black focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
             required>
-            <option value="-1">-</option>
+            <option value="">-</option>
             {productCategoryData.categories.map((category) => (
               <option value={category.id}>{category.name}</option>
             ))}
@@ -279,7 +279,7 @@ export const CreateNewPost: Component = () => {
               name="country"
               class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
-              <option value="-1">-</option>
+              <option value="">-</option>
             </select>
           </label>
         </div>
@@ -292,7 +292,7 @@ export const CreateNewPost: Component = () => {
               name="MajorMunicipality"
               class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
-              <option value="-1">-</option>
+              <option value="">-</option>
             </select>
           </label>
         </div>
@@ -305,7 +305,7 @@ export const CreateNewPost: Component = () => {
               name="MinorMunicipality"
               class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
               required>
-              <option value="-1">-</option>
+              <option value="">-</option>
             </select>
           </label>
         </div>
@@ -317,7 +317,7 @@ export const CreateNewPost: Component = () => {
             name="GoverningDistrict"
             class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
             required>
-            <option value="-1">-</option>
+            <option value="">-</option>
           </select>
         </label>
 
