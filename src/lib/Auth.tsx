@@ -171,7 +171,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   required
@@ -186,7 +186,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   required
@@ -218,7 +218,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="confirm password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.confirmPassword")}
                   required
