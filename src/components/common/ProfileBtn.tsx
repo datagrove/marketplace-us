@@ -66,7 +66,7 @@ export const ProfileBtn = () => {
         {renderWhenUser()}
         <div class="mt-2">
         <div>
-          <a>{t('pageTitles.home')}</a>
+          <a href={`/${lang}`}>{t('pageTitles.home')}</a>
         </div>
           <AuthMode />
         </div>
