@@ -152,7 +152,7 @@ export const Auth: Component = (props) => {
                   {" "}
                   {t("messages.noAccount")}
                   <a
-                    class="text-link2 hover:underline dark:text-link2-DM"
+                    class="text-link1 hover:underline dark:text-link1-DM"
                     href={`/${lang}/signup`}
                   >
                     {t("buttons.signUp")}
