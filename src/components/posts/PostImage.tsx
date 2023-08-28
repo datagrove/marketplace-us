@@ -69,7 +69,7 @@ const PostImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite">
+    <div class="flex-row text-center justify-center" aria-live="polite">
       {imageUrl().length > 0 ? (
         imageUrl().map((image) => (
           <img
@@ -80,6 +80,7 @@ const PostImage: Component<Props> = (props) => {
           />
         ))
       ) : (
+        <div class="flex justify-center">
         <svg
             width="120px" 
             height="120px" 
@@ -94,8 +95,9 @@ const PostImage: Component<Props> = (props) => {
                 </g>
             </g>
         </svg>
+        </div>
       )}
-      <div style={{ width: `${props.size}px` }}>
+      <div class="mt-3">
         <label
           class="btn-primary"
           for="single"
