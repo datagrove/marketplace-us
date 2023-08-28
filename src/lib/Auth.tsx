@@ -243,11 +243,11 @@ export const Auth: Component = (props) => {
                 {t("messages.clickWrap1")}{" "}
                 <span class="font-medium">{t("pageTitles.signUp")}</span>{" "}
                 {t("messages.clickWrap2")}{" "}
-                <a class="text-link2-DM hover:underline">
+                <a href={`/${lang}/terms`} target="_blank" class="text-link2-DM hover:underline">
                   {t("pageTitles.terms")}
                 </a>{" "}
                 &{" "}
-                <a class="text-link2-DM hover:underline">
+                <a href={`/${lang}/privacy`} target="_blank" class="text-link2-DM hover:underline">
                   {t("pageTitles.privacy")}
                 </a>
               </div>
