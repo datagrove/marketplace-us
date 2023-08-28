@@ -113,7 +113,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   value={email()}
@@ -126,16 +126,14 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   value={password()}
                   onChange={(e) => {
-                    if (e.currentTarget.value.length > 5) {
-                      console.log("Password length is greater than 5");
-                      return setPassword(e.currentTarget.value);
+                    setPassword(e.currentTarget.value);
                     }
-                  }}
+                  }
                 />
               </div>
               <div class="mb-4 flex justify-center">
