@@ -14,6 +14,7 @@ async function postFormData(formData: FormData) {
         body: formData,
     });
     const data = await response.json();
+    console.log(data.message);
     //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {
         //TODO: Not sure how to deal with internationalization here
@@ -157,12 +158,15 @@ export const ProviderRegistration: Component = () => {
 
         if(regularExpressionPhone.test(phone())){
         const formData = new FormData(e.target as HTMLFormElement)
+        console.log(session()?.access_token!)
         formData.append("access_token", session()?.access_token!)
+        console.log(session()?.refresh_token!)
         formData.append("refresh_token", session()?.refresh_token!)
         if (imageUrl() !== null) {
             formData.append("image_url", imageUrl()!)
         }
         setFormData(formData)
+
         } else if(!regularExpressionPhone.test(phone())) {  {
             alert(t("messages.phoneLackRequirements"));
     }
