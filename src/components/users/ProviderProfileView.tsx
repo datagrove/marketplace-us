@@ -62,7 +62,7 @@ export const ProviderProfileView: Component = () => {
   const [provider, setProvider] = createSignal<Provider>();
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [providerImage, setProviderImage] = createSignal<string>("");
-  const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
+  const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [screenSize, setScreenSize] = createSignal<
     "sm" | "md" | "lg" | "xl" | "2xl"
@@ -394,10 +394,7 @@ export const ProviderProfileView: Component = () => {
             <Show when={screenSize() === "sm"}>
               <div class="container">
                 {/* Profile Information for Mobile View */}
-                <details
-                  class="bg-background1 dark:bg-black shadow rounded group md:hidden"
-                  open
-                >
+                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold">
                       {t("formLabels.profileInfo")}
@@ -446,7 +443,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="first-name flex flex-row flex-wrap justify-between">
                       <label
                         for="FirstName"
-                        class="text-text2 dark:text-text1-DM"
+                        class="text-text1 dark:text-text1-DM"
                       >
                         {t("formLabels.firstName")}:
                       </label>
@@ -505,7 +502,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="last-name flex flex-row flex-wrap justify-between">
                       <label
                         for="LastName"
-                        class="text-text2 dark:text-text1-DM"
+                        class="text-text1 dark:text-text1-DM"
                       >
                         {t("formLabels.lastName")}:
                       </label>
@@ -626,12 +623,15 @@ export const ProviderProfileView: Component = () => {
                         {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                       </label>
                       <Show when={editMode() === false}>
-                        <p
-                          id="email"
-                          class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                        >
-                          {provider()?.email}
-                        </p>
+                        <div class="basis-full h-0"></div>
+                        <div class="basis-full">
+                          <p
+                            id="email"
+                            class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border mb-4 dark:border-border-DM focus:outline-none overflow-auto"
+                          >
+                            {provider()?.email}
+                          </p>
+                        </div>
                       </Show>
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
@@ -734,9 +734,7 @@ export const ProviderProfileView: Component = () => {
 
                     <Show when={editMode() === true}>
                       <div class="flex flex-row justify-items-center justify-left mb-2">
-                        <h3 class="font-bold mr-4">
-                          Location
-                        </h3>
+                        <h3 class="font-bold mr-4">Location</h3>
                         <div class="flex items-center relative mr-2">
                           <svg
                             class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
@@ -974,115 +972,325 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <label for="FirstName" class="text-text2 dark:text-text1-DM">
-                  {t("formLabels.firstName")}:
-                </label>
-                <Show when={editMode() === false}>
-                  <p
-                    id="FirstName"
-                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                  >
-                    {provider()?.first_name}
-                  </p>
-                </Show>
-                <Show when={editMode() === true}>
-                  <input
-                    type="text"
-                    id="FirstName"
-                    name="FirstName"
-                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                    value={provider()?.first_name}
-                  />
-                </Show>
+                <div class="first-name flex flex-row flex-wrap justify-between">
+                  <label for="FirstName" class="text-text1 dark:text-text1-DM">
+                    {t("formLabels.firstName")}:
+                  </label>
+                  <Show when={editMode() === false}>
+                    <p
+                      id="FirstName"
+                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    >
+                      {provider()?.first_name}
+                    </p>
+                  </Show>
+                  <Show when={editMode() === true}>
+                    <div class="group flex items-center relative mr-2">
+                      <svg
+                        class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
 
-                <label for="LastName" class="text-text2 dark:text-text1-DM">
-                  {t("formLabels.lastName")}:
-                </label>
-                <Show when={editMode() === false}>
-                  <p
-                    id="LastName"
-                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                  >
-                    {provider()?.last_name}
-                  </p>
-                </Show>
-                <Show when={editMode() === true}>
-                  <input
-                    type="text"
-                    id="LastName"
-                    name="LastName"
-                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                    value={provider()?.last_name}
-                  />
-                </Show>
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.firstName")}
+                      </span>
+                    </div>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <input
+                        type="text"
+                        id="FirstName"
+                        name="FirstName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.first_name}
+                        required
+                      />
+                    </div>
+                  </Show>
+                </div>
 
-                <label for="ProviderName" class="text-text1 dark:text-text1-DM">
-                  {t("formLabels.providerName")}:
-                </label>
-                <Show when={editMode() === false}>
-                  <p
-                    id="ProviderName"
-                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                  >
-                    {provider()?.provider_name
-                      ? provider()?.provider_name
-                      : t("formLabels.noValue")}
-                  </p>
-                </Show>
-                <Show when={editMode() === true}>
-                  <input
-                    type="text"
-                    id="ProviderName"
-                    name="ProviderName"
-                    class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                    value={provider()?.provider_name}
-                  />
-                </Show>
+                <div class="last-name flex flex-row flex-wrap justify-between">
+                  <label for="LastName" class="text-text1 dark:text-text1-DM">
+                    {t("formLabels.lastName")}:
+                  </label>
+                  <Show when={editMode() === false}>
+                    <p
+                      id="LastName"
+                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    >
+                      {provider()?.last_name}
+                    </p>
+                  </Show>
+                  <Show when={editMode() === true}>
+                    <div class="flex items-center relative mr-2">
+                      <svg
+                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
 
-                <div class="w-full overflow-auto mb-4">
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.lastName")}
+                      </span>
+                    </div>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <input
+                        type="text"
+                        id="LastName"
+                        name="LastName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.last_name}
+                      />
+                    </div>
+                  </Show>
+                </div>
+
+                <div class="provider-name flex flex-row flex-wrap justify-between">
+                  <label
+                    for="ProviderName"
+                    class="text-text1 dark:text-text1-DM"
+                  >
+                    {t("formLabels.providerName")}:
+                  </label>
+                  <Show when={editMode() === false}>
+                    <p
+                      id="ProviderName"
+                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    >
+                      {provider()?.provider_name
+                        ? provider()?.provider_name
+                        : t("formLabels.noValue")}
+                    </p>
+                  </Show>
+                  <Show when={editMode() === true}>
+                    <div class="flex items-center relative mr-2">
+                      <svg
+                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
+
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.displayName")}
+                      </span>
+                    </div>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <input
+                        type="text"
+                        id="ProviderName"
+                        name="ProviderName"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        value={provider()?.provider_name}
+                      />
+                    </div>
+                  </Show>
+                </div>
+
+                <div class="email-add flex flex-row flex-wrap justify-between">
                   <label for="email" class="text-text1 dark:text-text1-DM">
                     {t("formLabels.email")}:
                     {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                   </label>
                   <Show when={editMode() === false}>
-                    <p
-                      id="email"
-                      class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                    >
-                      {provider()?.email}
-                    </p>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <p
+                        id="email"
+                        class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 mb-4 overflow-auto border-border dark:border-border-DM focus:outline-none"
+                      >
+                        {provider()?.email}
+                      </p>
+                    </div>
                   </Show>
                   <Show when={editMode() === true}>
-                    <input
-                      id="email"
-                      name="email"
-                      class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
-                      type="email"
-                      placeholder={t("formLabels.email")}
-                      value={provider()?.email}
-                    />
+                    <div class="flex items-center relative mr-2">
+                      <svg
+                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
+
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.changeEmail")}
+                      </span>
+                    </div>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <input
+                        id="email"
+                        name="email"
+                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        type="email"
+                        placeholder={t("formLabels.email")}
+                        value={provider()?.email}
+                      />
+                    </div>
                   </Show>
                 </div>
 
-                <label for="Phone" class="text-text1 dark:text-text1-DM">
-                  {t("formLabels.phone")}:
-                </label>
-                <Show when={editMode() === false}>
-                  <p
-                    id="Phone"
-                    class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
-                  >
-                    {provider()?.provider_phone}
-                  </p>
-                </Show>
+                <div class="phone-number flex flex-row flex-wrap justify-between">
+                  <label for="Phone" class="text-text1 dark:text-text1-DM">
+                    {t("formLabels.phone")}:
+                  </label>
+                  <Show when={editMode() === false}>
+                    <p
+                      id="Phone"
+                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border dark:border-border-DM focus:outline-none"
+                    >
+                      {provider()?.provider_phone}
+                    </p>
+                  </Show>
+                  <Show when={editMode() === true}>
+                    <div class="flex items-center relative mr-2">
+                      <svg
+                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
+
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.providerPhone")}
+                      </span>
+                    </div>
+                    <div class="basis-full h-0"></div>
+                    <div class="basis-full">
+                      <input
+                        type="text"
+                        id="Phone"
+                        class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        name="Phone"
+                        value={provider()?.provider_phone}
+                      />
+                    </div>
+                  </Show>
+                </div>
+
                 <Show when={editMode() === true}>
-                  <input
-                    type="text"
-                    id="Phone"
-                    class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
-                    name="Phone"
-                    value={provider()?.provider_phone}
-                  />
+                  <div class="flex flex-row justify-items-center justify-left mb-2">
+                    <h3 class="font-bold mr-4">Location</h3>
+                    <div class="flex items-center relative mr-2">
+                      <svg
+                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 512 512"
+                      >
+                        <g>
+                          <path
+                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                          />
+                        </g>
+                      </svg>
+
+                      <span
+                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                          md:translate-x-1/4 translate-x-1/4 -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                      >
+                        {t("toolTips.locationUpdate")}
+                      </span>
+                    </div>
+                  </div>
                 </Show>
 
                 <label for="country" class="text-text1 dark:text-text1-DM">
