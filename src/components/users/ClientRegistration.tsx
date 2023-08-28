@@ -222,7 +222,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.firstName")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -238,8 +238,8 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
-                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.firstName")}
               </span>
 
@@ -260,7 +260,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.lastName")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -276,8 +276,8 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
-                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.lastName")}
               </span>
 
@@ -298,7 +298,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.displayName")}
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -314,8 +314,8 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
-                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.displayName")}
               </span>
 
@@ -335,7 +335,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.phone")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -351,8 +351,8 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
-                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.clientPhone")}
               </span>
 
@@ -427,7 +427,7 @@ export const ClientRegistration: Component = () => {
           <div class="">
             <div class="flex flex-row justify-end">
               <div class="group flex items-center relative mr-2">
-                <svg class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512">
                   <g>
                     <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -443,8 +443,8 @@ export const ClientRegistration: Component = () => {
                 </svg>
 
                 <span
-                  class="group-hover:opacity-100 transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
-                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48">
+                  class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                   {t("toolTips.profileImage")}
                 </span>
 
