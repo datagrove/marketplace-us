@@ -105,7 +105,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     .from("profiles")
     .select("user_id")
     .eq("user_id", user.id);
-    console.log("Type" + typeof profileExists);
+    console.log("Profile exists data: " + profileExists);
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message);
   } else if (Object.keys(profileExists).length === 0) {
