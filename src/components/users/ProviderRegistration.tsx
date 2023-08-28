@@ -27,7 +27,7 @@ async function postFormData(formData: FormData) {
 //Component that creates the form and collects the data
 export const ProviderRegistration: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null)
-    const [formData, setFormData] = createSignal<FormData | null>(null)
+    const [formData, setFormData] = createSignal<FormData>()
     const [response] = createResource(formData, postFormData)
     const [imageUrl, setImageUrl] = createSignal<string | null>(null)
     const [phone,setPhone] = createSignal<string>("")
