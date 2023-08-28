@@ -443,7 +443,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="first-name flex flex-row flex-wrap justify-between">
                       <label
                         for="FirstName"
-                        class="text-text2 dark:text-text1-DM"
+                        class="text-text1 dark:text-text1-DM"
                       >
                         {t("formLabels.firstName")}:
                       </label>
@@ -502,7 +502,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="last-name flex flex-row flex-wrap justify-between">
                       <label
                         for="LastName"
-                        class="text-text2 dark:text-text1-DM"
+                        class="text-text1 dark:text-text1-DM"
                       >
                         {t("formLabels.lastName")}:
                       </label>
@@ -973,7 +973,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="first-name flex flex-row flex-wrap justify-between">
-                  <label for="FirstName" class="text-text2 dark:text-text1-DM">
+                  <label for="FirstName" class="text-text1 dark:text-text1-DM">
                     {t("formLabels.firstName")}:
                   </label>
                   <Show when={editMode() === false}>
@@ -1029,7 +1029,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="last-name flex flex-row flex-wrap justify-between">
-                  <label for="LastName" class="text-text2 dark:text-text1-DM">
+                  <label for="LastName" class="text-text1 dark:text-text1-DM">
                     {t("formLabels.lastName")}:
                   </label>
                   <Show when={editMode() === false}>
