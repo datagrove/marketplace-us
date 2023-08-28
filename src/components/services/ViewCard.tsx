@@ -68,20 +68,20 @@ export const ViewCard: Component<Props> = (props) => {
         {newPosts().map((post: any) => (
           <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg dark:shadow-red">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-lg shadow-shadow-LM dark:shadow-shadow-DM">
                 <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                   {post.image_url ? (
                     <img
                       src={post.image_url}
                       alt={post.image_urls.split(',')[0] ? "User Image" : "No image"}
-                      class="dark:bg-background1-DM rounded-lg md:shadow-lg dark:shadow-2xl w-full h-full object-cover"
+                      class="bg-background1 dark:bg-background1-DM rounded-lg md:shadow-lg dark:shadow-2xl w-full h-full object-cover"
                     // style={{height: `120px`, width: `120px`}}
                     />
                   ) : (
                     <svg
                       viewBox="0 0 512 512"
                       version="1.1"
-                      class="fill-logo rounded-lg dark:fill-logo-DM bg-bg1-icon dark:bg-icon1-DM w-full h-full object-cover"
+                      class="fill-logo rounded-lg dark:fill-logo1-DM bg-icon1 dark:bg-icon1-DM w-full h-full object-cover"
                     >
                       <g id="Page-1" stroke="none" stroke-width="1">
                         <g id="icon" transform="translate(64.000000, 64.000000)">

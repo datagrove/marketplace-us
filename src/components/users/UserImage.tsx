@@ -103,7 +103,7 @@ const UserImage: Component<Props> = (props) => {
             height="120px"
             viewBox="0 0 512 512"
             version="1.1"
-            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM"
+            class="fill-logo2 dark:fill-icon1 bg-background2 dark:bg-icon2-DM"
           >
             <title>image-filled</title>
             <g id="Page-1" stroke="none" stroke-width="1">

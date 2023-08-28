@@ -40,13 +40,18 @@ export interface uiObject {
     delete: string,
     contact: string,
     phone: string,
+    saveProfile: string,
   },
 
   messages: {
     noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
     passwordLength: string,
     passwordValid: string,
     passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
     passwordMatch: string,
     passwordReset: string,
     forgotPassword: string,
@@ -71,6 +76,7 @@ export interface uiObject {
     fetch: string,
     todoFetch: string,
     mustSignIn: string,
+    profileEdits: string,
   },
 
   formLabels: {
@@ -106,6 +112,7 @@ export interface uiObject {
     image: string,
     slide: string,
     providerProfileImage: string,
+    clientProfileImage: string,
   },
 
   homePageText: {
@@ -125,6 +132,8 @@ export interface uiObject {
     lastName: string,
     displayName: string,
     profileImage: string,
+    changeEmail: string,
+    locationUpdate: string,
   },
 
   headerData: {

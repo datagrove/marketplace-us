@@ -11,7 +11,7 @@ export const PasswordReset: Component = () => {
 
 
     return (
-        <div class="bg-primaryBackground">
+        <div class="bg-background1 dark:bg:background1-DM">
             <p class="text-sm text-text1 dark:text-text1-DM"> {t('messages.forgotPassword')} <a class="text-link2 hover:underline dark:text-link2-DM" href={`/${lang}/password/request`}>{t('buttons.reset')}</a></p>
         </div>
     )

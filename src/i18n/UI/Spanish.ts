@@ -40,13 +40,18 @@ export const Spanish = {
     delete: 'Borrar',
     contact: 'Correo electrónico',
     phone: 'Llamada',
+    saveProfile: 'Guardar Perfil',
   },
 
   messages: {
     noAccount: "¿No tienes una cuenta? Click aquí para ",
+    emailValid: 'Dirección de correo electrónico válida',
+    emailLackRequirements: 'El correo electrónico no cumple con los requisitos',
     passwordLength: 'La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
+    phoneLackRequirements: 'El numero de telefono tiene que tener 8 digitos',
+    phoneValid: 'Número de teléfono válido',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
     forgotPassword: '¿Olvidaste tu contraseña? Click aquí para',
@@ -72,6 +77,7 @@ export const Spanish = {
     fetch: 'Obtener Servicios',
     todoFetch: '¡Todo el perro de servicio te traerá los servicios que necesitas!',
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
+    profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
   },
 
   formLabels: {
@@ -106,6 +112,7 @@ export const Spanish = {
     image: 'Publicar imagen',
     slide: 'Diapositiva',
     providerProfileImage: 'Imagen de perfil del proveedor',
+    clientProfileImage: "Imagen de perfil de cliente",
   },
 
   homePageText: {
@@ -125,6 +132,8 @@ export const Spanish = {
     lastName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
     displayName: "Este es el nombre que se mostrará en su perfil. Si no proporciona uno, su nombre y apellido se utilizarán con fines de visualización.",
     profileImage: "Esta imagen se mostrará en su perfil y en cualquiera de sus publicaciones/comunicaciones a través del sitio.",
+    changeEmail: 'Si actualiza su correo electrónico, debe confirmar el cambio en la dirección de correo electrónico anterior y en la nueva dirección de correo electrónico para completar el cambio.',
+    locationUpdate: 'Si actualiza su ubicación, se deben completar todos los campos.',
   },
 
   headerData: {

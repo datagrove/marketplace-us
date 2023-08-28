@@ -40,13 +40,18 @@ export const French = {
     delete: "Supprimer",
     contact: 'E-mail',
     phone: 'Appel',
+    saveProfile: "Enregistrer le profil",
   },
 
   messages: {
     noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
+    emailValid: 'Adresse e-mail valide',
+    emailLackRequirements: "L'e-mail ne répond pas aux exigences",
     passwordLength: "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
     passwordValid: 'Mot de passe valide',
     passwordLackRequirements: 'Le mot de passe ne répond pas aux exigences', 
+    phoneLackRequirements: 'Le numéro de téléphone doit comporter 8 chiffres',
+    phoneValid: 'Numéro de téléphone valide',
     passwordMatch: "Les mots de passe ne correspondent pas",
     passwordReset: 'Réinitialisation du mot de passe',
     forgotPassword: 'Mot de passe oublié? Cliquez ici pour',
@@ -71,6 +76,7 @@ export const French = {
     fetch: 'Récupérer des services',
     todoFetch: "Todo le chien d'assistance ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
+    profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
   },
 
   formLabels: {
@@ -105,6 +111,7 @@ export const French = {
     image: 'Publier une image',
     slide: 'Diapositive',
     providerProfileImage: 'Image du profil du fournisseur',
+    clientProfileImage: "Image du profil du client",
   },
 
   homePageText: {
@@ -124,6 +131,8 @@ export const French = {
     lastName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
     displayName: "C'est le nom qui sera affiché sur votre profil. Si vous n'en fournissez pas, votre prénom et votre nom seront utilisés à des fins d'affichage.",
     profileImage: "Cette image sera affichée sur votre profil et sur toutes vos publications/communications via le site.",
+    changeEmail: "Si vous mettez à jour votre adresse e-mail, vous devez confirmer le changement à l'ancienne adresse e-mail et à la nouvelle adresse e-mail pour finaliser la modification.",
+    locationUpdate: "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
   },
 
   headerData: {

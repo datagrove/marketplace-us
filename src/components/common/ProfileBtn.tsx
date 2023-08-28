@@ -40,10 +40,10 @@ export const ProfileBtn = () => {
     if (isUser()) {
       return (
         <div class="">
-          <div class="pb-2 border-b-2 border-border dark:border-border-DM">
+          <div class="pb-2 border-b-2 border-border1 dark:border-border1-DM">
             <ClientRouting />
           </div>
-          <div class="mt-2 border-b-2 border-border dark:border-border-DM pb-2">
+          <div class="mt-2 border-b-2 border-border1 dark:border-border1-DM pb-2">
             <div>
             <ProviderRegistrationRouting />
             </div>
