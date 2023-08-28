@@ -13,6 +13,7 @@ async function postFormData(formData: FormData) {
         method: "POST",
         body: formData,
     });
+    console.log(response);
     const data = await response.json();
     //Checks the API response for the redirect and sends them to the redirect page if there is one
     if (data.redirect) {

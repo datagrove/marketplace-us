@@ -8,7 +8,7 @@ export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKe
         fetch: (...args) => fetch(...args),
       },
     auth: {
-        storage: localStorage,
+        // storage: localStorage,
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
