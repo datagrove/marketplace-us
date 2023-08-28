@@ -120,7 +120,7 @@ const UserImage: Component<Props> = (props) => {
           class="btn-primary"
           for="single"
         >
-          {uploading() ? "Uploading ..." : "Upload Image"}
+          {uploading() ? t('buttons.uploading') : t('buttons.uploadImage')}
         </label>
         <span style="display:none">
           <input
