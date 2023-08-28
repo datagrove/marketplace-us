@@ -105,12 +105,12 @@ export const post: APIRoute = async ({ request, redirect }) => {
     .from("profiles")
     .select("user_id")
     .eq("user_id", user.id);
-    console.log(profileExists);
+    console.log("Type" + typeof profileExists);
   if (profileExistsError) {
     console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists.length > 0 && profileExists[0] !== undefined) {
+  } else if (profileExists[0] !== undefined) {
     console.log("Profile already exists");
-  } else if (profileExists.length = 0) {
+  } else if (profileExists[0] === undefined) {
     //Build a submission to the profile table
     let profileSubmission = {
       user_id: user.id,
