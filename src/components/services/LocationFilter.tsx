@@ -93,22 +93,20 @@ export const LocationFilter: Component<Props> = (props) => {
     createSignal<Array<{ major_municipality: string; id: number }>>(
       major_municipalities
     );
-  const [minorMunicipalities, setMinorMunicipalities] =
-    createSignal<
-      Array<{
-        minor_municipality: string;
-        id: number;
-        major_municipality: number;
-      }>
-    >(minor_municipalities);
-  const [governingDistricts, setGoverningDistricts] =
-    createSignal<
-      Array<{
-        governing_district: string;
-        id: number;
-        minor_municipality: number;
-      }>
-    >(governing_districts);
+  const [minorMunicipalities, setMinorMunicipalities] = createSignal<
+    Array<{
+      minor_municipality: string;
+      id: number;
+      major_municipality: number;
+    }>
+  >(minor_municipalities);
+  const [governingDistricts, setGoverningDistricts] = createSignal<
+    Array<{
+      governing_district: string;
+      id: number;
+      minor_municipality: number;
+    }>
+  >(governing_districts);
   const [locationFilters, setLocationFilters] = createSignal<
     Array<{ major_municipality: string; id: number }>
   >([]);
@@ -138,7 +136,10 @@ export const LocationFilter: Component<Props> = (props) => {
     minor_municipality: number;
   }> = [];
 
-  const setMajorMuniFilter = (item: { major_municipality: string; id: number }) => {
+  const setMajorMuniFilter = (item: {
+    major_municipality: string;
+    id: number;
+  }) => {
     if (locationFilters().includes(item)) {
       let currentLocationFilters = locationFilters().filter(
         (el) => el !== item
@@ -235,7 +236,7 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow rounded group/majorMunicipality md:hidden">
               <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">
+                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.majorMunicipality")}
                 </h2>
                 {/*Creates the Dropdown Arrow*/}
@@ -256,7 +257,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               setMajorMuniFilter(item);
                             }}
                           />
-                          <span class="text-text1 dark:text-text1-DM">
+                          <span class="text-ptext1 dark:text-ptext1-DM">
                             {item.major_municipality}
                           </span>
                         </li>
@@ -271,7 +272,7 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/minorMunicipality md:hidden">
               <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">
+                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.minorMunicipality")}
                 </h2>
                 {/*Creates the Dropdown Arrow*/}
@@ -292,7 +293,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               setMinorMuniFilter(item);
                             }}
                           />
-                          <span class="text-text1 dark:text-text1-DM">
+                          <span class="text-ptext1 dark:text-ptext1-DM">
                             {item.minor_municipality}
                           </span>
                         </div>
@@ -307,7 +308,7 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/governingDistrict md:hidden">
               <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">
+                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.governingDistrict")}
                 </h2>
                 {/*Creates the Dropdown Arrow*/}
@@ -328,7 +329,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               setGoverningDistrictFilter(item);
                             }}
                           />
-                          <span class="text-text1 dark:text-text1-DM">
+                          <span class="text-ptext1 dark:text-ptext1-DM">
                             {item.governing_district}
                           </span>
                         </div>
@@ -343,6 +344,7 @@ export const LocationFilter: Component<Props> = (props) => {
       </div>
       {/* Filter Menus for md+ view */}
       <div class="hidden md:block bg-background1 dark:bg-background1-DM w-full md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
+        {/*Major Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
           <div class="mt-2 ml-4">{t("formLabels.majorMunicipality")}</div>
           <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
@@ -356,7 +358,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       setMajorMuniFilter(item);
                     }}
                   />
-                  <span class="text-text1 dark:text-text1-DM">
+                  <span class="text-ptext1 dark:text-ptext1-DM">
                     {item.major_municipality}
                   </span>
                 </li>
@@ -364,6 +366,7 @@ export const LocationFilter: Component<Props> = (props) => {
             </For>
           </ul>
         </div>
+        {/*Minor Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
           <div class="mt-2 mb-2 ml-4">{t("formLabels.minorMunicipality")}</div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
@@ -379,7 +382,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       setMinorMuniFilter(item);
                     }}
                   />
-                  <span class="text-text1 dark:text-text1-DM">
+                  <span class="text-ptext1 dark:text-ptext1-DM">
                     {item.minor_municipality}
                   </span>
                 </div>
@@ -387,9 +390,8 @@ export const LocationFilter: Component<Props> = (props) => {
             </For>
           </ul>
         </div>
+        {/*Governing District*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          {" "}
-          {/*TODO: Set this to a website color */}
           <div class="mt-2 mb-2 ml-4">{t("formLabels.governingDistrict")}</div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
             <For each={governingDistricts()}>
@@ -402,7 +404,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       setGoverningDistrictFilter(item);
                     }}
                   />
-                  <span class="text-text1 dark:text-text1-DM">
+                  <span class="text-ptext1 dark:text-ptext1-DM">
                     {item.governing_district}
                   </span>
                 </div>

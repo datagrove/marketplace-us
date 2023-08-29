@@ -60,7 +60,7 @@ export const SetNewPassword: Component = () => {
             />
           </div>
           <div class="mb-4 flex justify-center">
-            {password().length > 5 ? '' : <span id='pwlength' class="text-sm text-text1 dark:text-text1-DM"> {t('messages.passwordLength')}</span>}
+            {password().length > 5 ? '' : <span id='pwlength' class="text-sm text-ptext1 dark:text-ptext1-DM"> {t('messages.passwordLength')}</span>}
           </div>
           <div class="mb-1 flex justify-center">
             <label for="confirm password" class="hidden">{t('formLabels.confirmPassword')}</label>
@@ -76,7 +76,7 @@ export const SetNewPassword: Component = () => {
             />
           </div>
           <div class="mb-4 flex justify-center">
-            {match() ? '' : <span id="pwconfirm" class="text-sm text-text1 dark:text-text1-DM">{t('messages.passwordMatch')}</span>}
+            {match() ? '' : <span id="pwconfirm" class="text-sm text-ptext1 dark:text-ptext1-DM">{t('messages.passwordMatch')}</span>}
           </div>
           <div class="flex justify-center">
             <button

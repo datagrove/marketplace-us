@@ -162,7 +162,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     return (
         <div>
-            <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+            <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
                 {post()?.title}
             </h2>
             <Show when={postImages().length > 0}>

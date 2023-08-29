@@ -218,7 +218,7 @@ export const ClientRegistration: Component = () => {
 
         <div class="">
           <div class="flex flex-row justify-between">
-            <label for="FirstName" class="text-text1 dark:text-text1-DM">
+            <label for="FirstName" class="text-ptext1 dark:text-ptext1-DM">
               {t("formLabels.firstName")}:
             </label>
             <div class="group flex items-center relative mr-2">
@@ -249,14 +249,14 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="FirstName"
             name="FirstName"
-            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
         </div>
 
         <div class="">
           <div class="flex flex-row justify-between">
-            <label for="LastName" class="text-text1 dark:text-text1-DM">
+            <label for="LastName" class="text-ptext1 dark:text-ptext1-DM">
               {t("formLabels.lastName")}:
             </label>
             <div class="group flex items-center relative mr-2">
@@ -287,14 +287,14 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="LastName"
             name="LastName"
-            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             required
           />
         </div>
 
         <div class="">
           <div class="flex flex-row justify-between">
-            <label for="DisplayName" class="text-text1 dark:text-text1-DM">
+            <label for="DisplayName" class="text-ptext1 dark:text-ptext1-DM">
               {t("formLabels.displayName")}
             </label>
             <div class="group flex items-center relative mr-2">
@@ -324,14 +324,14 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="DisplayName"
-            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="DisplayName"
           />
         </div>
 
         <div class="">
           <div class="flex flex-row justify-between">
-            <label for="Phone" class="text-text1 dark:text-text1-DM">
+            <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
               {t("formLabels.phone")}:
             </label>
             <div class="group flex items-center relative mr-2">
@@ -361,7 +361,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="Phone"
-            class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
             name="Phone"
             required
             onChange={(e) => setPhone(e.currentTarget.value)}
@@ -369,7 +369,7 @@ export const ClientRegistration: Component = () => {
         </div>
  
 
-        <label for="country" class="text-text1 dark:text-text1-DM">
+        <label for="country" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.country")}:
           <select
             id="country"
@@ -383,7 +383,7 @@ export const ClientRegistration: Component = () => {
 
         <br />
 
-        <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
+        <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.majorMunicipality")}:
           <select
             id="MajorMunicipality"
@@ -397,7 +397,7 @@ export const ClientRegistration: Component = () => {
 
         <br />
 
-        <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
+        <label for="MinorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.minorMunicipality")}:
           <select
             id="MinorMunicipality"
@@ -411,7 +411,7 @@ export const ClientRegistration: Component = () => {
 
         <br />
 
-        <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
+        <label for="GoverningDistrict" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.governingDistrict")}:
           <select
             id="GoverningDistrict"
