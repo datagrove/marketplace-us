@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabaseClient'
+import { supabase } from '../../lib/supabaseClientServer'
 import type { APIRoute } from "astro";
 import type { APIContext } from 'astro';
 

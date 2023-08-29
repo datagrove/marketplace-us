@@ -134,6 +134,7 @@ export const Spanish = {
     profileImage: "Esta imagen se mostrará en su perfil y en cualquiera de sus publicaciones/comunicaciones a través del sitio.",
     changeEmail: 'Si actualiza su correo electrónico, debe confirmar el cambio en la dirección de correo electrónico anterior y en la nueva dirección de correo electrónico para completar el cambio.',
     locationUpdate: 'Si actualiza su ubicación, se deben completar todos los campos.',
+    postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
   },
 
   headerData: {
