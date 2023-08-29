@@ -158,10 +158,9 @@ export const ProviderRegistration: Component = () => {
 
         if(regularExpressionPhone.test(phone())){
         const formData = new FormData(e.target as HTMLFormElement)
-        console.log(session()?.access_token!)
         formData.append("access_token", session()?.access_token!)
-        console.log(session()?.refresh_token!)
         formData.append("refresh_token", session()?.refresh_token!)
+        formData.append("lang", lang)
         if (imageUrl() !== null) {
             formData.append("image_url", imageUrl()!)
         }
@@ -422,7 +421,7 @@ export const ProviderRegistration: Component = () => {
                     <button class="btn-primary">{t('buttons.register')}</button>
                 </div>
 
-                <Suspense>{response() && <p>{response().message}</p>}</Suspense>
+                <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
             </form>
         </div>
     );

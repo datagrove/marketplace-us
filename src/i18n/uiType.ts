@@ -137,6 +137,30 @@ export interface uiObject {
     postImages: string,
   },
 
+  apiErrors: {
+    missingFields: string,
+    noSession: string,
+    noUser: string,
+    providerExists: string,
+    profileCreateError: string,
+    profileEditError: string,
+    noDistrict: string,
+    noMinorMunicipality: string,
+    noMajorMunicipality: string,
+    noCountry: string,
+    locationError: string,
+    providerCreateProfileError: string,
+    providerEditProfileError: string,
+    noProfileData: string,
+    success: string,
+    emailError: string,
+    noCategory: string,
+    postError: string,
+    noPost: string,
+    clientExists: string,
+    clientCreateProfileError: string,
+  },
+
   headerData: {
     links: [
       {
