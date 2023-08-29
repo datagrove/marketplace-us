@@ -95,21 +95,21 @@ export const ViewCard: Component<Props> = (props) => {
                 {/* <br /> */}
                 <div id="cardContent" class="px-1 pt-1 text-left w-full md:w-5/6 md:h-full">
                   <div class="grid grid-cols-4">
-                    <p class="text-lg font-bold mb-2 text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-3">
+                    <p class="text-2xl font-bold mb-2 text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-3">
                       {post.title}
                     </p>
                     <div class="justify-self-end pt-2 pr-4">
                       <DeletePostButton id={post.id} userId={post.user_id} postImage={post.image_urls} />
                     </div>
                   </div>
-                  <p class=" text-ptext1 dark:text-ptext1-DM text-xs max-h-12 md:h-12 overflow-hidden mb-2 border-2 border-border1 dark:border-border1-DM mr-4">{post.content}</p>
-                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-xs">{t('postLabels.provider')}{post.provider_name}</p>
-                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-xs">
-                    {t('postLabels.location')}{post.major_municipality}/{post.minor_municipality}/
+                  
+                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base"><span class="font-bold">{t('postLabels.provider')}</span>{post.provider_name}</p>
+                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base">
+                    <span class="font-bold">{t('postLabels.location')}</span>{post.major_municipality}/{post.minor_municipality}/
                     {post.governing_district}
                   </p>
-                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM pt-1 text-lg">{t('postLabels.category')}{post.category}</p>
-
+                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM pt-1 text-base">{t('postLabels.category')}{post.category}</p>
+                  <p class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] md:h-[60px] line-clamp-3 mb-2  mr-4">{post.content}</p>
                 </div>
               </div>
             </a>

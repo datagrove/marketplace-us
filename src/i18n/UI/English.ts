@@ -136,6 +136,30 @@ export const English = {
     postImages: 'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
   },
 
+  apiErrors: {
+    missingFields: "Missing required fields",
+    noSession: "Session not found",
+    noUser: "User not found",
+    providerExists: "Provider Profile already exists",
+    profileCreateError: "Error creating profile",
+    profileEditError: "Error updating profile",
+    noDistrict: "District not found",
+    noMinorMunicipality: "Minor Municipality not found",
+    noMajorMunicipality: "Major Municipality not found",
+    noCountry: "Country not found",
+    locationError: "Location not submitted",
+    providerCreateProfileError: "Error creating provider profile",
+    providerEditProfileError: "Error updating provider profile",
+    noProfileData: "No profile Data returned",
+    success: "Success!",
+    emailError: "Error updating email",
+    noCategory: "Category not found",
+    postError: "Error creating post",
+    noPost: "No post returned",
+    clientExists: "Client already exists",
+    clientCreateProfileError: "Error creating client profile",
+  },
+
   headerData: {
     links: [
       {

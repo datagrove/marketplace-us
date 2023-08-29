@@ -137,6 +137,30 @@ export const Spanish = {
     postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
   },
 
+  apiErrors: {
+    missingFields: "Faltan campos obligatorios",
+    noSession: "Sesión no encontrada",
+    noUser: "Usuario no encontrada",
+    providerExists: "El perfil del proveedor ya existe",
+    profileCreateError: "Error al crear perfil",
+    profileEditError: "Error al actualizar el perfil",
+    noDistrict: "Distrito no encontrado",
+    noMinorMunicipality: "Cantón no encontrado",
+    noMajorMunicipality: "Provincia no encontrado",
+    noCountry: "País no encontrado",
+    locationError: "Ubicación no enviada",
+    providerCreateProfileError: "Error al crear el perfil del proveedor",
+    providerEditProfileError: "Error al actualizar el perfil del proveedor",
+    noProfileData: "No se devolvieron datos de perfil",
+    success: "¡Éxito!",
+    emailError: "Error al actualizar el correo electrónico",
+    noCategory: "Categoría no encontrada",
+    postError: "Error al crear la publicación",
+    noPost: "No se devolvió ninguna publicación",
+    clientExists: "La cliente ya existe",
+    clientCreateProfileError: "Error al crear el perfil del cliente",
+  },
+
   headerData: {
     links: [
       {
