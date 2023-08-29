@@ -64,7 +64,7 @@ export const ViewCard: Component<Props> = (props) => {
 
   return (
     <div class="flex justify-center w-full">
-      <ul class="md:flex md:flex-wrap md:justify-center">
+      <ul class="md:flex md:flex-wrap md:justify-center md:w-full">
         {newPosts().map((post: any) => (
           <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
