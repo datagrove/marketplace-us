@@ -7,7 +7,8 @@ module.exports = {
 			colors: {
 				//Dark Mode
 				'background1-DM': '#000000',
-				'text1-DM': '#94A3B8',
+				'htext1-DM': '#39D0BF',
+				'ptext1-DM': '#94A3B8',
 				'btn1-DM':	'#1DD762',
 				'btn1Text-DM': '#000000',
 				'link1-DM': '#39D0BF',
@@ -17,8 +18,11 @@ module.exports = {
 				'icon1-DM': '#F0F0F0',
 				'logo1-DM': '#F0F0F0',
 				'highlight1-DM': '#1DD762',
+				'iconbg1-DM': '',
+
 				'background2-DM': '#1F2937',
-				'text2-DM': '#F0F0F0',
+				'htext2-DM': '#39D0BF',
+				'ptext2-DM': '#F0F0F0',
 				'btn2-DM': '#1DD762',
 				'btn2Text-DM': '#000000',
 				'link2-DM': '#39D0BF',
@@ -28,10 +32,12 @@ module.exports = {
 				'icon2-DM': '#F0F0F0',
 				'logo2-DM': '#F0F0F0',
 				'highlight2-DM': '#1DD762',
+				'iconbg2-DM': '',
 
 				//Light Mode
 				'background1': '#FFFFFF',
-				'text1': '#000000',
+				'htext1': '#1B5C74',
+				'ptext1': '#000000',
 				'btn1': '#296312',
 				'btn1Text': '#FFFFFF',
 				'link1': '#1B5C74',
@@ -41,8 +47,11 @@ module.exports = {
 				'icon1': '#000000',
 				'logo1': '#000000',
 				'highlight1': '#296312',
+				'iconbg1': '#FFFFFF',
+
 				'background2': '#2D2D2D',
-				'text2': '#F0F0F0',
+				'htext2': '#39D0BF',
+				'ptext2': '#F0F0F0',
 				'btn2': '#25DA49',
 				'btn2Text': '#2D2D2D',
 				'link2': '#39D0BF',
@@ -52,6 +61,8 @@ module.exports = {
 				'icon2': '#F0F0F0',
 				'logo2': '#F0F0F0',
 				'highlight2': '#25DA49',
+				'iconbg2': '',
+
 				'shadow-LM': '#9E9E9E',
 				'shadow-DM': '#616161',
 			},

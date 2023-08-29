@@ -148,7 +148,7 @@ export const Auth: Component = (props) => {
                 </button>
               </div>
               <div>
-                <p class="text-sm text-text1 dark:text-text1-DM">
+                <p class="text-sm text-ptext1 dark:text-ptext1-DM">
                   {" "}
                   {t("messages.noAccount")}
                   <a
@@ -201,14 +201,14 @@ export const Auth: Component = (props) => {
                 {regularExpressionPassword.test(password()) ? (
                   <span
                     id="pwlength"
-                    class="text-sm text-text1 dark:text-text1-DM "
+                    class="text-sm text-ptext1 dark:text-ptext1-DM "
                   >
                     {t("messages.passwordValid")}
                   </span>
                 ) : (
                   <span
                     id="pwlength"
-                    class="text-sm text-text1 dark:text-text1-DM whitespace-pre-wrap"
+                    class="text-sm text-ptext1 dark:text-ptext1-DM whitespace-pre-wrap"
                   >
                     {t("messages.passwordLength")}
                   </span>
@@ -269,7 +269,7 @@ export const Auth: Component = (props) => {
               </div>
 
               <div class="my-2">
-                <p class="text-text1 dark:text-text1-DM">
+                <p class="text-ptext1 dark:text-ptext1-DM">
                   {t("messages.alreadyAccount")}
                   <span> </span>
                   <a

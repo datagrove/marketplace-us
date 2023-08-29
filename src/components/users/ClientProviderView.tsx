@@ -119,7 +119,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                             </div>
                         </summary>
                         <div class="p-4">
-                            <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+                            <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
                                 {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
                             </h2>
                             <div class="flex justify-center mb-3">
@@ -148,7 +148,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     {/* Provider Posts for Mobile View*/}
                     <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden" open>
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                        <h2 class="flex flex-1 p-4 font-bold text-text1 dark:text-text1-DM">{t('formLabels.posts')}</h2>
+                        <h2 class="flex flex-1 p-4 font-bold text-ptext1 dark:text-ptext1-DM">{t('formLabels.posts')}</h2>
                         {/*Creates the Dropdown Arrow*/}
                         <div class="flex w-10 items-center justify-center">
                                 <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
@@ -164,7 +164,7 @@ export const ClientProviderView: Component<Props> = (props) => {
 
                 {/* Profile Information for md+ View */}
                 <div class="hidden md:block">
-                    <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+                    <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
                         {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
                     </h2>
                     <div class="flex justify-center mb-3">

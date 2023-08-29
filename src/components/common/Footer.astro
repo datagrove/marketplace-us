@@ -30,16 +30,16 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
 <footer class="flex flex-col bg-background2 dark:bg-background2-DM mt-4 py-4 -mx-4">
   <div class="w-full flex flex-col items-center">
       <div class="">
-        <div class="mb-2 text-center text-text2 dark:text-text2-DM  md:w-full">
+        <div class="mb-2 text-center text-ptext2 dark:text-text2-DM  md:w-full">
           <a class="inline-block font-bold text-xl" href={SITE.url}>{SITE?.name}</a>
         </div>
       </div>
 
       <div class="flex justify-center text-center max-w-screen-sm w-full my-2 md:my-4">
-        <!-- <div class="border-4 border-purple-800 flex justify-center items-center text-sm text-muted text-center text-text1-DM "> -->
+        <!-- <div class="border-4 border-purple-800 flex justify-center items-center text-sm text-muted text-center text-ptext1-DM "> -->
           {
             secondaryLinks.map(({ text, href }) => (
-            <div class="flex text-center items-center justify-center w-1/4 text-text2 dark:text-text2-DM"> 
+            <div class="flex text-center items-center justify-center w-1/4 text-ptext2 dark:text-ptext2-DM"> 
               <div class="flex justify-center items-center">
                 <a
                   class="text-muted text-center text-sm text-link2 hover:text-link2Hov dark:text-link2 dark:hover:text-link2Hov transition duration-150 ease-in-out"

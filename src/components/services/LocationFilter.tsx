@@ -141,7 +141,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     <div class="px-4">
                         <details class="bg-background1 dark:bg-background1-DM shadow rounded group/majorMunicipality md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">{t('formLabels.majorMunicipality')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
                                     <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
@@ -158,7 +158,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                                         testFunction(item)
                                                     }}
                                                 />
-                                                <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
+                                                <span class="text-ptext1 dark:text-ptext1-DM">{item.major_municipality}</span>
 
                                             </li>
                                         }</For>
@@ -171,7 +171,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     <div class="px-4">
                         <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/minorMunicipality md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">{t('formLabels.minorMunicipality')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
                                     <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
@@ -188,7 +188,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                                         test2Function(item)
                                                     }}
                                                 />
-                                                <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
+                                                <span class="text-ptext1 dark:text-ptext1-DM">{item.minor_municipality}</span>
 
                                             </div>
                                         }</For>
@@ -201,7 +201,7 @@ export const LocationFilter: Component<Props> = (props) => {
                     <div class="px-4">
                         <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/governingDistrict md:hidden">
                             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
-                                <h2 class="flex flex-1 pb-1 font-bold text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}</h2>
+                                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">{t('formLabels.governingDistrict')}</h2>
                                 {/*Creates the Dropdown Arrow*/}
                                 <div class="flex w-10 items-center justify-center">
                                     <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
@@ -218,7 +218,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                                         test3Function(item)
                                                     }}
                                                 />
-                                                <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
+                                                <span class="text-ptext1 dark:text-ptext1-DM">{item.governing_district}</span>
 
                                             </div>
                                         }</For>
@@ -242,7 +242,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                         testFunction(item)
                                     }}
                                 />
-                                <span class="text-text1 dark:text-text1-DM">{item.major_municipality}</span>
+                                <span class="text-ptext1 dark:text-ptext1-DM">{item.major_municipality}</span>
 
                             </li>
                         }</For>
@@ -259,7 +259,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                         test2Function(item)
                                     }}
                                 />
-                                <span class="text-text1 dark:text-text1-DM">{item.minor_municipality}</span>
+                                <span class="text-ptext1 dark:text-ptext1-DM">{item.minor_municipality}</span>
 
                             </div>
                         }</For>
@@ -276,7 +276,7 @@ export const LocationFilter: Component<Props> = (props) => {
                                         test3Function(item)
                                     }}
                                 />
-                                <span class="text-text1 dark:text-text1-DM">{item.governing_district}</span>
+                                <span class="text-ptext1 dark:text-ptext1-DM">{item.governing_district}</span>
 
                             </div>
                         }</For>
