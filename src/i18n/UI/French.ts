@@ -136,6 +136,30 @@ export const French = {
     postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
   },
 
+  apiErrors: {
+    missingFields: "Champs obligatoires manquants",
+    noSession: "Session introuvable",
+    noUser: "Utilisateur non trouvé",
+    providerExists: "Le profil du fournisseur existe déjà",
+    profileCreateError: "Erreur lors de la création du profil",
+    profileEditError: "Erreur lors de la mise à jour du profil",
+    noDistrict: "Quartier introuvable",
+    noMinorMunicipality: "Municipalité mineure introuvable",
+    noMajorMunicipality: "Municipalité majeure introuvable",
+    noCountry: "Pays introuvable",
+    locationError: "Emplacement non soumis",
+    providerCreateProfileError: "Erreur lors de la création du profil du fournisseur",
+    providerEditProfileError: "Erreur lors de la mise à jour du profil du fournisseur",
+    noProfileData: "Aucune donnée de profil renvoyée",
+    success: "Succès!",
+    emailError: "Erreur lors de la mise à jour de l'e-mail",
+    noCategory: "Catégorie introuvable",
+    postError: "Erreur lors de la création du message",
+    noPost: "Aucun message n'a été renvoyé",
+    clientExists: "Le client existe déjà",
+    clientCreateProfileError: "Erreur lors de la création du profil client",
+  },
+
   headerData: {
     links: [
       {
