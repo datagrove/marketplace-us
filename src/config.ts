@@ -5,7 +5,7 @@ const CONFIG = {
     description:
       'Everything you need to get the job done.',
     url: 'https://todoservis.com/',
-    devUrl: 'https://site-devurl.marketplace-4xm.pages.dev/',
+    devUrl: 'http://localhost:3000',
   
     defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
   
