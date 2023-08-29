@@ -125,7 +125,7 @@ export const English = {
   },
 
   toolTips: {
-    providerPhone: 'We require all users to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number will be available to clients in order to  contact you regarding your services.',
+    providerPhone: 'Each provider profile must have a unique phone number. This number will be available to clients in order to  contact you regarding your services. We require all users to provide valid phone numbers as part of our efforts to ensure the safety of our users.',
     clientPhone: 'We require clients to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number may be used by providers to contact you regarding quotes for requested services.',
     firstName: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.',
     lastName: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.',
