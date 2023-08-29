@@ -120,7 +120,7 @@ export const ClientProfileView: Component = () => {
               {/* <div class="mb-2 flex justify-center items-center align-items-center">
                                 <EditProfileButton />
                             </div> */}
-              <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+              <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
                 {client()?.display_name}
               </h2>
               <div class="flex justify-center mb-3">
@@ -135,21 +135,21 @@ export const ClientProfileView: Component = () => {
                   </div>
                 </Show>
               </div>
-              <label for="FirstName" class="text-text2 dark:text-text1-DM">
+              <label for="FirstName" class="text-text2 dark:text-ptext1-DM">
                 {t("formLabels.firstName")}:
                 <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                   {client()?.first_name}
                 </p>
               </label>
 
-              <label for="LastName" class="text-text2 dark:text-text1-DM">
+              <label for="LastName" class="text-text2 dark:text-ptext1-DM">
                 {t("formLabels.lastName")}:
                 <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                   {client()?.last_name}
                 </p>
               </label>
 
-              <label for="ProviderName" class="text-text1 dark:text-text1-DM">
+              <label for="ProviderName" class="text-ptext1 dark:text-ptext1-DM">
                 {t("formLabels.providerName")}:
                 <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                   {client()?.display_name
@@ -159,7 +159,7 @@ export const ClientProfileView: Component = () => {
               </label>
 
               <div class="w-full overflow-auto mb-4">
-                <label for="Email" class="text-text1 dark:text-text1-DM">
+                <label for="Email" class="text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.email")}:
                   {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                   <p class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
@@ -168,14 +168,14 @@ export const ClientProfileView: Component = () => {
                 </label>
               </div>
 
-              <label for="Phone" class="text-text1 dark:text-text1-DM">
+              <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
                 {t("formLabels.phone")}:
                 <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                   {client()?.client_phone}
                 </p>
               </label>
 
-              <label for="country" class="text-text1 dark:text-text1-DM">
+              <label for="country" class="text-ptext1 dark:text-ptext1-DM">
                 {t("formLabels.country")}:
                 <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                   {client()?.country}
@@ -186,7 +186,7 @@ export const ClientProfileView: Component = () => {
 
               <label
                 for="MajorMunicipality"
-                class="text-text1 dark:text-text1-DM"
+                class="text-ptext1 dark:text-ptext1-DM"
               >
                 {t("formLabels.majorMunicipality")}:
                 <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
@@ -198,7 +198,7 @@ export const ClientProfileView: Component = () => {
 
               <label
                 for="MinorMunicipality"
-                class="text-text1 dark:text-text1-DM"
+                class="text-ptext1 dark:text-ptext1-DM"
               >
                 {t("formLabels.minorMunicipality")}:
                 <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
@@ -210,7 +210,7 @@ export const ClientProfileView: Component = () => {
 
               <label
                 for="GoverningDistrict"
-                class="text-text1 dark:text-text1-DM"
+                class="text-ptext1 dark:text-ptext1-DM"
               >
                 {t("formLabels.governingDistrict")}:
                 <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
@@ -223,7 +223,7 @@ export const ClientProfileView: Component = () => {
 
         {/* Profile Information for md+ View */}
         <div class="hidden md:block">
-          <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+          <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
             {client()?.display_name == ""
               ? client()?.first_name + " " + client()?.last_name
               : client()?.display_name}
@@ -241,21 +241,21 @@ export const ClientProfileView: Component = () => {
             </Show>
           </div>
 
-          <label for="FirstName" class="text-text2 dark:text-text1-DM">
+          <label for="FirstName" class="text-text2 dark:text-ptext1-DM">
             {t("formLabels.firstName")}:
             <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.first_name}
             </p>
           </label>
 
-          <label for="LastName" class="text-text2 dark:text-text1-DM">
+          <label for="LastName" class="text-text2 dark:text-ptext1-DM">
             {t("formLabels.lastName")}:
             <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.last_name}
             </p>
           </label>
 
-          <label for="ProviderName" class="text-text1 dark:text-text1-DM">
+          <label for="ProviderName" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.providerName")}:
             <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.display_name
@@ -265,7 +265,7 @@ export const ClientProfileView: Component = () => {
           </label>
 
           <div class="w-full overflow-auto mb-4">
-            <label for="Email" class="text-text1 dark:text-text1-DM">
+            <label for="Email" class="text-ptext1 dark:text-ptext1-DM">
               {t("formLabels.email")}:
               {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
               <p class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
@@ -274,14 +274,14 @@ export const ClientProfileView: Component = () => {
             </label>
           </div>
 
-          <label for="Phone" class="text-text1 dark:text-text1-DM">
+          <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.phone")}:
             <p class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.client_phone}
             </p>
           </label>
 
-          <label for="country" class="text-text1 dark:text-text1-DM">
+          <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
             <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.country}
@@ -290,7 +290,7 @@ export const ClientProfileView: Component = () => {
 
           <br />
 
-          <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
+          <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.majorMunicipality")}:
             <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.major_municipality}
@@ -299,7 +299,7 @@ export const ClientProfileView: Component = () => {
 
           <br />
 
-          <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">
+          <label for="MinorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.minorMunicipality")}:
             <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.minor_municipality}
@@ -308,7 +308,7 @@ export const ClientProfileView: Component = () => {
 
           <br />
 
-          <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">
+          <label for="GoverningDistrict" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.governingDistrict")}:
             <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
               {client()?.governing_district}

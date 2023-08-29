@@ -411,7 +411,7 @@ export const ProviderProfileView: Component = () => {
                         </button>
                       </Show>
                     </div>
-                    <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+                    <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
                       {provider()?.provider_name == ""
                         ? provider()?.first_name + " " + provider()?.last_name
                         : provider()?.provider_name}
@@ -443,7 +443,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="first-name flex flex-row flex-wrap justify-between">
                       <label
                         for="FirstName"
-                        class="text-text1 dark:text-text1-DM"
+                        class="text-ptext1 dark:text-ptext1-DM"
                       >
                         {t("formLabels.firstName")}:
                       </label>
@@ -491,7 +491,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="FirstName"
                             name="FirstName"
-                            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                             value={provider()?.first_name}
                             required
                           />
@@ -502,7 +502,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="last-name flex flex-row flex-wrap justify-between">
                       <label
                         for="LastName"
-                        class="text-text1 dark:text-text1-DM"
+                        class="text-ptext1 dark:text-ptext1-DM"
                       >
                         {t("formLabels.lastName")}:
                       </label>
@@ -550,7 +550,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="LastName"
                             name="LastName"
-                            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                             value={provider()?.last_name}
                           />
                         </div>
@@ -560,7 +560,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="provider-name flex flex-row flex-wrap justify-between">
                       <label
                         for="ProviderName"
-                        class="text-text1 dark:text-text1-DM"
+                        class="text-ptext1 dark:text-ptext1-DM"
                       >
                         {t("formLabels.providerName")}:
                       </label>
@@ -610,7 +610,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="ProviderName"
                             name="ProviderName"
-                            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                             value={provider()?.provider_name}
                           />
                         </div>
@@ -618,7 +618,7 @@ export const ProviderProfileView: Component = () => {
                     </div>
 
                     <div class="email-add flex flex-row flex-wrap justify-between">
-                      <label for="email" class="text-text1 dark:text-text1-DM">
+                      <label for="email" class="text-ptext1 dark:text-ptext1-DM">
                         {t("formLabels.email")}:
                         {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                       </label>
@@ -668,7 +668,7 @@ export const ProviderProfileView: Component = () => {
                           <input
                             id="email"
                             name="email"
-                            class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                             type="email"
                             placeholder={t("formLabels.email")}
                             value={provider()?.email}
@@ -678,7 +678,7 @@ export const ProviderProfileView: Component = () => {
                     </div>
 
                     <div class="phone-number flex flex-row flex-wrap justify-between">
-                      <label for="Phone" class="text-text1 dark:text-text1-DM">
+                      <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
                         {t("formLabels.phone")}:
                       </label>
                       <Show when={editMode() === false}>
@@ -724,7 +724,7 @@ export const ProviderProfileView: Component = () => {
                           <input
                             type="text"
                             id="Phone"
-                            class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                             name="Phone"
                             value={provider()?.provider_phone}
                           />
@@ -767,7 +767,7 @@ export const ProviderProfileView: Component = () => {
                       </div>
                     </Show>
 
-                    <label for="country" class="text-text1 dark:text-text1-DM">
+                    <label for="country" class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.country")}:
                     </label>
                     <Show when={editMode() === false}>
@@ -788,7 +788,7 @@ export const ProviderProfileView: Component = () => {
                         <option value="">-</option>
                       </select>
                       <div>
-                        <label class="text-text1 dark:text-text1-DM">
+                        <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.country")}
                           <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                             {provider()?.country}
@@ -801,7 +801,7 @@ export const ProviderProfileView: Component = () => {
 
                     <label
                       for="MajorMunicipality"
-                      class="text-text1 dark:text-text1-DM"
+                      class="text-ptext1 dark:text-ptext1-DM"
                     >
                       {t("formLabels.majorMunicipality")}:
                     </label>
@@ -823,7 +823,7 @@ export const ProviderProfileView: Component = () => {
                         <option value="">-</option>
                       </select>
                       <div>
-                        <label class="text-text1 dark:text-text1-DM">
+                        <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.majorMunicipality")}:
                           <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                             {provider()?.major_municipality}
@@ -836,7 +836,7 @@ export const ProviderProfileView: Component = () => {
 
                     <label
                       for="MinorMunicipality"
-                      class="text-text1 dark:text-text1-DM"
+                      class="text-ptext1 dark:text-ptext1-DM"
                     >
                       {t("formLabels.minorMunicipality")}:
                     </label>
@@ -858,7 +858,7 @@ export const ProviderProfileView: Component = () => {
                         <option value="">-</option>
                       </select>
                       <div>
-                        <label class="text-text1 dark:text-text1-DM">
+                        <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.minorMunicipality")}:
                           <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                             {provider()?.minor_municipality}
@@ -871,7 +871,7 @@ export const ProviderProfileView: Component = () => {
 
                     <label
                       for="GoverningDistrict"
-                      class="text-text1 dark:text-text1-DM"
+                      class="text-ptext1 dark:text-ptext1-DM"
                     >
                       {t("formLabels.governingDistrict")}:
                     </label>
@@ -890,7 +890,7 @@ export const ProviderProfileView: Component = () => {
                         <option value="">-</option>
                       </select>
                       <div>
-                        <label class="text-text1 dark:text-text1-DM">
+                        <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.governingDistrict")}:
                           <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                             {provider()?.governing_district}
@@ -944,7 +944,7 @@ export const ProviderProfileView: Component = () => {
             {/* Profile Information for md+ View */}
             <Show when={screenSize() !== "sm"}>
               <div class="hidden md:block">
-                <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+                <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
                   {provider()?.provider_name == ""
                     ? provider()?.first_name + " " + provider()?.last_name
                     : provider()?.provider_name}
@@ -973,7 +973,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="first-name flex flex-row flex-wrap justify-between">
-                  <label for="FirstName" class="text-text1 dark:text-text1-DM">
+                  <label for="FirstName" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.firstName")}:
                   </label>
                   <Show when={editMode() === false}>
@@ -1020,7 +1020,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="FirstName"
                         name="FirstName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         value={provider()?.first_name}
                         required
                       />
@@ -1029,7 +1029,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="last-name flex flex-row flex-wrap justify-between">
-                  <label for="LastName" class="text-text1 dark:text-text1-DM">
+                  <label for="LastName" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.lastName")}:
                   </label>
                   <Show when={editMode() === false}>
@@ -1076,7 +1076,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="LastName"
                         name="LastName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         value={provider()?.last_name}
                       />
                     </div>
@@ -1086,7 +1086,7 @@ export const ProviderProfileView: Component = () => {
                 <div class="provider-name flex flex-row flex-wrap justify-between">
                   <label
                     for="ProviderName"
-                    class="text-text1 dark:text-text1-DM"
+                    class="text-ptext1 dark:text-ptext1-DM"
                   >
                     {t("formLabels.providerName")}:
                   </label>
@@ -1136,7 +1136,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="ProviderName"
                         name="ProviderName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         value={provider()?.provider_name}
                       />
                     </div>
@@ -1144,7 +1144,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="email-add flex flex-row flex-wrap justify-between">
-                  <label for="email" class="text-text1 dark:text-text1-DM">
+                  <label for="email" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.email")}:
                     {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                   </label>
@@ -1194,7 +1194,7 @@ export const ProviderProfileView: Component = () => {
                       <input
                         id="email"
                         name="email"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         type="email"
                         placeholder={t("formLabels.email")}
                         value={provider()?.email}
@@ -1204,7 +1204,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div class="phone-number flex flex-row flex-wrap justify-between">
-                  <label for="Phone" class="text-text1 dark:text-text1-DM">
+                  <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.phone")}:
                   </label>
                   <Show when={editMode() === false}>
@@ -1250,7 +1250,7 @@ export const ProviderProfileView: Component = () => {
                       <input
                         type="text"
                         id="Phone"
-                        class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="Phone"
                         value={provider()?.provider_phone}
                       />
@@ -1293,7 +1293,7 @@ export const ProviderProfileView: Component = () => {
                   </div>
                 </Show>
 
-                <label for="country" class="text-text1 dark:text-text1-DM">
+                <label for="country" class="text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.country")}:
                 </label>
                 <Show when={editMode() === false}>
@@ -1314,7 +1314,7 @@ export const ProviderProfileView: Component = () => {
                     <option value="">-</option>
                   </select>
                   <div>
-                    <label class="text-text1 dark:text-text1-DM">
+                    <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.country")}
                       <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.country}
@@ -1327,7 +1327,7 @@ export const ProviderProfileView: Component = () => {
 
                 <label
                   for="MajorMunicipality"
-                  class="text-text1 dark:text-text1-DM"
+                  class="text-ptext1 dark:text-ptext1-DM"
                 >
                   {t("formLabels.majorMunicipality")}:
                 </label>
@@ -1349,7 +1349,7 @@ export const ProviderProfileView: Component = () => {
                     <option value="">-</option>
                   </select>
                   <div>
-                    <label class="text-text1 dark:text-text1-DM">
+                    <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.majorMunicipality")}:
                       <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.major_municipality}
@@ -1362,7 +1362,7 @@ export const ProviderProfileView: Component = () => {
 
                 <label
                   for="MinorMunicipality"
-                  class="text-text1 dark:text-text1-DM"
+                  class="text-ptext1 dark:text-ptext1-DM"
                 >
                   {t("formLabels.minorMunicipality")}:
                 </label>
@@ -1384,7 +1384,7 @@ export const ProviderProfileView: Component = () => {
                     <option value="">-</option>
                   </select>
                   <div>
-                    <label class="text-text1 dark:text-text1-DM">
+                    <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.minorMunicipality")}:
                       <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.minor_municipality}
@@ -1397,7 +1397,7 @@ export const ProviderProfileView: Component = () => {
 
                 <label
                   for="GoverningDistrict"
-                  class="text-text1 dark:text-text1-DM"
+                  class="text-ptext1 dark:text-ptext1-DM"
                 >
                   {t("formLabels.governingDistrict")}:
                 </label>
@@ -1416,7 +1416,7 @@ export const ProviderProfileView: Component = () => {
                     <option value="">-</option>
                   </select>
                   <div>
-                    <label class="text-text1 dark:text-text1-DM">
+                    <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.governingDistrict")}:
                       <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.governing_district}

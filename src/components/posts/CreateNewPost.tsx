@@ -229,18 +229,18 @@ export const CreateNewPost: Component = () => {
   return (
     <div>
       <form onSubmit={submit}>
-        <label for="Title" class="text-text1 dark:text-text1-DM">
+        <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.title")}:
           <input
             type="text"
             id="Title"
             name="Title"
-            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-text1 dark:text-text1-DM"
+            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-ptext1 dark:text-ptext1-DM"
             required
           />
         </label>
 
-        <label for="ServiceCategory" class="text-text1 dark:text-text1-DM">
+        <label for="ServiceCategory" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.serviceCategory")}:
           <select
             id="ServiceCategory"
@@ -257,41 +257,40 @@ export const CreateNewPost: Component = () => {
 
         <br />
 
-        <label for="Content" class="text-text1 dark:text-text1-DM">
+
+        <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.postContent")}:
           <textarea
             id="Content"
             name="Content"
-            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-text1  dark:text-text1-DM"
-            placeholder={t("formLabels.enterPostContent")}
+            class="rounded w-full mb-4 px-1 focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none text-ptext1  dark:text-ptext1-DM"
+            placeholder={t('formLabels.enterPostContent')}
             rows="10"
             required
           ></textarea>
         </label>
 
         <div class="mb-6">
-          <label for="country" class="text-text1 dark:text-text1-DM">
+          <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
             <select
               id="country"
               name="country"
-              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required
-            >
+              class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+              required>
               <option value="">-</option>
             </select>
           </label>
         </div>
 
         <div class="mb-6">
-          <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">
+          <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.majorMunicipality")}:
             <select
               id="MajorMunicipality"
               name="MajorMunicipality"
-              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required
-            >
+              class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+              required>
               <option value="">-</option>
             </select>
           </label>
@@ -303,9 +302,8 @@ export const CreateNewPost: Component = () => {
             <select
               id="MinorMunicipality"
               name="MinorMunicipality"
-              class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required
-            >
+              class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+              required>
               <option value="">-</option>
             </select>
           </label>
@@ -316,9 +314,8 @@ export const CreateNewPost: Component = () => {
           <select
             id="GoverningDistrict"
             name="GoverningDistrict"
-            class="ml-2 rounded mb-4 text-text1 dark:text-text1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-            required
-          >
+            class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+            required>
             <option value="">-</option>
           </select>
         </label>
