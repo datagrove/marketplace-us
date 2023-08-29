@@ -16,7 +16,7 @@ export const NewPassword: Component = () => {
 
     try {
         setLoading(true)
-        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE.devUrl + `/${lang}/password/reset` })
+        const { data, error } = await supabase.auth.resetPasswordForEmail(email(), { redirectTo: SITE.url + `/${lang}/password/reset` })
         if (error) throw error
     } catch (error) {
         if (error instanceof Error) {
