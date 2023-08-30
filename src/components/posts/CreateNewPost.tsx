@@ -4,6 +4,7 @@ import {
   createEffect,
   createResource,
   createSignal,
+  onMount,
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -37,6 +38,16 @@ export const CreateNewPost: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
+
+  onMount(() => {
+    tinymce.init({
+      selector: '#Content',
+      setup: function (editor) {
+        editor.on('change', function () {
+          tinymce.triggerSave();
+        });}
+    });
+  })
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();

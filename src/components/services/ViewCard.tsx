@@ -109,7 +109,7 @@ export const ViewCard: Component<Props> = (props) => {
                     {post.governing_district}
                   </p>
                   <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM pt-1 text-base">{t('postLabels.category')}{post.category}</p>
-                  <p class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] md:h-[60px] line-clamp-3 mb-2  mr-4">{post.content}</p>
+                  <p class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] md:h-[40px] md:line-clamp-2 xl:line-clamp-3 mb-2 overflow-hidden mr-4" innerHTML={post.content}></p>
                 </div>
               </div>
             </a>
