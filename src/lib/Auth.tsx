@@ -113,7 +113,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   value={email()}
@@ -126,16 +126,14 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   value={password()}
                   onChange={(e) => {
-                    if (e.currentTarget.value.length > 5) {
-                      console.log("Password length is greater than 5");
-                      return setPassword(e.currentTarget.value);
+                    setPassword(e.currentTarget.value);
                     }
-                  }}
+                  }
                 />
               </div>
               <div class="mb-4 flex justify-center">
@@ -152,7 +150,7 @@ export const Auth: Component = (props) => {
                   {" "}
                   {t("messages.noAccount")}
                   <a
-                    class="text-link2 hover:underline dark:text-link2-DM"
+                    class="text-link1 hover:underline dark:text-link1-DM"
                     href={`/${lang}/signup`}
                   >
                     {t("buttons.signUp")}
@@ -173,7 +171,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   required
@@ -188,7 +186,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   required
@@ -220,7 +218,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="confirm password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.confirmPassword")}
                   required
@@ -245,11 +243,11 @@ export const Auth: Component = (props) => {
                 {t("messages.clickWrap1")}{" "}
                 <span class="font-medium">{t("pageTitles.signUp")}</span>{" "}
                 {t("messages.clickWrap2")}{" "}
-                <a class="text-link2-DM hover:underline">
+                <a href={`/${lang}/terms`} target="_blank" class="text-link2-DM hover:underline">
                   {t("pageTitles.terms")}
                 </a>{" "}
                 &{" "}
-                <a class="text-link2-DM hover:underline">
+                <a href={`/${lang}/privacy`} target="_blank" class="text-link2-DM hover:underline">
                   {t("pageTitles.privacy")}
                 </a>
               </div>

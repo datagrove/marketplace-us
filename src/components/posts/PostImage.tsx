@@ -1,6 +1,10 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   size: number;
@@ -69,7 +73,7 @@ const PostImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite">
+    <div class="flex-row text-center justify-center" aria-live="polite">
       {imageUrl().length > 0 ? (
         imageUrl().map((image) => (
           <img
@@ -80,6 +84,7 @@ const PostImage: Component<Props> = (props) => {
           />
         ))
       ) : (
+        <div class="flex justify-center">
         <svg
             width="120px" 
             height="120px" 
@@ -94,13 +99,14 @@ const PostImage: Component<Props> = (props) => {
                 </g>
             </g>
         </svg>
+        </div>
       )}
-      <div style={{ width: `${props.size}px` }}>
+      <div class="mt-3">
         <label
           class="btn-primary"
           for="single"
         >
-          {uploading() ? "Uploading ..." : "Upload Image"}
+          {uploading() ? t("buttons.uploading") : t("buttons.uploadImage")}
         </label>
         <span style="display:none">
           <input

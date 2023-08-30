@@ -133,6 +133,7 @@ export const English = {
     profileImage: 'This image will be displayed on your profile and any of your posts/communications through the site.',
     changeEmail: 'If you update your email you must confirm the change at the old email address and the new email address to complete the change.',
     locationUpdate: 'If you update your location all fields must be completed.',
+    postImages: 'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
   },
 
   headerData: {

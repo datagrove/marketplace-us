@@ -134,6 +134,7 @@ export interface uiObject {
     profileImage: string,
     changeEmail: string,
     locationUpdate: string,
+    postImages: string,
   },
 
   headerData: {
