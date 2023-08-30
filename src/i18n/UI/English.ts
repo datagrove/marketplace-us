@@ -229,7 +229,7 @@ export const English = {
       { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/todoserviscostarica/' },
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
-      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrovecr' },
+      { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrove/marketplace' },
       { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
       { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
