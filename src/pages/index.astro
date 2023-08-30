@@ -5,6 +5,8 @@ import { SignUpBtn } from "../components/common/SignUpButton";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import cleaner from "../assets/categoryIcons/cleaner-man.svg";
 import grid from "../assets/grid.svg";
+import services from "../assets/services.png";
+import servicesDM from "../assets/servicesDM.png";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -12,16 +14,16 @@ const t = useTranslations(lang);
 
 <Layout pageTitle={t("pageTitles.home")}>
   <!-- <h1>{t('pageTitles.home')}</h1> -->
-  <div class="flex flex-col px-2 md:px-0 md:flex-row">
-    <div class="mt-6 mb-6 md:mb-0">
+  <div class="flex flex-col items-center px-2 md:px-0 md:flex-wrap lg:flex-row">
+    <div class="mt-6 mb-6 md:mb-0 md:w-2/3 lg:w-1/2">
       <div>
         <h1 class="text-3xl font-bold text-htext1 dark:text-htext1-DM">{t(`homePageText.headline`)}</h1>
         <p class="text-lg my-6">{t(`homePageText.subHeadline`)}</p>
       </div>
-      <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-center grid grid-cols-8 gap-2 pb-6">
+      <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-start flex md:grid grid-cols-8 gap-2 mb-6">
         <a
           href={`/${lang}/services`}
-          class="flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM col-span-3 md:col-span-2 -space-y-8 h-28 w-28 hover:translate-y-0.5"
+          class="w-[112px] h-[112px] flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM md:col-start-1 md:row-start-1 md:w-24 md:h-24 -space-y-8 hover:translate-y-0.5"
         >
           <div class="flex">
             <svg
@@ -56,7 +58,7 @@ const t = useTranslations(lang);
             {t('messages.fetch')}
           </div>
         </a>
-        <div class="md:col-span-6 col-span-5 flex flex-col items-start justify-center">
+        <div class="flex flex-col items-start justify-center md:col-start-3 md:row-start-1 md:col-span-6">
           <p class="mb-4 text-ptext1 dark:text-ptext1-DM">{t('messages.todoFetch')}</p>
           <p class="text-xs italic text-ptext1 dark:text-ptext1-DM">*{t('messages.mustSignIn')}</p>
         </div>
@@ -113,8 +115,17 @@ const t = useTranslations(lang);
       </svg>
     </div> -->
 
-    <div class="hidden md:grid grid-rows-7 grid-cols-7 border-4 border-red-300 md:min-w-[300px] md:mx-4">
-      <div class="col-start-3 col-span-5 z-0">
+    <div class="hidden md:flex md:items-center md:justify-center md:w-full lg:w-1/2 md:mt-8 lg:mt-8 md:pl-2 md:min-w-[400px]">
+      { }
+      
+      <div class="inline dark:hidden">
+        <img src={ services } alt="homepage image of various services"/>
+      </div>
+
+      <div class="hidden dark:inline">
+        <img src={ servicesDM } alt="homepage image of various services"/>
+      </div>
+      <!-- <div class="col-start-3 col-span-5 z-0">
         <img 
           src={ grid }
           alt="grid icon"
@@ -135,7 +146,7 @@ const t = useTranslations(lang);
           alt="placeholder image"
           class="h-12"
         />
-      </div>
+      </div> -->
 
       <!-- <div class="row-start-7 row-span-1 col-start-1 col-span-7 border-4 border-purple-700">
         <p>Box Three</p>
