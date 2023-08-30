@@ -125,7 +125,7 @@ export const French = {
   },
 
   toolTips: {
-    providerPhone: "Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro sera mis à la disposition des clients afin de vous contacter au sujet de vos services.",
+    providerPhone: "Chaque profil de fournisseur doit avoir un numéro de téléphone unique. Ce numéro sera à la disposition des clients afin de vous contacter concernant vos services. Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs.",
     clientPhone: "Nous demandons aux clients de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro peut être utilisé par les fournisseurs pour vous contacter concernant les devis des services demandés.",
     firstName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
     lastName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
@@ -134,6 +134,30 @@ export const French = {
     changeEmail: "Si vous mettez à jour votre adresse e-mail, vous devez confirmer le changement à l'ancienne adresse e-mail et à la nouvelle adresse e-mail pour finaliser la modification.",
     locationUpdate: "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
     postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
+  },
+
+  apiErrors: {
+    missingFields: "Champs obligatoires manquants",
+    noSession: "Session introuvable",
+    noUser: "Utilisateur non trouvé",
+    providerExists: "Le profil du fournisseur existe déjà",
+    profileCreateError: "Erreur lors de la création du profil",
+    profileEditError: "Erreur lors de la mise à jour du profil",
+    noDistrict: "Quartier introuvable",
+    noMinorMunicipality: "Municipalité mineure introuvable",
+    noMajorMunicipality: "Municipalité majeure introuvable",
+    noCountry: "Pays introuvable",
+    locationError: "Emplacement non soumis",
+    providerCreateProfileError: "Erreur lors de la création du profil du fournisseur",
+    providerEditProfileError: "Erreur lors de la mise à jour du profil du fournisseur",
+    noProfileData: "Aucune donnée de profil renvoyée",
+    success: "Succès!",
+    emailError: "Erreur lors de la mise à jour de l'e-mail",
+    noCategory: "Catégorie introuvable",
+    postError: "Erreur lors de la création du message",
+    noPost: "Aucun message n'a été renvoyé",
+    clientExists: "Le client existe déjà",
+    clientCreateProfileError: "Erreur lors de la création du profil client",
   },
 
   headerData: {

@@ -125,7 +125,7 @@ export const Spanish = {
   },
 
   toolTips: {
-    providerPhone: 'Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número estará a disposición de los clientes para contactarlo con respecto a sus servicios.',
+    providerPhone: 'Cada perfil de proveedor debe tener un número de teléfono único. Este número estará disponible para los clientes para poder contactarlo con respecto a sus servicios. Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios.',
     clientPhone: "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
     firstName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
     lastName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
@@ -134,6 +134,30 @@ export const Spanish = {
     changeEmail: 'Si actualiza su correo electrónico, debe confirmar el cambio en la dirección de correo electrónico anterior y en la nueva dirección de correo electrónico para completar el cambio.',
     locationUpdate: 'Si actualiza su ubicación, se deben completar todos los campos.',
     postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
+  },
+
+  apiErrors: {
+    missingFields: "Faltan campos obligatorios",
+    noSession: "Sesión no encontrada",
+    noUser: "Usuario no encontrada",
+    providerExists: "El perfil del proveedor ya existe",
+    profileCreateError: "Error al crear perfil",
+    profileEditError: "Error al actualizar el perfil",
+    noDistrict: "Distrito no encontrado",
+    noMinorMunicipality: "Cantón no encontrado",
+    noMajorMunicipality: "Provincia no encontrado",
+    noCountry: "País no encontrado",
+    locationError: "Ubicación no enviada",
+    providerCreateProfileError: "Error al crear el perfil del proveedor",
+    providerEditProfileError: "Error al actualizar el perfil del proveedor",
+    noProfileData: "No se devolvieron datos de perfil",
+    success: "¡Éxito!",
+    emailError: "Error al actualizar el correo electrónico",
+    noCategory: "Categoría no encontrada",
+    postError: "Error al crear la publicación",
+    noPost: "No se devolvió ninguna publicación",
+    clientExists: "La cliente ya existe",
+    clientCreateProfileError: "Error al crear el perfil del cliente",
   },
 
   headerData: {

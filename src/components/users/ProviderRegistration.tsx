@@ -158,10 +158,9 @@ export const ProviderRegistration: Component = () => {
 
         if(regularExpressionPhone.test(phone())){
         const formData = new FormData(e.target as HTMLFormElement)
-        console.log(session()?.access_token!)
         formData.append("access_token", session()?.access_token!)
-        console.log(session()?.refresh_token!)
         formData.append("refresh_token", session()?.refresh_token!)
+        formData.append("lang", lang)
         if (imageUrl() !== null) {
             formData.append("image_url", imageUrl()!)
         }
@@ -180,7 +179,7 @@ export const ProviderRegistration: Component = () => {
             <form onSubmit={submit}>
                 <div class="">
                     <div class="flex flex-row justify-between">
-                        <label for="FirstName" class="text-text1 dark:text-text1-DM">
+                        <label for="FirstName" class="text-ptext1 dark:text-ptext1-DM">
                             {t("formLabels.firstName")}:
                         </label>
                         <div class="group flex items-center relative mr-2">
@@ -211,14 +210,14 @@ export const ProviderRegistration: Component = () => {
                         type="text"
                         id="FirstName"
                         name="FirstName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         required
                     />
                 </div>
 
                 <div class="">
                     <div class="flex flex-row justify-between">
-                        <label for="LastName" class="text-text1 dark:text-text1-DM">
+                        <label for="LastName" class="text-ptext1 dark:text-ptext1-DM">
                             {t("formLabels.lastName")}:
                         </label>
                         <div class="group flex items-center relative mr-2">
@@ -249,14 +248,14 @@ export const ProviderRegistration: Component = () => {
                         type="text"
                         id="LastName"
                         name="LastName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         required
                     />
                 </div>
 
                 <div class="">
                     <div class="flex flex-row justify-between">
-                        <label for="ProviderName" class="text-text1 dark:text-text1-DM">
+                        <label for="ProviderName" class="text-ptext1 dark:text-ptext1-DM">
                             {t('formLabels.providerName')}:
                         </label>
                         <div class="group flex items-center relative mr-2">
@@ -287,13 +286,13 @@ export const ProviderRegistration: Component = () => {
                         type="text"
                         id="ProviderName"
                         name="ProviderName"
-                        class="rounded w-full mb-4 px-1 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                     />
                 </div>
 
                 <div class="">
                     <div class="flex flex-row justify-between">
-                        <label for="Phone" class="text-text1 dark:text-text1-DM">{t('formLabels.phone')}:
+                        <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">{t('formLabels.phone')}:
                         </label>
                         <div class="group flex items-center relative mr-2">
                             <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -322,7 +321,7 @@ export const ProviderRegistration: Component = () => {
                     <input
                         type="text"
                         id="Phone"
-                        class="rounded w-full mb-4 text-text1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
                         name="Phone"
                         value={phone()}
                         required
@@ -332,7 +331,7 @@ export const ProviderRegistration: Component = () => {
 
                   
 
-                <label for="country" class="text-text1 dark:text-text1-DM">{t('formLabels.country')}:
+                <label for="country" class="text-ptext1 dark:text-ptext1-DM">{t('formLabels.country')}:
                     <select
                         id="country"
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -344,7 +343,7 @@ export const ProviderRegistration: Component = () => {
 
                 <br />
 
-                <label for="MajorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.majorMunicipality')}:
+                <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">{t('formLabels.majorMunicipality')}:
                     <select
                         id="MajorMunicipality"
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -357,7 +356,7 @@ export const ProviderRegistration: Component = () => {
 
                 <br />
 
-                <label for="MinorMunicipality" class="text-text1 dark:text-text1-DM">{t('formLabels.minorMunicipality')}:
+                <label for="MinorMunicipality" class="text-ptext1 dark:text-ptext1-DM">{t('formLabels.minorMunicipality')}:
                     <select
                         id="MinorMunicipality"
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -369,7 +368,7 @@ export const ProviderRegistration: Component = () => {
 
                 <br />
 
-                <label for="GoverningDistrict" class="text-text1 dark:text-text1-DM">{t('formLabels.governingDistrict')}:
+                <label for="GoverningDistrict" class="text-ptext1 dark:text-ptext1-DM">{t('formLabels.governingDistrict')}:
                     <select
                         id="GoverningDistrict"
                         class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
@@ -422,7 +421,7 @@ export const ProviderRegistration: Component = () => {
                     <button class="btn-primary">{t('buttons.register')}</button>
                 </div>
 
-                <Suspense>{response() && <p>{response().message}</p>}</Suspense>
+                <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
             </form>
         </div>
     );
