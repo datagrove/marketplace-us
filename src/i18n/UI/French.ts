@@ -125,7 +125,7 @@ export const French = {
   },
 
   toolTips: {
-    providerPhone: "Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro sera mis à la disposition des clients afin de vous contacter au sujet de vos services.",
+    providerPhone: "Chaque profil de fournisseur doit avoir un numéro de téléphone unique. Ce numéro sera à la disposition des clients afin de vous contacter concernant vos services. Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs.",
     clientPhone: "Nous demandons aux clients de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro peut être utilisé par les fournisseurs pour vous contacter concernant les devis des services demandés.",
     firstName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
     lastName: "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",

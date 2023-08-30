@@ -126,7 +126,7 @@ export const Spanish = {
   },
 
   toolTips: {
-    providerPhone: 'Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número estará a disposición de los clientes para contactarlo con respecto a sus servicios.',
+    providerPhone: 'Cada perfil de proveedor debe tener un número de teléfono único. Este número estará disponible para los clientes para poder contactarlo con respecto a sus servicios. Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios.',
     clientPhone: "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
     firstName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
     lastName: "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
