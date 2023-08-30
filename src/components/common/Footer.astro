@@ -85,6 +85,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
                   class="text-muted dark:text-icon2-DM text-icon2 hover:bg-shadow-LM dark:hover:bg-shadow-DM focus:outline-none focus:ring-4 rounded-lg text-sm p-2 inline-flex items-center"
                   aria-label={ariaLabel}
                   href={href}
+                  target="_blank"
                 >
                   {icon && <Icon name={icon} class="w-5 h-5" />}
                   <Fragment set:html={text}/>
