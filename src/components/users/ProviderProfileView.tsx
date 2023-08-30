@@ -381,10 +381,10 @@ export const ProviderProfileView: Component = () => {
   //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
   return (
-    <div>
+    <div class="">
       <div class="text-2xl font-bold underline italic text-link2 dark:text-link2-DM text-center">
         <Show when={editMode() === true}>
-          <h1>{t("messages.profileEdits")}</h1>
+          <h1 class="text-htext1 dark:text-htext1-DM">{t("messages.profileEdits")}</h1>
         </Show>
       </div>
       <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
@@ -397,7 +397,7 @@ export const ProviderProfileView: Component = () => {
                 {/* Profile Information for Mobile View */}
                 <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                    <h2 class="flex flex-1 p-4 font-bold">
+                    <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.profileInfo")}
                     </h2>
                     <div class="flex w-10 items-center justify-center">
@@ -412,7 +412,7 @@ export const ProviderProfileView: Component = () => {
                         </button>
                       </Show>
                     </div>
-                    <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
+                    <h2 class="text-xl text-htext1 dark:text-htext1-DM pb-4 font-bold">
                       {provider()?.provider_name == ""
                         ? provider()?.first_name + " " + provider()?.last_name
                         : provider()?.provider_name}
@@ -459,7 +459,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="group flex items-center relative mr-2">
                           <svg
-                            class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="w-4 h-4 bg-icon1 dark:bg-icon1-DM fill-background1 border-2 border-border1 dark:border-border1-DM rounded-full peer"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -518,7 +518,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border-2 border-border1 dark:border-border1-DM rounded-full peer"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -578,7 +578,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-border1 dark:border-border1-DMrounded-full peer"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
