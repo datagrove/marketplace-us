@@ -15,10 +15,16 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject
 const productCategories = values.productCategoryInfo.categories
 
+const { data: user, error: userError } = await supabase.auth.getSession();
+if(userError){
+    console.log(userError)
+}
+if (user.session === null || user.session === undefined) {
+    alert(t('messages.signIn'));
+    location.href = `/${lang}/login`;
+}
 
 const { data, error } = await supabase.from('providerposts').select('*');
-console.log(data)
-console.log(productCategories)
 
 data?.map(item => {
     productCategories.forEach(productCategories => {
@@ -29,7 +35,6 @@ data?.map(item => {
     delete item.service_category
 })
 
-console.log(data)
 
 
 interface ProviderPost {
@@ -272,10 +277,14 @@ export const ServicesView: Component = () => {
                     filterPosts={setCategoryFilter}
                 />
             </div>
-            <div>
-                <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
+            <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
+                <div class="md:w-48 md:mr-4 w-11/12">
+                    <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
+                </div>
+                <div class="md:flex-1 w-11/12 items-center">
+                    <ViewCard posts={currentPosts()} />
+                </div>
             </div>
-            <ViewCard posts={currentPosts()} />
         </div>
     )
 }

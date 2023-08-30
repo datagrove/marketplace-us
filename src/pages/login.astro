@@ -9,13 +9,13 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<PageLayout>
+<PageLayout pageTitle={t("pageTitles.login")}>
   <div>
     <div class="text-center mt-4 mb-8">
-      <h2 class="text-xl w-full italic">{t("pageTitles.login")}</h2>
+      <h2 class="text-xl w-full italic text-ptext1 dark:text-ptext1-DM">{t("pageTitles.login")}</h2>
     </div>
     <div
-      class="bg-background1 border-border border max-w-md max-h-max p-5 m-auto rounded-md dark:bg-background1-DM dark:border-border-DM"
+      class="bg-background1 border-border1 border max-w-md max-h-max p-5 m-auto rounded-md dark:bg-background1-DM dark:border-border1-DM"
     >
       <Auth client:only="solid-js" />
       <div class="m-2"></div>

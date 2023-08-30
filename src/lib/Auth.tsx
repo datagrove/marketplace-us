@@ -16,6 +16,11 @@ export const Auth: Component = (props) => {
   const [passwordMatch, setPasswordMatch] = createSignal(false);
   const match = () => password() === confirmPassword();
   const [authMode, setAuthMode] = createSignal<"sign_in" | "sign_up">(mode);
+  const lang = getLangFromUrl(new URL(window.location.href));
+  const t = useTranslations(lang);
+  const regularExpressionPassword =
+    /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -30,7 +35,7 @@ export const Auth: Component = (props) => {
       currentSession.set(data.session);
       // const test = useStore(currentSession)
       // console.log("Current Session: " + test()?.user.aud)
-      location.href = `/${lang}`;
+      location.href = `/${lang}/services`;
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -43,27 +48,55 @@ export const Auth: Component = (props) => {
   const handleSignUp = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    if (password() === confirmPassword()) {
-      setPasswordMatch(true);
-      try {
-        setLoading(true);
-        const { error } = await supabase.auth.signUp({
-          email: email(),
-          password: password(),
-        });
-        if (error) throw error;
-        alert(t("messages.checkConfirmEmail"));
-        location.href = `/${lang}`;
-      } catch (error) {
-        if (error instanceof Error) {
-          alert(error.message);
+    if (
+      regularExpressionPassword.test(password()) &&
+      regularExpressionEmail.test(email())
+    ) {
+      if (password() === confirmPassword()) {
+        setPasswordMatch(true);
+        try {
+          setLoading(true);
+          const { data, error } = await supabase.auth.signUp({
+            email: email(),
+            password: password(),
+          });
+          if (error) throw error;
+          alert(t("messages.checkConfirmEmail"));
+          if (data && data.user) {
+            if (
+              data.user.identities &&
+              data.user.identities.length > 0 &&
+              data.session === null
+            ) {
+              const { error } = await supabase.auth.resend({
+                type: "signup",
+                email: email(),
+              });
+              if (error) console.log(error);
+            }
+          }
+          location.href = `/${lang}`;
+        } catch (error) {
+          if (error instanceof Error) {
+            alert(error.message);
+          }
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
+      } else {
+        setPasswordMatch(false);
+        alert(t("messages.passwordMatch"));
       }
-    } else {
-      setPasswordMatch(false);
-      alert(t("messages.passwordMatch"));
+    } else if (
+      !regularExpressionEmail.test(password()) &&
+      !regularExpressionPassword.test(email())
+    ) {
+      alert(t("messages.passwordLackRequirements"));
+      alert(t("messages.emailLackRequirements"));
+    } else if (!regularExpressionEmail.test(password())) {
+      alert(t("messages.passwordLackRequirements"));
+    } else if (!regularExpressionPassword.test(email())) {
+      alert(t("messages.emailLackRequirements"));
     }
   };
 
@@ -76,11 +109,11 @@ export const Auth: Component = (props) => {
             <form class="form-widget" onSubmit={handleLogin}>
               <div class="mb-4 flex justify-center">
                 <label class="hidden" for="email">
-                  {t("formLabels.email")}:{" "}
+                  {t("formLabels.email")}
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   value={email()}
@@ -93,16 +126,14 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   value={password()}
                   onChange={(e) => {
-                    if (e.currentTarget.value.length > 5) {
-                      console.log("Password length is greater than 5");
-                      return setPassword(e.currentTarget.value);
+                    setPassword(e.currentTarget.value);
                     }
-                  }}
+                  }
                 />
               </div>
               <div class="mb-4 flex justify-center">
@@ -115,11 +146,11 @@ export const Auth: Component = (props) => {
                 </button>
               </div>
               <div>
-                <p class="text-sm text-text1 dark:text-text1-DM">
+                <p class="text-sm text-ptext1 dark:text-ptext1-DM">
                   {" "}
                   {t("messages.noAccount")}
                   <a
-                    class="text-link2 hover:underline dark:text-link2-DM"
+                    class="text-link1 hover:underline dark:text-link1-DM"
                     href={`/${lang}/signup`}
                   >
                     {t("buttons.signUp")}
@@ -140,7 +171,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="email"
                   placeholder={t("formLabels.email")}
                   required
@@ -148,13 +179,14 @@ export const Auth: Component = (props) => {
                   onChange={(e) => setEmail(e.currentTarget.value)}
                 />
               </div>
+
               <div class="mb-1 flex justify-center">
                 <label for="password" class="hidden">
                   {t("formLabels.password")}
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.password")}
                   required
@@ -164,12 +196,17 @@ export const Auth: Component = (props) => {
                 />
               </div>
               <div class="mb-4 flex justify-center">
-                {password().length > 5 ? (
-                  ""
+                {regularExpressionPassword.test(password()) ? (
+                  <span
+                    id="pwlength"
+                    class="text-sm text-ptext1 dark:text-ptext1-DM "
+                  >
+                    {t("messages.passwordValid")}
+                  </span>
                 ) : (
                   <span
                     id="pwlength"
-                    class="text-sm text-text1 dark:text-text1-DM"
+                    class="text-sm text-ptext1 dark:text-ptext1-DM whitespace-pre-wrap"
                   >
                     {t("messages.passwordLength")}
                   </span>
@@ -181,7 +218,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="confirm password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
                   type="password"
                   placeholder={t("formLabels.confirmPassword")}
                   required
@@ -196,16 +233,28 @@ export const Auth: Component = (props) => {
                 ) : (
                   <span
                     id="pwconfirm"
-                    class="text-sm text-text1 dark:text-text1-DM"
+                    class="text-sm font-bold text-alert1 dark:text-alert1-DM"
                   >
                     {t("messages.passwordMatch")}
                   </span>
                 )}
               </div>
+              <div class="px-10">
+                {t("messages.clickWrap1")}{" "}
+                <span class="font-medium">{t("pageTitles.signUp")}</span>{" "}
+                {t("messages.clickWrap2")}{" "}
+                <a href={`/${lang}/terms`} target="_blank" class="text-link2-DM hover:underline">
+                  {t("pageTitles.terms")}
+                </a>{" "}
+                &{" "}
+                <a href={`/${lang}/privacy`} target="_blank" class="text-link2-DM hover:underline">
+                  {t("pageTitles.privacy")}
+                </a>
+              </div>
               <div class="mb-4 flex justify-center">
                 <button
                   type="submit"
-                  class="mt-3 btn-primary dark:bg-btn1-DM"
+                  class="mt-4 btn-primary dark:bg-btn1-DM"
                   aria-live="polite"
                   disabled={!match()}
                 >
@@ -216,9 +265,11 @@ export const Auth: Component = (props) => {
                   )}
                 </button>
               </div>
+
               <div class="my-2">
-                <p class="text-text1 dark:text-text1-DM">
+                <p class="text-ptext1 dark:text-ptext1-DM">
                   {t("messages.alreadyAccount")}
+                  <span> </span>
                   <a
                     class="text-link2 hover:underline dark:text-link2-DM"
                     href={`/${lang}/login`}

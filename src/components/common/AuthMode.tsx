@@ -17,7 +17,6 @@ export const AuthMode: Component = () => {
   createEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
       currentSession.set(session);
-      console.log(authMode());
     });
 
     if (useStore(currentSession)() === null) {
@@ -36,7 +35,7 @@ export const AuthMode: Component = () => {
       authMode() === "signed_out" ? (
         <div>
           <form>
-            <button class="" type="submit" formaction="/login">
+            <button class="" type="submit" formaction={`/${lang}/login`}>
               {t("pageTitles.signIn")}
             </button>
           </form>

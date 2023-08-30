@@ -62,9 +62,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     alert(t('messages.noProvider'));
                     location.href = `/${lang}/services`
                 } else {
-                    console.log(data)
                     setProvider(data[0]);
-                    console.log(provider())
                 }
             } catch (error) {
                 console.log(error);
@@ -104,10 +102,10 @@ export const ClientProviderView: Component<Props> = (props) => {
 
 
     return (
-        <div class="m-6 md:grid md:grid-cols-5 md:gap-6">
+        <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
 
             {/* Left column for md+ View */}
-            <div class="md:col-span-2 md:drop-shadow-lg border border-border dark:border-border-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
+            <div class="md:col-span-2 md:drop-shadow-lg border border-border1 dark:border-border1-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
 
                 {/* Container for Mobile View */}
                 <div class="container">
@@ -117,16 +115,16 @@ export const ClientProviderView: Component<Props> = (props) => {
                             <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.providerInfo')}</h2>
                             {/*Creates the Dropdown Arrow*/}
                             <div class="flex w-10 items-center justify-center">
-                                <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                                <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                             </div>
                         </summary>
                         <div class="p-4">
-                            <h2 class="text-xl text-text1 dark:text-text1-DM pb-4 font-bold">
+                            <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
                                 {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
                             </h2>
                             <div class="flex justify-center mb-3">
                                 <Show when={typeof providerImage() !== "undefined"}>
-                                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                                    <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
                                         <img
                                             src={providerImage()}
                                             class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
@@ -148,12 +146,12 @@ export const ClientProviderView: Component<Props> = (props) => {
                     </details>
 
                     {/* Provider Posts for Mobile View*/}
-                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden" open>
+                    <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden" open>
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                        <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.posts')}</h2>
+                        <h2 class="flex flex-1 p-4 font-bold text-ptext1 dark:text-ptext1-DM">{t('formLabels.posts')}</h2>
                         {/*Creates the Dropdown Arrow*/}
                         <div class="flex w-10 items-center justify-center">
-                                <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                                <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                             </div>
                         </summary>
                         <div class='p-4'>
@@ -166,12 +164,12 @@ export const ClientProviderView: Component<Props> = (props) => {
 
                 {/* Profile Information for md+ View */}
                 <div class="hidden md:block">
-                    <h2 class="text-xl text-text1 dark:text-text1-DM py-4 font-bold">
+                    <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
                         {provider()?.provider_name == '' ? provider()?.first_name + ' ' + provider()?.last_name : provider()?.provider_name}
                     </h2>
                     <div class="flex justify-center mb-3">
                         <Show when={typeof providerImage() !== "undefined"}>
-                            <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border dark:border-border-DM">
+                            <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
                                 <img
                                     src={providerImage()}
                                     class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"

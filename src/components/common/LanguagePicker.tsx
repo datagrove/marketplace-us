@@ -40,11 +40,11 @@ export const LanguagePicker: Component = () => {
   }
 
   return (
-    <div class="flex rounded-lg dark:text-black focus:border-btn1 dark:focus:border-btn1-DM  focus:outline-none mr-4">
-      <img src={icon} alt="language icon" class="bg-background2 rounded-l-lg pl-2" />
+    <div class="flex rounded-lg text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM focus:outline-none mr-4">
+      <img src={icon} alt="language icon" class="bg-background1 dark:bg-background1-DM rounded-l-lg pl-2" />
       <select 
       id="language" 
-      class='bg-background2 rounded-r-lg '
+      class='bg-background1 dark:bg-background1-DM rounded-r-lg '
       value={selectedLanguage()} 
       onChange={handleLanguageChange}
       >

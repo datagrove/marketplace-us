@@ -17,10 +17,14 @@ const lang = getLangFromUrl(Astro.url)
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'></link>
     <!-- TODO: Is this still something that should be here? -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"/> 
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
     <title>{pageTitle}</title>
   </head>
 
-  <body class="md:mx-4 text-page bg-gray-200 dark:bg-black dark:text-slate-400">
+  <body class="md:mx-4 text-page bg-background1 dark:bg-background1-DM text-ptext1 dark:text-ptext1-DM">
     <slot />
   </body>
 </html>

@@ -16,7 +16,7 @@ export const ClientRouting = () => {
     t("pageTitles.createClientAccount")
   );
   const [routing, setRouting] = createSignal<string>(
-    `${lang}/../../client/createaccount`
+    `/${lang}/client/createaccount`
   );
 
   const CreateEditClientProfilelink = document.getElementById(
@@ -37,11 +37,10 @@ export const ClientRouting = () => {
         .eq("user_id", User.session!.user.id);
 
       if (data![0] === undefined) {
-        console.log("user is not a client");
+        // console.log("user is not a client");
       } else {
-        setCreateText(t("pageTitles.editClientAccount"));
-        setRouting(`${lang}/../../client/editaccount`);
-        // console.log("user is a client");
+        setCreateText(t("pageTitles.viewClientAccount"));
+        setRouting(`/${lang}/client/profile`);
         setIsUserClient(true);
       }
     } catch (error) {
@@ -53,6 +52,11 @@ export const ClientRouting = () => {
 
   return (
     <Show when={isUser}>
+      <div>
+      <a href={`/${lang}/services`} class=" ">
+        {t("menus.services")}
+      </a>
+      </div>
       <a class=" " id="createEditClientProfileLink" href={routing()}>
         {createText()}
       </a>

@@ -1,55 +1,151 @@
 ---
-import { SITE } from '../config';
-import Layout from '../layouts/PageLayout.astro';
-import { AuthMode } from '../components/common/AuthMode';
-import { SignUpBtn } from '../components/common/SignUpButton';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import Layout from "../layouts/PageLayout.astro";
+import { AuthMode } from "../components/common/AuthMode";
+import { SignUpBtn } from "../components/common/SignUpButton";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import cleaner from "../assets/categoryIcons/cleaner-man.svg";
+import grid from "../assets/grid.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
 ---
 
-<Layout pageTitle={t('pageTitles.home')}>
-	<!-- <h1>{t('pageTitles.home')}</h1> -->
-	<div class="flex flex-col px-2 md:px-0 md:flex-row">
-		<div class="mt-6 mb-6 md:mb-0">
-			<div>
-				<h1 class="text-3xl font-bold">{t(`homePageText.headline`)}</h1>
-				<p class="text-lg my-6">{t(`homePageText.subHeadline`)}</p>
-			</div>
+<Layout pageTitle={t("pageTitles.home")}>
+  <!-- <h1>{t('pageTitles.home')}</h1> -->
+  <div class="flex flex-col px-2 md:px-0 md:flex-row">
+    <div class="mt-6 mb-6 md:mb-0">
+      <div>
+        <h1 class="text-3xl font-bold text-htext1 dark:text-htext1-DM">{t(`homePageText.headline`)}</h1>
+        <p class="text-lg my-6">{t(`homePageText.subHeadline`)}</p>
+      </div>
+      <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-center grid grid-cols-8 gap-2 pb-6">
+        <a
+          href={`/${lang}/services`}
+          class="flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM col-span-3 md:col-span-2 -space-y-8 h-28 w-28 hover:translate-y-0.5"
+        >
+          <div class="flex">
+            <svg
+              version="1.1"
+              id="_x32_"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 512 512"
+              xml:space="preserve"
+              fill="currentColor"
+              class="w-12 h-12 fill-logo1"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 
-			<!-- <a href="/login?">Log In</a> -->
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"></g>
 
+              <g id="SVGRepo_iconCarrier">
+                <g>
+                  <path
+                    class="st0"
+                    d="M486.965,230.141c28.063-31.641,12.375-71.844,10.453-76.781s-5.25-2.859-6.984-0.25 c-1.766,2.609-40.172,50.484-40.172,50.484H248.403c0,0-103.719-148.453-107.297-153.672s-6.328-5.797-8.797-5.797 c-2.484,0-6.344,0.828-6.344,7.984c0,4.688,0,78.953,0,78.953s-101.25,58.375-115.844,66.328 c-14.547,7.984-10.172,17.891-6.578,25.578c3.156,6.828,44,94.109,45.109,96.594c1.094,2.469,3.844,2.469,4.688,0.813 c0.813-1.656,11.547-16.516,13.469-19.813c1.922-3.281,4.406-2.469,6.063-1.078c1.047,0.859,7.156,4.953,9.625,6.859 c2.484,1.938,5.219,0,6.047-1.391c0.844-1.359,13.484-20.344,14.859-22.547s3.297-1.078,4.141-0.531 c0.813,0.531,5.5,5.219,8.797,8.516c3.297,3.031,4.406,1.922,6.875-1.375c0.984-1.281,9.922-14.844,11.844-16.781 c1.906-1.922,3.281-0.828,4.672,1.094c1.375,1.938,14.313,22.031,18.984,29.438c4.672,7.453,4.125,10.734,4.125,13.484 s-13.766,151.625-13.766,151.625h93l15.688-104.031c0,0,95.203,0,101.813,0c6.594,0,20.906,2.203,35.219,16.25 c14.313,14.016,26.125,87.219,26.125,87.219h91.078L486.965,230.141z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <br />
+          <div class="text-btn1Text text-xs text-center p-2">
+            {t('messages.fetch')}
+          </div>
+        </a>
+        <div class="md:col-span-6 col-span-5 flex flex-col items-start justify-center">
+          <p class="mb-4 text-ptext1 dark:text-ptext1-DM">{t('messages.todoFetch')}</p>
+          <p class="text-xs italic text-ptext1 dark:text-ptext1-DM">*{t('messages.mustSignIn')}</p>
+        </div>
+      </div>
 
-			<div class="flex justify-start md:justify-end">
-				<AuthMode client:only="solid-js"/>
-				<SignUpBtn client:only="solid-js" />
+      <!-- <a href="/login?">Log In</a> -->
 
-				<!-- <button class="btn-primary mx-1">Sign Up</button> -->
-			</div>
-		</div>
+      <div class="flex justify-center md:justify-end">
+        <div class="btn-primary">
+          <AuthMode client:only="solid-js" />
+        </div>
+        <SignUpBtn client:only="solid-js" />
+      </div>
+    </div>
 
-		<div class="flex justify-center items-center md:w-1/2">
-			<svg class="fill-logo dark:fill-gray-300" width="200px" height="200px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-				<g clip-path="url(#clip0_429_11160)">
-				<circle class="stroke-gray-300 dark:stroke-logo-DM" cx="12" cy="11.9999" r="9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-				<rect class="stroke-gray-300 dark:stroke-gray-700" x="12" y="8" width="0.01" height="0.01" stroke-width="3.75" stroke-linejoin="round"/>
-				<path class="stroke-gray-300 dark:stroke-gray-700" d="M12 12V16" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-				</g>
-				<defs>
-					
-				<clipPath id="clip0_429_11160">
-				<rect class="fill-white dark:fill-gray-400" width="24" height="24" />
-				</clipPath>
-				</defs>
-			</svg>
-		</div>
-	</div>
+    <!-- <div class="flex justify-center items-center md:w-1/2">
+      <svg
+        class="fill-logo dark:fill-gray-300"
+        width="200px"
+        height="200px"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_429_11160)">
+          <circle
+            class="stroke-gray-300 dark:stroke-logo-DM"
+            cx="12"
+            cy="11.9999"
+            r="9"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></circle>
+          <rect
+            class="stroke-gray-300 dark:stroke-gray-700"
+            x="12"
+            y="8"
+            width="0.01"
+            height="0.01"
+            stroke-width="3.75"
+            stroke-linejoin="round"></rect>
+          <path
+            class="stroke-gray-300 dark:stroke-gray-700"
+            d="M12 12V16"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </g>
+        <defs>
+          <clipPath id="clip0_429_11160">
+            <rect class="fill-white dark:fill-gray-400" width="24" height="24"
+            ></rect>
+          </clipPath>
+        </defs>
+      </svg>
+    </div> -->
+
+    <div class="hidden md:grid grid-rows-7 grid-cols-7 border-4 border-red-300 md:min-w-[300px] md:mx-4">
+      <div class="col-start-3 col-span-5 z-0">
+        <img 
+          src={ grid }
+          alt="grid icon"
+          class=""
+        />
+      </div>
+      <div class="row-start-2 row-span-5 col-start-1 col-span-3 border-4 border-green-400 rounded md:min-w-36 flex items-center justify-center z-10">
+        <img 
+          src={ cleaner }
+          alt="placeholder image"
+          class="h-12"
+        />
+      </div>
+
+      <div class="row-start-3 row-span-5 col-start-5 col-span-3 border-4 border-blue-400 rounded md:min-w-36 flex items-center justify-center z-10">
+        <img 
+          src={ cleaner } 
+          alt="placeholder image"
+          class="h-12"
+        />
+      </div>
+
+      <!-- <div class="row-start-7 row-span-1 col-start-1 col-span-7 border-4 border-purple-700">
+        <p>Box Three</p>
+      </div> -->
+    </div>
+  </div>
 </Layout>
 
 <script>
-	const redirectLogin = () => {
-		alert("Test")
-	}
+  const redirectLogin = () => {
+    alert("Test");
+  };
 </script>

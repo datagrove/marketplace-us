@@ -53,6 +53,7 @@ const UserImage: Component<Props> = (props) => {
       const fileExt = file.name.split(".").pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `${fileName}`;
+      console.log(filePath);
 
       let { error: uploadError } = await supabase.storage
         .from("user.image")
@@ -60,6 +61,20 @@ const UserImage: Component<Props> = (props) => {
 
       if (uploadError) {
         throw uploadError;
+      }
+
+      if (imageUrl()) {
+        const { error } = await supabase
+          .storage
+          .from("user.image")
+          .remove([props.url!]);
+
+        if (error) {
+          console.log("supabase errror: " + error.message);
+        } else {
+          console.log("deleted images", [props.url!]);
+          setImageUrl(null);
+        }
       }
 
       props.onUpload(event, filePath);
@@ -73,7 +88,7 @@ const UserImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite" class="flex-row text-center justify-center">
+    <div aria-live="polite" class="flex-row text-center justify-center">
       {imageUrl() ? (
         <img
           src={imageUrl()!}
@@ -83,28 +98,29 @@ const UserImage: Component<Props> = (props) => {
         />
       ) : (
         <div class="flex justify-center">
-        <svg
-            width="120px" 
-            height="120px" 
-            viewBox="0 0 512 512" 
+          <svg
+            width="120px"
+            height="120px"
+            viewBox="0 0 512 512"
             version="1.1"
-            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM"
-        >
+            class="fill-logo2 dark:fill-icon1 bg-background2 dark:bg-icon2-DM"
+          >
             <title>image-filled</title>
             <g id="Page-1" stroke="none" stroke-width="1">
-                <g id="icon" transform="translate(64.000000, 64.000000)">
-                    <path d="M384,1.42108547e-14 L384,384 L1.42108547e-14,384 L1.42108547e-14,1.42108547e-14 L384,1.42108547e-14 Z M109.226667,142.933333 L42.666,249.881 L42.666,341.333 L341.333,341.333 L341.333,264.746 L277.333333,200.746667 L211.84,266.24 L109.226667,142.933333 Z M245.333333,85.3333333 C227.660221,85.3333333 213.333333,99.6602213 213.333333,117.333333 C213.333333,135.006445 227.660221,149.333333 245.333333,149.333333 C263.006445,149.333333 277.333333,135.006445 277.333333,117.333333 C277.333333,99.6602213 263.006445,85.3333333 245.333333,85.3333333 Z" id="Combined-Shape"></path>
-                </g>
+              <g id="icon" transform="translate(64.000000, 64.000000)">
+                <path d="M384,1.42108547e-14 L384,384 L1.42108547e-14,384 L1.42108547e-14,1.42108547e-14 L384,1.42108547e-14 Z M109.226667,142.933333 L42.666,249.881 L42.666,341.333 L341.333,341.333 L341.333,264.746 L277.333333,200.746667 L211.84,266.24 L109.226667,142.933333 Z M245.333333,85.3333333 C227.660221,85.3333333 213.333333,99.6602213 213.333333,117.333333 C213.333333,135.006445 227.660221,149.333333 245.333333,149.333333 C263.006445,149.333333 277.333333,135.006445 277.333333,117.333333 C277.333333,99.6602213 263.006445,85.3333333 245.333333,85.3333333 Z" id="Combined-Shape"></path>
+              </g>
             </g>
-        </svg>
+          </svg>
         </div>
       )}
-      <div style={{ width: `${props.size}px` }} class="mt-3">
+
+      <div class="mt-3">
         <label
           class="btn-primary"
           for="single"
         >
-          {uploading() ? "Uploading ..." : "Upload Image"}
+          {uploading() ? t('buttons.uploading') : t('buttons.uploadImage')}
         </label>
         <span style="display:none">
           <input

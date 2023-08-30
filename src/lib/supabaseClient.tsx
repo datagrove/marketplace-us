@@ -12,5 +12,5 @@ export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKe
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
-    }
+    },
 })

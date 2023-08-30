@@ -15,8 +15,10 @@ export interface uiObject {
     editProviderAccount: string,
     viewProviderAccount: string,
     page404: string,
-    requestPasswordReset: string
-    resetPassword: string
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
   },
 
   buttons: {
@@ -38,11 +40,18 @@ export interface uiObject {
     delete: string,
     contact: string,
     phone: string,
+    saveProfile: string,
   },
 
   messages: {
     noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
     passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
     passwordMatch: string,
     passwordReset: string,
     forgotPassword: string,
@@ -60,6 +69,14 @@ export interface uiObject {
     noPost: string,
     selectAnImage: string,
     noProvider: string,
+    translation: string,
+    translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
+    profileEdits: string,
   },
 
   formLabels: {
@@ -95,6 +112,53 @@ export interface uiObject {
     image: string,
     slide: string,
     providerProfileImage: string,
+    clientProfileImage: string,
+  },
+
+  homePageText: {
+    headline: string,
+    subHeadline: string,
+    ariaLabel: string,
+  },
+
+  menus: {
+    services: string,
+  },
+
+  toolTips: {
+    providerPhone: string,
+    clientPhone: string,
+    firstName: string,
+    lastName: string,
+    displayName: string,
+    profileImage: string,
+    changeEmail: string,
+    locationUpdate: string,
+    postImages: string,
+  },
+
+  apiErrors: {
+    missingFields: string,
+    noSession: string,
+    noUser: string,
+    providerExists: string,
+    profileCreateError: string,
+    profileEditError: string,
+    noDistrict: string,
+    noMinorMunicipality: string,
+    noMajorMunicipality: string,
+    noCountry: string,
+    locationError: string,
+    providerCreateProfileError: string,
+    providerEditProfileError: string,
+    noProfileData: string,
+    success: string,
+    emailError: string,
+    noCategory: string,
+    postError: string,
+    noPost: string,
+    clientExists: string,
+    clientCreateProfileError: string,
   },
 
   headerData: {
@@ -115,45 +179,45 @@ export interface uiObject {
 
   footerData: {
     links: [
+      // {
+      //   title: string,
+      //   links: [
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //   ],
+      // },
+      // {
+      //   title: string,
+      //   links: [
+      //     { text: string, href: string },
+      //     { text: string, href: string },
+      //   ],
+      // },
       {
-        title: string,
+        // title: string,
         links: [
           { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
       {
-        title: string,
+        // title: string,
         links: [
           { text: string, href: string },
-          { text: string, href: string },
-        ],
-      },
-      {
-        title: string,
-        links: [
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-        ],
-      },
-      {
-        title: string,
-        links: [
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
-          { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
+          // { text: string, href: string },
         ],
       },
     ],
@@ -162,8 +226,10 @@ export interface uiObject {
       { text: string, href: string },
     ],
     socialLinks: [
+      // { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
+      // { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
       { ariaLabel: string, icon: string, href: string },
@@ -189,10 +255,4 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
-  
-  homePageText: {
-    headline: string,
-    subHeadline: string,
-    ariaLabel: string,
-  }
 }

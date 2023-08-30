@@ -1,6 +1,10 @@
 import { Component, createEffect, createSignal, JSX } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Props {
   size: number;
@@ -69,23 +73,24 @@ const PostImage: Component<Props> = (props) => {
   };
 
   return (
-    <div style={{ width: `${props.size}px` }} aria-live="polite">
+    <div class="flex-row text-center justify-center" aria-live="polite">
       {imageUrl().length > 0 ? (
         imageUrl().map((image) => (
           <img
             src={image}
             alt={imageUrl() ? "Image" : "No image"}
-            class="user image border-2"
+            class="user image border-2 border-border1 dark:border-border1-DM"
             style={{ height: `${props.size}px`, width: `${props.size}px` }}
           />
         ))
       ) : (
+        <div class="flex justify-center">
         <svg
             width="120px" 
             height="120px" 
             viewBox="0 0 512 512" 
             version="1.1"
-            class="fill-logo dark:fill-logo-DM bg-background2 dark:bg-background2-DM mb-4"
+            class="fill-logo2 dark:fill-icon1 bg-background2 dark:bg-icon2-DM mb-4"
         >
             <title>image-filled</title>
             <g id="Page-1" stroke="none" stroke-width="1">
@@ -94,13 +99,14 @@ const PostImage: Component<Props> = (props) => {
                 </g>
             </g>
         </svg>
+        </div>
       )}
-      <div style={{ width: `${props.size}px` }}>
+      <div class="mt-3">
         <label
           class="btn-primary"
           for="single"
         >
-          {uploading() ? "Uploading ..." : "Upload Image"}
+          {uploading() ? t("buttons.uploading") : t("buttons.uploadImage")}
         </label>
         <span style="display:none">
           <input
