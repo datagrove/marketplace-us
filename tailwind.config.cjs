@@ -19,6 +19,7 @@ module.exports = {
 				'logo1-DM': '#F0F0F0',
 				'highlight1-DM': '#1DD762',
 				'iconbg1-DM': '',
+				'inputBorder1-DM': '',
 
 				'background2-DM': '#1F2937',
 				'htext2-DM': '#39D0BF',
@@ -33,6 +34,7 @@ module.exports = {
 				'logo2-DM': '#F0F0F0',
 				'highlight2-DM': '#1DD762',
 				'iconbg2-DM': '',
+				'inputBorder2-DM': '',
 
 				//Light Mode
 				'background1': '#FFFFFF',
@@ -48,6 +50,7 @@ module.exports = {
 				'logo1': '#000000',
 				'highlight1': '#296312',
 				'iconbg1': '#FFFFFF',
+				'inputBorder1': '',
 
 				'background2': '#2D2D2D',
 				'htext2': '#39D0BF',
@@ -62,6 +65,7 @@ module.exports = {
 				'logo2': '#F0F0F0',
 				'highlight2': '#25DA49',
 				'iconbg2': '',
+				'inputBorder1': '',
 
 				'shadow-LM': '#9E9E9E',
 				'shadow-DM': '#616161',

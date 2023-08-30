@@ -382,7 +382,7 @@ export const ProviderProfileView: Component = () => {
 
   return (
     <div>
-      <div class="text-2xl font-bold underline italic text-link2-DM text-center">
+      <div class="text-2xl font-bold underline italic text-link2 dark:text-link2-DM text-center">
         <Show when={editMode() === true}>
           <h1>{t("messages.profileEdits")}</h1>
         </Show>
@@ -395,13 +395,13 @@ export const ProviderProfileView: Component = () => {
             <Show when={screenSize() === "sm"}>
               <div class="container">
                 {/* Profile Information for Mobile View */}
-                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold">
                       {t("formLabels.profileInfo")}
                     </h2>
                     <div class="flex w-10 items-center justify-center">
-                      <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                      <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                     </div>
                   </summary>
                   <div class="p-4">
@@ -480,7 +480,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-bg1 text-sm text-gray-100 rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.firstName")}
@@ -492,7 +492,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="FirstName"
                             name="FirstName"
-                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM focus:outline-none"
                             value={provider()?.first_name}
                             required
                           />
