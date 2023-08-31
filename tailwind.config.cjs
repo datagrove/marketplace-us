@@ -50,7 +50,7 @@ module.exports = {
 				'logo1': '#000000',
 				'highlight1': '#296312',
 				'iconbg1': '#FFFFFF',
-				'inputBorder1': '#FFFFFF',
+				'inputBorder1': '#A9A9A9',
 
 				'background2': '#2D2D2D',
 				'htext2': '#39D0BF',
@@ -65,7 +65,7 @@ module.exports = {
 				'logo2': '#F0F0F0',
 				'highlight2': '#25DA49',
 				'iconbg2': '',
-				'inputBorder1': '',
+				'inputBorder2': '',
 
 				'shadow-LM': '#9E9E9E',
 				'shadow-DM': '#616161',
