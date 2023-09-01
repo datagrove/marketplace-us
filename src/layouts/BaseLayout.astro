@@ -21,11 +21,12 @@ const lang = getLangFromUrl(Astro.url)
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <script src="../../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    
     <title>{pageTitle}</title>
   </head>
 
   <body class="md:mx-4 text-page bg-background1 dark:bg-background1-DM text-ptext1 dark:text-ptext1-DM">
+    <script src="../../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <slot />
   </body>
 </html>
