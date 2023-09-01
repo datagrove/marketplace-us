@@ -12,10 +12,10 @@ import PostImage from "./PostImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import tinymce from 'tinymce';
-import model from "../../../node_modules/tinymce/models/dom/model";
-import theme from "../../../node_modules/tinymce/themes/silver/theme";
-import icons from "../../../node_modules/tinymce/icons/default/icons";
+import tinymce from "tinymce";
+import { model } from "../../../node_modules/tinymce/models/dom/model";
+import { theme } from "../../../node_modules/tinymce/themes/silver/theme";
+import { icons } from "../../../node_modules/tinymce/icons/default/icons";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -44,14 +44,21 @@ export const CreateNewPost: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
 
   onMount(() => {
-    tinymce.init({
-      selector: '#Content',
-      setup: function (editor) {
-        editor.on('change', function () {
-          tinymce.triggerSave();
-        });}
-    });
-  })
+    const script = document.createElement("script");
+    script.src = "/tinymce/tinymce.min.js";
+    script.async = true;
+    script.onload = () => {
+      tinymce.init({
+        selector: "#Content",
+        setup: function (editor) {
+          editor.on("change", function () {
+            tinymce.triggerSave();
+          });
+        },
+      });
+    };
+    document.body.appendChild(script);
+  });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -235,7 +242,7 @@ export const CreateNewPost: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
-    formData.append("lang", lang)
+    formData.append("lang", lang);
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
     }
@@ -273,14 +280,13 @@ export const CreateNewPost: Component = () => {
 
         <br />
 
-
         <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.postContent")}:
           <textarea
             id="Content"
             name="Content"
             class="rounded w-full mb-4 px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "
-            placeholder={t('formLabels.enterPostContent')}
+            placeholder={t("formLabels.enterPostContent")}
             rows="10"
             required
           ></textarea>
@@ -293,20 +299,25 @@ export const CreateNewPost: Component = () => {
               id="country"
               name="country"
               class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
         </div>
 
         <div class="mb-6">
-          <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
+          <label
+            for="MajorMunicipality"
+            class="text-ptext1 dark:text-ptext1-DM"
+          >
             {t("formLabels.majorMunicipality")}:
             <select
               id="MajorMunicipality"
               name="MajorMunicipality"
               class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
@@ -319,7 +330,8 @@ export const CreateNewPost: Component = () => {
               id="MinorMunicipality"
               name="MinorMunicipality"
               class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
@@ -331,7 +343,8 @@ export const CreateNewPost: Component = () => {
             id="GoverningDistrict"
             name="GoverningDistrict"
             class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-            required>
+            required
+          >
             <option value="">-</option>
           </select>
         </label>
