@@ -13,9 +13,9 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import tinymce from 'tinymce';
-import {model} from "../../../node_modules/tinymce/models/dom/model";
-import {theme} from "../../../node_modules/tinymce/themes/silver/theme";
-import {icons} from "../../../node_modules/tinymce/icons/default/icons";
+import model from "../../../node_modules/tinymce/models/dom/model";
+import theme from "../../../node_modules/tinymce/themes/silver/theme";
+import icons from "../../../node_modules/tinymce/icons/default/icons";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
