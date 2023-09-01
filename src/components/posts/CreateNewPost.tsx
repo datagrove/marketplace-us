@@ -12,6 +12,7 @@ import PostImage from "./PostImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import tinymce from 'tinymce/tinymce';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
