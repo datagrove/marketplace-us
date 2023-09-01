@@ -45,11 +45,14 @@ export const CreateNewPost: Component = () => {
 
   onMount(() => {
     const script = document.createElement("script");
-    script.src = "/tinymce/tinymce.min.js";
+    script.src = '/tinymce/tinymce.min.js';
     script.async = true;
     script.onload = () => {
+      console.log("tinymce loaded");
       tinymce.init({
         selector: "#Content",
+        skin: '/tinymce/skins/ui/oxide/skin.min.css',
+        content_css: '/tinymce/skins/content/default/content.min.css',
         setup: function (editor) {
           editor.on("change", function () {
             tinymce.triggerSave();
