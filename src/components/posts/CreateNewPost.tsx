@@ -42,8 +42,33 @@ export const CreateNewPost: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
+  const [mode, setMode] = createSignal<"dark" | "light">(localStorage.getItem("theme"));
 
-  onMount(() => {
+  console.log("Start Mode: " + mode());
+
+  // onMount(() => {
+  //   window.addEventListener("storage", (event) => {
+  //     console.log(event.key)
+  //   })
+  // })
+
+  // createEffect(() => {
+  //   console.log(mode());
+  // })
+  
+
+  createEffect(() => {
+    window.addEventListener("storage", (event) => {
+      if (event.key === "theme") {
+        setMode(event.newValue);
+      }
+      window.location.reload();
+      console.log(event.key);
+      console.log("Mode: " + mode());
+    })
+  })
+
+  createEffect(() => {
     const script = document.createElement("script");
     script.src = '/tinymce/tinymce.min.js';
     script.async = true;
@@ -51,8 +76,9 @@ export const CreateNewPost: Component = () => {
       console.log("tinymce loaded");
       tinymce.init({
         selector: "#Content",
-        skin: '/tinymce/skins/ui/oxide/skin.min.css',
-        content_css: '/tinymce/skins/content/default/content.min.css',
+        skin_url: (mode() ==="dark" ? '/tinymce/skins/ui/oxide-dark' : '/tinymce/skins/ui/oxide'),
+        content_css: (mode() ==="dark" ?'/tinymce/skins/content/dark/content.min.css' : '/tinymce/skins/content/default/content.min.css'),
+        promotion: false,
         setup: function (editor) {
           editor.on("change", function () {
             tinymce.triggerSave();
@@ -295,7 +321,7 @@ export const CreateNewPost: Component = () => {
           ></textarea>
         </label>
 
-        <div class="mb-6">
+        <div class="mb-6 mt-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
             <select
