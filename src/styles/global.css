@@ -4,7 +4,7 @@
 
 @layer components {
     .btn-primary {
-        @apply bg-btn1 hover:translate-y-0.5 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text font-bold py-2 px-4 border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM rounded max-h-14 shadow-md md:text-[1.2vw];
+        @apply bg-btn1 hover:translate-y-0.5 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM font-bold py-2 px-4 border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM rounded max-h-14 shadow-md md:text-[1.2vw];
     }
 
     button > * {
