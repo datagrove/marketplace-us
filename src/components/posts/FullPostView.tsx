@@ -236,7 +236,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 {post()?.governing_district}
             </p>
             <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.category}</p>
-            <div class="my-10 prose" id="post-content" innerHTML={post()?.content}></div>
+            <div class="my-10 prose dark:prose-invert" id="post-content" innerHTML={post()?.content}></div>
             <div class="mt-4">
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>

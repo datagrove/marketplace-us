@@ -39,7 +39,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
         <!-- <div class="border-4 border-purple-800 flex justify-center items-center text-sm text-muted text-center text-ptext1-DM "> -->
           {
             secondaryLinks.map(({ text, href }) => (
-            <div class="flex text-center items-center justify-center w-1/4 text-ptext2 dark:text-ptext2-DM"> 
+            <div class="flex text-center items-center justify-center w-1/4 text-ptext2 dark:text-ptext2-DM px-4"> 
               <div class="flex justify-center items-center">
                 <a
                   class="text-muted text-center text-sm text-link2 hover:text-link2Hov dark:text-link2 dark:hover:text-link2Hov transition duration-150 ease-in-out"
@@ -53,7 +53,7 @@ const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astr
         <!-- </div> -->
         {
           links.map(({ title, links }) => (
-            <div class="flex justify-center items-center w-1/4">
+            <div class="flex justify-center items-center w-1/4 px-4">
               {links && Array.isArray(links) && links.length > 0 && (
                 <ul class="text-sm">
                   {links.map(({ text, href, ariaLabel }) => (
