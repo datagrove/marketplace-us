@@ -254,7 +254,7 @@ export const Auth: Component = (props) => {
               <div class="mb-4 flex justify-center">
                 <button
                   type="submit"
-                  class="mt-4 btn-primary dark:bg-btn1-DM"
+                  class="mt-4 btn-primary"
                   aria-live="polite"
                   disabled={!match()}
                 >

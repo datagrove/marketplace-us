@@ -292,7 +292,7 @@ export const ClientProfileView: Component = () => {
 
           <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.majorMunicipality")}:
-            <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputborder1-DM focus:outline-none">
+            <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
               {client()?.major_municipality}
             </p>
           </label>

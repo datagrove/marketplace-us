@@ -239,7 +239,7 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.firstName")}
               </span>
@@ -277,7 +277,7 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.lastName")}
               </span>
@@ -315,7 +315,7 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.displayName")}
               </span>
@@ -352,7 +352,7 @@ export const ClientRegistration: Component = () => {
               </svg>
 
               <span
-                class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                 {t("toolTips.clientPhone")}
               </span>
@@ -444,7 +444,7 @@ export const ClientRegistration: Component = () => {
                 </svg>
 
                 <span
-                  class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                  class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48">
                   {t("toolTips.profileImage")}
                 </span>
