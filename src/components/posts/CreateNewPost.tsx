@@ -13,6 +13,15 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
+//tinymce
+import tinymce from "tinymce";
+import { model } from "../../../node_modules/tinymce/models/dom/model";
+import { theme } from "../../../node_modules/tinymce/themes/silver/theme";
+import { icons } from "../../../node_modules/tinymce/icons/default/icons";
+//To add new plugins import the main js file from the node modules and add the min file to public and add a script definition to the init call
+import lists from "../../../node_modules/tinymce/plugins/lists/plugin";
+import lists from "../../../node_modules/tinymce/plugins/quickbars/plugin";
+
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
@@ -38,16 +47,81 @@ export const CreateNewPost: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
+  const [mode, setMode] = createSignal<"dark" | "light">(
+    localStorage.getItem("theme")
+  );
 
-  onMount(() => {
-    tinymce.init({
-      selector: '#Content',
-      setup: function (editor) {
-        editor.on('change', function () {
-          tinymce.triggerSave();
-        });}
+  console.log("Start Mode: " + mode());
+
+  // onMount(() => {
+  //   window.addEventListener("storage", (event) => {
+  //     console.log(event.key)
+  //   })
+  // })
+
+  // createEffect(() => {
+  //   console.log(mode());
+  // })
+
+  createEffect(() => {
+    window.addEventListener("storage", (event) => {
+      if (event.key === "theme") {
+        setMode(event.newValue);
+      }
+      window.location.reload();
+      console.log(event.key);
+      console.log("Mode: " + mode());
     });
-  })
+  });
+
+  createEffect(() => {
+    const script = document.createElement("script");
+    script.src = "/tinymce/tinymce.min.js";
+    script.async = true;
+    script.onload = () => {
+      const listPlugin = document.createElement("script");
+      listPlugin.src = "/tinymce/plugins/lists/plugin.min.js";
+      listPlugin.async = true;
+      listPlugin.onload = () => {
+        const quickBarsPlugin = document.createElement("script");
+        quickBarsPlugin.src = "/tinymce/plugins/quickbars/plugin.min.js";
+        quickBarsPlugin.async = true;
+        quickBarsPlugin.onload = () => {
+          console.log("tinymce loaded");
+        tinymce.init({
+          selector: "#Content",
+          max_width: 384,
+          skin_url:
+            mode() === "dark"
+              ? "/tinymce/skins/ui/oxide-dark"
+              : "/tinymce/skins/ui/oxide",
+          content_css:
+            mode() === "dark"
+              ? "/tinymce/skins/content/dark/content.min.css"
+              : "/tinymce/skins/content/default/content.min.css",
+          promotion: false,
+          plugins: "lists, quickbars",
+          quickbars_image_toolbar: false,
+          quickbars_insert_toolbar: false,
+          toolbar: [
+            "undo redo | bold italic |alignleft aligncenter alignright",
+            "styles bullist numlist outdent indent",
+          ],
+          toolbar_mode: "wrap",
+          statusbar: false,
+          setup: function (editor) {
+            editor.on("change", function () {
+              tinymce.triggerSave();
+            });
+          },
+        });
+        }
+        document.body.appendChild(quickBarsPlugin);
+      };
+      document.body.appendChild(listPlugin);
+    };
+    document.body.appendChild(script);
+  });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -231,7 +305,7 @@ export const CreateNewPost: Component = () => {
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
-    formData.append("lang", lang)
+    formData.append("lang", lang);
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
     }
@@ -269,40 +343,44 @@ export const CreateNewPost: Component = () => {
 
         <br />
 
-
         <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.postContent")}:
           <textarea
             id="Content"
             name="Content"
             class="rounded w-full mb-4 px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "
-            placeholder={t('formLabels.enterPostContent')}
+            placeholder={t("formLabels.enterPostContent")}
             rows="10"
             required
           ></textarea>
         </label>
 
-        <div class="mb-6">
+        <div class="mb-6 mt-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
             <select
               id="country"
               name="country"
               class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
         </div>
 
         <div class="mb-6">
-          <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
+          <label
+            for="MajorMunicipality"
+            class="text-ptext1 dark:text-ptext1-DM"
+          >
             {t("formLabels.majorMunicipality")}:
             <select
               id="MajorMunicipality"
               name="MajorMunicipality"
               class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
@@ -315,7 +393,8 @@ export const CreateNewPost: Component = () => {
               id="MinorMunicipality"
               name="MinorMunicipality"
               class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-              required>
+              required
+            >
               <option value="">-</option>
             </select>
           </label>
@@ -327,7 +406,8 @@ export const CreateNewPost: Component = () => {
             id="GoverningDistrict"
             name="GoverningDistrict"
             class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
-            required>
+            required
+          >
             <option value="">-</option>
           </select>
         </label>
@@ -379,7 +459,7 @@ export const CreateNewPost: Component = () => {
         <div class="flex justify-center">
           <button class="btn-primary">{t("buttons.post")}</button>
         </div>
-        <Suspense>{response() && <p>{response().message}</p>}</Suspense>
+        <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
       </form>
     </div>
   );

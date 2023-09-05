@@ -7,6 +7,13 @@ const policiesCollection = defineCollection({
     }),
 });
 
+const aboutCollection = defineCollection({
+    type: 'content',
+    schema: z.object({
+    }),
+})
+
 export const collections = {
     'policies': policiesCollection,
+    'about': aboutCollection
 }

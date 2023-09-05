@@ -142,7 +142,7 @@ export const ViewCard: Component<Props> = (props) => {
                   </p>
 
                   <p
-                    class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden mr-4"
+                    class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden mr-4 prose dark:prose-invert"
                     innerHTML={post.content}
                   ></p>
                 </div>

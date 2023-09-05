@@ -382,7 +382,7 @@ export const ProviderProfileView: Component = () => {
 
   return (
     <div class="">
-      <div class="text-2xl font-bold underline italic text-link2 dark:text-link2-DM text-center">
+      <div class="text-2xl font-bold underline italic text-htext1 dark:text-htext1-DM text-center">
         <Show when={editMode() === true}>
           <h1 class="text-htext1 dark:text-htext1-DM">{t("messages.profileEdits")}</h1>
         </Show>
@@ -1427,7 +1427,7 @@ export const ProviderProfileView: Component = () => {
                 </Show>
               </div>
             </Show>
-            <Suspense>{response() && <p>{response().message}</p>}</Suspense>
+            <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
           </form>
         </div>
 
