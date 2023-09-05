@@ -621,7 +621,6 @@ export const ProviderProfileView: Component = () => {
                     <div class="email-add flex flex-row flex-wrap justify-between">
                       <label for="email" class="text-ptext1 dark:text-ptext1-DM">
                         {t("formLabels.email")}:
-                        {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                       </label>
                       <Show when={editMode() === false}>
                         <div class="basis-full h-0"></div>
@@ -1387,7 +1386,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.minorMunicipality")}:
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                         {provider()?.minor_municipality}
                       </p>
                     </label>
@@ -1419,7 +1418,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.governingDistrict")}:
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                         {provider()?.governing_district}
                       </p>
                     </label>
