@@ -1427,7 +1427,7 @@ export const ProviderProfileView: Component = () => {
                 </Show>
               </div>
             </Show>
-            <Suspense>{response() && <p>{response().message}</p>}</Suspense>
+            <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
           </form>
         </div>
 
