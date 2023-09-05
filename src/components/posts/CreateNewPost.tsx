@@ -417,7 +417,7 @@ export const CreateNewPost: Component = () => {
             <div class="flex flex-row justify-end">
               <div class="group flex items-center relative mr-2">
                 <svg
-                  class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full"
+                  class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full mb-2"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
@@ -438,7 +438,7 @@ export const CreateNewPost: Component = () => {
                 </svg>
 
                 <span
-                  class="peer-hover:visible transition-opacity bg-gray-800 text-sm text-gray-100 rounded-md absolute 
+                  class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48"
                 >
                   {t("toolTips.postImages")}

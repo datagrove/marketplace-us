@@ -18,7 +18,7 @@ module.exports = {
 				'icon1-DM': '#F0F0F0',
 				'logo1-DM': '#F0F0F0',
 				'highlight1-DM': '#1DD762',
-				'iconbg1-DM': '',
+				'iconbg1-DM': '#FFFFFF',
 				'inputBorder1-DM': '#A9A9A9',
 
 				'background2-DM': '#1F2937',

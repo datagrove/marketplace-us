@@ -223,7 +223,7 @@ export const LocationFilter: Component<Props> = (props) => {
       {/* Container for Mobile View */}
       <div class="container">
         {/*Mobile Filters Main Group*/}
-        <details class="bg-background1 dark:bg-black shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
+        <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
           <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
             <h2 class="flex flex-1 p-2 font-bold">Filters</h2>{" "}
             {/* TODO:Internationalize this */}

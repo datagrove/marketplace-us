@@ -223,7 +223,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.firstName")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -250,7 +250,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="FirstName"
             name="FirstName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             required
           />
         </div>
@@ -261,7 +261,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.lastName")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -288,7 +288,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="LastName"
             name="LastName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             required
           />
         </div>
@@ -299,7 +299,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.displayName")}
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -325,7 +325,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="DisplayName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="DisplayName"
           />
         </div>
@@ -336,7 +336,7 @@ export const ClientRegistration: Component = () => {
               {t("formLabels.phone")}:
             </label>
             <div class="group flex items-center relative mr-2">
-              <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              <svg class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512">
                 <g>
                   <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
@@ -362,7 +362,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="Phone"
-            class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="Phone"
             required
             onChange={(e) => setPhone(e.currentTarget.value)}
@@ -374,7 +374,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.country")}:
           <select
             id="country"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="country"
             required
           >
@@ -388,7 +388,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.majorMunicipality")}:
           <select
             id="MajorMunicipality"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="MajorMunicipality"
             required
           >
@@ -402,7 +402,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.minorMunicipality")}:
           <select
             id="MinorMunicipality"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="MinorMunicipality"
             required
           >
@@ -416,7 +416,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.governingDistrict")}:
           <select
             id="GoverningDistrict"
-            class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
             name="GoverningDistrict"
             required
           >
@@ -428,7 +428,7 @@ export const ClientRegistration: Component = () => {
           <div class="">
             <div class="flex flex-row justify-end">
               <div class="group flex items-center relative mr-2">
-                <svg class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                <svg class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full" version="1.1" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512">
                   <g>
                     <path d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992

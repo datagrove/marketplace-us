@@ -451,7 +451,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="FirstName"
-                          class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
                           {provider()?.first_name}
                         </p>
@@ -492,7 +492,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="FirstName"
                             name="FirstName"
-                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM focus:outline-none"
                             value={provider()?.first_name}
                             required
                           />
@@ -510,7 +510,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="LastName"
-                          class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
                           {provider()?.last_name}
                         </p>
@@ -551,7 +551,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="LastName"
                             name="LastName"
-                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                             value={provider()?.last_name}
                           />
                         </div>
@@ -568,7 +568,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="ProviderName"
-                          class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
                           {provider()?.provider_name
                             ? provider()?.provider_name
@@ -578,7 +578,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-border1 dark:border-border1-DMrounded-full peer"
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -611,7 +611,7 @@ export const ProviderProfileView: Component = () => {
                             type="text"
                             id="ProviderName"
                             name="ProviderName"
-                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                             value={provider()?.provider_name}
                           />
                         </div>
@@ -628,7 +628,7 @@ export const ProviderProfileView: Component = () => {
                         <div class="basis-full">
                           <p
                             id="email"
-                            class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 mb-4 dark:border-inputBorder1-DM focus:outline-none overflow-auto"
+                            class="rounded px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 mb-4 dark:border-inputBorder1-DM focus:outline-none overflow-auto"
                           >
                             {provider()?.email}
                           </p>
@@ -637,7 +637,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -669,7 +669,7 @@ export const ProviderProfileView: Component = () => {
                           <input
                             id="email"
                             name="email"
-                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                             type="email"
                             placeholder={t("formLabels.email")}
                             value={provider()?.email}
@@ -685,7 +685,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="Phone"
-                          class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
                           {provider()?.provider_phone}
                         </p>
@@ -693,7 +693,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -725,7 +725,7 @@ export const ProviderProfileView: Component = () => {
                           <input
                             type="text"
                             id="Phone"
-                            class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                            class="rounded w-full mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                             name="Phone"
                             value={provider()?.provider_phone}
                           />
@@ -738,7 +738,7 @@ export const ProviderProfileView: Component = () => {
                         <h3 class="font-bold mr-4">Location</h3>
                         <div class="flex items-center relative mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -774,7 +774,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="country"
-                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                       >
                         {provider()?.country}
                       </p>
@@ -782,7 +782,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="country"
-                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         name="country"
                         oninput={required}
                       >
@@ -791,7 +791,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.country")}
-                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                             {provider()?.country}
                           </p>
                         </label>
@@ -809,7 +809,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="MajorMunicipality"
-                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                       >
                         {provider()?.major_municipality}
                       </p>
@@ -817,7 +817,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="MajorMunicipality"
-                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         name="MajorMunicipality"
                         oninput={required}
                       >
@@ -826,7 +826,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.majorMunicipality")}:
-                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                             {provider()?.major_municipality}
                           </p>
                         </label>
@@ -844,7 +844,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="MinorMunicipality"
-                        class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                       >
                         {provider()?.minor_municipality}
                       </p>
@@ -852,7 +852,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="MinorMunicipality"
-                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         name="MinorMunicipality"
                         oninput={required}
                       >
@@ -861,7 +861,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.minorMunicipality")}:
-                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                             {provider()?.minor_municipality}
                           </p>
                         </label>
@@ -877,14 +877,14 @@ export const ProviderProfileView: Component = () => {
                       {t("formLabels.governingDistrict")}:
                     </label>
                     <Show when={editMode() === false}>
-                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                         {provider()?.governing_district}
                       </p>
                     </Show>
                     <Show when={editMode() === true}>
                       <select
                         id="GoverningDistrict"
-                        class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         name="GoverningDistrict"
                         oninput={required}
                       >
@@ -893,7 +893,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.governingDistrict")}:
-                          <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                             {provider()?.governing_district}
                           </p>
                         </label>
@@ -914,7 +914,7 @@ export const ProviderProfileView: Component = () => {
                 </details>
 
                 {/* View Posts for Mobile View */}
-                <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:bg-htext1-DM">
                       {t("formLabels.yourPosts")}
@@ -980,7 +980,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="FirstName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
                       {provider()?.first_name}
                     </p>
@@ -988,7 +988,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <div class="group flex items-center relative mr-2">
                       <svg
-                        class="w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full peer"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1021,7 +1021,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="FirstName"
                         name="FirstName"
-                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         value={provider()?.first_name}
                         required
                       />
@@ -1036,7 +1036,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="LastName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
                       {provider()?.last_name}
                     </p>
@@ -1044,7 +1044,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <div class="flex items-center relative mr-2">
                       <svg
-                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1077,7 +1077,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="LastName"
                         name="LastName"
-                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         value={provider()?.last_name}
                       />
                     </div>
@@ -1094,7 +1094,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="ProviderName"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
                       {provider()?.provider_name
                         ? provider()?.provider_name
@@ -1104,7 +1104,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <div class="flex items-center relative mr-2">
                       <svg
-                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1137,7 +1137,7 @@ export const ProviderProfileView: Component = () => {
                         type="text"
                         id="ProviderName"
                         name="ProviderName"
-                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         value={provider()?.provider_name}
                       />
                     </div>
@@ -1154,7 +1154,7 @@ export const ProviderProfileView: Component = () => {
                     <div class="basis-full">
                       <p
                         id="email"
-                        class="rounded px-1 focus:border-btn1 dark:focus:border-btn1-DM border mb-4 overflow-auto border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="rounded px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border mb-4 overflow-auto border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                       >
                         {provider()?.email}
                       </p>
@@ -1163,7 +1163,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <div class="flex items-center relative mr-2">
                       <svg
-                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1195,7 +1195,7 @@ export const ProviderProfileView: Component = () => {
                       <input
                         id="email"
                         name="email"
-                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         type="email"
                         placeholder={t("formLabels.email")}
                         value={provider()?.email}
@@ -1211,7 +1211,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="Phone"
-                      class="rounded w-full mb-4 px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
                       {provider()?.provider_phone}
                     </p>
@@ -1219,7 +1219,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === true}>
                     <div class="flex items-center relative mr-2">
                       <svg
-                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1251,7 +1251,7 @@ export const ProviderProfileView: Component = () => {
                       <input
                         type="text"
                         id="Phone"
-                        class="rounded w-full mb-4 text-ptext1 focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                        class="rounded w-full mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                         name="Phone"
                         value={provider()?.provider_phone}
                       />
@@ -1264,7 +1264,7 @@ export const ProviderProfileView: Component = () => {
                     <h3 class="font-bold mr-4">Location</h3>
                     <div class="flex items-center relative mr-2">
                       <svg
-                        class="peer w-4 h-4 bg-black fill-background1 border-2 border-black rounded-full peer"
+                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1300,7 +1300,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="country"
-                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                   >
                     {provider()?.country}
                   </p>
@@ -1308,7 +1308,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="country"
-                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                     name="country"
                     oninput={required}
                   >
@@ -1317,7 +1317,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.country")}
-                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                         {provider()?.country}
                       </p>
                     </label>
@@ -1335,7 +1335,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="MajorMunicipality"
-                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                   >
                     {provider()?.major_municipality}
                   </p>
@@ -1343,7 +1343,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="MajorMunicipality"
-                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                     name="MajorMunicipality"
                     oninput={required}
                   >
@@ -1352,7 +1352,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.majorMunicipality")}:
-                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                         {provider()?.major_municipality}
                       </p>
                     </label>
@@ -1370,7 +1370,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="MinorMunicipality"
-                    class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                   >
                     {provider()?.minor_municipality}
                   </p>
@@ -1378,7 +1378,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="MinorMunicipality"
-                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                     name="MinorMunicipality"
                     oninput={required}
                   >
@@ -1387,7 +1387,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.minorMunicipality")}:
-                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.minor_municipality}
                       </p>
                     </label>
@@ -1403,14 +1403,14 @@ export const ProviderProfileView: Component = () => {
                   {t("formLabels.governingDistrict")}:
                 </label>
                 <Show when={editMode() === false}>
-                  <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                  <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
                     {provider()?.governing_district}
                   </p>
                 </Show>
                 <Show when={editMode() === true}>
                   <select
                     id="GoverningDistrict"
-                    class="ml-2 rounded mb-4 dark:text-black focus:border-btn1 dark:focus:border-btn1-DM border-2 focus:outline-none"
+                    class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
                     name="GoverningDistrict"
                     oninput={required}
                   >
@@ -1419,7 +1419,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.governingDistrict")}:
-                      <p class="rounded w-full px-1 focus:border-btn1 dark:focus:border-btn1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
+                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 border-border1 dark:border-border1-DM focus:outline-none">
                         {provider()?.governing_district}
                       </p>
                     </label>
