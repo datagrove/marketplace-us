@@ -45,7 +45,7 @@ export const NewPassword: Component = () => {
               </label>
               <input
                 id="email"
-                class="inputField  ml-2 rounded-md pl-2 w-5/6 border border-border1 dark:border-border1-DM"
+                class="inputField ml-2 rounded-md pl-2 w-5/6 border px-1 focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                 type="email"
                 placeholder={t('formLabels.email')}
                 value={email()}

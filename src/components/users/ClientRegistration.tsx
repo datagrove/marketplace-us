@@ -250,7 +250,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="FirstName"
             name="FirstName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
             required
           />
         </div>
@@ -288,7 +288,7 @@ export const ClientRegistration: Component = () => {
             type="text"
             id="LastName"
             name="LastName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
             required
           />
         </div>
@@ -325,7 +325,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="DisplayName"
-            class="rounded w-full mb-4 px-1 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
             name="DisplayName"
           />
         </div>
@@ -362,7 +362,7 @@ export const ClientRegistration: Component = () => {
           <input
             type="text"
             id="Phone"
-            class="rounded w-full mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
             name="Phone"
             required
             onChange={(e) => setPhone(e.currentTarget.value)}
@@ -374,7 +374,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.country")}:
           <select
             id="country"
-            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="country"
             required
           >
@@ -388,7 +388,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.majorMunicipality")}:
           <select
             id="MajorMunicipality"
-            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MajorMunicipality"
             required
           >
@@ -402,7 +402,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.minorMunicipality")}:
           <select
             id="MinorMunicipality"
-            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MinorMunicipality"
             required
           >
@@ -416,7 +416,7 @@ export const ClientRegistration: Component = () => {
           {t("formLabels.governingDistrict")}:
           <select
             id="GoverningDistrict"
-            class="ml-2 rounded mb-4 text-ptext1 focus:border-highlight1 dark:focus:border-highlight1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="GoverningDistrict"
             required
           >

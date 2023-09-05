@@ -361,7 +361,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="country"
               name="country"
-              class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+              class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
               required
             >
               <option value="">-</option>
@@ -378,7 +378,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="MajorMunicipality"
               name="MajorMunicipality"
-              class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+              class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
               required
             >
               <option value="">-</option>
@@ -392,7 +392,7 @@ export const CreateNewPost: Component = () => {
             <select
               id="MinorMunicipality"
               name="MinorMunicipality"
-              class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+              class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
               required
             >
               <option value="">-</option>
@@ -405,7 +405,7 @@ export const CreateNewPost: Component = () => {
           <select
             id="GoverningDistrict"
             name="GoverningDistrict"
-            class="ml-2 rounded mb-4 text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM border-2 focus:outline-none"
+            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             required
           >
             <option value="">-</option>
