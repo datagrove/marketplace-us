@@ -20,6 +20,7 @@ export const French = {
     terms: 'Termes et Conditions',
     privacy: "Politique de Confidentialité",
     about: 'À Propos De Nous',
+    impact: 'Impact',
   },
 
   buttons: {

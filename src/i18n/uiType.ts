@@ -20,6 +20,7 @@ export interface uiObject {
     terms: string,
     privacy: string,
     about: string,
+    impact: string,
   },
 
   buttons: {

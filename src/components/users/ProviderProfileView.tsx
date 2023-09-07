@@ -382,9 +382,9 @@ export const ProviderProfileView: Component = () => {
 
   return (
     <div class="">
-      <div class="text-2xl font-bold underline italic text-htext1 dark:text-htext1-DM text-center">
-        <Show when={editMode() === true}>
-          <h1 class="text-htext1 dark:text-htext1-DM">{t("messages.profileEdits")}</h1>
+      <div class="text-2xl font-bold underline italic text-alert1 dark:text-alert1-DM text-center">
+        <Show when={editMode() === true}> 
+          <h1 class="text-alert1 dark:text-alert1-DM">{t("messages.profileEdits")}</h1>
         </Show>
       </div>
       <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
@@ -1146,7 +1146,6 @@ export const ProviderProfileView: Component = () => {
                 <div class="email-add flex flex-row flex-wrap justify-between">
                   <label for="email" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.email")}:
-                    {/* I would like this to have a tool tip that lets them know that they can't change the email because it is associated with their account. */}
                   </label>
                   <Show when={editMode() === false}>
                     <div class="basis-full h-0"></div>
