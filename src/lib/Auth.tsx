@@ -113,7 +113,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                   type="email"
                   placeholder={t("formLabels.email")}
                   value={email()}
@@ -126,7 +126,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                   type="password"
                   placeholder={t("formLabels.password")}
                   value={password()}
@@ -171,7 +171,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="email"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                   type="email"
                   placeholder={t("formLabels.email")}
                   required
@@ -186,7 +186,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                   type="password"
                   placeholder={t("formLabels.password")}
                   required
@@ -218,7 +218,7 @@ export const Auth: Component = (props) => {
                 </label>
                 <input
                   id="confirm password"
-                  class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1"
+                  class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                   type="password"
                   placeholder={t("formLabels.confirmPassword")}
                   required
@@ -254,7 +254,7 @@ export const Auth: Component = (props) => {
               <div class="mb-4 flex justify-center">
                 <button
                   type="submit"
-                  class="mt-4 btn-primary dark:bg-btn1-DM"
+                  class="mt-4 btn-primary"
                   aria-live="polite"
                   disabled={!match()}
                 >

@@ -20,6 +20,7 @@ export const English = {
     terms: 'Terms and Conditions',
     privacy: "Privacy Policy",
     about: 'About Us',
+    impact: 'Impact',
   },
 
   buttons: {

@@ -51,7 +51,7 @@ export const SetNewPassword: Component = () => {
             </label>
             <input
               id="password"
-              class="inputField  ml-2 rounded-md pl-2 w-5/6 border border-border1 dark:border-border1-DM"
+              class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
               type="password"
               placeholder={t('formLabels.password')}
               value={password()}
@@ -59,14 +59,14 @@ export const SetNewPassword: Component = () => {
               aria-describedby='pwlength'
             />
           </div>
-          <div class="mb-4 flex justify-center">
-            {password().length > 5 ? '' : <span id='pwlength' class="text-sm text-ptext1 dark:text-ptext1-DM"> {t('messages.passwordLength')}</span>}
+          <div class="mb-4 flex justify-center px-4">
+            {password().length > 5 ? '' : <span id='pwlength' class="text-sm text-ptext1 dark:text-ptext1-DM whitespace-pre-wrap"> {t('messages.passwordLength')}</span>}
           </div>
           <div class="mb-1 flex justify-center">
             <label for="confirm password" class="hidden">{t('formLabels.confirmPassword')}</label>
             <input
               id="confirm password"
-              class="inputField ml-2 rounded-md pl-2 w-5/6 border border-border1 dark:border-border1-DM"
+              class="inputField ml-2 rounded-md pl-2 w-5/6 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
               type="password"
               placeholder={t('formLabels.confirmPassword')}
               required

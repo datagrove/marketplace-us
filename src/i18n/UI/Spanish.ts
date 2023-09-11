@@ -20,6 +20,7 @@ export const Spanish = {
     terms: 'Términos y Condiciones',
     privacy: "Política de Privacidad",
     about: 'Sobre Nosotras',
+    impact: 'Impacto',
   },
 
   buttons: {

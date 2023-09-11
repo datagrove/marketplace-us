@@ -23,9 +23,9 @@ const t = useTranslations(lang);
       <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-start flex md:grid grid-cols-8 gap-2 mb-6">
         <a
           href={`/${lang}/services`}
-          class="w-[112px] h-[112px] flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM md:col-start-1 md:row-start-1 md:w-24 md:h-24 -space-y-8 hover:translate-y-0.5"
+          class="w-[112px] h-[112px] flex flex-col justify-center items-center align-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM md:col-start-1 md:row-start-1 md:w-24 md:h-24 -space-y-8 hover:translate-y-0.5"
         >
-          <div class="flex">
+          <div class="flex pr-3">
             <svg
               version="1.1"
               id="_x32_"
@@ -34,7 +34,7 @@ const t = useTranslations(lang);
               viewBox="0 0 512 512"
               xml:space="preserve"
               fill="currentColor"
-              class="w-12 h-12 fill-logo1"
+              class="w-12 h-12 fill-btn1Text dark:fill-btn1Text-DM"
             >
               <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
 
@@ -54,7 +54,7 @@ const t = useTranslations(lang);
             </svg>
           </div>
           <br />
-          <div class="text-btn1Text dark:text-btn1Text-DM text-xs text-center p-2">
+          <div class="text-btn1Text dark:text-btn1Text-DM text-xs text-center px-2">
             {t('messages.fetch')}
           </div>
         </a>
@@ -64,8 +64,6 @@ const t = useTranslations(lang);
         </div>
       </div>
 
-      <!-- <a href="/login?">Log In</a> -->
-
       <div class="flex justify-center md:justify-end">
         <div class="btn-primary">
           <AuthMode client:only="solid-js" />
@@ -74,46 +72,6 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <!-- <div class="flex justify-center items-center md:w-1/2">
-      <svg
-        class="fill-logo dark:fill-gray-300"
-        width="200px"
-        height="200px"
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_429_11160)">
-          <circle
-            class="stroke-gray-300 dark:stroke-logo-DM"
-            cx="12"
-            cy="11.9999"
-            r="9"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></circle>
-          <rect
-            class="stroke-gray-300 dark:stroke-gray-700"
-            x="12"
-            y="8"
-            width="0.01"
-            height="0.01"
-            stroke-width="3.75"
-            stroke-linejoin="round"></rect>
-          <path
-            class="stroke-gray-300 dark:stroke-gray-700"
-            d="M12 12V16"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </g>
-        <defs>
-          <clipPath id="clip0_429_11160">
-            <rect class="fill-white dark:fill-gray-400" width="24" height="24"
-            ></rect>
-          </clipPath>
-        </defs>
-      </svg>
-    </div> -->
 
     <div class="hidden md:flex md:items-center md:justify-center md:w-full lg:w-1/2 md:mt-8 lg:mt-8 md:pl-2 md:min-w-[400px]">
       { }
@@ -125,32 +83,7 @@ const t = useTranslations(lang);
       <div class="hidden dark:inline">
         <img src={ servicesDM } alt="homepage image of various services"/>
       </div>
-      <!-- <div class="col-start-3 col-span-5 z-0">
-        <img 
-          src={ grid }
-          alt="grid icon"
-          class=""
-        />
-      </div>
-      <div class="row-start-2 row-span-5 col-start-1 col-span-3 border-4 border-green-400 rounded md:min-w-36 flex items-center justify-center z-10">
-        <img 
-          src={ cleaner }
-          alt="placeholder image"
-          class="h-12"
-        />
-      </div>
-
-      <div class="row-start-3 row-span-5 col-start-5 col-span-3 border-4 border-blue-400 rounded md:min-w-36 flex items-center justify-center z-10">
-        <img 
-          src={ cleaner } 
-          alt="placeholder image"
-          class="h-12"
-        />
-      </div> -->
-
-      <!-- <div class="row-start-7 row-span-1 col-start-1 col-span-7 border-4 border-purple-700">
-        <p>Box Three</p>
-      </div> -->
+      
     </div>
   </div>
 </Layout>

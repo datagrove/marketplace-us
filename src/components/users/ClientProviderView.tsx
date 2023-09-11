@@ -110,7 +110,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                 {/* Container for Mobile View */}
                 <div class="container">
                     {/* Provider Info for Mobile View*/}
-                    <details class="bg-background1 dark:bg-black shadow rounded group md:hidden">
+                    <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                         <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                             <h2 class="flex flex-1 p-4 font-bold">{t('formLabels.providerInfo')}</h2>
                             {/*Creates the Dropdown Arrow*/}

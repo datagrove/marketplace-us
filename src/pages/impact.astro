@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import { Content } from "../content/about/impact.mdx";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+
+const classes = () => {
+  if (lang === "en" || lang === "fr") {
+    return "underline text-link1 dark:text-link1-DM";
+  } else if (lang === "es") {
+    return "";
+  }
+};
+---
+
+<Layout pageTitle={t("pageTitles.impact")}>
+  <div>
+    <div class="prose dark:prose-invert">
+      <Content />
+    </div>
+  </div>
+</Layout>
