@@ -15,11 +15,16 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 //tinymce
 import tinymce from "tinymce";
+//@ts-ignore
 import { model } from "../../../node_modules/tinymce/models/dom/model";
+//@ts-ignore
 import { theme } from "../../../node_modules/tinymce/themes/silver/theme";
+//@ts-ignore
 import { icons } from "../../../node_modules/tinymce/icons/default/icons";
 //To add new plugins import the main js file from the node modules and add the min file to public and add a script definition to the init call
+//@ts-ignore
 import lists from "../../../node_modules/tinymce/plugins/lists/plugin";
+//@ts-ignore
 import quickbars from "../../../node_modules/tinymce/plugins/quickbars/plugin";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -48,6 +53,7 @@ export const CreateNewPost: Component = () => {
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
   const [mode, setMode] = createSignal<"dark" | "light">(
+    //@ts-ignore
     localStorage.getItem("theme")
   );
 
@@ -66,6 +72,7 @@ export const CreateNewPost: Component = () => {
   createEffect(() => {
     window.addEventListener("storage", (event) => {
       if (event.key === "theme") {
+        //@ts-ignore
         setMode(event.newValue);
       }
       window.location.reload();
@@ -88,34 +95,34 @@ export const CreateNewPost: Component = () => {
         quickBarsPlugin.async = true;
         quickBarsPlugin.onload = () => {
           console.log("tinymce loaded");
-        tinymce.init({
-          selector: "#Content",
-          max_width: 384,
-          skin_url:
-            mode() === "dark"
-              ? "/tinymce/skins/ui/oxide-dark"
-              : "/tinymce/skins/ui/oxide",
-          content_css:
-            mode() === "dark"
-              ? "/tinymce/skins/content/dark/content.min.css"
-              : "/tinymce/skins/content/default/content.min.css",
-          promotion: false,
-          plugins: "lists, quickbars",
-          quickbars_image_toolbar: false,
-          quickbars_insert_toolbar: false,
-          toolbar: [
-            "undo redo | bold italic |alignleft aligncenter alignright",
-            "styles bullist numlist outdent indent",
-          ],
-          toolbar_mode: "wrap",
-          statusbar: false,
-          setup: function (editor) {
-            editor.on("change", function () {
-              tinymce.triggerSave();
-            });
-          },
-        });
-        }
+          tinymce.init({
+            selector: "#Content",
+            max_width: 384,
+            skin_url:
+              mode() === "dark"
+                ? "/tinymce/skins/ui/oxide-dark"
+                : "/tinymce/skins/ui/oxide",
+            content_css:
+              mode() === "dark"
+                ? "/tinymce/skins/content/dark/content.min.css"
+                : "/tinymce/skins/content/default/content.min.css",
+            promotion: false,
+            plugins: "lists, quickbars",
+            quickbars_image_toolbar: false,
+            quickbars_insert_toolbar: false,
+            toolbar: [
+              "undo redo | bold italic |alignleft aligncenter alignright",
+              "styles bullist numlist outdent indent",
+            ],
+            toolbar_mode: "wrap",
+            statusbar: false,
+            setup: function (editor) {
+              editor.on("change", function () {
+                tinymce.triggerSave();
+              });
+            },
+          });
+        };
         document.body.appendChild(quickBarsPlugin);
       };
       document.body.appendChild(listPlugin);
@@ -459,7 +466,13 @@ export const CreateNewPost: Component = () => {
         <div class="flex justify-center">
           <button class="btn-primary">{t("buttons.post")}</button>
         </div>
-        <Suspense>{response() && <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">{response().message}</p>}</Suspense>
+        <Suspense>
+          {response() && (
+            <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">
+              {response().message}
+            </p>
+          )}
+        </Suspense>
       </form>
     </div>
   );
