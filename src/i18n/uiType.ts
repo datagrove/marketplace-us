@@ -1,5 +1,6 @@
 export interface uiObject {
   textDirection: string,
+  siteDescription: string,
 
   pageTitles: {
     services: string,

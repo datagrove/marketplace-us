@@ -1,5 +1,6 @@
 export const Spanish = {
   textDirection: 'ltr',
+  siteDescription: "Todo lo que necesitas para hacer el trabajo.",
 
   pageTitles: {
     services: 'Servicios',

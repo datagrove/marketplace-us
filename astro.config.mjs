@@ -19,6 +19,11 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  server: {
+    headers: {
+      
+    }
+  },
   adapter: cloudflare(),
   site: SITE.url,
   trailingSlash: 'never',
@@ -47,10 +52,34 @@ export default defineConfig({
     })
   }), mdx()],
 
-  // vite: {
+  vite: {
+    plugins: [
+      VitePWA({
+        registerType: 'autoUpdate',
+        devOptions: {
+          enabled: true
+        },
+        manifest: {
+          name: 'TodoServis',
+          short_name: 'TodoServis',
+          description: SITE.description,
+          theme_color: SITE.themeColor,
+          icons: [
+            { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
+            { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+          ]
+        },
+        workbox: {
+				  globDirectory: 'dist',
+				  globPatterns: [
+				    '**/*.{js,css,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
+				  ],
+        },
+      })
+    ]
   //   define: {
   //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
   //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
   //   }
-  // },  
+ },  
 });
