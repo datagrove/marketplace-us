@@ -92,7 +92,6 @@ export default defineConfig({
 				  ],
         },
         useCredentials: true,
-        injectRegister: 'script',
       })
     ]
   //   define: {
