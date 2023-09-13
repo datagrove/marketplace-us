@@ -26,7 +26,7 @@ export default defineConfig({
     }
   },
   adapter: cloudflare(),
-  site: SITE.url,
+  site: SITE.pagesDevUrl,
   trailingSlash: 'never',
   build: {
     format: 'file'
@@ -66,8 +66,9 @@ export default defineConfig({
           description: SITE.description,
           theme_color: SITE.themeColor,
           icons: [
-            { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
-            { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" }
+            { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
+            { src: "/icon-512.png", type: "image/png", sizes: "512x512" },
+            { src: "/icon-512.png", type: "image/png", sizes: "512x512", purpose: "any maskable" }
           ]
         },
         workbox: {
