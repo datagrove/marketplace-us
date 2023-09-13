@@ -21,11 +21,6 @@ const defaultLocale = defaultLang;
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
-  server: {
-    headers: {
-
-    }
-  },
   adapter: cloudflare(),
   site: SITE.pagesDevUrl,
   trailingSlash: 'never',
@@ -72,7 +67,8 @@ export default defineConfig({
       VitePWA({
         registerType: 'autoUpdate',
         devOptions: {
-          enabled: true
+          enabled: true,
+          type: 'module'
         },
         manifest: {
           name: 'TodoServis',
@@ -90,6 +86,7 @@ export default defineConfig({
 				  globPatterns: [
 				    '**/*.{js,css,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
 				  ],
+          navigateFallback: null,
         },
         useCredentials: true,
       })
