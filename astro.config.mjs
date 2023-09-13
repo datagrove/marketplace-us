@@ -9,6 +9,7 @@ import { SITE } from './src/config';
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
 import { VitePWA } from "vite-plugin-pwa";
+import AstroPWA from "@vite-pwa/astro"
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkToc from "remark-toc";
 import rehypeSlug from 'rehype-slug';
@@ -35,23 +36,36 @@ export default defineConfig({
     remarkPlugins: [remarkToc],
     rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'append' }]],
   },
-  integrations: [solid(), tailwind(), icon({
-    iconDir: "src/assets",
-    include: {
-      tabler: ["*"]
-    }
-  }), i18n({
-    locales,
-    defaultLocale
-  }), sitemap({
-    i18n: {
+  integrations: [
+    solid(), 
+    tailwind(), 
+    icon({
+      iconDir: "src/assets",
+      include: {
+        tabler: ["*"]
+      }
+    }), 
+    i18n({
       locales,
       defaultLocale
-    },
-    filter: defaultLocaleSitemapFilter({
-      defaultLocale
-    })
-  }), mdx()],
+    }), 
+    sitemap({
+      i18n: {
+        locales,
+        defaultLocale
+      },
+      filter: defaultLocaleSitemapFilter({
+        defaultLocale
+      })
+    }), 
+    mdx(),
+    // AstroPWA({
+    //   registerType: 'autoUpdate',
+    //   devOptions: {
+    //     enabled: true
+    //   },
+    // })
+  ],
 
   vite: {
     plugins: [
@@ -78,6 +92,7 @@ export default defineConfig({
 				  ],
         },
         useCredentials: true,
+        injectRegister: 'script',
       })
     ]
   //   define: {
