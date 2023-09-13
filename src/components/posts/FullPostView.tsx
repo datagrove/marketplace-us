@@ -240,6 +240,18 @@ export const ViewFullPost: Component<Props> = (props) => {
             <div class="mt-4">
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
+
+            <div class="share-btns mt-4 border-4 border-red-400">
+                <div class="flex justify-center items-center bg-btn2 w-12 h-12 rounded">
+                    <a 
+                        class="twitter-share-button"
+                        href="https://twitter.com/intent/tweet?text=Check%20this%20out%20!"
+                        target="_blank"
+
+                    >X</a>
+                </div>
+            </div>
+
             <div class="flex justify-center mt-4">
                 <DeletePostButton id={+props.id!} userId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} postImage={post()?.image_urls} />
             </div>
