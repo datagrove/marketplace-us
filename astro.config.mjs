@@ -8,6 +8,7 @@ import { defaultLang, languages } from './src/i18n/ui';
 import { SITE } from './src/config';
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
+import { VitePWA } from "vite-plugin-pwa";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkToc from "remark-toc";
 import rehypeSlug from 'rehype-slug';
@@ -21,7 +22,7 @@ export default defineConfig({
   output: 'server',
   server: {
     headers: {
-      
+
     }
   },
   adapter: cloudflare(),
@@ -75,6 +76,7 @@ export default defineConfig({
 				    '**/*.{js,css,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
 				  ],
         },
+        useCredentials: true,
       })
     ]
   //   define: {
