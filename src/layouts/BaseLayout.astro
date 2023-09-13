@@ -31,7 +31,7 @@ const lang = getLangFromUrl(Astro.url)
     <meta name="theme-color" content={SITE.themeColor} />
 
     <!-- Service worker registration. -->
-    
+
     <script is:inline src="/registerSW.js"></script>
     <link rel="manifest" href="/manifest.webmanifest" />
     
@@ -40,5 +40,10 @@ const lang = getLangFromUrl(Astro.url)
   <body class="md:mx-4 text-page bg-background1 dark:bg-background1-DM text-ptext1 dark:text-ptext1-DM">
     <!-- <script src="../../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script> -->
     <slot />
+
+    <script>
+			// This is a hack to get vite-plugin-pwa to generate a sw.js file.
+			// Do not remove this script tag.
+		</script>
   </body>
 </html>
