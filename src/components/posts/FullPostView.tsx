@@ -5,6 +5,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { windowPersistentEvents } from "@nanostores/persistent";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -160,6 +161,54 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     }
 
+    const twitterUrl = "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
+    const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
+    const linkTarget = "_top";
+    const windowOptions = "menubar=yes,status=no,height=300,width=600";
+
+    function extractTitleText() {
+        return document.querySelector('h2')?.innerText;
+    }
+
+    function extractAnchorLink() {
+        return document.querySelector('a')?.href;
+    }
+    
+    function extractWindowLink() {
+        const currLink = window.location.href;
+        return currLink;
+    }
+    
+    function openTwitterWindow(text:any, link:any) {
+        const twitterQuery = `${text} ${link}`;
+        return window.open(`${twitterUrl} ${twitterQuery}&`, linkTarget, windowOptions);
+    }
+      
+
+    function registerShareButton() {
+        extractWindowLink();
+        const text= extractTitleText();
+        const link = extractWindowLink();
+        const twitterButton = document.querySelector('#button--twitter');
+        twitterButton?.addEventListener('click', () => openTwitterWindow(text, link))
+    }
+
+    function openFacebookWindow(text:any, link:any) {
+        const currPage = extractWindowLink();
+        const testLink = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currPage);
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(currPage)+ "&t=" + text, '', 'menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        console.log("TestLink: ", testLink)
+        // return false; 
+    }
+
+    function registerFacebookButton() {
+        extractWindowLink();
+        const text = extractTitleText();
+        const link = extractWindowLink();
+        const facebookButton = document.querySelector('#button--facebook');
+        facebookButton?.addEventListener('click', () => openFacebookWindow(text, link))
+    }
+  
     return (
         <div>
             <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
@@ -241,14 +290,17 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
 
-            <div class="share-btns mt-4 border-4 border-red-400">
-                <div class="flex justify-center items-center bg-btn2 w-12 h-12 rounded">
-                    <a 
-                        class="twitter-share-button"
-                        href="https://twitter.com/intent/tweet?text=Check%20this%20out%20!"
-                        target="_blank"
+            <div class="flex justify-start share-btns mt-4 border-4 border-red-400">
+                <div id="x-share" class="flex justify-center items-center">
+                    <button id="button--twitter" class="twitter-share-button" onclick={ registerShareButton }>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px" clip-rule="evenodd" baseProfile="basic"><path fill="#212121" fill-rule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28 c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clip-rule="evenodd"/><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"/><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"/><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"/></svg>
+                    </button>
+                </div>
 
-                    >X</a>
+                <div id="facebook-share" class="flex justify-center items-center">
+                    <button id="button--facebook" class="fb-share-button" onclick={ registerFacebookButton }>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">    <path d="M41,4H9C6.24,4,4,6.24,4,9v32c0,2.76,2.24,5,5,5h32c2.76,0,5-2.24,5-5V9C46,6.24,43.76,4,41,4z M37,19h-2c-2.14,0-3,0.5-3,2 v3h5l-1,5h-4v15h-5V29h-4v-5h4v-3c0-4,2-7,6-7c2.9,0,4,1,4,1V19z"/></svg>
+                    </button>
                 </div>
             </div>
 
