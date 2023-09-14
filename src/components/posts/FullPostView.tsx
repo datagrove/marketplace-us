@@ -163,6 +163,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const twitterUrl = "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
     const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
+    const whatsappUrl = "https://wa.me/?text=";
     const linkTarget = "_top";
     const windowOptions = "menubar=yes,status=no,height=300,width=600";
 
@@ -206,7 +207,21 @@ export const ViewFullPost: Component<Props> = (props) => {
         const text = extractTitleText();
         const link = extractWindowLink();
         const facebookButton = document.querySelector('#button--facebook');
-        facebookButton?.addEventListener('click', () => openFacebookWindow(text, link))
+        facebookButton?.addEventListener('click', () => openFacebookWindow(text, link));
+    }
+
+    function openWhatsappWindow(text:any, link:any) {
+        const currPage = extractWindowLink();
+        const testLink = whatsappUrl + "Check%20out%20this%20awesome%20service%20on%20TodoServis! ";
+        window.open(testLink + encodeURIComponent(currPage), 'menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+
+    }
+
+    function registerWhatsAppButton() {
+        const text = extractTitleText();
+        const link = extractWindowLink();
+        const whatsAppButton = document.querySelector('#button--whatsapp');
+        whatsAppButton?.addEventListener('click', () => openWhatsappWindow(text, link));
     }
   
     return (
@@ -293,15 +308,44 @@ export const ViewFullPost: Component<Props> = (props) => {
             <div class="flex justify-start share-btns mt-4 border-4 border-red-400">
                 <div id="x-share" class="flex justify-center items-center">
                     <button id="button--twitter" class="twitter-share-button" onclick={ registerShareButton }>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px" clip-rule="evenodd" baseProfile="basic"><path fill="#212121" fill-rule="evenodd" d="M38,42H10c-2.209,0-4-1.791-4-4V10c0-2.209,1.791-4,4-4h28 c2.209,0,4,1.791,4,4v28C42,40.209,40.209,42,38,42z" clip-rule="evenodd"/><path fill="#fff" d="M34.257,34h-6.437L13.829,14h6.437L34.257,34z M28.587,32.304h2.563L19.499,15.696h-2.563 L28.587,32.304z"/><polygon fill="#fff" points="15.866,34 23.069,25.656 22.127,24.407 13.823,34"/><polygon fill="#fff" points="24.45,21.721 25.355,23.01 33.136,14 31.136,14"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+                        </svg>
                     </button>
                 </div>
 
                 <div id="facebook-share" class="flex justify-center items-center">
                     <button id="button--facebook" class="fb-share-button" onclick={ registerFacebookButton }>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px">    <path d="M41,4H9C6.24,4,4,6.24,4,9v32c0,2.76,2.24,5,5,5h32c2.76,0,5-2.24,5-5V9C46,6.24,43.76,4,41,4z M37,19h-2c-2.14,0-3,0.5-3,2 v3h5l-1,5h-4v15h-5V29h-4v-5h4v-3c0-4,2-7,6-7c2.9,0,4,1,4,1V19z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M18 2a1 1 0 0 1 .993 .883l.007 .117v4a1 1 0 0 1 -.883 .993l-.117 .007h-3v1h3a1 1 0 0 1 .991 1.131l-.02 .112l-1 4a1 1 0 0 1 -.858 .75l-.113 .007h-2v6a1 1 0 0 1 -.883 .993l-.117 .007h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-6h-2a1 1 0 0 1 -.993 -.883l-.007 -.117v-4a1 1 0 0 1 .883 -.993l.117 -.007h2v-1a6 6 0 0 1 5.775 -5.996l.225 -.004h3z" stroke-width="0" fill="currentColor"></path>
+                        </svg>
                     </button>
                 </div>
+
+                {/* <div id="instagram-share" class="flex justify-center items-center">
+                    <button>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
+                            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                            <path d="M16.5 7.5l0 .01"></path>
+                        </svg>
+                    </button>
+                </div> */}
+
+                <div id="whatsapp-share" class="flex justify-center items-center">
+                    <button id="button--whatsapp" class="wa-share-button" onclick={ registerWhatsAppButton }>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
+                            <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
+                        </svg>
+                    </button>
+                </div>
+
             </div>
 
             <div class="flex justify-center mt-4">
