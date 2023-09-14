@@ -25,7 +25,8 @@ export default defineConfig({
   site: SITE.pagesDevUrl,
   trailingSlash: 'never',
   build: {
-    format: 'file'
+    format: 'file',
+    inlineStylesheets: 'always',
   },
   markdown: {
     remarkPlugins: [remarkToc],
@@ -65,7 +66,6 @@ export default defineConfig({
   vite: {
     plugins: [
       VitePWA({
-        registerType: 'autoUpdate',
         devOptions: {
           enabled: true,
           type: 'module'
@@ -84,7 +84,7 @@ export default defineConfig({
         workbox: {
 				  globDirectory: 'dist',
 				  globPatterns: [
-				    '**/*.{js,css,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
+				    '**\/*.{js,css,html,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
 				  ],
           navigateFallback: null,
         },
