@@ -35,7 +35,8 @@ export const SearchBar: Component<Props> = (props) => {
   return (
     <div class="search-form">
       <div class="form">
-        <input type="text" name="query" id="search" class="border border-border1 dark:border-border1-DM rounded px-1" placeholder={t('formLabels.search')} oninput={(e) => setSearchString(e.target.value)} />
+        <label class="sr-only" for="search">{t('formLabels.search')}</label>
+        <input type="text" name="query" id="search" class="border border-border1 dark:border-border1-DM rounded px-1 placeholder:text-ptext1 placeholder:opacity-[65%] placeholder:italic" placeholder={t('formLabels.search')} oninput={(e) => setSearchString(e.target.value)} />
         <button id="searchButton" class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button>
       </div>
     </div>

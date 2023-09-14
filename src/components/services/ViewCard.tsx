@@ -107,11 +107,11 @@ export const ViewCard: Component<Props> = (props) => {
                 >
                   <div class="grid grid-cols-4">
                     <div class="relative col-span-4 w-full flex align-top md:mt-2">
-                      <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-50 dark:opacity-100 w-fit rounded-lg px-2">
+                      <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
                         {post.major_municipality}/{post.minor_municipality}/
                         {post.governing_district}
                       </div>
-                      <div class="truncate inline-block max-w-[28%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-50 dark:opacity-100 w-fit rounded-lg px-2 ml-1">
+                      <div class="truncate inline-block max-w-[28%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
                         {post.category}
                       </div>
                       <div class="absolute right-2 inline-block">
