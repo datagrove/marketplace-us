@@ -22,6 +22,7 @@ export const French = {
     privacy: "Politique de Confidentialité",
     about: 'À Propos De Nous',
     impact: 'Impact',
+    offline: 'Hors ligne',
   },
 
   buttons: {

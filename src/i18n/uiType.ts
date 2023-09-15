@@ -22,6 +22,7 @@ export interface uiObject {
     privacy: string,
     about: string,
     impact: string,
+    offline: string,
   },
 
   buttons: {

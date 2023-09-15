@@ -22,6 +22,7 @@ export const Spanish = {
     privacy: "Política de Privacidad",
     about: 'Sobre Nosotras',
     impact: 'Impacto',
+    offline: 'Desconectada',
   },
 
   buttons: {

@@ -5,7 +5,7 @@ const assets = [
   "/service-worker.js",
   "/index.html",
   "/manifest.webmanifest",
-  "/dist/",
+  "/offline.html",
 ];
 
 // cache size limit function
@@ -54,7 +54,7 @@ self.addEventListener("fetch", function (event) {
               return caches.open(dynamicCacheName).then((dynamicCache) => {
                 dynamicCache.put(event.request.url, fetchRes.clone());
                 // check cached items size
-                limitCacheSize(dynamicCacheName, 15);
+                limitCacheSize(dynamicCacheName, 45);
                 return fetchRes;
               });
             })

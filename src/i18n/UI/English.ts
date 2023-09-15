@@ -22,6 +22,7 @@ export const English = {
     privacy: "Privacy Policy",
     about: 'About Us',
     impact: 'Impact',
+    offline: 'Offline',
   },
 
   buttons: {
