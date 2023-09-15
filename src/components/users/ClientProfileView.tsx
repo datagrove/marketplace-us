@@ -58,7 +58,7 @@ export const ClientProfileView: Component = () => {
   const [client, setClient] = createSignal<Client>();
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [clientImage, setClientImage] = createSignal<string>();
-  const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
+  const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [screenSize, setScreenSize] = createSignal<
     "sm" | "md" | "lg" | "xl" | "2xl"
@@ -395,7 +395,6 @@ export const ClientProfileView: Component = () => {
                 {/* Profile Information for Mobile View */}
                 <details
                   class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden"
-                  open
                 >
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
