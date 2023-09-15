@@ -25,6 +25,8 @@ interface Props {
 export const SocialMediaShares: Component<Props> = (props) => {
 // export const SocialMediaShares: Component = () => {
 
+    const whatsAppButton = document.querySelector('#button--whatsapp');
+
     const showSocials = async(e:SubmitEvent) => {
         e.preventDefault();
 
@@ -51,7 +53,9 @@ export const SocialMediaShares: Component<Props> = (props) => {
     }
 
     function extractTitleText() {
-        return document.querySelector('h2')?.innerText;
+        
+        
+        // return document.querySelector('h2')?.innerText;
     }
 
     function extractAnchorLink() {
@@ -92,18 +96,35 @@ export const SocialMediaShares: Component<Props> = (props) => {
         facebookButton?.addEventListener('click', () => openFacebookWindow(text, link));
     }
 
-    function openWhatsappWindow(text:any, link:any) {
-        const currPage = extractWindowLink();
-        const testLink = whatsappUrl + "Check%20out%20this%20awesome%20service%20on%20TodoServis! ";
-        window.open(testLink + encodeURIComponent(currPage), 'menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+    function openWhatsAppWindow(text:any, link:any) {
+        // const currPage = extractWindowLink();
+        const whatsappLink = whatsappUrl + "Check%20out%20this%20awesome%20service%20on%20TodoServis! ";
+        // alert(link)
+        window.open(whatsappLink + encodeURIComponent(link), 'menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
 
     }
 
-    function registerWhatsAppButton() {
-        const text = extractTitleText();
-        const link = extractWindowLink();
+    function shareWhatsApp() {
+        // alert("whatsapp clicked")
+        // const text = extractTitleText(); //need to fix this function now
+        const text = "THIS IS A TEST";
+        const currId = props.id;
+        // alert(currId);
+        // alert(text)
+        // const link = extractWindowLink();
+        // const link = {`/${lang}/posts/${ props.id}`}
+
+        const link = 'localhost:3000/' + lang  + '/posts/' + props.id; //need to update for production
+
+        // alert(link)
+        
+        // console.log("link: ", link)
+
         const whatsAppButton = document.querySelector('#button--whatsapp');
-        whatsAppButton?.addEventListener('click', () => openWhatsappWindow(text, link));
+
+        // alert(whatsAppButton?.id)
+    
+        whatsAppButton?.addEventListener('click', () => openWhatsAppWindow(text, link));
     }
 
     return (
@@ -162,7 +183,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                 </div> */}
 
                 <div id="whatsapp-share" class="flex justify-center items-center">
-                    <button id="button--whatsapp" class="wa-share-button" onclick={ registerWhatsAppButton }>
+                    <button id="button--whatsapp" class="wa-share-button" onclick={ shareWhatsApp }>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
