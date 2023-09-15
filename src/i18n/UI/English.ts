@@ -79,6 +79,7 @@ export const English = {
     todoFetch: 'Todo, the service dog, will fetch you the services you need!',
     mustSignIn: 'You must be signed in to view available services.',
     profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
+    noClient: "No Client found.",
   },
 
   formLabels: {
@@ -161,6 +162,7 @@ export const English = {
     noPost: "No post returned",
     clientExists: "Client already exists",
     clientCreateProfileError: "Error creating client profile",
+    clientEditProfileError: "Error updating client profile",
   },
 
   headerData: {

@@ -458,8 +458,8 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                       <Show when={editMode() === true}>
                         <div class="group flex items-center relative mr-2">
-                          <svg
-                            class="w-4 h-4 bg-icon1 dark:bg-icon1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
+                        <svg
+                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -898,6 +898,7 @@ export const ProviderProfileView: Component = () => {
                         </label>
                       </div>
                     </Show>
+
                     <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
                       <Show when={editMode() === true}>
                         <button
@@ -909,6 +910,7 @@ export const ProviderProfileView: Component = () => {
                         </button>
                       </Show>
                     </div>
+
                   </div>
                 </details>
 
@@ -938,13 +940,14 @@ export const ProviderProfileView: Component = () => {
                     </div>
                   </div>
                 </details>
+
               </div>
             </Show>
 
             {/* Profile Information for md+ View */}
             <Show when={screenSize() !== "sm"}>
               <div class="hidden md:block">
-                <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
+                <h2 class="text-xl text-htext1 dark:text-htext1-DM py-4 font-bold">
                   {provider()?.provider_name == ""
                     ? provider()?.first_name + " " + provider()?.last_name
                     : provider()?.provider_name}
