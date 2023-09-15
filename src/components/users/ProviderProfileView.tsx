@@ -917,11 +917,11 @@ export const ProviderProfileView: Component = () => {
                 {/* View Posts for Mobile View */}
                 <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                    <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:bg-htext1-DM">
+                    <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.yourPosts")}
                     </h2>
                     <div class="flex w-10 items-center justify-center">
-                      <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                      <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                     </div>
                   </summary>
                   <div class="p-2">
