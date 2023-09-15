@@ -6,6 +6,9 @@ const assets = [
   "/index.html",
   "/manifest.webmanifest",
   "/offline.html",
+  "/en.html",
+  "/fr.html",
+  "/es.html",
 ];
 
 // cache size limit function
@@ -65,7 +68,7 @@ self.addEventListener("fetch", function (event) {
           const pageResponse = await caches.match(event.request);
           if (pageResponse) return pageResponse;
           // if not, return fallback page
-          const errorResponse = await caches.match("/fallback");
+          const errorResponse = await caches.match("/offline.html");
           return errorResponse;
         })
     );
