@@ -6,9 +6,9 @@ const assets = [
   "/index.html",
   "/manifest.webmanifest",
   "/offline.html",
-  "/en.html",
-  "/fr.html",
-  "/es.html",
+  "/en",
+  "/fr",
+  "/es",
 ];
 
 // cache size limit function
