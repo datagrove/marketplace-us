@@ -63,37 +63,37 @@ export default defineConfig({
     // })
   ],
 
-  vite: {
-    plugins: [
-      VitePWA({
-        devOptions: {
-          enabled: true,
-          type: 'module'
-        },
-        manifest: {
-          name: 'TodoServis',
-          short_name: 'TodoServis',
-          description: SITE.description,
-          theme_color: SITE.themeColor,
-          icons: [
-            { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
-            { src: "/icon-512.png", type: "image/png", sizes: "512x512" },
-            { src: "/icon-512.png", type: "image/png", sizes: "512x512", purpose: "any maskable" }
-          ]
-        },
-        workbox: {
-				  globDirectory: 'dist',
-				  globPatterns: [
-				    '**\/*.{js,css,html,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
-				  ],
-          navigateFallback: null,
-        },
-        useCredentials: true,
-      })
-    ]
-  //   define: {
-  //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
-  //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
-  //   }
- },  
+//   vite: {
+//     plugins: [
+//       VitePWA({
+//         devOptions: {
+//           enabled: true,
+//           type: 'module'
+//         },
+//         manifest: {
+//           name: 'TodoServis',
+//           short_name: 'TodoServis',
+//           description: SITE.description,
+//           theme_color: SITE.themeColor,
+//           icons: [
+//             { src: "/icon-192.png", type: "image/png", sizes: "192x192" },
+//             { src: "/icon-512.png", type: "image/png", sizes: "512x512" },
+//             { src: "/icon-512.png", type: "image/png", sizes: "512x512", purpose: "any maskable" }
+//           ]
+//         },
+//         workbox: {
+// 				  globDirectory: 'dist',
+// 				  globPatterns: [
+// 				    '**\/*.{js,css,html,svg,png,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,ico}',
+// 				  ],
+//           navigateFallback: null,
+//         },
+//         useCredentials: true,
+//       })
+//     ]
+//   //   define: {
+//   //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
+//   //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
+//   //   }
+//  },  
 });
