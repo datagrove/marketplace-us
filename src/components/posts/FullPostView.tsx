@@ -305,7 +305,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
 
-            <div class="flex justify-start share-btns mt-4 border-4 border-red-400">
+            {/* <div class="flex justify-start share-btns mt-4 border-4 border-red-400">
                 <div id="x-share" class="flex justify-center items-center">
                     <button id="button--twitter" class="twitter-share-button" onclick={ registerShareButton }>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -325,7 +325,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </button>
                 </div>
 
-                {/* <div id="instagram-share" class="flex justify-center items-center">
+                <div id="instagram-share" class="flex justify-center items-center">
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -334,7 +334,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             <path d="M16.5 7.5l0 .01"></path>
                         </svg>
                     </button>
-                </div> */}
+                </div> 
 
                 <div id="whatsapp-share" class="flex justify-center items-center">
                     <button id="button--whatsapp" class="wa-share-button" onclick={ registerWhatsAppButton }>
@@ -346,7 +346,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </button>
                 </div>
 
-            </div>
+            </div> */}
 
             <div class="flex justify-center mt-4">
                 <DeletePostButton id={+props.id!} userId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} postImage={post()?.image_urls} />
