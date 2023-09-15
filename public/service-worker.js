@@ -3,8 +3,9 @@ const dynamicCacheName = "site-dynamic-v1";
 const assets = [
   "/",
   "/service-worker.js",
-  "/index",
+  "/index.html",
   "/manifest.webmanifest",
+  "/dist/",
 ];
 
 // cache size limit function
