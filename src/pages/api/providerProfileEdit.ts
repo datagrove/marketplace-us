@@ -12,6 +12,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Set internationalization values
   const lang = formData.get("lang");
+  //We know that this will be a string value from our languages array so just tell typescript to trust us
+  //@ts-ignore
   const t = useTranslations(lang);
 
   //set the formData fields to variables
