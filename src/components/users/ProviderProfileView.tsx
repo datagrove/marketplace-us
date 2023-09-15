@@ -10,13 +10,11 @@ import {
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
-import { EditProfileButton } from "../../components/users/EditProfileButton";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { image } from "astro:content";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
