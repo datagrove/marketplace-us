@@ -2,8 +2,6 @@
 import Layout from '../layouts/PageLayout.astro';
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
 
-export const prerender = true;
-
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
