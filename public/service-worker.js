@@ -52,9 +52,11 @@ self.addEventListener("fetch", function (event) {
           if (pageResponse) return pageResponse;
         })
       )
+    } else if (requestURL.pathname.startsWith('/en/') || requestURL.pathname.startsWith('/es/') || requestURL.pathname.startsWith('/fr/')) {
+      return;
     } else {
       event.respondWith(
-        fetch(event.request, { redirect: "follow" })
+        fetch(event.request)
           .then((fetchRes) => {
             return caches.open(dynamicCacheName).then((dynamicCache) => {
               dynamicCache.put(event.request.url, fetchRes.clone());
