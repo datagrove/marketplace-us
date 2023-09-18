@@ -37,48 +37,42 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", function (event) {
   if (event.request.method === "GET") {
-    event.respondWith(
-      fetch(event.request)
-        .then((fetchRes) => {
-          return caches.open(dynamicCacheName).then((dynamicCache) => {
-            dynamicCache.put(event.request.url, fetchRes.clone());
-            // check cached items size
-            limitCacheSize(dynamicCacheName, 100);
-            return fetchRes;
-          });
-        })
-        .catch(async function (err) {
-          // Return page if it exists in cache
-          const pageResponse = await caches.match(event.request);
-          if (pageResponse) return pageResponse;
-          // if not, return fallback page
-          const errorResponse = await caches.match("/offline.html");
-          return errorResponse;
-        })
-      // caches
-      //   .open(staticCacheName)
-      //   .then((staticCache) => staticCache.match(event.request))
-      //   .then((cacheRes) => {
-      //     return (
-      //       cacheRes ||
-      //       fetch(event.request).then((fetchRes) => {
-      //         return caches.open(dynamicCacheName).then((dynamicCache) => {
-      //           dynamicCache.put(event.request.url, fetchRes.clone());
-      //           // check cached items size
-      //           limitCacheSize(dynamicCacheName, 100);
-      //           return fetchRes;
-      //         });
-      //       })
-      //     );
-      //   })
-      //   .catch(async function (err) {
-      //     // Return page if it exists in cache
-      //     const pageResponse = await caches.match(event.request);
-      //     if (pageResponse) return pageResponse;
-      //     // if not, return fallback page
-      //     const errorResponse = await caches.match("/offline.html");
-      //     return errorResponse;
-      //   })
-    );
+    const requestURL = new URL(event.request.url);
+
+    //Check if the request is for the manifest file
+    if (requestURL.pathname === "/manifest.webmanifest") {
+      // Respond with the manifest file
+      event.respondWith(
+        caches.match("/manifest.webmanifest")
+          .then((response) => {
+            if (response) {
+              return response
+            } else {
+              //Fallback to the offline.htm if the manifest is not cached
+              return caches.match("/offline.html")
+            }
+          })
+      )
+    } else {
+      event.respondWith(
+        fetch(event.request)
+          .then((fetchRes) => {
+            return caches.open(dynamicCacheName).then((dynamicCache) => {
+              dynamicCache.put(event.request.url, fetchRes.clone());
+              // check cached items size
+              limitCacheSize(dynamicCacheName, 100);
+              return fetchRes;
+            });
+          })
+          .catch(async function (err) {
+            // Return page if it exists in cache
+            const pageResponse = await caches.match(event.request);
+            if (pageResponse) return pageResponse;
+            // if not, return fallback page
+            const errorResponse = await caches.match("/offline.html");
+            return errorResponse;
+          })
+      );
+    }
   }
 });

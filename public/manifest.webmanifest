@@ -1,6 +1,6 @@
 {
-  "short_name": "AstroSSRApp",
-  "name": "Astro SSR App",
+  "name": "TodoServis",
+  "short_name": "TodoServis",
   "icons": [
     {
       "src": "/icon-192.png",
@@ -20,7 +20,7 @@
     }
   ],
   "start_url": "/",
-  "display": "standalone",
+  "display": "minimal-ui",
   "theme_color": "#1DD762",
   "background_color": "#000000",
   "orientation": "portrait-primary"
