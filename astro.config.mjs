@@ -44,13 +44,13 @@ export default defineConfig({
     i18n({
       locales,
       defaultLocale,
-      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*'],
+      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*'],
     }), 
     sitemap({
       i18n: {
         locales,
         defaultLocale,
-        exclude: ['pages/offline.astro']
+        exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*']
       },
       filter: defaultLocaleSitemapFilter({
         defaultLocale
