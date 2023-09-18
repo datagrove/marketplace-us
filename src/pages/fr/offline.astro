@@ -1,10 +1,10 @@
 ---
-import Layout from '../layouts/PageLayout.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import Layout from '../../layouts/PageLayout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 export const prerender = true;
 
-const t = useTranslations('en');
+const t = useTranslations('fr');
 ---
 
 <Layout pageTitle={t("pageTitles.offline")}>

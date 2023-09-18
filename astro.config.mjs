@@ -43,12 +43,14 @@ export default defineConfig({
     }), 
     i18n({
       locales,
-      defaultLocale
+      defaultLocale,
+      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*'],
     }), 
     sitemap({
       i18n: {
         locales,
-        defaultLocale
+        defaultLocale,
+        exclude: ['pages/offline.astro']
       },
       filter: defaultLocaleSitemapFilter({
         defaultLocale
