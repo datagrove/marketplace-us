@@ -38,21 +38,14 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", function (event) {
   if (event.request.method === "GET") {
     event.respondWith(
-      caches
-        .open(staticCacheName)
-        .then((staticCache) => staticCache.match(event.request))
-        .then((cacheRes) => {
-          return (
-            cacheRes ||
-            fetch(event.request).then((fetchRes) => {
-              return caches.open(dynamicCacheName).then((dynamicCache) => {
-                dynamicCache.put(event.request.url, fetchRes.clone());
-                // check cached items size
-                limitCacheSize(dynamicCacheName, 45);
-                return fetchRes;
-              });
-            })
-          );
+      fetch(event.request)
+        .then((fetchRes) => {
+          return caches.open(dynamicCacheName).then((dynamicCache) => {
+            dynamicCache.put(event.request.url, fetchRes.clone());
+            // check cached items size
+            limitCacheSize(dynamicCacheName, 100);
+            return fetchRes;
+          });
         })
         .catch(async function (err) {
           // Return page if it exists in cache
@@ -62,6 +55,30 @@ self.addEventListener("fetch", function (event) {
           const errorResponse = await caches.match("/offline.html");
           return errorResponse;
         })
+      // caches
+      //   .open(staticCacheName)
+      //   .then((staticCache) => staticCache.match(event.request))
+      //   .then((cacheRes) => {
+      //     return (
+      //       cacheRes ||
+      //       fetch(event.request).then((fetchRes) => {
+      //         return caches.open(dynamicCacheName).then((dynamicCache) => {
+      //           dynamicCache.put(event.request.url, fetchRes.clone());
+      //           // check cached items size
+      //           limitCacheSize(dynamicCacheName, 100);
+      //           return fetchRes;
+      //         });
+      //       })
+      //     );
+      //   })
+      //   .catch(async function (err) {
+      //     // Return page if it exists in cache
+      //     const pageResponse = await caches.match(event.request);
+      //     if (pageResponse) return pageResponse;
+      //     // if not, return fallback page
+      //     const errorResponse = await caches.match("/offline.html");
+      //     return errorResponse;
+      //   })
     );
   }
 });
