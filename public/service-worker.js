@@ -55,7 +55,7 @@ self.addEventListener("fetch", function (event) {
       )
     } else {
       event.respondWith(
-        fetch(event.request)
+        fetch(event.request, {redirect: "follow"})
           .then((fetchRes) => {
             return caches.open(dynamicCacheName).then((dynamicCache) => {
               dynamicCache.put(event.request.url, fetchRes.clone());
