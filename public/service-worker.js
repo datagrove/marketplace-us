@@ -43,19 +43,16 @@ self.addEventListener("fetch", function (event) {
     if (requestURL.pathname === "/manifest.webmanifest") {
       // Respond with the manifest file
       event.respondWith(
-        caches.match("/manifest.webmanifest")
-          .then((response) => {
-            if (response) {
-              return response
-            } else {
-              //Fallback to the offline.htm if the manifest is not cached
-              return caches.match("/offline.html")
-            }
-          })
+        fetch(event.request, { redirect: "follow" })
+        .catch(async function (err) {
+          // Return page if it exists in cache
+          const pageResponse = await caches.match(event.request);
+          if (pageResponse) return pageResponse;
+        })
       )
     } else {
       event.respondWith(
-        fetch(event.request, {redirect: "follow"})
+        fetch(event.request, { redirect: "follow" })
           .then((fetchRes) => {
             return caches.open(dynamicCacheName).then((dynamicCache) => {
               dynamicCache.put(event.request.url, fetchRes.clone());
