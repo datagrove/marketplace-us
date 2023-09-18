@@ -1,15 +1,6 @@
 const staticCacheName = "site-static-v1";
 const dynamicCacheName = "site-dynamic-v1";
-const assets = [
-  "/",
-  "/service-worker.js",
-  "/index.html",
-  "/manifest.webmanifest",
-  "/offline.html",
-  "/en",
-  "/fr",
-  "/es",
-];
+const assets = self.__WB_MANIFEST;
 
 // cache size limit function
 const limitCacheSize = (name, size) => {
@@ -26,7 +17,7 @@ const limitCacheSize = (name, size) => {
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(staticCacheName).then((cache) => {
-      assets.forEach((asset) => cache.add(asset));
+      assets.forEach((asset) => cache.add(asset.url));
     })
   );
 });
