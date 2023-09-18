@@ -150,9 +150,6 @@ export const ViewCard: Component<Props> = (props) => {
 
                   <SocialMediaShares id={ post.id }/>
                 </div>
-
-                {/* <SocialMediaShares /> */}
-
               </div>
             </a>
           </li>
