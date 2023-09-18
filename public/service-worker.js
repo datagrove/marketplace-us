@@ -1,6 +1,8 @@
 const staticCacheName = "site-static-v1";
 const dynamicCacheName = "site-dynamic-v1";
-const assets = self.__WB_MANIFEST;
+let assets = self.__WB_MANIFEST;
+
+assets.push({ url: "/manifest.webmanifest", revision: "1" });
 
 // cache size limit function
 const limitCacheSize = (name, size) => {
