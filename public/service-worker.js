@@ -45,7 +45,7 @@ self.addEventListener("fetch", function (event) {
     if (requestURL.pathname === "/manifest.webmanifest") {
       // Respond with the manifest file
       event.respondWith(
-        fetch(event.request, { redirect: "follow" })
+        fetch(event.request)
         .catch(async function (err) {
           // Return page if it exists in cache
           const pageResponse = await caches.match(event.request);
