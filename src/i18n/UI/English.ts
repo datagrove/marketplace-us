@@ -76,7 +76,7 @@ export const English = {
     clickWrap1: 'By clicking',
     clickWrap2: 'you are indicating that you have read and agree to the',
     fetch: 'Fetch Services',
-    todoFetch: 'Todo the service dog will fetch you the services you need!',
+    todoFetch: 'Todo, the service dog, will fetch you the services you need!',
     mustSignIn: 'You must be signed in to view available services.',
     profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
   },
