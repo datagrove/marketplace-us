@@ -3,6 +3,7 @@ import { DeletePostButton } from "../posts/DeletePostButton";
 import { supabase } from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SocialMediaShares } from "../posts/SocialMediaShares";
+import SocialModal from "../posts/SocialModal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -104,9 +105,9 @@ export const ViewCard: Component<Props> = (props) => {
                 {/* <br /> */}
                 <div
                   id="cardContent"
-                  class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full border-4 border-red-300"
+                  class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
-                  <div id="card-text" class="border-4 border-blue-500 w-full">
+                  <div id="card-text" class=" w-full">
                     <div class="grid grid-cols-4">
                       <div class="relative col-span-4 w-full flex align-top md:mt-2">
                         <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-50 dark:opacity-100 w-fit rounded-lg px-2">
@@ -146,6 +147,11 @@ export const ViewCard: Component<Props> = (props) => {
                       class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden mr-4 prose dark:prose-invert"
                       innerHTML={post.content}
                     ></p>
+                  </div>
+                  
+                  <div>
+                    {/* <h1 class="header">SolidJs Modal!</h1> */}
+                    <SocialModal heading="Test Heading">Hello</SocialModal>
                   </div>
 
                   <SocialMediaShares id={ post.id }/>
