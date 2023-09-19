@@ -64,12 +64,12 @@ export const ViewCard: Component<Props> = (props) => {
   };
 
   return (
-    <div class="flex justify-center w-full">
+    <div class="flex justify-center w-full border-4 border-orange-300">
       <ul class="md:flex md:flex-wrap md:justify-center md:w-full">
         {newPosts().map((post: any) => (
-          <li class=" w-[99%]">
+          <li class=" w-[99%] border-4 border-red-500">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start rounded-lg md:h-48 shadow-md shadow-shadow-LM dark:shadow-shadow-DM box-content border border-opacity-25 border-border1 dark:border-border1-DM dark:border-opacity-25">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start rounded-lg md:h-48 shadow-md shadow-shadow-LM dark:shadow-shadow-DM box-content border border-opacity-25 border-border1 dark:border-border1-DM dark:border-opacity-25 w-full">
                 <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                   {post.image_url ? (
                     <img
@@ -150,11 +150,12 @@ export const ViewCard: Component<Props> = (props) => {
                   </div>
                   
                   <div>
-                    {/* <h1 class="header">SolidJs Modal!</h1> */}
-                    <SocialModal heading="Test Heading">Hello</SocialModal>
+                    <SocialModal id={ post.id }>Hello
+                      {/* <SocialMediaShares id={ post.id }/> */}
+                    </SocialModal>
                   </div>
 
-                  <SocialMediaShares id={ post.id }/>
+                  {/* <SocialMediaShares id={ post.id }/> */}
                 </div>
               </div>
             </a>

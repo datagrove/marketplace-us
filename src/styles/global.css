@@ -15,5 +15,9 @@
         @apply border-b-4 border-highlight1 dark:border-highlight1-DM
     }
 
+    .socialBtn {
+        @apply flex justify-start items-center border-2 border-border1 dark:border-border1-DM w-auto h-16 max-w-sm rounded-lg bg-background1 dark:bg-background1-DM px-2
+    }
+
 }
 
