@@ -9,7 +9,7 @@ const CONFIG = {
   
     defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
   
-    language: 'en',
+    language: 'es',
     textDirection: 'ltr',
   
     dateFormatter: new Intl.DateTimeFormat('en', {
