@@ -8,7 +8,7 @@ export const languages = {
     fr: 'Français',
 }
 
-export const defaultLang = 'en';
+export const defaultLang = 'es';
 
 export const ui = {
     en: {
