@@ -5,6 +5,7 @@ import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import { windowPersistentEvents } from "@nanostores/persistent";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -97,6 +98,16 @@ export const SocialMediaShares: Component<Props> = (props) => {
         };
 
         return navigator.share(shareData);
+    }
+
+    function textShare(e:Event) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        let message = "Check%20out%20this%20great%20service%20from%20TodoServis!%20";
+
+        // window.open("sms:?" + currPostLink, "_blank", windowOptions);
+        window.open("sms:?&body=" + message + currPostLink, "_blank", windowOptions);
     }
     
     return (
@@ -221,6 +232,18 @@ export const SocialMediaShares: Component<Props> = (props) => {
                             </svg>
                         </button>
                         <p class="hidden md:inline">Embed Link</p>
+                    </div>
+
+                    <div id="text-share" class="socialBtn">
+                        <button id="button--text" class="text-share-button p-1 rounded font-bold text-icon1 dark:text-icon1-DM" title="Text" onclick={ (e) => textShare(e) }>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-device-mobile-message" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M11 3h10v8h-3l-4 2v-2h-3z"></path>
+                                <path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2"></path>
+                                <path d="M10 18v.01"></path>
+                            </svg>
+                        </button>
+                        <p class="hidden md:inline">Text Link</p>
                     </div>
                 </div>
             </div>
