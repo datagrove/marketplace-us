@@ -47,15 +47,13 @@ export const SocialMediaShares: Component<Props> = (props) => {
     const fbShareLink = facebookUrl + currPostLink;
 
     function xShare(e:Event) {
-        // window.open(xUrl + encodeURIComponent(`www.todoservis.com/${ lang }/posts/${ props.id }`), "_blank", windowOptions);
         e.stopPropagation();
         e.preventDefault();
-        window.open(xUrl + `www.todoservis.com/${ lang }/posts/${ props.id }`, "_blank", windowOptions);
 
+        window.open(xUrl + `www.todoservis.com/${ lang }/posts/${ props.id }`, "_blank", windowOptions);
     }
 
     function facebookShare(e:Event) {
-        // window.open(facebookUrl + encodeURIComponent(`www.todoservis.com/${ lang }/posts/${ props.id }`), "_blank", windowOptions);
         e.stopPropagation();
         e.preventDefault();
 
@@ -69,30 +67,35 @@ export const SocialMediaShares: Component<Props> = (props) => {
     function whatsAppShare(e:Event) {
         e.stopPropagation();
         e.preventDefault();
+
         window.open(whatsappUrl + encodeURIComponent(`www.todoservis.com/${ lang }/posts/${ props.id }`), windowOptions);
     }
 
     function emailShare(e:Event) {
-        // window.location.href = "mailto:?subject=Check this out this service from TodoServis!&amp;body=Check out this service:" + encodeURIComponent(`www.todoservis.com/${ lang }/posts/${ props.id }`)
-        // window.location.href="mailto:?subject=Check this out this service from TodoServis!&body=Check%20out%20this%20service:";
         e.stopPropagation();
         e.preventDefault();
+
         window.open(emailURL + encodeURIComponent(`www.todoservis.com/${ lang }/posts/${ props.id }`));
 
+    }
+
+    function linkShare(e:Event) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        return navigator.clipboard.writeText(currPostLink);
     }
     
     return (
         <div class="w-full px-4 pb-4">
             <div>
-                <div>
-                    <h1 class="text-htext2 dark:text-htext2-DM text-xl pb-4">Share this service: </h1>
-                    <div class="flex items-center pb-4">
-                        <img 
-                            src={ placeholderImg } 
-                            class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2"
-                        />
-                        <p class="text-ptext2 dark:text-ptext2-DM">Post Title for Post #{ props.id }</p>
-                    </div>
+                <h1 class="text-htext2 dark:text-htext2-DM text-xl pb-4">Share this service: </h1>
+                <div class="flex items-center pb-4">
+                    <img 
+                        src={ placeholderImg } 
+                        class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2"
+                    />
+                    <p class="text-ptext2 dark:text-ptext2-DM">Post Title for Post #{ props.id }</p>
                 </div>
             </div>
       
@@ -183,7 +186,24 @@ export const SocialMediaShares: Component<Props> = (props) => {
                         </button>
                         <p class="hidden md:inline">Email</p>
                     </div>
+
+                    <div id="link-share" class="socialBtn">
+                        <button id="button--link" class="link-share-button p-1 rounded font-bold text-icon1 dark:text-icon1-DM" title="Copy Link" onclick={ (e) => linkShare(e) }>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-mail-forward" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 18h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v7.5"></path>
+                                <path d="M3 6l9 6l9 -6"></path>
+                                <path d="M15 18h6"></path>
+                                <path d="M18 15l3 3l-3 3"></path>
+                            </svg>
+                        </button>
+                        <p class="hidden md:inline">Copy Link</p>
+                    </div>
                 </div>
+            </div>
+
+            <div class="py-4">
+                <p class="text-ptext2 dark:text-ptext2-DM text-xs italic">TodoServis has no control over information at any site hyperlinked from this site. We are not responsible for the quality, content, privacy, or reliability of any hyperlinked site and is providing this hyperlink to you only as a convenience. In no event shall TodoServis be responsible for your use of a hyperlinked site.</p>
             </div>
         </div>
     );
