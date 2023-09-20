@@ -22,7 +22,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   const firstName = formData.get("FirstName");
   const lastName = formData.get("LastName");
-  const providerName = formData.get("ProviderName");
+  const displayName = formData.get("DisplayName");
   const phone = formData.get("Phone");
   const email = formData.get("email");
   const country = formData.get("country");
@@ -148,7 +148,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     location = null;
   } else {
     //Make a new location submission to the location table
-   
+
     //Build our submission to the location table keys need to match the field in the database you are trying to fill.
     let locationSubmission = {
       minor_municipality: minorMunicipality,
@@ -175,29 +175,29 @@ export const post: APIRoute = async ({ request, redirect }) => {
     }
     location = locationData[0];
   }
-  //Build our submission to the providers table including the location id from the select from the location table on line 158
+  //Build our submission to the clients table including the location id from the select from the location table on line 158
   let submission;
 
   //If the location is null then leave the current value for location
   if (location === null) {
     submission = {
-      provider_name: providerName,
-      provider_phone: phone,
+      display_name: displayName,
+      client_phone: phone,
       image_url: imageUrl,
     };
   } else {
     //Update the location with the new location
     submission = {
-      provider_name: providerName,
-      provider_phone: phone,
+      display_name: displayName,
+      client_phone: phone,
       location: location.id,
       image_url: imageUrl,
     };
   };
 
-  //submit to the providers table and select it back
+  //submit to the clients table and select it back
   const { error, data } = await supabase
-    .from("providers")
+    .from("clients")
     .update([submission])
     .eq("user_id", user.id)
     .select();
@@ -206,7 +206,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log(error);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.providerEditProfileError")),
+        message: (t("apiErrors.clientEditProfileError")),
       }),
       { status: 500 }
     );
@@ -227,7 +227,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: (t("apiErrors.success")),
-      redirect: "/provider/profile",
+      redirect: "/client/profile",
     }),
     { status: 200 }
   );
