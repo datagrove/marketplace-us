@@ -5,6 +5,7 @@ import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
+import dogLogo from '../../assets/dog-4-svgrepo-com (2).svg'
 import { windowPersistentEvents } from "@nanostores/persistent";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -125,14 +126,15 @@ export const SocialMediaShares: Component<Post> = (props) => {
                 {/* <h1 class="text-htext2">IMG { props.image_urls }</h1> */}
                 
                 <div class="flex items-center pb-4">
-                    { props.image_urls ? (
+                    <img src={ dogLogo } class="w-16 h-16 p-1 text-icon2 dark:text-icon2-DM rounded border border-border2 dark:border-border2-DM mr-2 bg-background1 dark:bg-border1-DM" />
+                    {/* { props.image_urls ? (
                         <>
                         <img src={ props.image_urls.split(",")[1] } />
                         <h1 class="text-htext2">IMG { props.image_urls.split(",")[0] }</h1>
                         </>
                     ) : (
-                        <img src={ placeholderImg } class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2" />
-                    )}
+                        <img src={ dogLogo } class="w-16 h-16 p-1 text-icon2 dark:text-icon2-DM rounded border border-border2 dark:border-border2-DM mr-2 bg-background1 dark:bg-border1-DM" />
+                    )} */}
                     
                     {/* <img 
                         class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2"
