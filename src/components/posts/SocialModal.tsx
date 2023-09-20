@@ -71,7 +71,7 @@ const SocialModal: Component<ModalProps> = function(props) {
     // });
     
     return (
-        <div class="border-2 border-green-200 flex flex-col justify-start">
+        <div class="right-[50%]">
             {/* { props.id } */}
 
             {/* <button class="border-4 border-purple-300 rounded px-2 flex justify-end" type="button" onClick={ (e) => openModal(e) }>
@@ -84,7 +84,7 @@ const SocialModal: Component<ModalProps> = function(props) {
             </button> */}
 
             {/* <div id="modal-overlay" class="overlay w-full h-full bg-gray-700"> */}
-                <div class="bg-blue-300">
+                <div class="">
                     {/* <button type="button" onClick={() => setIsOpen(true)}> */}
 
                         <Show
@@ -92,7 +92,7 @@ const SocialModal: Component<ModalProps> = function(props) {
                             // fallback={ <button onClick={() => setIsOpen(true)}>Open Modal</button> }
                             // fallback={ <button onClick={ openModal }>Open Modal</button> }
                             fallback={
-                                <button class="border-4 border-purple-300 rounded px-2 flex justify-end" type="button" onClick={ (e) => openModal(e) }>
+                                <button class="rounded px-2 flex justify-end" type="button" onClick={ (e) => openModal(e) }>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                                         <path d="M8 9h-1a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-8a2 2 0 0 0 -2 -2h-1"></path>
@@ -101,28 +101,31 @@ const SocialModal: Component<ModalProps> = function(props) {
                                     </svg>
                                 </button>
                             }
-
-
                         >
+                            <div class="rounded-lg flex flex-col-reverse items-end w-[75vMin] md:w-[50vMin] absolute right-[12%] md:right-[25%] z-40 bg-background2 dark:bg-background2-DM">
+                                <SocialMediaShares id={ props.id } />
+                                
+                                <button
+                                    aria-aria-label='Close Dialog'
+                                    class="modal-close w-8 h-8 flex justify-center items-start text-icon2 dark:text-icon2-DM"
+                                    onClick={ closeModal }
+                                >
+                                    &times;
+                                </button>
+                            </div>
                             {/* <div
                                 role="presentation"
                                 class="bg-yellow-200 border-4 border-red-500"
                                 onClick={() => setIsOpen(false)}
                                 onKeyPress={(e) => (e.key || e.code) === 'Esacpe' ? setIsOpen(false) : null }
                             /> */}
-                            <section role="dialog" class="modal border-4 border-yellow-300 md:w-[87vMax] h-[50vMin] absolute inset-x-[5%] rounded-lg z-40 bg-background2 dark:bg-background2-DM">
-                                <header class="flex justify-between">
-                                    <button
-                                        aria-aria-label='Close Dialog'
-                                        class="modal-close border-4 border-orange-400"
-                                        onClick={ closeModal }
-                                    >
-                                        &times;
-                                    </button>
-                                </header>
+                            {/* <section role="dialog" class="modal border-4 border-yellow-300 "> */}
+                                {/* <header class=""> */}
+
+                                {/* </header> */}
                                 {/* <div class="modal-body text-white w-full border-4 border-purple-700">{ props.children }</div> */}
-                                <SocialMediaShares id={ props.id } />
-                            </section>
+                                {/* <SocialMediaShares id={ props.id } /> */}
+                            {/* </section> */}
                         </Show>
                 </div>
             {/* </div> */}

@@ -4,6 +4,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import placeholderImg from '../../assets/userImagePlaceholder.svg';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -81,18 +82,21 @@ export const SocialMediaShares: Component<Props> = (props) => {
     }
     
     return (
-        <div class="absolute flex flex-col justify-center">
+        <div class="w-full px-4 pb-4">
             <div>
                 <div>
-                    <h1 class="text-htext2 dark:text-htext2-DM text-xl">Share this service</h1>
-                </div>
-
-                <div>
-                    { props.id }
+                    <h1 class="text-htext2 dark:text-htext2-DM text-xl pb-4">Share this service: </h1>
+                    <div class="flex items-center pb-4">
+                        <img 
+                            src={ placeholderImg } 
+                            class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2"
+                        />
+                        <p class="text-ptext2 dark:text-ptext2-DM">Post Title for Post #{ props.id }</p>
+                    </div>
                 </div>
             </div>
       
-            <div class="border-2 border-blue-400 z-50 w-full h-full justify-around">
+            <div class="flex justify-center">
                 {/* <div class="flex justify-end items-center">
                     <form id={ props.id } onSubmit={ showSocials } class="flex">
                         <button
@@ -119,7 +123,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                                 <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
                                 <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
                             </svg>
-                            <p>X</p>
+                            <p class="hidden md:inline">X</p>
                         </button>
 
                     </div>
@@ -131,7 +135,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                                 <path d="M18 2a1 1 0 0 1 .993 .883l.007 .117v4a1 1 0 0 1 -.883 .993l-.117 .007h-3v1h3a1 1 0 0 1 .991 1.131l-.02 .112l-1 4a1 1 0 0 1 -.858 .75l-.113 .007h-2v6a1 1 0 0 1 -.883 .993l-.117 .007h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-6h-2a1 1 0 0 1 -.993 -.883l-.007 -.117v-4a1 1 0 0 1 .883 -.993l.117 -.007h2v-1a6 6 0 0 1 5.775 -5.996l.225 -.004h3z" stroke-width="0" fill="currentColor"></path>
                             </svg>
                         </button>
-                        <p>Facebook</p>
+                        <p class="hidden md:inline">Facebook</p>
                     </div>
 
                     {/* <div id="instagram-share" class="flex justify-center items-center">
@@ -153,7 +157,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                                 <path d="M8 13l3 -2l2 2l3 -2"></path>
                             </svg>
                         </button>
-                        <p>Messenger</p>
+                        <p class="hidden md:inline">Messenger</p>
                     </div>
 
                     <div id="whatsapp-share" class="socialBtn">
@@ -164,7 +168,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                                 <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
                             </svg>
                         </button>
-                        <p>WhatsApp</p>
+                        <p class="hidden md:inline">WhatsApp</p>
                     </div>
 
                     <div id="email-share" class="socialBtn">
@@ -177,7 +181,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                                 <path d="M18 15l3 3l-3 3"></path>
                             </svg>
                         </button>
-                        <p>Email</p>
+                        <p class="hidden md:inline">Email</p>
                     </div>
                 </div>
             </div>
