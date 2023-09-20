@@ -161,6 +161,8 @@ export const French = {
     noPost: "Aucun message n'a été renvoyé",
     clientExists: "Le client existe déjà",
     clientCreateProfileError: "Erreur lors de la création du profil client",
+    clientEditProfileError: "Erreur lors de la mise à jour du profil client",
+    noClient: "Aucun client trouvé.",
   },
 
   headerData: {
