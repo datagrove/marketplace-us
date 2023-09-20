@@ -139,6 +139,8 @@ export interface uiObject {
     changeEmail: string,
     locationUpdate: string,
     postImages: string,
+    firstNameEdit: string,
+    lastNameEdit: string,
   },
 
   apiErrors: {
