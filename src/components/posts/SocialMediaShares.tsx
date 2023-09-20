@@ -22,11 +22,19 @@ const emailURL = "mailto:?subject=Check this out this service from TodoServis!&b
 const linkTarget = "_top";
 const windowOptions = "menubar=no,status=no,height=300,width=600";
 
+interface Post {
+    id: number;
+    title: string;
+    image_urls: string | null;
+}
+
 interface Props {
     id: string | undefined;
 }
 
-export const SocialMediaShares: Component<Props> = (props) => {
+// props?.image_urls?.split(",")[0]
+
+export const SocialMediaShares: Component<Post> = (props) => {
     const showSocials = async(e:SubmitEvent) => {
         e.preventDefault();
 
@@ -114,12 +122,22 @@ export const SocialMediaShares: Component<Props> = (props) => {
         <div class="w-full px-4 pb-4">
             <div>
                 <h1 class="text-htext2 dark:text-htext2-DM text-xl pb-4">Share this service: </h1>
+                {/* <h1 class="text-htext2">IMG { props.image_urls }</h1> */}
+                
                 <div class="flex items-center pb-4">
-                    <img 
-                        src={ placeholderImg } 
+                    { props.image_urls ? (
+                        <>
+                        <img src={ props.image_urls.split(",")[1] } />
+                        <h1 class="text-htext2">IMG { props.image_urls.split(",")[0] }</h1>
+                        </>
+                    ) : (
+                        <img src={ placeholderImg } class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2" />
+                    )}
+                    
+                    {/* <img 
                         class="w-16 h-16 rounded border border-border2 dark:border-border2-DM mr-2"
-                    />
-                    <p class="text-ptext2 dark:text-ptext2-DM">Post Title for Post #{ props.id }</p>
+                    /> */}
+                    <p class="text-ptext2 dark:text-ptext2-DM">{ props.title }</p>
                 </div>
             </div>
       
@@ -142,7 +160,7 @@ export const SocialMediaShares: Component<Props> = (props) => {
                     </form>
                 </div> */}
 
-                <div id={ 'socialsBtns' + props.id } class="share-btns grid grid-cols-2 gap-4 auto-rows-min">
+                <div id={ 'socialsBtns' + props.id } class="share-btns grid grid-cols-4 md:grid-cols-2 gap-4 auto-rows-min">
                     <div id="x-share" class="socialBtn">
                         <button id="button--x" class="x-share-button z-50 flex justify-start rounded font-bold text-icon1 dark:text-icon1-DM" title="Share to X - LANG!" onclick={ (e) => xShare(e) }>
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-x mr-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -152,7 +170,6 @@ export const SocialMediaShares: Component<Props> = (props) => {
                             </svg>
                             <p class="hidden md:inline">X</p>
                         </button>
-
                     </div>
 
                     <div id="facebook-share" class="socialBtn">

@@ -150,9 +150,8 @@ export const ViewCard: Component<Props> = (props) => {
                   </div>
                   
                   <div>
-                    <SocialModal id={ post.id }>Hello
+                    <SocialModal id={ post.id } title={ post.title } image_urls={ post.image_urls }/>
                       {/* <SocialMediaShares id={ post.id }/> */}
-                    </SocialModal>
                   </div>
 
                   {/* <SocialMediaShares id={ post.id }/> */}
