@@ -85,6 +85,19 @@ export const SocialMediaShares: Component<Props> = (props) => {
 
         return navigator.clipboard.writeText(currPostLink);
     }
+
+    function embedShare(e:Event) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const shareData = {
+            title: "share test",
+            text: "This is a test",
+            url: currPostLink,
+        };
+
+        return navigator.share(shareData);
+    }
     
     return (
         <div class="w-full px-4 pb-4">
@@ -196,6 +209,18 @@ export const SocialMediaShares: Component<Props> = (props) => {
                             </svg>
                         </button>
                         <p class="hidden md:inline">Copy Link</p>
+                    </div>
+
+                    <div id="embed-share" class="socialBtn">
+                        <button id="button--embed" class="embed-share-button p-1 rounded font-bold text-icon1 dark:text-icon1-DM" title="Embed" onclick={ (e) => embedShare(e) }>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-code" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M7 8l-4 4l4 4"></path>
+                                <path d="M17 8l4 4l-4 4"></path>
+                                <path d="M14 4l-4 16"></path>
+                            </svg>
+                        </button>
+                        <p class="hidden md:inline">Embed Link</p>
                     </div>
                 </div>
             </div>
