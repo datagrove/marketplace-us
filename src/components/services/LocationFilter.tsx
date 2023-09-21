@@ -230,6 +230,25 @@ export const LocationFilter: Component<Props> = (props) => {
     setLocationFilters([])
   }
 
+  const clearMinorMunicipality = () => {
+    const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
+    
+    minorMuniCheckboxes.forEach((checkbox) => {
+      console.log("checkbox:", checkbox)
+      if(checkbox && checkbox.checked) checkbox.checked = false;
+    })
+
+    setMinorLocationFilters([]);
+  }
+
+  const clearDistrict = () => {
+    const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+
+    districtCheckboxes.forEach((checkbox) => {
+      if(checkbox && checkbox.checked) checkbox.checked = false;
+    })
+  }
+
   return (
     <div>
       {/* Container for Mobile View */}
@@ -366,7 +385,19 @@ export const LocationFilter: Component<Props> = (props) => {
       <div class="hidden md:block bg-background1 dark:bg-background1-DM w-full md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
         {/*Major Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
-          <div class="mt-2 ml-4">{t("formLabels.majorMunicipality")}</div>
+          <div class="flex flex-wrap">
+            <div class="w-10/12 pl-4">{t("formLabels.majorMunicipality")}</div>
+            
+            <div class="flex justify-end items-center w-1/12">
+              <button 
+                class="clearBtn"
+                onclick={ clearMajorMunicipality }
+              >
+                <p class="text-xs">x</p>
+              </button>
+            </div>
+          </div>
+
           <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
             <For each={majorMunicipalities()}>
               {(item) => (
@@ -385,18 +416,21 @@ export const LocationFilter: Component<Props> = (props) => {
               )}
             </For>
           </ul>
-          <div class="flex justify-end">
-            <button 
-              class="bg-alert1 dark:bg-alert1-DM text-ptext2 dark:text-ptext2-DM rounded-lg px-2 mr-2"
-              onclick={ clearMajorMunicipality }
-            >
-              Clear
-            </button>
-          </div>
         </div>
         {/*Minor Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="mt-2 mb-2 ml-4">{t("formLabels.minorMunicipality")}</div>
+          <div class="flex flex-wrap">
+            <div class="w-10/12 pl-4">{t("formLabels.minorMunicipality")}</div>
+            
+            <div class="flex justify-end items-center w-1/12">
+              <button 
+                  class="clearBtn"
+                  onclick={ clearMinorMunicipality }
+                >
+                  <p class="text-xs">x</p>
+              </button>
+            </div>
+          </div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
             {" "}
             {/*Combination of h-full and overflow auto causing weird behavior */}
@@ -405,7 +439,7 @@ export const LocationFilter: Component<Props> = (props) => {
                 <div>
                   <input
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="minor-muni leading-tight mr-4"
                     onClick={() => {
                       setMinorMuniFilter(item);
                     }}
@@ -416,18 +450,30 @@ export const LocationFilter: Component<Props> = (props) => {
                 </div>
               )}
             </For>
-          </ul>
+          </ul>          
         </div>
         {/*Governing District*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="mt-2 mb-2 ml-4">{t("formLabels.governingDistrict")}</div>
+          <div class="flex flex-wrap">
+            <div class="w-10/12 pl-4">{t("formLabels.governingDistrict")}</div>
+            
+            <div class="flex justify-end items-center w-1/12">
+              <button 
+                class="clearBtn"
+                onclick={ clearDistrict }
+              >
+                <p class="text-xs">x</p>
+              </button>
+            </div>
+          </div>
+
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
             <For each={governingDistricts()}>
               {(item) => (
                 <div>
                   <input
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="district leading-tight mr-4"
                     onClick={() => {
                       setGoverningDistrictFilter(item);
                     }}

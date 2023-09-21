@@ -15,5 +15,9 @@
         @apply border-b-4 border-highlight1 dark:border-highlight1-DM
     }
 
+    .clearBtn {
+        @apply flex justify-center items-center bg-alert1 dark:bg-alert1-DM text-ptext2 dark:text-ptext2-DM rounded-lg px-2 h-4 w-4
+    }
+
 }
 
