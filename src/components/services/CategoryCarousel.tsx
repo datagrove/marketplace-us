@@ -1,4 +1,5 @@
 import type { Component } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -95,6 +96,25 @@ let light = window.matchMedia("(prefers-color-scheme: light)" || "(prefers-color
 
 export const CategoryCarousel: Component<Props> = (props) => {
 
+    const [filters, setFilters] = createSignal<Array<string>>([])
+
+    function clearServiceCategories(e:Event) {
+        e.preventDefault();
+
+        let allSelectedCategories = document.querySelectorAll(".selected");
+        
+        const allPosts = props.filterPosts(allSelectedCategories.toString());
+
+        console.log("props: ", props.filterPosts(allSelectedCategories.toString()))
+
+        { allSelectedCategories?.forEach((button) => {
+            if(button.classList.contains("selected")) {
+                button.classList.remove("selected");
+            }
+        })}
+    }
+
+
     return (
             <div class="product-carousel my-2">
                 <div class="flex flex-start justify-between">
@@ -110,7 +130,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             
                             <button 
                                 id={ item.id }
-                                class='flex flex-col flex-none justify-center items-center w-20 h-20' 
+                                class='catBtn flex flex-col flex-none justify-center items-center w-20 h-20' 
                                 onClick={(e) => {
                                     props.filterPosts(item.category)
 
@@ -142,6 +162,12 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             src={rightArrow}
                             alt="Right Arrow"
                         />
+                    </button>
+                </div>
+
+                <div>
+                    <button class="rounded bg-alert1 dark:bg-alert1-DM px-2 mt-2 text-ptext2 dark:text-ptext2-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
+                        Clear Service Categories
                     </button>
                 </div>
 

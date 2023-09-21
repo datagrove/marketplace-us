@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { check } from "prettier";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -218,6 +219,17 @@ export const LocationFilter: Component<Props> = (props) => {
     props.filterPostsByGoverningDistrict(item.governing_district);
   };
 
+  const clearMajorMunicipality = () => {
+    const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
+    
+    majorMuniCheckboxes.forEach((checkbox) => {
+      console.log("checkbox:", checkbox)
+      if(checkbox && checkbox.checked) checkbox.checked = false;
+    })
+
+    setLocationFilters([])
+  }
+
   return (
     <div>
       {/* Container for Mobile View */}
@@ -239,6 +251,14 @@ export const LocationFilter: Component<Props> = (props) => {
                 <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
                   {t("formLabels.majorMunicipality")}
                 </h2>
+                <div>
+                  <button 
+                    class="bg-alert1 dark:bg-alert1-DM text-ptext2 dark:text-ptext1-DM text-center w-6 h-6 rounded-full"
+                    onclick={ clearMajorMunicipality }
+                  >
+                      x
+                  </button>
+                </div>
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
                   <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
@@ -353,7 +373,7 @@ export const LocationFilter: Component<Props> = (props) => {
                 <li>
                   <input
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="major-muni leading-tight mr-4"
                     onClick={() => {
                       setMajorMuniFilter(item);
                     }}
@@ -365,6 +385,14 @@ export const LocationFilter: Component<Props> = (props) => {
               )}
             </For>
           </ul>
+          <div class="flex justify-end">
+            <button 
+              class="bg-alert1 dark:bg-alert1-DM text-ptext2 dark:text-ptext2-DM rounded-lg px-2 mr-2"
+              onclick={ clearMajorMunicipality }
+            >
+              Clear
+            </button>
+          </div>
         </div>
         {/*Minor Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
