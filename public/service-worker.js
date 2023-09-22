@@ -1,5 +1,5 @@
-const staticCacheName = "site-static-v1";
-const dynamicCacheName = "site-dynamic-v1";
+const staticCacheName = "site-static-v0";
+const dynamicCacheName = "site-dynamic-v0";
 let assets = self.__WB_MANIFEST;
 
 assets.push({ url: "/manifest.webmanifest", revision: "1" });
@@ -46,11 +46,11 @@ self.addEventListener("fetch", function (event) {
       // Respond with the manifest file
       event.respondWith(
         fetch(event.request)
-        .catch(async function (err) {
-          // Return page if it exists in cache
-          const pageResponse = await caches.match(event.request);
-          if (pageResponse) return pageResponse;
-        })
+          .catch(async function (err) {
+            // Return page if it exists in cache
+            const pageResponse = await caches.match(event.request);
+            if (pageResponse) return pageResponse;
+          })
       )
     } else if (requestURL.pathname.startsWith('/en/') || requestURL.pathname.startsWith('/es/') || requestURL.pathname.startsWith('/fr/')) {
       return;
