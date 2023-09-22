@@ -56,14 +56,19 @@ self.addEventListener("fetch", function (event) {
       return;
     } else {
       event.respondWith(
-        fetch(event.request)
-          .then((fetchRes) => {
-            return caches.open(dynamicCacheName).then((dynamicCache) => {
-              dynamicCache.put(event.request.url, fetchRes.clone());
-              // check cached items size
-              limitCacheSize(dynamicCacheName, 100);
-              return fetchRes;
-            });
+        caches.open(staticCacheName).then((cache) => cache.match(event.request))
+          .then((cacheRes) => {
+            return (cacheRes ||
+              fetch(event.request)
+                .then((fetchRes) => {
+                  return caches.open(dynamicCacheName).then((dynamicCache) => {
+                    dynamicCache.put(event.request.url, fetchRes.clone());
+                    // check cached items size
+                    limitCacheSize(dynamicCacheName, 100);
+                    return fetchRes;
+                  });
+                })
+            );
           })
           .catch(async function (err) {
             // Return page if it exists in cache
