@@ -78,7 +78,7 @@ export const French = {
     clickWrap1: 'En cliquant sur',
     clickWrap2: 'vous indiquez que vous avez lu et accepté les',
     fetch: 'Récupérer des services',
-    todoFetch: "Todo le chien d'assistance ira vous chercher les services dont vous avez besoin !",
+    todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
   },
@@ -163,6 +163,8 @@ export const French = {
     noPost: "Aucun message n'a été renvoyé",
     clientExists: "Le client existe déjà",
     clientCreateProfileError: "Erreur lors de la création du profil client",
+    clientEditProfileError: "Erreur lors de la mise à jour du profil client",
+    noClient: "Aucun client trouvé.",
   },
 
   headerData: {

@@ -15,7 +15,7 @@ const CONFIG = {
     defaultTheme: 'system', // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
     themeColor: '#1DD762',
   
-    language: 'en',
+    language: 'es',
     textDirection: 'ltr',
   
     dateFormatter: new Intl.DateTimeFormat('en', {

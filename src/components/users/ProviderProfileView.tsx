@@ -10,13 +10,11 @@ import {
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
-import { EditProfileButton } from "../../components/users/EditProfileButton";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { image } from "astro:content";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -458,8 +456,8 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                       <Show when={editMode() === true}>
                         <div class="group flex items-center relative mr-2">
-                          <svg
-                            class="w-4 h-4 bg-icon1 dark:bg-icon1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
+                        <svg
+                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -898,6 +896,7 @@ export const ProviderProfileView: Component = () => {
                         </label>
                       </div>
                     </Show>
+
                     <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
                       <Show when={editMode() === true}>
                         <button
@@ -909,17 +908,18 @@ export const ProviderProfileView: Component = () => {
                         </button>
                       </Show>
                     </div>
+
                   </div>
                 </details>
 
                 {/* View Posts for Mobile View */}
                 <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-                    <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:bg-htext1-DM">
+                    <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.yourPosts")}
                     </h2>
                     <div class="flex w-10 items-center justify-center">
-                      <div class="border-8 border-transparent border-l-gray-600 ml-2 group-open:rotate-90 transition-transform"></div>
+                      <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                     </div>
                   </summary>
                   <div class="p-2">
@@ -938,13 +938,14 @@ export const ProviderProfileView: Component = () => {
                     </div>
                   </div>
                 </details>
+
               </div>
             </Show>
 
             {/* Profile Information for md+ View */}
             <Show when={screenSize() !== "sm"}>
               <div class="hidden md:block">
-                <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
+                <h2 class="text-xl text-htext1 dark:text-htext1-DM py-4 font-bold">
                   {provider()?.provider_name == ""
                     ? provider()?.first_name + " " + provider()?.last_name
                     : provider()?.provider_name}

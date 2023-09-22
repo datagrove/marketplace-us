@@ -79,9 +79,10 @@ export const Spanish = {
     clickWrap1: 'Al hacer clic en',
     clickWrap2: 'estás indicando que has leído y estás de acuerdo con los',
     fetch: 'Obtener Servicios',
-    todoFetch: '¡Todo el perro de servicio te traerá los servicios que necesitas!',
+    todoFetch: '¡Todo, el perro de servicio, te traerá los servicios que necesitas!',
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
     profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
+    noClient: "No se encontró ninguna cliente.",
   },
 
   formLabels: {
@@ -163,6 +164,7 @@ export const Spanish = {
     noPost: "No se devolvió ninguna publicación",
     clientExists: "La cliente ya existe",
     clientCreateProfileError: "Error al crear el perfil del cliente",
+    clientEditProfileError: "Error al actualizar el perfil del cliente",
   },
 
   headerData: {
