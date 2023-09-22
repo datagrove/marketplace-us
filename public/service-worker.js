@@ -1,3 +1,4 @@
+//Change the cache version each time you want to force the service worker to create new cache
 const staticCacheName = "site-static-v0";
 const dynamicCacheName = "site-dynamic-v0";
 let assets = self.__WB_MANIFEST;
@@ -30,7 +31,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys
-          .filter((key) => key !== staticCacheName && key !== dynamicCacheName)
+          .filter((key) => key !== staticCacheName && key !== dynamicCacheName && !key.endsWith("1"))
           .map((key) => caches.delete(key))
       );
     })
