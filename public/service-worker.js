@@ -1,6 +1,6 @@
 //Change the cache version each time you want to force the service worker to create new cache
-const staticCacheName = "site-static-v0";
-const dynamicCacheName = "site-dynamic-v0";
+const staticCacheName = "site-static-v0.1";
+const dynamicCacheName = "site-dynamic-v0.1";
 let assets = self.__WB_MANIFEST;
 
 assets.push({ url: "/manifest.webmanifest", revision: "1" });
@@ -59,6 +59,16 @@ self.addEventListener("fetch", function (event) {
       )
     } else if (requestURL.pathname.startsWith('/en/') || requestURL.pathname.startsWith('/es/') || requestURL.pathname.startsWith('/fr/')) {
       return;
+      //Do not cache Post images
+    } else if (requestURL.pathname.startsWith('/storage/v1/post.image/')) {
+      event.respondWith(
+        fetch(event.request)
+      );
+      //Do not cache providerposts
+    } else if (requestURL.pathname.startsWith('/rest/v1/providerposts')) {
+      event.respondWith(
+        fetch(event.request)
+      );
     } else {
       event.respondWith(
         caches.open(staticCacheName).then((cache) => cache.match(event.request))
