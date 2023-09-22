@@ -31,7 +31,11 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) => {
       return Promise.all(
         keys
-          .filter((key) => key !== staticCacheName && key !== dynamicCacheName && !key.endsWith("1"))
+        //TODO: modify this line to delete the old cache any time you create a new cache by changing the ends with statement
+          .filter((key) => key !== staticCacheName && 
+          key !== dynamicCacheName && 
+          !key.startsWith("site-static-v") && // Filter out old static caches
+          !key.startsWith("site-dynamic-v"))  // Filter out old dynamic caches
           .map((key) => caches.delete(key))
       );
     })
