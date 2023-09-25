@@ -4,6 +4,7 @@ import {
   createEffect,
   createResource,
   createSignal,
+  onMount
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -46,9 +47,11 @@ export const ProviderRegistration: Component = () => {
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
   let iti: any;
+  let phoneInput: any;
 
-  createEffect(async () => {
-    const phoneInput = document.getElementById("Phone");
+  onMount(() => {
+    phoneInput = document.querySelector("#Phone");
+    console.log("PhoneInput: " + phoneInput);
     iti = intlTelInput(phoneInput!, {
       initialCountry: "cr",
       utilsScript: utils,
@@ -66,20 +69,6 @@ export const ProviderRegistration: Component = () => {
 
     //Create/Fill dropdown options for the form based on each selection if there is a session (Meaning the user is signed in)
     if (session()) {
-      //   try {
-      //     const phoneInput = document.getElementById("Phone");
-      //     const iti = intlTelInput(phoneInput!, {
-      //       initialCountry: "cr",
-      //       utilsScript: utils,
-      //       separateDialCode: true,
-      //       autoInsertDialCode: true,
-      //       autoPlaceholder: "aggressive",
-      //       placeholderNumberType: "MOBILE",
-      //       preferredCountries: ["cr", "us", "ni", "co"],
-      //     });
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
       //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
       try {
         const { data: countries, error } = await supabase
@@ -236,12 +225,15 @@ export const ProviderRegistration: Component = () => {
   });
 
   function phoneValidation() {
-    if (phone() !== "") {
+    console.log(phoneInput.value.trim());
+    console.log(iti)
+    if (phoneInput.value.trim()) {
+        console.log(iti.getNumber());
       if (iti.isPossibleNumber()) {
         console.log("Phone is possible");
       } else {
-        setPhone("");
         console.log("Phone is not possible");
+        console.log(iti.getValidationError());
       }
     }
   }
@@ -441,7 +433,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <div class="mb-4">
             <input
-              ref={iti}
+            //   ref={iti}
               type="tel"
               id="Phone"
               class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
@@ -449,7 +441,7 @@ export const ProviderRegistration: Component = () => {
               // value={phone()}
               required
               oninput={(e) => {
-                setPhone(e.target.value.trim());
+                iti.setNumber(e.target.value);
               }}
               onChange={phoneValidation}
             />
