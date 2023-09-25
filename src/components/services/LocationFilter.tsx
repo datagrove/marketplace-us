@@ -271,14 +271,14 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.majorMunicipality")}
                   </h2>
-                  <div>
+                  {/* <div>
                     <button 
                       class="clearBtn"
                       onclick={ clearMajorMunicipality }
                     >
                         <p class="text-xs m-2">X</p>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/*Creates the Dropdown Arrow*/}
@@ -318,14 +318,14 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.minorMunicipality")}
                   </h2>
-                  <div>
+                  {/* <div>
                     <button 
                       class="clearBtn"
                       onclick={ clearMinorMunicipality }
                     >
                         <p class="text-xs m-2">X</p>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/*Creates the Dropdown Arrow*/}
@@ -365,14 +365,14 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.governingDistrict")}
                   </h2>
-                  <div>
+                  {/* <div>
                     <button 
                       class="clearBtn"
                       onclick={ clearDistrict }
                     >
                         <p class="text-xs m-2">X</p>
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
@@ -412,14 +412,14 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="flex flex-wrap justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.majorMunicipality")}</div>
             
-            <div class="flex justify-start items-center w-1/5">
+            {/* <div class="flex justify-start items-center w-1/5">
               <button 
                 class="clearBtn"
                 onclick={ clearMajorMunicipality }
               >
                 <p class="text-xs">X</p>
               </button>
-            </div>
+            </div> */}
           </div>
 
           <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
@@ -446,14 +446,14 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="flex flex-wrap justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.minorMunicipality")}</div>
             
-            <div class="flex justify-start items-center w-1/5">
+            {/* <div class="flex justify-start items-center w-1/5">
               <button 
                   class="clearBtn"
                   onclick={ clearMinorMunicipality }
                 >
                   <p class="text-xs">X</p>
               </button>
-            </div>
+            </div> */}
           </div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
             {" "}
@@ -481,14 +481,14 @@ export const LocationFilter: Component<Props> = (props) => {
           <div class="flex justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.governingDistrict")}</div>
             
-            <div class="flex justify-start items-center w-1/5">
+            {/* <div class="flex justify-start items-center w-1/5">
               <button 
                 class="clearBtn"
                 onclick={ clearDistrict }
               >
                 <p class="text-xs">X</p>
               </button>
-            </div>
+            </div> */}
           </div>
 
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">

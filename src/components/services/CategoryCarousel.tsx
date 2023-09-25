@@ -100,75 +100,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
     const [filters, setFilters] = createSignal<Array<string>>([])
 
-    function clearServiceCategories(e:Event) {
-        e.preventDefault();
-
-        console.log("categories: ", categories)
-        console.log("data: ", data)
-        console.log("categoriesData: ", categoriesData)
-        console.log("allCategoryInfo: ", allCategoryInfo)
-        console.log("props: ", props)
-        console.log("filters: ", filters())
-
-        // Grab all posts with the class `selected`
-        // Remove the selected class from all posts
-        // Render all posts on the page
-
-        let selectedCategories = document.getElementsByClassName("selected");
-        let selectedCategoriesArray = Array.prototype.slice.call(selectedCategories);
-        console.log("selectedCategoriesArray: ", selectedCategoriesArray);
-
-        let clearedCategoriesArray = selectedCategoriesArray.map((category) => {
-            category.classList.remove("selected");
-        })
-
-        console.log("cleared: ", clearedCategoriesArray);
-
-        console.log("postData: ", postData)
-
-        // console.log("event: ", e.target)
-        // console.log("testesttest:", props.filterPosts)
-        // console.log("filters before: ", filters())
-
-        // console.log("allCategoryInfo: ", allCategoryInfo)
-
-        // let selectedCategories = document.querySelectorAll(".selected");
-
-        // selectedCategories.forEach((category) => {
-        //     category.classList.remove("selected")
-        // })
-
-        // let clearedCategoriesArray = Array.prototype.slice.call(selectedCategories);
-
-        // setFilters(clearedCategoriesArray);
-
-        // let selectedAfter = document.querySelector(".selected");
-        // console.log("selectedAfter: ", selectedAfter)
-
-        // console.log("selected elements: ", selectedCategories);
-
-        // setFilters([]);
-
-        // console.log("filters after: ", filters())
-
-        // setFilters([]);
-        // let allSelectedCategories = document.querySelectorAll(".selected");
-        
-        // const allPosts = props.filterPosts(allSelectedCategories.toString());
-
-        // console.log("allPosts: ", allPosts)
-        // console.log("props: ", props)
-
-        // // console.log("props: ", props.filterPosts(allSelectedCategories.toString()))
-
-        // { allSelectedCategories?.forEach((button) => {
-        //     if(button.classList.contains("selected")) {
-        //         button.classList.remove("selected");
-        //     }
-        // })}
-    }
-
-
     return (
             <div class="product-carousel my-2">
                 {/* <div class="flex justify-end items-center">
@@ -224,13 +155,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
                 </div>
-
-                <div class="flex justify-end items-center">
-                    <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
-                        <p class="text-xs">Clear Categories</p>
-                    </button>
-                </div>
-
             </div>
 
     )

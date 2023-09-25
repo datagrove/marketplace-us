@@ -19,5 +19,9 @@
         @apply flex justify-center items-center border border-alert1 dark:border-alert1-DM text-alert1 dark:text-alert1-DM rounded-full p-2 mx-1.5 h-4 w-4
     }
 
+    .clearBtnRectangle {
+        @apply rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md mx-1;
+    }
+
 }
 

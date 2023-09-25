@@ -268,24 +268,117 @@ export const ServicesView: Component = () => {
     }
 
     const clearAllFilters = () => {
-        alert("clicked clear all filters");
+        // alert("clicked clear all filters");
+        let selectedCategories = document.querySelectorAll(".selected");
+        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
+        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
+        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        majorMuniCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        minorMuniCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        districtCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        setFilters([]);
+        setLocationFilters([]);
+        setMinorLocationFilters([]);
+        setGoverningLocationFilters([]);
+        filterPosts();
     }
 
-    createEffect(() => {
+    const clearServiceCategories = () => {
+        let selectedCategories = document.querySelectorAll(".selected");
+        
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        setFilters([]);
         filterPosts();
-    })
+    }
+
+    const clearMajorMunicipality = () => {
+        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
+        
+        majorMuniCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+    
+        setLocationFilters([])
+        filterPosts();
+    }
+
+    const clearMinorMunicipality = () => {
+        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
+        
+        minorMuniCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+    
+        setMinorLocationFilters([]);
+        filterPosts();
+    }
+
+    const clearDistrict = () => {
+        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+    
+        districtCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        setGoverningLocationFilters([]);
+        filterPosts();
+    }
 
     return (
         <div class=''>
             <div>
                 <SearchBar search={searchPosts} />
             </div>
-            <div class="flex justify-center items-center">
-                <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ clearAllFilters }>
+            
+            <div class="flex flex-wrap justify-center items-center ">
+                <button class="clearBtnRectangle" onclick={ clearAllFilters }>
                     <p class="text-xs">Clear All Filters</p>
                 </button>
+                
+                <button class="clearBtnRectangle" onclick={ clearServiceCategories }>
+                    <p class="text-xs">Clear Categories</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearMajorMunicipality }>
+                    <p class="text-xs">Clear Major Municipality</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearMinorMunicipality }>
+                    <p class="text-xs">Clear Minor Municipality</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearDistrict }>
+                    <p class="text-xs">Clear Governing District</p>
+                </button>
+
             </div>
+
+
             <div>
+                <div class="flex justify-end items-center">
+
+                </div>
                 <CategoryCarousel
                     filterPosts={setCategoryFilter}
                 />
