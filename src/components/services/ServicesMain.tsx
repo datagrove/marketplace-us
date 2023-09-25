@@ -121,7 +121,7 @@ export const ServicesView: Component = () => {
             alert(t('messages.noPosts'))
         } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
-            console.log(data)
+            console.log("data in filterPosts: ", data)
             setPosts(data)
         } else (
             setPosts(searchPost())
@@ -267,13 +267,21 @@ export const ServicesView: Component = () => {
         filterPosts()
     }
 
+    const clearAllFilters = () => {
+        alert("clicked clear all filters");
+    }
+
+    createEffect(() => {
+        filterPosts();
+    })
+
     return (
         <div class=''>
             <div>
                 <SearchBar search={searchPosts} />
             </div>
             <div class="flex justify-center items-center">
-                <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md">
+                <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ clearAllFilters }>
                     <p class="text-xs">Clear All Filters</p>
                 </button>
             </div>

@@ -28,10 +28,12 @@ import beauty from '../../assets/categoryIcons/beauty-salon.svg'
 import finance from '../../assets/categoryIcons/banking-bank.svg'
 import financeDM from '../../assets/categoryIcons/banking-bank-DM.svg'
 import { currentLanguage } from '../../lib/languageSelectionStore';
+import { doc } from 'prettier';
 
 let categories: Array<any> = []
 
 const { data, error } = await supabase.from('post_category').select('*');
+const { data: postData } = await supabase.from('providerposts').select('*');
 
 if (error) {
     console.log("supabase error: " + error.message)
@@ -89,7 +91,7 @@ for (let i = 0; i < categoriesData.length; i++) {
 interface Props {
     // Define the type for the filterPosts prop
     filterPosts: (currentCategory: string) => void;
-  }
+}
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 let light = window.matchMedia("(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference" ).matches;
@@ -101,17 +103,69 @@ export const CategoryCarousel: Component<Props> = (props) => {
     function clearServiceCategories(e:Event) {
         e.preventDefault();
 
-        let allSelectedCategories = document.querySelectorAll(".selected");
+        console.log("categories: ", categories)
+        console.log("data: ", data)
+        console.log("categoriesData: ", categoriesData)
+        console.log("allCategoryInfo: ", allCategoryInfo)
+        console.log("props: ", props)
+        console.log("filters: ", filters())
+
+        // Grab all posts with the class `selected`
+        // Remove the selected class from all posts
+        // Render all posts on the page
+
+        let selectedCategories = document.getElementsByClassName("selected");
+        let selectedCategoriesArray = Array.prototype.slice.call(selectedCategories);
+        console.log("selectedCategoriesArray: ", selectedCategoriesArray);
+
+        let clearedCategoriesArray = selectedCategoriesArray.map((category) => {
+            category.classList.remove("selected");
+        })
+
+        console.log("cleared: ", clearedCategoriesArray);
+
+        console.log("postData: ", postData)
+
+        // console.log("event: ", e.target)
+        // console.log("testesttest:", props.filterPosts)
+        // console.log("filters before: ", filters())
+
+        // console.log("allCategoryInfo: ", allCategoryInfo)
+
+        // let selectedCategories = document.querySelectorAll(".selected");
+
+        // selectedCategories.forEach((category) => {
+        //     category.classList.remove("selected")
+        // })
+
+        // let clearedCategoriesArray = Array.prototype.slice.call(selectedCategories);
+
+        // setFilters(clearedCategoriesArray);
+
+        // let selectedAfter = document.querySelector(".selected");
+        // console.log("selectedAfter: ", selectedAfter)
+
+        // console.log("selected elements: ", selectedCategories);
+
+        // setFilters([]);
+
+        // console.log("filters after: ", filters())
+
+        // setFilters([]);
+        // let allSelectedCategories = document.querySelectorAll(".selected");
         
-        const allPosts = props.filterPosts(allSelectedCategories.toString());
+        // const allPosts = props.filterPosts(allSelectedCategories.toString());
 
-        console.log("props: ", props.filterPosts(allSelectedCategories.toString()))
+        // console.log("allPosts: ", allPosts)
+        // console.log("props: ", props)
 
-        { allSelectedCategories?.forEach((button) => {
-            if(button.classList.contains("selected")) {
-                button.classList.remove("selected");
-            }
-        })}
+        // // console.log("props: ", props.filterPosts(allSelectedCategories.toString()))
+
+        // { allSelectedCategories?.forEach((button) => {
+        //     if(button.classList.contains("selected")) {
+        //         button.classList.remove("selected");
+        //     }
+        // })}
     }
 
 
