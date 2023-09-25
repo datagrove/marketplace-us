@@ -48,30 +48,30 @@ export const ProviderRegistration: Component = () => {
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
-  let iti: any;
-  let phoneInput: any;
+  // let iti: any;
+  // let phoneInput: any;
 
-  createEffect(() => {
-    phoneInput = document.querySelector("#Phone");
-    console.log("PhoneInput: " + phoneInput);
-    iti = intlTelInput(phoneInput!, {
-      initialCountry: "cr",
-      utilsScript: utils,
-      separateDialCode: true,
-      autoInsertDialCode: true,
-      autoPlaceholder: "aggressive",
-      placeholderNumberType: "MOBILE",
-      preferredCountries: ["cr", "us", "ni", "co"],
-    });
+  // createEffect(() => {
+  //   phoneInput = document.querySelector("#Phone");
+  //   console.log("PhoneInput: " + phoneInput);
+  //   iti = intlTelInput(phoneInput!, {
+  //     initialCountry: "cr",
+  //     utilsScript: utils,
+  //     separateDialCode: true,
+  //     autoInsertDialCode: true,
+  //     autoPlaceholder: "aggressive",
+  //     placeholderNumberType: "MOBILE",
+  //     preferredCountries: ["cr", "us", "ni", "co"],
+  //   });
 
-    phoneInput.addEventListener("input", () => {
-      setPhone(iti.getNumber());
-    });
+  //   phoneInput.addEventListener("input", () => {
+  //     setPhone(iti.getNumber());
+  //   });
 
-    return () => {
-      iti.destroy();
-    };
-  });
+  //   return () => {
+  //     iti.destroy();
+  //   };
+  // });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -234,18 +234,22 @@ export const ProviderRegistration: Component = () => {
     }
   });
 
-  function phoneValidation() {
-    console.log(phoneInput.value.trim());
-    console.log(iti);
-    if (phoneInput.value.trim()) {
-      console.log(iti.getNumber());
-      if (iti.isPossibleNumber()) {
-        console.log("Phone is possible");
-      } else {
-        console.log("Phone is not possible");
-        console.log(iti.getValidationError());
-      }
-    }
+  // function phoneValidation() {
+  //   console.log(phoneInput.value.trim());
+  //   console.log(iti);
+  //   if (phoneInput.value.trim()) {
+  //     console.log(iti.getNumber());
+  //     if (iti.isPossibleNumber()) {
+  //       console.log("Phone is possible");
+  //     } else {
+  //       console.log("Phone is not possible");
+  //       console.log(iti.getValidationError());
+  //     }
+  //   }
+  // }
+
+  function handlePhoneInput(phoneValue: string) {
+    setPhone(phoneValue)
   }
 
   //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
@@ -253,20 +257,26 @@ export const ProviderRegistration: Component = () => {
   function submit(e: SubmitEvent) {
     e.preventDefault();
 
-    if (regularExpressionPhone.test(phone())) {
-      const formData = new FormData(e.target as HTMLFormElement);
+    const formData = new FormData(e.target as HTMLFormElement);
+    
+    console.log(phone());
+    if (phone() !== "") {
+      formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
       }
-      setFormData(formData);
-    } else if (!regularExpressionPhone.test(phone())) {
-      {
-        alert(t("messages.phoneLackRequirements"));
-      }
+      //TODO: Comment back in to send the data to the API
+      // setFormData(formData);
     }
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    //TODO: If Phone number is NOT valid - handle errors
   }
 
   //   PhoneCheck("Phone")
@@ -442,25 +452,11 @@ export const ProviderRegistration: Component = () => {
             </div>
           </div>
           <div class="mb-4">
-            <input
-              //   ref={iti}
-              type="tel"
-              id="Phone"
-              class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-              name="Phone"
-              // value={phone()}
-              required
-              oninput={(e) => {
-                iti.setNumber(e.target.value);
-              }}
-              onChange={phoneValidation}
-            />
+            <Phone onInput={handlePhoneInput} />
           </div>
         </div>
 
-        <div>
-          <Phone></Phone>
-        </div>
+        <div></div>
 
         <label for="country" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.country")}:
