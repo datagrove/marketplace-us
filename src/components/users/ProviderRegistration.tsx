@@ -4,7 +4,7 @@ import {
   createEffect,
   createResource,
   createSignal,
-  onMount
+  onMount,
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -15,6 +15,8 @@ import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
 //@ts-ignore
 import { utils } from "intl-tel-input";
+
+import Phone from "./forms/Phone";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -49,7 +51,7 @@ export const ProviderRegistration: Component = () => {
   let iti: any;
   let phoneInput: any;
 
-  onMount(() => {
+  createEffect(() => {
     phoneInput = document.querySelector("#Phone");
     console.log("PhoneInput: " + phoneInput);
     iti = intlTelInput(phoneInput!, {
@@ -61,6 +63,14 @@ export const ProviderRegistration: Component = () => {
       placeholderNumberType: "MOBILE",
       preferredCountries: ["cr", "us", "ni", "co"],
     });
+
+    phoneInput.addEventListener("input", () => {
+      setPhone(iti.getNumber());
+    });
+
+    return () => {
+      iti.destroy();
+    };
   });
 
   createEffect(async () => {
@@ -226,9 +236,9 @@ export const ProviderRegistration: Component = () => {
 
   function phoneValidation() {
     console.log(phoneInput.value.trim());
-    console.log(iti)
+    console.log(iti);
     if (phoneInput.value.trim()) {
-        console.log(iti.getNumber());
+      console.log(iti.getNumber());
       if (iti.isPossibleNumber()) {
         console.log("Phone is possible");
       } else {
@@ -433,7 +443,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <div class="mb-4">
             <input
-            //   ref={iti}
+              //   ref={iti}
               type="tel"
               id="Phone"
               class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
@@ -446,6 +456,10 @@ export const ProviderRegistration: Component = () => {
               onChange={phoneValidation}
             />
           </div>
+        </div>
+
+        <div>
+          <Phone></Phone>
         </div>
 
         <label for="country" class="text-ptext1 dark:text-ptext1-DM">
