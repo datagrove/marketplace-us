@@ -117,6 +117,12 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
     return (
             <div class="product-carousel my-2">
+                {/* <div class="flex justify-end items-center">
+                    <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
+                        <p class="text-xs">Clear Categories</p>
+                    </button>
+                </div> */}
+
                 <div class="flex flex-start justify-between">
                     <button class="w-12 hidden">
                         <img
@@ -165,9 +171,9 @@ export const CategoryCarousel: Component<Props> = (props) => {
                     </button>
                 </div>
 
-                <div>
-                    <button class="rounded bg-alert1 dark:bg-alert1-DM px-2 mt-2 text-ptext2 dark:text-ptext2-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
-                        Clear Service Categories
+                <div class="flex justify-end items-center">
+                    <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
+                        <p class="text-xs">Clear Categories</p>
                     </button>
                 </div>
 

@@ -272,6 +272,11 @@ export const ServicesView: Component = () => {
             <div>
                 <SearchBar search={searchPosts} />
             </div>
+            <div class="flex justify-center items-center">
+                <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md">
+                    <p class="text-xs">Clear All Filters</p>
+                </button>
+            </div>
             <div>
                 <CategoryCarousel
                     filterPosts={setCategoryFilter}
