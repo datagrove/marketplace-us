@@ -234,22 +234,9 @@ export const ProviderRegistration: Component = () => {
     }
   });
 
-  // function phoneValidation() {
-  //   console.log(phoneInput.value.trim());
-  //   console.log(iti);
-  //   if (phoneInput.value.trim()) {
-  //     console.log(iti.getNumber());
-  //     if (iti.isPossibleNumber()) {
-  //       console.log("Phone is possible");
-  //     } else {
-  //       console.log("Phone is not possible");
-  //       console.log(iti.getValidationError());
-  //     }
-  //   }
-  // }
-
   function handlePhoneInput(phoneValue: string) {
-    setPhone(phoneValue)
+    setPhone(phoneValue);
+    console.log("Current Phone " + phone());
   }
 
   //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
@@ -258,7 +245,7 @@ export const ProviderRegistration: Component = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
-    
+
     console.log(phone());
     if (phone() !== "") {
       formData.append("Phone", phone());
@@ -270,16 +257,15 @@ export const ProviderRegistration: Component = () => {
       }
       //TODO: Comment back in to send the data to the API
       // setFormData(formData);
+    } else {
+      alert(t("messages.phoneLackRequirements"));
     }
 
+    //TODO: Comment out after testing
     for (let pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
-
-    //TODO: If Phone number is NOT valid - handle errors
   }
-
-  //   PhoneCheck("Phone")
 
   //Actual Form that gets displayed for users to fill
   return (
@@ -320,13 +306,26 @@ export const ProviderRegistration: Component = () => {
               </span>
             </div>
           </div>
-          <input
-            type="text"
-            id="FirstName"
-            name="FirstName"
-            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-            required
-          />
+          <div class="flex justify-end items-center relative mb-4">
+          
+            <input
+              type="text"
+              id="FirstName"
+              name="FirstName"
+              class="peer rounded w-full px-1 
+              focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 focus:outline-none
+              border-inputBorder1 dark:border-inputBorder1-DM bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
+              invalid:border-alert1 invalid:border-2"
+              required
+            />
+            <svg
+              viewBox="-3.5 0 19 19"
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4 peer-invalid:fill-alert1 absolute mr-2 peer-invalid:block hidden"
+            >
+              <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
+            </svg>
+          </div>
         </div>
 
         <div class="">

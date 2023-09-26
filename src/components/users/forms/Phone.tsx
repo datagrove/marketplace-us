@@ -37,7 +37,12 @@ export const TelephoneInput: Component<Props> = (props) => {
 
           if (telInput.isPossibleNumber()) {
             if (typeof props.onInput === "function") {
-              props.onInput(telInput.getNumber());
+              props.onInput(telInput.getNumber().substring(1));
+            }
+          } else {
+            if (typeof props.onInput === "function") {
+              props.onInput("");
+              //TODO: Add a registration form error (highlight field red on change)
             }
           }
         }
