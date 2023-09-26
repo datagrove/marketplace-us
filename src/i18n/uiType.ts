@@ -106,6 +106,8 @@ export interface uiObject {
     posts: string,
     profileInfo: string,
     yourPosts: string,
+    optional: string,
+    required: string,
   },
 
   postLabels: {
@@ -139,6 +141,8 @@ export interface uiObject {
     changeEmail: string,
     locationUpdate: string,
     postImages: string,
+    firstNameEdit: string,
+    lastNameEdit: string,
   },
 
   apiErrors: {
