@@ -10,12 +10,6 @@ import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-// import { PhoneCheck } from "./forms/Phone";
-import intlTelInput from "intl-tel-input";
-import "intl-tel-input/build/css/intlTelInput.css";
-//@ts-ignore
-import { utils } from "intl-tel-input";
-
 import Phone from "./forms/Phone";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -46,32 +40,10 @@ export const ProviderRegistration: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [phone, setPhone] = createSignal<string>("");
 
+  const [firstName, setFirstName] = createSignal<string>("");
+  const [lastName, setLastName] = createSignal<string>("");
+
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
-
-  // let iti: any;
-  // let phoneInput: any;
-
-  // createEffect(() => {
-  //   phoneInput = document.querySelector("#Phone");
-  //   console.log("PhoneInput: " + phoneInput);
-  //   iti = intlTelInput(phoneInput!, {
-  //     initialCountry: "cr",
-  //     utilsScript: utils,
-  //     separateDialCode: true,
-  //     autoInsertDialCode: true,
-  //     autoPlaceholder: "aggressive",
-  //     placeholderNumberType: "MOBILE",
-  //     preferredCountries: ["cr", "us", "ni", "co"],
-  //   });
-
-  //   phoneInput.addEventListener("input", () => {
-  //     setPhone(iti.getNumber());
-  //   });
-
-  //   return () => {
-  //     iti.destroy();
-  //   };
-  // });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -79,6 +51,22 @@ export const ProviderRegistration: Component = () => {
 
     //Create/Fill dropdown options for the form based on each selection if there is a session (Meaning the user is signed in)
     if (session()) {
+
+      try {
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("user_id", session()!.user.id);
+        if (error) {
+          console.log("supabase error: " + error.message);
+        } else {
+          setFirstName(profile[0].first_name);
+          setLastName(profile[0].last_name);
+        }
+      } catch (error) {
+        console.log("Other error: " + error);
+      }
+
       //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
       try {
         const { data: countries, error } = await supabase
@@ -239,11 +227,12 @@ export const ProviderRegistration: Component = () => {
     console.log("Current Phone " + phone());
   }
 
+
   //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
-
+    
     const formData = new FormData(e.target as HTMLFormElement);
 
     console.log(phone());
@@ -255,6 +244,7 @@ export const ProviderRegistration: Component = () => {
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
       }
+
       //TODO: Comment back in to send the data to the API
       // setFormData(formData);
     } else {
@@ -265,6 +255,7 @@ export const ProviderRegistration: Component = () => {
     for (let pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
+
   }
 
   //Actual Form that gets displayed for users to fill
@@ -302,37 +293,16 @@ export const ProviderRegistration: Component = () => {
                 class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48"
               >
-                {t("toolTips.firstName")}
+                {t("toolTips.firstNameEdit")}
               </span>
             </div>
           </div>
-          <div class="flex justify-end items-center relative mb-4">
-            <input
-              type="text"
-              id="FirstName"
-              name="FirstName"
-              placeholder=""
-              class="peer rounded w-full px-1 
-              focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 focus:outline-none
-              border-inputBorder1 dark:border-inputBorder1-DM bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-              required
-            />
-            <svg
-              viewBox="-3.5 0 19 19"
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-4 h-4 peer-invalid:fill-alert1 dark:peer-invalid:fill-alert1-DM absolute mr-2 peer-invalid:block hidden"
-            >
-              <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
-            </svg>
-            <svg 
-            class="w-4 h-4 peer-valid:fill-btn1 dark:peer-valid:fill-btn1-DM absolute mr-2 peer-valid:block hidden"
-            viewBox="0 0 12 12" 
-            xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z"
-              />
-            </svg>
-          </div>
+          <p
+            id="FirstName"
+            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+          >
+            {firstName()}
+          </p>
         </div>
 
         <div class="">
@@ -366,17 +336,16 @@ export const ProviderRegistration: Component = () => {
                 class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48"
               >
-                {t("toolTips.lastName")}
+                {t("toolTips.lastNameEdit")}
               </span>
             </div>
           </div>
-          <input
-            type="text"
+          <p
             id="LastName"
-            name="LastName"
-            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-            required
-          />
+            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+          >
+            {lastName()}
+          </p>
         </div>
 
         <div class="">
@@ -457,6 +426,7 @@ export const ProviderRegistration: Component = () => {
               </span>
             </div>
           </div>
+          
           <div class="mb-4">
             <Phone onInput={handlePhoneInput} />
           </div>

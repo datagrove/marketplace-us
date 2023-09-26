@@ -18,8 +18,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
 
-  const firstName = formData.get("FirstName");
-  const lastName = formData.get("LastName");
+  // const firstName = formData.get("FirstName");
+  // const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
   const phone = formData.get("Phone");
   const country = formData.get("country");
@@ -32,8 +32,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
-    !firstName ||
-    !lastName ||
     !phone ||
     !country ||
     !majorMunicipality ||
@@ -105,40 +103,40 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  //Check if a profile exists
-  const { data: profileExists, error: profileExistsError } = await supabase
-    .from("profiles")
-    .select("user_id")
-    .eq("user_id", user.id);
-  console.log(profileExists!.length);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists.length !== 0) {
-    console.log("Profile already exists");
-  } else if (profileExists.length === 0) {
-    //Build a submission to the profile table
-    let profileSubmission = {
-      user_id: user.id,
-      first_name: firstName,
-      last_name: lastName,
-      email: user.email,
-    };
+  // //Check if a profile exists
+  // const { data: profileExists, error: profileExistsError } = await supabase
+  //   .from("profiles")
+  //   .select("user_id")
+  //   .eq("user_id", user.id);
+  // console.log(profileExists!.length);
+  // if (profileExistsError) {
+  //   console.log("supabase error: " + profileExistsError.message);
+  // } else if (profileExists.length !== 0) {
+  //   console.log("Profile already exists");
+  // } else if (profileExists.length === 0) {
+  //   //Build a submission to the profile table
+  //   let profileSubmission = {
+  //     user_id: user.id,
+  //     first_name: firstName,
+  //     last_name: lastName,
+  //     email: user.email,
+  //   };
 
-    //Submit to the profile table and select it back (the select back is not entirely necessary)
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .insert([profileSubmission])
-      .select();
-    if (profileError) {
-      console.log(profileError);
-      return new Response(
-        JSON.stringify({
-          message: (t("apiErrors.profileError")),
-        }),
-        { status: 500 }
-      );
-    }
-  }
+  //   //Submit to the profile table and select it back (the select back is not entirely necessary)
+  //   const { data: profileData, error: profileError } = await supabase
+  //     .from("profiles")
+  //     .insert([profileSubmission])
+  //     .select();
+  //   if (profileError) {
+  //     console.log(profileError);
+  //     return new Response(
+  //       JSON.stringify({
+  //         message: (t("apiErrors.profileError")),
+  //       }),
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
 
   /*Each of these retrieves the appropriate id from the database for the area level
   (governing district, minor municipality, major municipality, country)
