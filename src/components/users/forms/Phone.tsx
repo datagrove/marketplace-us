@@ -62,7 +62,6 @@ export const TelephoneInput: Component<Props> = (props) => {
         type="tel"
         id="telephoneInput"
         class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-        placeholder="Enter phone number"
       />
     </div>
   );
