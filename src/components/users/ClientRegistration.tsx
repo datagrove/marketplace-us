@@ -215,7 +215,8 @@ export const ClientRegistration: Component = () => {
 
   function handlePhoneInput(phoneValue: string) {
     setPhone(phoneValue);
-    console.log("Current Phone " + phone());
+    // Add back for testing
+    // console.log("Current Phone " + phone()); 
   }
 
   function submit(e: SubmitEvent) {
@@ -223,7 +224,6 @@ export const ClientRegistration: Component = () => {
     // this might not be the best way to do this but it works and we can also have more control over the form input data
     const formData = new FormData(e.target as HTMLFormElement);
 
-    console.log(phone());
     if (phone() !== "") {
       formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);

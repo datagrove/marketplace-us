@@ -223,7 +223,8 @@ export const ProviderRegistration: Component = () => {
 
   function handlePhoneInput(phoneValue: string) {
     setPhone(phoneValue);
-    console.log("Current Phone " + phone());
+    // Add back for testing
+    // console.log("Current Phone " + phone());
   }
 
   //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
@@ -233,7 +234,6 @@ export const ProviderRegistration: Component = () => {
 
     const formData = new FormData(e.target as HTMLFormElement);
 
-    console.log(phone());
     if (phone() !== "") {
       formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);
