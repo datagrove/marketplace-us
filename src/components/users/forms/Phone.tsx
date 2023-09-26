@@ -16,6 +16,7 @@ export const TelephoneInput: Component<Props> = (props) => {
   const [telephoneValue, setTelephoneValue] = createSignal("");
   let inputRef: HTMLInputElement | null = null;
   let telInput: any = null;
+  //this needs to be here or else the box won't render full width
   let iti: any;
 
   onMount(() => {
@@ -31,22 +32,6 @@ export const TelephoneInput: Component<Props> = (props) => {
         preferredCountries: ["cr", "us", "ni", "co"],
         utilsScript: "/intl-tel-input/build/js/utils.js", // Make sure to provide the correct path to utils.js
       });
-
-      // Event listener to update the signal when the input value changes
-      // const inputHandler = () => {
-      //   if (inputElement.value.trim()) {
-      //     if (telInput.isPossibleNumber()) {
-      //       if (typeof props.onInput === "function") {
-      //         props.onInput(telInput.getNumber().substring(1));
-      //       }
-      //     } else {
-      //       if (typeof props.onInput === "function") {
-      //         props.onInput("");
-      //         //TODO: Add a registration form error (highlight field red on change)
-      //       }
-      //     }
-      //   }
-      // };
 
       const changeHandler = () => {
         if (inputElement.value.trim()) {
@@ -66,7 +51,6 @@ export const TelephoneInput: Component<Props> = (props) => {
               document.getElementById("telephoneInput")?.classList.remove("border-inputBorder1", "border", "dark:border-inputBorder1-DM");
               document.getElementById("telephoneInput")?.classList.add("border-2", "border-alert1", "dark:border-alert1-DM");
               
-              //TODO: Add a registration form error (highlight field red on change)
             }
           }
         }
