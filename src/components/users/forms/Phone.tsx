@@ -16,6 +16,7 @@ export const TelephoneInput: Component<Props> = (props) => {
   const [telephoneValue, setTelephoneValue] = createSignal("");
   let inputRef: HTMLInputElement | null = null;
   let telInput: any = null;
+  let iti: any;
 
   onMount(() => {
     const inputElement = inputRef;
