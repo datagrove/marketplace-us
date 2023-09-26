@@ -268,12 +268,15 @@ export const ServicesView: Component = () => {
     }
 
     const clearAllFilters = () => {
-        // alert("clicked clear all filters");
-        let searchInputValue = document.getElementById("");
+        let searchInput = document.getElementById("search") as HTMLInputElement;
         let selectedCategories = document.querySelectorAll(".selected");
         const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
         const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
         const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+
+        if(searchInput.value !== null ) {
+            searchInput.value = "";
+        }
 
         selectedCategories.forEach((category) => {
             category.classList.remove("selected");
