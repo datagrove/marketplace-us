@@ -69,6 +69,8 @@ const SocialModal: Component<Post> = function(props) {
                     </div>
                 </Show>
             </div>
+
+            {/* <SocialModal /> */}
         </div>
     )
 }
