@@ -106,6 +106,8 @@ export interface uiObject {
     posts: string,
     profileInfo: string,
     yourPosts: string,
+    optional: string,
+    required: string,
   },
 
   postLabels: {

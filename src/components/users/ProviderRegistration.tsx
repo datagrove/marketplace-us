@@ -4,11 +4,14 @@ import {
   createEffect,
   createResource,
   createSignal,
+  onMount,
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import Phone from "./forms/Phone";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -218,31 +221,48 @@ export const ProviderRegistration: Component = () => {
     }
   });
 
+  function handlePhoneInput(phoneValue: string) {
+    setPhone(phoneValue);
+    // Add back for testing
+    // console.log("Current Phone " + phone());
+  }
+
   //This happens with the form is submitted. Builds the form data to be sent to the APIRoute.
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
 
-    if (regularExpressionPhone.test(phone())) {
-      const formData = new FormData(e.target as HTMLFormElement);
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    if (phone() !== "") {
+      formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
       }
-      setFormData(formData);
-    } else if (!regularExpressionPhone.test(phone())) {
-      {
-        alert(t("messages.phoneLackRequirements"));
-      }
+
+      //Comment back out for testing
+       setFormData(formData);
+    } else {
+      alert(t("messages.phoneLackRequirements"));
     }
+
+    //Comment in for testing
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
   }
 
   //Actual Form that gets displayed for users to fill
   return (
     <div class="">
       <form onSubmit={submit}>
+        <div class="mb-4">
+          <span class="text-alert1">* </span>
+          <span class="italic">{t("formLabels.required")}</span>
+        </div>
         <div class="">
           <div class="flex flex-row justify-between">
             <label for="FirstName" class="text-ptext1 dark:text-ptext1-DM">
@@ -280,7 +300,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <p
             id="FirstName"
-            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+            class="rounded bg-gray-100 text-gray-700 dark:text-ptext1-DM dark:bg-background1-DM mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
           >
             {firstName()}
           </p>
@@ -323,7 +343,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <p
             id="LastName"
-            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+            class="rounded bg-gray-100 text-gray-700 dark:text-ptext1-DM dark:bg-background1-DM mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
           >
             {lastName()}
           </p>
@@ -368,13 +388,17 @@ export const ProviderRegistration: Component = () => {
             type="text"
             id="ProviderName"
             name="ProviderName"
-            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+            placeholder={
+              firstName() + " " + lastName() + " " + t("formLabels.optional")
+            }
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
           />
         </div>
 
         <div class="">
           <div class="flex flex-row justify-between">
             <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
+              <span class="text-alert1 dark:text-alert1-DM">* </span>
               {t("formLabels.phone")}:
             </label>
             <div class="group flex items-center relative mr-2">
@@ -407,70 +431,120 @@ export const ProviderRegistration: Component = () => {
               </span>
             </div>
           </div>
-          <input
-            type="text"
-            id="Phone"
-            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-            name="Phone"
-            value={phone()}
-            required
-            onChange={(e) => setPhone(e.currentTarget.value)}
-          />
+
+          <div class="mb-4">
+            <Phone onInput={handlePhoneInput} />
+          </div>
         </div>
 
-        <label for="country" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.country")}:
+        <div></div>
+
+        <div class="flex justify-start">
+          <label for="country" class="text-ptext1 dark:text-ptext1-DM">
+            <span class="text-alert1 dark:text-alert1-DM">* </span>
+            {t("formLabels.country")}:
+          </label>
           <select
             id="country"
-            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="country"
             required
           >
             <option value="">-</option>
           </select>
-        </label>
+          <svg
+            id="isValid"
+            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+          </svg>
+        </div>
 
         <br />
 
-        <label for="MajorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.majorMunicipality")}:
+        <div class="flex justify-start">
+          <label
+            for="MajorMunicipality"
+            class="text-ptext1 dark:text-ptext1-DM"
+          >
+            <span class="text-alert1 dark:text-alert1-DM">* </span>
+            {t("formLabels.majorMunicipality")}:
+          </label>
           <select
             id="MajorMunicipality"
-            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MajorMunicipality"
             required
           >
             <option value="">-</option>
           </select>
-        </label>
+          <svg
+            id="isValid"
+            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+          </svg>
+        </div>
 
         <br />
 
-        <label for="MinorMunicipality" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.minorMunicipality")}:
+        <div class="flex justify-start">
+          <label
+            for="MinorMunicipality"
+            class="text-ptext1 dark:text-ptext1-DM"
+          >
+            <span class="text-alert1 dark:text-alert1-DM">* </span>
+            {t("formLabels.minorMunicipality")}:
+          </label>
           <select
             id="MinorMunicipality"
-            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MinorMunicipality"
             required
           >
             <option value="">-</option>
           </select>
-        </label>
+          <svg
+            id="isValid"
+            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+          </svg>
+        </div>
 
         <br />
 
-        <label for="GoverningDistrict" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.governingDistrict")}:
+        <div class="flex justify-start mb-4">
+          <label
+            for="GoverningDistrict"
+            class="text-ptext1 dark:text-ptext1-DM"
+          >
+            <span class="text-alert1 dark:text-alert1-DM">* </span>
+            {t("formLabels.governingDistrict")}:
+          </label>
           <select
             id="GoverningDistrict"
-            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="GoverningDistrict"
             required
           >
             <option value="">-</option>
           </select>
-        </label>
+          <svg
+            id="isValid"
+            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+          </svg>
+        </div>
 
         <div class="mb-4 flex justify-center">
           <div class="">

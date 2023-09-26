@@ -104,6 +104,8 @@ export const French = {
     posts: 'Messages du fournisseur',
     profileInfo: 'Informations sur le profil',
     yourPosts: 'Vos Publications',
+    optional: '(facultative)',
+    required: 'Champs Obligatoires',
   },
 
   postLabels: {
