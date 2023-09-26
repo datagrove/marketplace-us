@@ -121,7 +121,6 @@ export const ServicesView: Component = () => {
             alert(t('messages.noPosts'))
         } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
-            console.log("data in filterPosts: ", data)
             setPosts(data)
         } else (
             setPosts(searchPost())
