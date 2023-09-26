@@ -2,6 +2,8 @@ import { Component, createSignal, createEffect } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { supabase } from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { SocialMediaShares } from "../posts/SocialMediaShares";
+import SocialModal from "../posts/SocialModal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -67,7 +69,7 @@ export const ViewCard: Component<Props> = (props) => {
         {newPosts().map((post: any) => (
           <li class=" w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center rounded-lg md:h-48 shadow-md shadow-shadow-LM dark:shadow-shadow-DM box-content border border-opacity-25 border-border1 dark:border-border1-DM dark:border-opacity-25">
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start rounded-lg md:h-48 shadow-md shadow-shadow-LM dark:shadow-shadow-DM box-content border border-opacity-25 border-border1 dark:border-border1-DM dark:border-opacity-25 w-full">
                 <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                   {post.image_url ? (
                     <img
@@ -103,7 +105,7 @@ export const ViewCard: Component<Props> = (props) => {
                 {/* <br /> */}
                 <div
                   id="cardContent"
-                  class="px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
+                  class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
                   <div class="grid grid-cols-4">
                     <div class="relative col-span-4 w-full flex align-top md:mt-2">
@@ -123,29 +125,36 @@ export const ViewCard: Component<Props> = (props) => {
                       </div>
                     </div>
 
-                    <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
-                      {post.title}
+                      <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
+                        {post.title}
+                      </p>
+                      {/* <div class="justify-self-end pt-2 pr-4">
+                        <DeletePostButton
+                          id={post.id}
+                          userId={post.user_id}
+                          postImage={post.image_urls}
+                        />
+                      </div> */}
+                    </div>
+
+                    <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
+                      <span class="font-bold">{t("postLabels.provider")}</span>
+                      {post.provider_name}
                     </p>
-                    {/* <div class="justify-self-end pt-2 pr-4">
-                      <DeletePostButton
-                        id={post.id}
-                        userId={post.user_id}
-                        postImage={post.image_urls}
-                      />
-                    </div> */}
+
+                    <p
+                      class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden mr-4 prose dark:prose-invert"
+                      innerHTML={post.content}
+                    ></p>
+                  </div>
+                  
+                  <div>
+                    <SocialModal id={ post.id } title={ post.title } image_urls={ post.image_urls }/>
+                      {/* <SocialMediaShares id={ post.id }/> */}
                   </div>
 
-                  <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
-                    <span class="font-bold">{t("postLabels.provider")}</span>
-                    {post.provider_name}
-                  </p>
-
-                  <p
-                    class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden mr-4 prose dark:prose-invert"
-                    innerHTML={post.content}
-                  ></p>
+                  {/* <SocialMediaShares id={ post.id }/> */}
                 </div>
-              </div>
             </a>
           </li>
         ))}
