@@ -54,6 +54,8 @@ export const TelephoneInput: Component<Props> = (props) => {
               props.onInput(telInput.getNumber().substring(1));
               document.getElementById("notValidNumber")?.classList.add("hidden");
               document.getElementById("validNumber")?.classList.remove("hidden")
+              document.getElementById("telephoneInput")?.classList.add("border-inputBorder1", "border", "dark:border-inputBorder1-DM");
+              document.getElementById("telephoneInput")?.classList.remove("border-2", "border-alert1", "dark:border-alert1-DM");
             }
           } else {
             if (typeof props.onInput === "function") {

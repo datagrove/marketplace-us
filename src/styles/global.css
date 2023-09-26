@@ -18,5 +18,5 @@
 }
 
 @layer utilities {
-    .iti { width: 100% }
+    .iti { width: 100%; }
 }

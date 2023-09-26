@@ -39,7 +39,6 @@ export const ProviderRegistration: Component = () => {
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [phone, setPhone] = createSignal<string>("");
-
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
 
@@ -232,7 +231,7 @@ export const ProviderRegistration: Component = () => {
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target as HTMLFormElement);
 
     console.log(phone());
@@ -426,7 +425,7 @@ export const ProviderRegistration: Component = () => {
               </span>
             </div>
           </div>
-          
+
           <div class="mb-4">
             <Phone onInput={handlePhoneInput} />
           </div>
