@@ -263,4 +263,14 @@ productCategoryInfo:{
     ]
   },
 
+  clearFilters: {
+    filterButtons: [
+        { text: "Effacer Tous Les Filtres", ariaLabel: "Effacer Tous Les Filtres" },
+        { text: "Effacer le Filtre de Catégorie", ariaLabel: "Effacer le Filtre de Catégorie" },
+        { text: "Effacer le Filtre des Grandes Municipalités", ariaLabel: "Effacer le Filtre des Grandes Municipalités" },
+        { text: "Effacer le Filtre des Municipalités Mineures", ariaLabel: "Effacer le Filtre des Municipalités Mineures" },
+        { text: "Effacer le Filtre de District de Gouvernement", ariaLabel: "Effacer le Filtre de District de Gouvernement" },
+    ]
+  }
+
 } as const;

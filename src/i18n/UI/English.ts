@@ -263,4 +263,14 @@ productCategoryInfo:{
     ]
   },
 
+  clearFilters: {
+    filterButtons: [
+        { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
+        { text: "Clear Categories", ariaLabel: "Clear Categories" },
+        { text: "Clear Major Municipality", ariaLabel: "Clear Major Municipality" },
+        { text: "Clear Minor Municipality", ariaLabel: "Clear Minor Municipality" },
+        { text: "Clear Governing District", ariaLabel: "Clear Governing District" },
+    ]
+  }
+
 } as const;

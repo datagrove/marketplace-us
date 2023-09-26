@@ -358,7 +358,9 @@ export const ServicesView: Component = () => {
             
             <div class="flex flex-wrap justify-center items-center ">
                 <button class="clearBtnRectangle" onclick={ clearAllFilters }>
-                    <p class="text-xs">Clear All Filters</p>
+                    {/* <p class="text-xs">Clear All Filters</p> */}
+                    <p class="text-xs">{t('clearFilters.filterButtons[0].text')}</p>
+
                 </button>
                 
                 <button class="clearBtnRectangle" onclick={ clearServiceCategories }>

@@ -261,6 +261,14 @@ export const Spanish = {
     ],
   },
 
-
+  clearFilters: {
+    filterButtons: [
+        { text: "Borra Todos los Filtros", ariaLabel: "Borra Todos los Filtros" },
+        { text: "Borra Categorías", ariaLabel: "Borra Categorías" },
+        { text: "Borra Municipio Importante", ariaLabel: "Borra Municipio Importante" },
+        { text: "Borra Munucipio Menor", ariaLabel: "Borra Munucipio Menor" },
+        { text: "Borra Distrito Gobernante", ariaLabel: "Borra Distrito Gobernante" },
+    ]
+  }
 
 } as const;

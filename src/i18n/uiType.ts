@@ -260,4 +260,14 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
+
+  clearFilters: {
+    filterButtons: [
+        { text: string, ariaLabel:string },
+        { text: string, ariaLabel:string },
+        { text: string, ariaLabel:string },
+        { text: string, ariaLabel:string },
+        { text: string, ariaLabel:string },
+    ]
+  }
 }
