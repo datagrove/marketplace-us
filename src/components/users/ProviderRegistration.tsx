@@ -249,7 +249,7 @@ export const ProviderRegistration: Component = () => {
       alert(t("messages.phoneLackRequirements"));
     }
 
-    //TODO: Comment out after testing
+    //Comment in for testing
     // for (let pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }

@@ -234,15 +234,15 @@ export const ClientRegistration: Component = () => {
       }
 
       //Comment back out for testing
-      //  setFormData(formData);
+        setFormData(formData);
     } else {
       alert(t("messages.phoneLackRequirements"));
     }
 
-    //TODO: Comment out after testing
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    //Comment in for testing
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
   }
 
   return (
