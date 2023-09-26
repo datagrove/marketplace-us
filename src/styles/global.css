@@ -20,7 +20,7 @@
     }
 
     .clearBtnRectangle {
-        @apply flex rounded border border-gray-500 dark:border-gray-300 px-2 mt-2 text-gray-500 dark:text-gray-300 drop-shadow-md mx-1;
+        @apply flex rounded border border-gray-600 dark:border-gray-300 px-2 mt-2 text-gray-600 dark:text-gray-300 drop-shadow-md mx-1;
     }
 
 }
