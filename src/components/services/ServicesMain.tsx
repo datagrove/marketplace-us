@@ -361,7 +361,6 @@ export const ServicesView: Component = () => {
             <div class="flex flex-wrap justify-center items-center ">
                 <button class="clearBtnRectangle" onclick={ clearAllFilters } aria-label={t('clearFilters.filterButtons.0.ariaLabel')}>
                     <p class="text-xs">{t('clearFilters.filterButtons.0.text')}</p>
-
                 </button>
                 
                 <button class="clearBtnRectangle" onclick={ clearServiceCategories } aria-label={t('clearFilters.filterButtons.1.ariaLabel')}>
