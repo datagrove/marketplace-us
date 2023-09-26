@@ -269,6 +269,7 @@ export const ServicesView: Component = () => {
 
     const clearAllFilters = () => {
         // alert("clicked clear all filters");
+        let searchInputValue = document.getElementById("");
         let selectedCategories = document.querySelectorAll(".selected");
         const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
         const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
@@ -294,6 +295,7 @@ export const ServicesView: Component = () => {
             if(checkbox && checkbox.checked) checkbox.checked = false;
         })
 
+        setSearchPost([]);
         setFilters([]);
         setLocationFilters([]);
         setMinorLocationFilters([]);
