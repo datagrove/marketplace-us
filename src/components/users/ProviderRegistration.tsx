@@ -10,6 +10,11 @@ import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+// import { PhoneCheck } from "./forms/Phone";
+import intlTelInput from "intl-tel-input";
+import "intl-tel-input/build/css/intlTelInput.css";
+//@ts-ignore
+import { utils } from "intl-tel-input";
 import Phone from "./forms/Phone";
 
 const lang = getLangFromUrl(new URL(window.location.href));
