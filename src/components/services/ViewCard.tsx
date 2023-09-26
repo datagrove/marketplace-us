@@ -126,13 +126,6 @@ export const ViewCard: Component<Props> = (props) => {
                     <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
                       {post.title}
                     </p>
-                    {/* <div class="justify-self-end pt-2 pr-4">
-                      <DeletePostButton
-                        id={post.id}
-                        userId={post.user_id}
-                        postImage={post.image_urls}
-                      />
-                    </div> */}
                   </div>
 
                   <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">

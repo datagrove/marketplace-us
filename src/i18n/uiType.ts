@@ -263,11 +263,11 @@ productCategoryInfo:{
 
   clearFilters: {
     filterButtons: [
-        { text: string, ariaLabel:string },
-        { text: string, ariaLabel:string },
-        { text: string, ariaLabel:string },
-        { text: string, ariaLabel:string },
-        { text: string, ariaLabel:string },
+        { text: string, ariaLabel: string },
+        { text: string, ariaLabel: string },
+        { text: string, ariaLabel: string },
+        { text: string, ariaLabel: string },
+        { text: string, ariaLabel: string },
     ]
   }
 }

@@ -97,17 +97,8 @@ let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 let light = window.matchMedia("(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference" ).matches;
 
 export const CategoryCarousel: Component<Props> = (props) => {
-
-    const [filters, setFilters] = createSignal<Array<string>>([])
-
     return (
             <div class="product-carousel my-2">
-                {/* <div class="flex justify-end items-center">
-                    <button class="rounded border border-alert1 dark:border-alert1-DM px-2 mt-2 text-alert1 dark:text-alert1-DM drop-shadow-md" onclick={ (e) => clearServiceCategories(e) }>
-                        <p class="text-xs">Clear Categories</p>
-                    </button>
-                </div> */}
-
                 <div class="flex flex-start justify-between">
                     <button class="w-12 hidden">
                         <img

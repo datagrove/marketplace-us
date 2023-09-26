@@ -298,8 +298,6 @@ export const ServicesView: Component = () => {
             if(checkbox && checkbox.checked) checkbox.checked = false;
         })
 
-        console.log("test language: ", t('clearFilters.filterButtons.0.text'))
-
         setSearchPost([]);
         setFilters([]);
         setLocationFilters([]);
@@ -326,7 +324,7 @@ export const ServicesView: Component = () => {
           if(checkbox && checkbox.checked) checkbox.checked = false;
         })
     
-        setLocationFilters([])
+        setLocationFilters([]);
         filterPosts();
     }
 
@@ -358,7 +356,7 @@ export const ServicesView: Component = () => {
                 <SearchBar search={searchPosts} />
             </div>
             
-            <div class="flex flex-wrap justify-center items-center ">
+            <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
                 <button class="clearBtnRectangle" onclick={ clearAllFilters } aria-label={t('clearFilters.filterButtons.0.ariaLabel')}>
                     <p class="text-xs">{t('clearFilters.filterButtons.0.text')}</p>
                 </button>
@@ -378,9 +376,7 @@ export const ServicesView: Component = () => {
                 <button class="clearBtnRectangle" onclick={ clearDistrict } aria-label={t('clearFilters.filterButtons.4.ariaLabel')}>
                     <p class="text-xs">{t('clearFilters.filterButtons.4.text')}</p>
                 </button>
-
             </div>
-
 
             <div>
                 <div class="flex justify-end items-center">
@@ -390,10 +386,12 @@ export const ServicesView: Component = () => {
                     filterPosts={setCategoryFilter}
                 />
             </div>
+
             <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
                 <div class="md:w-48 md:mr-4 w-11/12">
                     <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
                 </div>
+                
                 <div class="md:flex-1 w-11/12 items-center">
                     <ViewCard posts={currentPosts()} />
                 </div>

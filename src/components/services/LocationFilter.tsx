@@ -219,36 +219,6 @@ export const LocationFilter: Component<Props> = (props) => {
     props.filterPostsByGoverningDistrict(item.governing_district);
   };
 
-  const clearMajorMunicipality = () => {
-    const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
-    
-    majorMuniCheckboxes.forEach((checkbox) => {
-      console.log("checkbox:", checkbox)
-      if(checkbox && checkbox.checked) checkbox.checked = false;
-    })
-
-    setLocationFilters([])
-  }
-
-  const clearMinorMunicipality = () => {
-    const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
-    
-    minorMuniCheckboxes.forEach((checkbox) => {
-      console.log("checkbox:", checkbox)
-      if(checkbox && checkbox.checked) checkbox.checked = false;
-    })
-
-    setMinorLocationFilters([]);
-  }
-
-  const clearDistrict = () => {
-    const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
-
-    districtCheckboxes.forEach((checkbox) => {
-      if(checkbox && checkbox.checked) checkbox.checked = false;
-    })
-  }
-
   return (
     <div>
       {/* Container for Mobile View */}
@@ -271,14 +241,6 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.majorMunicipality")}
                   </h2>
-                  {/* <div>
-                    <button 
-                      class="clearBtn"
-                      onclick={ clearMajorMunicipality }
-                    >
-                        <p class="text-xs m-2">X</p>
-                    </button>
-                  </div> */}
                 </div>
 
                 {/*Creates the Dropdown Arrow*/}
@@ -318,14 +280,6 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.minorMunicipality")}
                   </h2>
-                  {/* <div>
-                    <button 
-                      class="clearBtn"
-                      onclick={ clearMinorMunicipality }
-                    >
-                        <p class="text-xs m-2">X</p>
-                    </button>
-                  </div> */}
                 </div>
 
                 {/*Creates the Dropdown Arrow*/}
@@ -365,14 +319,6 @@ export const LocationFilter: Component<Props> = (props) => {
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.governingDistrict")}
                   </h2>
-                  {/* <div>
-                    <button 
-                      class="clearBtn"
-                      onclick={ clearDistrict }
-                    >
-                        <p class="text-xs m-2">X</p>
-                    </button>
-                  </div> */}
                 </div>
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
@@ -411,15 +357,6 @@ export const LocationFilter: Component<Props> = (props) => {
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
           <div class="flex flex-wrap justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.majorMunicipality")}</div>
-            
-            {/* <div class="flex justify-start items-center w-1/5">
-              <button 
-                class="clearBtn"
-                onclick={ clearMajorMunicipality }
-              >
-                <p class="text-xs">X</p>
-              </button>
-            </div> */}
           </div>
 
           <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
@@ -445,15 +382,6 @@ export const LocationFilter: Component<Props> = (props) => {
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
           <div class="flex flex-wrap justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.minorMunicipality")}</div>
-            
-            {/* <div class="flex justify-start items-center w-1/5">
-              <button 
-                  class="clearBtn"
-                  onclick={ clearMinorMunicipality }
-                >
-                  <p class="text-xs">X</p>
-              </button>
-            </div> */}
           </div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
             {" "}
@@ -480,15 +408,6 @@ export const LocationFilter: Component<Props> = (props) => {
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
           <div class="flex justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.governingDistrict")}</div>
-            
-            {/* <div class="flex justify-start items-center w-1/5">
-              <button 
-                class="clearBtn"
-                onclick={ clearDistrict }
-              >
-                <p class="text-xs">X</p>
-              </button>
-            </div> */}
           </div>
 
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
