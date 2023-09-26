@@ -304,50 +304,6 @@ export const ViewFullPost: Component<Props> = (props) => {
             <div class="mt-4">
                 <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>
             </div>
-
-            {/* <div class="flex justify-start share-btns mt-4 border-4 border-red-400">
-                <div id="x-share" class="flex justify-center items-center">
-                    <button id="button--twitter" class="twitter-share-button" onclick={ registerShareButton }>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
-                            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <div id="facebook-share" class="flex justify-center items-center">
-                    <button id="button--facebook" class="fb-share-button" onclick={ registerFacebookButton }>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M18 2a1 1 0 0 1 .993 .883l.007 .117v4a1 1 0 0 1 -.883 .993l-.117 .007h-3v1h3a1 1 0 0 1 .991 1.131l-.02 .112l-1 4a1 1 0 0 1 -.858 .75l-.113 .007h-2v6a1 1 0 0 1 -.883 .993l-.117 .007h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-6h-2a1 1 0 0 1 -.993 -.883l-.007 -.117v-4a1 1 0 0 1 .883 -.993l.117 -.007h2v-1a6 6 0 0 1 5.775 -5.996l.225 -.004h3z" stroke-width="0" fill="currentColor"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <div id="instagram-share" class="flex justify-center items-center">
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M4 4m0 4a4 4 0 0 1 4 -4h8a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-8a4 4 0 0 1 -4 -4z"></path>
-                            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                            <path d="M16.5 7.5l0 .01"></path>
-                        </svg>
-                    </button>
-                </div> 
-
-                <div id="whatsapp-share" class="flex justify-center items-center">
-                    <button id="button--whatsapp" class="wa-share-button" onclick={ registerWhatsAppButton }>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                            <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
-                            <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
-                        </svg>
-                    </button>
-                </div>
-
-            </div> */}
-
             <div class="flex justify-center mt-4">
                 <DeletePostButton id={+props.id!} userId={(post()?.user_id !== undefined ? (post()!.user_id) : (""))} postImage={post()?.image_urls} />
             </div>
