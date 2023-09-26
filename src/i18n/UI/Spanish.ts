@@ -106,6 +106,8 @@ export const Spanish = {
     posts: 'Publicaciones del Proveedores',
     profileInfo: 'Información del Perfil',
     yourPosts: 'Tus Publicaciones',
+    optional: '(opcional)',
+    required: 'Campos Requeridos',
   },
 
   postLabels: {

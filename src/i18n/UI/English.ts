@@ -105,6 +105,8 @@ export const English = {
     posts: 'Provider Posts',
     profileInfo: 'Profile Information',
     yourPosts: 'Your Posts',
+    optional: '(optional)',
+    required: 'Required Fields',
   },
 
   postLabels: {
