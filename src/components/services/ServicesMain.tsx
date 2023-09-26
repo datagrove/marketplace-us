@@ -298,6 +298,8 @@ export const ServicesView: Component = () => {
             if(checkbox && checkbox.checked) checkbox.checked = false;
         })
 
+        console.log("test language: ", t('clearFilters.filterButtons.0.text'))
+
         setSearchPost([]);
         setFilters([]);
         setLocationFilters([]);
@@ -357,26 +359,25 @@ export const ServicesView: Component = () => {
             </div>
             
             <div class="flex flex-wrap justify-center items-center ">
-                <button class="clearBtnRectangle" onclick={ clearAllFilters }>
-                    {/* <p class="text-xs">Clear All Filters</p> */}
-                    <p class="text-xs">{t('clearFilters.filterButtons[0].text')}</p>
+                <button class="clearBtnRectangle" onclick={ clearAllFilters } aria-label={t('clearFilters.filterButtons.0.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.0.text')}</p>
 
                 </button>
                 
-                <button class="clearBtnRectangle" onclick={ clearServiceCategories }>
-                    <p class="text-xs">Clear Categories</p>
+                <button class="clearBtnRectangle" onclick={ clearServiceCategories } aria-label={t('clearFilters.filterButtons.1.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.1.text')}</p>
                 </button>
 
-                <button class="clearBtnRectangle" onclick={ clearMajorMunicipality }>
-                    <p class="text-xs">Clear Major Municipality</p>
+                <button class="clearBtnRectangle" onclick={ clearMajorMunicipality } aria-label={t('clearFilters.filterButtons.2.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.2.text')}</p>
                 </button>
 
-                <button class="clearBtnRectangle" onclick={ clearMinorMunicipality }>
-                    <p class="text-xs">Clear Minor Municipality</p>
+                <button class="clearBtnRectangle" onclick={ clearMinorMunicipality } aria-label={t('clearFilters.filterButtons.3.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.3.text')}</p>
                 </button>
 
-                <button class="clearBtnRectangle" onclick={ clearDistrict }>
-                    <p class="text-xs">Clear Governing District</p>
+                <button class="clearBtnRectangle" onclick={ clearDistrict } aria-label={t('clearFilters.filterButtons.4.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.4.text')}</p>
                 </button>
 
             </div>
