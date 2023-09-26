@@ -10,11 +10,7 @@ import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-// import { PhoneCheck } from "./forms/Phone";
-import intlTelInput from "intl-tel-input";
-import "intl-tel-input/build/css/intlTelInput.css";
-//@ts-ignore
-import { utils } from "intl-tel-input";
+
 import Phone from "./forms/Phone";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -247,16 +243,16 @@ export const ProviderRegistration: Component = () => {
         formData.append("image_url", imageUrl()!);
       }
 
-      //TODO: Comment back in to send the data to the API
-      // setFormData(formData);
+      //Comment back out for testing
+       setFormData(formData);
     } else {
       alert(t("messages.phoneLackRequirements"));
     }
 
     //TODO: Comment out after testing
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
   }
 
   //Actual Form that gets displayed for users to fill
@@ -304,7 +300,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <p
             id="FirstName"
-            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+            class="rounded bg-gray-100 text-gray-700 dark:text-ptext1-DM dark:bg-background1-DM mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
           >
             {firstName()}
           </p>
@@ -347,7 +343,7 @@ export const ProviderRegistration: Component = () => {
           </div>
           <p
             id="LastName"
-            class="rounded mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+            class="rounded bg-gray-100 text-gray-700 dark:text-ptext1-DM dark:bg-background1-DM mb-4 w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
           >
             {lastName()}
           </p>
@@ -395,7 +391,7 @@ export const ProviderRegistration: Component = () => {
             placeholder={
               firstName() + " " + lastName() + " " + t("formLabels.optional")
             }
-            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
           />
         </div>
 
