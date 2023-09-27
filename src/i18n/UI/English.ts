@@ -24,9 +24,9 @@ export const English = {
   },
 
   pageDescriptions: {
-    // services: string,
-    // signUp: string,
-    // login: string,
+    services: "Find the services you need to get the job done. Search for keywords, filter by category, and filter by location to find what you need. View post previews and click on a post to learn more.",
+    signUp: "Provider your email and create a password to signup to search services or post services on Todo Servis.",
+    login: "Enter your email and password to login to Todo Servis.",
     home: 'Todo Servis, home to everything you need to get the job done.',
     // signIn: string,
     // createClientAccount: string,
@@ -41,8 +41,8 @@ export const English = {
     // resetPassword: string,
     terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in Spanish.",
     privacy: "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
-    // about: string,
-    // impact: string,
+    about: "Discover the story behind Todo Servis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
+    impact: "Explore the meaningful impact of Todo Servis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
   },
 
   buttons: {
@@ -191,6 +191,9 @@ export const English = {
     todo: 'Todo Servis Logo Return to Homepage',
     logo: 'Todo Servis Logo',
     navigation: 'Navigation',
+    checkboxMajorMunicipality: "Checkbox for selecting major municipality",
+    checkboxMinorMunicipality: "Checkbox for selecting minor municipality",
+    checkboxGoverningDistrict: "Checkbox for selecting governing district",
   },
 
   headerData: {

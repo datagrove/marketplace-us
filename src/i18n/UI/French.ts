@@ -24,9 +24,9 @@ export const French = {
   },
 
   pageDescriptions: {
-    // services: string,
-    // signUp: string,
-    // login: string,
+    services: "Trouvez les services dont vous avez besoin pour accomplir votre travail. Recherchez des mots-clés, filtrez par catégorie et filtrez par emplacement pour trouver ce dont vous avez besoin. Affichez les aperçus des articles et cliquez sur un article pour en savoir plus.",
+    signUp: "Fournissez votre e-mail et créez un mot de passe pour vous inscrire pour rechercher des services ou publier des services sur Todo Servis.",
+    login: "Entrez votre email et votre mot de passe pour vous connecter à Todo Servis.",
     home: "Todo Servis, où vous trouverez tout ce dont vous avez besoin pour accomplir votre travail. ",
     // signIn: string,
     // createClientAccount: string,
@@ -41,8 +41,8 @@ export const French = {
     // resetPassword: string,
     terms: "Consultez nos termes et conditions. Remarque : les traductions sont fournies à titre gracieux, les termes officiels contraignants sont en espagnol.",
     privacy: "Consultez notre politique de confidentialité. Veuillez noter que les traductions sont fournies à titre gracieux, la politique officielle contraignante est en espagnol.",
-    // about: string,
-    // impact: string,
+    about: "Découvrez l'histoire de Todo Servis – qui nous sommes, notre mission et notre passion de contribuer à révolutionner la façon dont les particuliers et les entreprises trouvent et fournissent des services. Découvrez notre équipe et les valeurs qui nous animent. Rejoignez-nous dans notre voyage !",
+    impact: "Découvrez l’impact significatif de Todo Servis. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
   },
 
   buttons: {
@@ -191,6 +191,9 @@ export const French = {
     todo: "Todo Servis Logo Retour à la page d'accueil",
     logo: "Logo Todo Servis",
     navigation: "La navigation",
+    checkboxMajorMunicipality: "Case à cocher pour sélectionner la grande municipalité",
+    checkboxMinorMunicipality: "Case à cocher pour sélectionner une commune mineure",
+    checkboxGoverningDistrict: "Case à cocher pour sélectionner le district administratif",
   },
 
   headerData: {

@@ -24,9 +24,9 @@ export const Spanish = {
   },
 
   pageDescriptions: {
-    // services: string,
-    // signUp: string,
-    // login: string,
+    services: "Encuentre los servicios que necesita para realizar el trabajo. Busque palabras clave, filtre por categoría y filtre por ubicación para encontrar lo que necesita. Vea vistas previas de publicaciones y haga clic en una publicación para obtener más información.",
+    signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse para buscar servicios o publicar servicios en Todo Servis.",
+    login: "Ingrese su correo electrónico y contraseña para iniciar sesión en Todo Servis.",
     home: 'Todo Servis, el hogar de todo lo que necesita para realizar el trabajo.',
     // signIn: string,
     // createClientAccount: string,
@@ -41,8 +41,8 @@ export const Spanish = {
     // resetPassword: string,
     terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en español.",
     privacy: "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
-    // about: string,
-    // impact: string,
+    about: "Descubra la historia detrás de Todo Servis: quiénes somos, nuestra misión y nuestra pasión por ayudar a revolucionar la forma en que las personas y las empresas encuentran y brindan servicios. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
+    impact: "Explore el impacto significativo de Todo Servis. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
   },
 
   buttons: {
@@ -191,6 +191,9 @@ export const Spanish = {
     todo: 'Logotipo de Todo Servis Volver a la página de inicio',
     logo: 'Logotipo de Todo Servis',
     navigation: 'Navegación',
+    checkboxMajorMunicipality: "Casilla de verificación para seleccionar Provincia",
+    checkboxMinorMunicipality: "Casilla de verificación para seleccionar Cantón",
+    checkboxGoverningDistrict: "Casilla de verificación para seleccionar Distrito",
   },
 
   headerData: {

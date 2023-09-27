@@ -192,6 +192,9 @@ export interface uiObject {
     todo: string,
     logo: string,
     navigation: string,
+    checkboxMajorMunicipality: string,
+    checkboxMinorMunicipality: string,
+    checkboxGoverningDistrict: string,
   },
 
   headerData: {
