@@ -23,6 +23,28 @@ export const French = {
     impact: 'Impact',
   },
 
+  pageDescriptions: {
+    // services: string,
+    // signUp: string,
+    // login: string,
+    home: "Todo Servis, où vous trouverez tout ce dont vous avez besoin pour accomplir votre travail. ",
+    // signIn: string,
+    // createClientAccount: string,
+    // editClientAccount: string,
+    // viewClientAccount: string,
+    createPost: "Créez une publication comprenant un titre, une catégorie, une description, un emplacement et des images pour proposer votre service sur Todo Servis.",
+    createProviderAccount: "Créez un compte fournisseur pour commencer à publier vos services sur Todo Servis",
+    // editProviderAccount: string,
+    // viewProviderAccount: string,
+    page404: "404 Page non trouvée",
+    // requestPasswordReset: string,
+    // resetPassword: string,
+    // terms: string,
+    // privacy: string,
+    // about: string,
+    // impact: string,
+  },
+
   buttons: {
     providerProfile: "Mon profil fournisseur",
     editProfile: "Editer le profil",
@@ -163,6 +185,12 @@ export const French = {
     clientCreateProfileError: "Erreur lors de la création du profil client",
     clientEditProfileError: "Erreur lors de la mise à jour du profil client",
     noClient: "Aucun client trouvé.",
+  },
+
+  ariaLabels: {
+    todo: "Todo Servis Logo Retour à la page d'accueil",
+    logo: "Logo Todo Servis",
+    navigation: "La navigation",
   },
 
   headerData: {

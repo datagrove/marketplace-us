@@ -11,7 +11,7 @@ import mdx from "@astrojs/mdx";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkToc from "remark-toc";
 import rehypeSlug from 'rehype-slug';
-
+import compress from "astro-compress";
 const locales = languages;
 const defaultLocale = defaultLang;
 
@@ -27,7 +27,9 @@ export default defineConfig({
   },
   markdown: {
     remarkPlugins: [remarkToc],
-    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: 'append' }]],
+    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
+      behavior: 'append'
+    }]]
   },
   integrations: [solid(), tailwind(), icon({
     iconDir: "src/assets",
@@ -45,7 +47,7 @@ export default defineConfig({
     filter: defaultLocaleSitemapFilter({
       defaultLocale
     })
-  }), mdx()],
+  }), mdx(), compress()]
 
   // vite: {
   //   define: {

@@ -23,6 +23,28 @@ export interface uiObject {
     impact: string,
   },
 
+  pageDescriptions: {
+    services: string,
+    signUp: string,
+    login: string,
+    home: string,
+    signIn: string,
+    createClientAccount: string,
+    editClientAccount: string,
+    viewClientAccount: string,
+    createPost: string,
+    createProviderAccount: string,
+    editProviderAccount: string,
+    viewProviderAccount: string,
+    page404: string,
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
+    about: string,
+    impact: string,
+  },
+
   buttons: {
     providerProfile: string,
     editProfile: string,
@@ -164,6 +186,12 @@ export interface uiObject {
     clientExists: string,
     clientCreateProfileError: string,
     clientEditProfileError: string,
+  },
+
+  ariaLabels: {
+    todo: string,
+    logo: string,
+    navigation: string,
   },
 
   headerData: {

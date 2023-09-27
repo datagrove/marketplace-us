@@ -12,7 +12,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout pageTitle={t("pageTitles.home")}>
+<Layout pageTitle={t("pageTitles.home")} pageDescription={t("pageDescriptions.home")}>
   <!-- <h1>{t('pageTitles.home')}</h1> -->
   <div class="flex flex-col items-center px-2 md:px-0 md:flex-wrap lg:flex-row">
     <div class="mt-6 mb-6 md:mb-0 md:w-2/3 lg:w-1/2">

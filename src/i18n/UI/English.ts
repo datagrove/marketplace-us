@@ -23,6 +23,28 @@ export const English = {
     impact: 'Impact',
   },
 
+  pageDescriptions: {
+    // services: string,
+    // signUp: string,
+    // login: string,
+    home: 'Todo Servis, home to everything you need to get the job done.',
+    // signIn: string,
+    // createClientAccount: string,
+    // editClientAccount: string,
+    // viewClientAccount: string,
+    createPost: 'Create a post including title, category, description, location, and images to offer your service on Todo Servis.',
+    createProviderAccount: 'Create a Provider Account to start posting your services on Todo Servis.',
+    // editProviderAccount: string,
+    // viewProviderAccount: string,
+    page404: '404 - page not found',
+    // requestPasswordReset: string,
+    // resetPassword: string,
+    // terms: string,
+    // privacy: string,
+    // about: string,
+    // impact: string,
+  },
+
   buttons: {
     providerProfile: 'My Provider Profile',
     editProfile: 'Edit Profile',
@@ -163,6 +185,12 @@ export const English = {
     clientExists: "Client already exists",
     clientCreateProfileError: "Error creating client profile",
     clientEditProfileError: "Error updating client profile",
+  },
+
+  ariaLabels: {
+    todo: 'Todo Servis Logo Return to Homepage',
+    logo: 'Todo Servis Logo',
+    navigation: 'Navigation',
   },
 
   headerData: {

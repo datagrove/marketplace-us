@@ -23,6 +23,28 @@ export const Spanish = {
     impact: 'Impacto',
   },
 
+  pageDescriptions: {
+    // services: string,
+    // signUp: string,
+    // login: string,
+    home: 'Todo Servis, el hogar de todo lo que necesita para realizar el trabajo.',
+    // signIn: string,
+    // createClientAccount: string,
+    // editClientAccount: string,
+    // viewClientAccount: string,
+    createPost: 'Crea una publicación incluyendo título, categoría, descripción e imágenes para ofrecer tu servicio en Todo Servis.',
+    createProviderAccount: 'Cree una cuenta de proveedor para comenzar a publicar sus servicios en Todo Servis',
+    // editProviderAccount: string,
+    // viewProviderAccount: string,
+    page404: '404 Pagina no encontrada',
+    // requestPasswordReset: string,
+    // resetPassword: string,
+    // terms: string,
+    // privacy: string,
+    // about: string,
+    // impact: string,
+  },
+
   buttons: {
     providerProfile: 'Mi Perfil de Proveedor',
     editProfile: 'Editar Perfil',
@@ -163,6 +185,12 @@ export const Spanish = {
     clientExists: "La cliente ya existe",
     clientCreateProfileError: "Error al crear el perfil del cliente",
     clientEditProfileError: "Error al actualizar el perfil del cliente",
+  },
+
+  ariaLabels: {
+    todo: 'Logotipo de Todo Servis Volver a la página de inicio',
+    logo: 'Logotipo de Todo Servis',
+    navigation: 'Navegación',
   },
 
   headerData: {

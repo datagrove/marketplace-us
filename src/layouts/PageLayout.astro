@@ -15,9 +15,9 @@ const headerData = values.headerData;
 const footerData = values.footerData
 
 
-const {pageTitle} = Astro.props
+const {pageTitle, pageDescription } = Astro.props
 ---
-<Layout {pageTitle}>
+<Layout {pageTitle} {pageDescription}>
   <div class="min-h-screen">
     <div class="header">
       <Header {...headerData} />
