@@ -107,43 +107,46 @@ export const ViewCard: Component<Props> = (props) => {
                   id="cardContent"
                   class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
-                  <div class="grid grid-cols-4">
-                    <div class="relative col-span-4 w-full flex align-top md:mt-2">
-                      <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
-                        {post.major_municipality}/{post.minor_municipality}/
-                        {post.governing_district}
+                  <div>
+                    <div class="grid grid-cols-4">
+                      <div class="relative col-span-4 w-full flex align-top md:mt-2">
+                        <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
+                          {post.major_municipality}/{post.minor_municipality}/
+                          {post.governing_district}
+                        </div>
+                        <div class="truncate inline-block max-w-[28%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
+                          {post.category}
+                        </div>
+                        <div class="absolute right-2 inline-block">
+                          <DeletePostButton
+                            id={post.id}
+                            userId={post.user_id}
+                            postImage={post.image_urls}
+                          />
+                        </div>
                       </div>
-                      <div class="truncate inline-block max-w-[28%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
-                        {post.category}
-                      </div>
-                      <div class="absolute right-2 inline-block">
-                        <DeletePostButton
-                          id={post.id}
-                          userId={post.user_id}
-                          postImage={post.image_urls}
-                        />
-                      </div>
-                    </div>
 
-                      <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
-                        {post.title}
+                        <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
+                          {post.title}
+                        </p>
+                        {/* <div class="justify-self-end pt-2 pr-4">
+                          <DeletePostButton
+                            id={post.id}
+                            userId={post.user_id}
+                            postImage={post.image_urls}
+                          />
+                        </div> */}
+                      </div>
+
+                      <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
+                        <span class="font-bold">{t("postLabels.provider")}</span>
+                        {post.provider_name}
                       </p>
-                      {/* <div class="justify-self-end pt-2 pr-4">
-                        <DeletePostButton
-                          id={post.id}
-                          userId={post.user_id}
-                          postImage={post.image_urls}
-                        />
-                      </div> */}
                     </div>
-
-                    <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
-                      <span class="font-bold">{t("postLabels.provider")}</span>
-                      {post.provider_name}
-                    </p>
+                
+                    <SocialModal id={ Number(post.id) } title={ post.title } image_urls={ post.image_urls }/>
+                  
                   </div>
-
-                  {/* <SocialMediaShares id={ post.id }/> */}
                 </div>
             </a>
           </li>
