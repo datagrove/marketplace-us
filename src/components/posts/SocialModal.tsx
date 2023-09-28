@@ -1,4 +1,4 @@
-import { Component, JSX, createSignal, Show } from 'solid-js';
+import { Component, JSX, createSignal, Show, createEffect, onCleanup } from 'solid-js';
 import { SocialMediaShares } from './SocialMediaShares';
 
 interface Post {
@@ -9,6 +9,7 @@ interface Post {
   
 type ModalProps = {
     children: JSX.Element;
+    // id: string;
     posts: Array<Post>;
 }
 
@@ -20,6 +21,8 @@ let modalOverlay = document.getElementById("modal-overlay");
 
 const SocialModal: Component<Post> = function(props) {
     const [isOpen, setIsOpen] = createSignal(false);
+    const elements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    let modal: HTMLElement;
 
     function openModal(e:Event) {
         e.preventDefault();
@@ -57,6 +60,8 @@ const SocialModal: Component<Post> = function(props) {
                     }
                 >
                     <div class="rounded-lg flex flex-col-reverse items-end w-[75vMin] md:w-[50vMin] absolute right-[12%] md:right-[25%] z-40 bg-background2 dark:bg-background2-DM">
+                        {/* <SocialMediaShares id={ props.id } /> */}
+
                         <SocialMediaShares id={ props.id } title={ props.title } image_urls={ props.image_urls }/>
                         
                         <button
@@ -70,7 +75,6 @@ const SocialModal: Component<Post> = function(props) {
                 </Show>
             </div>
 
-            {/* <SocialModal /> */}
         </div>
     )
 }
