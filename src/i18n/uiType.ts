@@ -14,6 +14,7 @@ export interface uiObject {
     createProviderAccount: string,
     editProviderAccount: string,
     viewProviderAccount: string,
+    clientViewProviderAccount: string,
     page404: string,
     requestPasswordReset: string,
     resetPassword: string,
@@ -21,6 +22,7 @@ export interface uiObject {
     privacy: string,
     about: string,
     impact: string,
+    fullPost: string,
   },
 
   pageDescriptions: {
@@ -30,12 +32,11 @@ export interface uiObject {
     home: string,
     signIn: string,
     createClientAccount: string,
-    editClientAccount: string,
     viewClientAccount: string,
     createPost: string,
     createProviderAccount: string,
-    editProviderAccount: string,
     viewProviderAccount: string,
+    clientViewProviderAccount: string,
     page404: string,
     requestPasswordReset: string,
     resetPassword: string,
@@ -43,6 +44,7 @@ export interface uiObject {
     privacy: string,
     about: string,
     impact: string,
+    fullPost: string,
   },
 
   buttons: {

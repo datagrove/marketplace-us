@@ -9,7 +9,7 @@ const t = useTranslations(lang);
 
 ---
 
-<Layout pageTitle={t("pageTitles.viewProviderAccount")}>
+<Layout pageTitle={t("pageTitles.viewProviderAccount")} pageDescription={t("pageDescriptions.viewProviderAccount")}>
   <div>
     <ProviderProfileView client:only="solid-js" />
   </div>
