@@ -14,6 +14,7 @@ export const English = {
     createProviderAccount: 'Create Provider Account',
     editProviderAccount: 'Edit Provider Account',
     viewProviderAccount: 'My Provider Profile',
+    clientViewProviderAccount: 'Provider Profile',
     page404: '404 - Page Not Found',
     requestPasswordReset: 'Request Password Reset',
     resetPassword: 'Set New Password',
@@ -21,6 +22,29 @@ export const English = {
     privacy: "Privacy Policy",
     about: 'About Us',
     impact: 'Impact',
+    fullPost: "View Full Post",
+  },
+
+  pageDescriptions: {
+    services: "Find the services you need to get the job done. Search for keywords, filter by category, and filter by location to find what you need. View post previews and click on a post to learn more.",
+    signUp: "Provider your email and create a password to signup to search services or post services on Todo Servis.",
+    login: "Enter your email and password to login to Todo Servis.",
+    home: 'Todo Servis, home to everything you need to get the job done.',
+    // signIn: string,
+    createClientAccount: "Join Todo Servis as a client and unlock a world of services. Sign up today to find and connect with top service providers in your area.",
+    viewClientAccount: "Access and manage your client account information effortlessly on Todo Servis.",
+    createPost: 'Create a post including title, category, description, location, and images to offer your service on Todo Servis.',
+    createProviderAccount: 'Create a Provider Account to start posting your services on Todo Servis.',
+    viewProviderAccount: 'Manage your provider account details and review your posts on Todo Servis.',
+    clientViewProviderAccount: "Discover more about this provider. Explore their profile and available services.",
+    page404: '404 - page not found',
+    requestPasswordReset: "Forgot your password? Request a secure password reset for your Todo Servis account. Enter your email and follow the instructions to regain access.",
+    resetPassword: "Reset your password securely with Todo Servis. Follow the link from your email to choose a new password.",
+    terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in Spanish.",
+    privacy: "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
+    about: "Discover the story behind Todo Servis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
+    impact: "Explore the meaningful impact of Todo Servis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
+    fullPost: "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
   },
 
   buttons: {
@@ -163,6 +187,15 @@ export const English = {
     clientExists: "Client already exists",
     clientCreateProfileError: "Error creating client profile",
     clientEditProfileError: "Error updating client profile",
+  },
+
+  ariaLabels: {
+    todo: 'Todo Servis Logo Return to Homepage',
+    logo: 'Todo Servis Logo',
+    navigation: 'Navigation',
+    checkboxMajorMunicipality: "Checkbox for selecting major municipality",
+    checkboxMinorMunicipality: "Checkbox for selecting minor municipality",
+    checkboxGoverningDistrict: "Checkbox for selecting governing district",
   },
 
   headerData: {
