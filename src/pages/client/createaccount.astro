@@ -1,7 +1,7 @@
 ---
-import Layout from "../../layouts/PageLayout.astro";
-import { ClientRegistration } from "../../components/users/ClientRegistration";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Layout from "@layouts/PageLayout.astro";
+import { ClientRegistration } from "@components/users/ClientRegistration";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
