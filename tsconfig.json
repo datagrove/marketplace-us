@@ -6,6 +6,7 @@
     "baseUrl": ".",
     "paths": {
         "@components/*": ["src/components/*"],
+        "@content/*": ["src/content/*"],
         "@layouts/*" : ["src/layouts/*"],
         "@i18n/*" : ["src/i18n/*"],
         "@utils/*" : ["src/utils/*"],
