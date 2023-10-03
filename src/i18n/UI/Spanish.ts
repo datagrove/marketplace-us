@@ -1,5 +1,6 @@
 export const Spanish = {
   textDirection: 'ltr',
+  siteDescription: "Todo lo que necesitas para hacer el trabajo.",
 
   pageTitles: {
     services: 'Servicios',
@@ -23,6 +24,7 @@ export const Spanish = {
     about: 'Sobre Nosotras',
     impact: 'Impacto',
     fullPost: "Ver publicación completa",
+    offline: 'Desconectada',
   },
 
   pageDescriptions: {

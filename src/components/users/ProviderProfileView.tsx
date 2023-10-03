@@ -190,6 +190,7 @@ export const ProviderProfileView: Component = () => {
       //Will create a list of Major Municipalities based on the selected country
       try {
         const { data: majorMunicipality, error: errorMajorMunicipality } =
+        //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it, try to reuse the same call across the site)
           await supabase.from("major_municipality").select("*");
         if (errorMajorMunicipality) {
           console.log("supabase error: " + errorMajorMunicipality.message);

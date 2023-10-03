@@ -1,5 +1,6 @@
 export interface uiObject {
   textDirection: string,
+  siteDescription: string,
 
   pageTitles: {
     services: string,
@@ -23,6 +24,7 @@ export interface uiObject {
     about: string,
     impact: string,
     fullPost: string,
+    offline: string,
   },
 
   pageDescriptions: {

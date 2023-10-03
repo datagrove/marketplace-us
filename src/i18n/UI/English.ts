@@ -1,5 +1,6 @@
 export const English = {
   textDirection: 'ltr',
+  siteDescription: 'Everything you need to get the job done.',
 
   pageTitles: {
     services: 'Services',
@@ -22,7 +23,9 @@ export const English = {
     privacy: "Privacy Policy",
     about: 'About Us',
     impact: 'Impact',
+
     fullPost: "View Full Post",
+    offline: 'Offline',
   },
 
   pageDescriptions: {

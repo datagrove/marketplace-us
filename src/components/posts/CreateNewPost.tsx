@@ -42,6 +42,7 @@ export const CreateNewPost: Component = () => {
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
 
 
+
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
     setSession(data.session);
@@ -86,6 +87,7 @@ export const CreateNewPost: Component = () => {
       //Major Municipality
       try {
         const { data: majorMunicipality, error: errorMajorMunicipality } =
+          //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
           await supabase.from("major_municipality").select("*");
         if (errorMajorMunicipality) {
           console.log("supabase error: " + errorMajorMunicipality.message);
@@ -230,7 +232,8 @@ export const CreateNewPost: Component = () => {
     }
     setFormData(formData);
   }
-  TinyComp()
+
+  TinyComp();
 
   return (
     <div>

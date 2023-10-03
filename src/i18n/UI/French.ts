@@ -1,5 +1,6 @@
 export const French = {
   textDirection: 'ltr',
+  siteDescription: "Tout ce dont vous avez besoin pour faire le travail.",
 
   pageTitles: {
     services: 'prestations de service',
@@ -22,7 +23,9 @@ export const French = {
     privacy: "Politique de Confidentialité",
     about: 'À Propos De Nous',
     impact: 'Impact',
+
     fullPost: "Voir le message complet",
+    offline: 'Hors ligne',
   },
 
   pageDescriptions: {
