@@ -45,19 +45,18 @@ export default defineConfig({
     }), 
     i18n({
       locales,
-      defaultLocale
-      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*'],
+      defaultLocale,
+      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*', 'pages/api/*'],
     }),
     sitemap({
       i18n: {
         locales,
         defaultLocale,
-        exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*']
+        exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*', 'pages/api/*'],
       },
       filter: defaultLocaleSitemapFilter({
         defaultLocale
-      })
-    }), 
+      }) 
   }), mdx(), compress()]
 
 //   vite: {
