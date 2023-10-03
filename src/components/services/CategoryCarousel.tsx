@@ -1,4 +1,5 @@
 import type { Component } from 'solid-js';
+import { createSignal } from 'solid-js';
 import { supabase } from '../../lib/supabaseClient'
 // import { productCategoryData } from '../../data'
 import { ui } from '../../i18n/ui'
@@ -27,6 +28,7 @@ import beauty from '../../assets/categoryIcons/beauty-salon.svg'
 import finance from '../../assets/categoryIcons/banking-bank.svg'
 import financeDM from '../../assets/categoryIcons/banking-bank-DM.svg'
 import { currentLanguage } from '../../lib/languageSelectionStore';
+import { doc } from 'prettier';
 
 let categories: Array<any> = []
 
@@ -88,13 +90,12 @@ for (let i = 0; i < categoriesData.length; i++) {
 interface Props {
     // Define the type for the filterPosts prop
     filterPosts: (currentCategory: string) => void;
-  }
+}
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 let light = window.matchMedia("(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference" ).matches;
 
 export const CategoryCarousel: Component<Props> = (props) => {
-
     return (
             <div class="product-carousel my-2">
                 <div class="flex flex-start justify-between">
@@ -110,7 +111,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                             
                             <button 
                                 id={ item.id }
-                                class='flex flex-col flex-none justify-center items-center w-20 h-20' 
+                                class='catBtn flex flex-col flex-none justify-center items-center w-20 h-20' 
                                 onClick={(e) => {
                                     props.filterPosts(item.category)
 
@@ -144,7 +145,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
                         />
                     </button>
                 </div>
-
             </div>
 
     )

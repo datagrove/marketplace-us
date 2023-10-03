@@ -6,6 +6,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { check } from "prettier";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -235,10 +236,13 @@ export const LocationFilter: Component<Props> = (props) => {
           {/*Major Municipality*/}
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow rounded group/majorMunicipality md:hidden">
-              <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                  {t("formLabels.majorMunicipality")}
-                </h2>
+              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
+                <div class="flex items-center pb-1">
+                  <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
+                    {t("formLabels.majorMunicipality")}
+                  </h2>
+                </div>
+
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
                   <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
@@ -256,7 +260,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               item.major_municipality
                             }
                             type="checkbox"
-                            class="leading-tight mr-4"
+                            class="leading-tight mr-4 major-muni"
                             onClick={() => {
                               setMajorMuniFilter(item);
                             }}
@@ -275,10 +279,13 @@ export const LocationFilter: Component<Props> = (props) => {
           {/*Minor Municipality*/}
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/minorMunicipality md:hidden">
-              <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                  {t("formLabels.minorMunicipality")}
-                </h2>
+              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
+                <div class="flex items-center pb-1">
+                  <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
+                    {t("formLabels.minorMunicipality")}
+                  </h2>
+                </div>
+
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
                   <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
@@ -296,7 +303,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               item.minor_municipality
                             }
                             type="checkbox"
-                            class="leading-tight mr-4"
+                            class="leading-tight mr-4 minor-muni"
                             onClick={() => {
                               setMinorMuniFilter(item);
                             }}
@@ -315,10 +322,12 @@ export const LocationFilter: Component<Props> = (props) => {
           {/*Governing District*/}
           <div class="px-4">
             <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/governingDistrict md:hidden">
-              <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
-                <h2 class="flex flex-1 pb-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                  {t("formLabels.governingDistrict")}
-                </h2>
+              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
+                <div class="flex items-center pb-1">
+                  <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
+                    {t("formLabels.governingDistrict")}
+                  </h2>
+                </div>
                 {/*Creates the Dropdown Arrow*/}
                 <div class="flex w-10 items-center justify-center">
                   <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
@@ -336,7 +345,7 @@ export const LocationFilter: Component<Props> = (props) => {
                               item.governing_district
                             }
                             type="checkbox"
-                            class="leading-tight mr-4"
+                            class="leading-tight mr-4 district"
                             onClick={() => {
                               setGoverningDistrictFilter(item);
                             }}
@@ -358,7 +367,10 @@ export const LocationFilter: Component<Props> = (props) => {
       <div class="hidden md:block bg-background1 dark:bg-background1-DM w-full md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
         {/*Major Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
-          <div class="mt-2 ml-4">{t("formLabels.majorMunicipality")}</div>
+          <div class="flex flex-wrap justify-between">
+            <div class="w-4/5 pl-4">{t("formLabels.majorMunicipality")}</div>
+          </div>
+
           <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
             <For each={majorMunicipalities()}>
               {(item) => (
@@ -369,7 +381,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       item.major_municipality
                     }
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="major-muni leading-tight mr-4"
                     onClick={() => {
                       setMajorMuniFilter(item);
                     }}
@@ -384,7 +396,9 @@ export const LocationFilter: Component<Props> = (props) => {
         </div>
         {/*Minor Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="mt-2 mb-2 ml-4">{t("formLabels.minorMunicipality")}</div>
+          <div class="flex flex-wrap justify-between">
+            <div class="w-4/5 pl-4">{t("formLabels.minorMunicipality")}</div>
+          </div>
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
             {" "}
             {/*Combination of h-full and overflow auto causing weird behavior */}
@@ -397,7 +411,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       item.minor_municipality
                     }
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="minor-muni leading-tight mr-4"
                     onClick={() => {
                       setMinorMuniFilter(item);
                     }}
@@ -408,11 +422,14 @@ export const LocationFilter: Component<Props> = (props) => {
                 </div>
               )}
             </For>
-          </ul>
+          </ul>          
         </div>
         {/*Governing District*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="mt-2 mb-2 ml-4">{t("formLabels.governingDistrict")}</div>
+          <div class="flex justify-between">
+            <div class="w-4/5 pl-4">{t("formLabels.governingDistrict")}</div>
+          </div>
+
           <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
             <For each={governingDistricts()}>
               {(item) => (
@@ -423,7 +440,7 @@ export const LocationFilter: Component<Props> = (props) => {
                       item.governing_district
                     }
                     type="checkbox"
-                    class="leading-tight mr-4"
+                    class="district leading-tight mr-4"
                     onClick={() => {
                       setGoverningDistrictFilter(item);
                     }}

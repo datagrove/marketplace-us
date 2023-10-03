@@ -1,5 +1,6 @@
 export const French = {
   textDirection: 'ltr',
+  siteDescription: "Tout ce dont vous avez besoin pour faire le travail.",
 
   pageTitles: {
     services: 'prestations de service',
@@ -22,7 +23,9 @@ export const French = {
     privacy: "Politique de Confidentialité",
     about: 'À Propos De Nous',
     impact: 'Impact',
+
     fullPost: "Voir le message complet",
+    offline: 'Hors ligne',
   },
 
   pageDescriptions: {
@@ -128,6 +131,8 @@ export const French = {
     posts: 'Messages du fournisseur',
     profileInfo: 'Informations sur le profil',
     yourPosts: 'Vos Publications',
+    optional: '(facultative)',
+    required: 'Champs Obligatoires',
   },
 
   postLabels: {
@@ -161,6 +166,8 @@ export const French = {
     changeEmail: "Si vous mettez à jour votre adresse e-mail, vous devez confirmer le changement à l'ancienne adresse e-mail et à la nouvelle adresse e-mail pour finaliser la modification.",
     locationUpdate: "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
     postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
+    firstNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
+    lastNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
   },
 
   apiErrors: {
@@ -295,5 +302,15 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
+
+  clearFilters: {
+    filterButtons: [
+        { text: "Effacer Tous Les Filtres", ariaLabel: "Effacer Tous Les Filtres" },
+        { text: "Effacer le Filtre de Catégorie", ariaLabel: "Effacer le Filtre de Catégorie" },
+        { text: "Effacer le Filtre des Grandes Municipalités", ariaLabel: "Effacer le Filtre des Grandes Municipalités" },
+        { text: "Effacer le Filtre des Municipalités Mineures", ariaLabel: "Effacer le Filtre des Municipalités Mineures" },
+        { text: "Effacer le Filtre de District de Gouvernement", ariaLabel: "Effacer le Filtre de District de Gouvernement" },
+    ]
+  }
 
 } as const;

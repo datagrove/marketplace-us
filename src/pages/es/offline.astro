@@ -1,0 +1,14 @@
+---
+import Layout from '../../layouts/PageLayout.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+export const prerender = true;
+
+const t = useTranslations('es');
+---
+
+<Layout pageTitle={t("pageTitles.offline")}>
+    <div class="flex-col place-content-center m-8 font-bold">
+	    <h1 class="text-5xl text-center m-4 text-ptext1 dark:text-ptext1-DM">{t('pageTitles.offline')}</h1>
+    </div>
+</Layout>

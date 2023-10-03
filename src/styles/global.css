@@ -15,5 +15,16 @@
         @apply border-b-4 border-highlight1 dark:border-highlight1-DM
     }
 
+    .clearBtn {
+        @apply flex justify-center items-center border border-alert1 dark:border-alert1-DM text-alert1 dark:text-alert1-DM rounded-full p-2 mx-1.5 h-4 w-4
+    }
+
+    .clearBtnRectangle {
+        @apply flex rounded border border-gray-600 dark:border-gray-300 px-2 mt-2 text-gray-600 dark:text-gray-300 drop-shadow-md mx-1;
+    }
+
 }
 
+@layer utilities {
+    .iti { width: 100%; }
+}

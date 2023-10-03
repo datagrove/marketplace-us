@@ -121,7 +121,6 @@ export const ServicesView: Component = () => {
             alert(t('messages.noPosts'))
         } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
-            console.log(data)
             setPosts(data)
         } else (
             setPosts(searchPost())
@@ -267,20 +266,131 @@ export const ServicesView: Component = () => {
         filterPosts()
     }
 
+    const clearAllFilters = () => {
+        let searchInput = document.getElementById("search") as HTMLInputElement;
+        let selectedCategories = document.querySelectorAll(".selected");
+        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
+        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
+        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+
+        if(searchInput.value !== null ) {
+            searchInput.value = "";
+        }
+
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        majorMuniCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        minorMuniCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        districtCheckboxes.forEach((checkbox) => {
+            if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        setSearchPost([]);
+        setFilters([]);
+        setLocationFilters([]);
+        setMinorLocationFilters([]);
+        setGoverningLocationFilters([]);
+        filterPosts();
+    }
+
+    const clearServiceCategories = () => {
+        let selectedCategories = document.querySelectorAll(".selected");
+        
+        selectedCategories.forEach((category) => {
+            category.classList.remove("selected");
+        })
+        
+        setFilters([]);
+        filterPosts();
+    }
+
+    const clearMajorMunicipality = () => {
+        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
+        
+        majorMuniCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+    
+        setLocationFilters([]);
+        filterPosts();
+    }
+
+    const clearMinorMunicipality = () => {
+        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
+        
+        minorMuniCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+    
+        setMinorLocationFilters([]);
+        filterPosts();
+    }
+
+    const clearDistrict = () => {
+        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
+    
+        districtCheckboxes.forEach((checkbox) => {
+          if(checkbox && checkbox.checked) checkbox.checked = false;
+        })
+
+        setGoverningLocationFilters([]);
+        filterPosts();
+    }
+
     return (
         <div class=''>
             <div>
                 <SearchBar search={searchPosts} />
             </div>
+            
+            <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
+                <button class="clearBtnRectangle" onclick={ clearAllFilters } aria-label={t('clearFilters.filterButtons.0.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.0.text')}</p>
+                </button>
+                
+                <button class="clearBtnRectangle" onclick={ clearServiceCategories } aria-label={t('clearFilters.filterButtons.1.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.1.text')}</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearMajorMunicipality } aria-label={t('clearFilters.filterButtons.2.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.2.text')}</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearMinorMunicipality } aria-label={t('clearFilters.filterButtons.3.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.3.text')}</p>
+                </button>
+
+                <button class="clearBtnRectangle" onclick={ clearDistrict } aria-label={t('clearFilters.filterButtons.4.ariaLabel')}>
+                    <p class="text-xs">{t('clearFilters.filterButtons.4.text')}</p>
+                </button>
+            </div>
+
             <div>
+                <div class="flex justify-end items-center">
+
+                </div>
                 <CategoryCarousel
                     filterPosts={setCategoryFilter}
                 />
             </div>
+
             <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
                 <div class="md:w-48 md:mr-4 w-11/12">
                     <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
                 </div>
+                
                 <div class="md:flex-1 w-11/12 items-center">
                     <ViewCard posts={currentPosts()} />
                 </div>
