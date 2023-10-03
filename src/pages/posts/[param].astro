@@ -9,7 +9,7 @@ const t = useTranslations(lang);
 const { param } = Astro.params;
 ---
 
-<Layout>
+<Layout pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param} pageDescription={t("pageTitles.clientViewProviderAccount") + " " + param + " " + t("pageDescriptions.clientViewProviderAccount")}>
   <div
     class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center w-96 md:w-5/6"
   >

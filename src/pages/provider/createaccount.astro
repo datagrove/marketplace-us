@@ -7,7 +7,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout pageTitle={t("pageTitles.createProviderAccount")}>
+<Layout pageTitle={t("pageTitles.createProviderAccount")} pageDescription={t("pageDescriptions.createProviderAccount")}>
   <div
     class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center w-96"
   >

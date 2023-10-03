@@ -2,7 +2,7 @@
 import { SITE } from '.././config.js';
 import { getLangFromUrl } from '../i18n/utils'
 
-const { pageTitle } = Astro.props;
+const { pageTitle, pageDescription, stylesheets } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url)
 ---
@@ -29,6 +29,7 @@ const lang = getLangFromUrl(Astro.url)
     <link rel="manifest" href="/manifest.webmanifest" />
     
     <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
   </head>
 
   <body class="md:mx-4 text-page bg-background1 dark:bg-background1-DM text-ptext1 dark:text-ptext1-DM">

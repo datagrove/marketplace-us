@@ -9,7 +9,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<PageLayout pageTitle={t("pageTitles.requestPasswordReset")}>
+<PageLayout pageTitle={t("pageTitles.requestPasswordReset")} pageDescription={t("pageDescriptions.requestPasswordReset")}>
   <div
     class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center w-96"
   >

@@ -43,7 +43,6 @@ export const LanguagePicker: Component = () => {
     <div class="flex rounded-lg text-ptext1 dark:text-ptext1-DM focus:border-border1 dark:focus:border-border1-DM focus:outline-none mr-4">
       <svg class="bg-background1 dark:bg-background1-DM rounded-l-lg w-4 h-full ml-2 stroke-icon1 dark:stroke-icon1-DM" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M4 5h7M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c0 2.144 2.952 3.908 6.7 4m.3 7l4-9l4 9m-.9-2h-6.2"/></g></svg>
       <select 
-      id="language" 
       class='bg-background1 dark:bg-background1-DM rounded-r-lg '
       value={selectedLanguage()} 
       onChange={handleLanguageChange}

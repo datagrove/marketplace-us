@@ -11,7 +11,7 @@ const t = useTranslations(lang);
 const { param } = Astro.params;
 ---
 
-<Layout>
+<Layout pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param} pageDescription={t("pageTitles.clientViewProviderAccount") + " " + param + " " + t("pageDescriptions.clientViewProviderAccount")}>
     <div class="w-full">
       <ClientProviderView id={param} client:only="solid-js" />
     </div>

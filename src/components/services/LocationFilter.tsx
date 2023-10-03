@@ -255,6 +255,10 @@ export const LocationFilter: Component<Props> = (props) => {
                       {(item) => (
                         <li>
                           <input
+                            aria-label={
+                              t("ariaLabels.checkboxMajorMunicipality") +
+                              item.major_municipality
+                            }
                             type="checkbox"
                             class="leading-tight mr-4 major-muni"
                             onClick={() => {
@@ -294,6 +298,10 @@ export const LocationFilter: Component<Props> = (props) => {
                       {(item) => (
                         <div>
                           <input
+                            aria-label={
+                              t("ariaLabels.checkboxMinorMunicipality") +
+                              item.minor_municipality
+                            }
                             type="checkbox"
                             class="leading-tight mr-4 minor-muni"
                             onClick={() => {
@@ -332,6 +340,10 @@ export const LocationFilter: Component<Props> = (props) => {
                       {(item) => (
                         <div>
                           <input
+                            aria-label={
+                              t("ariaLabels.checkboxGoverningDistrict") +
+                              item.governing_district
+                            }
                             type="checkbox"
                             class="leading-tight mr-4 district"
                             onClick={() => {
@@ -364,6 +376,10 @@ export const LocationFilter: Component<Props> = (props) => {
               {(item) => (
                 <li>
                   <input
+                    aria-label={
+                      t("ariaLabels.checkboxMajorMunicipality") +
+                      item.major_municipality
+                    }
                     type="checkbox"
                     class="major-muni leading-tight mr-4"
                     onClick={() => {
@@ -390,6 +406,10 @@ export const LocationFilter: Component<Props> = (props) => {
               {(item) => (
                 <div>
                   <input
+                    aria-label={
+                      t("ariaLabels.checkboxMinorMunicipality") +
+                      item.minor_municipality
+                    }
                     type="checkbox"
                     class="minor-muni leading-tight mr-4"
                     onClick={() => {
@@ -415,6 +435,10 @@ export const LocationFilter: Component<Props> = (props) => {
               {(item) => (
                 <div>
                   <input
+                    aria-label={
+                      t("ariaLabels.checkboxGoverningDistrict") +
+                      item.governing_district
+                    }
                     type="checkbox"
                     class="district leading-tight mr-4"
                     onClick={() => {
