@@ -117,7 +117,10 @@ CREATE TABLE IF NOT EXISTS "public"."provider_post" (
     "content" "text" NOT NULL,
     "location" bigint NOT NULL,
     "user_id" "uuid" NOT NULL,
-    "image_urls" "text"
+    "image_urls" "text",
+    "promoted" boolean DEFAULT false NOT NULL,
+    "promotedStartDate" "date",
+    "promotedFinishDate" "date"
 );
 
 ALTER TABLE "public"."provider_post" OWNER TO "postgres";
@@ -452,13 +455,15 @@ CREATE POLICY "Allow Users to update own data" ON "public"."providers" FOR UPDAT
 
 CREATE POLICY "Allow Users to update their own data" ON "public"."profiles" FOR UPDATE TO "authenticated" USING (("auth"."uid"() = "user_id")) WITH CHECK (("auth"."uid"() = "user_id"));
 
+CREATE POLICY "Allow users to update their own data" ON "public"."clients" FOR UPDATE TO "authenticated" USING (("auth"."uid"() = "user_id")) WITH CHECK (("auth"."uid"() = "user_id"));
+
 CREATE POLICY "Enable delete for users based on user_id" ON "public"."provider_post" FOR DELETE USING (("auth"."uid"() = "user_id"));
 
 CREATE POLICY "Enable insert for authenticated users only" ON "public"."clients" FOR INSERT TO "authenticated" WITH CHECK (true);
 
 CREATE POLICY "Enable insert for authenticated users only" ON "public"."location" FOR INSERT TO "authenticated" WITH CHECK (true);
 
-CREATE POLICY "Enable insert for authenticated users only" ON "public"."profiles" FOR INSERT TO "authenticated" WITH CHECK (true);
+CREATE POLICY "Enable insert for authenticated users only" ON "public"."profiles" FOR INSERT TO "anon" WITH CHECK (true);
 
 CREATE POLICY "Enable insert for authenticated users only" ON "public"."provider_post" FOR INSERT TO "authenticated" WITH CHECK (true);
 

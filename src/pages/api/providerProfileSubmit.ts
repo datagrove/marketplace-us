@@ -53,6 +53,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       access_token: access_token!.toString(),
     });
   if (sessionError) {
+    console.log("supabase error: " + sessionError.message);
     return new Response(
       JSON.stringify({
         message: (t("apiErrors.noSession")),

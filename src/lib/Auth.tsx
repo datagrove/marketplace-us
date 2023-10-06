@@ -58,6 +58,7 @@ export const Auth: Component = (props) => {
         setPasswordMatch(true);
         try {
           setLoading(true);
+          console.log(firstName(), lastName())
           const { data, error } = await supabase.auth.signUp({
             email: email(),
             password: password(),
@@ -68,6 +69,9 @@ export const Auth: Component = (props) => {
               },
             },
           });
+
+          console.log(data)
+
           let profileSubmission = {
             user_id: data.user?.id,
             first_name: data.user?.user_metadata.first_name,
@@ -81,7 +85,8 @@ export const Auth: Component = (props) => {
             .insert([profileSubmission]);
           if (profileError) {
             console.log(profileError.message);
-            alert(t("apiErrors.profileError"));
+            alert(t("apiErrors.profileCreateError"));
+            return
           }
 
           if (error) throw error;
