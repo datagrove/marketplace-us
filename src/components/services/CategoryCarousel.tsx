@@ -101,7 +101,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                 <div class="flex flex-start justify-between">
                     <button class="w-12 hidden">
                         <img
-                            src={leftArrow}
+                            src={leftArrow.src}
                             alt="Left Arrow"
                         />
                     </button>
@@ -128,7 +128,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
                                 }}
                             >
                                 <div class="bg-iconbg1 dark:bg-iconbg1-DM rounded-full">
-                                    <img src={ item.icon } alt={item.ariaLabel} title={item.description} class="w-12 p-1 m-2" /> 
+                                    <img src={ item.icon.src } alt={item.ariaLabel} title={item.description} class="w-12 p-1 m-2" /> 
                                 </div>
                                 
                                 <p class="text-ptext1 dark:text-ptext2-DM my-2 text-center text-xs">{item.name} </p>
@@ -140,7 +140,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
 
                     <button class="w-12 hidden">
                         <img
-                            src={rightArrow}
+                            src={rightArrow.src}
                             alt="Right Arrow"
                         />
                     </button>

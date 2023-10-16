@@ -194,6 +194,7 @@ export interface uiObject {
     clientExists: string,
     clientCreateProfileError: string,
     clientEditProfileError: string,
+    createUserError: string,
   },
 
   ariaLabels: {

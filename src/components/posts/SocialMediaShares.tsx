@@ -126,7 +126,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                 {/* <h1 class="text-htext2">IMG { props.image_urls }</h1> */}
                 
                 <div class="flex items-center pb-4">
-                    <img src={ dogLogo } class="w-16 h-16 p-1 text-icon2 dark:text-icon2-DM rounded border border-border2 dark:border-border2-DM mr-2 bg-background1 dark:bg-border1-DM" />
+                    <img src={ dogLogo.src } class="w-16 h-16 p-1 text-icon2 dark:text-icon2-DM rounded border border-border2 dark:border-border2-DM mr-2 bg-background1 dark:bg-border1-DM" />
                     {/* { props.image_urls ? (
                         <>
                         <img src={ props.image_urls.split(",")[1] } />

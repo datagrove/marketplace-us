@@ -194,6 +194,7 @@ export const French = {
     clientCreateProfileError: "Erreur lors de la création du profil client",
     clientEditProfileError: "Erreur lors de la mise à jour du profil client",
     noClient: "Aucun client trouvé.",
+    createUserError: "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
   },
 
   ariaLabels: {

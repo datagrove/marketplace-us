@@ -193,6 +193,7 @@ export const Spanish = {
     clientExists: "La cliente ya existe",
     clientCreateProfileError: "Error al crear el perfil del cliente",
     clientEditProfileError: "Error al actualizar el perfil del cliente",
+    createUserError: "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
   },
 
   ariaLabels: {

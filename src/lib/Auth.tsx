@@ -68,6 +68,8 @@ export const Auth: Component = (props) => {
               },
             },
           });
+
+
           let profileSubmission = {
             user_id: data.user?.id,
             first_name: data.user?.user_metadata.first_name,
@@ -81,7 +83,8 @@ export const Auth: Component = (props) => {
             .insert([profileSubmission]);
           if (profileError) {
             console.log(profileError.message);
-            alert(t("apiErrors.profileError"));
+            alert(t("apiErrors.profileCreateError"));
+            return
           }
 
           if (error) throw error;

@@ -194,6 +194,7 @@ export const English = {
     clientExists: "Client already exists",
     clientCreateProfileError: "Error creating client profile",
     clientEditProfileError: "Error updating client profile",
+    createUserError: "Error creating user, please try again or contact us for assistance.",
   },
 
   ariaLabels: {
