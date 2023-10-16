@@ -58,7 +58,6 @@ export const Auth: Component = (props) => {
         setPasswordMatch(true);
         try {
           setLoading(true);
-          console.log(firstName(), lastName())
           const { data, error } = await supabase.auth.signUp({
             email: email(),
             password: password(),
@@ -70,7 +69,6 @@ export const Auth: Component = (props) => {
             },
           });
 
-          console.log(data)
 
           let profileSubmission = {
             user_id: data.user?.id,
