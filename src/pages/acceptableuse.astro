@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/PageLayout.astro";
+import { Content } from "../content/policies/acceptable_use.mdx";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const translateLink = () => {
+  if (lang === "en") {
+    return "#english";
+  } else if (lang === "fr") {
+    return "#français";
+  } else if (lang === "es") {
+    return "#";
+  }
+};
+
+const classes = () => {
+  if (lang === "en" || lang === "fr") {
+    return "underline text-link1 dark:text-link1-DM";
+  } else if (lang === "es") {
+    return "";
+  }
+}
+---
+
+<Layout pageTitle={t("pageTitles.acceptableUse")} pageDescription={t("pageDescriptions.acceptableUse")}>
+  <div>
+    <div class="mb-8">
+      <h1 class="font-bold text-3xl mb-2 text-ptext1 dark:text-ptext1-DM">{t("pageTitles.acceptableUse")}</h1>
+      <p><a class=`${classes()}` href={translateLink()}>{t("messages.translation")}</a>{t("messages.translations")}</p>
+    </div>
+    <div class="prose dark:prose-invert">
+      <Content />
+    </div>
+  </div>
+</Layout>
