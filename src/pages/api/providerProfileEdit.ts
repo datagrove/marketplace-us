@@ -129,7 +129,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       console.log(profileError);
       return new Response(
         JSON.stringify({
-          message: (t("apiErrors.profileError")),
+          message: (t("apiErrors.profileEditError")),
         }),
         { status: 500 }
       );

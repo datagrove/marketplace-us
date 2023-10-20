@@ -12,6 +12,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Set internationalization values
   const lang = formData.get("lang");
+  //@ts-ignore
   const t = useTranslations(lang);
 
   //set the formData fields to variables
@@ -133,7 +134,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       console.log(profileError);
       return new Response(
         JSON.stringify({
-          message: (t("apiErrors.profileError")),
+          message: (t("apiErrors.profileCreateError")),
         }),
         { status: 500 }
       );
