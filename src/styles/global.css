@@ -23,6 +23,10 @@
         @apply flex rounded border border-gray-600 dark:border-gray-300 px-2 mt-2 text-gray-600 dark:text-gray-300 drop-shadow-md mx-1;
     }
 
+    .socialBtn {
+        @apply border border-border2 dark:border-border2-DM rounded-lg flex py-2 px-1 text-ptext2 dark:text-ptext2-DM w-full items-center
+    }
+
 }
 
 @layer utilities {
