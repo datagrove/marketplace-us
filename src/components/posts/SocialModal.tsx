@@ -1,4 +1,5 @@
-import { Component, JSX, createSignal, Show, createEffect, onCleanup } from 'solid-js';
+import { createSignal, Show, createEffect, onCleanup } from 'solid-js';
+import type { Component, JSX } from 'solid-js';
 import { SocialMediaShares } from './SocialMediaShares';
 
 interface Post {
@@ -17,23 +18,15 @@ interface Props {
     posts: Array<Post>;
 }
 
-let modalOverlay = document.getElementById("modal-overlay");
 
 const SocialModal: Component<Post> = function(props) {
     const [isOpen, setIsOpen] = createSignal(false);
-    const elements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    let modal: HTMLElement;
 
     function openModal(e:Event) {
         e.preventDefault();
         e.stopPropagation();
 
         setIsOpen(true);
-
-        if(modalOverlay?.classList.contains("hidden")) {
-            modalOverlay.classList.remove("hidden");
-            modalOverlay.classList.add("block");
-        }
     }
 
     function closeModal(e:Event) {
@@ -44,22 +37,22 @@ const SocialModal: Component<Post> = function(props) {
     }
     
     return (
-        <div class="right-[50%]">
-            <div class="">
-                <Show
-                    when={ isOpen()}
-                    fallback={
-                        <button class="rounded px-2 flex justify-end" type="button" onClick={ (e) => openModal(e) }>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <path d="M8 9h-1a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-8a2 2 0 0 0 -2 -2h-1"></path>
-                                <path d="M12 14v-11"></path>
-                                <path d="M9 6l3 -3l3 3"></path>
-                            </svg>
-                        </button>
-                    }
-                >
-                    <div class="rounded-lg flex flex-col-reverse items-end w-[75vMin] md:w-[50vMin] absolute right-[12%] md:right-[25%] z-40 bg-background2 dark:bg-background2-DM">
+        <div id="social-modal-div" class="relative z-40">
+            <Show
+                when={ isOpen()}
+                fallback={
+                    <button class="rounded px-2 flex justify-end" type="button" onClick={ (e) => openModal(e) }>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-share-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M8 9h-1a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-8a2 2 0 0 0 -2 -2h-1"></path>
+                            <path d="M12 14v-11"></path>
+                            <path d="M9 6l3 -3l3 3"></path>
+                        </svg>
+                    </button>
+                }
+            >
+                <div  class="absolute w-[95vw] h-screen flex justify-center right-1/4 ">
+                    <div class="rounded-lg flex flex-col-reverse items-end w-[75vMin] md:w-[50vMin] h-[58vMin] z-50 bg-background2 dark:bg-background2-DM">
                         {/* <SocialMediaShares id={ props.id } /> */}
 
                         <SocialMediaShares id={ props.id } title={ props.title } image_urls={ props.image_urls }/>
@@ -72,9 +65,8 @@ const SocialModal: Component<Post> = function(props) {
                             &times;
                         </button>
                     </div>
-                </Show>
-            </div>
-
+                </div>
+            </Show>
         </div>
     )
 }
