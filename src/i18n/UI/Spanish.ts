@@ -1,5 +1,6 @@
 export const Spanish = {
   textDirection: 'ltr',
+  siteDescription: "Todo lo que necesitas para hacer el trabajo.",
 
   pageTitles: {
     services: 'Servicios',
@@ -24,6 +25,7 @@ export const Spanish = {
     about: 'Sobre Nosotras',
     impact: 'Impacto',
     fullPost: "Ver publicación completa",
+    offline: 'Desconectada',
   },
 
   pageDescriptions: {
@@ -132,6 +134,8 @@ export const Spanish = {
     posts: 'Publicaciones del Proveedores',
     profileInfo: 'Información del Perfil',
     yourPosts: 'Tus Publicaciones',
+    optional: '(opcional)',
+    required: 'Campos Requeridos',
   },
 
   postLabels: {
@@ -164,6 +168,8 @@ export const Spanish = {
     changeEmail: 'Si actualiza su correo electrónico, debe confirmar el cambio en la dirección de correo electrónico anterior y en la nueva dirección de correo electrónico para completar el cambio.',
     locationUpdate: 'Si actualiza su ubicación, se deben completar todos los campos.',
     postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
+    firstNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
+    lastNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
   },
 
   apiErrors: {
@@ -189,6 +195,7 @@ export const Spanish = {
     clientExists: "La cliente ya existe",
     clientCreateProfileError: "Error al crear el perfil del cliente",
     clientEditProfileError: "Error al actualizar el perfil del cliente",
+    createUserError: "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
   },
 
   ariaLabels: {
@@ -296,6 +303,14 @@ export const Spanish = {
     ],
   },
 
-
+  clearFilters: {
+    filterButtons: [
+        { text: "Borra Todos los Filtros", ariaLabel: "Borra Todos los Filtros" },
+        { text: "Borra Categorías", ariaLabel: "Borra Categorías" },
+        { text: "Borra Municipio Importante", ariaLabel: "Borra Municipio Importante" },
+        { text: "Borra Munucipio Menor", ariaLabel: "Borra Munucipio Menor" },
+        { text: "Borra Distrito Gobernante", ariaLabel: "Borra Distrito Gobernante" },
+    ]
+  }
 
 } as const;

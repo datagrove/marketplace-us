@@ -8,6 +8,8 @@ import { defaultLang, languages } from './src/i18n/ui';
 import { SITE } from './src/config';
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
+import { VitePWA } from "vite-plugin-pwa";
+import AstroPWA from "@vite-pwa/astro"
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkToc from "remark-toc";
 import rehypeSlug from 'rehype-slug';
@@ -20,10 +22,11 @@ const defaultLocale = defaultLang;
 export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
-  site: SITE.url,
+  site: SITE.pagesDevUrl,
   trailingSlash: 'never',
   build: {
-    format: 'file'
+    format: 'file',
+    inlineStylesheets: 'always',
   },
   markdown: {
     remarkPlugins: [remarkToc],
@@ -31,28 +34,35 @@ export default defineConfig({
       behavior: 'append'
     }]]
   },
-  integrations: [solid(), tailwind(), icon({
-    iconDir: "src/assets",
-    include: {
-      tabler: ["*"]
-    }
-  }), i18n({
-    locales,
-    defaultLocale
-  }), sitemap({
-    i18n: {
+  integrations: [
+    solid(), 
+    tailwind(), 
+    icon({
+      iconDir: "src/assets",
+      include: {
+        tabler: ["*"]
+      }
+    }), 
+    i18n({
       locales,
-      defaultLocale
-    },
-    filter: defaultLocaleSitemapFilter({
-      defaultLocale
-    })
+      defaultLocale,
+      exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*', 'pages/api/*'],
+    }),
+    sitemap({
+      i18n: {
+        locales,
+        defaultLocale,
+        exclude: ['pages/offline.astro', 'pages/fr/*', 'pages/es/*', 'pages/en/*', 'pages/api/*'],
+      },
+      filter: defaultLocaleSitemapFilter({
+        defaultLocale
+      }) 
   }), mdx(), compress()]
 
-  // vite: {
-  //   define: {
-  //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
-  //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
-  //   }
-  // },  
+//   vite: {
+//   //   define: {
+//   //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
+//   //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
+//   //   }
+//  },  
 });

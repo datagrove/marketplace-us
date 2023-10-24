@@ -1,12 +1,12 @@
 ---
-import Layout from "../layouts/PageLayout.astro";
-import { AuthMode } from "../components/common/AuthMode";
-import { SignUpBtn } from "../components/common/SignUpButton";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import cleaner from "../assets/categoryIcons/cleaner-man.svg";
-import grid from "../assets/grid.svg";
-import services from "../assets/services.png";
-import servicesDM from "../assets/servicesDM.png";
+import Layout from "@layouts/PageLayout.astro";
+import { AuthMode } from "@components/common/AuthMode";
+import { SignUpBtn } from "@components/common/SignUpButton";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import cleaner from "@assets/categoryIcons/cleaner-man.svg";
+import grid from "@assets/grid.svg";
+import services from "@assets/services.png";
+import servicesDM from "@assets/servicesDM.png";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -77,11 +77,11 @@ const t = useTranslations(lang);
       { }
       
       <div class="inline dark:hidden">
-        <img src={ services } alt="homepage image of various services"/>
+        <img src= {services.src}  alt="homepage image of various services"/>
       </div>
 
       <div class="hidden dark:inline">
-        <img src={ servicesDM } alt="homepage image of various services"/>
+        <img src={ servicesDM.src } alt="homepage image of various services"/>
       </div>
       
     </div>

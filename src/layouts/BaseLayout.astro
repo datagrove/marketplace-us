@@ -10,22 +10,27 @@ const lang = getLangFromUrl(Astro.url)
 <!DOCTYPE html>
 <html lang={lang} dir={SITE.textDirection} class="2xl:text-[20px]">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <meta name="generator" content = {Astro.generator} >
     <meta charset="UTF-8">
     {stylesheets}
     
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <meta name="theme-color" content={SITE.themeColor} />
+
     <link rel="manifest" href="/manifest.webmanifest" />
     
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
+
   </head>
 
   <body class="md:mx-4 text-page bg-background1 dark:bg-background1-DM text-ptext1 dark:text-ptext1-DM">
     <!-- <script src="../../../node_modules/tinymce/tinymce.min.js" referrerpolicy="origin"></script> -->
     <slot />
+
   </body>
 </html>

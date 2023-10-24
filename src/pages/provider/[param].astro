@@ -1,8 +1,8 @@
 ---
-import Layout from "../../layouts/PageLayout.astro";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { ClientProviderView } from "../../components/users/ClientProviderView";
-import { ClientViewProviderPosts } from "../../components/posts/ClientViewProviderPosts";
+import Layout from "@layouts/PageLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ClientProviderView } from "@components/users/ClientProviderView";
+import { ClientViewProviderPosts } from "@components/posts/ClientViewProviderPosts";
 
 
 const lang = getLangFromUrl(Astro.url);

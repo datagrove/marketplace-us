@@ -1,6 +1,6 @@
 import { supabase } from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
-import { useTranslations } from "../../i18n/utils";
+import { useTranslations } from "@i18n/utils";
 
 export const post: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
@@ -18,8 +18,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //set the formData fields to variables
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
-  const firstName = formData.get("FirstName");
-  const lastName = formData.get("LastName");
+  // const firstName = formData.get("FirstName");
+  // const lastName = formData.get("LastName");
   const displayName = formData.get("DisplayName");
   const phone = formData.get("Phone");
   const country = formData.get("country");
@@ -31,7 +31,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
-    !displayName ||
     !phone ||
     !country ||
     !majorMunicipality ||
@@ -106,39 +105,40 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: profileExists, error: profileExistsError } = await supabase
-    .from("profiles")
-    .select("user_id")
-    .eq("user_id", user.id);
-  if (profileExistsError) {
-    console.log("supabase error: " + profileExistsError.message);
-  } else if (profileExists[0] !== undefined) {
-    console.log("Profile already exists");
-  } else if (profileExists[0] === undefined) {
-    //Build a submission to the profile table
-    let profileSubmission = {
-      user_id: user.id,
-      email: user.email,
-      first_name: firstName,
-      last_name: lastName,
-    };
+  // const { data: profileExists, error: profileExistsError } = await supabase
+  //   .from("profiles")
+  //   .select("user_id")
+  //   .eq("user_id", user.id);
+  // if (profileExistsError) {
+  //   console.log("supabase error: " + profileExistsError.message);
+  // } else if (profileExists[0] !== undefined) {
+  //   console.log("Profile already exists");
+  // } else if (profileExists[0] === undefined) {
+  //   //Build a submission to the profile table
+  //   let profileSubmission = {
+  //     user_id: user.id,
+  //     first_name: firstName,
+  //     last_name: lastName,
+  //   };
 
-    //Submit to the profile table and select it back (the select back is not entirely necessary)
 
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .insert([profileSubmission])
-      .select();
-    if (profileError) {
-      console.log(profileError);
-      return new Response(
-        JSON.stringify({
-          message: (t("apiErrors.profileCreateError")),
-        }),
-        { status: 500 }
-      );
-    }
-  }
+  //   //Submit to the profile table and select it back (the select back is not entirely necessary)
+
+
+  //   const { data: profileData, error: profileError } = await supabase
+  //     .from("profiles")
+  //     .insert([profileSubmission])
+  //     .select();
+  //   if (profileError) {
+  //     console.log(profileError);
+  //     return new Response(
+  //       JSON.stringify({
+  //         message: (t("apiErrors.profileError")),
+  //       }),
+  //       { status: 500 }
+  //     );
+  //   }
+  // }
 
   
 

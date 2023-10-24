@@ -3,5 +3,15 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "paths": {
+        "@components/*": ["src/components/*"],
+        "@content/*": ["src/content/*"],
+        "@layouts/*" : ["src/layouts/*"],
+        "@i18n/*" : ["src/i18n/*"],
+        "@utils/*" : ["src/utils/*"],
+        "@assets/*" : ["src/assets/*"],
+    },
+    "types": ["vite-plugin-pwa/client"],
   }
 }

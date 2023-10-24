@@ -1,7 +1,7 @@
 ---
-import Layout from "../../layouts/PageLayout.astro";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { ViewFullPost } from "../../components/posts/FullPostView";
+import Layout from "@layouts/PageLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { ViewFullPost } from "@components/posts/FullPostView";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

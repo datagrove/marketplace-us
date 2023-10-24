@@ -1,9 +1,9 @@
 ---
 import { SITE } from "../config";
-import type BaseLayout from "../layouts/BaseLayout.astro";
-import PageLayout from "../layouts/PageLayout.astro";
+import type BaseLayout from "@layouts/BaseLayout.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 import { Auth } from "../lib/Auth";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

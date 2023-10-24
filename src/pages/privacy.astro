@@ -1,7 +1,7 @@
 ---
-import Layout from "../layouts/PageLayout.astro";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
-import { Content } from "../content/policies/privacy.mdx";
+import Layout from "@layouts/PageLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { Content } from "@content/policies/privacy.mdx";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

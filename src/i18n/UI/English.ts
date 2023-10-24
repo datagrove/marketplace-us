@@ -1,5 +1,6 @@
 export const English = {
   textDirection: 'ltr',
+  siteDescription: 'Everything you need to get the job done.',
 
   pageTitles: {
     services: 'Services',
@@ -23,7 +24,9 @@ export const English = {
     acceptableUse: "Acceptable Use Policy",
     about: 'About Us',
     impact: 'Impact',
+
     fullPost: "View Full Post",
+    offline: 'Offline',
   },
 
   pageDescriptions: {
@@ -131,6 +134,8 @@ export const English = {
     posts: 'Provider Posts',
     profileInfo: 'Profile Information',
     yourPosts: 'Your Posts',
+    optional: '(optional)',
+    required: 'Required Fields',
   },
 
   postLabels: {
@@ -164,6 +169,8 @@ export const English = {
     changeEmail: 'If you update your email you must confirm the change at the old email address and the new email address to complete the change.',
     locationUpdate: 'If you update your location all fields must be completed.',
     postImages: 'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
+    firstNameEdit: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider account. Since this is your legal name, the same first and last name must be used on your client and provider accounts.',
+    lastNameEdit: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider account. Since this is your legal name, the same first and last name must be used on your client and provider accounts.',
   },
 
   apiErrors: {
@@ -189,6 +196,7 @@ export const English = {
     clientExists: "Client already exists",
     clientCreateProfileError: "Error creating client profile",
     clientEditProfileError: "Error updating client profile",
+    createUserError: "Error creating user, please try again or contact us for assistance.",
   },
 
   ariaLabels: {
@@ -297,5 +305,15 @@ productCategoryInfo:{
       // Add more products as needed
     ]
   },
+
+  clearFilters: {
+    filterButtons: [
+        { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
+        { text: "Clear Categories", ariaLabel: "Clear Categories" },
+        { text: "Clear Major Municipality", ariaLabel: "Clear Major Municipality" },
+        { text: "Clear Minor Municipality", ariaLabel: "Clear Minor Municipality" },
+        { text: "Clear Governing District", ariaLabel: "Clear Governing District" },
+    ]
+  }
 
 } as const;

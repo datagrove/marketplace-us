@@ -12,20 +12,8 @@ import PostImage from "./PostImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { TinyComp } from "./TinyComp";
 
-//tinymce
-import tinymce from "tinymce";
-//@ts-ignore
-import { model } from "../../../node_modules/tinymce/models/dom/model";
-//@ts-ignore
-import { theme } from "../../../node_modules/tinymce/themes/silver/theme";
-//@ts-ignore
-import { icons } from "../../../node_modules/tinymce/icons/default/icons";
-//To add new plugins import the main js file from the node modules and add the min file to public and add a script definition to the init call
-//@ts-ignore
-import lists from "../../../node_modules/tinymce/plugins/lists/plugin";
-//@ts-ignore
-import quickbars from "../../../node_modules/tinymce/plugins/quickbars/plugin";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -52,83 +40,8 @@ export const CreateNewPost: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
-  const [mode, setMode] = createSignal<"dark" | "light">(
-    //@ts-ignore
-    localStorage.getItem("theme")
-  );
 
-  console.log("Start Mode: " + mode());
 
-  // onMount(() => {
-  //   window.addEventListener("storage", (event) => {
-  //     console.log(event.key)
-  //   })
-  // })
-
-  // createEffect(() => {
-  //   console.log(mode());
-  // })
-
-  createEffect(() => {
-    window.addEventListener("storage", (event) => {
-      if (event.key === "theme") {
-        //@ts-ignore
-        setMode(event.newValue);
-      }
-      window.location.reload();
-      console.log(event.key);
-      console.log("Mode: " + mode());
-    });
-  });
-
-  createEffect(() => {
-    const script = document.createElement("script");
-    script.src = "/tinymce/tinymce.min.js";
-    script.async = true;
-    script.onload = () => {
-      const listPlugin = document.createElement("script");
-      listPlugin.src = "/tinymce/plugins/lists/plugin.min.js";
-      listPlugin.async = true;
-      listPlugin.onload = () => {
-        const quickBarsPlugin = document.createElement("script");
-        quickBarsPlugin.src = "/tinymce/plugins/quickbars/plugin.min.js";
-        quickBarsPlugin.async = true;
-        quickBarsPlugin.onload = () => {
-          console.log("tinymce loaded");
-          tinymce.init({
-            selector: "#Content",
-            max_width: 384,
-            skin_url:
-              mode() === "dark"
-                ? "/tinymce/skins/ui/oxide-dark"
-                : "/tinymce/skins/ui/oxide",
-            content_css:
-              mode() === "dark"
-                ? "/tinymce/skins/content/dark/content.min.css"
-                : "/tinymce/skins/content/default/content.min.css",
-            promotion: false,
-            plugins: "lists, quickbars",
-            quickbars_image_toolbar: false,
-            quickbars_insert_toolbar: false,
-            toolbar: [
-              "undo redo | bold italic |alignleft aligncenter alignright",
-              "styles bullist numlist outdent indent",
-            ],
-            toolbar_mode: "wrap",
-            statusbar: false,
-            setup: function (editor) {
-              editor.on("change", function () {
-                tinymce.triggerSave();
-              });
-            },
-          });
-        };
-        document.body.appendChild(quickBarsPlugin);
-      };
-      document.body.appendChild(listPlugin);
-    };
-    document.body.appendChild(script);
-  });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -174,6 +87,7 @@ export const CreateNewPost: Component = () => {
       //Major Municipality
       try {
         const { data: majorMunicipality, error: errorMajorMunicipality } =
+          //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
           await supabase.from("major_municipality").select("*");
         if (errorMajorMunicipality) {
           console.log("supabase error: " + errorMajorMunicipality.message);
@@ -318,6 +232,8 @@ export const CreateNewPost: Component = () => {
     }
     setFormData(formData);
   }
+
+  TinyComp();
 
   return (
     <div>
