@@ -21,6 +21,7 @@ export const French = {
     resetPassword: "réinitialiser le mot de passe",
     terms: 'Termes et Conditions',
     privacy: "Politique de Confidentialité",
+    acceptableUse: "Politique d'utilisation acceptable",
     about: 'À Propos De Nous',
     impact: 'Impact',
 
@@ -45,6 +46,7 @@ export const French = {
     resetPassword: "Réinitialisez votre mot de passe en toute sécurité avec Todo Servis. Suivez le lien de votre e-mail pour choisir un nouveau mot de passe.",
     terms: "Consultez nos termes et conditions. Remarque : les traductions sont fournies à titre gracieux, les termes officiels contraignants sont en espagnol.",
     privacy: "Consultez notre politique de confidentialité. Veuillez noter que les traductions sont fournies à titre gracieux, la politique officielle contraignante est en espagnol.",
+    acceptableUse: "Consultez notre politique d’utilisation acceptable. Veuillez noter que les traductions sont fournies à titre gracieux et que la politique officielle contraignante est en espagnol.",
     about: "Découvrez l'histoire de Todo Servis – qui nous sommes, notre mission et notre passion de contribuer à révolutionner la façon dont les particuliers et les entreprises trouvent et fournissent des services. Découvrez notre équipe et les valeurs qui nous animent. Rejoignez-nous dans notre voyage !",
     impact: "Découvrez l’impact significatif de Todo Servis. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
     fullPost: "En savoir plus sur ce service et contacter le fournisseur si vous êtes intéressé. Découvrez des images supplémentaires et la description complète du service.",

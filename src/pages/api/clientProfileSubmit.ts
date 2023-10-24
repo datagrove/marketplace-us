@@ -12,6 +12,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
    //Set internationalization values
    const lang = formData.get("lang");
+   //@ts-ignore
    const t = useTranslations(lang);
 
   //set the formData fields to variables
@@ -72,6 +73,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Get the user and make sure we have a user
   const user = sessionData?.session.user;
+  console.log(user)
 
   if (!user) {
     return new Response(
@@ -119,7 +121,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //     last_name: lastName,
   //   };
 
+
   //   //Submit to the profile table and select it back (the select back is not entirely necessary)
+
 
   //   const { data: profileData, error: profileError } = await supabase
   //     .from("profiles")

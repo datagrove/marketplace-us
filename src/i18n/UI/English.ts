@@ -21,6 +21,7 @@ export const English = {
     resetPassword: 'Set New Password',
     terms: 'Terms and Conditions',
     privacy: "Privacy Policy",
+    acceptableUse: "Acceptable Use Policy",
     about: 'About Us',
     impact: 'Impact',
 
@@ -45,6 +46,7 @@ export const English = {
     resetPassword: "Reset your password securely with Todo Servis. Follow the link from your email to choose a new password.",
     terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in Spanish.",
     privacy: "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
+    acceptableUse: "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
     about: "Discover the story behind Todo Servis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
     impact: "Explore the meaningful impact of Todo Servis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
     fullPost: "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
