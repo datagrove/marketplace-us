@@ -12,6 +12,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
 
   //Set internationalization values
   const lang = formData.get("lang");
+  //@ts-ignore
   const t = useTranslations(lang);
 
   const access_token = formData.get("access_token");

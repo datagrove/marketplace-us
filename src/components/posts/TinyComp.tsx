@@ -2,17 +2,18 @@ import { createEffect, createSignal } from "solid-js";
 
 import tinymce from "tinymce";
 
+//New tiny imports
 //@ts-ignore
-import { model } from "../../../node_modules/tinymce/models/dom/model";
+import "tinymce/models/dom";
 //@ts-ignore
-import { theme } from "../../../node_modules/tinymce/themes/silver/theme";
+import "tinymce/themes/silver";
 //@ts-ignore
-import { icons } from "../../../node_modules/tinymce/icons/default/icons";
-//To add new plugins import the main js file from the node modules and add the min file to public and add a script definition to the init call
+import 'tinymce/icons/default';
 //@ts-ignore
-import lists from "../../../node_modules/tinymce/plugins/lists/plugin";
+import "tinymce/plugins/lists";
 //@ts-ignore
-import quickbars from "../../../node_modules/tinymce/plugins/quickbars/plugin";
+import "tinymce/plugins/quickbars";
+
 
 export const TinyComp= () => {
 
