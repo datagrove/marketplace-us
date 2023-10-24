@@ -4,6 +4,11 @@ import { Icon } from 'astro-icon/components';
 
 import { SITE } from '../../config';
 
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+
 export interface Props {
   label?: string;
   class?: string;
@@ -12,7 +17,7 @@ export interface Props {
 }
 
 const {
-  label = 'Toggle between Dark and Light mode',
+  label = {t(‘ariaLabels.darkMessage’)},
   class:
     className = 'text-ptext1 dark:text-ptext1-DM hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center',
   iconClass = 'w-6 h-6',

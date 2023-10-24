@@ -1,6 +1,10 @@
 import { createSignal, Show, createEffect, onCleanup } from 'solid-js';
 import type { Component, JSX } from 'solid-js';
 import { SocialMediaShares } from './SocialMediaShares';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 interface Post {
     id: number;
@@ -58,7 +62,7 @@ const SocialModal: Component<Post> = function(props) {
                         <SocialMediaShares id={ props.id } title={ props.title } image_urls={ props.image_urls }/>
                         
                         <button
-                            aria-aria-label='Close Dialog'
+                            aria-label={t(‘ariaLabels.closeDialog’)}
                             class="modal-close w-8 h-8 flex justify-center items-start text-icon2 dark:text-icon2-DM"
                             onClick={ closeModal }
                         >

@@ -204,6 +204,8 @@ export const English = {
     checkboxMajorMunicipality: "Checkbox for selecting major municipality",
     checkboxMinorMunicipality: "Checkbox for selecting minor municipality",
     checkboxGoverningDistrict: "Checkbox for selecting governing district",
+    darkMessage: "Toggle between Dark and Light mode",
+    closeDialog: "Close Dialog",
   },
 
   headerData: {

@@ -204,6 +204,8 @@ export interface uiObject {
     checkboxMajorMunicipality: string,
     checkboxMinorMunicipality: string,
     checkboxGoverningDistrict: string,
+    darkMessage: string,
+    closeDialog: string,
   },
 
   headerData: {

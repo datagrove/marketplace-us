@@ -203,6 +203,8 @@ export const Spanish = {
     checkboxMajorMunicipality: "Casilla de verificación para seleccionar Provincia",
     checkboxMinorMunicipality: "Casilla de verificación para seleccionar Cantón",
     checkboxGoverningDistrict: "Casilla de verificación para seleccionar Distrito",
+    darkMessage: "Cambia entre modo claro y modo oscuro",
+    closeDialog: "Cerrar Dialogo",
   },
 
   headerData: {
