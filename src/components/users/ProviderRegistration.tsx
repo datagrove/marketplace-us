@@ -42,6 +42,7 @@ export const ProviderRegistration: Component = () => {
   const [phone, setPhone] = createSignal<string>("");
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
+  const [providerName, setProviderName] = createSignal<string>("");
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -61,6 +62,7 @@ export const ProviderRegistration: Component = () => {
         } else {
           setFirstName(profile[0].first_name);
           setLastName(profile[0].last_name);
+          setProviderName(firstName() + " " + lastName());
         }
       } catch (error) {
         console.log("Other error: " + error);
@@ -234,6 +236,10 @@ export const ProviderRegistration: Component = () => {
 
     const formData = new FormData(e.target as HTMLFormElement);
 
+    if (formData.get("ProviderName") === "") {
+      formData.set("ProviderName", (firstName() + " " + lastName()));
+    }
+
     if (phone() !== "") {
       formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);
@@ -392,6 +398,7 @@ export const ProviderRegistration: Component = () => {
               firstName() + " " + lastName() + " " + t("formLabels.optional")
             }
             class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+            oninput = {(e)=>setProviderName(e.target.value)}
           />
         </div>
 
