@@ -62,7 +62,7 @@ const SocialModal: Component<Post> = function(props) {
                         <SocialMediaShares id={ props.id } title={ props.title } image_urls={ props.image_urls }/>
                         
                         <button
-                            aria-label={t(‘ariaLabels.closeDialog’)}
+                            aria-label={t('ariaLabels.closeDialog')}
                             class="modal-close w-8 h-8 flex justify-center items-start text-icon2 dark:text-icon2-DM"
                             onClick={ closeModal }
                         >
