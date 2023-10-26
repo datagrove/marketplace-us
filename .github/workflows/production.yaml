@@ -19,7 +19,7 @@ jobs:
         with:
           version: latest
 
-      - run: supabase link --project-ref $SUPABASE_PROJECT_ID --dns-resolver https
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID
       
       - name: Database Migrations push
         run: supabase db push 
