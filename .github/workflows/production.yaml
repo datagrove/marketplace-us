@@ -1,4 +1,4 @@
-name: Deploy Migrations/Edge Functions to Production
+name: Deploy Migrations to Production
 
 on:
   workflow_dispatch
@@ -22,4 +22,4 @@ jobs:
       - run: supabase link --project-ref $SUPABASE_PROJECT_ID
       
       - name: Database Migrations push
-        run: supabase db push
+        run: supabase db push 
