@@ -19,7 +19,7 @@ jobs:
         with:
           version: latest
 
-      - run: supabase link --project-ref $SUPABASE_PROJECT_ID --db-url "postgres://postgres:$SUPABASE_DB_PASSWORD@db.$SUPABASE_PROJECT_ID.supabase.co:5432/postgres?sslmode=require"
+      - run: supabase link --project-ref $SUPABASE_PROJECT_ID --dns-resolver https
       
       - name: Database Migrations push
         run: supabase db push 
