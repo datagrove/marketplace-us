@@ -206,6 +206,8 @@ export const French = {
     checkboxMajorMunicipality: "Case à cocher pour sélectionner la grande municipalité",
     checkboxMinorMunicipality: "Case à cocher pour sélectionner une commune mineure",
     checkboxGoverningDistrict: "Case à cocher pour sélectionner le district administratif",
+    darkMessage: "Basculer entre le mode clair et le mode sombre",
+    closeDialog: "Fermer la boîte de dialogue",
   },
 
   headerData: {
