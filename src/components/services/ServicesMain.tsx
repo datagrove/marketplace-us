@@ -61,18 +61,37 @@ export const ServicesView: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
     // start the page as displaying all posts
     if (!data) {
-        alert(t('messages.noPosts'))
+        let noPostsMessage = document.getElementById("no-posts-message");
+        noPostsMessage?.classList.remove("hidden")
+
+        setPosts([])
+        setCurrentPosts([])
     } else {
         setPosts(data)
         setCurrentPosts(data)  
     }
 
     createEffect(async() => {
-        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
-    
+        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString());
+
         if(res === null || res === undefined) {
+            let noPostsMessage = document.getElementById("no-posts-message");
+            noPostsMessage?.classList.remove("hidden")
+
+            setPosts([])
+            setCurrentPosts([])
+
             console.error()
+        } else if(Object.keys(res).length === 0) {
+            let noPostsMessage = document.getElementById("no-posts-message");
+            noPostsMessage?.classList.remove("hidden")
+
+            setPosts(res)
+            setCurrentPosts(res)
         } else {
+            let noPostsMessage = document.getElementById("no-posts-message");
+            noPostsMessage?.classList.add("hidden")
+
             setPosts(res)
             console.log("results after createEffect: ", posts())
         }
@@ -142,7 +161,12 @@ export const ServicesView: Component = () => {
         // alert("filterPosts function")
 
         if (!data) {
-            alert(t('messages.noPosts'))
+            let noPostsMessage = document.getElementById("no-posts-message");
+            noPostsMessage?.classList.remove("hidden")
+
+            setPosts([])
+            setCurrentPosts([])
+
         } else if (searchPost().length === 0) {
             //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
             setPosts(data)
@@ -338,6 +362,9 @@ export const ServicesView: Component = () => {
                 </div>
                 
                 <div class="md:flex-1 w-11/12 items-center">
+                    <div id="no-posts-message" class="hidden">
+                        <h1>{ (t('messages.noPosts')) }</h1>
+                    </div>
                     <ViewCard posts={currentPosts()} />
                 </div>
             </div>

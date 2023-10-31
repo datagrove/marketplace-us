@@ -71,11 +71,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("service_category", categoryIntegers)
         
                 if(!catPosts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+
+                    return catPosts
                 }
         
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return catPosts;
                 }
@@ -312,7 +315,10 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 if(error) {
                     console.log("supabase error: " + error.message);
                 } else if( searchPosts.length === 0) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return searchPosts
                 } else {
                     console.log("fetch Search bar: ", searchPosts)
                     return searchPosts
@@ -361,11 +367,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("service_category", categoryIntegers)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -415,11 +424,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("major_municipality", locationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -470,11 +482,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("minor_municipality", minorLocationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -526,11 +541,12 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("governing_district", governingLocationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
-                }
-
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts                }
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -547,11 +563,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("major_municipality", locationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -569,11 +588,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("minor_municipality", minorLocationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -592,11 +614,14 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
                 .in("governing_district", governingLocationFilters)
 
                 if(!posts) {
-                    alert(t('messages.noPosts'))
+                    let noPostsMessage = document.getElementById("no-posts-message");
+                    noPostsMessage?.classList.remove("hidden")
+        
+                    return posts
                 }
 
                 if(error) {
-                    console.log("supabase error: " + error.message);
+                    console.log("supabase error: " + error);
                 } else {
                     return posts;
                 }
@@ -658,11 +683,14 @@ export async function fetchPostsByCategory(selectedCats: Array<string>) {
             console.log("category data: ", catPosts)
 
         if(!catPosts) {
-            alert(t('messages.noPosts'))
+            let noPostsMessage = document.getElementById("no-posts-message");
+            noPostsMessage?.classList.remove("hidden")
+
+            return catPosts
         }
 
         if(error) {
-            console.log("supabase error: " + error.message);
+            console.log("supabase error: " + error);
         }
 
         return catPosts;
