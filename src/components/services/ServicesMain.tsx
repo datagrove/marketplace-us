@@ -1,12 +1,14 @@
-import { Component, createEffect, createSignal } from 'solid-js'
+import type { Component } from 'solid-js'
+import { createSignal, createEffect } from 'solid-js'
 import { supabase } from '../../lib/supabaseClient'
-import { CategoryCarousel } from './CategoryCarousel'
+import { CategoryCarousel} from './CategoryCarousel'
 import { ViewCard } from './ViewCard';
 import { LocationFilter } from './LocationFilter';
 import { SearchBar } from './SearchBar'
 import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import * as allFilters from '../posts/fetchPosts';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -35,8 +37,6 @@ data?.map(item => {
     delete item.service_category
 })
 
-
-
 interface ProviderPost {
     content: string;
     id: number;
@@ -58,47 +58,70 @@ export const ServicesView: Component = () => {
     const [locationFilters, setLocationFilters] = createSignal<Array<string>>([])
     const [minorLocationFilters, setMinorLocationFilters] = createSignal<Array<string>>([])
     const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<string>>([])
-
-    //start the page as displaying all posts
+    const [searchString, setSearchString] = createSignal<string>("");
+    // start the page as displaying all posts
     if (!data) {
         alert(t('messages.noPosts'))
     } else {
         setPosts(data)
-        setCurrentPosts(data)
+        setCurrentPosts(data)  
     }
 
-    const searchPosts = async (searchString: string) => {
-        console.log(searchString);
-        if (searchString === '') {
-            console.log("Data: ")
-            console.log(data)
-            setSearchPost(data!)
+    createEffect(async() => {
+        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
+    
+        if(res === null || res === undefined) {
+            console.error()
         } else {
-            const { data: searchResults, error: searchError } = await supabase
-                .from('providerposts')
-                .select()
-                .textSearch('title_content', searchString);
+            setPosts(res)
+            console.log("results after createEffect: ", posts())
+        }
+    })
 
-            if (searchError) {
-                console.log("supabase error: " + searchError.message);
-            } else {
-                console.log(searchResults)
-                searchResults?.map(item => {
-                    productCategories.forEach(productCategories => {
-                        if (item.service_category.toString() === productCategories.id) {
-                            item.category = productCategories.name
-                        }
-                    })
-                    delete item.service_category
-                })
-                setSearchPost(searchResults)
-            }
+    const searchPosts = async (searchText: string) => {
+        if(searchText === "") {
+            alert(t('messages.noSearchTerm'))
+        } else {
+            setSearchString(searchText)
         }
 
-        filterPosts()
+        filterPosts();
     }
 
+    // const searchPosts = async (searchString: string) => {
+    //     console.log(searchString);
+    //     if (searchString === '') {
+    //         console.log("Data: ")
+    //         console.log(data)
+    //         setSearchPost(data!)
+    //     } else {
+    //         const { data: searchResults, error: searchError } = await supabase
+    //             .from('providerposts')
+    //             .select()
+    //             .textSearch('title_content', searchString);
+
+    //         if (searchError) {
+    //             console.log("supabase error: " + searchError.message);
+    //         } else {
+    //             console.log("searchResults: ", searchResults)
+    //             searchResults?.map(item => {
+    //                 productCategories.forEach(productCategories => {
+    //                     if (item.service_category.toString() === productCategories.id) {
+    //                         item.category = productCategories.name
+    //                     }
+    //                 })
+    //                 delete item.service_category
+    //             })
+    //             setSearchPost(searchResults)
+    //         }
+    //     }
+
+    //     filterPosts()
+    // }
+
     const setCategoryFilter = (currentCategory: string) => {
+
+        console.log("currCat from catFilter: ", currentCategory)
 
         if (filters().includes(currentCategory)) {
             let currentFilters = filters().filter((el) => el !== currentCategory)
@@ -112,10 +135,11 @@ export const ServicesView: Component = () => {
         console.log("Category Filters: ")
         console.log(filters())
 
-        filterPosts()
+        filterPosts() 
     }
 
-    const filterPosts = () => {
+    const filterPosts = async() => {
+        // alert("filterPosts function")
 
         if (!data) {
             alert(t('messages.noPosts'))
@@ -126,103 +150,26 @@ export const ServicesView: Component = () => {
             setPosts(searchPost())
         )
 
-        console.log("Posts: ")
-        console.log(posts())
+        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
 
-        let filtered: ProviderPost[] = posts()
-
-        if (filters().length === 0 && locationFilters().length === 0 && minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-            setCurrentPosts(filtered)
+        // alert("res: " + res)
+    
+        if(res === null || res === undefined) {
+            console.error()
         } else {
-            if (filters().length !== 0) {
-                let filterPosts = filters().map((currentCategory) => {
-                    let tempPosts = filtered.filter((post: any) => {
-                        return post.category === currentCategory
-                    })
-                    return tempPosts;
-                })
-                console.log("Filtered Posts: ")
-                console.log(filterPosts.flat())
-                let filter1 = filterPosts.flat()
-                filtered = filter1
-                setCurrentPosts(filtered)
-            }
+            console.log("res in filterPosts: ", res)
 
-            if (locationFilters().length !== 0) {
-                let majorMuniFilter = locationFilters().map((currentLocation) => {
-                    let tempPosts = filtered.filter((post: any) => {
-                        return post.major_municipality === currentLocation
-                    })
-                    return tempPosts
-                })
-                let filter2 = majorMuniFilter.flat()
-                if (minorLocationFilters().length === 0 && governingLocationFilters().length === 0) {
-                    filtered = filter2
-                    setCurrentPosts(filtered)
-                } else if (minorLocationFilters().length !== 0) {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filter2.filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter3 = minorMuniFilter.flat()
-                    if (governingLocationFilters().length === 0) {
-                        filtered = filter3
-                        setCurrentPosts(filtered)
-                    } else {
-                        let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                            let tempPosts = filter3.filter((post: any) => {
-                                return post.governing_district === currentLocation
-                            })
-                            return tempPosts
-                        })
-                        let filter4 = governingMuniFilter.flat()
-                        filtered = filter4
-                        setCurrentPosts(filtered)
+            res.map(post => {
+                productCategories.forEach(productCategory => {
+                    if(post.service_category.toString() === productCategory.id) {
+                        post.category = productCategory.name
                     }
-                }
-            } else if (minorLocationFilters().length !== 0) {
-                if (governingLocationFilters().length === 0) {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filtered.filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter5 = minorMuniFilter.flat()
-                    filtered = filter5
-                    setCurrentPosts(filtered)
-                } else {
-                    let minorMuniFilter = minorLocationFilters().map((currentLocation) => {
-                        let tempPosts = filtered.filter((post: any) => {
-                            return post.minor_municipality === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter6 = minorMuniFilter.flat()
-                    let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                        let tempPosts = filter6.filter((post: any) => {
-                            return post.governing_district === currentLocation
-                        })
-                        return tempPosts
-                    })
-                    let filter7 = governingMuniFilter.flat()
-                    filtered = filter7
-                    setCurrentPosts(filtered)
-                }
-                // return filtered
-            } else if (governingLocationFilters().length !== 0) {
-                let governingMuniFilter = governingLocationFilters().map((currentLocation) => {
-                    let tempPosts = filtered.filter((post: any) => {
-                        return post.governing_district === currentLocation
-                    })
-                    return tempPosts
                 })
-                let filter8 = governingMuniFilter.flat()
-                filtered = filter8
-                setCurrentPosts(filtered)
-            }
+                delete post.service_category
+            })
+
+            setPosts(res)
+            setCurrentPosts(res)
         }
     }
 
@@ -298,6 +245,7 @@ export const ServicesView: Component = () => {
         })
 
         setSearchPost([]);
+        setSearchString("");
         setFilters([]);
         setLocationFilters([]);
         setMinorLocationFilters([]);
@@ -353,6 +301,7 @@ export const ServicesView: Component = () => {
         <div class=''>
             <div>
                 <SearchBar search={searchPosts} />
+                {/* <SearchBar search={ searchString } /> */}
             </div>
             
             <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
@@ -378,9 +327,6 @@ export const ServicesView: Component = () => {
             </div>
 
             <div>
-                <div class="flex justify-end items-center">
-
-                </div>
                 <CategoryCarousel
                     filterPosts={setCategoryFilter}
                 />
