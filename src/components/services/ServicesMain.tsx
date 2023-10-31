@@ -93,7 +93,6 @@ export const ServicesView: Component = () => {
             noPostsMessage?.classList.add("hidden")
 
             setPosts(res)
-            console.log("results after createEffect: ", posts())
         }
     })
 
@@ -107,59 +106,19 @@ export const ServicesView: Component = () => {
         filterPosts();
     }
 
-    // const searchPosts = async (searchString: string) => {
-    //     console.log(searchString);
-    //     if (searchString === '') {
-    //         console.log("Data: ")
-    //         console.log(data)
-    //         setSearchPost(data!)
-    //     } else {
-    //         const { data: searchResults, error: searchError } = await supabase
-    //             .from('providerposts')
-    //             .select()
-    //             .textSearch('title_content', searchString);
-
-    //         if (searchError) {
-    //             console.log("supabase error: " + searchError.message);
-    //         } else {
-    //             console.log("searchResults: ", searchResults)
-    //             searchResults?.map(item => {
-    //                 productCategories.forEach(productCategories => {
-    //                     if (item.service_category.toString() === productCategories.id) {
-    //                         item.category = productCategories.name
-    //                     }
-    //                 })
-    //                 delete item.service_category
-    //             })
-    //             setSearchPost(searchResults)
-    //         }
-    //     }
-
-    //     filterPosts()
-    // }
-
     const setCategoryFilter = (currentCategory: string) => {
-
-        console.log("currCat from catFilter: ", currentCategory)
 
         if (filters().includes(currentCategory)) {
             let currentFilters = filters().filter((el) => el !== currentCategory)
             setFilters(currentFilters)
         } else {
             setFilters([...filters(), currentCategory])
-            console.log("Category Filters Updated: ")
-            console.log(filters())
         }
-
-        console.log("Category Filters: ")
-        console.log(filters())
 
         filterPosts() 
     }
 
     const filterPosts = async() => {
-        // alert("filterPosts function")
-
         if (!data) {
             let noPostsMessage = document.getElementById("no-posts-message");
             noPostsMessage?.classList.remove("hidden")
@@ -176,13 +135,9 @@ export const ServicesView: Component = () => {
 
         const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
 
-        // alert("res: " + res)
-    
         if(res === null || res === undefined) {
             console.error()
         } else {
-            console.log("res in filterPosts: ", res)
-
             res.map(post => {
                 productCategories.forEach(productCategory => {
                     if(post.service_category.toString() === productCategory.id) {
@@ -205,9 +160,6 @@ export const ServicesView: Component = () => {
             setLocationFilters([...locationFilters(), location])
         }
 
-        console.log("Location Filters: ")
-        console.log(locationFilters())
-
         filterPosts()
     }
 
@@ -219,8 +171,6 @@ export const ServicesView: Component = () => {
             setMinorLocationFilters([...minorLocationFilters(), location])
         }
 
-        console.log("Minor Location Filters: ")
-        console.log(minorLocationFilters())
         filterPosts()
     }
 
@@ -232,8 +182,6 @@ export const ServicesView: Component = () => {
             setGoverningLocationFilters([...governingLocationFilters(), location])
         }
 
-        console.log("Governing Location Filters: ")
-        console.log(governingLocationFilters())
         filterPosts()
     }
 
