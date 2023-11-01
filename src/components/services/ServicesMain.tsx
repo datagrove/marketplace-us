@@ -54,7 +54,7 @@ export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([])
     const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([])
     const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([])
-    const [filters, setFilters] = createSignal<Array<string>>([])
+    const [filters, setFilters] = createSignal<Array<number>>([])
     const [locationFilters, setLocationFilters] = createSignal<Array<string>>([])
     const [minorLocationFilters, setMinorLocationFilters] = createSignal<Array<string>>([])
     const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<string>>([])
@@ -106,7 +106,7 @@ export const ServicesView: Component = () => {
         filterPosts();
     }
 
-    const setCategoryFilter = (currentCategory: string) => {
+    const setCategoryFilter = (currentCategory: number) => {
 
         if (filters().includes(currentCategory)) {
             let currentFilters = filters().filter((el) => el !== currentCategory)
@@ -125,12 +125,8 @@ export const ServicesView: Component = () => {
 
             setPosts([])
             setCurrentPosts([])
-
-        } else if (searchPost().length === 0) {
-            //Start each filter with all the posts so that when you switch categories it is filtering ALL posts again
-            setPosts(data)
         } else (
-            setPosts(searchPost())
+            setPosts(data)
         )
 
         const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
