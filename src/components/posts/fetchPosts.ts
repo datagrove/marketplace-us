@@ -283,6 +283,7 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
             } catch(e) {
                 console.error(e);
             }
+        // search
         } else if (categoryFilters.length === 0 && locationFilters.length === 0 && minorLocationFilters.length === 0 && governingLocationFilters.length === 0 && searchString.length > 0) {
             try {
                 const { data: searchPosts, error } = await supabase
@@ -1245,29 +1246,7 @@ export async function fetchFilteredPosts(categoryFilters: any, locationFilters: 
             } catch(e) {
                 console.error(e);
             }
-        // search
-        } else if(categoryFilters.length === 0 && locationFilters.length === 0 && minorLocationFilters.length === 0 && governingLocationFilters.length === 0 && searchString.length > 0) {
-            try {
-                const { data: posts, error } = await supabase
-                .from('providerposts')
-                .select('*')
-                .textSearch('title', searchString)
-
-                if(!posts) {
-                    let noPostsMessage = document.getElementById("no-posts-message");
-                    noPostsMessage?.classList.remove("hidden");
-        
-                    return posts;             
-                }
-                if(error) {
-                    console.log("supabase error: " + error);
-                } else {
-                    return posts;
-                }
-            } catch(e) {
-                console.error(e);
-            }
-        }
+        } 
     } catch(e) { 
         console.error(e)
     }
