@@ -89,7 +89,7 @@ for (let i = 0; i < categoriesData.length; i++) {
 
 interface Props {
     // Define the type for the filterPosts prop
-    filterPosts: (currentCategory: string) => void;
+    filterPosts: (currentCategory: number) => void;
 }
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;

@@ -97,11 +97,7 @@ export const ServicesView: Component = () => {
     })
 
     const searchPosts = async (searchText: string) => {
-        if(searchText === "") {
-            alert(t('messages.noSearchTerm'))
-        } else {
-            setSearchString(searchText)
-        }
+        setSearchString(searchText)
 
         filterPosts();
     }
