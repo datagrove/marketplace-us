@@ -252,6 +252,7 @@ export const ProviderRegistration: Component = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
+    
 
     if (formData.get("ProviderName") === "") {
       formData.set("ProviderName", (firstName() + " " + lastName()));
@@ -262,6 +263,7 @@ export const ProviderRegistration: Component = () => {
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
+      
       // formData.append("language", languageS());
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
@@ -473,8 +475,10 @@ export const ProviderRegistration: Component = () => {
             name="language"
             required
           >
+
+            <option value="">-</option>
           <For each={languageS()}>{(language) => 
-            <option value="">{language.language}</option>
+            <option value={language.id}>{language!.language}</option>
             }</For>
           </select>
           <svg
