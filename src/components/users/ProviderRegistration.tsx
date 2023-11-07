@@ -33,6 +33,10 @@ async function postFormData(formData: FormData) {
   return data;
 }
 
+const english = 1 
+const spanish = 2
+const french = 3
+
 //Component that creates the form and collects the data
 export const ProviderRegistration: Component = () => {
   const [session, setSession] = createSignal<AuthSession | null>(null);
@@ -43,6 +47,7 @@ export const ProviderRegistration: Component = () => {
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
   const [providerName, setProviderName] = createSignal<string>("");
+  const [languageS,setLanguageS] = createSignal<string>("");
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -67,6 +72,19 @@ export const ProviderRegistration: Component = () => {
       } catch (error) {
         console.log("Other error: " + error);
       }
+      try {
+          const { data, error } = await supabase
+            .from("language_each_provider")
+            .select("*")
+            .eq("provider_id",session()!.user.id);
+            console.log(data)
+            
+
+          }catch (error) {
+              console.log("Language error: " + error);
+
+              }
+
 
       //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
       try {
@@ -245,6 +263,7 @@ export const ProviderRegistration: Component = () => {
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
+      // formData.append("language", languageS());
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
       }
@@ -444,7 +463,30 @@ export const ProviderRegistration: Component = () => {
           </div>
         </div>
 
-        <div></div>
+        <div class="flex justify-start">
+          <label for="language" class="text-ptext1 dark:text-ptext1-DM">
+            <span class="text-alert1 dark:text-alert1-DM">* </span>
+            Language:
+          </label>
+          <select
+            id="language"
+            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+            name="language"
+            required
+          >
+            <option value="">-</option>
+          </select>
+          <svg
+            id="isValid"
+            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
+            viewBox="0 0 12 12"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+          </svg>
+        </div>
+
+        <br />
 
         <div class="flex justify-start">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
