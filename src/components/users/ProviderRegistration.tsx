@@ -5,6 +5,7 @@ import {
   createResource,
   createSignal,
   onMount,
+  For,
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -47,7 +48,7 @@ export const ProviderRegistration: Component = () => {
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
   const [providerName, setProviderName] = createSignal<string>("");
-  const [languageS,setLanguageS] = createSignal<string>("");
+  const [languageS,setLanguageS] = createSignal()
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -74,15 +75,13 @@ export const ProviderRegistration: Component = () => {
       }
       try {
           const { data, error } = await supabase
-            .from("language_each_provider")
+            .from("language")
             .select("*")
-            .eq("provider_id",session()!.user.id);
-            console.log(data)
-            
+            setLanguageS(data)
+            console.log(languageS())
 
           }catch (error) {
               console.log("Language error: " + error);
-
               }
 
 
@@ -474,7 +473,9 @@ export const ProviderRegistration: Component = () => {
             name="language"
             required
           >
-            <option value="">-</option>
+          <For each={languageS()}>{(language) => 
+            <option value="">{language.language}</option>
+            }</For>
           </select>
           <svg
             id="isValid"
