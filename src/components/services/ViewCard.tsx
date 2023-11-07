@@ -1,4 +1,5 @@
-import { Component, createSignal, createEffect } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal, createEffect } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { supabase } from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";

@@ -59,6 +59,7 @@ export const ServicesView: Component = () => {
     const [minorLocationFilters, setMinorLocationFilters] = createSignal<Array<string>>([])
     const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<string>>([])
     const [searchString, setSearchString] = createSignal<string>("");
+    const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     // start the page as displaying all posts
     if (!data) {
         let noPostsMessage = document.getElementById("no-posts-message");
@@ -86,8 +87,22 @@ export const ServicesView: Component = () => {
             let noPostsMessage = document.getElementById("no-posts-message");
             noPostsMessage?.classList.remove("hidden")
 
-            setPosts(res)
-            setCurrentPosts(res)
+            setTimeout(() => {
+                noPostsMessage?.classList.add("hidden")
+            }, 2000);
+
+            let allPosts = await allFilters.fetchAllPosts();
+            console.log("allPosts in createEffect:" + Array.isArray(allPosts))
+
+            allPosts?.map(post => {
+                post.category = post.service_category
+            })
+
+            setPosts(allPosts)
+            setCurrentPosts(allPosts)
+
+            // setPosts([])
+            // setCurrentPosts([])
         } else {
             let noPostsMessage = document.getElementById("no-posts-message");
             noPostsMessage?.classList.add("hidden")
@@ -121,9 +136,9 @@ export const ServicesView: Component = () => {
 
             setPosts([])
             setCurrentPosts([])
-        } else (
+        } else {
             setPosts(data)
-        )
+        }
 
         const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
 
@@ -302,8 +317,8 @@ export const ServicesView: Component = () => {
                 </div>
                 
                 <div class="md:flex-1 w-11/12 items-center">
-                    <div id="no-posts-message" class="hidden">
-                        <h1>{ (t('messages.noPosts')) }</h1>
+                    <div id="no-posts-message" class="hidden py-2 my-1 bg-btn1 dark:bg-btn1-DM rounded">
+                        <h1 class="text-btn1Text dark:text-btn1Text-DM">{ (t('messages.noPostsSearch')) }</h1>
                     </div>
                     <ViewCard posts={currentPosts()} />
                 </div>

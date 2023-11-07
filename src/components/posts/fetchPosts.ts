@@ -41,3 +41,65 @@ export async function fetchFilteredPosts(categoryFilters: Array<number>, locatio
         console.error(e)
     }
 } 
+
+export async function fetchAllPosts() {
+    try {
+        const { data: allPosts, error } = await supabase.from("providerposts").select("*")
+
+        if(error) {
+            console.log("supabase error: " + error.message);
+        } else {
+                await allPosts.map(post => {
+                    // console.log("service_category: ", post.service_category)
+                    // post.service_category = post.service_category.toString()
+                switch(post.service_category) {
+                    case 1:
+                        post.service_category = "Gardening"
+                        break
+                    case 2:
+                        post.service_category = "Beauty"
+                        break
+                    case 3:
+                        post.service_category = "Construction"
+                        break
+                    case 4:
+                        post.service_category = "Computer"
+                        break
+                    case 5:
+                        post.service_category = "Automotive"
+                        break
+                    case 6:
+                        post.service_category = "Creative"
+                        break
+                    case 7:
+                        post.service_category = "Financial"
+                        break
+                    case 8:
+                        post.service_category = "Cleaning"
+                        break
+                    case 9:
+                        post.service_category = "Pet"
+                        break
+                    case 10:
+                        post.service_category = "Legal"
+                        break
+                    case 11:
+                        post.service_category = "Health"
+                        break
+                    case 12:
+                        post.service_category = "Labor"
+                        break
+                    case 13:
+                        post.service_category = "Travel"
+                        break
+                }
+            })
+
+            console.log("allPosts in fetchAllPosts: ", allPosts)
+
+            return allPosts
+        }
+    } catch(e) {
+        console.error(e);
+    }
+}

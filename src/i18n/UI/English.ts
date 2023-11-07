@@ -109,6 +109,7 @@ export const English = {
     mustSignIn: 'You must be signed in to view available services.',
     profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
     noClient: "No Client found.",
+    noPostsSearch: "No posts match this specific search - please try a different filter or key word",
   },
 
   formLabels: {
