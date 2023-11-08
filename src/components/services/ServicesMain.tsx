@@ -89,17 +89,16 @@ export const ServicesView: Component = () => {
 
             setTimeout(() => {
                 noPostsMessage?.classList.add("hidden")
-            }, 2000);
+            }, 3000);
 
             let allPosts = await allFilters.fetchAllPosts();
-            console.log("allPosts in createEffect:" + Array.isArray(allPosts))
 
             allPosts?.map(post => {
                 post.category = post.service_category
             })
 
-            setPosts(allPosts)
-            setCurrentPosts(allPosts)
+            setPosts(allPosts!)
+            setCurrentPosts(allPosts!)
 
             // setPosts([])
             // setCurrentPosts([])
