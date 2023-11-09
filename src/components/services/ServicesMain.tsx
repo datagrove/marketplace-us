@@ -93,8 +93,7 @@ export const ServicesView: Component = () => {
                 clearAllFilters();
             }, 3000);
 
-            // Make the fetch with no values another option would be to fetch all posts (without the switch statement)
-            let allPosts = await allFilters.fetchFilteredPosts([], [], [], [], '');
+            let allPosts = await allFilters.fetchAllPosts();
 
             //Add the categories to the posts in the current language
             allPosts?.map(item => {
@@ -109,8 +108,6 @@ export const ServicesView: Component = () => {
             setPosts(allPosts!)
             setCurrentPosts(allPosts!)
 
-            // setPosts([])
-            // setCurrentPosts([])
         } else {
             let noPostsMessage = document.getElementById("no-posts-message");
             noPostsMessage?.classList.add("hidden")
@@ -220,15 +217,15 @@ export const ServicesView: Component = () => {
         })
         
         majorMuniCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.checked = false;
+            if(checkbox && checkbox.checked) checkbox.click();
         })
 
         minorMuniCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.checked = false;
+            if(checkbox && checkbox.checked) checkbox.click();
         })
 
         districtCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.checked = false;
+            if(checkbox && checkbox.checked) checkbox.click();
         })
 
         setSearchPost([]);
