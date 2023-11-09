@@ -123,8 +123,6 @@ export const CategoryCarousel: Component<Props> = (props) => {
                                         currBtn.classList.remove('selected')
                                     }
 
-                                    console.log("color scheme: ", light, dark)
-
                                 }}
                             >
                                 <div class="bg-iconbg1 dark:bg-iconbg1-DM rounded-full">

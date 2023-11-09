@@ -1,333 +1,380 @@
-import type { Component } from 'solid-js'
-import { createSignal, createEffect } from 'solid-js'
-import { supabase } from '../../lib/supabaseClient'
-import { CategoryCarousel} from './CategoryCarousel'
-import { ViewCard } from './ViewCard';
-import { LocationFilter } from './LocationFilter';
-import { SearchBar } from './SearchBar'
-import { ui } from '../../i18n/ui'
-import type { uiObject } from '../../i18n/uiType';
+import type { Component } from "solid-js";
+import { createSignal, createEffect } from "solid-js";
+import { supabase } from "../../lib/supabaseClient";
+import { CategoryCarousel } from "./CategoryCarousel";
+import { ViewCard } from "./ViewCard";
+import { LocationFilter } from "./LocationFilter";
+import { SearchBar } from "./SearchBar";
+import { ui } from "../../i18n/ui";
+import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import * as allFilters from '../posts/fetchPosts';
+import * as allFilters from "../posts/fetchPosts";
+import { F } from "dist/_astro/web.fcb3b003";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject
-const productCategories = values.productCategoryInfo.categories
+const values = ui[lang] as uiObject;
+const productCategories = values.productCategoryInfo.categories;
 
 const { data: user, error: userError } = await supabase.auth.getSession();
-if(userError){
-    console.log(userError)
+if (userError) {
+  console.log(userError);
 }
 if (user.session === null || user.session === undefined) {
-    alert(t('messages.signIn'));
-    location.href = `/${lang}/login`;
+  alert(t("messages.signIn"));
+  location.href = `/${lang}/login`;
 }
 
-const { data, error } = await supabase.from('providerposts').select('*');
+const { data, error } = await supabase.from("providerposts").select("*");
 
-data?.map(item => {
-    productCategories.forEach(productCategories => {
-        if (item.service_category.toString() === productCategories.id) {
-            item.category = productCategories.name
-        }
-    })
-    delete item.service_category
-})
+data?.map((item) => {
+  productCategories.forEach((productCategories) => {
+    if (item.service_category.toString() === productCategories.id) {
+      item.category = productCategories.name;
+    }
+  });
+  delete item.service_category;
+});
 
 interface ProviderPost {
-    content: string;
-    id: number;
-    category: string;
-    title: string;
-    provider_name: string;
-    major_municipality: string;
-    minor_municipality: string;
-    governing_district: string;
-    user_id: string;
-    image_urls: string;
+  content: string;
+  id: number;
+  category: string;
+  title: string;
+  provider_name: string;
+  major_municipality: string;
+  minor_municipality: string;
+  governing_district: string;
+  user_id: string;
+  image_urls: string;
 }
 
 export const ServicesView: Component = () => {
-    const [posts, setPosts] = createSignal<Array<ProviderPost>>([])
-    const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([])
-    const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([])
-    const [filters, setFilters] = createSignal<Array<number>>([])
-    const [locationFilters, setLocationFilters] = createSignal<Array<string>>([])
-    const [minorLocationFilters, setMinorLocationFilters] = createSignal<Array<string>>([])
-    const [governingLocationFilters, setGoverningLocationFilters] = createSignal<Array<string>>([])
-    const [searchString, setSearchString] = createSignal<string>("");
-    const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
-    // start the page as displaying all posts
-    if (!data) {
-        let noPostsMessage = document.getElementById("no-posts-message");
-        noPostsMessage?.classList.remove("hidden")
+  const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
+  const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([]);
+  const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
+  const [filters, setFilters] = createSignal<Array<number>>([]);
+  const [locationFilters, setLocationFilters] = createSignal<Array<string>>([]);
+  const [minorLocationFilters, setMinorLocationFilters] = createSignal<
+    Array<string>
+  >([]);
+  const [governingLocationFilters, setGoverningLocationFilters] = createSignal<
+    Array<string>
+  >([]);
+  const [searchString, setSearchString] = createSignal<string>("");
+  const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
 
-        setPosts([])
-        setCurrentPosts([])
+  // start the page as displaying all posts
+  if (!data) {
+    let noPostsMessage = document.getElementById("no-posts-message");
+    noPostsMessage?.classList.remove("hidden");
+
+    setPosts([]);
+    setCurrentPosts([]);
+  } else {
+    setPosts(data);
+    setCurrentPosts(data);
+  }
+
+  const searchPosts = async (searchText: string) => {
+    setSearchString(searchText);
+
+    filterPosts();
+  };
+
+  const setCategoryFilter = (currentCategory: number) => {
+    if (filters().includes(currentCategory)) {
+      let currentFilters = filters().filter((el) => el !== currentCategory);
+      setFilters(currentFilters);
     } else {
-        setPosts(data)
-        setCurrentPosts(data)  
+      setFilters([...filters(), currentCategory]);
     }
 
-    createEffect(async() => {
-        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString());
+    filterPosts();
+  };
 
-        if(res === null || res === undefined) {
-            let noPostsMessage = document.getElementById("no-posts-message");
-            noPostsMessage?.classList.remove("hidden")
+  let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
-            setPosts([])
-            setCurrentPosts([])
+  const filterPosts = async () => {
 
-            console.error()
-        } else if(Object.keys(res).length === 0) {
-            let noPostsMessage = document.getElementById("no-posts-message");
-            noPostsMessage?.classList.remove("hidden")
+    const noPostsMessage = document.getElementById("no-posts-message");
 
-            setTimeout(() => {
-                noPostsMessage?.classList.add("hidden")
-                //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-                clearAllFilters();
-            }, 3000);
+    const res = await allFilters.fetchFilteredPosts(
+      filters(),
+      locationFilters(),
+      minorLocationFilters(),
+      governingLocationFilters(),
+      searchString()
+    );
 
-            let allPosts = await allFilters.fetchAllPosts();
+    if (res === null || res === undefined) {
+      noPostsMessage?.classList.remove("hidden");
 
-            //Add the categories to the posts in the current language
-            allPosts?.map(item => {
-                productCategories.forEach(productCategories => {
-                    if (item.service_category.toString() === productCategories.id) {
-                        item.category = productCategories.name
-                    }
-                })
-                delete item.service_category
-            })
 
-            setPosts(allPosts!)
-            setCurrentPosts(allPosts!)
+      setPosts([]);
+      setCurrentPosts([]);
+      console.error();
 
-        } else {
-            let noPostsMessage = document.getElementById("no-posts-message");
-            noPostsMessage?.classList.add("hidden")
+    } else if (Object.keys(res).length === 0) {
+      noPostsMessage?.classList.remove("hidden");
 
-            setPosts(res)
-        }
-    })
+      setTimeout(() => {
+        noPostsMessage?.classList.add("hidden");
+      }, 3000);
 
-    const searchPosts = async (searchText: string) => {
-        setSearchString(searchText)
+      timeouts.push(setTimeout(() => {
+        //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+        clearAllFilters();
+      }, 3000));
 
-        filterPosts();
-    }
 
-    const setCategoryFilter = (currentCategory: number) => {
+      let allPosts = await allFilters.fetchAllPosts();
 
-        if (filters().includes(currentCategory)) {
-            let currentFilters = filters().filter((el) => el !== currentCategory)
-            setFilters(currentFilters)
-        } else {
-            setFilters([...filters(), currentCategory])
-        }
+      //Add the categories to the posts in the current language
+      allPosts?.map((item) => {
+        productCategories.forEach((productCategories) => {
+          if (item.service_category.toString() === productCategories.id) {
+            item.category = productCategories.name;
+          }
+        });
+        delete item.service_category;
+      });
 
-        filterPosts() 
-    }
-
-    const filterPosts = async() => {
-        if (!data) {
-            let noPostsMessage = document.getElementById("no-posts-message");
-            noPostsMessage?.classList.remove("hidden")
-
-            setPosts([])
-            setCurrentPosts([])
-        } else {
-            setPosts(data)
-        }
-
-        const res = await allFilters.fetchFilteredPosts(filters(), locationFilters(), minorLocationFilters(), governingLocationFilters(), searchString())
-
-        if(res === null || res === undefined) {
-            console.error()
-        } else {
-            res.map(post => {
-                productCategories.forEach(productCategory => {
-                    if(post.service_category.toString() === productCategory.id) {
-                        post.category = productCategory.name
-                    }
-                })
-                delete post.service_category
-            })
-
-            setPosts(res)
-            setCurrentPosts(res)
-        }
-    }
-
-    const filterPostsByMajorMunicipality = (location: string) => {
-        if (locationFilters().includes(location)) {
-            let currentLocationFilters = locationFilters().filter((el) => el !== location)
-            setLocationFilters(currentLocationFilters)
-        } else {
-            setLocationFilters([...locationFilters(), location])
-        }
-
-        filterPosts()
-    }
-
-    const filterPostsByMinorMunicipality = (location: string) => {
-        if (minorLocationFilters().includes(location)) {
-            let currentLocationFilters = minorLocationFilters().filter((el) => el !== location)
-            setMinorLocationFilters(currentLocationFilters)
-        } else {
-            setMinorLocationFilters([...minorLocationFilters(), location])
-        }
-
-        filterPosts()
-    }
-
-    const filterPostsByGoverningDistrict = (location: string) => {
-        if (governingLocationFilters().includes(location)) {
-            let currentLocationFilters = governingLocationFilters().filter((el) => el !== location)
-            setGoverningLocationFilters(currentLocationFilters)
-        } else {
-            setGoverningLocationFilters([...governingLocationFilters(), location])
-        }
-
-        filterPosts()
-    }
-
-    const clearAllFilters = () => {
-        let searchInput = document.getElementById("search") as HTMLInputElement;
-        let selectedCategories = document.querySelectorAll(".selected");
-        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
-        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
-        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
-
-        if(searchInput.value !== null ) {
-            searchInput.value = "";
-        }
-
-        selectedCategories.forEach((category) => {
-            category.classList.remove("selected");
-        })
-        
-        selectedCategories.forEach((category) => {
-            category.classList.remove("selected");
-        })
-        
-        majorMuniCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.click();
-        })
-
-        minorMuniCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.click();
-        })
-
-        districtCheckboxes.forEach((checkbox) => {
-            if(checkbox && checkbox.checked) checkbox.click();
-        })
-
-        setSearchPost([]);
-        setSearchString("");
-        setFilters([]);
-        setLocationFilters([]);
-        setMinorLocationFilters([]);
-        setGoverningLocationFilters([]);
-        filterPosts();
-    }
-
-    const clearServiceCategories = () => {
-        let selectedCategories = document.querySelectorAll(".selected");
-        
-        selectedCategories.forEach((category) => {
-            category.classList.remove("selected");
-        })
-        
-        setFilters([]);
-        filterPosts();
-    }
-
-    const clearMajorMunicipality = () => {
-        const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
-        
-        majorMuniCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.click();
-        })
+      setPosts(allPosts!);
+      setCurrentPosts(allPosts!);
+    } else {
     
-        setLocationFilters([]);
-        filterPosts();
+      for (let i = 0; i < timeouts.length; i++) {
+        clearTimeout(timeouts[i]);
+      }
+
+      timeouts = [];
+
+      res.map((post) => {
+        productCategories.forEach((productCategory) => {
+          if (post.service_category.toString() === productCategory.id) {
+            post.category = productCategory.name;
+          }
+        });
+        delete post.service_category;
+      });
+
+      setPosts(res);
+      setCurrentPosts(res);
+    }
+  };
+
+  const filterPostsByMajorMunicipality = (location: string) => {
+    if (locationFilters().includes(location)) {
+      let currentLocationFilters = locationFilters().filter(
+        (el) => el !== location
+      );
+      setLocationFilters(currentLocationFilters);
+    } else {
+      setLocationFilters([...locationFilters(), location]);
     }
 
-    const clearMinorMunicipality = () => {
-        const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
-        
-        minorMuniCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.click();
-        })
-    
-        setMinorLocationFilters([]);
-        filterPosts();
+    filterPosts();
+  };
+
+  const filterPostsByMinorMunicipality = (location: string) => {
+    if (minorLocationFilters().includes(location)) {
+      let currentLocationFilters = minorLocationFilters().filter(
+        (el) => el !== location
+      );
+      setMinorLocationFilters(currentLocationFilters);
+    } else {
+      setMinorLocationFilters([...minorLocationFilters(), location]);
     }
 
-    const clearDistrict = () => {
-        const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
-    
-        districtCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.click();
-        })
+    filterPosts();
+  };
 
-        setGoverningLocationFilters([]);
-        filterPosts();
+  const filterPostsByGoverningDistrict = (location: string) => {
+    if (governingLocationFilters().includes(location)) {
+      let currentLocationFilters = governingLocationFilters().filter(
+        (el) => el !== location
+      );
+      setGoverningLocationFilters(currentLocationFilters);
+    } else {
+      setGoverningLocationFilters([...governingLocationFilters(), location]);
     }
 
-    return (
-        <div class=''>
-            <div>
-                <SearchBar search={searchPosts} />
-                {/* <SearchBar search={ searchString } /> */}
-            </div>
-            
-            <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
-                <button class="clearBtnRectangle" onclick={ clearAllFilters } aria-label={t('clearFilters.filterButtons.0.ariaLabel')}>
-                    <p class="text-xs">{t('clearFilters.filterButtons.0.text')}</p>
-                </button>
-                
-                <button class="clearBtnRectangle" onclick={ clearServiceCategories } aria-label={t('clearFilters.filterButtons.1.ariaLabel')}>
-                    <p class="text-xs">{t('clearFilters.filterButtons.1.text')}</p>
-                </button>
+    filterPosts();
+  };
 
-                <button class="clearBtnRectangle" onclick={ clearMajorMunicipality } aria-label={t('clearFilters.filterButtons.2.ariaLabel')}>
-                    <p class="text-xs">{t('clearFilters.filterButtons.2.text')}</p>
-                </button>
+  const clearAllFilters = () => {
+    let searchInput = document.getElementById("search") as HTMLInputElement;
+    let selectedCategories = document.querySelectorAll(".selected");
+    const majorMuniCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].major-muni"
+    ) as NodeListOf<HTMLInputElement>;
+    const minorMuniCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].minor-muni"
+    ) as NodeListOf<HTMLInputElement>;
+    const districtCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].district"
+    ) as NodeListOf<HTMLInputElement>;
 
-                <button class="clearBtnRectangle" onclick={ clearMinorMunicipality } aria-label={t('clearFilters.filterButtons.3.ariaLabel')}>
-                    <p class="text-xs">{t('clearFilters.filterButtons.3.text')}</p>
-                </button>
+    if (searchInput.value !== null) {
+      searchInput.value = "";
+    }
 
-                <button class="clearBtnRectangle" onclick={ clearDistrict } aria-label={t('clearFilters.filterButtons.4.ariaLabel')}>
-                    <p class="text-xs">{t('clearFilters.filterButtons.4.text')}</p>
-                </button>
-            </div>
+    selectedCategories.forEach((category) => {
+      category.classList.remove("selected");
+    });
 
-            <div>
-                <CategoryCarousel
-                    filterPosts={setCategoryFilter}
-                />
-            </div>
+    selectedCategories.forEach((category) => {
+      category.classList.remove("selected");
+    });
 
-            <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
-                <div class="md:w-48 md:mr-4 w-11/12">
-                    <LocationFilter filterPostsByMajorMunicipality={filterPostsByMajorMunicipality} filterPostsByMinorMunicipality={filterPostsByMinorMunicipality} filterPostsByGoverningDistrict={filterPostsByGoverningDistrict} />
-                </div>
-                
-                <div class="md:flex-1 w-11/12 items-center">
-                    <div id="no-posts-message" class="hidden py-2 my-1 bg-btn1 dark:bg-btn1-DM rounded">
-                        <h1 class="text-btn1Text dark:text-btn1Text-DM">{ (t('messages.noPostsSearch')) }</h1>
-                    </div>
-                    <ViewCard posts={currentPosts()} />
-                </div>
-            </div>
+    majorMuniCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    minorMuniCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    districtCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    setSearchPost([]);
+    setSearchString("");
+    setFilters([]);
+    setLocationFilters([]);
+    setMinorLocationFilters([]);
+    setGoverningLocationFilters([]);
+    filterPosts();
+  };
+
+  const clearServiceCategories = () => {
+    let selectedCategories = document.querySelectorAll(".selected");
+
+    selectedCategories.forEach((category) => {
+      category.classList.remove("selected");
+    });
+
+    setFilters([]);
+    filterPosts();
+  };
+
+  const clearMajorMunicipality = () => {
+    const majorMuniCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].major-muni"
+    ) as NodeListOf<HTMLInputElement>;
+
+    majorMuniCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    setLocationFilters([]);
+    filterPosts();
+  };
+
+  const clearMinorMunicipality = () => {
+    const minorMuniCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].minor-muni"
+    ) as NodeListOf<HTMLInputElement>;
+
+    minorMuniCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    setMinorLocationFilters([]);
+    filterPosts();
+  };
+
+  const clearDistrict = () => {
+    const districtCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].district"
+    ) as NodeListOf<HTMLInputElement>;
+
+    districtCheckboxes.forEach((checkbox) => {
+      if (checkbox && checkbox.checked) checkbox.click();
+    });
+
+    setGoverningLocationFilters([]);
+    filterPosts();
+  };
+
+  return (
+    <div class="">
+      <div>
+        <SearchBar search={searchPosts} />
+        {/* <SearchBar search={ searchString } /> */}
+      </div>
+
+      <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
+        <button
+          class="clearBtnRectangle"
+          onclick={clearAllFilters}
+          aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
+        >
+          <p class="text-xs">{t("clearFilters.filterButtons.0.text")}</p>
+        </button>
+
+        <button
+          class="clearBtnRectangle"
+          onclick={clearServiceCategories}
+          aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
+        >
+          <p class="text-xs">{t("clearFilters.filterButtons.1.text")}</p>
+        </button>
+
+        <button
+          class="clearBtnRectangle"
+          onclick={clearMajorMunicipality}
+          aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
+        >
+          <p class="text-xs">{t("clearFilters.filterButtons.2.text")}</p>
+        </button>
+
+        <button
+          class="clearBtnRectangle"
+          onclick={clearMinorMunicipality}
+          aria-label={t("clearFilters.filterButtons.3.ariaLabel")}
+        >
+          <p class="text-xs">{t("clearFilters.filterButtons.3.text")}</p>
+        </button>
+
+        <button
+          class="clearBtnRectangle"
+          onclick={clearDistrict}
+          aria-label={t("clearFilters.filterButtons.4.ariaLabel")}
+        >
+          <p class="text-xs">{t("clearFilters.filterButtons.4.text")}</p>
+        </button>
+      </div>
+
+      <div>
+        <CategoryCarousel filterPosts={setCategoryFilter} />
+      </div>
+
+      <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
+        <div class="md:w-48 md:mr-4 w-11/12">
+          <LocationFilter
+            filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
+            filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
+            filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
+          />
         </div>
-    )
-}
+
+        <div class="md:flex-1 w-11/12 items-center">
+          <div
+            id="no-posts-message"
+            class="hidden py-2 my-1 bg-btn1 dark:bg-btn1-DM rounded"
+          >
+            <h1 class="text-btn1Text dark:text-btn1Text-DM">
+              {t("messages.noPostsSearch")}
+            </h1>
+          </div>
+          <ViewCard posts={currentPosts()} />
+        </div>
+      </div>
+    </div>
+  );
+};
