@@ -252,7 +252,7 @@ export const ServicesView: Component = () => {
         const majorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].major-muni") as NodeListOf<HTMLInputElement>;
         
         majorMuniCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.checked = false;
+          if(checkbox && checkbox.checked) checkbox.click();
         })
     
         setLocationFilters([]);
@@ -263,7 +263,7 @@ export const ServicesView: Component = () => {
         const minorMuniCheckboxes = document.querySelectorAll("input[type='checkbox'].minor-muni") as NodeListOf<HTMLInputElement>;
         
         minorMuniCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.checked = false;
+          if(checkbox && checkbox.checked) checkbox.click();
         })
     
         setMinorLocationFilters([]);
@@ -274,7 +274,7 @@ export const ServicesView: Component = () => {
         const districtCheckboxes = document.querySelectorAll("input[type='checkbox'].district") as NodeListOf<HTMLInputElement>;
     
         districtCheckboxes.forEach((checkbox) => {
-          if(checkbox && checkbox.checked) checkbox.checked = false;
+          if(checkbox && checkbox.checked) checkbox.click();
         })
 
         setGoverningLocationFilters([]);
