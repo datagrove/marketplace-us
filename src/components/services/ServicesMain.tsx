@@ -89,12 +89,21 @@ export const ServicesView: Component = () => {
 
             setTimeout(() => {
                 noPostsMessage?.classList.add("hidden")
+                //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+                clearAllFilters();
             }, 3000);
 
-            let allPosts = await allFilters.fetchAllPosts();
+            // Make the fetch with no values another option would be to fetch all posts (without the switch statement)
+            let allPosts = await allFilters.fetchFilteredPosts([], [], [], [], '');
 
-            allPosts?.map(post => {
-                post.category = post.service_category
+            //Add the categories to the posts in the current language
+            allPosts?.map(item => {
+                productCategories.forEach(productCategories => {
+                    if (item.service_category.toString() === productCategories.id) {
+                        item.category = productCategories.name
+                    }
+                })
+                delete item.service_category
             })
 
             setPosts(allPosts!)

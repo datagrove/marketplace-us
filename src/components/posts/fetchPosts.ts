@@ -7,7 +7,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 // one giant filter function that includes the logic for all combinations 
-export async function fetchFilteredPosts(categoryFilters: Array<number>, locationFilters: any, minorLocationFilters: any, governingLocationFilters: any, searchString: string) {
+export async function fetchFilteredPosts(categoryFilters: Array<number>, locationFilters: Array<string>, minorLocationFilters: Array<string>, governingLocationFilters: Array<string>, searchString: string) {
     try {
             let query = supabase.from("providerposts").select("*");
             if(categoryFilters.length !== 0) {    
@@ -49,51 +49,51 @@ export async function fetchAllPosts() {
         if(error) {
             console.log("supabase error: " + error.message);
         } else {
-                await allPosts.map(post => {
-                    // console.log("service_category: ", post.service_category)
-                    // post.service_category = post.service_category.toString()
-                switch(post.service_category) {
-                    case 1:
-                        post.service_category = "Gardening"
-                        break
-                    case 2:
-                        post.service_category = "Beauty"
-                        break
-                    case 3:
-                        post.service_category = "Construction"
-                        break
-                    case 4:
-                        post.service_category = "Computer"
-                        break
-                    case 5:
-                        post.service_category = "Automotive"
-                        break
-                    case 6:
-                        post.service_category = "Creative"
-                        break
-                    case 7:
-                        post.service_category = "Financial"
-                        break
-                    case 8:
-                        post.service_category = "Cleaning"
-                        break
-                    case 9:
-                        post.service_category = "Pet"
-                        break
-                    case 10:
-                        post.service_category = "Legal"
-                        break
-                    case 11:
-                        post.service_category = "Health"
-                        break
-                    case 12:
-                        post.service_category = "Labor"
-                        break
-                    case 13:
-                        post.service_category = "Travel"
-                        break
-                }
-            })
+            //     await allPosts.map(post => {
+            //         // console.log("service_category: ", post.service_category)
+            //         // post.service_category = post.service_category.toString()
+            //     switch(post.service_category) {
+            //         case 1:
+            //             post.service_category = "Gardening"
+            //             break
+            //         case 2:
+            //             post.service_category = "Beauty"
+            //             break
+            //         case 3:
+            //             post.service_category = "Construction"
+            //             break
+            //         case 4:
+            //             post.service_category = "Computer"
+            //             break
+            //         case 5:
+            //             post.service_category = "Automotive"
+            //             break
+            //         case 6:
+            //             post.service_category = "Creative"
+            //             break
+            //         case 7:
+            //             post.service_category = "Financial"
+            //             break
+            //         case 8:
+            //             post.service_category = "Cleaning"
+            //             break
+            //         case 9:
+            //             post.service_category = "Pet"
+            //             break
+            //         case 10:
+            //             post.service_category = "Legal"
+            //             break
+            //         case 11:
+            //             post.service_category = "Health"
+            //             break
+            //         case 12:
+            //             post.service_category = "Labor"
+            //             break
+            //         case 13:
+            //             post.service_category = "Travel"
+            //             break
+            //     }
+            // })
 
             console.log("allPosts in fetchAllPosts: ", allPosts)
 
