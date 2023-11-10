@@ -109,6 +109,7 @@ export const Spanish = {
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
     profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
     noClient: "No se encontró ninguna cliente.",
+    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
   },
 
   formLabels: {

@@ -108,6 +108,7 @@ export interface uiObject {
     mustSignIn: string,
     profileEdits: string,
     noClient: string,
+    noPostsSearch: string,
   },
 
   formLabels: {
