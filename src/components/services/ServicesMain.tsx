@@ -9,7 +9,6 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import * as allFilters from "../posts/fetchPosts";
-import { F } from "dist/_astro/web.fcb3b003";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
