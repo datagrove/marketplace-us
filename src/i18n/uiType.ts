@@ -200,6 +200,18 @@ export interface uiObject {
     createUserError: string,
   },
 
+  socialModal: {
+    shareService: string,
+    twitterX: string,
+    facebook: string,
+    WhatsApp: string,
+    email: string,
+    copyLink: string,
+    embedLink: string,
+    textLink: string,
+    disclaimer: string,
+  },
+
   ariaLabels: {
     todo: string,
     logo: string,
