@@ -107,10 +107,10 @@ export const ViewCard: Component<Props> = (props) => {
                   id="cardContent"
                   class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
-                  <div class=" w-full">
+                  <div class="w-full">
                     <div class="grid grid-cols-4">
-                      <div class="relative col-span-4 w-full flex align-top">
-                        <div class=" w-full">
+                      <div class="relative col-span-3 w-full flex align-top">
+                        <div class="w-full">
                           <div class="truncate inline-block max-w-[58%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
                             {post.major_municipality}/{post.minor_municipality}/
                             {post.governing_district}
@@ -119,14 +119,16 @@ export const ViewCard: Component<Props> = (props) => {
                             {post.category}
                           </div>
                         </div>
-                        <div class="inline-block ml-2">
+                      </div>
+                      <div class="relative col-span-1 w-full flex align-top justify-end">
+                        <div class="inline-block">
                           <DeletePostButton
                             id={post.id}
                             userId={post.user_id}
                             postImage={post.image_urls}
                           />
                         </div>
-                        <div class="inline-block ml-2">
+                        <div class="inline-block">
                           <SocialModal
                             id={Number(post.id)}
                             title={post.title}
