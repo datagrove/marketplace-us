@@ -108,8 +108,9 @@ export const French = {
     todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+    noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
   },
-
+  
   formLabels: {
     title: "Titre",
     serviceCategory: "Catégorie de services",
