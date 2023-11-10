@@ -135,7 +135,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
                             <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
                         </svg>
-                        <p class="hidden md:inline text-ptext2 dark:text-ptext2-DM font-light text-xs">{t("socialModal.twitterX")}</p>
+                        <p class="hidden md:inline text-ptext2 dark:text-ptext2-DM font-light text-xs px-1">{t("socialModal.twitterX")}</p>
                     </button>
 
                     <button id="button--facebook" class="fb-share-button socialBtn flex justify-start rounded font-bold text-icon1 dark:text-icon1-DM" title="Share to Facebook - LANG!" onclick={ (e) => facebookShare(e) }>
@@ -143,7 +143,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M18 2a1 1 0 0 1 .993 .883l.007 .117v4a1 1 0 0 1 -.883 .993l-.117 .007h-3v1h3a1 1 0 0 1 .991 1.131l-.02 .112l-1 4a1 1 0 0 1 -.858 .75l-.113 .007h-2v6a1 1 0 0 1 -.883 .993l-.117 .007h-4a1 1 0 0 1 -.993 -.883l-.007 -.117v-6h-2a1 1 0 0 1 -.993 -.883l-.007 -.117v-4a1 1 0 0 1 .883 -.993l.117 -.007h2v-1a6 6 0 0 1 5.775 -5.996l.225 -.004h3z" stroke-width="0" fill="currentColor"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.facebook")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.facebook")}</p>
                     </button>
 
 
@@ -153,7 +153,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9"></path>
                             <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.WhatsApp")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.WhatsApp")}</p>
                     </button>
 
 
@@ -167,7 +167,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M15 18h6"></path>
                             <path d="M18 15l3 3l-3 3"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.email")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.email")}</p>
                     </button>
 
                     <button id="button--link" class="link-share-button socialBtn flex justify-start rounded font-bold text-icon1 dark:text-icon1-DM" title="Copy Link" onclick={ (e) => linkShare(e) }>
@@ -176,7 +176,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M8 8m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z"></path>
                             <path d="M16 8v-2a2 2 0 0 0 -2 -2h-8a2 2 0 0 0 -2 2v8a2 2 0 0 0 2 2h2"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.copyLink")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.copyLink")}</p>
                     </button>
 
                     <button id="button--embed" class="embed-share-button socialBtn flex justify-start rounded font-bold text-icon1 dark:text-icon1-DM" title="Embed" onclick={ (e) => embedShare(e) }>
@@ -186,7 +186,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M17 8l4 4l-4 4"></path>
                             <path d="M14 4l-4 16"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.embedLink")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.embedLink")}</p>
                     </button>
 
                     <button id="button--text" class="text-share-button socialBtn flex justify-start rounded font-bold text-icon1 dark:text-icon1-DM" title="Text" onclick={ (e) => textShare(e) }>
@@ -196,7 +196,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
                             <path d="M15 16v4a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1h2"></path>
                             <path d="M10 18v.01"></path>
                         </svg>
-                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light">{t("socialModal.textLink")}</p>
+                        <p class="hidden md:inline text-xs text-ptext2 dark:text-ptext2-DM font-light px-1">{t("socialModal.textLink")}</p>
                     </button>
                 </div>
             </div>
