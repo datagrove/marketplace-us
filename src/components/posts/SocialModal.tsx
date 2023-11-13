@@ -49,6 +49,7 @@ const SocialModal: Component<Post> = function (props) {
               class="rounded flex font-bold pb-1 px-1 pt-1"
               type="button"
               onClick={(e) => openModal(e)}
+              aria-label={t("socialModal.shareButton")}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +74,7 @@ const SocialModal: Component<Post> = function (props) {
           class="rounded flex font-bold pb-1 px-1 pt-1"
           type="button"
           onClick={closeModal}
+          aria-label={t("socialModal.closeShareMenu")}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
