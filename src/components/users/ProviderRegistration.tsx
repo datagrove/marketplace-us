@@ -49,6 +49,7 @@ export const ProviderRegistration: Component = () => {
   const [lastName, setLastName] = createSignal<string>("");
   const [providerName, setProviderName] = createSignal<string>("");
   const [languageS,setLanguageS] = createSignal()
+  const [languagePick,setLanguagePick] = createSignal()
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -250,6 +251,7 @@ export const ProviderRegistration: Component = () => {
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
+    console.log(languageS())
 
     const formData = new FormData(e.target as HTMLFormElement);
     
@@ -263,6 +265,7 @@ export const ProviderRegistration: Component = () => {
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
+      formData.append("language", languagePick());
       
       // formData.append("language", languageS());
       if (imageUrl() !== null) {
@@ -474,11 +477,12 @@ export const ProviderRegistration: Component = () => {
             class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="language"
             required
+            multiple
+            oninput={(e)=>setLanguagePick(e.target.value)}
           >
-
             <option value="">-</option>
           <For each={languageS()}>{(language) => 
-            <option value={language.id}>{language!.language}</option>
+            <option   value={language.id}>{language!.language}</option>
             }</For>
           </select>
           <svg

@@ -7,6 +7,7 @@ import {
   onMount,
   onCleanup,
   createResource,
+  For,
 } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
@@ -37,7 +38,7 @@ interface Provider {
   first_name: string;
   last_name: string;
   country: string | null;
-  language_spoken:number | null;
+  language:number[] | null;
 }
 
 async function postFormData(formData: FormData) {
@@ -68,6 +69,7 @@ export const ProviderProfileView: Component = () => {
   >();
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
+  const [languageSpoken , setLanguageSpoken] = createSignal<string[]>(["1"]);
 
   const setSize = (e: Event) => {
     if (window.innerWidth <= 767) {
@@ -118,6 +120,7 @@ export const ProviderProfileView: Component = () => {
           .eq("user_id", user_id);
 
         console.log(data);
+        
 
         if (error) {
           console.log(error);
@@ -126,6 +129,29 @@ export const ProviderProfileView: Component = () => {
           location.href = `/${lang}/services`;
         } else {
           setProvider(data[0]);
+          console.log(provider())
+
+            let languageArray = provider().language_spoken;
+            let language0 = languageSpoken()
+            languageArray?.map((language:number) => {
+                if(language == 1){
+                    language0.push("English")
+                }
+
+                if(language == 2){
+                    languageSpoken().push("Spanish")
+                }
+
+                if(language == 3){
+                    languageSpoken().push("French")
+                }
+                return language0
+                })
+            console.log(language0,"languageArray")
+            setLanguageSpoken(language0)
+        
+
+
         }
       } catch (error) {
         console.log(error);
@@ -502,6 +528,67 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                     </div>
 
+                    <div class="flex flex-row flex-wrap justify-between">
+                      <label
+                        for="language"
+                        class="text-ptext1 dark:text-ptext1-DM"
+                      >
+                      Language:
+                      </label>
+                      <Show when={editMode() === false}>
+                        <p
+                          id="langauge"
+                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        >
+                        <For each={languageSpoken()}>
+                                {(language)=>(
+                                    <p>1</p>
+                                )}
+                        </For>
+                        </p>
+                      </Show>
+                      <Show when={editMode() === true}>
+                        <div class="flex items-center relative mr-2">
+                          <svg
+                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                          >
+                            <g>
+                              <path
+                                d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                              />
+                            </g>
+                          </svg>
+
+                          <span
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                          >
+                            {t("toolTips.lastName")}
+                          </span>
+                        </div>
+                        <div class="basis-full h-0"></div>
+                        <div class="basis-full">
+                          <input
+                            type="text"
+                            id="language"
+                            name="language"
+                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            value={provider()?.language}
+                          />
+                        </div>
+                      </Show>
+                    </div>
                     <div class="last-name flex flex-row flex-wrap justify-between">
                       <label
                         for="LastName"
@@ -628,14 +715,14 @@ export const ProviderProfileView: Component = () => {
                         for="language"
                         class="text-ptext1 dark:text-ptext1-DM"
                       >
-                            {provider()?.language_spoken} 
+                            {provider()?.language} 
                       </label>
                       <Show when={editMode() === false}>
                         <p
                           id="language"
                           class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
-                          {provider()?.language_spoken}
+                          {provider()?.language}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
@@ -665,7 +752,7 @@ export const ProviderProfileView: Component = () => {
                             class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                           md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
-                            {provider()?.language_spoken}
+                            // {t("toolTips.lastName")}
                           </span>
                         </div>
                         <div class="basis-full h-0"></div>
@@ -675,7 +762,7 @@ export const ProviderProfileView: Component = () => {
                             id="LastName"
                             name="language"
                             class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-                            value={provider()?.language_spoken}
+                            value={provider()?.language}
                           />
                         </div>
                       </Show>

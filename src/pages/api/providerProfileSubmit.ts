@@ -29,7 +29,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
+  const language = formData.get("language");
   console.log("imageURL: " + imageUrl);
+  console.log("language: " + language);
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
@@ -229,6 +231,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     location: location[0].id,
     user_id: user.id,
     image_url: imageUrl,
+    language_spoken: language,
   };
 
   //submit to the providers table and select it back
