@@ -38,7 +38,7 @@ interface Provider {
   first_name: string;
   last_name: string;
   country: string | null;
-  language:number[] | null;
+  language_spoken:number[] | null;
 }
 
 async function postFormData(formData: FormData) {
@@ -69,7 +69,8 @@ export const ProviderProfileView: Component = () => {
   >();
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
-  const [languageSpoken , setLanguageSpoken] = createSignal<string[]>(["1"]);
+  const [languageSpoken , setLanguageSpoken] = createSignal<string[]>([]);
+  const [languageSpokenString, setLanguageSpokenString] = createSignal<string>("")
 
   const setSize = (e: Event) => {
     if (window.innerWidth <= 767) {
@@ -118,9 +119,7 @@ export const ProviderProfileView: Component = () => {
           .from("providerviewlang")
           .select("*")
           .eq("user_id", user_id);
-
         console.log(data);
-        
 
         if (error) {
           console.log(error);
@@ -131,7 +130,7 @@ export const ProviderProfileView: Component = () => {
           setProvider(data[0]);
           console.log(provider())
 
-            let languageArray = provider().language_spoken;
+            let languageArray = provider()?.language_spoken;
             let language0 = languageSpoken()
             languageArray?.map((language:number) => {
                 if(language == 1){
@@ -147,7 +146,8 @@ export const ProviderProfileView: Component = () => {
                 }
                 return language0
                 })
-            console.log(language0,"languageArray")
+            setLanguageSpokenString(language0.join(", "))
+            console.log(languageSpokenString(),"join")
             setLanguageSpoken(language0)
         
 
@@ -540,11 +540,7 @@ export const ProviderProfileView: Component = () => {
                           id="langauge"
                           class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
-                        <For each={languageSpoken()}>
-                                {(language)=>(
-                                    <p>1</p>
-                                )}
-                        </For>
+                        {languageSpokenString()}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
