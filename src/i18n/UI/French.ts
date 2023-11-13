@@ -200,6 +200,18 @@ export const French = {
     createUserError: "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
   },
 
+  socialModal: {
+    shareService: "Partager ce service",
+    twitterX: "Partager sur X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "E-mail",
+    copyLink: "Copier le lien",
+    embedLink: "Intégrer le lien",
+    textLink: "Lien texte",
+    disclaimer: "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
+  },
+
   ariaLabels: {
     todo: "Todo Servis Logo Retour à la page d'accueil",
     logo: "Logo Todo Servis",

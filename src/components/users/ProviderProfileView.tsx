@@ -1,5 +1,5 @@
+import type { Component } from "solid-js";
 import {
-  Component,
   createSignal,
   createEffect,
   Show,
@@ -69,13 +69,13 @@ export const ProviderProfileView: Component = () => {
   const [response] = createResource(formData, postFormData);
 
   const setSize = (e: Event) => {
-    if (window.innerWidth <= 767) {
+    if (window.screen.width <= 767) {
       setScreenSize("sm");
-    } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
+    } else if (window.screen.width > 767 && window.screen.width < 1024) {
       setScreenSize("md");
-    } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
+    } else if (window.screen.width >= 1024 && window.screen.width < 1280) {
       setScreenSize("lg");
-    } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
+    } else if (window.screen.width >= 1280 && window.screen.width < 1536) {
       setScreenSize("xl");
     } else {
       setScreenSize("2xl");
@@ -84,13 +84,13 @@ export const ProviderProfileView: Component = () => {
 
   onMount(() => {
     window.addEventListener("resize", setSize);
-    if (window.innerWidth <= 767) {
+    if (window.screen.width <= 767) {
       setScreenSize("sm");
-    } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
+    } else if (window.screen.width > 767 && window.screen.width < 1024) {
       setScreenSize("md");
-    } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
+    } else if (window.screen.width >= 1024 && window.screen.width < 1280) {
       setScreenSize("lg");
-    } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
+    } else if (window.screen.width >= 1280 && window.screen.width < 1536) {
       setScreenSize("xl");
     } else {
       setScreenSize("2xl");
