@@ -23,9 +23,10 @@ const t = useTranslations(lang);
       <div class="text-2xl font-bold text-link1 dark:text-link1-DM justify-center items-start flex md:grid grid-cols-8 gap-2 mb-6">
         <a
           href={`/${lang}/services`}
-          class="w-[112px] h-[112px] flex flex-col justify-center items-center align-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM md:col-start-1 md:row-start-1 md:w-24 md:h-24 -space-y-8 hover:translate-y-0.5"
-        >
-          <div class="flex pr-3">
+          class="w-[112px] h-[112px] flex flex-col justify-center items-center rounded-xl bg-btn1 dark:bg-btn1-DM drop-shadow-md shadow-md border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM md:col-start-1 md:row-start-1 md:w-24 md:h-24 -space-y-8 hover:translate-y-0.5"
+          >
+          <div class="">
+          <div class="pr-2 flex justify-center">
             <svg
               version="1.1"
               id="_x32_"
@@ -53,10 +54,10 @@ const t = useTranslations(lang);
               </g>
             </svg>
           </div>
-          <br />
-          <div class="text-btn1Text dark:text-btn1Text-DM text-xs text-center px-2">
+          <div class=" text-btn1Text dark:text-btn1Text-DM text-xs text-center px-2">
             {t('messages.fetch')}
           </div>
+        </div>
         </a>
         <div class="flex flex-col items-start justify-center md:col-start-3 md:row-start-1 md:col-span-6">
           <p class="mb-4 text-ptext1 dark:text-ptext1-DM">{t('messages.todoFetch')}</p>
