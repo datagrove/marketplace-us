@@ -13,6 +13,7 @@ import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 import Phone from "./forms/Phone";
+import { check } from "prettier";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -34,10 +35,6 @@ async function postFormData(formData: FormData) {
   return data;
 }
 
-const english = 1 
-const spanish = 2
-const french = 3
-
 //Component that creates the form and collects the data
 export const ProviderRegistration: Component = () => {
   const [session, setSession] = createSignal<AuthSession | null>(null);
@@ -48,8 +45,8 @@ export const ProviderRegistration: Component = () => {
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
   const [providerName, setProviderName] = createSignal<string>("");
-  const [languageS,setLanguageS] = createSignal()
-  const [languagePick,setLanguagePick] = createSignal()
+  const [languages, setLanguages] = createSignal<Array<{id: number; language: string;}>>();
+  const [languagePick, setLanguagePick] = createSignal();
 
   const regularExpressionPhone = new RegExp("^[0-9]{8}$");
 
@@ -74,17 +71,18 @@ export const ProviderRegistration: Component = () => {
       } catch (error) {
         console.log("Other error: " + error);
       }
+
+      //Will create a dropdown of all the languages in the database
       try {
-          const { data, error } = await supabase
-            .from("language")
-            .select("*")
-            setLanguageS(data)
-            console.log(languageS())
-
-          }catch (error) {
-              console.log("Language error: " + error);
-              }
-
+        const { data, error } = await supabase.from("language").select("*");
+        if (error) {
+          console.log("supabase error: " + error.message);
+        } else if (data!) {
+          setLanguages(data);
+        }
+      } catch (error) {
+        console.log("Language error: " + error);
+      }
 
       //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
       try {
@@ -251,13 +249,12 @@ export const ProviderRegistration: Component = () => {
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
-    console.log(languageS())
+    console.log(languages());
 
     const formData = new FormData(e.target as HTMLFormElement);
-    
 
     if (formData.get("ProviderName") === "") {
-      formData.set("ProviderName", (firstName() + " " + lastName()));
+      formData.set("ProviderName", firstName() + " " + lastName());
     }
 
     if (phone() !== "") {
@@ -266,14 +263,14 @@ export const ProviderRegistration: Component = () => {
       formData.append("refresh_token", session()?.refresh_token!);
       formData.append("lang", lang);
       formData.append("language", languagePick());
-      
+
       // formData.append("language", languageS());
       if (imageUrl() !== null) {
         formData.append("image_url", imageUrl()!);
       }
 
       //Comment back out for testing
-       setFormData(formData);
+      setFormData(formData);
     } else {
       alert(t("messages.phoneLackRequirements"));
     }
@@ -282,6 +279,20 @@ export const ProviderRegistration: Component = () => {
     // for (let pair of formData.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
+  }
+
+  let expanded = false;
+  function languageCheckboxes() {
+    let checkboxes = document.getElementById("checkboxes");
+    if (!expanded) {
+      checkboxes?.classList.remove("hidden");
+      checkboxes?.classList.add("block");
+      expanded = true;
+    } else {
+      checkboxes?.classList.remove("block");
+      checkboxes?.classList.add("hidden");
+      expanded = false;
+    }
   }
 
   //Actual Form that gets displayed for users to fill
@@ -421,7 +432,7 @@ export const ProviderRegistration: Component = () => {
               firstName() + " " + lastName() + " " + t("formLabels.optional")
             }
             class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-            oninput = {(e)=>setProviderName(e.target.value)}
+            oninput={(e) => setProviderName(e.target.value)}
           />
         </div>
 
@@ -467,24 +478,36 @@ export const ProviderRegistration: Component = () => {
           </div>
         </div>
 
-        <div class="flex justify-start">
-          <label for="language" class="text-ptext1 dark:text-ptext1-DM">
+        <div class="flex flex-wrap justify-start border border-green-500">
+          <label for="language" class="text-ptext1 dark:text-ptext1-DM w-1/3">
             <span class="text-alert1 dark:text-alert1-DM">* </span>
-            Language:
+            {/* TODO:Internationalize */}
+            Languages:
           </label>
-          <select
-            id="language"
-            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-            name="language"
-            required
-            multiple
-            oninput={(e)=>setLanguagePick(e.target.value)}
-          >
-            <option value="">-</option>
-          <For each={languageS()}>{(language) => 
-            <option   value={language.id}>{language!.language}</option>
-            }</For>
-          </select>
+          {/* Creates a list of checkboxes that drop down to multiple select */}
+          <div class="border border-purple-500 w-2/3">
+            <div class="relative" onclick={() => languageCheckboxes()}>
+              <select
+                id="language"
+                class="w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                name="language"
+              >
+                <option value="">-</option>
+              </select>
+              <div class="absolute"></div>
+            </div>
+            <div id="checkboxes" class="hidden rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM">
+              <For each={languages()}>
+                {(language) => (
+                  <label class="block ml-2" for={language.language}>
+                    <input type="checkbox" id={language.id.toString()} />
+                    <span class="ml-2">{language.language}</span>
+                  </label>
+                )}
+              </For>
+            </div>
+          </div>
+
           <svg
             id="isValid"
             class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"

@@ -1,8 +1,8 @@
-alter table "public"."providers" add constraint "providers_language_spoken_fkey" FOREIGN KEY (language_spoken) REFERENCES language(language) not valid;
+alter table "public"."providers" alter column "language_spoken" set data type text[] using "language_spoken"::text[];
 
-alter table "public"."providers" validate constraint "providers_language_spoken_fkey";
+alter table "public"."providers" alter column "language_spoken" set not null;
 
-create or replace view "public"."providerviewlang" as  SELECT providers.user_id,
+create or replace view "public"."providerview" as  SELECT providers.user_id,
     providers.created_at,
     providers.provider_name,
     providers.provider_phone,
@@ -20,5 +20,7 @@ create or replace view "public"."providerviewlang" as  SELECT providers.user_id,
      LEFT JOIN profiles ON ((providers.user_id = profiles.user_id)))
      LEFT JOIN locationview ON ((providers.location = locationview.id)));
 
-
+INSERT INTO "public"."language" ("id", "language") VALUES
+	(2, 'Español'),
+  (3, 'Français');
 

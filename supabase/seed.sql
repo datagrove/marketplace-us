@@ -356,15 +356,15 @@ INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_pho
 -- Data for Name: providers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."providers" ("created_at", "provider_name", "user_id", "location", "provider_phone", "image_url", "provider_id") VALUES
-	('2023-07-28 13:55:57.853558+00', 'g', '0517efc0-1beb-4239-a522-748616a0d83f', 55, 'g', NULL, 1),
-	('2023-08-24 15:44:32.554938+00', 'ger', '9ff9251c-1c89-41a9-b6ef-da3b8bd9adab', 116, '12345678', NULL, 11),
-	('2023-08-28 17:52:48.611925+00', 'GeneralServices', '8ad6e0e4-39b7-4b5e-bd85-ad1ba3b8daae', 130, '60280735', NULL, 20),
-	('2023-08-29 19:40:50.32649+00', 'GeneralServicesAS', '0dfdccab-0418-42bb-8768-5f9f7a58c52f', 156, '70280735', NULL, 31),
-	('2023-08-11 17:43:51.320021+00', 'Programming for Good ', '72ddf579-0400-407f-9a7b-903e7d3c6afa', 82, '85815898 ', NULL, 9),
-	('2023-08-30 14:41:03.355275+00', 'GeneralServices', '2cf81880-3206-4bb1-9734-ddcacd822d18', 161, '50280735', NULL, 36),
-	('2023-08-09 18:26:20.371128+00', 'MEEEE', '5f41591b-0850-47b7-b6a4-08251ba79b66', 76, '1234567890', NULL, 5),
-	('2023-08-03 19:05:47.022082+00', 'Provider', 'b8a30290-79ac-49bb-9a76-223532e62ae4', 63, '315', NULL, 2);
+INSERT INTO "public"."providers" ("created_at", "provider_name", "user_id", "location", "provider_phone", "image_url", "provider_id", "language_spoken") VALUES
+	('2023-07-28 13:55:57.853558+00', 'g', '0517efc0-1beb-4239-a522-748616a0d83f', 55, 'g', NULL, 1, '{"1"}'),
+	('2023-08-24 15:44:32.554938+00', 'ger', '9ff9251c-1c89-41a9-b6ef-da3b8bd9adab', 116, '12345678', NULL, 11, '{"1"}'),
+	('2023-08-28 17:52:48.611925+00', 'GeneralServices', '8ad6e0e4-39b7-4b5e-bd85-ad1ba3b8daae', 130, '60280735', NULL, 20, '{"1"}'),
+	('2023-08-29 19:40:50.32649+00', 'GeneralServicesAS', '0dfdccab-0418-42bb-8768-5f9f7a58c52f', 156, '70280735', NULL, 31, '{"1"}'),
+	('2023-08-11 17:43:51.320021+00', 'Programming for Good ', '72ddf579-0400-407f-9a7b-903e7d3c6afa', 82, '85815898 ', NULL, 9, '{"1"}'),
+	('2023-08-30 14:41:03.355275+00', 'GeneralServices', '2cf81880-3206-4bb1-9734-ddcacd822d18', 161, '50280735', NULL, 36, '{"1"}'),
+	('2023-08-09 18:26:20.371128+00', 'MEEEE', '5f41591b-0850-47b7-b6a4-08251ba79b66', 76, '1234567890', NULL, 5, '{"1"}'),
+	('2023-08-03 19:05:47.022082+00', 'Provider', 'b8a30290-79ac-49bb-9a76-223532e62ae4', 63, '315', NULL, 2, '{"1"}');
 
 
 --
