@@ -108,8 +108,9 @@ export const French = {
     todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+    noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
   },
-
+  
   formLabels: {
     title: "Titre",
     serviceCategory: "Catégorie de services",
@@ -197,6 +198,18 @@ export const French = {
     clientEditProfileError: "Erreur lors de la mise à jour du profil client",
     noClient: "Aucun client trouvé.",
     createUserError: "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
+  },
+
+  socialModal: {
+    shareService: "Partager ce service",
+    twitterX: "Partager sur X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "E-mail",
+    copyLink: "Copier le lien",
+    embedLink: "Intégrer le lien",
+    textLink: "Lien texte",
+    disclaimer: "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
   },
 
   ariaLabels: {

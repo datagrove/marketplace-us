@@ -108,6 +108,7 @@ export interface uiObject {
     mustSignIn: string,
     profileEdits: string,
     noClient: string,
+    noPostsSearch: string,
   },
 
   formLabels: {
@@ -197,6 +198,18 @@ export interface uiObject {
     clientCreateProfileError: string,
     clientEditProfileError: string,
     createUserError: string,
+  },
+
+  socialModal: {
+    shareService: string,
+    twitterX: string,
+    facebook: string,
+    WhatsApp: string,
+    email: string,
+    copyLink: string,
+    embedLink: string,
+    textLink: string,
+    disclaimer: string,
   },
 
   ariaLabels: {

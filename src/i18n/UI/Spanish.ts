@@ -109,6 +109,7 @@ export const Spanish = {
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
     profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
     noClient: "No se encontró ninguna cliente.",
+    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
   },
 
   formLabels: {
@@ -196,6 +197,18 @@ export const Spanish = {
     clientCreateProfileError: "Error al crear el perfil del cliente",
     clientEditProfileError: "Error al actualizar el perfil del cliente",
     createUserError: "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
+  },
+
+  socialModal: {
+    shareService: "Comparte este servicio",
+    twitterX: "Compartir en X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "Correo electrónico",
+    copyLink: "Copiar link",
+    embedLink: "Insertar enlace",
+    textLink: "Enlace de texto",
+    disclaimer: "TodoServis no tiene control sobre la información de ningún sitio externo. TodoServis no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso TodoServis será responsable del uso que usted haga de un sitio vinculado.",
   },
 
   ariaLabels: {

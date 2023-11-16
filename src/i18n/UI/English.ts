@@ -109,6 +109,7 @@ export const English = {
     mustSignIn: 'You must be signed in to view available services.',
     profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
     noClient: "No Client found.",
+    noPostsSearch: "No posts match this specific search - please try a different filter or key word",
   },
 
   formLabels: {
@@ -197,6 +198,18 @@ export const English = {
     clientCreateProfileError: "Error creating client profile",
     clientEditProfileError: "Error updating client profile",
     createUserError: "Error creating user, please try again or contact us for assistance.",
+  },
+
+  socialModal: {
+    shareService: "Share this service",
+    twitterX: "Share on X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "Email",
+    copyLink: "Copy Link",
+    embedLink: "Embed Link",
+    textLink: "Text Link",
+    disclaimer: "TodoServis has no control over information at any external site. TodoServis is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall TodoServis be responsible for your use of a linked site.",
   },
 
   ariaLabels: {
