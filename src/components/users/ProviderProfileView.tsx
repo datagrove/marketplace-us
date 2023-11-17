@@ -490,7 +490,6 @@ export const ProviderProfileView: Component = () => {
                 {/* Profile Information for Mobile View */}
                 <details
                   class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden"
-                  open
                 >
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
