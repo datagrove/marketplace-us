@@ -210,6 +210,8 @@ export interface uiObject {
     embedLink: string,
     textLink: string,
     disclaimer: string,
+    shareButton: string,
+    closeShareMenu: string,
   },
 
   ariaLabels: {

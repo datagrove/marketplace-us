@@ -123,9 +123,9 @@ export const CategoryCarousel: Component<Props> = (props) => {
               <div class="bg-iconbg1 dark:bg-iconbg1-DM rounded-full">
                 <img
                   src={item.icon.src}
-                  alt={item.ariaLabel}
+                  alt={item.ariaLabel + " Icon"}
                   title={item.description}
-                  class="w-12 p-1 m-2"
+                  class="w-12 h-12 p-1 m-2"
                 />
               </div>
 

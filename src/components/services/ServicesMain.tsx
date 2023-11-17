@@ -354,7 +354,7 @@ export const ServicesView: Component = () => {
       </div>
 
       <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
-        <div class="md:w-48 md:mr-4 w-11/12">
+        <div class="md:w-56 md:mr-4 w-11/12">
           <LocationFilter
             filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
             filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
