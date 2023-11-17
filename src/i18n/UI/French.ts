@@ -210,6 +210,8 @@ export const French = {
     embedLink: "Intégrer le lien",
     textLink: "Lien texte",
     disclaimer: "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
+    shareButton: "Bouton Partager",
+    closeShareMenu: "Fermer le menu Partager",
   },
 
   ariaLabels: {
