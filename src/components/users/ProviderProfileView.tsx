@@ -143,7 +143,6 @@ export const ProviderProfileView: Component = () => {
             if (language == 3) {
               setLanguageSpoken([...languageSpoken(), "Français"]);
             }
-
           });
 
           //set initial list of languages for provider
@@ -488,9 +487,7 @@ export const ProviderProfileView: Component = () => {
             <Show when={screenSize() === "sm"}>
               <div class="container">
                 {/* Profile Information for Mobile View */}
-                <details
-                  class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden"
-                >
+                <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
                   <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.profileInfo")}
@@ -709,7 +706,7 @@ export const ProviderProfileView: Component = () => {
                         </div>
                       </Show>
                     </div>
-                    <div class="language flex flex-row flex-wrap justify-start">
+                    <div class="language flex flex-row flex-wrap justify-between">
                       <label
                         for="language"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -726,7 +723,7 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                       <Show when={editMode() === true}>
                         {/* Tool tip could go here */}
-                        <div class="flex items-start mt-1 relative ml-2">
+                        <div class="flex items-center relative mr-2">
                           <svg
                             class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
@@ -750,48 +747,53 @@ export const ProviderProfileView: Component = () => {
 
                           <span
                             class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                           translate-x-0 translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.languages")}
                           </span>
                         </div>
-                        <div class="flex flex-wrap justify-start ml-2">
-                          {/* Creates a list of checkboxes that drop down to multiple select */}
-                          <div class=" w-full mb-4">
-                            <div
-                              class="relative"
-                              onclick={() => languageCheckboxes()}
-                            >
-                              <select
-                                id="language"
-                                class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                                name="language"
+                        <div class="basis-full h-0"></div>
+                        <div class="basis-full">
+                          <div class="flex flex-wrap justify-start">
+                            {/* Creates a list of checkboxes that drop down to multiple select */}
+                            <div class=" w-full mb-4">
+                              <div
+                                class="relative"
+                                onclick={() => languageCheckboxes()}
                               >
-                                <option value="">{t("formLabels.chooseLanguage")}</option>
-                              </select>
+                                <select
+                                  id="language"
+                                  class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                                  name="language"
+                                >
+                                  <option value="">
+                                    {t("formLabels.chooseLanguage")}
+                                  </option>
+                                </select>
 
-                              <div class="absolute"></div>
-                            </div>
-                            <div
-                              id="checkboxes"
-                              class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                            >
-                              <For each={languages()}>
-                                {(language) => (
-                                  <label class="block ml-2">
-                                    <input
-                                      type="checkbox"
-                                      id={language.id.toString()}
-                                      value={language.id.toString()}
-                                      onchange={(e) => setLanguageArray(e)}
-                                      checked={language.checked}
-                                    />
-                                    <span class="ml-2">
-                                      {language.language}
-                                    </span>
-                                  </label>
-                                )}
-                              </For>
+                                <div class="absolute"></div>
+                              </div>
+                              <div
+                                id="checkboxes"
+                                class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                              >
+                                <For each={languages()}>
+                                  {(language) => (
+                                    <label class="block ml-2">
+                                      <input
+                                        type="checkbox"
+                                        id={language.id.toString()}
+                                        value={language.id.toString()}
+                                        onchange={(e) => setLanguageArray(e)}
+                                        checked={language.checked}
+                                      />
+                                      <span class="ml-2">
+                                        {language.language}
+                                      </span>
+                                    </label>
+                                  )}
+                                </For>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1325,11 +1327,11 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <div class="language flex flex-row flex-wrap justify-start">
+                <div class="language flex flex-row flex-wrap justify-between">
                   <label for="language" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.languages")}:
                   </label>
-                  
+
                   <Show when={editMode() === false}>
                     <p
                       id="language"
@@ -1340,7 +1342,7 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                   <Show when={editMode() === true}>
                     {/* Tool tip could go here */}
-                    <div class="flex items-start mt-1 relative ml-2">
+                    <div class="flex items-center relative mr-2">
                           <svg
                             class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                             version="1.1"
@@ -1364,49 +1366,56 @@ export const ProviderProfileView: Component = () => {
 
                           <span
                             class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
                           >
                             {t("toolTips.languages")}
                           </span>
                         </div>
-                    <div class="flex flex-wrap justify-start ml-2">
-                      {/* Creates a list of checkboxes that drop down to multiple select */}
-                      <div class=" w-full mb-4">
-                        <div
-                          class="relative"
-                          onclick={() => languageCheckboxes()}
-                        >
-                          <select
-                            id="language"
-                            class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                            name="language"
-                          >
-                            <option value="">{t("formLabels.chooseLanguage")}</option>
-                          </select>
+                        <div class="basis-full h-0"></div>
+                        <div class="basis-full">
+                          <div class="flex flex-wrap justify-start">
+                            {/* Creates a list of checkboxes that drop down to multiple select */}
+                            <div class=" w-full mb-4">
+                              <div
+                                class="relative"
+                                onclick={() => languageCheckboxes()}
+                              >
+                                <select
+                                  id="language"
+                                  class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                                  name="language"
+                                >
+                                  <option value="">
+                                    {t("formLabels.chooseLanguage")}
+                                  </option>
+                                </select>
 
-                          <div class="absolute"></div>
+                                <div class="absolute"></div>
+                              </div>
+                              <div
+                                id="checkboxes"
+                                class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                              >
+                                <For each={languages()}>
+                                  {(language) => (
+                                    <label class="block ml-2">
+                                      <input
+                                        type="checkbox"
+                                        id={language.id.toString()}
+                                        value={language.id.toString()}
+                                        onchange={(e) => setLanguageArray(e)}
+                                        checked={language.checked}
+                                      />
+                                      <span class="ml-2">
+                                        {language.language}
+                                      </span>
+                                    </label>
+                                  )}
+                                </For>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div
-                          id="checkboxes"
-                          class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                        >
-                          <For each={languages()}>
-                            {(language) => (
-                              <label class="block ml-2">
-                                <input
-                                  type="checkbox"
-                                  id={language.id.toString()}
-                                  value={language.id.toString()}
-                                  onchange={(e) => setLanguageArray(e)}
-                                  checked={language.checked}
-                                />
-                                <span class="ml-2">{language.language}</span>
-                              </label>
-                            )}
-                          </For>
-                        </div>
-                      </div>
-                    </div>
                   </Show>
                 </div>
 
