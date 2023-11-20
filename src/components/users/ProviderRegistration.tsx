@@ -524,7 +524,7 @@ export const ProviderRegistration: Component = () => {
                 class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
                 after:content-['_^'] after:absolute after:-top-0.5 after:right-2 after:height-[20px] after:width-[20px] after:rotate-180 after:text-inputBorder1 after:dark:text-inputBorder1-DM"
               >
-                {t("formLabels.chooseLanguage")}{" "}
+                {t("formLabels.chooseLanguage")}
               </p>
 
               <div class="absolute"></div>
