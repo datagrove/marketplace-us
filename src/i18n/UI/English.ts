@@ -72,6 +72,7 @@ export const English = {
     contact: 'Email',
     phone: 'Call',
     saveProfile: 'Save Profile',
+    filters: "Filters",
   },
 
   messages: {
@@ -137,6 +138,9 @@ export const English = {
     yourPosts: 'Your Posts',
     optional: '(optional)',
     required: 'Required Fields',
+    languages: "Languages", 
+    chooseLanguage: "Choose one or more",
+    languagesSpoken: "Languages Spoken",
   },
 
   postLabels: {
@@ -172,6 +176,7 @@ export const English = {
     postImages: 'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
     firstNameEdit: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider account. Since this is your legal name, the same first and last name must be used on your client and provider accounts.',
     lastNameEdit: 'This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider account. Since this is your legal name, the same first and last name must be used on your client and provider accounts.',
+    languages: "Please select the languages in which you are able to conduct business. These will be displayed on your profile for clients.",
   },
 
   apiErrors: {

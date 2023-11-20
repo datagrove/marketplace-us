@@ -227,8 +227,7 @@ export const LocationFilter: Component<Props> = (props) => {
         {/*Mobile Filters Main Group*/}
         <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
           <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-            <h2 class="flex flex-1 p-2 font-bold">Filters</h2>{" "}
-            {/* TODO:Internationalize this */}
+            <h2 class="flex flex-1 p-2 font-bold">{t("buttons.filters")}</h2>
             {/*Creates the Dropdown Arrow*/}
             <div class="flex w-10 items-center justify-center">
               <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>

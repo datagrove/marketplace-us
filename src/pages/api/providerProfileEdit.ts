@@ -2,7 +2,7 @@ import { supabase } from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 
-export const post: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
 
   //Just console.log the formData for troubleshooting
@@ -32,12 +32,14 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
+  const language = JSON.parse(formData.get("languageArray")! as string);
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
     !firstName ||
     !lastName ||
-    !phone
+    !phone ||
+    language?.length === 0
   ) {
     return new Response(
       JSON.stringify({
@@ -184,6 +186,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       provider_name: providerName,
       provider_phone: phone,
       image_url: imageUrl,
+      language_spoken: language,
     };
   } else {
     //Update the location with the new location
@@ -192,6 +195,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       provider_phone: phone,
       location: location.id,
       image_url: imageUrl,
+      language_spoken: language,
     };
   };
 

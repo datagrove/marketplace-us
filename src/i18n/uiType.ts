@@ -71,6 +71,7 @@ export interface uiObject {
     contact: string,
     phone: string,
     saveProfile: string,
+    filters: string,
   },
 
   messages: {
@@ -137,6 +138,9 @@ export interface uiObject {
     yourPosts: string,
     optional: string,
     required: string,
+    languages: string,
+    chooseLanguage: string,
+    languagesSpoken: string,
   },
 
   postLabels: {
@@ -172,6 +176,7 @@ export interface uiObject {
     postImages: string,
     firstNameEdit: string,
     lastNameEdit: string,
+    languages: string,
   },
 
   apiErrors: {

@@ -72,6 +72,7 @@ export const French = {
     contact: 'E-mail',
     phone: 'Appel',
     saveProfile: "Enregistrer le profil",
+    filters: "Filtres",
   },
 
   messages: {
@@ -136,6 +137,9 @@ export const French = {
     yourPosts: 'Vos Publications',
     optional: '(facultative)',
     required: 'Champs Obligatoires',
+    languages: "Langues",
+    chooseLanguage: "Choisissez-en un ou plusieurs",
+    languagesSpoken: "Langues parlées",
   },
 
   postLabels: {
@@ -171,6 +175,7 @@ export const French = {
     postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
     firstNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
     lastNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
+    languages: "Veuillez sélectionner les langues dans lesquelles vous êtes capable de faire des affaires. Ceux-ci seront affichés sur votre profil pour les clients.",
   },
 
   apiErrors: {
