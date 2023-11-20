@@ -72,6 +72,7 @@ export const French = {
     contact: 'E-mail',
     phone: 'Appel',
     saveProfile: "Enregistrer le profil",
+    filters: "Filtres",
   },
 
   messages: {

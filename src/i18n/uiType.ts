@@ -71,6 +71,7 @@ export interface uiObject {
     contact: string,
     phone: string,
     saveProfile: string,
+    filters: string,
   },
 
   messages: {

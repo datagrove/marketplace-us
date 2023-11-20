@@ -71,6 +71,7 @@ export const Spanish = {
     contact: 'Correo Electrónico',
     phone: 'Llamada',
     saveProfile: 'Guardar Perfil',
+    filters: "Filtros",
   },
 
   messages: {

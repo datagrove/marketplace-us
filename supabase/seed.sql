@@ -460,6 +460,13 @@ Post with multiples images. Succesful.', 178, '2cf81880-3206-4bb1-9734-ddcacd822
 	(103, '2023-09-20 21:35:46.409722+00', 'test2', 7, '<p>test 2</p>', 192, '0517efc0-1beb-4239-a522-748616a0d83f', NULL, false, NULL, NULL);
 
 
+INSERT INTO "public"."language" ("id", "language") VALUES
+	(4, 'Chinese'),
+  	(5, 'German'),
+	(6, 'French'),
+	(7, 'English (UK)'),
+	(8, 'Japanese');
+
 --
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --

@@ -72,6 +72,7 @@ export const English = {
     contact: 'Email',
     phone: 'Call',
     saveProfile: 'Save Profile',
+    filters: "Filters",
   },
 
   messages: {
