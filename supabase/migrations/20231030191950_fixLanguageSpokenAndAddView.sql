@@ -24,3 +24,9 @@ INSERT INTO "public"."language" ("id", "language") VALUES
 	(2, 'Español'),
   (3, 'Français');
 
+create policy "Enable select for authenticated users only"
+on "public"."language"
+as permissive
+for select
+to authenticated
+using (true);
