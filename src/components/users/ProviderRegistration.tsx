@@ -28,7 +28,6 @@ async function postFormData(formData: FormData) {
   console.log(data.message);
   //Checks the API response for the redirect and sends them to the redirect page if there is one
   if (data.redirect) {
-    //TODO: Not sure how to deal with internationalization here
     alert(data.message);
     window.location.href = `/${lang}` + data.redirect;
   }
@@ -505,8 +504,7 @@ export const ProviderRegistration: Component = () => {
         <div class="flex flex-wrap justify-start">
           <label for="language" class="text-ptext1 dark:text-ptext1-DM w-4/12">
             <span class="text-alert1 dark:text-alert1-DM">* </span>
-            {/* TODO:Internationalize */}
-            Languages:
+            {t("formLabels.languages")}:
           </label>
           {/* Creates a list of checkboxes that drop down to multiple select */}
           <div class=" w-7/12">
@@ -516,15 +514,14 @@ export const ProviderRegistration: Component = () => {
                 class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                 name="language"
               >
-                {/* TODO: Internationalize */}
-                <option value="">Choose one or more</option>
+                <option value="">{t("formLabels.chooseLanguage")}</option>
               </select>
               
               <div class="absolute"></div>
             </div>
             <div
               id="checkboxes"
-              class="hidden rounded max-h-28 overflow-y-scroll focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+              class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             >
               <For each={languages()}>
                 {(language) => (

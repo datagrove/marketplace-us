@@ -143,6 +143,7 @@ export const ProviderProfileView: Component = () => {
             if (language == 3) {
               setLanguageSpoken([...languageSpoken(), "Français"]);
             }
+
           });
 
           //set initial list of languages for provider
@@ -713,8 +714,7 @@ export const ProviderProfileView: Component = () => {
                         for="language"
                         class="text-ptext1 dark:text-ptext1-DM"
                       >
-                        {/* TODO: Internationalize */}
-                        Language:
+                        {t("formLabels.languages")}:
                       </label>
                       <Show when={editMode() === false}>
                         <p
@@ -738,15 +738,14 @@ export const ProviderProfileView: Component = () => {
                                 class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                                 name="language"
                               >
-                                {/* TODO: Internationalize */}
-                                <option value="">Choose one or more</option>
+                                <option value="">{t("formLabels.chooseLanguage")}</option>
                               </select>
 
                               <div class="absolute"></div>
                             </div>
                             <div
                               id="checkboxes"
-                              class="hidden rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                              class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                             >
                               <For each={languages()}>
                                 {(language) => (
@@ -1299,8 +1298,7 @@ export const ProviderProfileView: Component = () => {
 
                 <div class="language flex flex-row flex-wrap justify-start">
                   <label for="language" class="text-ptext1 dark:text-ptext1-DM">
-                    {/* TODO: Internationalize */}
-                    Language:
+                    {t("formLabels.languages")}:
                   </label>
                   <Show when={editMode() === false}>
                     <p
@@ -1324,15 +1322,14 @@ export const ProviderProfileView: Component = () => {
                             class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                             name="language"
                           >
-                            {/* TODO: Internationalize */}
-                            <option value="">Choose one or more</option>
+                            <option value="">{t("formLabels.chooseLanguage")}</option>
                           </select>
 
                           <div class="absolute"></div>
                         </div>
                         <div
                           id="checkboxes"
-                          class="hidden rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                          class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                         >
                           <For each={languages()}>
                             {(language) => (

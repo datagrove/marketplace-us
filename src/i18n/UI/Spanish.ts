@@ -138,6 +138,9 @@ export const Spanish = {
     yourPosts: 'Tus Publicaciones',
     optional: '(opcional)',
     required: 'Campos Requeridos',
+    languages: "Idiomas",
+    chooseLanguage: "Elige uno o más",
+    languagesSpoken: "Idiomas hablados",
   },
 
   postLabels: {

@@ -137,6 +137,9 @@ export const French = {
     yourPosts: 'Vos Publications',
     optional: '(facultative)',
     required: 'Champs Obligatoires',
+    languages: "Langues",
+    chooseLanguage: "Choisissez-en un ou plusieurs",
+    languagesSpoken: "Langues parlées",
   },
 
   postLabels: {

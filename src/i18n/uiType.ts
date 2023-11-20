@@ -138,6 +138,9 @@ export interface uiObject {
     yourPosts: string,
     optional: string,
     required: string,
+    languages: string,
+    chooseLanguage: string,
+    languagesSpoken: string,
   },
 
   postLabels: {

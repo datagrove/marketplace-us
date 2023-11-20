@@ -138,6 +138,9 @@ export const English = {
     yourPosts: 'Your Posts',
     optional: '(optional)',
     required: 'Required Fields',
+    languages: "Languages", 
+    chooseLanguage: "Choose one or more",
+    languagesSpoken: "Languages Spoken",
   },
 
   postLabels: {

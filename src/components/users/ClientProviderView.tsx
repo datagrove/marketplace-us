@@ -80,6 +80,18 @@ export const ClientProviderView: Component<Props> = (props) => {
             if (language == 3) {
               setLanguageSpoken([...languageSpoken(), "Français"]);
             }
+
+            if (language == 4) {
+              setLanguageSpoken([...languageSpoken(), "Chinese"]);
+            }
+
+            if (language == 5) {
+              setLanguageSpoken([...languageSpoken(), "German"]);
+            }
+
+            if (language == 6) {
+              setLanguageSpoken([...languageSpoken(), "French"]);
+            }
           });
 
           //set display list of languages for provider
@@ -167,8 +179,9 @@ export const ClientProviderView: Component<Props> = (props) => {
                 {provider()?.governing_district}
               </p>
               <p class="my-1">
-                {/* TODO: Internationalize */}
-              <span class="font-bold">Languages: </span>
+                <span class="font-bold">
+                  {t("formLabels.languagesSpoken")}:
+                </span>
                 {provider()?.languages}
               </p>
               <div class="mt-4 flex justify-center">
@@ -188,9 +201,7 @@ export const ClientProviderView: Component<Props> = (props) => {
           </details>
 
           {/* Provider Posts for Mobile View*/}
-          <details
-            class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden"
-          >
+          <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
             <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
               <h2 class="flex flex-1 p-4 font-bold text-ptext1 dark:text-ptext1-DM">
                 {t("formLabels.posts")}
@@ -232,10 +243,9 @@ export const ClientProviderView: Component<Props> = (props) => {
             {provider()?.governing_district}
           </p>
           <p class="my-1">
-                {/* TODO: Internationalize */}
-              <span class="font-bold">Languages: </span>
-                {provider()?.languages}
-              </p>
+            <span class="font-bold">{t("formLabels.languagesSpoken")}: </span>
+            {provider()?.languages}
+          </p>
           <div class="mt-4 flex justify-center">
             <a href={`mailto:${provider()?.email}`} class="btn-primary">
               {t("buttons.contact")}
