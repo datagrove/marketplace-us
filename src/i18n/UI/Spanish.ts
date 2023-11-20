@@ -327,11 +327,11 @@ export const Spanish = {
 
   clearFilters: {
     filterButtons: [
-        { text: "Borra Todos los Filtros", ariaLabel: "Borra Todos los Filtros" },
-        { text: "Borra Categorías", ariaLabel: "Borra Categorías" },
-        { text: "Borra Municipio Importante", ariaLabel: "Borra Municipio Importante" },
-        { text: "Borra Munucipio Menor", ariaLabel: "Borra Munucipio Menor" },
-        { text: "Borra Distrito Gobernante", ariaLabel: "Borra Distrito Gobernante" },
+        { text: "Borrar Todos los Filtros", ariaLabel: "Borrar Todos los Filtros" },
+        { text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
+        { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
+        { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
+        { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
     ]
   }
 
