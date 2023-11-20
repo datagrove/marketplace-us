@@ -543,7 +543,10 @@ export const ProviderRegistration: Component = () => {
           </div>
 
           <div class="w-1/12">
-            <div class="flex items-start mt-1 relative ml-2" id="languageToolTip">
+            <div
+              class="flex items-start mt-1 relative ml-2"
+              id="languageToolTip"
+            >
               <svg
                 class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                 version="1.1"

@@ -62,7 +62,7 @@ export const ProviderProfileView: Component = () => {
   const [provider, setProvider] = createSignal<Provider>();
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [providerImage, setProviderImage] = createSignal<string>("");
-  const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
+  const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [screenSize, setScreenSize] = createSignal<
     "sm" | "md" | "lg" | "xl" | "2xl"
