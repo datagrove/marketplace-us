@@ -1,7 +1,5 @@
 alter table "public"."providers" alter column "language_spoken" set data type text[] using "language_spoken"::text[];
 
-alter table "public"."providers" alter column "language_spoken" set not null;
-
 create or replace view "public"."providerview" as  SELECT providers.user_id,
     providers.created_at,
     providers.provider_name,
