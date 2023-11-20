@@ -735,7 +735,7 @@ export const ProviderProfileView: Component = () => {
                             >
                               <select
                                 id="language"
-                                class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                                class="peer w-full mb-4 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                                 name="language"
                               >
                                 <option value="">{t("formLabels.chooseLanguage")}</option>
@@ -1319,7 +1319,7 @@ export const ProviderProfileView: Component = () => {
                         >
                           <select
                             id="language"
-                            class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                            class="peer w-full mb-4 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                             name="language"
                           >
                             <option value="">{t("formLabels.chooseLanguage")}</option>
