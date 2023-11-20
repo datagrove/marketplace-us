@@ -311,19 +311,19 @@ export const French = {
 
 productCategoryInfo:{
     categories: [
-      { name: "Jardinage", description: '', ariaLabel: "Jardinage", id: "1" },
-      { name: "Construction", description: '', ariaLabel: "Construction", id: "3" },
-      { name: "Beauté", description: '', ariaLabel: "Beauté", id: "2" },
-      { name: "Automobile", description: '', ariaLabel: "Automobile", id: "5" },
-      { name: "Ordinateur", description: '', ariaLabel: "Ordinateur", id: "4" },
-      { name: "Créative", description: '', ariaLabel: "Créative", id: "6" },
-      { name: "Financière", description: '', ariaLabel: "Financière", id: "7" },
-      { name: "Nettoyage", description: '', ariaLabel: "Nettoyage", id: "8" },
-      { name: "Animaux domestiques", description: '', ariaLabel: "Animaux domestiques", id: "9" },
-      { name: "Juridique", description: '', ariaLabel: "Juridique", id: "10" },
-      { name: "Santé", description: '', ariaLabel: "Santé", id: "11" },
-      { name: "Travail", description: '', ariaLabel: "Travail", id: "12" },
-      { name: "Voyage", description: '', ariaLabel: "Voyage", id: "13" },
+      { name: "Jardinage", description: "Obtenez de l'aide pour votre jardin et votre aménagement paysager.", ariaLabel: "Jardinage", id: "1" },
+      { name: "Construction", description: "Nouvelles constructions, ajouts ou services de réparation", ariaLabel: "Construction", id: "3" },
+      { name: "Beauté", description: "Salons, barbiers et autres soins personnels.", ariaLabel: "Beauté", id: "2" },
+      { name: "Automobile", description: "Services automobiles", ariaLabel: "Automobile", id: "5" },
+      { name: "Ordinateur", description: "Réparation et services informatiques", ariaLabel: "Ordinateur", id: "4" },
+      { name: "Créative", description: "Services créatifs", ariaLabel: "Créative", id: "6" },
+      { name: "Financière", description: "Services financiers", ariaLabel: "Financière", id: "7" },
+      { name: "Nettoyage", description: "Services de nettoyage", ariaLabel: "Nettoyage", id: "8" },
+      { name: "Animaux domestiques", description: "Services pour animaux de compagnie", ariaLabel: "Animaux domestiques", id: "9" },
+      { name: "Juridique", description: "Services juridiques", ariaLabel: "Juridique", id: "10" },
+      { name: "Santé", description: "Services de santé", ariaLabel: "Santé", id: "11" },
+      { name: "Travail", description: "Services du travail", ariaLabel: "Travail", id: "12" },
+      { name: "Voyage", description: "Services de voyage", ariaLabel: "Voyage", id: "13" },
       // Add more products as needed
     ]
   },
