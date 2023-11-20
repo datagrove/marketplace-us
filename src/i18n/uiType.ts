@@ -176,6 +176,7 @@ export interface uiObject {
     postImages: string,
     firstNameEdit: string,
     lastNameEdit: string,
+    languages: string,
   },
 
   apiErrors: {

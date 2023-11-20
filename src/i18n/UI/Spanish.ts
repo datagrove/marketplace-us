@@ -175,6 +175,7 @@ export const Spanish = {
     postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
     firstNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
     lastNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
+    languages: "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
   },
 
   apiErrors: {

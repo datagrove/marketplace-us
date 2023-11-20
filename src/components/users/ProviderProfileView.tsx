@@ -62,7 +62,7 @@ export const ProviderProfileView: Component = () => {
   const [provider, setProvider] = createSignal<Provider>();
   const [session, setSession] = createSignal<AuthSession | null>(null);
   const [providerImage, setProviderImage] = createSignal<string>("");
-  const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
+  const [editMode, setEditMode] = createSignal<boolean>(true); //TODO Set back to false
   const [imageUrl, setImageUrl] = createSignal<string | null>(null);
   const [screenSize, setScreenSize] = createSignal<
     "sm" | "md" | "lg" | "xl" | "2xl"
@@ -726,16 +726,45 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                       <Show when={editMode() === true}>
                         {/* Tool tip could go here */}
+                        <div class="flex items-start mt-1 relative ml-2">
+                          <svg
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                          >
+                            <g>
+                              <path
+                                d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                              />
+                            </g>
+                          </svg>
+
+                          <span
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
+                           translate-x-0 translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                          >
+                            {t("toolTips.languages")}
+                          </span>
+                        </div>
                         <div class="flex flex-wrap justify-start ml-2">
                           {/* Creates a list of checkboxes that drop down to multiple select */}
-                          <div class=" w-full">
+                          <div class=" w-full mb-4">
                             <div
                               class="relative"
                               onclick={() => languageCheckboxes()}
                             >
                               <select
                                 id="language"
-                                class="peer w-full mb-4 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                                class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                                 name="language"
                               >
                                 <option value="">{t("formLabels.chooseLanguage")}</option>
@@ -1300,6 +1329,7 @@ export const ProviderProfileView: Component = () => {
                   <label for="language" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.languages")}:
                   </label>
+                  
                   <Show when={editMode() === false}>
                     <p
                       id="language"
@@ -1310,16 +1340,45 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                   <Show when={editMode() === true}>
                     {/* Tool tip could go here */}
+                    <div class="flex items-start mt-1 relative ml-2">
+                          <svg
+                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                          >
+                            <g>
+                              <path
+                                d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                              />
+                            </g>
+                          </svg>
+
+                          <span
+                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
+                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                          >
+                            {t("toolTips.languages")}
+                          </span>
+                        </div>
                     <div class="flex flex-wrap justify-start ml-2">
                       {/* Creates a list of checkboxes that drop down to multiple select */}
-                      <div class=" w-full">
+                      <div class=" w-full mb-4">
                         <div
                           class="relative"
                           onclick={() => languageCheckboxes()}
                         >
                           <select
                             id="language"
-                            class="peer w-full mb-4 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                            class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                             name="language"
                           >
                             <option value="">{t("formLabels.chooseLanguage")}</option>
