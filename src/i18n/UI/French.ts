@@ -72,6 +72,7 @@ export const French = {
     contact: 'E-mail',
     phone: 'Appel',
     saveProfile: "Enregistrer le profil",
+    filters: "Filtres",
   },
 
   messages: {
@@ -108,8 +109,9 @@ export const French = {
     todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin !",
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+    noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
   },
-
+  
   formLabels: {
     title: "Titre",
     serviceCategory: "Catégorie de services",
@@ -135,6 +137,9 @@ export const French = {
     yourPosts: 'Vos Publications',
     optional: '(facultative)',
     required: 'Champs Obligatoires',
+    languages: "Langues",
+    chooseLanguage: "Choisissez-en un ou plusieurs",
+    languagesSpoken: "Langues parlées",
   },
 
   postLabels: {
@@ -170,6 +175,7 @@ export const French = {
     postImages: "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
     firstNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
     lastNameEdit: "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un compte client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos comptes client et fournisseur.",
+    languages: "Veuillez sélectionner les langues dans lesquelles vous êtes capable de faire des affaires. Ceux-ci seront affichés sur votre profil pour les clients.",
   },
 
   apiErrors: {
@@ -199,6 +205,20 @@ export const French = {
     createUserError: "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
   },
 
+  socialModal: {
+    shareService: "Partager ce service",
+    twitterX: "Partager sur X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "E-mail",
+    copyLink: "Copier le lien",
+    embedLink: "Intégrer le lien",
+    textLink: "Lien texte",
+    disclaimer: "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
+    shareButton: "Bouton Partager",
+    closeShareMenu: "Fermer le menu Partager",
+  },
+
   ariaLabels: {
     todo: "Todo Servis Logo Retour à la page d'accueil",
     logo: "Logo Todo Servis",
@@ -206,6 +226,8 @@ export const French = {
     checkboxMajorMunicipality: "Case à cocher pour sélectionner la grande municipalité",
     checkboxMinorMunicipality: "Case à cocher pour sélectionner une commune mineure",
     checkboxGoverningDistrict: "Case à cocher pour sélectionner le district administratif",
+    darkMessage: "Basculer entre le mode clair et le mode sombre",
+    closeDialog: "Fermer la boîte de dialogue",
   },
 
   headerData: {
@@ -278,7 +300,7 @@ export const French = {
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrove/marketplace' },
-      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
+      { ariaLabel: 'WhatsApp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1'},
       { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `
@@ -289,19 +311,19 @@ export const French = {
 
 productCategoryInfo:{
     categories: [
-      { name: "Jardinage", description: '', ariaLabel: "Jardinage", id: "1" },
-      { name: "Construction", description: '', ariaLabel: "Construction", id: "3" },
-      { name: "Beauté", description: '', ariaLabel: "Beauté", id: "2" },
-      { name: "Automobile", description: '', ariaLabel: "Automobile", id: "5" },
-      { name: "Ordinateur", description: '', ariaLabel: "Ordinateur", id: "4" },
-      { name: "Créative", description: '', ariaLabel: "Créative", id: "6" },
-      { name: "Financière", description: '', ariaLabel: "Financière", id: "7" },
-      { name: "Nettoyage", description: '', ariaLabel: "Nettoyage", id: "8" },
-      { name: "Animaux domestiques", description: '', ariaLabel: "Animaux domestiques", id: "9" },
-      { name: "Juridique", description: '', ariaLabel: "Juridique", id: "10" },
-      { name: "Santé", description: '', ariaLabel: "Santé", id: "11" },
-      { name: "Travail", description: '', ariaLabel: "Travail", id: "12" },
-      { name: "Voyage", description: '', ariaLabel: "Voyage", id: "13" },
+      { name: "Jardinage", description: "Obtenez de l'aide pour votre jardin et votre aménagement paysager.", ariaLabel: "Jardinage", id: "1" },
+      { name: "Construction", description: "Nouvelles constructions, ajouts ou services de réparation", ariaLabel: "Construction", id: "3" },
+      { name: "Beauté", description: "Salons, barbiers et autres soins personnels.", ariaLabel: "Beauté", id: "2" },
+      { name: "Automobile", description: "Services automobiles", ariaLabel: "Automobile", id: "5" },
+      { name: "Ordinateur", description: "Réparation et services informatiques", ariaLabel: "Ordinateur", id: "4" },
+      { name: "Créative", description: "Services créatifs", ariaLabel: "Créative", id: "6" },
+      { name: "Financière", description: "Services financiers", ariaLabel: "Financière", id: "7" },
+      { name: "Nettoyage", description: "Services de nettoyage", ariaLabel: "Nettoyage", id: "8" },
+      { name: "Animaux domestiques", description: "Services pour animaux de compagnie", ariaLabel: "Animaux domestiques", id: "9" },
+      { name: "Juridique", description: "Services juridiques", ariaLabel: "Juridique", id: "10" },
+      { name: "Santé", description: "Services de santé", ariaLabel: "Santé", id: "11" },
+      { name: "Travail", description: "Services du travail", ariaLabel: "Travail", id: "12" },
+      { name: "Voyage", description: "Services de voyage", ariaLabel: "Voyage", id: "13" },
       // Add more products as needed
     ]
   },

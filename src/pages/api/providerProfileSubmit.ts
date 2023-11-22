@@ -2,7 +2,7 @@ import { supabase } from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 
-export const post: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
 
   //Just console.log the formData for troubleshooting
@@ -29,7 +29,10 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
+  const language = JSON.parse(formData.get("languageArray")! as string);
   console.log("imageURL: " + imageUrl);
+  console.log("language: " + language);
+  console.log(language?.length);
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
@@ -37,7 +40,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
     !country ||
     !majorMunicipality ||
     !minorMunicipality ||
-    !governingDistrict
+    !governingDistrict ||
+    language?.length === 0
   ) {
     return new Response(
       JSON.stringify({
@@ -104,42 +108,6 @@ export const post: APIRoute = async ({ request, redirect }) => {
       { status: 302 }
     );
   }
-
-  // //Check if a profile exists
-  // const { data: profileExists, error: profileExistsError } = await supabase
-  //   .from("profiles")
-  //   .select("user_id")
-  //   .eq("user_id", user.id);
-  // console.log(profileExists!.length);
-  // if (profileExistsError) {
-  //   console.log("supabase error: " + profileExistsError.message);
-  // } else if (profileExists.length !== 0) {
-  //   console.log("Profile already exists");
-  // } else if (profileExists.length === 0) {
-  //   //Build a submission to the profile table
-  //   let profileSubmission = {
-  //     user_id: user.id,
-  //     first_name: firstName,
-  //     last_name: lastName,
-  //     email: user.email,
-  //   };
-
-
-  //   //Submit to the profile table and select it back (the select back is not entirely necessary)
-  //   const { data: profileData, error: profileError } = await supabase
-  //     .from("profiles")
-  //     .insert([profileSubmission])
-  //     .select();
-  //   if (profileError) {
-  //     console.log(profileError);
-  //     return new Response(
-  //       JSON.stringify({
-  //         message: (t("apiErrors.profileError")),
-  //       }),
-  //       { status: 500 }
-  //     );
-  //   }
-  // }
 
   /*Each of these retrieves the appropriate id from the database for the area level
   (governing district, minor municipality, major municipality, country)
@@ -229,6 +197,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     location: location[0].id,
     user_id: user.id,
     image_url: imageUrl,
+    language_spoken: language,
   };
 
   //submit to the providers table and select it back

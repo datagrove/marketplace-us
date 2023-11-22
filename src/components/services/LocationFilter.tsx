@@ -1,5 +1,6 @@
 //TODO: Need to add a Country filter for future phases
-import { Component, createEffect, createSignal, For } from "solid-js";
+import type { Component } from 'solid-js'
+import { createEffect, createSignal, For } from "solid-js";
 
 import { supabase } from "../../lib/supabaseClient";
 // import { productCategoryData } from '../../data'
@@ -226,8 +227,7 @@ export const LocationFilter: Component<Props> = (props) => {
         {/*Mobile Filters Main Group*/}
         <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
           <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
-            <h2 class="flex flex-1 p-2 font-bold">Filters</h2>{" "}
-            {/* TODO:Internationalize this */}
+            <h2 class="flex flex-1 p-2 font-bold">{t("buttons.filters")}</h2>
             {/*Creates the Dropdown Arrow*/}
             <div class="flex w-10 items-center justify-center">
               <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
@@ -250,10 +250,11 @@ export const LocationFilter: Component<Props> = (props) => {
               </summary>
               <div class="px-4">
                 <div class="h-42 flex-column text-left rounded">
-                  <ul class="grid text-left mr-4 ml-8 h-42 overflow-auto">
+                  <div class="grid text-left mr-4 ml-8 h-42 overflow-auto">
                     <For each={majorMunicipalities()}>
                       {(item) => (
-                        <li>
+                        <div class="flex flex-row w-11/12">
+                        <div class="inline">
                           <input
                             aria-label={
                               t("ariaLabels.checkboxMajorMunicipality") +
@@ -265,13 +266,16 @@ export const LocationFilter: Component<Props> = (props) => {
                               setMajorMuniFilter(item);
                             }}
                           />
+                          </div>
+                          <div class="inline">
                           <span class="text-ptext1 dark:text-ptext1-DM">
                             {item.major_municipality}
                           </span>
-                        </li>
+                        </div>
+                        </div>
                       )}
                     </For>
-                  </ul>
+                  </div>
                 </div>
               </div>
             </details>
@@ -293,28 +297,32 @@ export const LocationFilter: Component<Props> = (props) => {
               </summary>
               <div class="px-4 pb-2">
                 <div class="h-42 flex-column text-left rounded">
-                  <ul class="grid text-left mr-4 ml-8 h-40 overflow-auto">
+                  <div class="grid text-left mr-4 ml-8 h-40 overflow-auto">
                     <For each={minorMunicipalities()}>
                       {(item) => (
-                        <div>
-                          <input
-                            aria-label={
-                              t("ariaLabels.checkboxMinorMunicipality") +
-                              item.minor_municipality
-                            }
-                            type="checkbox"
-                            class="leading-tight mr-4 minor-muni"
-                            onClick={() => {
-                              setMinorMuniFilter(item);
-                            }}
-                          />
-                          <span class="text-ptext1 dark:text-ptext1-DM">
-                            {item.minor_municipality}
-                          </span>
+                        <div class="flex flex-row w-11/12">
+                          <div class="inline">
+                              <input
+                                aria-label={
+                                  t("ariaLabels.checkboxMinorMunicipality") +
+                                  item.minor_municipality
+                                }
+                                type="checkbox"
+                                class="leading-tight mr-4 minor-muni"
+                                onClick={() => {
+                                  setMinorMuniFilter(item);
+                                }}
+                              />
+                          </div>
+                          <div class="inline">
+                            <span class="text-ptext1 dark:text-ptext1-DM">
+                              {item.minor_municipality}
+                            </span>
+                          </div>
                         </div>
                       )}
                     </For>
-                  </ul>
+                  </div>
                 </div>
               </div>
             </details>
@@ -335,28 +343,32 @@ export const LocationFilter: Component<Props> = (props) => {
               </summary>
               <div class="px-4 pb-2">
                 <div class="h-42 flex-column text-left rounded">
-                  <ul class="grid text-left mr-4 ml-8 h-36 overflow-auto">
+                  <div class="grid text-left mr-4 ml-8 h-36 overflow-auto">
                     <For each={governingDistricts()}>
                       {(item) => (
-                        <div>
-                          <input
-                            aria-label={
-                              t("ariaLabels.checkboxGoverningDistrict") +
-                              item.governing_district
-                            }
-                            type="checkbox"
-                            class="leading-tight mr-4 district"
-                            onClick={() => {
-                              setGoverningDistrictFilter(item);
-                            }}
-                          />
-                          <span class="text-ptext1 dark:text-ptext1-DM">
-                            {item.governing_district}
-                          </span>
+                        <div class="flex flex-row w-11/12">
+                          <div class="inline">
+                            <input
+                              aria-label={
+                                t("ariaLabels.checkboxGoverningDistrict") +
+                                item.governing_district
+                              }
+                              type="checkbox"
+                              class="leading-tight mr-4 district"
+                              onClick={() => {
+                                setGoverningDistrictFilter(item);
+                              }}
+                            />
+                          </div>
+                          <div class="inline">
+                            <span class="text-ptext1 dark:text-ptext1-DM">
+                              {item.governing_district}
+                            </span>
+                          </div>
                         </div>
                       )}
                     </For>
-                  </ul>
+                  </div>
                 </div>
               </div>
             </details>
@@ -371,10 +383,10 @@ export const LocationFilter: Component<Props> = (props) => {
             <div class="w-4/5 pl-4">{t("formLabels.majorMunicipality")}</div>
           </div>
 
-          <ul class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
+          <div class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
             <For each={majorMunicipalities()}>
               {(item) => (
-                <li>
+                <div>
                   <input
                     aria-label={
                       t("ariaLabels.checkboxMajorMunicipality") +
@@ -389,40 +401,44 @@ export const LocationFilter: Component<Props> = (props) => {
                   <span class="text-ptext1 dark:text-ptext1-DM">
                     {item.major_municipality}
                   </span>
-                </li>
+                </div>
               )}
             </For>
-          </ul>
+          </div>
         </div>
         {/*Minor Municipality*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
           <div class="flex flex-wrap justify-between">
             <div class="w-4/5 pl-4">{t("formLabels.minorMunicipality")}</div>
           </div>
-          <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
+          <div class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
             {" "}
             {/*Combination of h-full and overflow auto causing weird behavior */}
             <For each={minorMunicipalities()}>
               {(item) => (
-                <div>
-                  <input
-                    aria-label={
-                      t("ariaLabels.checkboxMinorMunicipality") +
-                      item.minor_municipality
-                    }
-                    type="checkbox"
-                    class="minor-muni leading-tight mr-4"
-                    onClick={() => {
-                      setMinorMuniFilter(item);
-                    }}
-                  />
-                  <span class="text-ptext1 dark:text-ptext1-DM">
-                    {item.minor_municipality}
-                  </span>
+                <div class="flex flex-row w-11/12">
+                  <div class="inline">
+                    <input
+                      aria-label={
+                        t("ariaLabels.checkboxMinorMunicipality") +
+                        item.minor_municipality
+                      }
+                      type="checkbox"
+                      class="minor-muni leading-tight mr-4"
+                      onClick={() => {
+                        setMinorMuniFilter(item);
+                      }}
+                    />
+                  </div>
+                  <div class="inline">
+                    <span class="text-ptext1 dark:text-ptext1-DM">
+                      {item.minor_municipality}
+                    </span>
+                  </div>
                 </div>
               )}
             </For>
-          </ul>          
+          </div>          
         </div>
         {/*Governing District*/}
         <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
@@ -430,10 +446,11 @@ export const LocationFilter: Component<Props> = (props) => {
             <div class="w-4/5 pl-4">{t("formLabels.governingDistrict")}</div>
           </div>
 
-          <ul class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
+          <div class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
             <For each={governingDistricts()}>
               {(item) => (
-                <div>
+               <div class="flex flex-row w-11/12">
+               <div class="inline">
                   <input
                     aria-label={
                       t("ariaLabels.checkboxGoverningDistrict") +
@@ -445,13 +462,16 @@ export const LocationFilter: Component<Props> = (props) => {
                       setGoverningDistrictFilter(item);
                     }}
                   />
+                  </div>
+                  <div class="inline">
                   <span class="text-ptext1 dark:text-ptext1-DM">
                     {item.governing_district}
                   </span>
+                  </div>
                 </div>
               )}
             </For>
-          </ul>
+          </div>
         </div>
       </div>
     </div>

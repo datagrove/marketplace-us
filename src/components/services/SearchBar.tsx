@@ -1,6 +1,7 @@
-import { Component, createSignal, createEffect } from 'solid-js'
-import { supabase } from '../../lib/supabaseClient'
-import type { AuthSession } from '@supabase/supabase-js'
+import type { Component } from 'solid-js';
+import { createSignal, createEffect } from 'solid-js';
+import { supabase } from '../../lib/supabaseClient';
+import type { AuthSession } from '@supabase/supabase-js';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -13,6 +14,12 @@ interface Props {
 
 export const SearchBar: Component<Props> = (props) => {
   const [searchString, setSearchString] = createSignal<string>('');
+
+  const clickSearch = (e:Event) => {
+    props.search(searchString())
+
+    setSearchString("");
+  }
 
   createEffect(() => {
     // Execute a function when the user presses a key on the keyboard
@@ -37,7 +44,8 @@ export const SearchBar: Component<Props> = (props) => {
       <div class="form">
         <label class="sr-only" for="search">{t('formLabels.search')}</label>
         <input type="text" name="query" id="search" value={ searchString() } class="border border-border1 dark:border-border1-DM focus:outline-none focus:border-2 focus:border-highlight1 dark:focus:border-highlight1-DM rounded px-1 placeholder:text-ptext1 placeholder:opacity-[65%] placeholder:italic text-ptext1" placeholder={t('formLabels.search')} oninput={(e) => setSearchString(e.target.value)} />
-        <button id="searchButton" class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button>
+        {/* <button id="searchButton" class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button> */}
+        <button id="searchButton" class="btn-primary mx-6" onclick={(e) => clickSearch(e)}>{t('formLabels.search')}</button>
       </div>
     </div>
   )

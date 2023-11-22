@@ -71,6 +71,7 @@ export interface uiObject {
     contact: string,
     phone: string,
     saveProfile: string,
+    filters: string,
   },
 
   messages: {
@@ -108,6 +109,7 @@ export interface uiObject {
     mustSignIn: string,
     profileEdits: string,
     noClient: string,
+    noPostsSearch: string,
   },
 
   formLabels: {
@@ -136,6 +138,9 @@ export interface uiObject {
     yourPosts: string,
     optional: string,
     required: string,
+    languages: string,
+    chooseLanguage: string,
+    languagesSpoken: string,
   },
 
   postLabels: {
@@ -171,6 +176,7 @@ export interface uiObject {
     postImages: string,
     firstNameEdit: string,
     lastNameEdit: string,
+    languages: string,
   },
 
   apiErrors: {
@@ -199,6 +205,20 @@ export interface uiObject {
     createUserError: string,
   },
 
+  socialModal: {
+    shareService: string,
+    twitterX: string,
+    facebook: string,
+    WhatsApp: string,
+    email: string,
+    copyLink: string,
+    embedLink: string,
+    textLink: string,
+    disclaimer: string,
+    shareButton: string,
+    closeShareMenu: string,
+  },
+
   ariaLabels: {
     todo: string,
     logo: string,
@@ -206,6 +226,8 @@ export interface uiObject {
     checkboxMajorMunicipality: string,
     checkboxMinorMunicipality: string,
     checkboxGoverningDistrict: string,
+    darkMessage: string,
+    closeDialog: string,
   },
 
   headerData: {

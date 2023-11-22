@@ -1,4 +1,5 @@
-import { Component, createSignal, createEffect } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal, createEffect } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { supabase } from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -102,52 +103,58 @@ export const ViewCard: Component<Props> = (props) => {
                   )}
                 </div>
 
-                {/* <br /> */}
                 <div
                   id="cardContent"
                   class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
-                  <div>
+                  <div class="w-full">
                     <div class="grid grid-cols-4">
-                      <div class="relative col-span-4 w-full flex align-top md:mt-2">
-                        <div class="truncate inline-block max-w-[58%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
-                          {post.major_municipality}/{post.minor_municipality}/
-                          {post.governing_district}
+                      <div class="relative col-span-3 w-full flex align-top">
+                        <div class="w-full">
+                          <div class="truncate inline-block max-w-[58%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
+                            {post.major_municipality}/{post.minor_municipality}/
+                            {post.governing_district}
+                          </div>
+                          <div class="truncate inline-block max-w-[28%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
+                            {post.category}
+                          </div>
                         </div>
-                        <div class="truncate inline-block max-w-[28%] text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
-                          {post.category}
-                        </div>
-                        <div class="absolute right-2 inline-block">
+                      </div>
+                      <div class="relative col-span-1 w-full flex align-top justify-end">
+                        <div class="inline-block">
                           <DeletePostButton
                             id={post.id}
                             userId={post.user_id}
                             postImage={post.image_urls}
                           />
                         </div>
-                      </div>
-
-                        <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
-                          {post.title}
-                        </p>
-                        {/* <div class="justify-self-end pt-2 pr-4">
-                          <DeletePostButton
-                            id={post.id}
-                            userId={post.user_id}
-                            postImage={post.image_urls}
+                        <div class="inline-block">
+                          <SocialModal
+                            id={Number(post.id)}
+                            title={post.title}
+                            image_urls={post.image_urls}
                           />
-                        </div> */}
+                        </div>
                       </div>
 
-                      <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
-                        <span class="font-bold">{t("postLabels.provider")}</span>
-                        {post.provider_name}
+                      <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
+                        {post.title}
                       </p>
                     </div>
-                
-                    <SocialModal id={ Number(post.id) } title={ post.title } image_urls={ post.image_urls }/>
-                  
+
+                    <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
+                      <span class="font-bold">{t("postLabels.provider")}</span>
+                      {post.provider_name}
+                    </p>
+
+                    <p
+                      class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 pt-0.5 overflow-hidden mr-4 prose dark:prose-invert"
+                      innerHTML={post.content}
+                    ></p>
+
                   </div>
                 </div>
+              </div>
             </a>
           </li>
         ))}

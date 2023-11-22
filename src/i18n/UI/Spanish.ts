@@ -22,7 +22,7 @@ export const Spanish = {
     terms: 'Términos y Condiciones',
     privacy: "Política de Privacidad",
     acceptableUse: "Política de uso aceptable",
-    about: 'Sobre Nosotras',
+    about: 'Sobre nosotras',
     impact: 'Impacto',
     fullPost: "Ver publicación completa",
     offline: 'Desconectada',
@@ -62,7 +62,7 @@ export const Spanish = {
     signUp: 'inscribirse',
     signIn: 'Iniciar Sesión',
     signOut: 'Desconectar',
-    returnHome: 'Pagina de Inicio',
+    returnHome: 'Página de Inicio',
     reset: 'Reiniciar',
     post: 'Publicar',
     next: 'Próxima',
@@ -71,27 +71,28 @@ export const Spanish = {
     contact: 'Correo Electrónico',
     phone: 'Llamada',
     saveProfile: 'Guardar Perfil',
+    filters: "Filtros",
   },
 
   messages: {
-    noAccount: "¿No tienes una cuenta? Click aquí para ",
+    noAccount: "¿No tienes una cuenta? Haz click aquí para ",
     emailValid: 'Dirección de correo electrónico válida',
     emailLackRequirements: 'El correo electrónico no cumple con los requisitos',
     passwordLength: 'La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
-    phoneLackRequirements: 'El numero de telefono tiene que tener 8 digitos',
+    phoneLackRequirements: 'El número de teléfono tiene que tener 8 digitos',
     phoneValid: 'Número de teléfono válido',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',
-    forgotPassword: '¿Olvidaste tu contraseña? Click aquí para',
-    alreadyAccount: '¿Ya tienes una cuenta? Click aquí para',
+    forgotPassword: '¿Olvidaste tu contraseña? Haz click aquí para',
+    alreadyAccount: '¿Ya tienes una cuenta? Haz click aquí para',
     error404: 'Algo salió mal',
-    onlyProvider: 'Solo las proveedoras pueden crear publicaciones.',
-    signInAsProvider: 'Inicie sesión en una cuenta de proveedor antes de publicar.',
+    onlyProvider: 'Solo los proveedores pueden crear publicaciones.',
+    signInAsProvider: 'Inicie sesión en una cuenta de proveedor para poder publicar.',
     checkEmail: "¡Revise su correo electrónico para ver el enlace de reinicio!",
     checkConfirmEmail: 'Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico.',
-    signIn: "Inicia sesión para acceder a esta página",
+    signIn: "Inicie sesión para acceder a esta página",
     createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
     createClientAccount: "Inicie sesión para crear un perfil de cliente",
     viewProviderAccount: "No tiene una cuenta de proveedor, por favor cree una para ver su perfil de proveedor",
@@ -108,7 +109,8 @@ export const Spanish = {
     todoFetch: '¡Todo, el perro de servicio, te traerá los servicios que necesitas!',
     mustSignIn: 'Debe iniciar sesión para ver los servicios disponibles.',
     profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
-    noClient: "No se encontró ninguna cliente.",
+    noClient: "No se encontró ningún cliente.",
+    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
   },
 
   formLabels: {
@@ -136,10 +138,13 @@ export const Spanish = {
     yourPosts: 'Tus Publicaciones',
     optional: '(opcional)',
     required: 'Campos Requeridos',
+    languages: "Idiomas",
+    chooseLanguage: "Elige uno o más",
+    languagesSpoken: "Idiomas hablados",
   },
 
   postLabels: {
-    provider: 'Proveedora: ',
+    provider: 'Ofrecido por: ',
     location: 'Ubicación: ',
     category: 'Categoría: ',
     image: 'Publicar imagen',
@@ -155,7 +160,7 @@ export const Spanish = {
   },
   menus: {
     services: 'Buscar Servicios',
-    contactUs: 'Contacta Con Nosotras',
+    contactUs: 'Contáctenos',
   },
 
   toolTips: {
@@ -170,12 +175,13 @@ export const Spanish = {
     postImages: 'La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.',
     firstNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
     lastNameEdit: 'Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear una cuenta de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus cuentas de cliente y proveedor.',
+    languages: "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
   },
 
   apiErrors: {
     missingFields: "Faltan campos obligatorios",
     noSession: "Sesión no encontrada",
-    noUser: "Usuario no encontrada",
+    noUser: "Usuario no encontrado",
     providerExists: "El perfil del proveedor ya existe",
     profileCreateError: "Error al crear perfil",
     profileEditError: "Error al actualizar el perfil",
@@ -187,15 +193,29 @@ export const Spanish = {
     providerCreateProfileError: "Error al crear el perfil del proveedor",
     providerEditProfileError: "Error al actualizar el perfil del proveedor",
     noProfileData: "No se devolvieron datos de perfil",
-    success: "¡Éxito!",
+    success: "¡Completado!",
     emailError: "Error al actualizar el correo electrónico",
     noCategory: "Categoría no encontrada",
     postError: "Error al crear la publicación",
     noPost: "No se devolvió ninguna publicación",
-    clientExists: "La cliente ya existe",
+    clientExists: "El cliente ya existe",
     clientCreateProfileError: "Error al crear el perfil del cliente",
     clientEditProfileError: "Error al actualizar el perfil del cliente",
     createUserError: "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
+  },
+
+  socialModal: {
+    shareService: "Comparte este servicio",
+    twitterX: "Compartir en X",
+    facebook: "Facebook",
+    WhatsApp: "WhatsApp",
+    email: "Correo electrónico",
+    copyLink: "Copiar link",
+    embedLink: "Insertar enlace",
+    textLink: "Enlace de texto",
+    disclaimer: "TodoServis no tiene control sobre la información de ningún sitio externo. TodoServis no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso TodoServis será responsable del uso que usted haga de un sitio vinculado.",
+    shareButton: "Botón de compartir",
+    closeShareMenu: "Cerrar menú Compartir",
   },
 
   ariaLabels: {
@@ -205,6 +225,8 @@ export const Spanish = {
     checkboxMajorMunicipality: "Casilla de verificación para seleccionar Provincia",
     checkboxMinorMunicipality: "Casilla de verificación para seleccionar Cantón",
     checkboxGoverningDistrict: "Casilla de verificación para seleccionar Distrito",
+    darkMessage: "Cambia entre modo claro y modo oscuro",
+    closeDialog: "Cerrar Dialogo",
   },
 
   headerData: {
@@ -247,7 +269,7 @@ export const Spanish = {
       {
         // title: 'Apoyo',
         links: [
-          { text: 'Contacta Con Nosotras', href: 'mailto:support@todoservis.com' },
+          { text: 'Contáctenos', href: 'mailto:support@todoservis.com' },
           // { text: 'Community Forum', href: '#' },
           // { text: 'Professional Services', href: '#' },
           // { text: 'Skills', href: '#' },
@@ -277,7 +299,7 @@ export const Spanish = {
       { ariaLabel: 'Facebook', icon: 'tabler:brand-facebook', href: 'https://www.facebook.com/TodoServisCostaRica' },
       // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/datagrove/marketplace' },
-      { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1' },
+      { ariaLabel: 'WhatsApp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/message/RUD233VVIVPMG1' },
       { ariaLabel: 'Discord', icon: 'tabler:brand-discord', href: 'https://discord.gg/NpV44vS6bF'},
     ],
     footNote: `<span class="w-5 h-5 md:w-6 md:h-6 md:-mt-0.5 bg-cover mr-1.5 float-left rounded-sm"></span>
@@ -286,30 +308,30 @@ export const Spanish = {
 
   productCategoryInfo: {
     categories: [
-      { name: 'Jardinería', description: 'Obtenga ayuda con su jardín y paisajismo.', ariaLabel: "Jardinería", id: "1" },
+      { name: 'Jardinería', description: 'Obtenga ayuda con su jardín y sus áreas verdes.', ariaLabel: "Jardinería", id: "1" },
       { name: 'Construcción', description: 'Nueva construcción, adiciones o servicios de reparación', ariaLabel: "Construcción", id: "3" },
       { name: 'Belleza', description: 'Salones, Barberias, y otros cuidados personales.', ariaLabel: "Belleza", id: "2" },
-      { name: 'Automóvil', description: 'Servicios Automotrices', ariaLabel: "Automóvil", id: "5" },
-      { name: 'Computadora', description: 'Reparación y servicios de computadoras', ariaLabel: "Computadora", id: "4" },
-      { name: 'Creativadad', description: 'Servicios Creativos', ariaLabel: "Creatividad", id: "6" },
-      { name: 'Financiera', description: 'Servicios Financieros', ariaLabel: "Financiera", id: "7" },
+      { name: 'Automotriz', description: 'Servicios Automotrices', ariaLabel: "Automotriz", id: "5" },
+      { name: 'Computación', description: 'Reparación y servicios de computadoras', ariaLabel: "Computación", id: "4" },
+      { name: 'Artes', description: 'Servicios Creativos', ariaLabel: "Artes", id: "6" },
+      { name: 'Finanzas', description: 'Servicios Financieros', ariaLabel: "Finanzas", id: "7" },
       { name: 'Limpieza', description: 'Servicios de Limpieza', ariaLabel: "Limpieza", id: "8" },
       { name: 'Mascotas', description: 'Servicios para Mascotas', ariaLabel: "Mascotas", id: "9" },
       { name: 'Legal', description: 'Servicios Legales', ariaLabel: "Servicios Legales", id: "10" },
       { name: 'Salud', description: 'Servicios de Salud', ariaLabel: "Salud", id: "11" },
       { name: 'Servicios Laborales', description: 'Servicios Laborales', ariaLabel: "Servicios Laborales", id: "12" },
-      { name: 'Viajar', description: 'Servicios de Viaje', ariaLabel: "Viajar", id: "13" },
+      { name: 'Viajes', description: 'Servicios de Viaje', ariaLabel: "Viajes", id: "13" },
       // Add more products as needed
     ],
   },
 
   clearFilters: {
     filterButtons: [
-        { text: "Borra Todos los Filtros", ariaLabel: "Borra Todos los Filtros" },
-        { text: "Borra Categorías", ariaLabel: "Borra Categorías" },
-        { text: "Borra Municipio Importante", ariaLabel: "Borra Municipio Importante" },
-        { text: "Borra Munucipio Menor", ariaLabel: "Borra Munucipio Menor" },
-        { text: "Borra Distrito Gobernante", ariaLabel: "Borra Distrito Gobernante" },
+        { text: "Borrar Todos los Filtros", ariaLabel: "Borrar Todos los Filtros" },
+        { text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
+        { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
+        { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
+        { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
     ]
   }
 
