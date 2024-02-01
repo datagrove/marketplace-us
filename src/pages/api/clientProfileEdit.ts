@@ -25,7 +25,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const displayName = formData.get("DisplayName");
   const phone = formData.get("Phone");
   const email = formData.get("email");
-  const country = formData.get("country");
+  // const country = formData.get("country");
   const majorMunicipality = formData.get("MajorMunicipality");
   const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
@@ -141,7 +141,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   let location;
 
   //If any location fields are blank then set location to null
-  if (!country ||
+  if (
+      // !country ||
     !majorMunicipality ||
     !minorMunicipality ||
     !governingDistrict) {
@@ -154,7 +155,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
       minor_municipality: minorMunicipality,
       major_municipality: majorMunicipality,
       governing_district: governingDistrict,
-      country: country,
+      // country: country,
       user_id: user.id,
     };
 

@@ -33,8 +33,8 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (
     !phone ||
     !country ||
-    !majorMunicipality ||
-    !minorMunicipality ||
+    // !majorMunicipality ||
+    // !minorMunicipality ||
     !governingDistrict
   ) {
     return new Response(
@@ -158,55 +158,55 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: minorMunicipalityId, error: minorMunicipalityError } =
-    await supabase
-      .from("minor_municipality")
-      .select("id")
-      .eq("id", minorMunicipality);
-  if (minorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMinorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: minorMunicipalityId, error: minorMunicipalityError } =
+  //   await supabase
+  //     .from("minor_municipality")
+  //     .select("id")
+  //     .eq("id", minorMunicipality);
+  // if (minorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMinorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: majorMunicipalityId, error: majorMunicipalityError } =
-    await supabase
-      .from("major_municipality")
-      .select("id")
-      .eq("id", majorMunicipality);
-  if (majorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMajorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
+  //   await supabase
+  //     .from("major_municipality")
+  //     .select("id")
+  //     .eq("id", majorMunicipality);
+  // if (majorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMajorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: countryId, error: countryError } = await supabase
-    .from("country")
-    .select("id")
-    .eq("id", country);
-  if (countryError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noCountry")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: countryId, error: countryError } = await supabase
+  //   .from("country")
+  //   .select("id")
+  //   .eq("id", country);
+  // if (countryError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noCountry")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
   
 
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
-    minor_municipality: minorMunicipalityId[0].id,
-    major_municipality: majorMunicipalityId[0].id,
+    // minor_municipality: minorMunicipalityId[0].id,
+    // major_municipality: majorMunicipalityId[0].id,
     governing_district: districtId[0].id,
-    country: countryId[0].id,
+    // country: countryId[0].id,
     user_id: user.id,
   };
 

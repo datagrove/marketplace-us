@@ -20,9 +20,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const title = formData.get("Title");
   const serviceCategory = formData.get("ServiceCategory");
   const content = formData.get("Content");
-  const country = formData.get("country");
-  const majorMunicipality = formData.get("MajorMunicipality");
-  const minorMunicipality = formData.get("MinorMunicipality");
+  // const country = formData.get("country");
+  // const majorMunicipality = formData.get("MajorMunicipality");
+  // const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
@@ -32,9 +32,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
     !title ||
     !serviceCategory ||
     !content ||
-    !country ||
-    !majorMunicipality ||
-    !minorMunicipality ||
+    // !country ||
+    // !majorMunicipality ||
+    // !minorMunicipality ||
     !governingDistrict
   ) {
     return new Response(
@@ -94,46 +94,46 @@ export const post: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: minorMunicipalityId, error: minorMunicipalityError } =
-    await supabase
-      .from("minor_municipality")
-      .select("id")
-      .eq("id", minorMunicipality);
-  if (minorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMinorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: minorMunicipalityId, error: minorMunicipalityError } =
+  //   await supabase
+  //     .from("minor_municipality")
+  //     .select("id")
+  //     .eq("id", minorMunicipality);
+  // if (minorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMinorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: majorMunicipalityId, error: majorMunicipalityError } =
-    await supabase
-      .from("major_municipality")
-      .select("id")
-      .eq("id", majorMunicipality);
-  if (majorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMajorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
+  //   await supabase
+  //     .from("major_municipality")
+  //     .select("id")
+  //     .eq("id", majorMunicipality);
+  // if (majorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMajorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: countryId, error: countryError } = await supabase
-    .from("country")
-    .select("id")
-    .eq("id", country);
-  if (countryError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noCountry")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: countryId, error: countryError } = await supabase
+  //   .from("country")
+  //   .select("id")
+  //   .eq("id", country);
+  // if (countryError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noCountry")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
   const { data: categoryId, error: categoryError } = await supabase
     .from("post_category")
@@ -149,10 +149,10 @@ export const post: APIRoute = async ({ request, redirect }) => {
   }
 
   let locationSubmission = {
-    minor_municipality: minorMunicipalityId[0].id,
-    major_municipality: majorMunicipalityId[0].id,
+    // minor_municipality: minorMunicipalityId[0].id,
+    // major_municipality: majorMunicipalityId[0].id,
     governing_district: districtId[0].id,
-    country: countryId[0].id,
+    // country: countryId[0].id,
     user_id: user.id,
   };
 

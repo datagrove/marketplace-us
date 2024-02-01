@@ -26,8 +26,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const phone = formData.get("Phone");
   const email = formData.get("email");
   const country = formData.get("country");
-  const majorMunicipality = formData.get("MajorMunicipality");
-  const minorMunicipality = formData.get("MinorMunicipality");
+  // const majorMunicipality = formData.get("MajorMunicipality");
+  // const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
@@ -144,8 +144,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   //If any location fields are blank then set location to null
   if (!country ||
-    !majorMunicipality ||
-    !minorMunicipality ||
+    // !majorMunicipality ||
+    // !minorMunicipality ||
     !governingDistrict) {
     location = null;
   } else {
@@ -153,8 +153,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
    
     //Build our submission to the location table keys need to match the field in the database you are trying to fill.
     let locationSubmission = {
-      minor_municipality: minorMunicipality,
-      major_municipality: majorMunicipality,
+      // minor_municipality: minorMunicipality,
+      // major_municipality: majorMunicipality,
       governing_district: governingDistrict,
       country: country,
       user_id: user.id,

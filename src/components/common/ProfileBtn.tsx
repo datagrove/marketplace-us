@@ -54,6 +54,8 @@ export const ProfileBtn = () => {
     }
   }
 
+// ADD EMAIL TO SEND FOR CONTACT US
+
   return (
     <div class="">
       <button onclick={clickHandler} class="rounded-lg border border-border1 dark:border-border1-DM px-3 py-2 mr-4 md:mr-0 flex" aria-label={t("ariaLabels.navigation")}>
@@ -69,7 +71,7 @@ export const ProfileBtn = () => {
           <a href={`/${lang}`}>{t('pageTitles.home')}</a>
         </div>
         <div>
-        <a href={`mailto:support@todoservis.com`}>{t('menus.contactUs')}</a>
+        <a href={`mailto:MAIL@.com`}>{t('menus.contactUs')}</a>
         </div>
           <AuthMode />
         </div>

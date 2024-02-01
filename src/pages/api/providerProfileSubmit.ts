@@ -23,9 +23,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
   const phone = formData.get("Phone");
-  const country = formData.get("country");
-  const majorMunicipality = formData.get("MajorMunicipality");
-  const minorMunicipality = formData.get("MinorMunicipality");
+  // const country = formData.get("country");
+  // const majorMunicipality = formData.get("MajorMunicipality");
+  // const minorMunicipality = formData.get("MinorMunicipality");
   const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
@@ -37,9 +37,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
     !phone ||
-    !country ||
-    !majorMunicipality ||
-    !minorMunicipality ||
+    // !country ||
+    // !majorMunicipality ||
+    // !minorMunicipality ||
     !governingDistrict ||
     language?.length === 0
   ) {
@@ -125,53 +125,53 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: minorMunicipalityId, error: minorMunicipalityError } =
-    await supabase
-      .from("minor_municipality")
-      .select("id")
-      .eq("id", minorMunicipality);
-  if (minorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMinorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: minorMunicipalityId, error: minorMunicipalityError } =
+  //   await supabase
+  //     .from("minor_municipality")
+  //     .select("id")
+  //     .eq("id", minorMunicipality);
+  // if (minorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMinorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: majorMunicipalityId, error: majorMunicipalityError } =
-    await supabase
-      .from("major_municipality")
-      .select("id")
-      .eq("id", majorMunicipality);
-  if (majorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noMajorMunicipality")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
+  //   await supabase
+  //     .from("major_municipality")
+  //     .select("id")
+  //     .eq("id", majorMunicipality);
+  // if (majorMunicipalityError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noMajorMunicipality")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
-  const { data: countryId, error: countryError } = await supabase
-    .from("country")
-    .select("id")
-    .eq("id", country);
-  if (countryError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noCountry")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: countryId, error: countryError } = await supabase
+  //   .from("country")
+  //   .select("id")
+  //   .eq("id", country);
+  // if (countryError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noCountry")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
 
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
-    minor_municipality: minorMunicipalityId[0].id,
-    major_municipality: majorMunicipalityId[0].id,
+    // minor_municipality: minorMunicipalityId[0].id,
+    // major_municipality: majorMunicipalityId[0].id,
     governing_district: districtId[0].id,
-    country: countryId[0].id,
+    // country: countryId[0].id,
     user_id: user.id,
   };
 
