@@ -116,97 +116,97 @@ export const ClientRegistration: Component = () => {
         console.log("Other error: " + error);
       }
 
-      //Minor Municipality
-      try {
-        const { data: minorMunicipality, error: errorMinorMunicipality } =
-          await supabase.from("minor_municipality").select("*");
-        if (errorMinorMunicipality) {
-          console.log("supabase error: " + errorMinorMunicipality.message);
-        } else {
-          document
-            .getElementById("MajorMunicipality")
-            ?.addEventListener("change", () => {
-              let municipalitySelect = document.getElementById(
-                "MinorMunicipality"
-              ) as HTMLSelectElement;
-
-              let length = municipalitySelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "") {
-                  municipalitySelect.remove(i);
-                }
-              }
-
-              let filteredMunicipality = minorMunicipality.filter(
-                (municipality) =>
-                  municipality.major_municipality ==
-                  (
-                    document.getElementById(
-                      "MajorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredMunicipality.forEach((municipality) => {
-                let municipalityOption = new Option(
-                  municipality.minor_municipality,
-                  municipality.id
-                );
-                document
-                  .getElementById("MinorMunicipality")
-                  ?.append(municipalityOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
-      //Governing District
-      try {
-        const { data: governingDistrict, error: errorGoverningDistrict } =
-          await supabase.from("governing_district").select("*");
-        if (errorGoverningDistrict) {
-          console.log("supabase error: " + errorGoverningDistrict.message);
-        } else {
-          document
-            .getElementById("MinorMunicipality")
-            ?.addEventListener("change", () => {
-              let districtSelect = document.getElementById(
-                "GoverningDistrict"
-              ) as HTMLSelectElement;
-
-              let length = districtSelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "") {
-                  districtSelect.remove(i);
-                }
-              }
-
-              let filteredDistrict = governingDistrict.filter(
-                (district) =>
-                  district.minor_municipality ==
-                  (
-                    document.getElementById(
-                      "MinorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredDistrict.forEach((district) => {
-                let districtOption = new Option(
-                  district.governing_district,
-                  district.id
-                );
-                document
-                  .getElementById("GoverningDistrict")
-                  ?.append(districtOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      // //Minor Municipality
+      // try {
+      //   const { data: minorMunicipality, error: errorMinorMunicipality } =
+      //     await supabase.from("minor_municipality").select("*");
+      //   if (errorMinorMunicipality) {
+      //     console.log("supabase error: " + errorMinorMunicipality.message);
+      //   } else {
+      //     document
+      //       .getElementById("MajorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let municipalitySelect = document.getElementById(
+      //           "MinorMunicipality"
+      //         ) as HTMLSelectElement;
+      //
+      //         let length = municipalitySelect?.length;
+      //
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (municipalitySelect.options[i].value !== "") {
+      //             municipalitySelect.remove(i);
+      //           }
+      //         }
+      //
+      //         let filteredMunicipality = minorMunicipality.filter(
+      //           (municipality) =>
+      //             municipality.major_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MajorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredMunicipality.forEach((municipality) => {
+      //           let municipalityOption = new Option(
+      //             municipality.minor_municipality,
+      //             municipality.id
+      //           );
+      //           document
+      //             .getElementById("MinorMunicipality")
+      //             ?.append(municipalityOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
+      //
+      // //Governing District
+      // try {
+      //   const { data: governingDistrict, error: errorGoverningDistrict } =
+      //     await supabase.from("governing_district").select("*");
+      //   if (errorGoverningDistrict) {
+      //     console.log("supabase error: " + errorGoverningDistrict.message);
+      //   } else {
+      //     document
+      //       .getElementById("MinorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let districtSelect = document.getElementById(
+      //           "GoverningDistrict"
+      //         ) as HTMLSelectElement;
+      //
+      //         let length = districtSelect?.length;
+      //
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (districtSelect.options[i].value !== "") {
+      //             districtSelect.remove(i);
+      //           }
+      //         }
+      //
+      //         let filteredDistrict = governingDistrict.filter(
+      //           (district) =>
+      //             district.minor_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MinorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredDistrict.forEach((district) => {
+      //           let districtOption = new Option(
+      //             district.governing_district,
+      //             district.id
+      //           );
+      //           document
+      //             .getElementById("GoverningDistrict")
+      //             ?.append(districtOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
     } else {
       alert(t("messages.createClientAccount"));
       location.href = `/${lang}/login`;
@@ -478,7 +478,7 @@ export const ClientRegistration: Component = () => {
 
         <br />
 
-        <div class="flex justify-start">
+        {/*<div class="flex justify-start">
           <label
             for="MinorMunicipality"
             class="text-ptext1 dark:text-ptext1-DM"
@@ -530,7 +530,7 @@ export const ClientRegistration: Component = () => {
           >
             <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
           </svg>
-        </div>
+        </div>*/}
 
         <div class="mb-4 flex justify-center">
           <div class="">

@@ -26,8 +26,8 @@ interface Client {
   display_name: string;
   client_phone: string;
   major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
+  // minor_municipality: string;
+  // governing_district: string;
   user_id: string;
   image_url: string | null;
   email: string;
@@ -225,97 +225,97 @@ export const ClientProfileView: Component = () => {
       }
 
       //Creates drop down options for Minor Municipality based on selected Major Municipality
-      try {
-        const { data: minorMunicipality, error: errorMinorMunicipality } =
-          await supabase.from("minor_municipality").select("*");
-        if (errorMinorMunicipality) {
-          console.log("supabase error: " + errorMinorMunicipality.message);
-        } else {
-          document
-            .getElementById("MajorMunicipality")
-            ?.addEventListener("change", () => {
-              let municipalitySelect = document.getElementById(
-                "MinorMunicipality"
-              ) as HTMLSelectElement;
-
-              let length = municipalitySelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "") {
-                  municipalitySelect.remove(i);
-                }
-              }
-
-              let filteredMunicipality = minorMunicipality.filter(
-                (municipality) =>
-                  municipality.major_municipality ==
-                  (
-                    document.getElementById(
-                      "MajorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredMunicipality.forEach((municipality) => {
-                let municipalityOption = new Option(
-                  municipality.minor_municipality,
-                  municipality.id
-                );
-                document
-                  .getElementById("MinorMunicipality")
-                  ?.append(municipalityOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
-      //Creates filtered drop down options for Governing District base on selected Minor Municipality
-      try {
-        const { data: governingDistrict, error: errorGoverningDistrict } =
-          await supabase.from("governing_district").select("*");
-        if (errorGoverningDistrict) {
-          console.log("supabase error: " + errorGoverningDistrict.message);
-        } else {
-          document
-            .getElementById("MinorMunicipality")
-            ?.addEventListener("change", () => {
-              let districtSelect = document.getElementById(
-                "GoverningDistrict"
-              ) as HTMLSelectElement;
-
-              let length = districtSelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "") {
-                  districtSelect.remove(i);
-                }
-              }
-
-              let filteredDistrict = governingDistrict.filter(
-                (district) =>
-                  district.minor_municipality ==
-                  (
-                    document.getElementById(
-                      "MinorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredDistrict.forEach((district) => {
-                let districtOption = new Option(
-                  district.governing_district,
-                  district.id
-                );
-                document
-                  .getElementById("GoverningDistrict")
-                  ?.append(districtOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
+      // try {
+      //   const { data: minorMunicipality, error: errorMinorMunicipality } =
+      //     await supabase.from("minor_municipality").select("*");
+      //   if (errorMinorMunicipality) {
+      //     console.log("supabase error: " + errorMinorMunicipality.message);
+      //   } else {
+      //     document
+      //       .getElementById("MajorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let municipalitySelect = document.getElementById(
+      //           "MinorMunicipality"
+      //         ) as HTMLSelectElement;
+      //
+      //         let length = municipalitySelect?.length;
+      //
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (municipalitySelect.options[i].value !== "") {
+      //             municipalitySelect.remove(i);
+      //           }
+      //         }
+      //
+      //         let filteredMunicipality = minorMunicipality.filter(
+      //           (municipality) =>
+      //             municipality.major_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MajorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredMunicipality.forEach((municipality) => {
+      //           let municipalityOption = new Option(
+      //             municipality.minor_municipality,
+      //             municipality.id
+      //           );
+      //           document
+      //             .getElementById("MinorMunicipality")
+      //             ?.append(municipalityOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
+      //
+      // //Creates filtered drop down options for Governing District base on selected Minor Municipality
+      // try {
+      //   const { data: governingDistrict, error: errorGoverningDistrict } =
+      //     await supabase.from("governing_district").select("*");
+      //   if (errorGoverningDistrict) {
+      //     console.log("supabase error: " + errorGoverningDistrict.message);
+      //   } else {
+      //     document
+      //       .getElementById("MinorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let districtSelect = document.getElementById(
+      //           "GoverningDistrict"
+      //         ) as HTMLSelectElement;
+      //
+      //         let length = districtSelect?.length;
+      //
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (districtSelect.options[i].value !== "") {
+      //             districtSelect.remove(i);
+      //           }
+      //         }
+      //
+      //         let filteredDistrict = governingDistrict.filter(
+      //           (district) =>
+      //             district.minor_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MinorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredDistrict.forEach((district) => {
+      //           let districtOption = new Option(
+      //             district.governing_district,
+      //             district.id
+      //           );
+      //           document
+      //             .getElementById("GoverningDistrict")
+      //             ?.append(districtOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
+      //
       //If the user is not signed in then tell them to sign in and send them to the login page
     }
   });
@@ -327,33 +327,33 @@ export const ClientProfileView: Component = () => {
     const majorMunicipality = document.getElementById(
       "MajorMunicipality"
     ) as HTMLSelectElement;
-    const minorMunicipality = document.getElementById(
-      "MinorMunicipality"
-    ) as HTMLSelectElement;
-    const governingDistrict = document.getElementById(
-      "GoverningDistrict"
-    ) as HTMLSelectElement;
+    // const minorMunicipality = document.getElementById(
+    //   "MinorMunicipality"
+    // ) as HTMLSelectElement;
+    // const governingDistrict = document.getElementById(
+    //   "GoverningDistrict"
+    // ) as HTMLSelectElement;
 
     if (
       country.value !== "" ||
       majorMunicipality.value !== "" ||
-      minorMunicipality.value !== "" ||
-      governingDistrict.value !== ""
+      // minorMunicipality.value !== "" ||
+      // governingDistrict.value !== ""
     ) {
       country.required = true;
       majorMunicipality.required = true;
-      minorMunicipality.required = true;
-      governingDistrict.required = true;
+      // minorMunicipality.required = true;
+      // governingDistrict.required = true;
     } else if (
       country.value === "" &&
-      majorMunicipality.value === "" &&
-      minorMunicipality.value === "" &&
-      governingDistrict.value === ""
+      majorMunicipality.value === "" 
+      // minorMunicipality.value === "" &&
+      // governingDistrict.value === ""
     ) {
       country.required = false;
       majorMunicipality.required = false;
-      minorMunicipality.required = false;
-      governingDistrict.required = false;
+      // minorMunicipality.required = false;
+      // governingDistrict.required = false;
     }
   };
 
@@ -845,7 +845,8 @@ export const ClientProfileView: Component = () => {
 
                     <br />
 
-                    <label
+                                        
+                    {/* <label
                       for="MinorMunicipality"
                       class="text-ptext1 dark:text-ptext1-DM"
                     >
@@ -908,7 +909,7 @@ export const ClientProfileView: Component = () => {
                           </p>
                         </label>
                       </div>
-                    </Show>
+                    </Show> */}
 
                     <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
                       <Show when={editMode() === true}>

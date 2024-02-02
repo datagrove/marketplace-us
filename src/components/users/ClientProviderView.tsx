@@ -19,8 +19,8 @@ interface Provider {
   provider_id: number;
   provider_phone: string;
   major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
+  // minor_municipality: string;
+  // governing_district: string;
   user_id: string;
   image_url: string | null;
   email: string;
@@ -175,8 +175,8 @@ export const ClientProviderView: Component<Props> = (props) => {
               <p class="my-1">
                 <span class="font-bold">{t("postLabels.location")}</span>
                 {provider()?.major_municipality}/
-                {provider()?.minor_municipality}/
-                {provider()?.governing_district}
+                {/*provider()?.minor_municipality*/}/
+                {/*provider()?.governing_district*/}
               </p>
               <p class="my-1">
                 <span class="font-bold">

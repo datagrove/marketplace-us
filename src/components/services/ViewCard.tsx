@@ -16,8 +16,8 @@ interface Post {
   title: string;
   provider_name: string;
   major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
+  // minor_municipality: string;
+  // governing_district: string;
   user_id: string;
   image_urls: string | null;
 }
@@ -112,8 +112,8 @@ export const ViewCard: Component<Props> = (props) => {
                       <div class="relative col-span-3 w-full flex align-top">
                         <div class="w-full">
                           <div class="truncate inline-block max-w-[58%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
-                            {post.major_municipality}/{post.minor_municipality}/
-                            {post.governing_district}
+                             {/*post.major_municipality}/{post.minor_municipality*/}
+                             {/*post.governing_district*/}
                           </div>
                           <div class="truncate inline-block max-w-[28%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
                             {post.category}

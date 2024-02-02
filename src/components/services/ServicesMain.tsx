@@ -43,9 +43,9 @@ interface ProviderPost {
   category: string;
   title: string;
   provider_name: string;
-  major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
+  // major_municipality: string;
+  // minor_municipality: string;
+  // governing_district: string;
   user_id: string;
   image_urls: string;
 }
