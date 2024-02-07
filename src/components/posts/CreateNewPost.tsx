@@ -1,5 +1,5 @@
+import type { Component } from "solid-js";
 import {
-  Component,
   Suspense,
   createEffect,
   createResource,
@@ -336,11 +336,24 @@ export const CreateNewPost: Component = () => {
         </label>
 
         <div class="mb-4 flex justify-center">
+        <div class="flex items-end justify-end">
+              <div class="group flex items-center relative mr-2 w-4">
+                
+              </div>
+            </div>
           <div class="">
-            <div class="flex flex-row justify-end">
-              <div class="group flex items-center relative mr-2">
+            <PostImage
+              url={imageUrl()[imageUrl().length - 1]}
+              size={150}
+              onUpload={(e: Event, url: string) => {
+                setImageUrl([...imageUrl(), url]);
+              }}
+            />
+          </div>
+          <div class="flex items-end justify-end">
+              <div class="group flex items-center relative ml-2">
                 <svg
-                  class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full mb-2"
+                  class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
@@ -368,14 +381,6 @@ export const CreateNewPost: Component = () => {
                 </span>
               </div>
             </div>
-            <PostImage
-              url={imageUrl()[imageUrl().length - 1]}
-              size={150}
-              onUpload={(e: Event, url: string) => {
-                setImageUrl([...imageUrl(), url]);
-              }}
-            />
-          </div>
         </div>
 
         <br />

@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # Pages created by i18n-astro-aut integration
 astro_tmp_pages_*
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

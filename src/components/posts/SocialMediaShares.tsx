@@ -129,7 +129,7 @@ export const SocialMediaShares: Component<Post> = (props) => {
       
             <div class="flex justify-center">
                 <div id={ 'socialsBtns' + props.id } class="share-btns grid grid-cols-4 md:grid-cols-2 gap-4 auto-rows-min">
-                    <button id="button--x" class="x-share-button socialBtn z-30 flex justify-start items-center rounded font-bold text-icon1 dark:text-icon1-DM" title="Share to X - LANG!" onclick={ (e) => xShare(e) }>
+                <button id="button--x" class="x-share-button socialBtn z-20 flex justify-start items-center rounded font-bold text-icon1 dark:text-icon1-DM" title="Share to X - LANG!" onclick={ (e) => xShare(e) }>
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-x mr-1 text-icon2 dark:text-icon2-DM" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>

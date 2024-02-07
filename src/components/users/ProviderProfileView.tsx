@@ -226,12 +226,14 @@ export const ProviderProfileView: Component = () => {
           console.log(data);
           data.forEach((item) => {
             item.checked = false;
-            provider()?.language_spoken.forEach((language) => {
-              console.log(language);
-              if (language === item.id.toString()) {
-                item.checked = true;
-              }
-            });
+            if (provider()?.language_spoken && provider()?.language_spoken.length > 0){
+              provider()?.language_spoken.forEach((language) => {
+                console.log(language);
+                if (language === item.id.toString()) {
+                  item.checked = true;
+                }
+              });
+            }
           });
           console.log(data);
           setLanguages(data);

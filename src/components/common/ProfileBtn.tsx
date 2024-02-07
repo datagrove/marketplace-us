@@ -66,6 +66,9 @@ export const ProfileBtn = () => {
       </button>
       <ul id="profileItems" class="hidden fixed z-50 right-2 bg-background1 dark:bg-background1-DM m-2 p-2 rounded-lg justify-start shadow-md shadow-shadow-LM dark:shadow-shadow-DM">
         {renderWhenUser()}
+        <div class="mt-2 border-b-2 border-border1 dark:border-border1-DM pb-2">
+          <a href={`/${lang}/faq`}>{t('buttons.faq')}</a>
+        </div>
         <div class="mt-2">
         <div>
           <a href={`/${lang}`}>{t('pageTitles.home')}</a>
