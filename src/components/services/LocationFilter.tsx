@@ -1,5 +1,5 @@
 //TODO: Need to add a Country filter for future phases
-import type { Component } from 'solid-js'
+import type { Component } from "solid-js";
 import { createEffect, createSignal, For } from "solid-js";
 
 import { supabase } from "../../lib/supabaseClient";
@@ -39,7 +39,7 @@ if (major_municipality_error) {
     });
   });
   major_municipalities.sort((a, b) =>
-    a.major_municipality > b.major_municipality ? 0 : -1
+    a.major_municipality > b.major_municipality ? 0 : -1,
   );
 }
 
@@ -93,7 +93,7 @@ interface Props {
 export const LocationFilter: Component<Props> = (props) => {
   const [majorMunicipalities, setMajorMunicipalities] =
     createSignal<Array<{ major_municipality: string; id: number }>>(
-      major_municipalities
+      major_municipalities,
     );
   // const [minorMunicipalities, setMinorMunicipalities] = createSignal<
   //   Array<{
@@ -144,7 +144,7 @@ export const LocationFilter: Component<Props> = (props) => {
   }) => {
     if (locationFilters().includes(item)) {
       let currentLocationFilters = locationFilters().filter(
-        (el) => el !== item
+        (el) => el !== item,
       );
       setLocationFilters(currentLocationFilters);
     } else {
@@ -225,18 +225,18 @@ export const LocationFilter: Component<Props> = (props) => {
       {/* Container for Mobile View */}
       <div class="container">
         {/*Mobile Filters Main Group*/}
-        <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden mx-1 mb-4 border border-border1 dark:border-border1-DM">
-          <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+        <details class="mx-1 mb-4 rounded border shadow md:hidden bg-background1 group border-border1 dark:bg-background1-DM dark:border-border1-DM">
+          <summary class="flex relative flex-wrap items-center list-none rounded cursor-pointer group-open:rounded-b-none group-open:z-[1]">
             <h2 class="flex flex-1 p-2 font-bold">{t("buttons.filters")}</h2>
             {/*Creates the Dropdown Arrow*/}
-            <div class="flex w-10 items-center justify-center">
-              <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
+            <div class="flex justify-center items-center w-10">
+              <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open:rotate-90 dark:border-l-border1-DM"></div>
             </div>
           </summary>
           {/*Major Municipality*/}
           <div class="px-4">
-            <details class="bg-background1 dark:bg-background1-DM shadow rounded group/majorMunicipality md:hidden">
-              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1] relative">
+            <details class="rounded shadow md:hidden bg-background1 group/majorMunicipality dark:bg-background1-DM">
+              <summary class="flex relative flex-wrap justify-between items-center list-none rounded cursor-pointer group-open/majorMunicipality:rounded-b-none group-open/majorMunicipality:z-[1]">
                 <div class="flex items-center pb-1">
                   <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.majorMunicipality")}
@@ -244,34 +244,34 @@ export const LocationFilter: Component<Props> = (props) => {
                 </div>
 
                 {/*Creates the Dropdown Arrow*/}
-                <div class="flex w-10 items-center justify-center">
-                  <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/majorMunicipality:rotate-90 transition-transform"></div>
+                <div class="flex justify-center items-center w-10">
+                  <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open/majorMunicipality:rotate-90 dark:border-l-border1-DM"></div>
                 </div>
               </summary>
               <div class="px-4">
-                <div class="h-42 flex-column text-left rounded">
-                  <div class="grid text-left mr-4 ml-8 h-42 overflow-auto">
+                <div class="text-left rounded h-42 flex-column">
+                  <div class="grid overflow-auto mr-4 ml-8 text-left h-42">
                     <For each={majorMunicipalities()}>
                       {(item) => (
                         <div class="flex flex-row w-11/12">
-                        <div class="inline">
-                          <input
-                            aria-label={
-                              t("ariaLabels.checkboxMajorMunicipality") +
-                              item.major_municipality
-                            }
-                            type="checkbox"
-                            class="leading-tight mr-4 major-muni"
-                            onClick={() => {
-                              setMajorMuniFilter(item);
-                            }}
-                          />
+                          <div class="inline">
+                            <input
+                              aria-label={
+                                t("ariaLabels.checkboxMajorMunicipality") +
+                                item.major_municipality
+                              }
+                              type="checkbox"
+                              class="mr-4 leading-tight major-muni"
+                              onClick={() => {
+                                setMajorMuniFilter(item);
+                              }}
+                            />
                           </div>
                           <div class="inline">
-                          <span class="text-ptext1 dark:text-ptext1-DM">
-                            {item.major_municipality}
-                          </span>
-                        </div>
+                            <span class="text-ptext1 dark:text-ptext1-DM">
+                              {item.major_municipality}
+                            </span>
+                          </div>
                         </div>
                       )}
                     </For>
@@ -281,199 +281,13 @@ export const LocationFilter: Component<Props> = (props) => {
             </details>
           </div>
           {/*Minor Municipality*/}
-          <div class="px-4">
-            <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/minorMunicipality md:hidden">
-              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/minorMunicipality:rounded-b-none group-open/minorMunicipality:z-[1] relative">
-                <div class="flex items-center pb-1">
-                  <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.minorMunicipality")}
-                  </h2>
-                </div>
+          {/*
 
-                {/*Creates the Dropdown Arrow*/}
-                <div class="flex w-10 items-center justify-center">
-                  <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/minorMunicipality:rotate-90 transition-transform"></div>
-                </div>
-              </summary>
-              <div class="px-4 pb-2">
-                <div class="h-42 flex-column text-left rounded">
-                  <div class="grid text-left mr-4 ml-8 h-40 overflow-auto">
-                    <For each={minorMunicipalities()}>
-                      {(item) => (
-                        <div class="flex flex-row w-11/12">
-                          <div class="inline">
-                              <input
-                                aria-label={
-                                  t("ariaLabels.checkboxMinorMunicipality") +
-                                  item.minor_municipality
-                                }
-                                type="checkbox"
-                                class="leading-tight mr-4 minor-muni"
-                                onClick={() => {
-                                  setMinorMuniFilter(item);
-                                }}
-                              />
-                          </div>
-                          <div class="inline">
-                            <span class="text-ptext1 dark:text-ptext1-DM">
-                              {item.minor_municipality}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </For>
-                  </div>
-                </div>
-              </div>
-            </details>
-          </div>
+          */}
           {/*Governing District*/}
-          <div class="px-4">
-            <details class="bg-background1 dark:bg-background1-DM shadow shadow-shadow-LM dark:shadow-shadow-DM rounded group/governingDistrict md:hidden">
-              <summary class="list-none flex flex-wrap justify-between items-center cursor-pointer rounded group-open/governingDistrict:rounded-b-none group-open/governingDistrict:z-[1] relative">
-                <div class="flex items-center pb-1">
-                  <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.governingDistrict")}
-                  </h2>
-                </div>
-                {/*Creates the Dropdown Arrow*/}
-                <div class="flex w-10 items-center justify-center">
-                  <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open/governingDistrict:rotate-90 transition-transform"></div>
-                </div>
-              </summary>
-              <div class="px-4 pb-2">
-                <div class="h-42 flex-column text-left rounded">
-                  <div class="grid text-left mr-4 ml-8 h-36 overflow-auto">
-                    <For each={governingDistricts()}>
-                      {(item) => (
-                        <div class="flex flex-row w-11/12">
-                          <div class="inline">
-                            <input
-                              aria-label={
-                                t("ariaLabels.checkboxGoverningDistrict") +
-                                item.governing_district
-                              }
-                              type="checkbox"
-                              class="leading-tight mr-4 district"
-                              onClick={() => {
-                                setGoverningDistrictFilter(item);
-                              }}
-                            />
-                          </div>
-                          <div class="inline">
-                            <span class="text-ptext1 dark:text-ptext1-DM">
-                              {item.governing_district}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </For>
-                  </div>
-                </div>
-              </div>
-            </details>
-          </div>
         </details>
       </div>
       {/* Filter Menus for md+ view */}
-      <div class="hidden md:block bg-background1 dark:bg-background1-DM w-full md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
-        {/*Major Municipality*/}
-        <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM">
-          <div class="flex flex-wrap justify-between">
-            <div class="w-4/5 pl-4">{t("formLabels.majorMunicipality")}</div>
-          </div>
-
-          <div class="md:grid md:text-left md:mr-4 md:ml-8 md:h-fit md:overflow-auto">
-            <For each={majorMunicipalities()}>
-              {(item) => (
-                <div>
-                  <input
-                    aria-label={
-                      t("ariaLabels.checkboxMajorMunicipality") +
-                      item.major_municipality
-                    }
-                    type="checkbox"
-                    class="major-muni leading-tight mr-4"
-                    onClick={() => {
-                      setMajorMuniFilter(item);
-                    }}
-                  />
-                  <span class="text-ptext1 dark:text-ptext1-DM">
-                    {item.major_municipality}
-                  </span>
-                </div>
-              )}
-            </For>
-          </div>
-        </div>
-        {/*Minor Municipality*/}
-        <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="flex flex-wrap justify-between">
-            <div class="w-4/5 pl-4">{t("formLabels.minorMunicipality")}</div>
-          </div>
-          <div class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto">
-            {" "}
-            {/*Combination of h-full and overflow auto causing weird behavior */}
-            <For each={minorMunicipalities()}>
-              {(item) => (
-                <div class="flex flex-row w-11/12">
-                  <div class="inline">
-                    <input
-                      aria-label={
-                        t("ariaLabels.checkboxMinorMunicipality") +
-                        item.minor_municipality
-                      }
-                      type="checkbox"
-                      class="minor-muni leading-tight mr-4"
-                      onClick={() => {
-                        setMinorMuniFilter(item);
-                      }}
-                    />
-                  </div>
-                  <div class="inline">
-                    <span class="text-ptext1 dark:text-ptext1-DM">
-                      {item.minor_municipality}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </For>
-          </div>          
-        </div>
-        {/*Governing District*/}
-        <div class="md:h-56 md:flex-column md:text-left md:border-b-2 md:rounded md:border-border2 dark:md:border-border2-DM md:box-border">
-          <div class="flex justify-between">
-            <div class="w-4/5 pl-4">{t("formLabels.governingDistrict")}</div>
-          </div>
-
-          <div class=" box-border md:grid md:text-left md:mr-4 md:ml-8 md:h-44 md:overflow-auto md:place-content-start">
-            <For each={governingDistricts()}>
-              {(item) => (
-               <div class="flex flex-row w-11/12">
-               <div class="inline">
-                  <input
-                    aria-label={
-                      t("ariaLabels.checkboxGoverningDistrict") +
-                      item.governing_district
-                    }
-                    type="checkbox"
-                    class="district leading-tight mr-4"
-                    onClick={() => {
-                      setGoverningDistrictFilter(item);
-                    }}
-                  />
-                  </div>
-                  <div class="inline">
-                  <span class="text-ptext1 dark:text-ptext1-DM">
-                    {item.governing_district}
-                  </span>
-                  </div>
-                </div>
-              )}
-            </For>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

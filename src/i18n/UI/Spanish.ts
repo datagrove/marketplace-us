@@ -31,7 +31,7 @@ export const Spanish = {
   pageDescriptions: {
     services: "services",
     signUp:
-      "Ingrese su correo electrónico y cree una contraseña para registrarse para buscar servicios o publicar servicios en Todo Servis.",
+      "Ingrese su correo electrónico y cree una contraseña para registrarse ",
     login: "Ingrese su correo electrónico y contraseña para iniciar sesión.",
     home: "home",
     // signIn: string,
@@ -43,7 +43,7 @@ export const Spanish = {
     clientViewProviderAccount: "clientViewProviderAccount",
     page404: "404 Pagina no encontrada",
     requestPasswordReset:
-      "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta Todo Servis. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
+      "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña ",
     resetPassword: "Restablece tu contraseña de forma segura ",
     terms:
       "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en español.",
@@ -51,12 +51,9 @@ export const Spanish = {
       "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
     acceptableUse:
       "Revise nuestra política de uso aceptable. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
-    about:
-      "Descubra la historia detrás de Todo Servis: quiénes somos, nuestra misión y nuestra pasión por ayudar a revolucionar la forma en que las personas y las empresas encuentran y brindan servicios. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
-    impact:
-      "Explore el impacto significativo de Todo Servis. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
-    fullPost:
-      "Lea más sobre este servicio y comuníquese con el proveedor si está interesado. Explora imágenes adicionales y la descripción completa del servicio.",
+    about: "sobre",
+    impact: "impacto",
+    fullPost: "fullPost",
   },
 
   buttons: {
@@ -118,10 +115,9 @@ export const Spanish = {
       " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
     clickWrap1: "Al hacer clic en",
     clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
-    fetch: "Obtener Servicios",
-    todoFetch:
-      "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
-    mustSignIn: "Debe iniciar sesión para ver los servicios disponibles.",
+    fetch: "fetch",
+    todoFetch: "todoFetch",
+    mustSignIn: "mustSignIn",
     profileEdits:
       "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
     noClient: "No se encontró ningún cliente.",
@@ -131,7 +127,7 @@ export const Spanish = {
 
   formLabels: {
     title: "Título",
-    serviceCategory: "Categoría de Servicio",
+    serviceCategory: "Categoría ",
     postContent: "Publicar Contenido",
     country: "País",
     majorMunicipality: "Provincia",
@@ -171,8 +167,7 @@ export const Spanish = {
 
   homePageText: {
     headline: "headline",
-    subHeadline:
-      "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
+    subHeadline: "subHeadline",
     ariaLabel: "Imagen para el marcador de posición de información",
   },
   menus: {
@@ -181,8 +176,7 @@ export const Spanish = {
   },
 
   toolTips: {
-    providerPhone:
-      "Cada perfil de proveedor debe tener un número de teléfono único. Este número estará disponible para los clientes para poder contactarlo con respecto a sus servicios. Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios.",
+    providerPhone: "providerPhone",
     clientPhone:
       "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
     firstName:
@@ -235,7 +229,7 @@ export const Spanish = {
   },
 
   socialModal: {
-    shareService: "Comparte este servicio",
+    shareService: "Comparte ",
     twitterX: "Compartir en X",
     facebook: "Facebook",
     WhatsApp: "WhatsApp",
@@ -243,15 +237,14 @@ export const Spanish = {
     copyLink: "Copiar link",
     embedLink: "Insertar enlace",
     textLink: "Enlace de texto",
-    disclaimer:
-      "TodoServis no tiene control sobre la información de ningún sitio externo. TodoServis no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso TodoServis será responsable del uso que usted haga de un sitio vinculado.",
+    disclaimer: "disclaimer",
     shareButton: "Botón de compartir",
     closeShareMenu: "Cerrar menú Compartir",
   },
 
   ariaLabels: {
     todo: "todo",
-    logo: "Logotipo de Todo Servis",
+    logo: "Logotipo ",
     navigation: "Navegación",
     checkboxMajorMunicipality:
       "Casilla de verificación para seleccionar Provincia",
@@ -301,7 +294,8 @@ export const Spanish = {
       {
         // title: 'Apoyo',
         links: [
-          { text: "Contáctenos", href: "mailto:support@todoservis.com" },
+          // NEED TO ADD EMAIL
+          { text: "Contáctenos", href: "mailto:support@.com" },
           // { text: 'Community Forum', href: '#' },
           // { text: 'Professional Services', href: '#' },
           // { text: 'Skills', href: '#' },
@@ -330,12 +324,12 @@ export const Spanish = {
       {
         ariaLabel: "Instagram",
         icon: "tabler:brand-instagram",
-        href: "https://www.instagram.com/todoserviscostarica/",
+        href: "https://www.instagram.com//",
       },
       {
         ariaLabel: "Facebook",
         icon: "tabler:brand-facebook",
-        href: "https://www.facebook.com/TodoServisCostaRica",
+        href: "https://www.facebook.com/",
       },
       // { ariaLabel: 'RSS', icon: 'tabler:rss', href: '/rss.xml' },
       {
@@ -346,12 +340,12 @@ export const Spanish = {
       {
         ariaLabel: "WhatsApp",
         icon: "tabler:brand-whatsapp",
-        href: "https://wa.me/message/RUD233VVIVPMG1",
+        href: "https://wa.me/message/",
       },
       {
         ariaLabel: "Discord",
         icon: "tabler:brand-discord",
-        href: "https://discord.gg/NpV44vS6bF",
+        href: "https://discord.gg/",
       },
     ],
     footNote: `<span class="float-left mr-1.5 w-5 h-5 bg-cover rounded-sm md:-mt-0.5 md:w-6 md:h-6"></span>

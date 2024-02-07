@@ -43,7 +43,7 @@ interface ProviderPost {
   category: string;
   title: string;
   provider_name: string;
-  // major_municipality: string;
+  major_municipality: string;
   // minor_municipality: string;
   // governing_district: string;
   user_id: string;
@@ -97,7 +97,6 @@ export const ServicesView: Component = () => {
   let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
   const filterPosts = async () => {
-
     const noPostsMessage = document.getElementById("no-posts-message");
 
     const res = await allFilters.fetchFilteredPosts(
@@ -105,17 +104,15 @@ export const ServicesView: Component = () => {
       locationFilters(),
       minorLocationFilters(),
       governingLocationFilters(),
-      searchString()
+      searchString(),
     );
 
     if (res === null || res === undefined) {
       noPostsMessage?.classList.remove("hidden");
 
-
       setPosts([]);
       setCurrentPosts([]);
       console.error();
-
     } else if (Object.keys(res).length === 0) {
       noPostsMessage?.classList.remove("hidden");
 
@@ -123,11 +120,12 @@ export const ServicesView: Component = () => {
         noPostsMessage?.classList.add("hidden");
       }, 3000);
 
-      timeouts.push(setTimeout(() => {
-        //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-        clearAllFilters();
-      }, 3000));
-
+      timeouts.push(
+        setTimeout(() => {
+          //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+          clearAllFilters();
+        }, 3000),
+      );
 
       let allPosts = await allFilters.fetchAllPosts();
 
@@ -144,7 +142,6 @@ export const ServicesView: Component = () => {
       setPosts(allPosts!);
       setCurrentPosts(allPosts!);
     } else {
-    
       for (let i = 0; i < timeouts.length; i++) {
         clearTimeout(timeouts[i]);
       }
@@ -168,7 +165,7 @@ export const ServicesView: Component = () => {
   const filterPostsByMajorMunicipality = (location: string) => {
     if (locationFilters().includes(location)) {
       let currentLocationFilters = locationFilters().filter(
-        (el) => el !== location
+        (el) => el !== location,
       );
       setLocationFilters(currentLocationFilters);
     } else {
@@ -178,44 +175,44 @@ export const ServicesView: Component = () => {
     filterPosts();
   };
 
-  const filterPostsByMinorMunicipality = (location: string) => {
-    if (minorLocationFilters().includes(location)) {
-      let currentLocationFilters = minorLocationFilters().filter(
-        (el) => el !== location
-      );
-      setMinorLocationFilters(currentLocationFilters);
-    } else {
-      setMinorLocationFilters([...minorLocationFilters(), location]);
-    }
-
-    filterPosts();
-  };
-
-  const filterPostsByGoverningDistrict = (location: string) => {
-    if (governingLocationFilters().includes(location)) {
-      let currentLocationFilters = governingLocationFilters().filter(
-        (el) => el !== location
-      );
-      setGoverningLocationFilters(currentLocationFilters);
-    } else {
-      setGoverningLocationFilters([...governingLocationFilters(), location]);
-    }
-
-    filterPosts();
-  };
+  // const filterPostsByMinorMunicipality = (location: string) => {
+  //   if (minorLocationFilters().includes(location)) {
+  //     let currentLocationFilters = minorLocationFilters().filter(
+  //       (el) => el !== location
+  //     );
+  //     setMinorLocationFilters(currentLocationFilters);
+  //   } else {
+  //     setMinorLocationFilters([...minorLocationFilters(), location]);
+  //   }
+  //
+  //   filterPosts();
+  // };
+  //
+  // const filterPostsByGoverningDistrict = (location: string) => {
+  //   if (governingLocationFilters().includes(location)) {
+  //     let currentLocationFilters = governingLocationFilters().filter(
+  //       (el) => el !== location
+  //     );
+  //     setGoverningLocationFilters(currentLocationFilters);
+  //   } else {
+  //     setGoverningLocationFilters([...governingLocationFilters(), location]);
+  //   }
+  //
+  //   filterPosts();
+  // };
 
   const clearAllFilters = () => {
     let searchInput = document.getElementById("search") as HTMLInputElement;
     let selectedCategories = document.querySelectorAll(".selected");
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni"
+      "input[type='checkbox'].major-muni",
     ) as NodeListOf<HTMLInputElement>;
-    const minorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].minor-muni"
-    ) as NodeListOf<HTMLInputElement>;
-    const districtCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].district"
-    ) as NodeListOf<HTMLInputElement>;
+    // const minorMuniCheckboxes = document.querySelectorAll(
+    //   "input[type='checkbox'].minor-muni"
+    // ) as NodeListOf<HTMLInputElement>;
+    // const districtCheckboxes = document.querySelectorAll(
+    //   "input[type='checkbox'].district"
+    // ) as NodeListOf<HTMLInputElement>;
 
     if (searchInput.value !== null) {
       searchInput.value = "";
@@ -233,20 +230,20 @@ export const ServicesView: Component = () => {
       if (checkbox && checkbox.checked) checkbox.click();
     });
 
-    minorMuniCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
-    });
-
-    districtCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
-    });
-
+    // minorMuniCheckboxes.forEach((checkbox) => {
+    //   if (checkbox && checkbox.checked) checkbox.click();
+    // });
+    //
+    // districtCheckboxes.forEach((checkbox) => {
+    //   if (checkbox && checkbox.checked) checkbox.click();
+    // });
+    //
     setSearchPost([]);
     setSearchString("");
     setFilters([]);
     setLocationFilters([]);
-    setMinorLocationFilters([]);
-    setGoverningLocationFilters([]);
+    // setMinorLocationFilters([]);
+    // setGoverningLocationFilters([]);
     filterPosts();
   };
 
@@ -263,7 +260,7 @@ export const ServicesView: Component = () => {
 
   const clearMajorMunicipality = () => {
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni"
+      "input[type='checkbox'].major-muni",
     ) as NodeListOf<HTMLInputElement>;
 
     majorMuniCheckboxes.forEach((checkbox) => {
@@ -274,32 +271,32 @@ export const ServicesView: Component = () => {
     filterPosts();
   };
 
-  const clearMinorMunicipality = () => {
-    const minorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].minor-muni"
-    ) as NodeListOf<HTMLInputElement>;
-
-    minorMuniCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
-    });
-
-    setMinorLocationFilters([]);
-    filterPosts();
-  };
-
-  const clearDistrict = () => {
-    const districtCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].district"
-    ) as NodeListOf<HTMLInputElement>;
-
-    districtCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
-    });
-
-    setGoverningLocationFilters([]);
-    filterPosts();
-  };
-
+  // const clearMinorMunicipality = () => {
+  //   const minorMuniCheckboxes = document.querySelectorAll(
+  //     "input[type='checkbox'].minor-muni"
+  //   ) as NodeListOf<HTMLInputElement>;
+  //
+  //   minorMuniCheckboxes.forEach((checkbox) => {
+  //     if (checkbox && checkbox.checked) checkbox.click();
+  //   });
+  //
+  //   setMinorLocationFilters([]);
+  //   filterPosts();
+  // };
+  //
+  // const clearDistrict = () => {
+  //   const districtCheckboxes = document.querySelectorAll(
+  //     "input[type='checkbox'].district"
+  //   ) as NodeListOf<HTMLInputElement>;
+  //
+  //   districtCheckboxes.forEach((checkbox) => {
+  //     if (checkbox && checkbox.checked) checkbox.click();
+  //   });
+  //
+  //   setGoverningLocationFilters([]);
+  //   filterPosts();
+  // };
+  //
   return (
     <div class="">
       <div>
@@ -307,7 +304,7 @@ export const ServicesView: Component = () => {
         {/* <SearchBar search={ searchString } /> */}
       </div>
 
-      <div class="clear-filters-btns flex flex-wrap justify-center items-center ">
+      <div class="flex flex-wrap justify-center items-center clear-filters-btns">
         <button
           class="clearBtnRectangle"
           onclick={clearAllFilters}
@@ -332,6 +329,7 @@ export const ServicesView: Component = () => {
           <p class="text-xs">{t("clearFilters.filterButtons.2.text")}</p>
         </button>
 
+        {/*
         <button
           class="clearBtnRectangle"
           onclick={clearMinorMunicipality}
@@ -347,25 +345,26 @@ export const ServicesView: Component = () => {
         >
           <p class="text-xs">{t("clearFilters.filterButtons.4.text")}</p>
         </button>
+        */}
       </div>
 
       <div class="">
         <CategoryCarousel filterPosts={setCategoryFilter} />
       </div>
 
-      <div class="md:h-full flex flex-col md:flex-row items-center md:items-start ">
-        <div class="md:w-56 md:mr-4 w-11/12">
+      <div class="flex flex-col items-center md:flex-row md:items-start md:h-full">
+        <div class="w-11/12 md:mr-4 md:w-56">
           <LocationFilter
             filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
-            filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
-            filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
+            // filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
+            // filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
           />
         </div>
 
-        <div class="md:flex-1 w-11/12 items-center">
+        <div class="items-center w-11/12 md:flex-1">
           <div
             id="no-posts-message"
-            class="hidden py-2 my-1 bg-btn1 dark:bg-btn1-DM rounded"
+            class="hidden py-2 my-1 rounded bg-btn1 dark:bg-btn1-DM"
           >
             <h1 class="text-btn1Text dark:text-btn1Text-DM">
               {t("messages.noPostsSearch")}

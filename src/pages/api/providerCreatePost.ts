@@ -21,9 +21,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   const serviceCategory = formData.get("ServiceCategory");
   const content = formData.get("Content");
   // const country = formData.get("country");
-  // const majorMunicipality = formData.get("MajorMunicipality");
+  const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
-  const governingDistrict = formData.get("GoverningDistrict");
+  // const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
 
@@ -33,15 +33,15 @@ export const post: APIRoute = async ({ request, redirect }) => {
     !serviceCategory ||
     !content ||
     // !country ||
-    // !majorMunicipality ||
     // !minorMunicipality ||
-    !governingDistrict
+    !majorMunicipality
+    // !governingDistrict
   ) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.missingFields")),
+        message: t("apiErrors.missingFields"),
       }),
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -53,9 +53,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (sessionError) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noSession")),
+        message: t("apiErrors.noSession"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -64,9 +64,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (!sessionData?.session) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noSession")),
+        message: t("apiErrors.noSession"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -75,24 +75,24 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (!user) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noUser")),
+        message: t("apiErrors.noUser"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
-  const { data: districtId, error: districtError } = await supabase
-    .from("governing_district")
-    .select("id")
-    .eq("id", governingDistrict);
-  if (districtError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noDistrict")),
-      }),
-      { status: 500 }
-    );
-  }
+  // const { data: districtId, error: districtError } = await supabase
+  //   .from("governing_district")
+  //   .select("id")
+  //   .eq("id", governingDistrict);
+  // if (districtError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: t("apiErrors.noDistrict"),
+  //     }),
+  //     { status: 500 },
+  //   );
+  // }
 
   // const { data: minorMunicipalityId, error: minorMunicipalityError } =
   //   await supabase
@@ -108,19 +108,19 @@ export const post: APIRoute = async ({ request, redirect }) => {
   //   );
   // }
 
-  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
-  //   await supabase
-  //     .from("major_municipality")
-  //     .select("id")
-  //     .eq("id", majorMunicipality);
-  // if (majorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: (t("apiErrors.noMajorMunicipality")),
-  //     }),
-  //     { status: 500 }
-  //   );
-  // }
+  const { data: majorMunicipalityId, error: majorMunicipalityError } =
+    await supabase
+      .from("major_municipality")
+      .select("id")
+      .eq("id", majorMunicipality);
+  if (majorMunicipalityError) {
+    return new Response(
+      JSON.stringify({
+        message: t("apiErrors.noMajorMunicipality"),
+      }),
+      { status: 500 },
+    );
+  }
 
   // const { data: countryId, error: countryError } = await supabase
   //   .from("country")
@@ -142,16 +142,16 @@ export const post: APIRoute = async ({ request, redirect }) => {
   if (categoryError) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noCategory")),
+        message: t("apiErrors.noCategory"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
   let locationSubmission = {
     // minor_municipality: minorMunicipalityId[0].id,
-    // major_municipality: majorMunicipalityId[0].id,
-    governing_district: districtId[0].id,
+    major_municipality: majorMunicipalityId[0].id,
+    // governing_district: districtId[0].id,
     // country: countryId[0].id,
     user_id: user.id,
   };
@@ -164,9 +164,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log(locationError);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.locationError")),
+        message: t("apiErrors.locationError"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -188,16 +188,16 @@ export const post: APIRoute = async ({ request, redirect }) => {
     console.log(error);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.postError")),
+        message: t("apiErrors.postError"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   } else if (!data) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noPost")),
+        message: t("apiErrors.noPost"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   } else {
     console.log("Post Data: " + JSON.stringify(data));
@@ -206,9 +206,9 @@ export const post: APIRoute = async ({ request, redirect }) => {
   // Do something with the formData, then return a success response
   return new Response(
     JSON.stringify({
-      message: (t("apiErrors.success")),
+      message: t("apiErrors.success"),
       redirect: "/provider/profile",
     }),
-    { status: 200 }
+    { status: 200 },
   );
 };

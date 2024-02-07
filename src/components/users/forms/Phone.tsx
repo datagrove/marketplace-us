@@ -29,7 +29,7 @@ export const TelephoneInput: Component<Props> = (props) => {
         autoInsertDialCode: true,
         autoPlaceholder: "aggressive",
         placeholderNumberType: "MOBILE",
-        preferredCountries: ["cr", "us", "ni", "co"],
+        preferredCountries: ["us"],
         utilsScript: "/intl-tel-input/build/js/utils.js", // Make sure to provide the correct path to utils.js
       });
 
@@ -38,19 +38,48 @@ export const TelephoneInput: Component<Props> = (props) => {
           if (telInput.isPossibleNumber()) {
             if (typeof props.onInput === "function") {
               props.onInput(telInput.getNumber().substring(1));
-              document.getElementById("notValidNumber")?.classList.add("hidden");
-              document.getElementById("validNumber")?.classList.remove("hidden")
-              document.getElementById("telephoneInput")?.classList.add("border-inputBorder1", "border", "dark:border-inputBorder1-DM");
-              document.getElementById("telephoneInput")?.classList.remove("border-2", "border-alert1", "dark:border-alert1-DM");
+              document
+                .getElementById("notValidNumber")
+                ?.classList.add("hidden");
+              document
+                .getElementById("validNumber")
+                ?.classList.remove("hidden");
+              document
+                .getElementById("telephoneInput")
+                ?.classList.add(
+                  "border-inputBorder1",
+                  "border",
+                  "dark:border-inputBorder1-DM",
+                );
+              document
+                .getElementById("telephoneInput")
+                ?.classList.remove(
+                  "border-2",
+                  "border-alert1",
+                  "dark:border-alert1-DM",
+                );
             }
           } else {
             if (typeof props.onInput === "function") {
               props.onInput("");
-              document.getElementById("validNumber")?.classList.add("hidden")
-              document.getElementById("notValidNumber")?.classList.remove("hidden");
-              document.getElementById("telephoneInput")?.classList.remove("border-inputBorder1", "border", "dark:border-inputBorder1-DM");
-              document.getElementById("telephoneInput")?.classList.add("border-2", "border-alert1", "dark:border-alert1-DM");
-              
+              document.getElementById("validNumber")?.classList.add("hidden");
+              document
+                .getElementById("notValidNumber")
+                ?.classList.remove("hidden");
+              document
+                .getElementById("telephoneInput")
+                ?.classList.remove(
+                  "border-inputBorder1",
+                  "border",
+                  "dark:border-inputBorder1-DM",
+                );
+              document
+                .getElementById("telephoneInput")
+                ?.classList.add(
+                  "border-2",
+                  "border-alert1",
+                  "dark:border-alert1-DM",
+                );
             }
           }
         }
@@ -70,25 +99,25 @@ export const TelephoneInput: Component<Props> = (props) => {
   });
 
   return (
-    <div class="flex justify-end items-center relative mb-4">
+    <div class="flex relative justify-end items-center mb-4">
       <input
         ref={(el) => (inputRef = el)}
         type="tel"
         id="telephoneInput"
-        class="peer rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none peer border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
         required
       />
       <svg
         id="notValidNumber"
         viewBox="-3.5 0 19 19"
         xmlns="http://www.w3.org/2000/svg"
-        class="w-4 h-4 fill-alert1 dark:fill-alert1-DM absolute mr-2 hidden"
+        class="hidden absolute mr-2 w-4 h-4 fill-alert1 dark:fill-alert1-DM"
       >
         <path d="M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z" />
       </svg>
       <svg
         id="validNumber"
-        class="w-4 h-4 fill-btn1 dark:fill-btn1-DM absolute mr-2 hidden"
+        class="hidden absolute mr-2 w-4 h-4 fill-btn1 dark:fill-btn1-DM"
         viewBox="0 0 12 12"
         xmlns="http://www.w3.org/2000/svg"
       >

@@ -24,9 +24,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const providerName = formData.get("ProviderName");
   const phone = formData.get("Phone");
   // const country = formData.get("country");
-  // const majorMunicipality = formData.get("MajorMunicipality");
+  const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
-  const governingDistrict = formData.get("GoverningDistrict");
+  // const governingDistrict = formData.get("GoverningDistrict");
   const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   const language = JSON.parse(formData.get("languageArray")! as string);
@@ -38,16 +38,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (
     !phone ||
     // !country ||
-    // !majorMunicipality ||
+    !majorMunicipality ||
     // !minorMunicipality ||
-    !governingDistrict ||
+    // !governingDistrict ||
     language?.length === 0
   ) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.missingFields")),
+        message: t("apiErrors.missingFields"),
       }),
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -61,9 +61,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log("supabase error: " + sessionError.message);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noSession")),
+        message: t("apiErrors.noSession"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -73,9 +73,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (!sessionData?.session) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noSession")),
+        message: t("apiErrors.noSession"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -85,9 +85,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (!user) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noUser")),
+        message: t("apiErrors.noUser"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -102,29 +102,29 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   } else if (providerExists[0] !== undefined) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.providerExists")),
+        message: t("apiErrors.providerExists"),
         redirect: "/provider/profile",
       }),
-      { status: 302 }
+      { status: 302 },
     );
   }
 
   /*Each of these retrieves the appropriate id from the database for the area level
   (governing district, minor municipality, major municipality, country)
   in order to make a proper submission to the location table */
-  const { data: districtId, error: districtError } = await supabase
-    .from("governing_district")
-    .select("id")
-    .eq("id", governingDistrict);
-  if (districtError) {
-    return new Response(
-      JSON.stringify({
-        message: (t("apiErrors.noDistrict")),
-      }),
-      { status: 500 }
-    );
-  }
-
+  // const { data: districtId, error: districtError } = await supabase
+  //   .from("governing_district")
+  //   .select("id")
+  //   .eq("id", governingDistrict);
+  // if (districtError) {
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: (t("apiErrors.noDistrict")),
+  //     }),
+  //     { status: 500 }
+  //   );
+  // }
+  //
   // const { data: minorMunicipalityId, error: minorMunicipalityError } =
   //   await supabase
   //     .from("minor_municipality")
@@ -139,19 +139,19 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   //   );
   // }
 
-  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
-  //   await supabase
-  //     .from("major_municipality")
-  //     .select("id")
-  //     .eq("id", majorMunicipality);
-  // if (majorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: (t("apiErrors.noMajorMunicipality")),
-  //     }),
-  //     { status: 500 }
-  //   );
-  // }
+  const { data: majorMunicipalityId, error: majorMunicipalityError } =
+    await supabase
+      .from("major_municipality")
+      .select("id")
+      .eq("id", majorMunicipality);
+  if (majorMunicipalityError) {
+    return new Response(
+      JSON.stringify({
+        message: t("apiErrors.noMajorMunicipality"),
+      }),
+      { status: 500 },
+    );
+  }
 
   // const { data: countryId, error: countryError } = await supabase
   //   .from("country")
@@ -169,8 +169,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
     // minor_municipality: minorMunicipalityId[0].id,
-    // major_municipality: majorMunicipalityId[0].id,
-    governing_district: districtId[0].id,
+    major_municipality: majorMunicipalityId[0].id,
+    // governing_district: districtId[0].id,
     // country: countryId[0].id,
     user_id: user.id,
   };
@@ -184,9 +184,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(locationError);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.locationError")),
+        message: t("apiErrors.locationError"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -210,16 +210,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(error);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.providerCreateProfileError")),
+        message: t("apiErrors.providerCreateProfileError"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   } else if (!data) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noProfileData")),
+        message: t("apiErrors.noProfileData"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   } else {
     console.log("Profile Data: " + JSON.stringify(data));
@@ -228,9 +228,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // If everything works send a success response
   return new Response(
     JSON.stringify({
-      message: (t("apiErrors.success")),
+      message: t("apiErrors.success"),
       redirect: "/provider/profile",
     }),
-    { status: 200 }
+    { status: 200 },
   );
 };

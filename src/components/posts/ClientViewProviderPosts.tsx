@@ -1,15 +1,15 @@
 import { Component, createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import { supabase } from "../../lib/supabaseClient";
-import { ui } from '../../i18n/ui'
-import type { uiObject } from '../../i18n/uiType';
+import { ui } from "../../i18n/ui";
+import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
 //get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject
-const productCategories = values.productCategoryInfo.categories
+const values = ui[lang] as uiObject;
+const productCategories = values.productCategoryInfo.categories;
 
 interface ProviderPost {
   user_id: string;
@@ -19,8 +19,8 @@ interface ProviderPost {
   title: string;
   provider_name: string;
   major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
+  // minor_municipality: string;
+  // governing_district: string;
   image_urls: string;
 }
 
@@ -42,14 +42,14 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
     if (error) {
       console.log("supabase error: " + error.message);
     } else {
-      data?.map(item => {
-        productCategories.forEach(productCategories => {
+      data?.map((item) => {
+        productCategories.forEach((productCategories) => {
           if (item.service_category.toString() === productCategories.id) {
-            item.category = productCategories.name
+            item.category = productCategories.name;
           }
-        })
-        delete item.service_category
-      })
+        });
+        delete item.service_category;
+      });
       setPosts(data);
     }
   });
