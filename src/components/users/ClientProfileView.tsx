@@ -1346,7 +1346,7 @@ export const ClientProfileView: Component = () => {
 
                 <br />
 
-                <label
+                {/* <label
                   for="MinorMunicipality"
                   class="text-ptext1 dark:text-ptext1-DM"
                 >
@@ -1409,7 +1409,7 @@ export const ClientProfileView: Component = () => {
                       </p>
                     </label>
                   </div>
-                </Show>
+                </Show> */}
               </div>
             </Show>
 
