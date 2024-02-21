@@ -239,8 +239,9 @@ export const ClientProviderView: Component<Props> = (props) => {
           </div>
           <p class="my-1">
             <span class="font-bold">{t("postLabels.location")}</span>
-            {provider()?.major_municipality}/{provider()?.minor_municipality}/
-            {provider()?.governing_district}
+            {provider()?.major_municipality}
+            {/* {provider()?.major_municipality}/{provider()?.minor_municipality}/
+            {provider()?.governing_district} */}
           </p>
           <p class="my-1">
             <span class="font-bold">{t("formLabels.languagesSpoken")}: </span>
