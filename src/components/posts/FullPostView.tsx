@@ -1,4 +1,5 @@
-import { Component, createSignal, createEffect, Show } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal, createEffect, Show } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import type { AuthSession } from "@supabase/supabase-js";

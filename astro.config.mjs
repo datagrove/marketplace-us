@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config'
 import solid from '@astrojs/solid-js'
 import tailwind from '@astrojs/tailwind'
-import { i18n, defaultLocaleSitemapFilter } from 'astro-i18n-aut/integration'
+import { i18n, filterSitemapByDefaultLocale } from 'astro-i18n-aut/integration'
 import sitemap from '@astrojs/sitemap'
 import cloudflare from '@astrojs/cloudflare'
 import { defaultLang, languages } from './src/i18n/ui'
@@ -71,7 +71,7 @@ export default defineConfig({
           'pages/api/*'
         ]
       },
-      filter: defaultLocaleSitemapFilter({
+      filter: filterSitemapByDefaultLocale({
         defaultLocale
       })
     }),

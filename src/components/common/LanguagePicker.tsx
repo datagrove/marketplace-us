@@ -1,6 +1,7 @@
 
 import { languages } from "../../i18n/ui";
-import { createSignal, createEffect, Component, onMount } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal, createEffect,  onMount } from "solid-js";
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import language from '../../assets/language.svg'
 
