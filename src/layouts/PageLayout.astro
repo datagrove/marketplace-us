@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/BaseLayout.astro';
-// import { headerData, footerData } from '../data';
 import Footer from "../components/common/Footer.astro";
 import Header from "../components/common/Header.astro";
 import { getLangFromUrl, useTranslations } from '../i18n/utils';
@@ -18,14 +17,14 @@ const footerData = values.footerData
 const {pageTitle, pageDescription } = Astro.props
 ---
 <Layout {pageTitle} {pageDescription}>
-  <div class="min-h-screen">
+  <div class="">
     <div class="header">
       <Header {...headerData} />
     </div>
-    <main class="flex justify-center">
+    <main class="flex justify-center min-h-screen">
       <slot />
     </main>
-    <div class="footer sticky top-[100vh]">
+    <div class="footer sticky bottom-0 z-50">
       <Footer {...footerData} />
     </div>
   </div>

@@ -40,7 +40,7 @@ const SocialModal: Component<Post> = function (props) {
   }
 
   return (
-    <div id="social-modal-div" class="relative z-40">
+    <div id="social-modal-div" class="relative z-10">
       <Show
         when={isOpen()}
         fallback={

@@ -386,7 +386,7 @@ export const ClientProfileView: Component = () => {
           </h1>
         </Show>
       </div>
-      <div class="m-auto md:w-[44rem]">
+      <div class="m-auto md:max-w-max ">
         {/* Left column for md+ View */}
         <div class="justify-center rounded-md border md:px-4 md:pb-4 md:mt-4 border-border1 md:drop-shadow-lg md:h-fit dark:border-border1-DM">
           <form onSubmit={submit} id="editProfile">
@@ -462,7 +462,7 @@ export const ClientProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex relative items-center mr-2 group">
                           <svg
-                            class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
+                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"

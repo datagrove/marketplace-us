@@ -27,79 +27,81 @@ export interface Props {
 
 const { socialLinks = [], secondaryLinks = [], links = [], footNote = ''} = Astro.props;
 ---
-<footer class="flex flex-col bg-background2 dark:bg-background2-DM mt-4 py-4 -mx-4">
-  <div class="w-full flex flex-col items-center">
+<footer class="flex flex-col bg-background2 dark:bg-background2-DM mt-4 md:-mx-4 md:p-2 pb-1.5 z-50">
+  <div class="w-full flex flex-col">
       <div class="">
-        <div class="mb-2 text-center text-ptext2 dark:text-text2-DM  md:w-full">
+        <div class="text-center text-ptext2 dark:text-text2-DM">
           <a class="inline-block font-bold text-xl" href={SITE.url}>{SITE?.name}</a>
         </div>
       </div>
 
-      <div class="flex justify-center text-center max-w-screen-sm w-full my-2 md:my-4">
+      <div class="w-full flex-wrap md:flex items-center">
+        <div class="flex w-full justify-center md:justify-start md:w-1/3 text-center max-w-screen-sm">
+            {
+              secondaryLinks.map(({ text, href }) => (
+              <div class="flex text-center items-center justify-center text-ptext2 dark:text-ptext2-DM px-2"> 
+                <div class="flex justify-center items-center">
+                  <a
+                    class="text-muted text-center text-sm text-link2 hover:text-link2Hov dark:text-link2-DM dark:hover:text-link2Hov-DM transition duration-150 ease-in-out"
+                    href={`/${lang}/${href}`}
+                    set:html={text}
+                  />
+                </div>
+              </div> 
+              ))
+            }
+          <!-- </div> -->
           {
-            secondaryLinks.map(({ text, href }) => (
-            <div class="flex text-center items-center justify-center w-1/4 text-ptext2 dark:text-ptext2-DM px-4"> 
-              <div class="flex justify-center items-center">
-                <a
-                  class="text-muted text-center text-sm text-link2 hover:text-link2Hov dark:text-link2-DM dark:hover:text-link2Hov-DM transition duration-150 ease-in-out"
-                  href={`/${lang}/${href}`}
-                  set:html={text}
-                />
+            links.map(({ title, links }) => (
+              <div class="flex justify-center items-center px-2">
+                {links && Array.isArray(links) && links.length > 0 && (
+                  <ul class="text-sm">
+                    {links.map(({ text, href, ariaLabel }) => (
+                      <li class="text-link2 dark:text-link2-DM">
+                        <a
+                          class="text-muted text-link2 hover:text-link2Hov dark:text-link2-DM dark:hover:text-link2Hov-DM transition duration-150 ease-in-out"
+                          href={href}
+                          aria-label={ariaLabel}
+                        >
+                          <Fragment set:html={text} />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-            </div> 
             ))
           }
-        <!-- </div> -->
-        {
-          links.map(({ title, links }) => (
-            <div class="flex justify-center items-center w-1/4 px-4">
-              {links && Array.isArray(links) && links.length > 0 && (
-                <ul class="text-sm">
-                  {links.map(({ text, href, ariaLabel }) => (
-                    <li class="text-link2 dark:text-link2-DM">
-                      <a
-                        class="text-muted text-link2 hover:text-link2Hov dark:text-link2-DM dark:hover:text-link2Hov-DM transition duration-150 ease-in-out"
-                        href={href}
-                        aria-label={ariaLabel}
-                      >
-                        <Fragment set:html={text} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))
-        }
-      </div>
-    </div>
+        </div>
     
-    <div class="text-center text-text2 dark:text-text2-DM">
-      {
-        socialLinks?.length ? (
-          <ul class="flex justify-center mb-2">
-            {socialLinks.map(({ ariaLabel, href, text, icon }) => (
-              <li>
-                <a
-                  class="text-muted dark:text-icon2-DM text-icon2 hover:bg-shadow-LM dark:hover:bg-shadow-DM focus:outline-none focus:ring-4 rounded-lg text-sm p-2 inline-flex items-center"
-                  aria-label={ariaLabel}
-                  href={href}
-                  target="_blank"
-                >
-                  {icon && <Icon name={icon} class="w-5 h-5" />}
-                  <Fragment set:html={text}/>
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          ''
-        )
-      }
-
-      <div class="text-sm dark:text-text2-DM text-text2">
-        <Fragment set:html={footNote} />
-      </div>
+        <div class="flex justify-center md:justify-center items-center w-full md:w-1/3 h-full text-center text-text2 dark:text-text2-DM">
+          {
+            socialLinks?.length ? (
+              <ul class="flex justify-center">
+                {socialLinks.map(({ ariaLabel, href, text, icon }) => (
+                  <li>
+                    <a
+                      class="text-muted dark:text-icon2-DM text-icon2 hover:bg-shadow-LM dark:hover:bg-shadow-DM focus:outline-none focus:ring-4 rounded-lg text-sm p-2 inline-flex items-center"
+                      aria-label={ariaLabel}
+                      href={href}
+                      target="_blank"
+                    >
+                      {icon && <Icon name={icon} class="w-5 h-5" />}
+                      <Fragment set:html={text}/>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              ''
+            )
+          }
+        </div>
+      <div>
+    </div>
+    <div class="text-sm dark:text-ptext2-DM text-ptext2 text-center md:w-1/3 md:text-end">
+      <Fragment set:html={footNote} class="text-ptext2 dark:text-ptext2-DM"/>
     </div>
   </div>
+  
 </footer>

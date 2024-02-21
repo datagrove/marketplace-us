@@ -99,13 +99,13 @@ let light = window.matchMedia(
 
 export const CategoryCarousel: Component<Props> = (props) => {
   return (
-    <div class="product-carousel my-2">
-      <div class="flex flex-start justify-between">
+    <div class="product-carousel my-2 rounded-lg p-1">
+      <div class="flex flex-start justify-between scrollbar-thin overflow-x-auto drop-shadow-md dark:drop-shadow-[0_4px_3px_rgba(97,97,97,1)]  scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thumb-shadow-LM scrollbar-track-background1 dark:scrollbar-thumb-shadow-DM dark:scrollbar-track-background1-DM">
         <button class="w-12 hidden">
           <img src={leftArrow.src} alt="Left Arrow" />
         </button>
 
-        <div class="flex justify-between items-start w-full overflow-auto pt-2 h-[7.5rem]">
+        <div class="flex justify-between items-start w-full pt-2 h-[7.5rem]">
           {allCategoryInfo?.map((item) => (
             <button
               id={item.id}
@@ -123,12 +123,14 @@ export const CategoryCarousel: Component<Props> = (props) => {
               }}
             >
               <div class="bg-iconbg1 dark:bg-iconbg1-DM rounded-full">
-                <img
-                  src={item.icon.src}
-                  alt={item.ariaLabel + " Icon"}
-                  title={item.description}
-                  class="w-12 h-12 p-1 m-2"
-                />
+              {item.icon && item.icon.src ? (
+                  <img
+                    src={item.icon.src}
+                    alt={item.ariaLabel + " Icon"}
+                    title={item.description}
+                    class="w-12 h-12 p-1 m-2"
+                  />
+                ) : null}
               </div>
 
               <div class="flex flex-row justify-center items-center h-44">
