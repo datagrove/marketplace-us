@@ -19,7 +19,7 @@
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/solid": "^0.4.2",
     "@playwright/test": "^1.41.2",
-    "@supabase/supabase-js": "^2.37.0",
+    "@supabase/supabase-js": "^2.39.6",
     "astro": "^4.4.0",
     "astro-compress": "^2.0.15",
     "astro-i18n-aut": "^0.7.0",
