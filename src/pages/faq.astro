@@ -1,26 +1,21 @@
 ---
 import Layout from "@layouts/PageLayout.astro";
-import { Content } from "@content/about/about.mdx";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { getCollection } from 'astro:content';
+
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-
-const classes = () => {
-  if (lang === "en" || lang === "fr") {
-    return "underline text-link1 dark:text-link1-DM";
-  } else if (lang === "es") {
-    return "";
-  }
-};
+const faqPage = await getCollection('faq', ({data}) => data.lang === lang);
+const { Content } = await faqPage[0].render();
 ---
 
-<Layout pageTitle={t("pageTitles.about")} pageDescription={t("pageDescriptions.about")}>
+<Layout pageTitle={t("pageTitles.faq")} pageDescription={t("pageDescriptions.faq")}>
   <div class="mx-6">
     <div class="mb-8">
       <h1 class="font-bold text-3xl mb-2 text-ptext1 dark:text-ptext1-DM">
-        {t("pageTitles.about")}
+        {t("pageTitles.faq")}
       </h1>
     </div>
     <div class="prose dark:prose-invert">

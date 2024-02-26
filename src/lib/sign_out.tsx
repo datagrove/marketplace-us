@@ -1,4 +1,5 @@
-import { Component, createSignal } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal } from "solid-js";
 import { supabase } from "./supabaseClient";
 import { currentSession } from "./userSessionStore";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";

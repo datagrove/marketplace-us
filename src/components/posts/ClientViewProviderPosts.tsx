@@ -1,4 +1,5 @@
-import { Component, createEffect, createSignal } from "solid-js";
+import type { Component } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import { supabase } from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";

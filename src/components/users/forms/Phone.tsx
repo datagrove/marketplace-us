@@ -1,5 +1,5 @@
+import type { Component } from "solid-js";
 import {
-  Component,
   createEffect,
   createSignal,
   onCleanup,

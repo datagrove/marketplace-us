@@ -1,4 +1,5 @@
-import { Component, createSignal, createEffect } from "solid-js";
+import type { Component } from "solid-js";
+import { createSignal, createEffect } from "solid-js";
 import { supabase } from "../../lib/supabaseClient";
 import { currentSession } from "../../lib/userSessionStore";
 import { useStore } from "@nanostores/solid";

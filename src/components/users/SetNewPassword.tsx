@@ -1,5 +1,6 @@
 import { supabase } from '../../lib/supabaseClient'
-import { Component, createSignal } from 'solid-js'
+import type { Component } from "solid-js";
+import { createSignal } from 'solid-js'
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(new URL(window.location.href));
