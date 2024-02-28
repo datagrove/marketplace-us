@@ -83,6 +83,7 @@ export const Auth: Component = (props) => {
             last_name: data.user?.user_metadata.last_name,
             email: data.user?.email,
           };
+          console.log(profileSubmission);
 
           //Todo: Update RLS to allow anyone to insert into the profile table
           const { data: profileData, error: profileError } = await supabase
@@ -90,6 +91,8 @@ export const Auth: Component = (props) => {
             .insert([profileSubmission]);
           if (profileError) {
             console.log(profileError.message);
+            console.log(profileError.code);
+            console.log(profileError.details);
             alert(t("apiErrors.profileCreateError"));
             return
           }

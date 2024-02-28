@@ -4,9 +4,9 @@
 // const t = useTranslations(lang);
 
 const CONFIG = {
-  name: "HomeSchool",
+  name: "LearnGrove",
 
-  title: "HomeSchool",
+  title: "LearnGrove",
   description: "HomeSchool description",
   //NEED TO ADD NEW URL
   url: "https://NEWURL.com/",
