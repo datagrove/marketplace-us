@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import { supabase } from "./supabaseClient";
 import { currentSession } from "./userSessionStore";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
@@ -24,6 +24,11 @@ export const Auth: Component = (props) => {
   const regularExpressionPassword =
     /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
   const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+
+  createEffect(() => {
+    console.log(firstName(), lastName());
+  });
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
