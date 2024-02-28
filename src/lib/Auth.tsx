@@ -26,10 +26,6 @@ export const Auth: Component = (props) => {
   const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 
-  createEffect(() => {
-    console.log(firstName(), lastName());
-  });
-
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
 
@@ -81,20 +77,13 @@ export const Auth: Component = (props) => {
             },
           });
 
-          console.log(data);
-          if (error){
-            console.log(error.message);
-            console.log(error.name);
-            console.log(error.cause);
-          }
-
           let profileSubmission = {
             user_id: data.user?.id,
             first_name: data.user?.user_metadata.first_name,
             last_name: data.user?.user_metadata.last_name,
             email: data.user?.email,
           };
-          console.log(profileSubmission);
+
 
           //Todo: Update RLS to allow anyone to insert into the profile table
           const { data: profileData, error: profileError } = await supabase
@@ -102,8 +91,6 @@ export const Auth: Component = (props) => {
             .insert([profileSubmission]);
           if (profileError) {
             console.log(profileError.message);
-            console.log(profileError.code);
-            console.log(profileError.details);
             alert(t("apiErrors.profileCreateError"));
             return
           }
