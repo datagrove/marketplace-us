@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import { supabase } from "./supabaseClient";
 import { currentSession } from "./userSessionStore";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
@@ -24,6 +24,7 @@ export const Auth: Component = (props) => {
   const regularExpressionPassword =
     /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
   const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
 
   const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -76,13 +77,13 @@ export const Auth: Component = (props) => {
             },
           });
 
-
           let profileSubmission = {
             user_id: data.user?.id,
             first_name: data.user?.user_metadata.first_name,
             last_name: data.user?.user_metadata.last_name,
             email: data.user?.email,
           };
+
 
           //Todo: Update RLS to allow anyone to insert into the profile table
           const { data: profileData, error: profileError } = await supabase
