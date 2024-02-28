@@ -82,6 +82,11 @@ export const Auth: Component = (props) => {
           });
 
           console.log(data);
+          if (error){
+            console.log(error.message);
+            console.log(error.name);
+            console.log(error.cause);
+          }
 
           let profileSubmission = {
             user_id: data.user?.id,
