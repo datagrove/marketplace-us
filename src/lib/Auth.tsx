@@ -81,6 +81,7 @@ export const Auth: Component = (props) => {
             },
           });
 
+          console.log(data);
 
           let profileSubmission = {
             user_id: data.user?.id,
