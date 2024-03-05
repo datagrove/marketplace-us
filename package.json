@@ -19,9 +19,10 @@
     "@nanostores/persistent": "^0.9.1",
     "@nanostores/solid": "^0.4.2",
     "@playwright/test": "^1.41.2",
+    "@stripe/stripe-js": "^3.0.6",
     "@supabase/supabase-js": "^2.39.6",
     "astro": "^4.4.0",
-    "astro-compress": "^2.0.15",
+    "astro-compress": "^2.2.11",
     "astro-i18n-aut": "^0.7.0",
     "astro-icon": "^1.0.0-next.2",
     "astro-service-worker": "^0.1.2",
@@ -36,9 +37,10 @@
     "rehype-slug": "^5.1.0",
     "remark-toc": "^8.0.1",
     "solid-js": "^1.7.7",
+    "stripe": "^14.18.0",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.3.2",
-    "tinymce": "^6.7.0"
+    "tinymce": "^6.8.3"
   },
   "devDependencies": {
     "@iconify-json/tabler": "^1.1.87",
@@ -47,6 +49,7 @@
     "@types/jquery": "^3.5.16",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.7",
+    "@types/tinymce": "^4.6.9",
     "@vite-pwa/astro": "^0.2.0",
     "prettier": "^3.0.1",
     "prettier-plugin-astro": "^0.11.0",

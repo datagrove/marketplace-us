@@ -13,6 +13,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
+import stripe from "../../lib/stripe";
 
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -84,156 +85,90 @@ export const CreateNewPost: Component = () => {
         console.log("Other error: " + error);
       }
 
-      //Major Municipality
-      try {
-        const { data: majorMunicipality, error: errorMajorMunicipality } =
-          //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
-          await supabase.from("major_municipality").select("*");
-        if (errorMajorMunicipality) {
-          console.log("supabase error: " + errorMajorMunicipality.message);
-        } else {
-          document.getElementById("country")?.addEventListener("change", () => {
-            let municipalitySelect = document.getElementById(
-              "MajorMunicipality"
-            ) as HTMLSelectElement;
+      // //Major Municipality
+      // try {
+      //   const { data: majorMunicipality, error: errorMajorMunicipality } =
+      //     //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
+      //     await supabase.from("major_municipality").select("*");
+      //   if (errorMajorMunicipality) {
+      //     console.log("supabase error: " + errorMajorMunicipality.message);
+      //   } else {
+      //     document.getElementById("country")?.addEventListener("change", () => {
+      //       let municipalitySelect = document.getElementById(
+      //         "MajorMunicipality"
+      //       ) as HTMLSelectElement;
 
-            let length = municipalitySelect?.length;
+      //       let length = municipalitySelect?.length;
 
-            for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "") {
-                municipalitySelect.remove(i);
-              }
-            }
-            let filteredMunicipality = majorMunicipality.filter(
-              (municipality) =>
-                municipality.country ==
-                (document.getElementById("country") as HTMLSelectElement)?.value
-            );
-            filteredMunicipality.forEach((municipality) => {
-              let municipalityOption = new Option(
-                municipality.major_municipality,
-                municipality.id
-              );
-              document
-                .getElementById("MajorMunicipality")
-                ?.append(municipalityOption);
-            });
-          });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      //       for (let i = length - 1; i > -1; i--) {
+      //         if (municipalitySelect.options[i].value !== "") {
+      //           municipalitySelect.remove(i);
+      //         }
+      //       }
+      //       let filteredMunicipality = majorMunicipality.filter(
+      //         (municipality) =>
+      //           municipality.country ==
+      //           (document.getElementById("country") as HTMLSelectElement)?.value
+      //       );
+      //       filteredMunicipality.forEach((municipality) => {
+      //         let municipalityOption = new Option(
+      //           municipality.major_municipality,
+      //           municipality.id
+      //         );
+      //         document
+      //           .getElementById("MajorMunicipality")
+      //           ?.append(municipalityOption);
+      //       });
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
 
-      //Minor Municipality
-      try {
-        const { data: minorMunicipality, error: errorMinorMunicipality } =
-          await supabase.from("minor_municipality").select("*");
-        if (errorMinorMunicipality) {
-          console.log("supabase error: " + errorMinorMunicipality.message);
-        } else {
-          document
-            .getElementById("MajorMunicipality")
-            ?.addEventListener("change", () => {
-              let municipalitySelect = document.getElementById(
-                "MinorMunicipality"
-              ) as HTMLSelectElement;
-
-              let length = municipalitySelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "") {
-                  municipalitySelect.remove(i);
-                }
-              }
-
-              let filteredMunicipality = minorMunicipality.filter(
-                (municipality) =>
-                  municipality.major_municipality ==
-                  (
-                    document.getElementById(
-                      "MajorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredMunicipality.forEach((municipality) => {
-                let municipalityOption = new Option(
-                  municipality.minor_municipality,
-                  municipality.id
-                );
-                document
-                  .getElementById("MinorMunicipality")
-                  ?.append(municipalityOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
-      //Governing District
-      try {
-        const { data: governingDistrict, error: errorGoverningDistrict } =
-          await supabase.from("governing_district").select("*");
-        if (errorGoverningDistrict) {
-          console.log("supabase error: " + errorGoverningDistrict.message);
-        } else {
-          document
-            .getElementById("MinorMunicipality")
-            ?.addEventListener("change", () => {
-              let districtSelect = document.getElementById(
-                "GoverningDistrict"
-              ) as HTMLSelectElement;
-
-              let length = districtSelect?.length;
-
-              for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "") {
-                  districtSelect.remove(i);
-                }
-              }
-
-              let filteredDistrict = governingDistrict.filter(
-                (district) =>
-                  district.minor_municipality ==
-                  (
-                    document.getElementById(
-                      "MinorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredDistrict.forEach((district) => {
-                let districtOption = new Option(
-                  district.governing_district,
-                  district.id
-                );
-                document
-                  .getElementById("GoverningDistrict")
-                  ?.append(districtOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
     } else {
       alert(t("messages.signInAsProvider"));
       location.href = `/${lang}/login`;
     }
   });
 
-  function submit(e: SubmitEvent) {
+  async function createProduct(name: string, description: string) {
+    return stripe.products.create({
+      name: name,
+      description: description,
+    });
+  }
+
+  async function createPrice(product: any, price: number) {
+    return stripe.prices.create({
+      unit_amount: price,
+      currency: "usd",
+      product: product.id,
+    });
+  }
+
+  async function submit(e: SubmitEvent) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
     formData.append("lang", lang);
+    const product = await createProduct(formData.get("Title") as string, formData.get("Content") as string);
+    const price = await createPrice(product, parseInt(formData.get("Price") as string));
+    console.log(product, price);
+    formData.append("product_id", product.id);
+    formData.append("price_id", price.id);
+
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
     }
     setFormData(formData);
+
+    
   }
 
-  TinyComp();
+  onMount(() => {
+    TinyComp('#Content');
+  });
 
   return (
     <div>
@@ -292,7 +227,7 @@ export const CreateNewPost: Component = () => {
           </label>
         </div>
 
-        <div class="mb-6">
+        {/* <div class="mb-6">
           <label
             for="MajorMunicipality"
             class="text-ptext1 dark:text-ptext1-DM"
@@ -307,33 +242,7 @@ export const CreateNewPost: Component = () => {
               <option value="">-</option>
             </select>
           </label>
-        </div>
-
-        <div class="mb-6">
-          <label for="MinorMunicipality">
-            {t("formLabels.minorMunicipality")}:
-            <select
-              id="MinorMunicipality"
-              name="MinorMunicipality"
-              class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-              required
-            >
-              <option value="">-</option>
-            </select>
-          </label>
-        </div>
-
-        <label for="GoverningDistrict">
-          {t("formLabels.governingDistrict")}:
-          <select
-            id="GoverningDistrict"
-            name="GoverningDistrict"
-            class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-            required
-          >
-            <option value="">-</option>
-          </select>
-        </label>
+        </div> */}
 
         <div class="mb-4 flex justify-center">
         <div class="flex items-end justify-end">

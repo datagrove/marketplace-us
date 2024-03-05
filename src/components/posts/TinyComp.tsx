@@ -1,21 +1,21 @@
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
 
 import tinymce from "tinymce";
 
 //New tiny imports
-//@ts-ignore
+
 import "tinymce/models/dom";
-//@ts-ignore
+
 import "tinymce/themes/silver";
-//@ts-ignore
+
 import 'tinymce/icons/default';
-//@ts-ignore
+
 import "tinymce/plugins/lists";
-//@ts-ignore
+
 import "tinymce/plugins/quickbars";
 
 
-export const TinyComp= () => {
+export const TinyComp= (props:any) => {
 
   const [mode, setMode] = createSignal<"dark" | "light">(
     //@ts-ignore
@@ -23,19 +23,16 @@ export const TinyComp= () => {
   );
 
 
-  createEffect(() => {
+  onMount(() => {
     window.addEventListener("storage", (event) => {
       if (event.key === "theme") {
         //@ts-ignore
         setMode(event.newValue);
       }
-      window.location.reload();
-      console.log(event.key);
-      console.log("Mode: " + mode());
     });
   });
 
-  createEffect(() => {
+  onMount(() => {
     const script = document.createElement("script");
     script.src = "/tinymce/tinymce.min.js";
     script.async = true;
@@ -50,7 +47,7 @@ export const TinyComp= () => {
         quickBarsPlugin.onload = () => {
           console.log("tinymce loaded");
           tinymce.init({
-            selector: "#Content",
+            selector: props,
             max_width: 384,
             skin_url:
               mode() === "dark"

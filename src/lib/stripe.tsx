@@ -1,5 +1,17 @@
-import { loadStripe } from  "@stripe/stripe-js"
+import Stripe from "stripe"
 
-const stripeKey = import.meta.env.PUBLIC_VITE_STRIPE_KEY
+const stripeKey = import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY
+let stripe = null;
 
-export const stripe = require('stripe')(stripeKey)
+try {
+    stripe = new Stripe(stripeKey);
+    if (stripe === null) {
+        console.log("Stripe is null");
+    } 
+} catch (error) {
+    if(error instanceof Error){
+    console.error(error.message);
+    }
+}
+
+export default stripe!;

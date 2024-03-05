@@ -156,13 +156,42 @@ export const ProviderRegistration: Component = () => {
       //         ) as HTMLSelectElement;
 
       //         let length = municipalitySelect?.length;
+      //         let length = municipalitySelect?.length;
 
       //         for (let i = length - 1; i > -1; i--) {
       //           if (municipalitySelect.options[i].value !== "") {
       //             municipalitySelect.remove(i);
       //           }
       //         }
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (municipalitySelect.options[i].value !== "") {
+      //             municipalitySelect.remove(i);
+      //           }
+      //         }
 
+      //         let filteredMunicipality = minorMunicipality.filter(
+      //           (municipality) =>
+      //             municipality.major_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MajorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredMunicipality.forEach((municipality) => {
+      //           let municipalityOption = new Option(
+      //             municipality.minor_municipality,
+      //             municipality.id
+      //           );
+      //           document
+      //             .getElementById("MinorMunicipality")
+      //             ?.append(municipalityOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
       //         let filteredMunicipality = minorMunicipality.filter(
       //           (municipality) =>
       //             municipality.major_municipality ==
@@ -200,7 +229,21 @@ export const ProviderRegistration: Component = () => {
       //         let districtSelect = document.getElementById(
       //           "GoverningDistrict"
       //         ) as HTMLSelectElement;
+      // //Creates filtered drop down options for Governing District base on selected Minor Municipality
+      // try {
+      //   const { data: governingDistrict, error: errorGoverningDistrict } =
+      //     await supabase.from("governing_district").select("*");
+      //   if (errorGoverningDistrict) {
+      //     console.log("supabase error: " + errorGoverningDistrict.message);
+      //   } else {
+      //     document
+      //       .getElementById("MinorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let districtSelect = document.getElementById(
+      //           "GoverningDistrict"
+      //         ) as HTMLSelectElement;
 
+      //         let length = districtSelect?.length;
       //         let length = districtSelect?.length;
 
       //         for (let i = length - 1; i > -1; i--) {
@@ -208,7 +251,35 @@ export const ProviderRegistration: Component = () => {
       //             districtSelect.remove(i);
       //           }
       //         }
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (districtSelect.options[i].value !== "") {
+      //             districtSelect.remove(i);
+      //           }
+      //         }
 
+      //         let filteredDistrict = governingDistrict.filter(
+      //           (district) =>
+      //             district.minor_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MinorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredDistrict.forEach((district) => {
+      //           let districtOption = new Option(
+      //             district.governing_district,
+      //             district.id
+      //           );
+      //           document
+      //             .getElementById("GoverningDistrict")
+      //             ?.append(districtOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
       //         let filteredDistrict = governingDistrict.filter(
       //           (district) =>
       //             district.minor_municipality ==
@@ -633,7 +704,7 @@ export const ProviderRegistration: Component = () => {
             id="MajorMunicipality"
             class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MajorMunicipality"
-            // required
+            // required TODO:Make this required
           >
             <option value="">-</option>
           </select>
