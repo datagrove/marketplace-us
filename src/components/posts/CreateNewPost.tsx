@@ -6,7 +6,7 @@ import {
   createSignal,
   onMount,
 } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import PostImage from "./PostImage";
 import { ui } from "../../i18n/ui";
@@ -51,7 +51,7 @@ export const CreateNewPost: Component = () => {
       //Check if they are a provider
       try {
         const { data: providers, error: errorProviders } = await supabase
-          .from("providers")
+          .from("sellers")
           .select("*")
           .eq("user_id", session()!.user.id);
         if (errorProviders) {

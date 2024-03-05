@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { LocationFilter } from "./LocationFilter";
@@ -42,7 +42,7 @@ interface ProviderPost {
   id: number;
   category: string;
   title: string;
-  provider_name: string;
+  seller_name: string;
   major_municipality: string;
   // minor_municipality: string;
   // governing_district: string;

@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect, Show } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { ClientViewProviderPosts } from "../posts/ClientViewProviderPosts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
@@ -15,9 +15,9 @@ const values = ui[lang] as uiObject;
 const productCategories = values.productCategoryInfo.categories;
 
 interface Provider {
-  provider_name: string;
-  provider_id: number;
-  provider_phone: string;
+  seller_name: string;
+  seller_id: number;
+  seller_phone: string;
   major_municipality: string;
   // minor_municipality: string;
   // governing_district: string;
@@ -58,7 +58,7 @@ export const ClientProviderView: Component<Props> = (props) => {
         const { data, error } = await supabase
           .from("providerview")
           .select("*")
-          .eq("provider_id", id);
+          .eq("seller_id", id);
 
         if (error) {
           console.log(error);
@@ -157,9 +157,9 @@ export const ClientProviderView: Component<Props> = (props) => {
             </summary>
             <div class="p-4">
               <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
-                {provider()?.provider_name == ""
+                {provider()?.seller_name == ""
                   ? provider()?.first_name + " " + provider()?.last_name
-                  : provider()?.provider_name}
+                  : provider()?.seller_name}
               </h2>
               <div class="flex justify-center mb-3">
                 <Show when={typeof providerImage() !== "undefined"}>
@@ -191,7 +191,7 @@ export const ClientProviderView: Component<Props> = (props) => {
               </div>
               <div class="mt-4 flex justify-center">
                 <a
-                  href={`tel:${provider()?.provider_phone}`}
+                  href={`tel:${provider()?.seller_phone}`}
                   class="btn-primary"
                 >
                   {t("buttons.phone")}
@@ -222,9 +222,9 @@ export const ClientProviderView: Component<Props> = (props) => {
         {/* Profile Information for md+ View */}
         <div class="hidden md:block">
           <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
-            {provider()?.provider_name == ""
+            {provider()?.seller_name == ""
               ? provider()?.first_name + " " + provider()?.last_name
-              : provider()?.provider_name}
+              : provider()?.seller_name}
           </h2>
           <div class="flex justify-center mb-3">
             <Show when={typeof providerImage() !== "undefined"}>
@@ -253,7 +253,7 @@ export const ClientProviderView: Component<Props> = (props) => {
             </a>
           </div>
           <div class="mt-4 flex justify-center">
-            <a href={`tel:${provider()?.provider_phone}`} class="btn-primary">
+            <a href={`tel:${provider()?.seller_phone}`} class="btn-primary">
               {t("buttons.phone")}
             </a>
           </div>

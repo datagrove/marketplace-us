@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import { createSignal, createEffect } from 'solid-js';
-import { supabase } from '../../lib/supabaseClient';
+import supabase from '../../lib/supabaseClient';
 import type { AuthSession } from '@supabase/supabase-js';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 

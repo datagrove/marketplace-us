@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from '../../i18n/ui'
 import type { uiObject } from '../../i18n/uiType';
@@ -20,7 +20,7 @@ interface ProviderPost {
   id: number;
   category: string;
   title: string;
-  provider_name: string;
+  seller_name: string;
   major_municipality: string;
   minor_municipality: string;
   governing_district: string;

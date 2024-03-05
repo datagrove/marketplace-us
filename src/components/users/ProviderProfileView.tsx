@@ -9,7 +9,7 @@ import {
   createResource,
   For,
 } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
@@ -25,9 +25,9 @@ const values = ui[lang] as uiObject;
 const productCategories = values.productCategoryInfo.categories;
 
 interface Provider {
-  provider_name: string;
-  provider_id: number;
-  provider_phone: string;
+  seller_name: string;
+  seller_id: number;
+  seller_phone: string;
   major_municipality: string;
   minor_municipality: string;
   governing_district: string;
@@ -507,9 +507,9 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                     </div>
                     <h2 class="text-xl text-htext1 dark:text-htext1-DM pb-4 font-bold">
-                      {provider()?.provider_name == ""
+                      {provider()?.seller_name == ""
                         ? provider()?.first_name + " " + provider()?.last_name
-                        : provider()?.provider_name}
+                        : provider()?.seller_name}
                     </h2>
                     <div class="flex justify-center mb-3">
                       <Show when={editMode() === false}>
@@ -661,8 +661,8 @@ export const ProviderProfileView: Component = () => {
                           id="ProviderName"
                           class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
-                          {provider()?.provider_name
-                            ? provider()?.provider_name
+                          {provider()?.seller_name
+                            ? provider()?.seller_name
                             : t("formLabels.noValue")}
                         </p>
                       </Show>
@@ -703,7 +703,7 @@ export const ProviderProfileView: Component = () => {
                             id="ProviderName"
                             name="ProviderName"
                             class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-                            value={provider()?.provider_name}
+                            value={provider()?.seller_name}
                           />
                         </div>
                       </Show>
@@ -882,7 +882,7 @@ export const ProviderProfileView: Component = () => {
                           id="Phone"
                           class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                         >
-                          {provider()?.provider_phone}
+                          {provider()?.seller_phone}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
@@ -922,7 +922,7 @@ export const ProviderProfileView: Component = () => {
                             id="Phone"
                             class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                             name="Phone"
-                            value={provider()?.provider_phone}
+                            value={provider()?.seller_phone}
                           />
                         </div>
                       </Show>
@@ -1136,9 +1136,9 @@ export const ProviderProfileView: Component = () => {
             <Show when={screenSize() !== "sm"}>
               <div class="hidden md:block">
                 <h2 class="text-xl text-htext1 dark:text-htext1-DM py-4 font-bold">
-                  {provider()?.provider_name == ""
+                  {provider()?.seller_name == ""
                     ? provider()?.first_name + " " + provider()?.last_name
-                    : provider()?.provider_name}
+                    : provider()?.seller_name}
                 </h2>
                 <div class="flex justify-center mb-3">
                   <Show when={editMode() === false}>
@@ -1289,8 +1289,8 @@ export const ProviderProfileView: Component = () => {
                       id="ProviderName"
                       class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
-                      {provider()?.provider_name
-                        ? provider()?.provider_name
+                      {provider()?.seller_name
+                        ? provider()?.seller_name
                         : t("formLabels.noValue")}
                     </p>
                   </Show>
@@ -1331,7 +1331,7 @@ export const ProviderProfileView: Component = () => {
                         id="ProviderName"
                         name="ProviderName"
                         class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
-                        value={provider()?.provider_name}
+                        value={provider()?.seller_name}
                       />
                     </div>
                   </Show>
@@ -1503,7 +1503,7 @@ export const ProviderProfileView: Component = () => {
                       id="Phone"
                       class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
                     >
-                      {provider()?.provider_phone}
+                      {provider()?.seller_phone}
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
@@ -1543,7 +1543,7 @@ export const ProviderProfileView: Component = () => {
                         id="Phone"
                         class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
                         name="Phone"
-                        value={provider()?.provider_phone}
+                        value={provider()?.seller_phone}
                       />
                     </div>
                   </Show>

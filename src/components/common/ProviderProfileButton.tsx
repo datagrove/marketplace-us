@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { currentSession } from "../../lib/userSessionStore";
 import { useStore } from "@nanostores/solid";
 
@@ -28,7 +28,7 @@ export const ProviderProfileButton: Component = () => {
         location.href = `/${lang}/login`;
       } else {
         const { data: provider, error: providerError } = await supabase
-          .from("providers")
+          .from("sellers")
           .select("*")
           .eq("user_id", user()!.user.id);
         setHidden("hidden");

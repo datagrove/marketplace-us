@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
@@ -14,7 +14,7 @@ interface Post {
   id: number;
   category: string;
   title: string;
-  provider_name: string;
+  seller_name: string;
   major_municipality: string;
   // minor_municipality: string;
   // governing_district: string;
@@ -144,7 +144,7 @@ export const ViewCard: Component<Props> = (props) => {
 
                     <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
                       <span class="font-bold">{t("postLabels.provider")}</span>
-                      {post.provider_name}
+                      {post.seller_name}
                     </p>
 
                     <p

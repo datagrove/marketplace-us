@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabaseClientServer";
+import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 
@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
   const phone = formData.get("Phone");
-  // const country = formData.get("country");
+  const country = formData.get("country");
   const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
   // const governingDistrict = formData.get("GoverningDistrict");
@@ -37,8 +37,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
     !phone ||
-    // !country ||
-    !majorMunicipality ||
+    !country ||
+    // !majorMunicipality ||
     // !minorMunicipality ||
     // !governingDistrict ||
     language?.length === 0
@@ -94,7 +94,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
 
   const { data: providerExists, error: providerExistsError } = await supabase
-    .from("providers")
+    .from("sellers")
     .select("user_id")
     .eq("user_id", user.id);
   if (providerExistsError) {
@@ -139,39 +139,39 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   //   );
   // }
 
-  const { data: majorMunicipalityId, error: majorMunicipalityError } =
-    await supabase
-      .from("major_municipality")
-      .select("id")
-      .eq("id", majorMunicipality);
-  if (majorMunicipalityError) {
-    return new Response(
-      JSON.stringify({
-        message: t("apiErrors.noMajorMunicipality"),
-      }),
-      { status: 500 },
-    );
-  }
-
-  // const { data: countryId, error: countryError } = await supabase
-  //   .from("country")
-  //   .select("id")
-  //   .eq("id", country);
-  // if (countryError) {
+  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
+  //   await supabase
+  //     .from("major_municipality")
+  //     .select("id")
+  //     .eq("id", majorMunicipality);
+  // if (majorMunicipalityError) {
   //   return new Response(
   //     JSON.stringify({
-  //       message: (t("apiErrors.noCountry")),
+  //       message: t("apiErrors.noMajorMunicipality"),
   //     }),
-  //     { status: 500 }
+  //     { status: 500 },
   //   );
   // }
+
+  const { data: countryId, error: countryError } = await supabase
+    .from("country")
+    .select("id")
+    .eq("id", country);
+  if (countryError) {
+    return new Response(
+      JSON.stringify({
+        message: (t("apiErrors.noCountry")),
+      }),
+      { status: 500 }
+    );
+  }
 
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
     // minor_municipality: minorMunicipalityId[0].id,
-    major_municipality: majorMunicipalityId[0].id,
+    // major_municipality: majorMunicipalityId[0].id,
     // governing_district: districtId[0].id,
-    // country: countryId[0].id,
+    country: countryId[0].id,
     user_id: user.id,
   };
 
@@ -192,8 +192,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   //Build our submission to the providers table including the location id from the select from the location table on line 158
   let submission = {
-    provider_name: providerName,
-    provider_phone: phone,
+    seller_name: providerName,
+    seller_phone: phone,
     location: location[0].id,
     user_id: user.id,
     image_url: imageUrl,
@@ -202,7 +202,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   //submit to the providers table and select it back
   const { error, data } = await supabase
-    .from("providers")
+    .from("sellers")
     .insert([submission])
     .select();
 

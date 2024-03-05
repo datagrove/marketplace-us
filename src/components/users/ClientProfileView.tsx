@@ -8,7 +8,7 @@ import {
   onCleanup,
   Suspense,
 } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
