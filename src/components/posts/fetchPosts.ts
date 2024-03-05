@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabaseClient';
+import supabase from '../../lib/supabaseClient';
 import { ui } from '../../i18n/ui';
 import type { uiObject } from '../../i18n/uiType';
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";

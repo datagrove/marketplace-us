@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 // import { productCategoryData } from '../../data'
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";

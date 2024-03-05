@@ -1,5 +1,5 @@
 import { Show, createSignal } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 // Internationalization

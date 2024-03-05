@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect, Show } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from '../../i18n/ui'
@@ -21,15 +21,15 @@ interface Post {
     id: number;
     category: string;
     title: string;
-    provider_name: string;
+    seller_name: string;
     major_municipality: string;
     minor_municipality: string;
     governing_district: string;
     user_id: string;
     image_urls: string | null;
     email: string;
-    provider_id: number;
-    provider_url: string;
+    seller_id: number;
+    seller_url: string;
 }
 
 interface Props {
@@ -73,7 +73,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             }
                         })
                         delete item.service_category
-                        item.provider_url = `/${lang}/provider/${item.provider_id}`
+                        item.seller_url = `/${lang}/provider/${item.seller_id}`
                     })
                     setPost(data[0]);
                 }
@@ -300,7 +300,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         </Show>
                     </div>
                 </Show>
-                <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.provider_url} class="text-link1 hover:text-link1Hov dark:text-link1-DM dark:hover:bg-link1Hov-DM">{post()?.provider_name}</a></p>
+                <p class="my-1"><span class="font-bold">{t('postLabels.provider')}</span><a href={post()?.seller_url} class="text-link1 hover:text-link1Hov dark:text-link1-DM dark:hover:bg-link1Hov-DM">{post()?.seller_name}</a></p>
                 <p class="my-1">
                     <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                     {post()?.governing_district}

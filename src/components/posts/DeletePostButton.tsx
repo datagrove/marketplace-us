@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { Show, createSignal } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
@@ -37,7 +37,7 @@ export const DeletePostButton: Component<Props> = (props) => {
     if (props.userId === session()!.user.id) {
       try {
         const { error } = await supabase
-          .from("provider_post")
+          .from("seller_post")
           .delete()
           .eq("id", props.id)
 

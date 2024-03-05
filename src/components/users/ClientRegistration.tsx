@@ -5,7 +5,7 @@ import {
   createResource,
   createSignal,
 } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";

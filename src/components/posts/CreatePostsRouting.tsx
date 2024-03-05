@@ -1,5 +1,5 @@
 import { Show, createSignal } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -20,7 +20,7 @@ export const CreatePostsRouting = () => {
   const isProvider = async () => {
     try {
       const { data, error } = await supabase
-        .from("providers")
+        .from("sellers")
         .select("*")
         .eq("user_id", User.session!.user.id);
 

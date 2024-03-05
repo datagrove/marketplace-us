@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -18,7 +18,7 @@ interface ProviderPost {
   id: number;
   category: string;
   title: string;
-  provider_name: string;
+  seller_name: string;
   major_municipality: string;
   // minor_municipality: string;
   // governing_district: string;
@@ -36,7 +36,7 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
     const { data, error } = await supabase
       .from("providerposts")
       .select("*")
-      .eq("provider_id", props.id);
+      .eq("seller_id", props.id);
     if (!data) {
       alert("No posts available.");
     }

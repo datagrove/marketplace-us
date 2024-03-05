@@ -2,7 +2,7 @@ import { AuthMode } from "./AuthMode";
 import { ProviderProfileButton } from "./ProviderProfileButton";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
 import { ClientRouting } from "../users/ClientRouting";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import { Auth } from "../../lib/Auth";
 import { Show, createSignal } from "solid-js";
 import { ProviderRegistration } from "../users/ProviderRegistration";

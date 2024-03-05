@@ -1,4 +1,4 @@
-import { supabase } from '../../lib/supabaseClient'
+import supabase from '../../lib/supabaseClient'
 import type { Component } from "solid-js";
 import { createSignal } from 'solid-js'
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';

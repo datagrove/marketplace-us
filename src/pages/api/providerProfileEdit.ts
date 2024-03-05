@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabaseClientServer";
+import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 
@@ -183,16 +183,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   //If the location is null then leave the current value for location
   if (location === null) {
     submission = {
-      provider_name: providerName,
-      provider_phone: phone,
+      seller_name: providerName,
+      seller_phone: phone,
       image_url: imageUrl,
       language_spoken: language,
     };
   } else {
     //Update the location with the new location
     submission = {
-      provider_name: providerName,
-      provider_phone: phone,
+      seller_name: providerName,
+      seller_phone: phone,
       location: location.id,
       image_url: imageUrl,
       language_spoken: language,
@@ -201,7 +201,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   //submit to the providers table and select it back
   const { error, data } = await supabase
-    .from("providers")
+    .from("sellers")
     .update([submission])
     .eq("user_id", user.id)
     .select();

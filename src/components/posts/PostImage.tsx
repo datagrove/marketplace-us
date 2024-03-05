@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal, type JSX } from "solid-js";
-import { supabase } from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClient";
 import placeholderImg from '../../assets/userImagePlaceholder.svg';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 

@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
-import { supabase } from '../../lib/supabaseClient'
+import supabase from '../../lib/supabaseClient'
 import { useStore } from '@nanostores/solid'
 
 import '../../styles/global.css';

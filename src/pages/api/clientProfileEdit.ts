@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabaseClientServer";
+import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 

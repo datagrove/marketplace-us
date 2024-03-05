@@ -1,4 +1,4 @@
-import { supabase } from "../../lib/supabaseClientServer";
+import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
@@ -180,7 +180,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
   };
 
   const { error, data } = await supabase
-    .from("provider_post")
+    .from("seller_post")
     .insert([postSubmission])
     .select();
 
