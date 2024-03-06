@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
 
-export const post: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
 
   for (let pair of formData.entries()) {
@@ -178,7 +178,7 @@ export const post: APIRoute = async ({ request, redirect }) => {
     title: title,
     content: content,
     location: location[0].id,
-    service_category: categoryId[0].id,
+    product_category: categoryId[0].id,
     image_urls: imageUrl,
     user_id: user.id,
     stripe_product_id: stripeProductId,

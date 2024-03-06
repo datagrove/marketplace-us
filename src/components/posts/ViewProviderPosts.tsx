@@ -45,7 +45,7 @@ export const ViewProviderPosts: Component = () => {
   // if there is a modification to the posts table, the page will refresh and the posts will be updated.
   createEffect(async () => {
     const { data, error } = await supabase
-      .from("providerposts")
+      .from("sellerposts")
       .select("*")
       .eq("user_id", session()!.user.id);
     if (!data) {
@@ -56,11 +56,11 @@ export const ViewProviderPosts: Component = () => {
     } else {
       data?.map(item => {
         productCategories.forEach(productCategories => {
-          if (item.service_category.toString() === productCategories.id) {
+          if (item.product_category.toString() === productCategories.id) {
             item.category = productCategories.name
           }
         })
-        delete item.service_category
+        delete item.product_category
       })
       setPosts(data);
     }

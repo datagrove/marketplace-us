@@ -13,8 +13,8 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
+import { createStore } from "solid-js/store";
 import stripe from "../../lib/stripe";
-
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -29,6 +29,9 @@ async function postFormData(formData: FormData) {
     body: formData,
   });
   const data = await response.json();
+  if (data.status === 200) {
+    
+  }
   if (data.redirect) {
     alert(data.message); //TODO: Not sure how to internationalize these
     window.location.href = `/${lang}` + data.redirect;
@@ -41,8 +44,18 @@ export const CreateNewPost: Component = () => {
   const [formData, setFormData] = createSignal<FormData>();
   const [response] = createResource(formData, postFormData);
   const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
+  const [mode, setMode] = createStore({
+    theme: localStorage.getItem("theme"),
+  });
 
-
+  onMount(() => {
+    window.addEventListener("storage", (event) => {
+      if (event.key === "theme") {
+        setMode({ theme: event.newValue });
+        console.log("Theme changed: " + mode.theme);
+      }
+    });
+  });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -124,7 +137,6 @@ export const CreateNewPost: Component = () => {
       // } catch (error) {
       //   console.log("Other error: " + error);
       // }
-
     } else {
       alert(t("messages.signInAsProvider"));
       location.href = `/${lang}/login`;
@@ -152,8 +164,15 @@ export const CreateNewPost: Component = () => {
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
     formData.append("lang", lang);
-    const product = await createProduct(formData.get("Title") as string, formData.get("Content") as string);
-    const price = await createPrice(product, parseInt(formData.get("Price") as string));
+    formData.append("Price", '1000');
+    const product = await createProduct(
+      formData.get("Title") as string,
+      formData.get("Content") as string
+    );
+    const price = await createPrice(
+      product,
+      parseInt(formData.get("Price") as string)
+    );
     console.log(product, price);
     formData.append("product_id", product.id);
     formData.append("price_id", price.id);
@@ -162,13 +181,12 @@ export const CreateNewPost: Component = () => {
       formData.append("image_url", imageUrl()!.toString());
     }
     setFormData(formData);
-
-    
   }
 
-  onMount(() => {
-    TinyComp('#Content');
-  });
+  createEffect(() => {
+    console.log("mode: " + mode.theme);
+    TinyComp({id:"#Content", mode: mode.theme});
+  })
 
   return (
     <div>
@@ -213,6 +231,8 @@ export const CreateNewPost: Component = () => {
           ></textarea>
         </label>
 
+        
+
         <div class="mb-6 mt-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
@@ -245,11 +265,9 @@ export const CreateNewPost: Component = () => {
         </div> */}
 
         <div class="mb-4 flex justify-center">
-        <div class="flex items-end justify-end">
-              <div class="group flex items-center relative mr-2 w-4">
-                
-              </div>
-            </div>
+          <div class="flex items-end justify-end">
+            <div class="group flex items-center relative mr-2 w-4"></div>
+          </div>
           <div class="">
             <PostImage
               url={imageUrl()[imageUrl().length - 1]}
@@ -260,16 +278,16 @@ export const CreateNewPost: Component = () => {
             />
           </div>
           <div class="flex items-end justify-end">
-              <div class="group flex items-center relative ml-2">
-                <svg
-                  class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <g>
-                    <path
-                      d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+            <div class="group flex items-center relative ml-2">
+              <svg
+                class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <g>
+                  <path
+                    d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
                       C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
                       c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
                       s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
@@ -278,18 +296,18 @@ export const CreateNewPost: Component = () => {
                       C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
                       c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
                       C314.716,152.979,297.039,174.043,273.169,176.123z"
-                    />
-                  </g>
-                </svg>
+                  />
+                </g>
+              </svg>
 
-                <span
-                  class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
+              <span
+                class="peer-hover:visible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
                 md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 invisible m-4 mx-auto p-2 w-48"
-                >
-                  {t("toolTips.postImages")}
-                </span>
-              </div>
+              >
+                {t("toolTips.postImages")}
+              </span>
             </div>
+          </div>
         </div>
 
         <br />
