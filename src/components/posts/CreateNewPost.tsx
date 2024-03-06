@@ -14,7 +14,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
 import { createStore } from "solid-js/store";
-import stripe from "../../lib/stripe";
+import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -24,18 +24,29 @@ const values = ui[lang] as uiObject;
 const productCategoryData = values.productCategoryInfo;
 
 async function postFormData(formData: FormData) {
+  const info = formData
   const response = await fetch("/api/providerCreatePost", {
     method: "POST",
     body: formData,
   });
   const data = await response.json();
-  if (data.status === 200) {
-    
+  console.log(response.status)
+  if (response.status === 200) {
+    CreateStripeProductPrice({
+      name: String(formData.get("Title")),
+      description: formData.get("Content") as string,
+      price: parseInt(formData.get("Price") as string),
+      //TODO: check if this gets the post id back from the database
+      id: data.id,
+      access_token: formData.get("access_token") as string,
+      refresh_token: formData.get("refresh_token") as string,
+    });
   }
-  if (data.redirect) {
-    alert(data.message); //TODO: Not sure how to internationalize these
-    window.location.href = `/${lang}` + data.redirect;
-  }
+  // I think we are going to do this in the CreateStripeProductPrice component
+  // if (data.redirect) {
+  //   alert(data.message);
+  //   window.location.href = `/${lang}` + data.redirect;
+  // }
   return data;
 }
 
@@ -143,39 +154,14 @@ export const CreateNewPost: Component = () => {
     }
   });
 
-  async function createProduct(name: string, description: string) {
-    return stripe.products.create({
-      name: name,
-      description: description,
-    });
-  }
-
-  async function createPrice(product: any, price: number) {
-    return stripe.prices.create({
-      unit_amount: price,
-      currency: "usd",
-      product: product.id,
-    });
-  }
-
   async function submit(e: SubmitEvent) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
     formData.append("lang", lang);
-    formData.append("Price", '1000');
-    const product = await createProduct(
-      formData.get("Title") as string,
-      formData.get("Content") as string
-    );
-    const price = await createPrice(
-      product,
-      parseInt(formData.get("Price") as string)
-    );
-    console.log(product, price);
-    formData.append("product_id", product.id);
-    formData.append("price_id", price.id);
+    //TODO: Collect Price from Form
+    formData.append("Price", "2000");
 
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
@@ -185,8 +171,8 @@ export const CreateNewPost: Component = () => {
 
   createEffect(() => {
     console.log("mode: " + mode.theme);
-    TinyComp({id:"#Content", mode: mode.theme});
-  })
+    TinyComp({ id: "#Content", mode: mode.theme });
+  });
 
   return (
     <div>
@@ -230,8 +216,6 @@ export const CreateNewPost: Component = () => {
             required
           ></textarea>
         </label>
-
-        
 
         <div class="mb-6 mt-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">

@@ -21,8 +21,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const serviceCategory = formData.get("ServiceCategory");
   const content = formData.get("Content");
   const country = formData.get("country");
-  const stripeProductId = formData.get("product_id");
-  const stripePriceId = formData.get("price_id");
   // const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
   // const governingDistrict = formData.get("GoverningDistrict");
@@ -34,9 +32,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     !title ||
     !serviceCategory ||
     !content ||
-    !country ||
-    !stripeProductId ||
-    !stripePriceId
+    !country
     // !minorMunicipality ||
     // !majorMunicipality ||
     // !governingDistrict
@@ -181,8 +177,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     product_category: categoryId[0].id,
     image_urls: imageUrl,
     user_id: user.id,
-    stripe_product_id: stripeProductId,
-    stripe_price_id: stripePriceId,
   };
 
   const { error, data } = await supabase
@@ -213,7 +207,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: t("apiErrors.success"),
-      redirect: "/provider/profile",
+      id: data[0].id,
     }),
     { status: 200 },
   );
