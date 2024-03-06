@@ -130,8 +130,8 @@ INSERT INTO "auth"."refresh_tokens" ("instance_id", "id", "token", "user_id", "r
 -- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."country" ("id", "created_at", "country") VALUES
-	(1, '2023-07-07 14:18:29.85077+00', 'United States');
+-- INSERT INTO "public"."country" ("id", "created_at", "country") VALUES
+-- 	(1, '2023-07-07 14:18:29.85077+00', 'United States');
 
 
 --
