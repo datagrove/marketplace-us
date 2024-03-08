@@ -216,9 +216,9 @@ INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "locatio
 -- Data for Name: buckets; Type: TABLE DATA; Schema: storage; Owner: supabase_storage_admin
 --
 
-INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES
-	('user.image', 'user.image', NULL, '2023-07-13 19:25:41.126949+00', '2023-07-13 19:25:41.126949+00', false, false, NULL, NULL, NULL),
-	('post.image', 'post.image', NULL, '2023-08-01 19:11:48.793899+00', '2023-08-01 19:11:48.793899+00', false, false, NULL, NULL, NULL);
+-- INSERT INTO "storage"."buckets" ("id", "name", "owner", "created_at", "updated_at", "public", "avif_autodetection", "file_size_limit", "allowed_mime_types", "owner_id") VALUES
+-- 	('user.image', 'user.image', NULL, '2023-07-13 19:25:41.126949+00', '2023-07-13 19:25:41.126949+00', false, false, NULL, NULL, NULL),
+-- 	('post.image', 'post.image', NULL, '2023-08-01 19:11:48.793899+00', '2023-08-01 19:11:48.793899+00', false, false, NULL, NULL, NULL);
 
 
 --
