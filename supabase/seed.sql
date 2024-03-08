@@ -172,8 +172,8 @@ INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_pho
 -- Data for Name: language; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."language" ("id", "language") VALUES
-	(1, 'English (American)');
+-- INSERT INTO "public"."language" ("id", "language") VALUES
+-- 	(1, 'English (American)');
 
 
 --
