@@ -115,6 +115,7 @@ async function postFormData(formData: FormData) {
       id: data.id,
       access_token: formData.get("access_token") as string,
       refresh_token: formData.get("refresh_token") as string,
+      tax_code: formData.get("TaxCode") as string,
     });
   }
   // I think we are going to do this in the CreateStripeProductPrice component
@@ -144,6 +145,12 @@ export const CreateNewPost: Component = () => {
         console.log("Theme changed: " + mode.theme);
       }
     });
+  });
+
+  createEffect(() => {
+    if(selectedTaxCode() !== undefined) {
+      console.log("Tax Code: " + selectedTaxCode()!.value);
+    }
   });
 
   createEffect(async () => {
@@ -212,45 +219,45 @@ export const CreateNewPost: Component = () => {
         console.log("Other error: " + error);
       }
 
-      //Major Municipality
-      try {
-        const { data: majorMunicipality, error: errorMajorMunicipality } =
-          //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
-          await supabase.from("major_municipality").select("*");
-        if (errorMajorMunicipality) {
-          console.log("supabase error: " + errorMajorMunicipality.message);
-        } else {
-          document.getElementById("country")?.addEventListener("change", () => {
-            let municipalitySelect = document.getElementById(
-              "MajorMunicipality"
-            ) as HTMLSelectElement;
+      // //Major Municipality
+      // try {
+      //   const { data: majorMunicipality, error: errorMajorMunicipality } =
+      //     //TODO: optimize these calls to the database for PWA caching (if we don't need the created date don't return it)
+      //     await supabase.from("major_municipality").select("*");
+      //   if (errorMajorMunicipality) {
+      //     console.log("supabase error: " + errorMajorMunicipality.message);
+      //   } else {
+      //     document.getElementById("country")?.addEventListener("change", () => {
+      //       let municipalitySelect = document.getElementById(
+      //         "MajorMunicipality"
+      //       ) as HTMLSelectElement;
 
-            let length = municipalitySelect?.length;
+      //       let length = municipalitySelect?.length;
 
-            for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "") {
-                municipalitySelect.remove(i);
-              }
-            }
-            let filteredMunicipality = majorMunicipality.filter(
-              (municipality) =>
-                municipality.country ==
-                (document.getElementById("country") as HTMLSelectElement)?.value
-            );
-            filteredMunicipality.forEach((municipality) => {
-              let municipalityOption = new Option(
-                municipality.major_municipality,
-                municipality.id
-              );
-              document
-                .getElementById("MajorMunicipality")
-                ?.append(municipalityOption);
-            });
-          });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      //       for (let i = length - 1; i > -1; i--) {
+      //         if (municipalitySelect.options[i].value !== "") {
+      //           municipalitySelect.remove(i);
+      //         }
+      //       }
+      //       let filteredMunicipality = majorMunicipality.filter(
+      //         (municipality) =>
+      //           municipality.country ==
+      //           (document.getElementById("country") as HTMLSelectElement)?.value
+      //       );
+      //       filteredMunicipality.forEach((municipality) => {
+      //         let municipalityOption = new Option(
+      //           municipality.major_municipality,
+      //           municipality.id
+      //         );
+      //         document
+      //           .getElementById("MajorMunicipality")
+      //           ?.append(municipalityOption);
+      //       });
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
     } else {
       alert(t("messages.signInAsProvider"));
       location.href = `/${lang}/login`;
@@ -265,7 +272,9 @@ export const CreateNewPost: Component = () => {
     formData.append("lang", lang);
     //TODO: Collect Price from Form
     formData.append("Price", "2000");
-    formData.append("TaxCode", selectedTaxCode()!.toString());
+    if (selectedTaxCode() !== undefined) {
+      formData.append("TaxCode", selectedTaxCode()!.value.toString());
+    }
 
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
@@ -342,11 +351,12 @@ export const CreateNewPost: Component = () => {
               options={taxCodeOptions}
               selectedOption={selectedTaxCode()!}
               setSelectedOption={setSelectedTaxCode}
+              isRequired={true}
             />
           </label>
         </div>
 
-        <div class="mb-6">
+        {/* <div class="mb-6">
           <label
             for="MajorMunicipality"
             class="text-ptext1 dark:text-ptext1-DM"
@@ -361,7 +371,7 @@ export const CreateNewPost: Component = () => {
               <option value="">-</option>
             </select>
           </label>
-        </div>
+        </div> */}
 
         <div class="mb-4 flex justify-center">
           <div class="flex items-end justify-end">

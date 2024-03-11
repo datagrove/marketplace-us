@@ -107,9 +107,7 @@ export const TinyComp= (props: Props) => {
 
 
     return (
-        <div>
-            <h1>TinyMCE</h1>
-        </div>
+       null
     )
 }
 

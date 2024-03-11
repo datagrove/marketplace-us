@@ -21,6 +21,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const serviceCategory = formData.get("ServiceCategory");
   const content = formData.get("Content");
   const country = formData.get("country");
+  const tax_code = formData.get("TaxCode");
   // const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
   // const governingDistrict = formData.get("GoverningDistrict");
@@ -32,7 +33,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     !title ||
     !serviceCategory ||
     !content ||
-    !country
+    !country ||
+    !tax_code
     // !minorMunicipality ||
     // !majorMunicipality ||
     // !governingDistrict

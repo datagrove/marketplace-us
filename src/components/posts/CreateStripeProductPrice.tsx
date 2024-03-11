@@ -29,15 +29,17 @@ interface Props {
   id: number;
   access_token: string;
   refresh_token: string;
+  tax_code: string;
 }
 
 export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
   const [stripeData, setStripeData] = createSignal<FormData>();
   const [response] = createResource(stripeData, postStripeData);
-  async function createProduct(name: string, description: string) {
+  async function createProduct(name: string, description: string, tax_code: string) {
     return stripe.products.create({
       name: name,
       description: description,
+      tax_code: tax_code,
     });
   }
 
@@ -50,7 +52,8 @@ export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
   }
 
   async function createPriceAndProduct() {
-    const product = await createProduct(props.name, props.description);
+    console.log("Stripe Tax Code: " + props.tax_code)
+    const product = await createProduct(props.name, props.description, props.tax_code);
     const price = await createPrice(product, props.price);
     const stripeData = new FormData();
     stripeData.append("price_id", price.id);
