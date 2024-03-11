@@ -1,11 +1,11 @@
 import { createSignal, Show } from "solid-js";
 import type { Component } from "solid-js";
 
+//TODO: Upgrade to have an option for required and not let a user select nothing
 interface Props {
   options: HTMLOptionElement[];
   selectedOption: HTMLOptionElement;
   setSelectedOption: (option: HTMLOptionElement) => void;
-  isRequired: boolean;
 }
 
 const Dropdown: Component<Props> = (Props: Props) => {

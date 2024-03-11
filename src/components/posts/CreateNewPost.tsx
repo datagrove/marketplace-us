@@ -351,7 +351,6 @@ export const CreateNewPost: Component = () => {
               options={taxCodeOptions}
               selectedOption={selectedTaxCode()!}
               setSelectedOption={setSelectedTaxCode}
-              isRequired={true}
             />
           </label>
         </div>
