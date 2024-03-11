@@ -144,6 +144,7 @@ export interface uiObject {
     languages: string,
     chooseLanguage: string,
     languagesSpoken: string,
+    taxCode: string,
   },
 
   postLabels: {

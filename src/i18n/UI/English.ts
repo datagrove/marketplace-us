@@ -143,6 +143,7 @@ export const English = {
     languages: "Languages", 
     chooseLanguage: "Choose one or more",
     languagesSpoken: "Languages Spoken",
+    taxCode: "Tax Code",
   },
 
   postLabels: {

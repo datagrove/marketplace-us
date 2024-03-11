@@ -15,6 +15,8 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
 import { createStore } from "solid-js/store";
 import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
+import stripe from "../../lib/stripe";
+import Dropdown from "@components/common/Dropdown";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -23,20 +25,93 @@ const values = ui[lang] as uiObject;
 //get the categories from the language files so they translate with changes in the language picker
 const productCategoryData = values.productCategoryInfo;
 
+const excludeTaxCodes = new Set([
+  //Website/online dating products
+  /^txcd_107.*/,
+  //Streaming products
+  /^txcd_10201003.*/,
+  /^txcd_10201004.*/,
+  /^txcd_10401000.*/,
+  /^txcd_10401200.*/,
+  /^txcd_10402000.*/,
+  /^txcd_10402200.*/,
+  /^txcd_10402300.*/,
+  /^txcd_10804001.*/,
+  /^txcd_10804002.*/,
+  /^txcd_10804003.*/,
+  /^txcd_10804010.*/,
+  //Infrastructure as Service
+  /^txcd_10010001.*/,
+  /^txcd_10101000.*/,
+  //Platform as a Service
+  /^txcd_10102000.*/,
+  /^txcd_10102001.*/,
+  //Cloud Based Business Process as Service
+  /^txcd_10104001.*/,
+  //Video Games, non-subscription, conditional or limited rights
+  /^txcd_10201001.*/,
+  /^txcd_10201002.*/,
+  //Digital Books limited/conditional rights
+  /^txcd_10302001.*/,
+  /^txcd_10302002.*/,
+  /^txcd_10302003.*/,
+  //Digital Magazines limited/conditional rights or subscription
+  /^txcd_10303000.*/,
+  /^txcd_10303001.*/,
+  /^txcd_10303002.*/,
+  /^txcd_10303101.*/,
+  /^txcd_10303102.*/,
+  /^txcd_10303104.*/,
+  //Digital Newspapers limited/conditional rights or subscription
+  /^txcd_10304001.*/,
+  /^txcd_10304002.*/,
+  /^txcd_10304003.*/,
+  /^txcd_10304100.*/,
+  /^txcd_10304101.*/,
+  /^txcd_10304102.*/,
+  //Digital School Books limited/conditional rights
+  /^txcd_10305000.*/,
+  //Digital Audio Works limited/conditional rights
+  /^txcd_10401001.*/,
+  /^txcd_10401200.*/,
+  /^txcd_10402000.*/,
+  /^txcd_10402110.*/,
+  /^txcd_10402200.*/,
+  //Digital Video Streaming
+  /^txcd_10402300.*/,
+  //Digital other news or documents limited/conditional rights
+  /^txcd_10503001.*/,
+  /^txcd_10503002.*/,
+  /^txcd_10503003.*/,
+  /^txcd_10503004.*/,
+  /^txcd_10503005.*/,
+  //Electronic software manuals
+  /^txcd_10504000.*/,
+  /^txcd_10504003.*/,
+  //Digital Finished Artwork limited/conditional rights
+  /^txcd_10505000.*/,
+  /^txcd_10505002.*/,
+  //Digital Audio Visual Works bundle limited/conditional rights
+  /^txcd_10804001.*/,
+  /^txcd_10804002.*/,
+  /^txcd_10804010.*/,
+  //Gift card
+  /^txcd_10502.*/,
+]);
+
 async function postFormData(formData: FormData) {
-  const info = formData
+  const info = formData;
   const response = await fetch("/api/providerCreatePost", {
     method: "POST",
     body: formData,
   });
   const data = await response.json();
-  console.log(response.status)
+  console.log(response.status);
   if (response.status === 200) {
     CreateStripeProductPrice({
       name: String(formData.get("Title")),
       description: formData.get("Content") as string,
       price: parseInt(formData.get("Price") as string),
-      //TODO: check if this gets the post id back from the database
       id: data.id,
       access_token: formData.get("access_token") as string,
       refresh_token: formData.get("refresh_token") as string,
@@ -58,6 +133,9 @@ export const CreateNewPost: Component = () => {
   const [mode, setMode] = createStore({
     theme: localStorage.getItem("theme"),
   });
+  const taxCodeOptions: HTMLOptionElement[] = [];
+  const [selectedTaxCode, setSelectedTaxCode] =
+    createSignal<HTMLOptionElement>();
 
   onMount(() => {
     window.addEventListener("storage", (event) => {
@@ -87,6 +165,31 @@ export const CreateNewPost: Component = () => {
             window.location.href = `/${lang}/provider/createaccount`;
           } else {
           }
+        }
+      } catch (error) {
+        console.log("Other error: " + error);
+      }
+
+      //Tax Code
+      try {
+        const { data: taxCodes } = await stripe.taxCodes.list({ limit: 100 });
+        if (error) {
+          console.log("stripe error: " + error.message);
+        } else {
+          taxCodes.forEach((taxCode) => {
+            if (
+              //Digital Products
+              /^txcd_1.*/.test(taxCode.id) &&
+              //Not in our filter list
+              !Array.from(excludeTaxCodes).some((excludeTaxCode) =>
+                excludeTaxCode.test(taxCode.id)
+              )
+            ) {
+              let taxCodeOption = new Option(taxCode.name, taxCode.id);
+              taxCodeOption.setAttribute("data-description", taxCode.description);
+              taxCodeOptions.push(taxCodeOption);
+            }
+          });
         }
       } catch (error) {
         console.log("Other error: " + error);
@@ -162,6 +265,7 @@ export const CreateNewPost: Component = () => {
     formData.append("lang", lang);
     //TODO: Collect Price from Form
     formData.append("Price", "2000");
+    formData.append("TaxCode", selectedTaxCode()!.toString());
 
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
@@ -228,6 +332,17 @@ export const CreateNewPost: Component = () => {
             >
               <option value="">-</option>
             </select>
+          </label>
+        </div>
+
+        <div class="mb-6 mt-6">
+          <label for="taxCode" class="text-ptext1 dark:text-ptext1-DM">
+            {t("formLabels.taxCode")}:
+            <Dropdown
+              options={taxCodeOptions}
+              selectedOption={selectedTaxCode()!}
+              setSelectedOption={setSelectedTaxCode}
+            />
           </label>
         </div>
 
