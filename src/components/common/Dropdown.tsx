@@ -48,23 +48,23 @@ const Dropdown: Component<Props> = (Props: Props) => {
       </button>
       {isOpen() && (
         <div
-          class="absolute ml-2 rounded mb-4 
+          class="rounded mb-4 
         focus:border-highlight1 dark:focus:border-highlight1-DM 
-        border border-inputBorder1 dark:border-inputBorder1-DM 
+        border border-red-500 dark:border-inputBorder1-DM 
         focus:border-2 focus:outline-none 
         bg-background1 dark:bg-background2-DM 
         text-ptext1 dark:text-ptext2-DM
-        max-w-md whitespace-normal"
+        max-w-fit max-h-96 overflow-auto whitespace-normal"
         >
           {Props.options.map((option) => (
             <div
-              class="py-2 px-4 cursor-pointer hover:bg-gray-100 whitespace-normal"
+              class="py-2 px-4 cursor-pointer hover:bg-background1 dark:hover:bg-background1-DM whitespace-normal"
               onClick={(e) => {
                 e.preventDefault();
                 handleOptionClick(option);
               }}
             >
-              {option}
+              {option.text}
               <div class="border border-border1 dark:border-border1-DM rounded text-xs p-2">
                 {option.dataset.description}
               </div>
