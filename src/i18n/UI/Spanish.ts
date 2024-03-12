@@ -84,7 +84,7 @@ export const Spanish = {
     passwordLength: 'La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *',
     passwordValid: 'Contraseña valida',
     passwordLackRequirements: 'Contraseña no cumple con los requisitos',  
-    phoneLackRequirements: 'El número de teléfono tiene que tener 8 digitos',
+    phoneLackRequirements: 'Por favor ingrese un número de teléfono válido.',
     phoneValid: 'Número de teléfono válido',
     passwordMatch: 'Las contraseñas no coinciden',
     passwordReset: 'Restablecimiento de contraseña',

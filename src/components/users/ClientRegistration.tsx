@@ -38,8 +38,6 @@ export const ClientRegistration: Component = () => {
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
 
-  const regularExpressionPhone = new RegExp("^[0-9]{8}$");
-
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
     setSession(data.session);
@@ -116,97 +114,6 @@ export const ClientRegistration: Component = () => {
         console.log("Other error: " + error);
       }
 
-      // //Minor Municipality
-      // try {
-      //   const { data: minorMunicipality, error: errorMinorMunicipality } =
-      //     await supabase.from("minor_municipality").select("*");
-      //   if (errorMinorMunicipality) {
-      //     console.log("supabase error: " + errorMinorMunicipality.message);
-      //   } else {
-      //     document
-      //       .getElementById("MajorMunicipality")
-      //       ?.addEventListener("change", () => {
-      //         let municipalitySelect = document.getElementById(
-      //           "MinorMunicipality"
-      //         ) as HTMLSelectElement;
-      //
-      //         let length = municipalitySelect?.length;
-      //
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (municipalitySelect.options[i].value !== "") {
-      //             municipalitySelect.remove(i);
-      //           }
-      //         }
-      //
-      //         let filteredMunicipality = minorMunicipality.filter(
-      //           (municipality) =>
-      //             municipality.major_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MajorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredMunicipality.forEach((municipality) => {
-      //           let municipalityOption = new Option(
-      //             municipality.minor_municipality,
-      //             municipality.id
-      //           );
-      //           document
-      //             .getElementById("MinorMunicipality")
-      //             ?.append(municipalityOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
-      //
-      // //Governing District
-      // try {
-      //   const { data: governingDistrict, error: errorGoverningDistrict } =
-      //     await supabase.from("governing_district").select("*");
-      //   if (errorGoverningDistrict) {
-      //     console.log("supabase error: " + errorGoverningDistrict.message);
-      //   } else {
-      //     document
-      //       .getElementById("MinorMunicipality")
-      //       ?.addEventListener("change", () => {
-      //         let districtSelect = document.getElementById(
-      //           "GoverningDistrict"
-      //         ) as HTMLSelectElement;
-      //
-      //         let length = districtSelect?.length;
-      //
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (districtSelect.options[i].value !== "") {
-      //             districtSelect.remove(i);
-      //           }
-      //         }
-      //
-      //         let filteredDistrict = governingDistrict.filter(
-      //           (district) =>
-      //             district.minor_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MinorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredDistrict.forEach((district) => {
-      //           let districtOption = new Option(
-      //             district.governing_district,
-      //             district.id
-      //           );
-      //           document
-      //             .getElementById("GoverningDistrict")
-      //             ?.append(districtOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
     } else {
       alert(t("messages.createClientAccount"));
       location.href = `/${lang}/login`;

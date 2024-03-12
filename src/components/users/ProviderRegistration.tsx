@@ -6,17 +6,31 @@ import {
   createSignal,
   onMount,
   For,
+  Show,
 } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import stripe from "src/lib/stripe";
 
 import Phone from "./forms/Phone";
 import { check } from "prettier";
+import { CreateStripeProductPrice } from "@components/posts/CreateStripeProductPrice";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+
+async function createStripeAccount(formData: FormData) {
+  const account = await stripe.accounts.create({
+    type: "express",
+    country: "US",
+    //TODO: Prefill email
+    email: formData.get("email") as string,
+  })
+  formData.append("account_id", account.id);
+  postStripeAccount(formData);
+}
 
 //Send the data to the APIRoute and wait for a JSON response see src/pages/api for APIRoute
 async function postFormData(formData: FormData) {
@@ -27,10 +41,23 @@ async function postFormData(formData: FormData) {
   const data = await response.json();
   console.log(data.message);
   //Checks the API response for the redirect and sends them to the redirect page if there is one
-  if (data.redirect) {
-    alert(data.message);
-    window.location.href = `/${lang}` + data.redirect;
+  if (response.status === 200) {
+    createStripeAccount(formData);
   }
+  return data;
+}
+
+async function postStripeAccount(stripeData: FormData) {
+  const response = await fetch("/api/updateAccountStripe", {
+    method: "POST",
+    body: stripeData,
+  });
+  const data = await response.json();
+  console.log(data.url)
+  // if (data.redirect) {
+  //   alert(data.message); //TODO: Not sure how to internationalize these
+  //   window.location.href = `/${lang}` + data.redirect;
+  // }
   return data;
 }
 
@@ -43,6 +70,7 @@ export const ProviderRegistration: Component = () => {
   const [phone, setPhone] = createSignal<string>("");
   const [firstName, setFirstName] = createSignal<string>("");
   const [lastName, setLastName] = createSignal<string>("");
+  const [email, setEmail] = createSignal<string>("");
   const [providerName, setProviderName] = createSignal<string>("");
   const [languages, setLanguages] =
     createSignal<Array<{ id: number; language: string }>>();
@@ -67,24 +95,13 @@ export const ProviderRegistration: Component = () => {
           setFirstName(profile[0].first_name);
           setLastName(profile[0].last_name);
           setProviderName(firstName() + " " + lastName());
+          setEmail(profile[0].email);
         }
       } catch (error) {
         console.log("Other error: " + error);
       }
 
-      //Will create a dropdown of all the languages in the database
-      try {
-        const { data, error } = await supabase.from("language").select("*");
-        if (error) {
-          console.log("supabase error: " + error.message);
-        } else if (data!) {
-          setLanguages(data);
-        }
-      } catch (error) {
-        console.log("Language error: " + error);
-      }
-
-      //Will create a dropdown of all the countries in the database (Currently only Costa Rica)
+      //Will create a dropdown of all the countries in the database (Currently only United States)
       try {
         const { data: countries, error } = await supabase
           .from("country")
@@ -101,209 +118,21 @@ export const ProviderRegistration: Component = () => {
         console.log("Other error: " + error);
       }
 
-      //Will create a list of Major Municipalities based on the selected country
       try {
-        const { data: majorMunicipality, error: errorMajorMunicipality } =
-          await supabase.from("major_municipality").select("*");
-        if (errorMajorMunicipality) {
-          console.log("supabase error: " + errorMajorMunicipality.message);
+        const { data: majorMunicipality, error: errorMajorMunicipality } = await supabase
+          .from("major_municipality")
+          .select("*");
+        if (error) {
+          console.log("supabase error: " + error.message);
         } else {
-          document.getElementById("country")?.addEventListener("change", () => {
-            let municipalitySelect = document.getElementById(
-              "MajorMunicipality"
-            ) as HTMLSelectElement;
-
-            let length = municipalitySelect?.length;
-
-            for (let i = length - 1; i > -1; i--) {
-              if (municipalitySelect.options[i].value !== "") {
-                municipalitySelect.remove(i);
-              }
-            }
-            let filteredMunicipality = majorMunicipality.filter(
-              (municipality) =>
-                municipality.country ==
-                (document.getElementById("country") as HTMLSelectElement)?.value
-            );
-            filteredMunicipality.forEach((municipality) => {
-              let municipalityOption = new Option(
-                municipality.major_municipality,
-                municipality.id
-              );
-              document
-                .getElementById("MajorMunicipality")
-                ?.append(municipalityOption);
-            });
+          majorMunicipality?.forEach((state) => {
+            let muniOption = new Option(state.major_municipality, state.id);
+            document.getElementById("MajorMunicipality")?.append(muniOption);
           });
         }
       } catch (error) {
         console.log("Other error: " + error);
       }
-
-      //Old code for minor and governing
-      //Creates drop down options for Minor Municipality based on selected Major Municipality
-      // try {
-      //   const { data: minorMunicipality, error: errorMinorMunicipality } =
-      //     await supabase.from("minor_municipality").select("*");
-      //   if (errorMinorMunicipality) {
-      //     console.log("supabase error: " + errorMinorMunicipality.message);
-      //   } else {
-      //     document
-      //       .getElementById("MajorMunicipality")
-      //       ?.addEventListener("change", () => {
-      //         let municipalitySelect = document.getElementById(
-      //           "MinorMunicipality"
-      //         ) as HTMLSelectElement;
-
-      //         let length = municipalitySelect?.length;
-      //         let length = municipalitySelect?.length;
-
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (municipalitySelect.options[i].value !== "") {
-      //             municipalitySelect.remove(i);
-      //           }
-      //         }
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (municipalitySelect.options[i].value !== "") {
-      //             municipalitySelect.remove(i);
-      //           }
-      //         }
-
-      //         let filteredMunicipality = minorMunicipality.filter(
-      //           (municipality) =>
-      //             municipality.major_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MajorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredMunicipality.forEach((municipality) => {
-      //           let municipalityOption = new Option(
-      //             municipality.minor_municipality,
-      //             municipality.id
-      //           );
-      //           document
-      //             .getElementById("MinorMunicipality")
-      //             ?.append(municipalityOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
-      //         let filteredMunicipality = minorMunicipality.filter(
-      //           (municipality) =>
-      //             municipality.major_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MajorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredMunicipality.forEach((municipality) => {
-      //           let municipalityOption = new Option(
-      //             municipality.minor_municipality,
-      //             municipality.id
-      //           );
-      //           document
-      //             .getElementById("MinorMunicipality")
-      //             ?.append(municipalityOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
-
-      // //Creates filtered drop down options for Governing District base on selected Minor Municipality
-      // try {
-      //   const { data: governingDistrict, error: errorGoverningDistrict } =
-      //     await supabase.from("governing_district").select("*");
-      //   if (errorGoverningDistrict) {
-      //     console.log("supabase error: " + errorGoverningDistrict.message);
-      //   } else {
-      //     document
-      //       .getElementById("MinorMunicipality")
-      //       ?.addEventListener("change", () => {
-      //         let districtSelect = document.getElementById(
-      //           "GoverningDistrict"
-      //         ) as HTMLSelectElement;
-      // //Creates filtered drop down options for Governing District base on selected Minor Municipality
-      // try {
-      //   const { data: governingDistrict, error: errorGoverningDistrict } =
-      //     await supabase.from("governing_district").select("*");
-      //   if (errorGoverningDistrict) {
-      //     console.log("supabase error: " + errorGoverningDistrict.message);
-      //   } else {
-      //     document
-      //       .getElementById("MinorMunicipality")
-      //       ?.addEventListener("change", () => {
-      //         let districtSelect = document.getElementById(
-      //           "GoverningDistrict"
-      //         ) as HTMLSelectElement;
-
-      //         let length = districtSelect?.length;
-      //         let length = districtSelect?.length;
-
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (districtSelect.options[i].value !== "") {
-      //             districtSelect.remove(i);
-      //           }
-      //         }
-      //         for (let i = length - 1; i > -1; i--) {
-      //           if (districtSelect.options[i].value !== "") {
-      //             districtSelect.remove(i);
-      //           }
-      //         }
-
-      //         let filteredDistrict = governingDistrict.filter(
-      //           (district) =>
-      //             district.minor_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MinorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredDistrict.forEach((district) => {
-      //           let districtOption = new Option(
-      //             district.governing_district,
-      //             district.id
-      //           );
-      //           document
-      //             .getElementById("GoverningDistrict")
-      //             ?.append(districtOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
-      //         let filteredDistrict = governingDistrict.filter(
-      //           (district) =>
-      //             district.minor_municipality ==
-      //             (
-      //               document.getElementById(
-      //                 "MinorMunicipality"
-      //               ) as HTMLSelectElement
-      //             )?.value
-      //         );
-      //         filteredDistrict.forEach((district) => {
-      //           let districtOption = new Option(
-      //             district.governing_district,
-      //             district.id
-      //           );
-      //           document
-      //             .getElementById("GoverningDistrict")
-      //             ?.append(districtOption);
-      //         });
-      //       });
-      //   }
-      // } catch (error) {
-      //   console.log("Other error: " + error);
-      // }
-
       //If the user is not signed in then tell them to sign in and send them to the login page
     } else {
       alert(t("messages.createProviderAccount"));
@@ -333,8 +162,11 @@ export const ProviderRegistration: Component = () => {
       formData.append("Phone", phone());
       formData.append("access_token", session()?.access_token!);
       formData.append("refresh_token", session()?.refresh_token!);
+      formData.append("email", email());
       formData.append("lang", lang);
       formData.append("languageArray", JSON.stringify(languagePick()));
+      //Remove when more countries are added
+      formData.set("country", "1");
 
       // formData.append("language", languageS());
       if (imageUrl() !== null) {
@@ -367,30 +199,30 @@ export const ProviderRegistration: Component = () => {
     }
   }
 
-  function setLanguageArray(e: Event) {
-    if ((e.target as HTMLInputElement).checked) {
-      setLanguagePick([
-        ...languagePick(),
-        (e.target as HTMLInputElement).value,
-      ]);
-    } else if ((e.target as HTMLInputElement).checked === false) {
-      if (languagePick().includes((e.target as HTMLInputElement).value)) {
-        setLanguagePick(
-          languagePick().filter(
-            (value) => value !== (e.target as HTMLInputElement).value
-          )
-        );
-      }
-    }
-    if (languagePick().length > 0) {
-      document.getElementById("isValid")?.classList.remove("hidden");
-      document.getElementById("languageToolTip")?.classList.add("hidden");
-    } else if (languagePick().length === 0) {
-      document.getElementById("isValid")?.classList.add("hidden");
-      document.getElementById("languageToolTip")?.classList.remove("hidden");
-    }
-    console.log(languagePick());
-  }
+  // function setLanguageArray(e: Event) {
+  //   if ((e.target as HTMLInputElement).checked) {
+  //     setLanguagePick([
+  //       ...languagePick(),
+  //       (e.target as HTMLInputElement).value,
+  //     ]);
+  //   } else if ((e.target as HTMLInputElement).checked === false) {
+  //     if (languagePick().includes((e.target as HTMLInputElement).value)) {
+  //       setLanguagePick(
+  //         languagePick().filter(
+  //           (value) => value !== (e.target as HTMLInputElement).value
+  //         )
+  //       );
+  //     }
+  //   }
+  //   if (languagePick().length > 0) {
+  //     document.getElementById("isValid")?.classList.remove("hidden");
+  //     document.getElementById("languageToolTip")?.classList.add("hidden");
+  //   } else if (languagePick().length === 0) {
+  //     document.getElementById("isValid")?.classList.add("hidden");
+  //     document.getElementById("languageToolTip")?.classList.remove("hidden");
+  //   }
+  //   console.log(languagePick());
+  // }
 
   //Actual Form that gets displayed for users to fill
   return (
@@ -575,22 +407,16 @@ export const ProviderRegistration: Component = () => {
           </div>
         </div>
 
-        <div class="flex flex-wrap justify-start">
+        {/* <div class="flex flex-wrap justify-start">
           <label for="language" class="text-ptext1 dark:text-ptext1-DM w-4/12">
             <span class="text-alert1 dark:text-alert1-DM">* </span>
             {t("formLabels.languages")}:
-          </label>
+          </label> */}
+
 
           {/* Creates a list of checkboxes that drop down to multiple select */}
-          <div class=" w-7/12">
+          {/* <div class=" w-7/12">
             <div class="relative" onClick={() => languageCheckboxes()}>
-              {/* <select
-                id="language"
-                class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                name="language"
-              >
-                <option value="">{t("formLabels.chooseLanguage")}</option>
-              </select> */}
               <p
                 id="chooseLanguage"
                 class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
@@ -663,10 +489,10 @@ export const ProviderRegistration: Component = () => {
               <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
             </svg>
           </div>
-        </div>
-
+        </div> */}
+        <Show when={false}>
         <br />
-
+        {/* TODO: Un-hide by removing Show when allowing countries outside US */}
         <div class="flex justify-start">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             <span class="text-alert1 dark:text-alert1-DM">* </span>
@@ -677,8 +503,10 @@ export const ProviderRegistration: Component = () => {
             class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="country"
             required
+            disabled
           >
-            <option value="">-</option>
+            {/* Defaults to United States for now */}
+            <option value="1">United States</option>
           </select>
           <svg
             id="isValid"
@@ -689,8 +517,8 @@ export const ProviderRegistration: Component = () => {
             <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
           </svg>
         </div>
-
         <br />
+        </Show>
 
         <div class="flex justify-start">
           <label
@@ -704,34 +532,6 @@ export const ProviderRegistration: Component = () => {
             id="MajorMunicipality"
             class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
             name="MajorMunicipality"
-            // required TODO:Make this required
-          >
-            <option value="">-</option>
-          </select>
-          <svg
-            id="isValid"
-            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
-            viewBox="0 0 12 12"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
-          </svg>
-        </div>
-
-        <br />
-
-        {/* <div class="flex justify-start">
-          <label
-            for="MinorMunicipality"
-            class="text-ptext1 dark:text-ptext1-DM"
-          >
-            <span class="text-alert1 dark:text-alert1-DM">* </span>
-            {t("formLabels.minorMunicipality")}:
-          </label>
-          <select
-            id="MinorMunicipality"
-            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-            name="MinorMunicipality"
             required
           >
             <option value="">-</option>
@@ -747,32 +547,6 @@ export const ProviderRegistration: Component = () => {
         </div>
 
         <br />
-
-        <div class="flex justify-start mb-4">
-          <label
-            for="GoverningDistrict"
-            class="text-ptext1 dark:text-ptext1-DM"
-          >
-            <span class="text-alert1 dark:text-alert1-DM">* </span>
-            {t("formLabels.governingDistrict")}:
-          </label>
-          <select
-            id="GoverningDistrict"
-            class="peer ml-2 rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-            name="GoverningDistrict"
-            required
-          >
-            <option value="">-</option>
-          </select>
-          <svg
-            id="isValid"
-            class="w-4 h-4 peer-valid:fill-btn1 peer-valid:dark:fill-btn1-DM mr-2 mt-0.5 ml-4 peer-invalid:hidden"
-            viewBox="0 0 12 12"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
-          </svg>
-        </div> */}
 
         <div class="mb-4 flex justify-center">
           <div class="">

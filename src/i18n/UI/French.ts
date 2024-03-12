@@ -84,7 +84,7 @@ export const French = {
     passwordLength: "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
     passwordValid: 'Mot de passe valide',
     passwordLackRequirements: 'Le mot de passe ne répond pas aux exigences', 
-    phoneLackRequirements: 'Le numéro de téléphone doit comporter 8 chiffres',
+    phoneLackRequirements: "S'il vous plaît entrer un numéro de téléphone valide.",
     phoneValid: 'Numéro de téléphone valide',
     passwordMatch: "Les mots de passe ne correspondent pas",
     passwordReset: 'Réinitialisation du mot de passe',

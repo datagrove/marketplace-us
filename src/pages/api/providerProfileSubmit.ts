@@ -25,23 +25,17 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const phone = formData.get("Phone");
   const country = formData.get("country");
   const majorMunicipality = formData.get("MajorMunicipality");
-  // const minorMunicipality = formData.get("MinorMunicipality");
-  // const governingDistrict = formData.get("GoverningDistrict");
-  const postalArea = formData.get("PostalArea");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
-  const language = JSON.parse(formData.get("languageArray")! as string);
   console.log("imageURL: " + imageUrl);
-  console.log("language: " + language);
-  console.log(language?.length);
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
     !phone ||
     !country ||
-    // !majorMunicipality ||
+    !majorMunicipality
     // !minorMunicipality ||
     // !governingDistrict ||
-    language?.length === 0
+    // language?.length === 0
   ) {
     return new Response(
       JSON.stringify({
@@ -112,46 +106,20 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   /*Each of these retrieves the appropriate id from the database for the area level
   (governing district, minor municipality, major municipality, country)
   in order to make a proper submission to the location table */
-  // const { data: districtId, error: districtError } = await supabase
-  //   .from("governing_district")
-  //   .select("id")
-  //   .eq("id", governingDistrict);
-  // if (districtError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: (t("apiErrors.noDistrict")),
-  //     }),
-  //     { status: 500 }
-  //   );
-  // }
-  //
-  // const { data: minorMunicipalityId, error: minorMunicipalityError } =
-  //   await supabase
-  //     .from("minor_municipality")
-  //     .select("id")
-  //     .eq("id", minorMunicipality);
-  // if (minorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: (t("apiErrors.noMinorMunicipality")),
-  //     }),
-  //     { status: 500 }
-  //   );
-  // }
 
-  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
-  //   await supabase
-  //     .from("major_municipality")
-  //     .select("id")
-  //     .eq("id", majorMunicipality);
-  // if (majorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: t("apiErrors.noMajorMunicipality"),
-  //     }),
-  //     { status: 500 },
-  //   );
-  // }
+  const { data: majorMunicipalityId, error: majorMunicipalityError } =
+    await supabase
+      .from("major_municipality")
+      .select("id")
+      .eq("id", majorMunicipality);
+  if (majorMunicipalityError) {
+    return new Response(
+      JSON.stringify({
+        message: t("apiErrors.noMajorMunicipality"),
+      }),
+      { status: 500 },
+    );
+  }
 
   const { data: countryId, error: countryError } = await supabase
     .from("country")
@@ -168,9 +136,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   //Build our submission to the location table keys need to match the field in the database you are trying to fill.
   let locationSubmission = {
-    // minor_municipality: minorMunicipalityId[0].id,
-    // major_municipality: majorMunicipalityId[0].id,
-    // governing_district: districtId[0].id,
+    major_municipality: majorMunicipalityId[0].id,
     country: countryId[0].id,
     user_id: user.id,
   };
@@ -196,8 +162,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     seller_phone: phone,
     location: location[0].id,
     user_id: user.id,
-    image_url: imageUrl,
-    language_spoken: language,
+    image_url: imageUrl
   };
 
   //submit to the providers table and select it back
@@ -229,7 +194,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: t("apiErrors.success"),
-      redirect: "/provider/profile",
     }),
     { status: 200 },
   );
