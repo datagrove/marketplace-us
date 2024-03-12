@@ -142,6 +142,7 @@ export const French = {
     languages: "Langues",
     chooseLanguage: "Choisissez-en un ou plusieurs",
     languagesSpoken: "Langues parlées",
+    taxCode: "Code fiscal",
   },
 
   postLabels: {

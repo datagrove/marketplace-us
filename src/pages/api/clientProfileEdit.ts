@@ -2,7 +2,7 @@ import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 
-export const post: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
 
     //Just console.log the formData for troubleshooting

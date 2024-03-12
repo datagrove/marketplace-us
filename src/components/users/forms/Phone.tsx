@@ -24,7 +24,7 @@ export const TelephoneInput: Component<Props> = (props) => {
 
     if (inputElement) {
       telInput = intlTelInput(inputElement, {
-        initialCountry: "cr",
+        initialCountry: "us",
         separateDialCode: true,
         autoInsertDialCode: true,
         autoPlaceholder: "aggressive",
@@ -105,7 +105,7 @@ export const TelephoneInput: Component<Props> = (props) => {
         type="tel"
         id="telephoneInput"
         class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none peer border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
-        required
+        // required TODO: add required
       />
       <svg
         id="notValidNumber"

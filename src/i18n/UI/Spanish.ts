@@ -144,6 +144,7 @@ export const Spanish = {
     languages: "Idiomas",
     chooseLanguage: "Elige uno o más",
     languagesSpoken: "Idiomas hablados",
+    taxCode: "Código de impuestos",
   },
 
   postLabels: {
