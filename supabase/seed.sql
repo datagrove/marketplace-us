@@ -106,12 +106,6 @@ INSERT INTO "public"."post_category" ("id", "category", "language") VALUES
 
 
 --
--- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
 -- Data for Name: seller_post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
