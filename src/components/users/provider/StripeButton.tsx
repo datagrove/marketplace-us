@@ -19,12 +19,18 @@ const { data: stripeData, error: stripeError } = await supabase
 
 if (stripeError) {
   console.log("Stripe Error: " + stripeError.message);
-}
+} 
 if (!stripeData) {
   console.log("No Stripe ID found");
-} 
-
+} else {
+    console.log(stripeData)
+}
+if (stripeData === null ||stripeData.length === 0) {
+    alert(t("messages.noProvider"));
+    location.href = `/${lang}/provider/createaccount`;
+}
 const stripeId = stripeData![0].stripe_connected_account_id;
+
   
 
 const stripeAcctSetup = await stripe.accounts.retrieve(stripeId).then((res) => {

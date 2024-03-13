@@ -147,11 +147,11 @@ export const CreateNewPost: Component = () => {
     });
   });
 
-  createEffect(() => {
-    if(selectedTaxCode() !== undefined) {
-      console.log("Tax Code: " + selectedTaxCode()!.value);
-    }
-  });
+  // createEffect(() => {
+  //   if(selectedTaxCode() !== undefined) {
+  //     console.log("Tax Code: " + selectedTaxCode()!.value);
+  //   }
+  // });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();

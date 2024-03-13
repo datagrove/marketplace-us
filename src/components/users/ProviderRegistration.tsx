@@ -46,8 +46,6 @@ async function postFormData(formData: FormData) {
     body: formData,
   });
   const data = await response.json();
-  console.log(data.message);
-  //Checks the API response for the redirect and sends them to the redirect page if there is one
   if (response.status === 200) {
     createStripeAccount(formData);
   }
@@ -155,7 +153,6 @@ export const ProviderRegistration: Component = () => {
   //Must send the access_token and refresh_token to the APIRoute because the server can't see the local session
   function submit(e: SubmitEvent) {
     e.preventDefault();
-    console.log(languages());
 
     const formData = new FormData(e.target as HTMLFormElement);
 

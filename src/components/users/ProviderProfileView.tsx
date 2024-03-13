@@ -128,7 +128,7 @@ export const ProviderProfileView: Component = () => {
           console.log(error);
         } else if (data[0] === undefined) {
           alert(t("messages.noProvider"));
-          location.href = `/${lang}/services`;
+          location.href = `/${lang}/provider/createaccount`;
         } else {
           // let languageArray = data[0].language_spoken;
           // console.log("Languages Array: " + languageArray);
