@@ -193,7 +193,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // If everything works send a success response
   return new Response(
     JSON.stringify({
-      message: t("apiErrors.success"),
+      // message: t("apiErrors.success"),
     }),
     { status: 200 },
   );

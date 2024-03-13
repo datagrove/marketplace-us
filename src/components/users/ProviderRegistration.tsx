@@ -53,7 +53,6 @@ async function postStripeAccount(stripeData: FormData) {
     body: stripeData,
   });
   const data = await response.json();
-  console.log(data.url)
   // if (data.redirect) {
   //   alert(data.message); //TODO: Not sure how to internationalize these
   //   window.location.href = `/${lang}` + data.redirect;

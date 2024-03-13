@@ -1,0 +1,14 @@
+---
+import { responseHasCookies } from "astro/dist/core/cookies";
+import { POST } from "../api/stripeAccountLinkReauth";
+
+let response = await POST(Astro);
+
+const data = await response.json();
+
+if (data.redirect) {
+    window.location.href = data.redirect;
+} else {
+    window.location.href = "/404";
+}
+---
