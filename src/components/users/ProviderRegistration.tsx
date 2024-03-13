@@ -27,6 +27,13 @@ async function createStripeAccount(formData: FormData) {
     country: "US",
     //TODO: Prefill email
     email: formData.get("email") as string,
+    settings: {
+      payouts: {
+        schedule: {
+          interval: "manual",
+        },
+      },
+    }
   })
   formData.append("account_id", account.id);
   postStripeAccount(formData);
@@ -53,10 +60,9 @@ async function postStripeAccount(stripeData: FormData) {
     body: stripeData,
   });
   const data = await response.json();
-  // if (data.redirect) {
-  //   alert(data.message); //TODO: Not sure how to internationalize these
-  //   window.location.href = `/${lang}` + data.redirect;
-  // }
+  if (data.redirect) {
+    window.location.href = data.redirect;
+  }
   return data;
 }
 

@@ -46,10 +46,20 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         return_url: SITE.url + "/provider/profile",
         type: "account_onboarding",
       });
+
+      if (!accountLink) {
+        return new Response(
+          JSON.stringify({
+            //TODO: Change this error to be more specific like "error creating account link"
+            message: t("apiErrors.providerCreateProfileError"),
+          }),
+          { status: 500 }
+        );
+      }
+
+      return accountLink;
     }
   }
-
-  const accountLink = getAccountLink();
 
   const { data: sessionData, error: sessionError } =
     await supabase.auth.setSession({
@@ -112,11 +122,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log("Post Data: " + JSON.stringify(data));
   }
 
+  const accountLink = await getAccountLink();
+
   // Do something with the formData, then return a success response
   return new Response(
     JSON.stringify({
       message: t("apiErrors.success"),
-      redirect: "/provider/profile",
+      redirect: accountLink.url,
     }),
     { status: 200 }
   );

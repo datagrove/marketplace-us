@@ -9,7 +9,7 @@ const CONFIG = {
   title: "LearnGrove",
   description: "HomeSchool description",
   //NEED TO ADD NEW URL
-  url: "https://learngrove.co/",
+  url: "https://learngrove.co",
   devUrl: "http://localhost:4321",
   //NEED TO ADD NEW URL
   pagesDevUrl: "https://pwa.NEWURL.pages.dev",
