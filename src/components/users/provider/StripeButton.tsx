@@ -25,6 +25,8 @@ if (!stripeData) {
 } else {
     console.log(stripeData)
 }
+
+// Improvement: This probably shouldn't be needed in the button like this the page should check that before loading the button at all. But this works for now.
 if (stripeData === null ||stripeData.length === 0) {
     alert(t("messages.noProvider"));
     location.href = `/${lang}/provider/createaccount`;
