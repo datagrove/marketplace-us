@@ -114,6 +114,7 @@ export const Spanish = {
     profileEdits: '¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!',
     noClient: "No se encontró ningún cliente.",
     noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
+    noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
   },
 
   formLabels: {

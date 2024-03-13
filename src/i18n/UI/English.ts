@@ -113,6 +113,7 @@ export const English = {
     profileEdits: 'Profile edits will only be saved after clicking the Save Profile button!',
     noClient: "No Client found.",
     noPostsSearch: "No posts match this specific search - please try a different filter or key word",
+    noStripeAccount: "You must complete enrollment with Stripe before posting resources.",
   },
 
   formLabels: {

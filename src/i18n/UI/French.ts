@@ -112,6 +112,7 @@ export const French = {
     mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
     noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
+    noStripeAccount: "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
   },
   
   formLabels: {
