@@ -16,6 +16,7 @@ import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { StripeButton } from "./provider/StripeButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -118,7 +119,7 @@ export const ProviderProfileView: Component = () => {
     if (session()) {
       try {
         const { data, error } = await supabase
-          .from("providerview")
+          .from("sellerview")
           .select("*")
           .eq("user_id", user_id);
         console.log(data);
@@ -127,29 +128,29 @@ export const ProviderProfileView: Component = () => {
           console.log(error);
         } else if (data[0] === undefined) {
           alert(t("messages.noProvider"));
-          location.href = `/${lang}/services`;
+          location.href = `/${lang}/provider/createaccount`;
         } else {
-          let languageArray = data[0].language_spoken;
-          console.log("Languages Array: " + languageArray);
-          languageArray?.map((language: number) => {
-            if (language == 1) {
-              setLanguageSpoken([...languageSpoken(), "English"]);
-            }
+          // let languageArray = data[0].language_spoken;
+          // console.log("Languages Array: " + languageArray);
+          // languageArray?.map((language: number) => {
+          //   if (language == 1) {
+          //     setLanguageSpoken([...languageSpoken(), "English"]);
+          //   }
 
-            if (language == 2) {
-              setLanguageSpoken([...languageSpoken(), "Español"]);
-            }
+          //   if (language == 2) {
+          //     setLanguageSpoken([...languageSpoken(), "Español"]);
+          //   }
 
-            if (language == 3) {
-              setLanguageSpoken([...languageSpoken(), "Français"]);
-            }
-          });
+          //   if (language == 3) {
+          //     setLanguageSpoken([...languageSpoken(), "Français"]);
+          //   }
+          // });
 
-          //set initial list of languages for provider
-          setLanguagePick(data[0].language_spoken);
+          // //set initial list of languages for provider
+          // setLanguagePick(data[0].language_spoken);
 
-          //set display list of languages for provider
-          data[0].languages = languageSpoken().join(", ");
+          // //set display list of languages for provider
+          // data[0].languages = languageSpoken().join(", ");
 
           setProvider(data[0]);
         }
@@ -217,30 +218,30 @@ export const ProviderProfileView: Component = () => {
       }
 
       //Will create a list of Languages in the database
-      try {
-        const { data, error } = await supabase.from("language").select("*");
-        if (error) {
-          console.log("supabase error: " + error.message);
-        } else if (data!) {
-          console.log("DB data");
-          console.log(data);
-          data.forEach((item) => {
-            item.checked = false;
-            if (provider()?.language_spoken && provider()?.language_spoken.length > 0){
-              provider()?.language_spoken.forEach((language) => {
-                console.log(language);
-                if (language === item.id.toString()) {
-                  item.checked = true;
-                }
-              });
-            }
-          });
-          console.log(data);
-          setLanguages(data);
-        }
-      } catch (error) {
-        console.log("Language error: " + error);
-      }
+      // try {
+      //   const { data, error } = await supabase.from("language").select("*");
+      //   if (error) {
+      //     console.log("supabase error: " + error.message);
+      //   } else if (data!) {
+      //     console.log("DB data");
+      //     console.log(data);
+      //     data.forEach((item) => {
+      //       item.checked = false;
+      //       if (provider()?.language_spoken && provider()?.language_spoken.length > 0){
+      //         provider()?.language_spoken.forEach((language) => {
+      //           console.log(language);
+      //           if (language === item.id.toString()) {
+      //             item.checked = true;
+      //           }
+      //         });
+      //       }
+      //     });
+      //     console.log(data);
+      //     setLanguages(data);
+      //   }
+      // } catch (error) {
+      //   console.log("Language error: " + error);
+      // }
 
       //Will create a list of Major Municipalities based on the selected country
       try {
@@ -283,96 +284,96 @@ export const ProviderProfileView: Component = () => {
       }
 
       //Creates drop down options for Minor Municipality based on selected Major Municipality
-      try {
-        const { data: minorMunicipality, error: errorMinorMunicipality } =
-          await supabase.from("minor_municipality").select("*");
-        if (errorMinorMunicipality) {
-          console.log("supabase error: " + errorMinorMunicipality.message);
-        } else {
-          document
-            .getElementById("MajorMunicipality")
-            ?.addEventListener("change", () => {
-              let municipalitySelect = document.getElementById(
-                "MinorMunicipality"
-              ) as HTMLSelectElement;
+      // try {
+      //   const { data: minorMunicipality, error: errorMinorMunicipality } =
+      //     await supabase.from("minor_municipality").select("*");
+      //   if (errorMinorMunicipality) {
+      //     console.log("supabase error: " + errorMinorMunicipality.message);
+      //   } else {
+      //     document
+      //       .getElementById("MajorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let municipalitySelect = document.getElementById(
+      //           "MinorMunicipality"
+      //         ) as HTMLSelectElement;
 
-              let length = municipalitySelect?.length;
+      //         let length = municipalitySelect?.length;
 
-              for (let i = length - 1; i > -1; i--) {
-                if (municipalitySelect.options[i].value !== "") {
-                  municipalitySelect.remove(i);
-                }
-              }
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (municipalitySelect.options[i].value !== "") {
+      //             municipalitySelect.remove(i);
+      //           }
+      //         }
 
-              let filteredMunicipality = minorMunicipality.filter(
-                (municipality) =>
-                  municipality.major_municipality ==
-                  (
-                    document.getElementById(
-                      "MajorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredMunicipality.forEach((municipality) => {
-                let municipalityOption = new Option(
-                  municipality.minor_municipality,
-                  municipality.id
-                );
-                document
-                  .getElementById("MinorMunicipality")
-                  ?.append(municipalityOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      //         let filteredMunicipality = minorMunicipality.filter(
+      //           (municipality) =>
+      //             municipality.major_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MajorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredMunicipality.forEach((municipality) => {
+      //           let municipalityOption = new Option(
+      //             municipality.minor_municipality,
+      //             municipality.id
+      //           );
+      //           document
+      //             .getElementById("MinorMunicipality")
+      //             ?.append(municipalityOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
 
       //Creates filtered drop down options for Governing District base on selected Minor Municipality
-      try {
-        const { data: governingDistrict, error: errorGoverningDistrict } =
-          await supabase.from("governing_district").select("*");
-        if (errorGoverningDistrict) {
-          console.log("supabase error: " + errorGoverningDistrict.message);
-        } else {
-          document
-            .getElementById("MinorMunicipality")
-            ?.addEventListener("change", () => {
-              let districtSelect = document.getElementById(
-                "GoverningDistrict"
-              ) as HTMLSelectElement;
+      // try {
+      //   const { data: governingDistrict, error: errorGoverningDistrict } =
+      //     await supabase.from("governing_district").select("*");
+      //   if (errorGoverningDistrict) {
+      //     console.log("supabase error: " + errorGoverningDistrict.message);
+      //   } else {
+      //     document
+      //       .getElementById("MinorMunicipality")
+      //       ?.addEventListener("change", () => {
+      //         let districtSelect = document.getElementById(
+      //           "GoverningDistrict"
+      //         ) as HTMLSelectElement;
 
-              let length = districtSelect?.length;
+      //         let length = districtSelect?.length;
 
-              for (let i = length - 1; i > -1; i--) {
-                if (districtSelect.options[i].value !== "") {
-                  districtSelect.remove(i);
-                }
-              }
+      //         for (let i = length - 1; i > -1; i--) {
+      //           if (districtSelect.options[i].value !== "") {
+      //             districtSelect.remove(i);
+      //           }
+      //         }
 
-              let filteredDistrict = governingDistrict.filter(
-                (district) =>
-                  district.minor_municipality ==
-                  (
-                    document.getElementById(
-                      "MinorMunicipality"
-                    ) as HTMLSelectElement
-                  )?.value
-              );
-              filteredDistrict.forEach((district) => {
-                let districtOption = new Option(
-                  district.governing_district,
-                  district.id
-                );
-                document
-                  .getElementById("GoverningDistrict")
-                  ?.append(districtOption);
-              });
-            });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
+      //         let filteredDistrict = governingDistrict.filter(
+      //           (district) =>
+      //             district.minor_municipality ==
+      //             (
+      //               document.getElementById(
+      //                 "MinorMunicipality"
+      //               ) as HTMLSelectElement
+      //             )?.value
+      //         );
+      //         filteredDistrict.forEach((district) => {
+      //           let districtOption = new Option(
+      //             district.governing_district,
+      //             district.id
+      //           );
+      //           document
+      //             .getElementById("GoverningDistrict")
+      //             ?.append(districtOption);
+      //         });
+      //       });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
 
       //If the user is not signed in then tell them to sign in and send them to the login page
     }
@@ -385,33 +386,33 @@ export const ProviderProfileView: Component = () => {
     const majorMunicipality = document.getElementById(
       "MajorMunicipality"
     ) as HTMLSelectElement;
-    const minorMunicipality = document.getElementById(
-      "MinorMunicipality"
-    ) as HTMLSelectElement;
-    const governingDistrict = document.getElementById(
-      "GoverningDistrict"
-    ) as HTMLSelectElement;
+    // const minorMunicipality = document.getElementById(
+    //   "MinorMunicipality"
+    // ) as HTMLSelectElement;
+    // const governingDistrict = document.getElementById(
+    //   "GoverningDistrict"
+    // ) as HTMLSelectElement;
 
     if (
       country.value !== "" ||
-      majorMunicipality.value !== "" ||
-      minorMunicipality.value !== "" ||
-      governingDistrict.value !== ""
+      majorMunicipality.value !== "" 
+      // minorMunicipality.value !== "" ||
+      // governingDistrict.value !== ""
     ) {
       country.required = true;
       majorMunicipality.required = true;
-      minorMunicipality.required = true;
-      governingDistrict.required = true;
+      // minorMunicipality.required = true;
+      // governingDistrict.required = true;
     } else if (
       country.value === "" &&
-      majorMunicipality.value === "" &&
-      minorMunicipality.value === "" &&
-      governingDistrict.value === ""
+      majorMunicipality.value === "" 
+      // minorMunicipality.value === "" &&
+      // governingDistrict.value === ""
     ) {
       country.required = false;
       majorMunicipality.required = false;
-      minorMunicipality.required = false;
-      governingDistrict.required = false;
+      // minorMunicipality.required = false;
+      // governingDistrict.required = false;
     }
   };
 
@@ -432,48 +433,49 @@ export const ProviderProfileView: Component = () => {
     setFormData(formData);
   }
 
-  let expanded = false;
-  function languageCheckboxes() {
-    let checkboxes = document.getElementById("checkboxes");
-    if (!expanded) {
-      checkboxes?.classList.remove("hidden");
-      checkboxes?.classList.add("block");
-      expanded = true;
-    } else {
-      checkboxes?.classList.remove("block");
-      checkboxes?.classList.add("hidden");
-      expanded = false;
-    }
-  }
+  // let expanded = false;
+  // function languageCheckboxes() {
+  //   let checkboxes = document.getElementById("checkboxes");
+  //   if (!expanded) {
+  //     checkboxes?.classList.remove("hidden");
+  //     checkboxes?.classList.add("block");
+  //     expanded = true;
+  //   } else {
+  //     checkboxes?.classList.remove("block");
+  //     checkboxes?.classList.add("hidden");
+  //     expanded = false;
+  //   }
+  // }
 
-  function setLanguageArray(e: Event) {
-    if ((e.target as HTMLInputElement).checked) {
-      setLanguagePick([
-        ...languagePick(),
-        (e.target as HTMLInputElement).value,
-      ]);
-    } else if ((e.target as HTMLInputElement).checked === false) {
-      if (languagePick().includes((e.target as HTMLInputElement).value)) {
-        setLanguagePick(
-          languagePick().filter(
-            (value) => value !== (e.target as HTMLInputElement).value
-          )
-        );
-      }
-    }
-    if (languagePick().length > 0) {
-      document.getElementById("isValid")?.classList.remove("hidden");
-    } else if (languagePick().length === 0) {
-      document.getElementById("isValid")?.classList.add("hidden");
-    }
-    console.log(languagePick());
-  }
+  // function setLanguageArray(e: Event) {
+  //   if ((e.target as HTMLInputElement).checked) {
+  //     setLanguagePick([
+  //       ...languagePick(),
+  //       (e.target as HTMLInputElement).value,
+  //     ]);
+  //   } else if ((e.target as HTMLInputElement).checked === false) {
+  //     if (languagePick().includes((e.target as HTMLInputElement).value)) {
+  //       setLanguagePick(
+  //         languagePick().filter(
+  //           (value) => value !== (e.target as HTMLInputElement).value
+  //         )
+  //       );
+  //     }
+  //   }
+  //   if (languagePick().length > 0) {
+  //     document.getElementById("isValid")?.classList.remove("hidden");
+  //   } else if (languagePick().length === 0) {
+  //     document.getElementById("isValid")?.classList.add("hidden");
+  //   }
+  //   console.log(languagePick());
+  // }
 
   //TODO: Style improvement - when posts section is opened in mobile view, it takes up full screen width some margin might be nice not sure but this might be due to current card styling
   //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
   return (
     <div class="">
+      <StripeButton/>
       <div class="text-2xl font-bold underline italic text-alert1 dark:text-alert1-DM text-center">
         <Show when={editMode() === true}>
           <h1 class="text-alert1 dark:text-alert1-DM">
@@ -759,19 +761,10 @@ export const ProviderProfileView: Component = () => {
                           <div class="flex flex-wrap justify-start">
                             {/* Creates a list of checkboxes that drop down to multiple select */}
                             <div class=" w-full mb-4">
-                              <div
+                              {/* <div
                                 class="relative"
                                 onclick={() => languageCheckboxes()}
                               >
-                                {/* <select
-                                  id="language"
-                                  class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                                  name="language"
-                                >
-                                  <option value="">
-                                    {t("formLabels.chooseLanguage")}
-                                  </option>
-                                </select> */}
 
                                 <p
                                   id="chooseLanguage"
@@ -782,8 +775,8 @@ export const ProviderProfileView: Component = () => {
                                 </p>
 
                                 <div class="absolute"></div>
-                              </div>
-                              <div
+                              </div> */}
+                              {/* <div
                                 id="checkboxes"
                                 class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
                               >
@@ -803,7 +796,7 @@ export const ProviderProfileView: Component = () => {
                                     </label>
                                   )}
                                 </For>
-                              </div>
+                              </div> */}
                             </div>
                           </div>
                         </div>
@@ -1385,21 +1378,11 @@ export const ProviderProfileView: Component = () => {
                     <div class="basis-full">
                       <div class="flex flex-wrap justify-start">
                         {/* Creates a list of checkboxes that drop down to multiple select */}
-                        <div class=" w-full mb-4">
+                        {/* <div class=" w-full mb-4">
                           <div
                             class="relative"
                             onclick={() => languageCheckboxes()}
                           >
-                            {/* <select
-                              id="language"
-                              class="peer w-full rounded focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
-                              name="language"
-                            >
-                              <option value="">
-                                {t("formLabels.chooseLanguage")}
-                              </option>
-                            </select> */}
-
                             <p
                               id="chooseLanguage"
                               class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
@@ -1429,7 +1412,7 @@ export const ProviderProfileView: Component = () => {
                               )}
                             </For>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </Show>

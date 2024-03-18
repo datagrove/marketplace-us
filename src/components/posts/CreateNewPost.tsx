@@ -147,11 +147,11 @@ export const CreateNewPost: Component = () => {
     });
   });
 
-  createEffect(() => {
-    if(selectedTaxCode() !== undefined) {
-      console.log("Tax Code: " + selectedTaxCode()!.value);
-    }
-  });
+  // createEffect(() => {
+  //   if(selectedTaxCode() !== undefined) {
+  //     console.log("Tax Code: " + selectedTaxCode()!.value);
+  //   }
+  // });
 
   createEffect(async () => {
     const { data, error } = await supabase.auth.getSession();
@@ -170,7 +170,9 @@ export const CreateNewPost: Component = () => {
           if (providers.length === 0) {
             alert(t("messages.onlyProvider"));
             window.location.href = `/${lang}/provider/createaccount`;
-          } else {
+          } else if (providers[0].stripe_connected_account_id === null) {
+            alert(t("messages.noStripeAccount"));
+            window.location.href = `/${lang}/provider/profile`;
           }
         }
       } catch (error) {
