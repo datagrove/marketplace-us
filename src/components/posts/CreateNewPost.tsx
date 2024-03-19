@@ -293,7 +293,7 @@ export const CreateNewPost: Component = () => {
     <div>
       <form onSubmit={submit}>
         <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.title")}:
+          {t("formLabels.title")}
           <input
             type="text"
             id="Title"
@@ -303,7 +303,7 @@ export const CreateNewPost: Component = () => {
           />
         </label>
 
-        <label for="ServiceCategory" class="text-ptext1 dark:text-ptext1-DM">
+        {/* <label for="ServiceCategory" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.serviceCategory")}:
           <select
             id="ServiceCategory"
@@ -316,12 +316,12 @@ export const CreateNewPost: Component = () => {
               <option value={category.id}>{category.name}</option>
             ))}
           </select>
-        </label>
+        </label> */}
 
         <br />
 
         <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
-          {t("formLabels.postContent")}:
+          {t("formLabels.postContent")}
           <textarea
             id="Content"
             name="Content"
@@ -332,7 +332,78 @@ export const CreateNewPost: Component = () => {
           ></textarea>
         </label>
 
-        <div class="mb-6 mt-6">
+        <div class="add-images-div">
+          <label for="Images" class="text-ptext1 dark:text-ptext1-DM">
+            {t("formLabels.images")} 4/5
+          </label>
+
+          <div class="border border-red-300 flex flex-wrap">
+            <button
+              class="bg-gray-200 rounded-md h-24 w-24 flex flex-col justify-center items-center m-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 48 48" fill="none">
+                  <path d="M20.5152 7C18.9718 7 17.5496 7.83679 16.8 9.18602L15.5145 11.5H11.75C8.57436 11.5 6 14.0744 6 17.25V34.25C6 37.4256 8.57436 40 11.75 40H22.9963C22.6642 39.2037 22.4091 38.3672 22.2402 37.5H11.75C9.95507 37.5 8.5 36.0449 8.5 34.25V17.25C8.5 15.4551 9.95507 14 11.75 14H16.9855L18.9854 10.4001C19.2941 9.84456 19.8797 9.5 20.5152 9.5H27.4848C28.1203 9.5 28.7059 9.84456 29.0146 10.4001L31.0145 14H36.25C38.0449 14 39.5 15.4551 39.5 17.25V22.7999C40.3823 23.1255 41.2196 23.544 42 24.0436V17.25C42 14.0744 39.4256 11.5 36.25 11.5H32.4855L31.2 9.18602C30.4504 7.83679 29.0282 7 27.4848 7H20.5152Z" fill="#212121"/>
+                  <path d="M24 17C27.5278 17 30.5222 19.2834 31.586 22.4529C30.7711 22.6741 29.988 22.9726 29.2451 23.34C28.5411 21.1138 26.459 19.5 24 19.5C20.9624 19.5 18.5 21.9624 18.5 25C18.5 27.6415 20.3622 29.8481 22.8454 30.3786C22.5516 31.151 22.3292 31.9587 22.1865 32.7936C18.6418 31.972 16 28.7945 16 25C16 20.5817 19.5817 17 24 17Z" fill="#212121"/>
+                  <path d="M46 35C46 41.0751 41.0751 46 35 46C28.9249 46 24 41.0751 24 35C24 28.9249 28.9249 24 35 24C41.0751 24 46 28.9249 46 35ZM36 29C36 28.4477 35.5523 28 35 28C34.4477 28 34 28.4477 34 29V34H29C28.4477 34 28 34.4477 28 35C28 35.5523 28.4477 36 29 36H34V41C34 41.5523 34.4477 42 35 42C35.5523 42 36 41.5523 36 41V36H41C41.5523 36 42 35.5523 42 35C42 34.4477 41.5523 34 41 34H36V29Z" fill="#212121"/>
+                </svg>
+                Add Images
+            </button>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+            </svg>
+
+          </div>
+        </div>
+
+        <br />
+
+        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
+          {t("formLabels.grade")}
+
+        </div>
+
+        <br />
+
+        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
+          {t("formLabels.subject")}
+
+        </div>
+
+        <br />
+
+        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
+          {t("formLabels.fileType")}
+
+        </div>
+
+        <br />
+
+        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
+          {t("formLabels.standards")}
+
+        </div>
+
+        <br />
+
+        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
+          {t("formLabels.price")}
+
+        </div>
+
+        {/* <div class="mb-6 mt-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
             <select
@@ -344,7 +415,7 @@ export const CreateNewPost: Component = () => {
               <option value="">-</option>
             </select>
           </label>
-        </div>
+        </div> */}
 
         <div class="mb-6 mt-6">
           <label for="taxCode" class="text-ptext1 dark:text-ptext1-DM">
@@ -374,7 +445,7 @@ export const CreateNewPost: Component = () => {
           </label>
         </div> */}
 
-        <div class="mb-4 flex justify-center">
+        {/* <div class="mb-4 flex justify-center">
           <div class="flex items-end justify-end">
             <div class="group flex items-center relative mr-2 w-4"></div>
           </div>
@@ -418,11 +489,18 @@ export const CreateNewPost: Component = () => {
               </span>
             </div>
           </div>
+        </div> */}
+
+        <div class="flex flex-wrap">
+          <p class="my-2 italic w-full">Name of uploaded file appears here.pdf</p>
+          <button
+            class="btn-primary"
+          >Upload Resource</button>
         </div>
 
         <br />
-        <div class="flex justify-center">
-          <button class="btn-primary">{t("buttons.post")}</button>
+        <div class="flex justify-center mt-4">
+          <button class="btn-primary w-full rounded-full">{t("buttons.post")}</button>
         </div>
         <Suspense>
           {response() && (

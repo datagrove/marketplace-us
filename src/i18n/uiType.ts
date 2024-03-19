@@ -146,6 +146,13 @@ export interface uiObject {
     chooseLanguage: string,
     languagesSpoken: string,
     taxCode: string,
+    images: string,
+    grade: string,
+    subject: string,
+    fileType: string,
+    standards: string,
+    price: string,
+
   },
 
   postLabels: {
