@@ -34,7 +34,7 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
 
   createEffect(async () => {
     const { data, error } = await supabase
-      .from("providerposts")
+      .from("sellerposts")
       .select("*")
       .eq("seller_id", props.id);
     if (!data) {
@@ -45,11 +45,11 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
     } else {
       data?.map((item) => {
         productCategories.forEach((productCategories) => {
-          if (item.service_category.toString() === productCategories.id) {
+          if (item.product_category.toString() === productCategories.id) {
             item.category = productCategories.name;
           }
         });
-        delete item.service_category;
+        delete item.product_category;
       });
       setPosts(data);
     }

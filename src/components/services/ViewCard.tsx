@@ -5,6 +5,7 @@ import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
+import { Cart } from "../common/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -130,6 +131,13 @@ export const ViewCard: Component<Props> = (props) => {
                         </div>
                         <div class="inline-block">
                           <SocialModal
+                            id={Number(post.id)}
+                            title={post.title}
+                            image_urls={post.image_urls}
+                          />
+                        </div>
+                        <div class="inline-block">
+                          <Cart
                             id={Number(post.id)}
                             title={post.title}
                             image_urls={post.image_urls}

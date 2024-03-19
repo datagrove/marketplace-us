@@ -7,6 +7,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ThemeIcon from "./ThemeIcon.astro";
 
 import { ProfileBtn } from "./ProfileBtn";
+import { Cart } from "./Cart";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
 import { ClientRouting } from "../users/ClientRouting";
 
@@ -75,6 +76,10 @@ const { links = [] } = Astro.props;
 
       <div class="">
         <ThemeIcon />
+      </div>
+
+      <div class="">
+        <Cart client:only="solid-js" />
       </div>
 
       <div class="">

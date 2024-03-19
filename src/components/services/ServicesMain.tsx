@@ -26,15 +26,15 @@ if (user.session === null || user.session === undefined) {
   location.href = `/${lang}/login`;
 }
 
-const { data, error } = await supabase.from("providerposts").select("*");
+const { data, error } = await supabase.from("sellerposts").select("*");
 
 data?.map((item) => {
   productCategories.forEach((productCategories) => {
-    if (item.service_category.toString() === productCategories.id) {
+    if (item.product_category.toString() === productCategories.id) {
       item.category = productCategories.name;
     }
   });
-  delete item.service_category;
+  delete item.product_category;
 });
 
 interface ProviderPost {
@@ -132,11 +132,11 @@ export const ServicesView: Component = () => {
       //Add the categories to the posts in the current language
       allPosts?.map((item) => {
         productCategories.forEach((productCategories) => {
-          if (item.service_category.toString() === productCategories.id) {
+          if (item.product_category.toString() === productCategories.id) {
             item.category = productCategories.name;
           }
         });
-        delete item.service_category;
+        delete item.product_category;
       });
 
       setPosts(allPosts!);
@@ -150,11 +150,11 @@ export const ServicesView: Component = () => {
 
       res.map((post) => {
         productCategories.forEach((productCategory) => {
-          if (post.service_category.toString() === productCategory.id) {
+          if (post.product_category.toString() === productCategory.id) {
             post.category = productCategory.name;
           }
         });
-        delete post.service_category;
+        delete post.product_category;
       });
 
       setPosts(res);

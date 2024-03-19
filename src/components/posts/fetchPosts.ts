@@ -9,9 +9,9 @@ const t = useTranslations(lang);
 // one giant filter function that includes the logic for all combinations 
 export async function fetchFilteredPosts(categoryFilters: Array<number>, locationFilters: Array<string>, minorLocationFilters: Array<string>, governingLocationFilters: Array<string>, searchString: string) {
     try {
-            let query = supabase.from("providerposts").select("*");
+            let query = supabase.from("sellerposts").select("*");
             if(categoryFilters.length !== 0) {    
-                query = query.in('service_category', categoryFilters);
+                query = query.in('product_category', categoryFilters);
             }
             if(locationFilters.length !== 0) {
                 query = query.in('major_municipality', locationFilters);
@@ -44,7 +44,7 @@ export async function fetchFilteredPosts(categoryFilters: Array<number>, locatio
 
 export async function fetchAllPosts() {
     try {
-        const { data: allPosts, error } = await supabase.from("providerposts").select("*")
+        const { data: allPosts, error } = await supabase.from("sellerposts").select("*")
 
         if(error) {
             console.log("supabase error: " + error.message);
