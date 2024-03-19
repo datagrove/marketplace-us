@@ -23,6 +23,10 @@ interface ProviderPost {
   // minor_municipality: string;
   // governing_district: string;
   image_urls: string;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
 }
 
 interface Props {

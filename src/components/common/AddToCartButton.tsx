@@ -11,6 +11,7 @@ interface Item {
   price: number;
   price_id: string;
   quantity: number;
+  product_id: string;
 }
 
 interface Props {
@@ -18,29 +19,65 @@ interface Props {
   price: number;
   price_id: string;
   quantity: number;
+  product_id: string;
 }
 
 //TODO Remove this test code
-localStorage.items = JSON.stringify([
-  { description: "t-shirt", price: 1000, price_id: "", quantity: 2 },
-  { description: "watch", price: 2000, price_id: "", quantity: 2 },
-]);
+if (localStorage.order === undefined || localStorage.order === null) {
+  localStorage.order = JSON.stringify([
+    {
+      description: "t-shirt",
+      price: 10,
+      price_id: "",
+      product_id: "",
+      quantity: 3,
+    },
+    {
+      description: "watch",
+      price: 20.99,
+      price_id: "",
+      product_id: "",
+      quantity: 1,
+    },
+  ]);
+}
 
 export const Cart: Component<Props> = (props: Props) => {
   const [items, setItems] = createSignal<Item[]>([]);
 
   onMount(() => {
     try {
-      setItems(JSON.parse(localStorage.items));
+      setItems(JSON.parse(localStorage.order));
     } catch (_) {
       setItems([]);
     }
   });
 
   function clickHandler() {
-    
-  }
+    let itemInCart = false;
 
+    items().forEach((item: Item) => {
+      if (item.product_id === props.product_id) {
+        item.quantity += props.quantity;
+        itemInCart = true;
+      }
+    });
+
+    if (!itemInCart) {
+      const newItem = {
+        description: props.description,
+        price: props.price,
+        price_id: props.price_id,
+        quantity: props.quantity,
+        product_id: props.product_id,
+      };
+      setItems([...items(), newItem]);
+    }
+
+    localStorage.setItem("order", JSON.stringify(items()));
+    console.log("Items: " + items().map((item: Item) => item.description));
+    console.log("Order: " + localStorage.order);
+  }
 
   return (
     <div class="">
@@ -53,7 +90,6 @@ export const Cart: Component<Props> = (props: Props) => {
         {/* TODO Internationalize */}
         Add to Cart
       </button>
-      
     </div>
   );
 };

@@ -21,6 +21,10 @@ interface Post {
   // governing_district: string;
   user_id: string;
   image_urls: string | null;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
 }
 
 interface Props {
@@ -40,6 +44,8 @@ export const ViewCard: Component<Props> = (props) => {
                 post.image_urls.split(",")[0]
               ))
             : (post.image_url = null);
+          // Set the default quantity to 1 This should be replaced with the quantity from the quantity counter in the future
+          post.quantity = 1;
           return post;
         })
       );
@@ -138,9 +144,11 @@ export const ViewCard: Component<Props> = (props) => {
                         </div>
                         <div class="inline-block">
                           <Cart
-                            id={Number(post.id)}
-                            title={post.title}
-                            image_urls={post.image_urls}
+                            description= {post.title}
+                            price={post.price}
+                            price_id={post.price_id}
+                            product_id={post.product_id}
+                            quantity= {post.quantity}
                           />
                         </div>
                       </div>

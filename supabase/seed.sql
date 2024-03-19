@@ -72,12 +72,12 @@ INSERT INTO "public"."post_category" ("id", "category", "language") VALUES
 -- Data for Name: seller_post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_category", "content", "location", "user_id", "image_urls") VALUES
-	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', 1, 'Content of the first post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL),
-	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', 1, 'Content for the second post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL),
-	(3, '2024-03-05 21:52:06.919336+00', 'Math course', 3, 'math course for k12', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL),
-	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', 2, 'k10 geography course', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL),
-	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', 3, 'learn programming', 1, '1caa66a7-d9a2-462f-93c4-e65946d61c02', NULL);
+INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_category", "content", "location", "user_id", "image_urls", "stripe_product_id", "stripe_price_id") VALUES
+	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', 1, 'Content of the first post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'prod_PihVI0liGFkala', 'price_1OtG6cBRZLMDvS4Ri22IpzGq'),
+	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', 1, 'Content for the second post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, NULL, NULL),
+	(3, '2024-03-05 21:52:06.919336+00', 'Math course', 3, 'math course for k12', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, NULL, NULL),
+	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', 2, 'k10 geography course', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'prod_PihF0aDvvT4PeU', 'price_1OtFqrBRZLMDvS4RK5Ajf7na'),
+	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', 3, 'learn programming', 1, '1caa66a7-d9a2-462f-93c4-e65946d61c02', NULL, NULL, NULL);
 
 
 --
