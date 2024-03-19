@@ -27,6 +27,7 @@ export const Spanish = {
     fullPost: "Ver publicación completa",
     offline: 'Desconectado',
     faq: "Preguntas frecuentes",
+    viewCart: "Mi carrito",
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export const Spanish = {
     impact: "Explore el impacto significativo de TodoServis. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
     fullPost: "Lea más sobre este servicio y comuníquese con el proveedor si está interesado. Explora imágenes adicionales y la descripción completa del servicio.",
     faq: "Explore nuestra completa página de preguntas frecuentes para obtener respuestas a preguntas comunes sobre nuestros servicios, políticas y más.",
+    viewCart: "Vea su carrito y realice el pago con facilidad.",
   },
 
   buttons: {

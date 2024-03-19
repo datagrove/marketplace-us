@@ -1,7 +1,7 @@
 import { Show, createResource, createSignal, onMount } from "solid-js";
 import type { Component } from "solid-js";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import cart from "../../assets/shopping-cart.svg";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import cart from "@assets/shopping-cart.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);

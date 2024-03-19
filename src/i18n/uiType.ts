@@ -27,6 +27,7 @@ export interface uiObject {
     fullPost: string,
     offline: string,
     faq: string,
+    viewCart: string,
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export interface uiObject {
     impact: string,
     fullPost: string,
     faq: string,
+    viewCart: string,
   },
 
   buttons: {

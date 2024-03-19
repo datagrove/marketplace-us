@@ -27,6 +27,7 @@ export const English = {
     fullPost: "View Full Post",
     offline: 'Offline',
     faq: "Frequently Asked Questions",
+    viewCart: "My Cart",
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export const English = {
     impact: "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
     fullPost: "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
     faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
+    viewCart: "View your cart and checkout with ease.",
   },
 
   buttons: {

@@ -27,6 +27,7 @@ export const French = {
     fullPost: "Voir le message complet",
     offline: 'Hors ligne',
     faq: "Questions fréquemment posées",
+    viewCart: "Mon panier",
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export const French = {
     impact: "Découvrez l’impact significatif de TodoServis. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
     fullPost: "En savoir plus sur ce service et contacter le fournisseur si vous êtes intéressé. Découvrez des images supplémentaires et la description complète du service.",
     faq: "Explorez notre page FAQ complète pour obtenir des réponses aux questions courantes sur nos services, nos politiques et bien plus encore.",
+    viewCart: "Consultez votre panier et passez à la caisse en toute simplicité.",
   },
 
   buttons: {

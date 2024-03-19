@@ -5,7 +5,7 @@ import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
-import { Cart } from "../common/AddToCartButton";
+import { Cart } from "../common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);

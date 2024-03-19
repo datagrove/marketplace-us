@@ -1,6 +1,6 @@
 import { Show, createEffect, createResource, createSignal, onMount } from "solid-js";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import cart from "../../assets/shopping-cart.svg";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import cart from "@assets/shopping-cart.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -36,7 +36,9 @@ export const Cart = () => {
 });
 
   function clickHandler() {
-    setItems(JSON.parse(localStorage.order));
+    if (localStorage.order) {
+      setItems(JSON.parse(localStorage.order));
+    }
     const listShow = document.getElementById("cartItems");
     if (listShow?.classList.contains("hidden")) {
       listShow?.classList.remove("hidden");
@@ -105,7 +107,7 @@ export const Cart = () => {
       >
         <img src={cart.src} class="w-8 h-8" />
         <Show when={items().length > 0}>
-          <div class="border border-purple-500 absolute -bottom-0.5 right-1.5 bg-background2 dark:bg-background2-DM text-ptext2 dark:text-ptext2-DM opacity-[85%] rounded-full w-5 h-5 text-xs">{totalItems()}</div>
+          <div class="absolute -bottom-0.5 right-1.5 bg-background2 dark:bg-background2-DM text-ptext2 dark:text-ptext2-DM opacity-[85%] rounded-full w-5 h-5 text-xs flex justify-center items-center">{totalItems()}</div>
         </Show>
       </button>
       <div
