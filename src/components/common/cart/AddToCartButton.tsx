@@ -1,4 +1,5 @@
 import { Show, createResource, createSignal, onMount } from "solid-js";
+import { createStore } from "solid-js/store";
 import type { Component } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import cart from "@assets/shopping-cart.svg";
@@ -22,45 +23,30 @@ interface Props {
   product_id: string;
 }
 
-//TODO Remove this test code
-if (localStorage.order === undefined || localStorage.order === null) {
-  localStorage.order = JSON.stringify([
-    {
-      description: "t-shirt",
-      price: 10,
-      price_id: "",
-      product_id: "",
-      quantity: 3,
-    },
-    {
-      description: "watch",
-      price: 20.99,
-      price_id: "",
-      product_id: "",
-      quantity: 1,
-    },
-  ]);
-}
+export const [items, setItems] = createStore<Item[]>([]);
 
 export const Cart: Component<Props> = (props: Props) => {
-  const [items, setItems] = createSignal<Item[]>([]);
+  
+  const storedItems = localStorage.getItem("cartItems");
 
   onMount(() => {
-    try {
-      setItems(JSON.parse(localStorage.order));
-    } catch (_) {
-      setItems([]);
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
     }
   });
 
-  function clickHandler() {
+  function clickHandler(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+
     let itemInCart = false;
 
-    items().forEach((item: Item) => {
+    const updatedItems = items.map((item: Item) => {
       if (item.product_id === props.product_id) {
-        item.quantity += props.quantity;
         itemInCart = true;
+        return { ...item, quantity: item.quantity + props.quantity };
       }
+      return item;
     });
 
     if (!itemInCart) {
@@ -71,18 +57,18 @@ export const Cart: Component<Props> = (props: Props) => {
         quantity: props.quantity,
         product_id: props.product_id,
       };
-      setItems([...items(), newItem]);
+      setItems([...updatedItems, newItem]);
+    } else {
+      setItems (updatedItems);
     }
 
-    localStorage.setItem("order", JSON.stringify(items()));
-    console.log("Items: " + items().map((item: Item) => item.description));
-    console.log("Order: " + localStorage.order);
+    console.log(items)
   }
 
   return (
-    <div class="">
+    <div class="relative z-10">
       <button
-        onclick={clickHandler}
+        onclick={(e) => clickHandler(e)}
         class="btn-primary"
         // TODO:Internationalize
         aria-label="Add to Cart"

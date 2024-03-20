@@ -7,6 +7,9 @@ import {
 } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import cart from "@assets/shopping-cart.svg";
+import supabase from "@lib/supabaseClient";
+import { CartCard } from "@components/common/cart/CartCard";
+import { items } from "@components/common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -15,71 +18,75 @@ interface Item {
   description: string;
   price: number;
   price_id: string;
+  product_id: string;
   quantity: number;
 }
 
-export const CartView = () => {
-  const [items, setItems] = createSignal<Item[]>([]);
-  const [totalItems, setTotalItems] = createSignal(0);
+interface ItemDetails {
+  content: string;
+  title: string;
+  seller_name: string;
+  image_urls: string | null;
+  price?: number;
+  price_id: string;
+  quantity?: number;
+  product_id: string;
+}
 
-  onMount(() => {
+export const CartView = () => {
+  const [totalItems, setTotalItems] = createSignal(0);
+  const [itemsDetails, setItemsDetails] = createSignal<ItemDetails[]>([]);
+
+  onMount(async () => {
     try {
-      setItems(JSON.parse(localStorage.order));
-      console.log("Items: " + items().map((item: Item) => item.description));
-      items().forEach((item) => {
-        setTotalItems(totalItems() + item.quantity);
-      });
+      console.log("Cart Items: " + items.map((item: Item) => item.description));
+      items.forEach(async (item) => {
+        if (item.product_id !== "") {
+          const { data , error } = await supabase.from("sellerposts").select("title, content, image_urls, price_id, product_id, seller_name, seller_id").eq("product_id", item.product_id);
+        if (data){
+          const currentItem: ItemDetails = data[0];
+          currentItem.quantity = item.quantity;
+          currentItem.price = item.price;
+          console.log(currentItem);
+          setItemsDetails([...itemsDetails(), currentItem]);
+        } 
+        if (error) {
+          console.log("Supabase error: " + error.code + " " + error.message);
+        }
+      }
+    });
     } catch (_) {
-      setItems([]);
+      // setItems([]);
+      console.log("Cart Error");
     }
   });
 
   createEffect(() => {
-    setTotalItems(0);
-    items().forEach((item) => {
-      setTotalItems(totalItems() + item.quantity);
+    let count = 0;
+    items.forEach((item) => {
+      count += item.quantity;
     });
-  });
+    setTotalItems(count);
+  })
 
-  function clickHandler() {
-    setItems(JSON.parse(localStorage.order));
-    const listShow = document.getElementById("cartItems");
-    if (listShow?.classList.contains("hidden")) {
-      listShow?.classList.remove("hidden");
-    } else {
-      listShow?.classList.add("hidden");
-    }
-  }
-
-  function goToCart() {
+  function goToCheckout() {
     window.location.href = `/${lang}/cart`;
   }
 
   function shoppingCart() {
-    if (items().length > 0) {
+    if (items.length > 0) {
       let total = 0;
       {
-        console.log("items in cart: " + items().length);
+        console.log("items in cart: " + items.length);
       }
-      items().forEach((item: Item) => {
+      items.forEach((item: Item) => {
         total += item.price * item.quantity;
       });
       return (
         <div>
-          <div class="text-3xl font-bold">Cart</div>
-          <ul>
-            {items().map((item: Item) => (
-              <div class="grid justify-between mt-2 border-t-2 border-border1 dark:border-border1-DM pb-2 grid-cols-5">
-                <div class="col-span-3 inline-block mr-2">
-                  {item.description}
-                </div>
-                <div class="inline-block text-start">
-                  ${item.price.toFixed(2)}
-                </div>
-                <div class="inline-block text-end">{item.quantity}</div>
-              </div>
-            ))}
-          </ul>
+          {/* TODO: Internationalize */}
+          <div class="text-3xl font-bold">My Cart</div>
+          <CartCard items={itemsDetails()} />
           <div class="grid justify-between mt-2 border-t-2 border-border1 dark:border-border1-DM pb-2 grid-cols-5">
             {/* TODO: Internationalize */}
             <div class="col-span-3 inline-block mr-2">Subtotal: </div>
@@ -108,27 +115,16 @@ export const CartView = () => {
   // ADD EMAIL TO SEND FOR CONTACT US
 
   return (
-    <div class="">
-      {/* <button
-        onclick={clickHandler}
-        class="rounded-lg p-1 mr-0 w-14 flex relative"
-        //TODO: Internationalize Aria Label
-        aria-label="Cart"
-      >
-        <img src={cart.src} class="w-8 h-8" />
-        <Show when={items().length > 0}>
-          <div class="absolute -bottom-0.5 right-1.5 bg-background2 dark:bg-background2-DM text-ptext2 dark:text-ptext2-DM opacity-[85%] rounded-full w-5 h-5 text-xs flex justify-center items-center">{totalItems()}</div>
-        </Show>
-      </button> */}
-      <div class="">
+    <div class="grid grid-cols-3">
+      <div class="inline-block col-span-2">
         <div>{shoppingCart()}</div>
-        {/* TODO: Style and Internationalize */}
-        <div class="flex justify-center">
-          <button class="btn-primary" onclick={goToCart}>
-            View Cart
+      </div>
+      <div class="justify-center inline-block col-span-1">
+          <button class="btn-primary" onclick={goToCheckout}>
+            {/* TODO: Style and Internationalize */}
+            Proceed to Checkout
           </button>
         </div>
-      </div>
     </div>
   );
 };
