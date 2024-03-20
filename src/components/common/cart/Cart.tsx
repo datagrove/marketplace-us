@@ -7,7 +7,6 @@ import {
   onCleanup,
 } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import cart from "@assets/shopping-cart.svg";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -106,7 +105,7 @@ export const Cart = () => {
           </div>
         </div>
       );
-    }  else {
+    } else {
       return (
         <div class="">
           <div>Cart is empty</div>
@@ -131,9 +130,39 @@ export const Cart = () => {
         //TODO: Internationalize Aria Label
         aria-label="Cart"
       >
-        <img src={cart.src} class="w-8 h-8" />
+        <svg viewBox="0 0 24 24" class="w-8 h-8 fill-none stroke-icon1 dark:stroke-icon1-DM">
+          <path
+            d="M3 3H4.37144C5.31982 3 6.13781 3.66607 6.32996 4.59479L8.67004 15.9052C8.86219 16.8339 9.68018 17.5 10.6286 17.5H17.5"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M6.82422 7H19.6743C20.3386 7 20.8183 7.6359 20.6358 8.27472L19.6217 11.8242C19.2537 13.1121 18.0765 14 16.7371 14H8.27734"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle
+            cx="16.5"
+            cy="20.5"
+            r="0.5"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle
+            cx="0.5"
+            cy="0.5"
+            r="0.5"
+            transform="matrix(1 0 0 -1 10 21)"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
         <Show when={items.length > 0}>
-          <div class="absolute -bottom-0.5 right-1.5 bg-background2 dark:bg-background2-DM text-ptext2 dark:text-ptext2-DM opacity-[85%] rounded-full w-5 h-5 text-xs flex justify-center items-center">
+          <div class="absolute -bottom-0.5 right-1.5 bg-background2 dark:bg-background2-DM text-ptext2 dark:text-ptext2-DM opacity-[85%] dark:opacity-100 rounded-full w-5 h-5 text-xs flex justify-center items-center">
             {totalItems()}
           </div>
         </Show>

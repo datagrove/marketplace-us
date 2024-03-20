@@ -66,10 +66,10 @@ export const CartCard: Component<Props> = (props) => {
     <div class="flex justify-center w-full">
       <ul class="md:flex md:flex-wrap md:justify-center md:w-full">
         {newItems().map((item: any) => (
-          <li class=" w-[99%]">
-            <a href={`/${lang}/posts/${item.id}`}>
-              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start rounded-lg md:h-48 shadow-md shadow-shadow-LM dark:shadow-shadow-DM box-content border border-opacity-25 border-border1 dark:border-border1-DM dark:border-opacity-25 w-full">
-                <div class="flex md:w-48 w-full h-80 md:h-48 md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
+          <li class=" w-[99%] py-4 border-b border-border1 dark:border-border1-DM border-opacity-50">
+            
+              <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start md:h-full  box-content w-full">
+                <div class="flex md:w-48 w-full h-full md:h-full md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                   {item.image_url ? (
                     <img
                       src={item.image_url}
@@ -84,7 +84,7 @@ export const CartCard: Component<Props> = (props) => {
                     <svg
                       viewBox="0 0 512 512"
                       version="1.1"
-                      class="dark:bg-icon1-DM fill-logo rounded-lg w-full h-full object-cover"
+                      class="bg-gray-400 fill-logo w-full h-full object-cover"
                     >
                       <g id="Page-1" stroke="none" stroke-width="1">
                         <g
@@ -107,25 +107,12 @@ export const CartCard: Component<Props> = (props) => {
                 >
                   <div class="w-full">
                     <div class="grid grid-cols-4">
-                      <div class="relative col-span-3 w-full flex align-top">
-                        <div class="w-full">
-                          <div class="truncate inline-block max-w-[58%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2">
-                             {/*post.major_municipality}/{post.minor_municipality*/}
-                             {/*post.governing_district*/}
-                          </div>
-                          <div class="truncate inline-block max-w-[28%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
-                            {item.category}
-                          </div>
-                        </div>
-                      </div>
-
                       <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 truncate">
-                        {item.title}
+                      <a href={`/${lang}/posts/${item.id}`}>{item.title}</a>
                       </p>
                     </div>
 
                     <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1">
-                      <span class="font-bold">{t("postLabels.provider")}</span>
                       {item.seller_name}
                     </p>
 
@@ -137,7 +124,6 @@ export const CartCard: Component<Props> = (props) => {
                   </div>
                 </div>
               </div>
-            </a>
           </li>
         ))}
       </ul>
