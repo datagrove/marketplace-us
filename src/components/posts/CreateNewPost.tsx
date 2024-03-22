@@ -289,6 +289,59 @@ export const CreateNewPost: Component = () => {
     TinyComp({ id: "#Content", mode: mode.theme });
   });
 
+  function showGrades(): any {
+    // alert("In the function")
+    let gradesDiv = document.getElementById("grades-div");
+    let dropDownArrow = document.getElementById("gradesDropDownArrow");
+    let closeUpArrow = document.getElementById("gradesCloseUpArrow");
+    
+    if(gradesDiv?.classList.contains("hidden")) {
+      gradesDiv?.classList.remove("hidden");
+      gradesDiv?.classList.add("flex");
+
+      dropDownArrow?.classList.remove("inline");
+      dropDownArrow?.classList.add("hidden");
+
+      closeUpArrow?.classList.remove("hidden");
+      closeUpArrow?.classList.add("inline");
+    } else if(gradesDiv?.classList.contains("flex")) {
+      gradesDiv?.classList.remove("flex");
+      gradesDiv?.classList.add("hidden");
+
+      dropDownArrow?.classList.remove("hidden");
+      dropDownArrow?.classList.add("inline");
+
+      closeUpArrow?.classList.remove("inline");
+      closeUpArrow?.classList.add("hidden");
+    }
+  }
+
+  function showSubjects(): any {
+    let subjectsDiv = document.getElementById("subjects-div");
+    let dropDownArrow = document.getElementById("subjectsDropDownArrow");
+    let closeUpArrow = document.getElementById("subjectsCloseUpArrow");
+    
+    if(subjectsDiv?.classList.contains("hidden")) {
+      subjectsDiv?.classList.remove("hidden");
+      subjectsDiv?.classList.add("flex");
+
+      dropDownArrow?.classList.remove("inline");
+      dropDownArrow?.classList.add("hidden");
+
+      closeUpArrow?.classList.remove("hidden");
+      closeUpArrow?.classList.add("inline");
+    } else if(subjectsDiv?.classList.contains("flex")) {
+      subjectsDiv?.classList.remove("flex");
+      subjectsDiv.classList.add("hidden");
+
+      dropDownArrow?.classList.remove("hidden");
+      dropDownArrow?.classList.add("inline");
+
+      closeUpArrow?.classList.remove("inline");
+      closeUpArrow?.classList.add("hidden");
+    }
+  }
+
   return (
     <div>
       <form onSubmit={submit}>
@@ -337,49 +390,247 @@ export const CreateNewPost: Component = () => {
             {t("formLabels.images")} 4/5
           </label>
 
-          <div class="border border-red-300 flex flex-wrap">
-            <button
-              class="bg-gray-200 rounded-md h-24 w-24 flex flex-col justify-center items-center m-1"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 48 48" fill="none">
-                  <path d="M20.5152 7C18.9718 7 17.5496 7.83679 16.8 9.18602L15.5145 11.5H11.75C8.57436 11.5 6 14.0744 6 17.25V34.25C6 37.4256 8.57436 40 11.75 40H22.9963C22.6642 39.2037 22.4091 38.3672 22.2402 37.5H11.75C9.95507 37.5 8.5 36.0449 8.5 34.25V17.25C8.5 15.4551 9.95507 14 11.75 14H16.9855L18.9854 10.4001C19.2941 9.84456 19.8797 9.5 20.5152 9.5H27.4848C28.1203 9.5 28.7059 9.84456 29.0146 10.4001L31.0145 14H36.25C38.0449 14 39.5 15.4551 39.5 17.25V22.7999C40.3823 23.1255 41.2196 23.544 42 24.0436V17.25C42 14.0744 39.4256 11.5 36.25 11.5H32.4855L31.2 9.18602C30.4504 7.83679 29.0282 7 27.4848 7H20.5152Z" fill="#212121"/>
-                  <path d="M24 17C27.5278 17 30.5222 19.2834 31.586 22.4529C30.7711 22.6741 29.988 22.9726 29.2451 23.34C28.5411 21.1138 26.459 19.5 24 19.5C20.9624 19.5 18.5 21.9624 18.5 25C18.5 27.6415 20.3622 29.8481 22.8454 30.3786C22.5516 31.151 22.3292 31.9587 22.1865 32.7936C18.6418 31.972 16 28.7945 16 25C16 20.5817 19.5817 17 24 17Z" fill="#212121"/>
-                  <path d="M46 35C46 41.0751 41.0751 46 35 46C28.9249 46 24 41.0751 24 35C24 28.9249 28.9249 24 35 24C41.0751 24 46 28.9249 46 35ZM36 29C36 28.4477 35.5523 28 35 28C34.4477 28 34 28.4477 34 29V34H29C28.4477 34 28 34.4477 28 35C28 35.5523 28.4477 36 29 36H34V41C34 41.5523 34.4477 42 35 42C35.5523 42 36 41.5523 36 41V36H41C41.5523 36 42 35.5523 42 35C42 34.4477 41.5523 34 41 34H36V29Z" fill="#212121"/>
-                </svg>
-                Add Images
-            </button>
+          <div class="flex flex-wrap">
+            <div class="h-24 w-24 flex justify-center items-center m-1">
+              <button
+                class="bg-gray-200 rounded-md h-full w-full flex flex-col justify-center items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="60px" height="60px" viewBox="0 0 48 48" fill="none">
+                    <path d="M20.5152 7C18.9718 7 17.5496 7.83679 16.8 9.18602L15.5145 11.5H11.75C8.57436 11.5 6 14.0744 6 17.25V34.25C6 37.4256 8.57436 40 11.75 40H22.9963C22.6642 39.2037 22.4091 38.3672 22.2402 37.5H11.75C9.95507 37.5 8.5 36.0449 8.5 34.25V17.25C8.5 15.4551 9.95507 14 11.75 14H16.9855L18.9854 10.4001C19.2941 9.84456 19.8797 9.5 20.5152 9.5H27.4848C28.1203 9.5 28.7059 9.84456 29.0146 10.4001L31.0145 14H36.25C38.0449 14 39.5 15.4551 39.5 17.25V22.7999C40.3823 23.1255 41.2196 23.544 42 24.0436V17.25C42 14.0744 39.4256 11.5 36.25 11.5H32.4855L31.2 9.18602C30.4504 7.83679 29.0282 7 27.4848 7H20.5152Z" fill="#212121"/>
+                    <path d="M24 17C27.5278 17 30.5222 19.2834 31.586 22.4529C30.7711 22.6741 29.988 22.9726 29.2451 23.34C28.5411 21.1138 26.459 19.5 24 19.5C20.9624 19.5 18.5 21.9624 18.5 25C18.5 27.6415 20.3622 29.8481 22.8454 30.3786C22.5516 31.151 22.3292 31.9587 22.1865 32.7936C18.6418 31.972 16 28.7945 16 25C16 20.5817 19.5817 17 24 17Z" fill="#212121"/>
+                    <path d="M46 35C46 41.0751 41.0751 46 35 46C28.9249 46 24 41.0751 24 35C24 28.9249 28.9249 24 35 24C41.0751 24 46 28.9249 46 35ZM36 29C36 28.4477 35.5523 28 35 28C34.4477 28 34 28.4477 34 29V34H29C28.4477 34 28 34.4477 28 35C28 35.5523 28.4477 36 29 36H34V41C34 41.5523 34.4477 42 35 42C35.5523 42 36 41.5523 36 41V36H41C41.5523 36 42 35.5523 42 35C42 34.4477 41.5523 34 41 34H36V29Z" fill="#212121"/>
+                  </svg>
+                  <p>Add Images</p>
+              </button>
+            </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
-              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
-            </svg>
+            <div class="h-24 w-24 flex justify-center items-center m-1 border-2 border-gray-200 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+                <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+              </svg>
+            </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
-              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
-            </svg>
+            <div class="h-24 w-24 flex justify-center items-center m-1 border-2 border-gray-200 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+                <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+              </svg>
+            </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
-              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
-            </svg>
+            <div class="h-24 w-24 flex justify-center items-center m-1 border-2 border-gray-200 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+                <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+              </svg>
+            </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
-              <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
-            </svg>
+            <div class="h-24 w-24 flex justify-center items-center m-1 border-2 border-gray-200 rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="#000000" width="96px" height="96px" viewBox="38 36 180 185" id="Flat" class="m-1">
+                <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
+              </svg>
+            </div>
+            
+
+            
 
           </div>
         </div>
 
         <br />
 
-        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
-          {t("formLabels.grade")}
+        <div id="grade-level-div" class="border border-border1 dark:border-border1-DM rounded px-1">
+          <div 
+            class="flex justify-between items-center"
+            id="grade-title-div"
+            onClick={ showGrades }
+          >
+            {t("formLabels.grade")}
+
+            <svg 
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 30"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              id="gradesDropDownArrow"
+            >
+            <polyline points="19 12 12 19 5 12" />
+            </svg>
+
+            <svg 
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 -6 24 30"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="hidden"
+              id="gradesCloseUpArrow"
+            >
+            <polyline points="19 12 12 5 5 12" />
+            </svg>
+          </div>
+
+          <div id="grades-div" class="hidden">
+            <div class="grade-col-1 w-1/2 px-4 pb-2">
+              <div class="mt-1">
+                <input type="checkbox" id="prek" name="prek" />
+                <label for="prek" class="ml-1">PreK</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="k" name="k" />
+                <label for="k" class="ml-1">K</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="1" name="1" />
+                <label for="1" class="ml-1">1st</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="2" name="2" />
+                <label for="2" class="ml-1">2nd</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="3" name="3" />
+                <label for="3" class="ml-1">3rd</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="4" name="4" />
+                <label for="4" class="ml-1">4th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="5" name="5" />
+                <label for="5" class="ml-1">5th</label>
+              </div>
+            </div>
+
+            <div class="grade-col-2 w-1/2 px-4 pb-2">
+
+              <div class="mt-1">
+                <input type="checkbox" id="6" name="6" />
+                <label for="6" class="ml-1">6th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="7" name="7" />
+                <label for="7" class="ml-1">7th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="8" name="8" />
+                <label for="8" class="ml-1">8th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="9" name="9" />
+                <label for="9" class="ml-1">9th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="10" name="10" />
+                <label for="10" class="ml-1">10th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="11" name="11" />
+                <label for="11" class="ml-1">11th</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="12" name="12" />
+                <label for="12" class="ml-1">12th</label>
+              </div>
+            </div>
+
+          </div>
 
         </div>
 
         <br />
 
-        <div class="grade-level-div border border-border1 dark:border-border1-DM rounded px-1">
-          {t("formLabels.subject")}
+        <div id="subjects-level-div" class="border border-border1 dark:border-border1-DM rounded px-1">
+          <div 
+            class="flex justify-between items-center"
+            id="subjects-title-div"
+            onClick={ showSubjects }
+          >
+            {t("formLabels.subject")}
 
+            <svg 
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 30"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              id="subjectsDropDownArrow"
+            >
+            <polyline points="19 12 12 19 5 12" />
+            </svg>
+
+            <svg 
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 -6 24 30"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="hidden"
+              id="subjectsCloseUpArrow"
+            >
+            <polyline points="19 12 12 5 5 12" />
+            </svg>
+          </div>
+        
+          <div id="subjects-div" class="hidden">
+            <div class="subjects-list px-4 pb-2">
+              <div class="mt-1">
+                <input type="checkbox" id="art" name="art" />
+                <label for="art" class="ml-1">Arts and Music</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="ela" name="ela" />
+                <label for="ela" class="ml-1">English Language Arts</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="language" name="language" />
+                <label for="language" class="ml-1">Foreign Languages</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="math" name="math" />
+                <label for="math" class="ml-1">Math</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="science" name="science" />
+                <label for="science" class="ml-1">Science</label>
+              </div>
+
+              <div class="mt-1">
+                <input type="checkbox" id="history" name="history" />
+                <label for="history" class="ml-1">Social Studies - History</label>
+              </div>
+            </div>
+          </div>        
         </div>
 
         <br />
