@@ -21,12 +21,12 @@ interface Props {
   price_id: string;
   quantity: number;
   product_id: string;
+  buttonClick: (event: Event) => void;
 }
 
 export const [items, setItems] = createStore<Item[]>([]);
 
-export const Cart: Component<Props> = (props: Props) => {
-  
+export const AddToCart: Component<Props> = (props: Props) => {
   const storedItems = localStorage.getItem("cartItems");
 
   onMount(() => {
@@ -59,10 +59,11 @@ export const Cart: Component<Props> = (props: Props) => {
       };
       setItems([...updatedItems, newItem]);
     } else {
-      setItems (updatedItems);
+      setItems(updatedItems);
     }
 
-    console.log(items)
+    props.buttonClick(e);
+    console.log(items);
   }
 
   return (

@@ -51,6 +51,7 @@ export const CartView = () => {
             )
             .eq("product_id", item.product_id);
           if (data) {
+            console.log(data[0]);
             const currentItem: ItemDetails = data[0];
             currentItem.quantity = item.quantity;
             currentItem.price = item.price;

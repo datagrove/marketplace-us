@@ -2,10 +2,19 @@ import type { Component } from "solid-js";
 import { createSignal, createEffect } from "solid-js";
 import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import SocialModal from "@components/posts/SocialModal";
+import { Quantity } from "@components/common/cart/Quantity";
+import { items, setItems } from "@components/common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+
+interface Item {
+  description: string;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
+}
 
 interface ItemDetails {
   content: string;
@@ -24,7 +33,8 @@ interface Props {
 }
 
 export const CartCard: Component<Props> = (props) => {
-  const [newItems, setNewItems] = createSignal<Array<any>>([]);
+  const [newItems, setNewItems] = createSignal<Array<ItemDetails>>([]);
+  const [quantity, setQuantity] = createSignal<number>(0);
 
   createEffect(async () => {
     if (props.items) {
@@ -36,7 +46,7 @@ export const CartCard: Component<Props> = (props) => {
               ))
             : (item.image_url = null);
           // Set the default quantity to 1 This should be replaced with the quantity from the quantity counter in the future
-          item.quantity = 1;
+          // item.quantity = 1;
           return item;
         })
       );
@@ -44,6 +54,40 @@ export const CartCard: Component<Props> = (props) => {
       setNewItems(updatedItems);
     }
   });
+
+  const updateQuantity = async (quantity: number, product_id?: string) => {
+    console.log("Card Card Update Quantity")
+    setQuantity(quantity);
+    if(product_id){
+      const updatedItems: Array<ItemDetails> = await Promise.all(
+        props.items.map(async (item: ItemDetails) => {
+          if (item.product_id === product_id) {
+            item.quantity = quantity;
+          }
+          return item;
+        })
+      )
+      setNewItems(updatedItems);
+      console.log("Updated Items: " + updatedItems);
+      
+      const cartItems: Array<Item> = await Promise.all(
+        props.items.map(async (oldItem: ItemDetails) => {
+          let item: Item = {description: oldItem.title,
+            price: oldItem.price? oldItem.price : 0,
+            price_id: oldItem.price_id,
+            quantity: oldItem.quantity? oldItem.quantity : 0,
+            product_id: oldItem.product_id};
+          if (oldItem.product_id === product_id) {
+            item.quantity = quantity;
+          } 
+          return item;
+        })
+      )
+
+      setItems(cartItems);
+      console.log("Cart Store: " + cartItems);
+    }
+  };
 
   const downloadImage = async (path: string) => {
     try {
@@ -118,8 +162,9 @@ export const CartCard: Component<Props> = (props) => {
                       innerHTML={item.content}
                     ></p>
                   </div>
-                  <div class="col-span-1 col-start-3 row-span-2 border border-green-500">
+                  <div class="col-span-1 col-start-3 row-span-1 border border-green-500">
                     {/* Quantity */}
+                    <Quantity quantity={item.quantity} updateQuantity={updateQuantity} product_id={item.product_id}/>
                   </div>
                   <div class="col-span-1 col-start-4 border border-green-500">
                     {/* Price */}
