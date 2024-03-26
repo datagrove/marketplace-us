@@ -175,6 +175,8 @@ export interface uiObject {
     taxes: string, 
     total: string, 
     emptyCart: string, 
+    orderSummary: string,
+    items: string,
   },
 
   homePageText: {

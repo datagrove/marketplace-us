@@ -173,6 +173,8 @@ export const French = {
     taxes: "Taxes calculées à la caisse", 
     total: "Total", 
     emptyCart: "Le panier est vide", 
+    orderSummary: "Récapitulatif de la commande",
+    items: "articles",
   },
 
   homePageText: {

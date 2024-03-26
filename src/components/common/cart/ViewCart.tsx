@@ -140,12 +140,13 @@ export const CartView = () => {
         <div>{shoppingCart()}</div>
       </div>
       <div class="justify-center inline-block col-span-1">
-        <div class="text-start text-xl mb-2">Order Summary</div>
+        {/* TODO: Internationalization */}
+        <div class="text-start text-xl mb-2">{t("cartLabels.orderSummary")}</div>
         <div class="border border-border1 dark:border-border1-DM h-fit p-2">
           <div class="mb-4">
             <div class="flex justify-between">
               <div class="inline-block text-start font-bold">
-                Subtotal ({totalItems()} items){" "}
+              {t("cartLabels.subTotal")} ({totalItems()} {t("cartLabels.items")}){" "}
               </div>
               <div class="inline-block text-end font-bold">${cartTotal()}</div>
             </div>

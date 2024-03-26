@@ -170,10 +170,12 @@ export const English = {
     quantity: "Quantity",
     price: "Price", 
     myCart: "My Cart", 
-    subTotal: "SubTotal", 
+    subTotal: "Subtotal", 
     taxes: "Taxes calculated at checkout", 
     total: "Total", 
     emptyCart: "Cart is empty", 
+    orderSummary: "Order Summary",
+    items: "items",
   },
 
   homePageText: {

@@ -175,7 +175,8 @@ export const Spanish = {
     taxes: "Impuestos calculados al finalizar la compra", 
     total: "Total", 
     emptyCart: "El carrito esta vacío", 
-
+    orderSummary: "Resumen del pedido",
+    items: "elementos",
   },
 
   homePageText: {
