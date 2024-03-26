@@ -40,10 +40,16 @@ export const CartView = () => {
   const [cartTotal, setCartTotal] = createSignal(0);
 
   onMount(async () => {
+    await fetchItemDetails();
+  })
+
+  const fetchItemDetails = async () => {
     try {
       console.log("Cart Items: " + items.map((item: Item) => item.description));
+      const details: ItemDetails[] = [];
       items.forEach(async (item) => {
-        if (item.product_id !== "") {
+        if (item.product_id !== "" &&
+        !itemsDetails().some((items) => items.product_id === item.product_id)) {
           const { data, error } = await supabase
             .from("sellerposts")
             .select(
@@ -56,18 +62,28 @@ export const CartView = () => {
             currentItem.quantity = item.quantity;
             currentItem.price = item.price;
             console.log(currentItem);
-            setItemsDetails([...itemsDetails(), currentItem]);
+            details.push(currentItem);
           }
           if (error) {
             console.log("Supabase error: " + error.code + " " + error.message);
           }
+        } else if (item.product_id !== "" &&
+        itemsDetails().some((items) => items.product_id === item.product_id)) {
+          const index = itemsDetails().findIndex((itemDetail) => itemDetail.product_id === item.product_id);
+          if (index !== -1) {
+            const updatedItem: ItemDetails = { ...itemsDetails()[index] };
+            details.push(updatedItem)
         }
+      }
       });
+      console.log("Details" + details)
+      setItemsDetails([])
+      setItemsDetails(details)
     } catch (_) {
       // setItems([]);
       console.log("Cart Error");
     }
-  });
+  };
 
   createEffect(() => {
     let count = 0;
@@ -98,7 +114,6 @@ export const CartView = () => {
           <div class="max-h-screen overflow-auto">
             <CartCard items={itemsDetails()} />
           </div>
-          
         </div>
       );
     } else {

@@ -56,9 +56,9 @@ export const CartCard: Component<Props> = (props) => {
   });
 
   const updateQuantity = async (quantity: number, product_id?: string) => {
-    console.log("Card Card Update Quantity")
+    console.log("Card Card Update Quantity");
     setQuantity(quantity);
-    if(product_id){
+    if (product_id) {
       const updatedItems: Array<ItemDetails> = await Promise.all(
         props.items.map(async (item: ItemDetails) => {
           if (item.product_id === product_id) {
@@ -66,27 +66,36 @@ export const CartCard: Component<Props> = (props) => {
           }
           return item;
         })
-      )
+      );
       setNewItems(updatedItems);
       console.log("Updated Items: " + updatedItems);
-      
+
       const cartItems: Array<Item> = await Promise.all(
         props.items.map(async (oldItem: ItemDetails) => {
-          let item: Item = {description: oldItem.title,
-            price: oldItem.price? oldItem.price : 0,
+          let item: Item = {
+            description: oldItem.title,
+            price: oldItem.price ? oldItem.price : 0,
             price_id: oldItem.price_id,
-            quantity: oldItem.quantity? oldItem.quantity : 0,
-            product_id: oldItem.product_id};
+            quantity: oldItem.quantity ? oldItem.quantity : 0,
+            product_id: oldItem.product_id,
+          };
           if (oldItem.product_id === product_id) {
             item.quantity = quantity;
-          } 
+          }
           return item;
         })
-      )
+      );
 
       setItems(cartItems);
       console.log("Cart Store: " + cartItems);
     }
+  };
+
+  const removeItem = async (product_id: string) => {
+    let currentItems = items;
+    currentItems = currentItems.filter((item) => item.product_id !== product_id);
+    setItems(currentItems)
+    console.log("Items" + items.map((item) => item.description))
   };
 
   const downloadImage = async (path: string) => {
@@ -164,13 +173,39 @@ export const CartCard: Component<Props> = (props) => {
                   </div>
                   <div class="col-span-1 col-start-3 row-span-1 border border-green-500">
                     {/* Quantity */}
-                    <Quantity quantity={item.quantity} updateQuantity={updateQuantity} product_id={item.product_id}/>
+                    <Quantity
+                      quantity={item.quantity}
+                      updateQuantity={updateQuantity}
+                      product_id={item.product_id}
+                    />
                   </div>
                   <div class="col-span-1 col-start-4 border border-green-500">
                     {/* Price */}
+                    {"$" + (item.price * item.quantity).toFixed(2)}
                   </div>
-                  <div class="col-span-1 col-start-4 row-start-4 border border-green-500">
+                  <div class="col-start-4 row-start-4 border border-purple-500 place-content-center text-end">
                     {/* Remove All from Cart */}
+                    <button
+                      class="text-alert1 dark:text-alert1-DM font-bold rounded"
+                      onclick={() => removeItem(item.product_id)}
+                      // TODO: Internationalize
+                      aria-label="Remove from Cart"
+                    >
+                      <svg
+                        class="h-8 w-8"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
