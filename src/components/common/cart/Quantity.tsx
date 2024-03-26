@@ -1,9 +1,7 @@
-import { createEffect, createSignal, onMount } from "solid-js";
-import { createStore } from "solid-js/store";
+import { createSignal, onMount } from "solid-js";
 import type { Component } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import { items, setItems } from "@components/common/cart/AddToCartButton";
-import { e } from "dist/_astro/web.DzrY7x_K";
+
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
