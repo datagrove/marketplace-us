@@ -30,6 +30,7 @@ interface ItemDetails {
 interface Props {
   // Define the type for the filterPosts prop
   items: Array<ItemDetails>;
+  deleteItem: () => void;
 }
 
 export const CartCard: Component<Props> = (props) => {
@@ -96,6 +97,7 @@ export const CartCard: Component<Props> = (props) => {
     currentItems = currentItems.filter((item) => item.product_id !== product_id);
     setItems(currentItems)
     console.log("Items" + items.map((item) => item.description))
+    props.deleteItem();
   };
 
   const downloadImage = async (path: string) => {

@@ -38,16 +38,17 @@ export const CartView = () => {
   const [totalItems, setTotalItems] = createSignal(0);
   const [itemsDetails, setItemsDetails] = createSignal<ItemDetails[]>([]);
   const [cartTotal, setCartTotal] = createSignal(0);
+  const [oldItems, setOldItems] = createSignal<Item[]>([]);
 
   onMount(async () => {
     await fetchItemDetails();
   })
 
   const fetchItemDetails = async () => {
+    console.log("Fetching Details")
     try {
       console.log("Cart Items: " + items.map((item: Item) => item.description));
-      const details: ItemDetails[] = [];
-      items.forEach(async (item) => {
+      const promises = items.map(async (item) => {
         if (item.product_id !== "" &&
         !itemsDetails().some((items) => items.product_id === item.product_id)) {
           const { data, error } = await supabase
@@ -57,12 +58,10 @@ export const CartView = () => {
             )
             .eq("product_id", item.product_id);
           if (data) {
-            console.log(data[0]);
             const currentItem: ItemDetails = data[0];
             currentItem.quantity = item.quantity;
             currentItem.price = item.price;
-            console.log(currentItem);
-            details.push(currentItem);
+            return currentItem;
           }
           if (error) {
             console.log("Supabase error: " + error.code + " " + error.message);
@@ -72,13 +71,15 @@ export const CartView = () => {
           const index = itemsDetails().findIndex((itemDetail) => itemDetail.product_id === item.product_id);
           if (index !== -1) {
             const updatedItem: ItemDetails = { ...itemsDetails()[index] };
-            details.push(updatedItem)
+            return updatedItem
         }
       }
       });
-      console.log("Details" + details)
-      setItemsDetails([])
-      setItemsDetails(details)
+      const details = await Promise.all(promises)
+      // console.log("Details" + details)
+      // setItemsDetails([])
+      console.log("Setting Details: " + details)
+      setItemsDetails(details.filter((item): item is ItemDetails => !!item));
     } catch (_) {
       // setItems([]);
       console.log("Cart Error");
@@ -97,11 +98,16 @@ export const CartView = () => {
     window.location.href = `/${lang}/cart`;
   }
 
+  function updateCards() {
+    fetchItemDetails();
+  }
+
   function shoppingCart() {
     if (items.length > 0) {
       let total = 0;
       {
         console.log("items in cart: " + items.length);
+        console.log("Item Details: " + itemsDetails())
       }
       items.forEach((item: Item) => {
         total += item.price * item.quantity;
@@ -112,7 +118,7 @@ export const CartView = () => {
           {/* TODO: Internationalize */}
           <div class="text-3xl font-bold text-start">My Cart</div>
           <div class="max-h-screen overflow-auto">
-            <CartCard items={itemsDetails()} />
+            <CartCard items={itemsDetails()} deleteItem={updateCards} />
           </div>
         </div>
       );
