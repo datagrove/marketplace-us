@@ -71,11 +71,9 @@ export const AddToCart: Component<Props> = (props: Props) => {
       <button
         onclick={(e) => clickHandler(e)}
         class="btn-primary"
-        // TODO:Internationalize
-        aria-label="Add to Cart"
+        aria-label={t("buttons.addToCart")}
       >
-        {/* TODO Internationalize */}
-        Add to Cart
+        {t("buttons.addToCart")}
       </button>
     </div>
   );

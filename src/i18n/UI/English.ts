@@ -77,6 +77,11 @@ export const English = {
     saveProfile: 'Save Profile',
     filters: "Filters",
     faq: "Help Center",
+    addToCart: "Add to Cart",
+    stripeSetup: "Stripe Setup",
+    stripeLogin: "Stripe Login",
+    proceedToCheckout: "Proceed to Checkout", 
+    viewCart: "View Cart"
   },
 
   messages: {
@@ -147,6 +152,7 @@ export const English = {
     chooseLanguage: "Choose one or more",
     languagesSpoken: "Languages Spoken",
     taxCode: "Tax Code",
+    dropdownDefault: "Select an option",
   },
 
   postLabels: {
@@ -159,6 +165,17 @@ export const English = {
     clientProfileImage: 'Client Profile Image',
   },
 
+  cartLabels: {
+    product: "Product",
+    quantity: "Quantity",
+    price: "Price", 
+    myCart: "My Cart", 
+    subTotal: "SubTotal", 
+    taxes: "Taxes calculated at checkout", 
+    total: "Total", 
+    emptyCart: "Cart is empty", 
+  },
+
   homePageText: {
     headline: "Everything you need to get the job done.",
     subHeadline: "Providers post services. Customers search posts. Work gets done.",
@@ -166,7 +183,7 @@ export const English = {
   },
 
   menus: {
-    services: 'Find Services',
+    resources: 'Find Resources',
     contactUs: 'Contact Us',
   },
 
@@ -235,6 +252,10 @@ export const English = {
     checkboxGoverningDistrict: "Checkbox for selecting governing district",
     darkMessage: "Toggle between Dark and Light mode",
     closeDialog: "Close Dialog",
+    cart: "Cart",
+    removeFromCart: "Remove From Cart",
+    increaseQuantity: "Increase Quantity",
+    decreaseQuantity: "Decrease Quantity",
   },
 
   headerData: {

@@ -190,8 +190,7 @@ export const CartCard: Component<Props> = (props) => {
                     <button
                       class="text-alert1 dark:text-alert1-DM font-bold rounded"
                       onclick={() => removeItem(item.product_id)}
-                      // TODO: Internationalize
-                      aria-label="Remove from Cart"
+                      aria-label={t("ariaLabels.removeFromCart")}
                     >
                       <svg
                         class="h-8 w-8"

@@ -52,8 +52,7 @@ export const Quantity: Component<Props> = (props: Props) => {
       <button
         onclick={(e) => decrease(e)}
         class="btn-primary inline-block"
-        // TODO:Internationalize
-        aria-label="Decrease Quantity"
+        aria-label={t("ariaLabels.decreaseQuantity")}
       >
         -
       </button>
@@ -72,8 +71,7 @@ export const Quantity: Component<Props> = (props: Props) => {
       <button
         onclick={(e) => increase(e)}
         class="btn-primary inline-block"
-        // TODO:Internationalize
-        aria-label="Increase Quantity"
+        aria-label={t("ariaLabels.increaseQuantity")}
       >
         +
       </button>

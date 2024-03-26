@@ -54,7 +54,7 @@ export const ClientRouting = () => {
     <Show when={isUser}>
       <div>
       <a href={`/${lang}/services`} class=" ">
-        {t("menus.services")}
+        {t("menus.resources")}
       </a>
       </div>
       <a class=" " id="createEditClientProfileLink" href={routing()}>

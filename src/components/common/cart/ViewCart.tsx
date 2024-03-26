@@ -115,8 +115,7 @@ export const CartView = () => {
       setCartTotal(total);
       return (
         <div class="">
-          {/* TODO: Internationalize */}
-          <div class="text-3xl font-bold text-start">My Cart</div>
+          <div class="text-3xl font-bold text-start">{t("cartLabels.myCart")}</div>
           <div class="max-h-screen overflow-auto">
             <CartCard items={itemsDetails()} deleteItem={updateCards} />
           </div>
@@ -127,7 +126,7 @@ export const CartView = () => {
       return (
         //TODO: Revisit Styling
         <div class="">
-          <div>Cart is empty</div>
+          <div>{t("cartLabels.emptyCart")}</div>
         </div>
       );
     }
@@ -152,9 +151,9 @@ export const CartView = () => {
             </div>
           </div>
 
-          <button class="btn-primary" onclick={goToCheckout}>
-            {/* TODO: Style and Internationalize */}
-            Proceed to Checkout
+          <button class="btn-primary" onclick={goToCheckout} aria-label={t("buttons.proceedToCheckout")}>
+            {/* TODO: Style*/}
+            {t("buttons.proceedToCheckout")}
           </button>
         </div>
       </div>

@@ -71,13 +71,11 @@ export const Cart = () => {
       });
       return (
         <div>
-          {/* TODO: Internationalize */}
-          <div class="text-3xl font-bold">My Cart</div>
+          <div class="text-3xl font-bold">{t("cartLabels.myCart")}</div>
           <div class="grid justify-between mt-2 pb-2 grid-cols-5">
-            {/* TODO: Internationalize */}
-            <div class="col-span-3 inline-block mr-2">Product</div>
-            <div class="inline-block text-start mr-2">Quantity</div>
-            <div class="inline-block text-start">Price</div>
+            <div class="col-span-3 inline-block mr-2">{t("cartLabels.product")}</div>
+            <div class="inline-block text-start mr-2">{t("cartLabels.quantity")}</div>
+            <div class="inline-block text-start">{t("cartLabels.price")}</div>
           </div>
           <ul>
             {items.map((item: Item) => (
@@ -94,13 +92,12 @@ export const Cart = () => {
             ))}
           </ul>
           <div class="grid justify-between mt-2 border-t-2 border-border1 dark:border-border1-DM pb-2 grid-cols-5">
-            {/* TODO: Internationalize */}
-            <div class="col-span-3 inline-block mr-2 font-bold">Subtotal: </div>
+            <div class="col-span-3 inline-block mr-2 font-bold">{t("cartLabels.subTotal")}: </div>
             <div class="col-span-2 inline-block font-bold text-end">
               ${total.toFixed(2)}
             </div>
             <div class="col-span-5 text-xs italic text-center mt-4 mb-1">
-              Taxes calculated at checkout
+            {t("cartLabels.taxes")}
             </div>
           </div>
         </div>
@@ -108,11 +105,10 @@ export const Cart = () => {
     } else {
       return (
         <div class="">
-          <div>Cart is empty</div>
+          <div>{t("cartLabels.emptyCart")}</div>
 
           <div class="flex justify-between mt-2 border-t-2 border-border1 dark:border-border1-DM pb-2">
-            {/* TODO: Internationalize */}
-            <div class="inline-block">Total: </div>
+            <div class="inline-block">{t("cartLabels.total")}: </div>
             <div class="inline-block text-end">$0.00</div>
           </div>
         </div>
@@ -127,8 +123,7 @@ export const Cart = () => {
       <button
         onclick={clickHandler}
         class="rounded-lg p-1 mr-0 w-14 flex relative"
-        //TODO: Internationalize Aria Label
-        aria-label="Cart"
+        aria-label={t("ariaLabels.cart")}
       >
         <svg viewBox="0 0 24 24" class="w-8 h-8 fill-none stroke-icon1 dark:stroke-icon1-DM">
           <path
@@ -172,10 +167,10 @@ export const Cart = () => {
         class="hidden fixed z-50 right-2 bg-background1 dark:bg-background1-DM m-2 p-2 rounded-lg justify-start shadow-md shadow-shadow-LM dark:shadow-shadow-DM"
       >
         <div>{shoppingCart()}</div>
-        {/* TODO: Style and Internationalize */}
+        {/* TODO: Style */}
         <div class="flex justify-center">
-          <button class="btn-primary" onclick={goToCart}>
-            View Cart
+          <button class="btn-primary" onclick={goToCart} aria-label={t("buttons.viewCart")}>
+            {t("buttons.viewCart")}
           </button>
         </div>
       </div>

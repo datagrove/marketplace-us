@@ -77,6 +77,11 @@ export const Spanish = {
     saveProfile: 'Guardar Perfil',
     filters: "Filtros",
     faq: "Centro de Ayuda",
+    addToCart: "añadir a la cesta",
+    stripeSetup: "Configuración de Stripe",
+    stripeLogin: "Iniciar sesión Stripe",
+    proceedToCheckout: "Pasar por la caja", 
+    viewCart: "Ver carrito", 
   },
 
   messages: {
@@ -148,6 +153,7 @@ export const Spanish = {
     chooseLanguage: "Elige uno o más",
     languagesSpoken: "Idiomas hablados",
     taxCode: "Código de impuestos",
+    dropdownDefault: "Seleccione una opción",
   },
 
   postLabels: {
@@ -160,13 +166,25 @@ export const Spanish = {
     clientProfileImage: "Imagen de Perfil del Cliente",
   },
 
+  cartLabels: {
+    product: "Producto",
+    quantity: "Cantidad",
+    price: "Precio", 
+    myCart: "Mi carrito", 
+    subTotal: "Total parcial", 
+    taxes: "Impuestos calculados al finalizar la compra", 
+    total: "Total", 
+    emptyCart: "El carrito esta vacío", 
+
+  },
+
   homePageText: {
     headline: "Todo lo que necesitas para hacer el trabajo.",
     subHeadline: "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
     ariaLabel: "Imagen para el marcador de posición de información",
   },
   menus: {
-    services: 'Buscar Servicios',
+    resources: 'Buscar Recursos',
     contactUs: 'Contáctenos',
   },
 
@@ -235,6 +253,10 @@ export const Spanish = {
     checkboxGoverningDistrict: "Casilla de verificación para seleccionar Distrito",
     darkMessage: "Cambia entre modo claro y modo oscuro",
     closeDialog: "Cerrar Diálogo",
+    cart: "Carro",
+    removeFromCart: "Quitar del carrito",
+    increaseQuantity: "Aumentar cantidad",
+    decreaseQuantity: "Disminuir cantidad",
   },
 
   headerData: {
