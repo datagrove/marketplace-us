@@ -146,8 +146,8 @@ export const ViewCard: Component<Props> = (props) => {
                             postImage={post.image_urls}
                           />
                         </div>
-                        <div class="inline-block border border-red-500">
-                          <p>{post.price} </p>
+                        <div class="inline-block">
+                          <p>${post.price.toFixed(2)} </p>
                         </div>
                         <div class="inline-block">
                           <SocialModal
