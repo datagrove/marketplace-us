@@ -53,6 +53,7 @@ export const Cart = () => {
     const listShow = document.getElementById("cartItems");
     if (listShow?.classList.contains("hidden")) {
       listShow?.classList.remove("hidden");
+      document.getElementById("backdrop")?.classList.remove("hidden")
     } else {
       listShow?.classList.add("hidden");
     }
@@ -115,6 +116,11 @@ export const Cart = () => {
     }
   }
 
+  function hideMenu () {
+    document.getElementById("cartItems")?.classList.add("hidden")
+    document.getElementById("backdrop")?.classList.add("hidden")
+  }
+
   // ADD EMAIL TO SEND FOR CONTACT US
 
   return (
@@ -161,6 +167,9 @@ export const Cart = () => {
           </div>
         </Show>
       </button>
+      <div id="backdrop" class="backdrop absolute h-full w-screen top-0 left-0 hidden" onClick={()=> hideMenu()}>
+        {/* This allows that if someone clicks anywhere outside the modal the modal will hide */}
+      </div>
       <div
         id="cartItems"
         class="hidden fixed z-50 right-2 bg-background1 dark:bg-background1-DM m-2 p-2 rounded-lg justify-start shadow-md shadow-shadow-LM dark:shadow-shadow-DM"

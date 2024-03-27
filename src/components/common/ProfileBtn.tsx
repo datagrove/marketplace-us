@@ -27,6 +27,7 @@ export const ProfileBtn = () => {
     const listShow = document.getElementById("profileItems");
     if (listShow?.classList.contains("hidden")) {
       listShow?.classList.remove("hidden");
+      document.getElementById("backdrop")?.classList.remove("hidden")
     } else {
       listShow?.classList.add("hidden");
     }
@@ -34,6 +35,11 @@ export const ProfileBtn = () => {
 
   if (UserError) {
     console.log("User Error: " + UserError.message);
+  }
+
+  function hideMenu () {
+    document.getElementById("profileItems")?.classList.add("hidden")
+    document.getElementById("backdrop")?.classList.add("hidden")
   }
 
   function renderWhenUser() {
@@ -64,6 +70,9 @@ export const ProfileBtn = () => {
           <path fill-rule="evenodd" clip-rule="evenodd" d="M4 5C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H4ZM3 12C3 11.4477 3.44772 11 4 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13H4C3.44772 13 3 12.5523 3 12ZM3 18C3 17.4477 3.44772 17 4 17H20C20.5523 17 21 17.4477 21 18C21 18.5523 20.5523 19 20 19H4C3.44772 19 3 18.5523 3 18Z" fill="currentColor" />
         </svg>
       </button>
+      <div id="backdrop" class="backdrop absolute h-full w-screen top-0 left-0 hidden" onClick={()=> hideMenu()}>
+        {/* This allows that if someone clicks anywhere outside the modal the modal will hide */}
+      </div>
       <ul id="profileItems" class="hidden fixed z-50 right-2 bg-background1 dark:bg-background1-DM m-2 p-2 rounded-lg justify-start shadow-md shadow-shadow-LM dark:shadow-shadow-DM">
         {renderWhenUser()}
         <div class="mt-2 border-b-2 border-border1 dark:border-border1-DM pb-2">
