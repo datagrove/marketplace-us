@@ -27,6 +27,7 @@ export const French = {
     fullPost: "Voir le message complet",
     offline: 'Hors ligne',
     faq: "Questions fréquemment posées",
+    viewCart: "Mon panier",
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export const French = {
     impact: "Découvrez l’impact significatif de TodoServis. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
     fullPost: "En savoir plus sur ce service et contacter le fournisseur si vous êtes intéressé. Découvrez des images supplémentaires et la description complète du service.",
     faq: "Explorez notre page FAQ complète pour obtenir des réponses aux questions courantes sur nos services, nos politiques et bien plus encore.",
+    viewCart: "Consultez votre panier et passez à la caisse en toute simplicité.",
   },
 
   buttons: {
@@ -75,6 +77,11 @@ export const French = {
     saveProfile: "Enregistrer le profil",
     filters: "Filtres",
     faq: "Centre d'Aide",
+    addToCart: "Ajouter au panier",
+    stripeSetup: "Configuration de Stripe",
+    stripeLogin: "Connexion à Stripe",
+    proceedToCheckout: "Passer à la caisse", 
+    viewCart: "Voir le panier",
   },
 
   messages: {
@@ -144,6 +151,7 @@ export const French = {
     chooseLanguage: "Choisissez-en un ou plusieurs",
     languagesSpoken: "Langues parlées",
     taxCode: "Code fiscal",
+    dropdownDefault: "Choisir une option",
   },
 
   postLabels: {
@@ -156,6 +164,19 @@ export const French = {
     clientProfileImage: "Image du profil du client",
   },
 
+  cartLabels: {
+    product: "Produit",
+    quantity: "Quantité",
+    price: "Prix", 
+    myCart: "Mon panier", 
+    subTotal: "Total", 
+    taxes: "Taxes calculées à la caisse", 
+    total: "Total", 
+    emptyCart: "Le panier est vide", 
+    orderSummary: "Récapitulatif de la commande",
+    items: "articles",
+  },
+
   homePageText: {
     headline: "Tout ce dont vous avez besoin pour faire le travail.",
     subHeadline: "Les fournisseurs publient des services. Les clients recherchent des messages. Le travail est fait.",
@@ -163,7 +184,7 @@ export const French = {
   },
 
   menus: {
-    services: 'Trouver des Services',
+    resources: 'Trouver des ressources',
     contactUs: 'Contactez-nous',
   },
 
@@ -233,6 +254,10 @@ export const French = {
     checkboxGoverningDistrict: "Case à cocher pour sélectionner le district administratif",
     darkMessage: "Basculer entre le mode clair et le mode sombre",
     closeDialog: "Fermer la boîte de dialogue",
+    cart: "Chariot",
+    removeFromCart: "Supprimer du panier",
+    increaseQuantity: "Augmenter la quantité",
+    decreaseQuantity: "Diminuer la quantité",
   },
 
   headerData: {

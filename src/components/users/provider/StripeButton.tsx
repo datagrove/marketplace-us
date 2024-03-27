@@ -75,11 +75,10 @@ export const StripeButton = () => {
         <button
           onclick={stripeSetup}
           class="rounded-lg border border-border1 dark:border-border1-DM px-3 py-2 mr-4 md:mr-0 flex"
-          //TODO: Internationalize Aria Label
-          aria-label="Stripe Setup"
+          aria-label={t("buttons.stripeSetup")}
         >
-            Stripe Setup
-            {/* TODO : Internationalize */}
+           {t("buttons.stripeSetup")}
+
         </button>
         </div>
       );
@@ -93,11 +92,9 @@ export const StripeButton = () => {
         <button
           onclick={stripeLogin}
           class="rounded-lg border border-border1 dark:border-border1-DM px-3 py-2 mr-4 md:mr-0 flex"
-          //TODO: Internationalize Aria Label
-          aria-label="Stripe Login"
+          aria-label={t("buttons.stripeLogin")}
         >
-            Stripe Login
-            {/* TODO : Internationalize */}
+            {t("buttons.stripeLogin")}
         </button>
         </div>
       );

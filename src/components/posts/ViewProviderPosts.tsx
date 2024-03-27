@@ -3,32 +3,36 @@ import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
-import { ui } from '../../i18n/ui'
-import type { uiObject } from '../../i18n/uiType';
+import { ui } from "../../i18n/ui";
+import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import stripe from "@lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
 //get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject
-const productCategories = values.productCategoryInfo.categories
+const values = ui[lang] as uiObject;
+const productCategories = values.productCategoryInfo.categories;
 
 // Define the type for the ProviderPost interface
 interface ProviderPost {
-  user_id: string;
   content: string;
   id: number;
   category: string;
   title: string;
   seller_name: string;
   major_municipality: string;
-  minor_municipality: string;
-  governing_district: string;
-  image_urls: string;
+  user_id: string;
+  image_urls: string | null;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
 }
 
 // Get the user session
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 
 export const ViewProviderPosts: Component = () => {
   // initialize posts and session
@@ -54,15 +58,24 @@ export const ViewProviderPosts: Component = () => {
     if (error) {
       console.log("supabase error: " + error.message);
     } else {
-      data?.map(item => {
-        productCategories.forEach(productCategories => {
-          if (item.product_category.toString() === productCategories.id) {
-            item.category = productCategories.name
+      const newItems = await Promise.all(
+        data?.map(async (item) => {
+          productCategories.forEach((productCategories) => {
+            if (item.product_category.toString() === productCategories.id) {
+              item.category = productCategories.name;
+            }
+          });
+          delete item.product_category;
+
+          if (item.price_id !== null) {
+            const priceData = await stripe.prices.retrieve(item.price_id);
+            item.price = priceData.unit_amount! / 100;
           }
+          return item;
         })
-        delete item.product_category
-      })
-      setPosts(data);
+      );
+      console.log(newItems.map(item => item.price))
+      setPosts(newItems);
     }
   });
   return (

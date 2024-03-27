@@ -27,6 +27,7 @@ export interface uiObject {
     fullPost: string,
     offline: string,
     faq: string,
+    viewCart: string,
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export interface uiObject {
     impact: string,
     fullPost: string,
     faq: string,
+    viewCart: string,
   },
 
   buttons: {
@@ -75,6 +77,11 @@ export interface uiObject {
     saveProfile: string,
     filters: string,
     faq: string,
+    addToCart: string,
+    stripeSetup: string,
+    stripeLogin: string,
+    proceedToCheckout: string, 
+    viewCart: string,
   },
 
   messages: {
@@ -146,6 +153,7 @@ export interface uiObject {
     chooseLanguage: string,
     languagesSpoken: string,
     taxCode: string,
+    dropdownDefault: string,
   },
 
   postLabels: {
@@ -158,6 +166,19 @@ export interface uiObject {
     clientProfileImage: string,
   },
 
+  cartLabels: {
+    product: string,
+    quantity: string,
+    price: string, 
+    myCart: string, 
+    subTotal: string, 
+    taxes: string, 
+    total: string, 
+    emptyCart: string, 
+    orderSummary: string,
+    items: string,
+  },
+
   homePageText: {
     headline: string,
     subHeadline: string,
@@ -165,7 +186,7 @@ export interface uiObject {
   },
 
   menus: {
-    services: string,
+    resources: string,
     contactUs: string,
   },
 
@@ -234,6 +255,10 @@ export interface uiObject {
     checkboxGoverningDistrict: string,
     darkMessage: string,
     closeDialog: string,
+    cart: string,
+    removeFromCart: string,
+    increaseQuantity: string,
+    decreaseQuantity: string, 
   },
 
   headerData: {

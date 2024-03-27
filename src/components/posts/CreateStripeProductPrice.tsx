@@ -16,7 +16,7 @@ async function postStripeData(stripeData: FormData) {
   });
   const data = await response.json();
   if (data.redirect) {
-    alert(data.message); //TODO: Not sure how to internationalize these
+    alert(data.message); 
     window.location.href = `/${lang}` + data.redirect;
   }
   return data;

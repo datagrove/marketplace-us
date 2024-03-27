@@ -1,5 +1,10 @@
 import { createSignal, Show } from "solid-js";
 import type { Component } from "solid-js";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+// Internationalization
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 
 //TODO: Upgrade to have an option for required and not let a user select nothing
 interface Props {
@@ -29,8 +34,7 @@ const Dropdown: Component<Props> = (Props: Props) => {
         }}
       >
         <div class="inline-block ml-2">
-          {/* TODO:Internationalize */}
-          {Props.selectedOption || "Select an option"}
+          {Props.selectedOption || t("formLabels.dropdownDefault")}
         </div>
         {/* Dropdown icon */}
         <div class="inline-block">

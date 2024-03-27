@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
@@ -9,6 +9,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import * as allFilters from "../posts/fetchPosts";
+import stripe from "../../lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -26,16 +27,21 @@ if (user.session === null || user.session === undefined) {
   location.href = `/${lang}/login`;
 }
 
-const { data, error } = await supabase.from("providerposts").select("*");
+// const { data, error } = await supabase.from("sellerposts").select("*");
 
-data?.map((item) => {
-  productCategories.forEach((productCategories) => {
-    if (item.service_category.toString() === productCategories.id) {
-      item.category = productCategories.name;
-    }
-  });
-  delete item.service_category;
-});
+// data?.map(async (item) => {
+//   productCategories.forEach((productCategories) => {
+//     if (item.product_category.toString() === productCategories.id) {
+//       item.category = productCategories.name;
+//     }
+//   });
+//   delete item.product_category;
+
+//   if (item.price_id !== null) {
+//     const priceData = await stripe.prices.retrieve(item.price_id);
+//     item.price = priceData.unit_amount! / 100;
+//   }
+// });
 
 interface ProviderPost {
   content: string;
@@ -48,6 +54,10 @@ interface ProviderPost {
   // governing_district: string;
   user_id: string;
   image_urls: string;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
 }
 
 export const ServicesView: Component = () => {
@@ -64,6 +74,45 @@ export const ServicesView: Component = () => {
   >([]);
   const [searchString, setSearchString] = createSignal<string>("");
   const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
+
+  onMount(async () => {
+    await fetchPosts();
+  });
+
+  let data;
+
+  async function fetchPosts() {
+    const { data, error } = await supabase
+      .from("sellerposts")
+      .select("*");
+
+    if (!data) {
+      alert("No posts available.");
+    }
+    if (error) {
+      console.log("supabase error: " + error.message);
+    } else {
+      const newItems = await Promise.all(
+        data?.map(async (item) => {
+          productCategories.forEach((productCategories) => {
+            if (item.product_category.toString() === productCategories.id) {
+              item.category = productCategories.name;
+            }
+          });
+          delete item.product_category;
+
+          if (item.price_id !== null) {
+            const priceData = await stripe.prices.retrieve(item.price_id);
+            item.price = priceData.unit_amount! / 100;
+          }
+          return item;
+        })
+      );
+      console.log(newItems.map(item => item.price))
+      setPosts(newItems);
+      setCurrentPosts(newItems);
+    }
+  }
 
   // start the page as displaying all posts
   if (!data) {
@@ -104,7 +153,7 @@ export const ServicesView: Component = () => {
       locationFilters(),
       minorLocationFilters(),
       governingLocationFilters(),
-      searchString(),
+      searchString()
     );
 
     if (res === null || res === undefined) {
@@ -124,7 +173,7 @@ export const ServicesView: Component = () => {
         setTimeout(() => {
           //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
           clearAllFilters();
-        }, 3000),
+        }, 3000)
       );
 
       let allPosts = await allFilters.fetchAllPosts();
@@ -132,11 +181,11 @@ export const ServicesView: Component = () => {
       //Add the categories to the posts in the current language
       allPosts?.map((item) => {
         productCategories.forEach((productCategories) => {
-          if (item.service_category.toString() === productCategories.id) {
+          if (item.product_category.toString() === productCategories.id) {
             item.category = productCategories.name;
           }
         });
-        delete item.service_category;
+        delete item.product_category;
       });
 
       setPosts(allPosts!);
@@ -150,11 +199,11 @@ export const ServicesView: Component = () => {
 
       res.map((post) => {
         productCategories.forEach((productCategory) => {
-          if (post.service_category.toString() === productCategory.id) {
+          if (post.product_category.toString() === productCategory.id) {
             post.category = productCategory.name;
           }
         });
-        delete post.service_category;
+        delete post.product_category;
       });
 
       setPosts(res);
@@ -165,7 +214,7 @@ export const ServicesView: Component = () => {
   const filterPostsByMajorMunicipality = (location: string) => {
     if (locationFilters().includes(location)) {
       let currentLocationFilters = locationFilters().filter(
-        (el) => el !== location,
+        (el) => el !== location
       );
       setLocationFilters(currentLocationFilters);
     } else {
@@ -205,7 +254,7 @@ export const ServicesView: Component = () => {
     let searchInput = document.getElementById("search") as HTMLInputElement;
     let selectedCategories = document.querySelectorAll(".selected");
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni",
+      "input[type='checkbox'].major-muni"
     ) as NodeListOf<HTMLInputElement>;
     // const minorMuniCheckboxes = document.querySelectorAll(
     //   "input[type='checkbox'].minor-muni"
@@ -260,7 +309,7 @@ export const ServicesView: Component = () => {
 
   const clearMajorMunicipality = () => {
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni",
+      "input[type='checkbox'].major-muni"
     ) as NodeListOf<HTMLInputElement>;
 
     majorMuniCheckboxes.forEach((checkbox) => {

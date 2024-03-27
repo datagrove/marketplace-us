@@ -56,7 +56,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     if (session()) {
       try {
         const { data, error } = await supabase
-          .from("providerview")
+          .from("sellerview")
           .select("*")
           .eq("seller_id", id);
 

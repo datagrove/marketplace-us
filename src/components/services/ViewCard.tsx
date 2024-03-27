@@ -5,6 +5,9 @@ import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
+import { AddToCart } from "../common/cart/AddToCartButton";
+import { Quantity } from "@components/common/cart/Quantity";
+
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -20,6 +23,10 @@ interface Post {
   // governing_district: string;
   user_id: string;
   image_urls: string | null;
+  price: number;
+  price_id: string;
+  quantity: number;
+  product_id: string;
 }
 
 interface Props {
@@ -29,6 +36,7 @@ interface Props {
 
 export const ViewCard: Component<Props> = (props) => {
   const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
+  const [quantity, setQuantity] = createSignal<number>(1);
 
   createEffect(async () => {
     if (props.posts) {
@@ -39,6 +47,8 @@ export const ViewCard: Component<Props> = (props) => {
                 post.image_urls.split(",")[0]
               ))
             : (post.image_url = null);
+          // Set the default quantity to 1
+          post.quantity = 1;
           return post;
         })
       );
@@ -46,6 +56,14 @@ export const ViewCard: Component<Props> = (props) => {
       setNewPosts(updatedPosts);
     }
   });
+
+  const updateQuantity = (quantity: number) => {
+    setQuantity(quantity);
+  };
+
+  const resetQuantity = () => {
+    setQuantity(1);
+  };
 
   const downloadImage = async (path: string) => {
     try {
@@ -129,11 +147,25 @@ export const ViewCard: Component<Props> = (props) => {
                           />
                         </div>
                         <div class="inline-block">
+                          <p>${post.price.toFixed(2)} </p>
+                        </div>
+                        <div class="inline-block">
                           <SocialModal
                             id={Number(post.id)}
                             title={post.title}
                             image_urls={post.image_urls}
                           />
+                        </div>
+                        <div class="inline-block">
+                          <AddToCart
+                            description= {post.title}
+                            price={post.price}
+                            price_id={post.price_id}
+                            product_id={post.product_id}
+                            quantity= {quantity()}
+                            buttonClick={resetQuantity}
+                          />
+                          <Quantity quantity={1} updateQuantity={updateQuantity}/>
                         </div>
                       </div>
 

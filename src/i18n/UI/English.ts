@@ -27,6 +27,7 @@ export const English = {
     fullPost: "View Full Post",
     offline: 'Offline',
     faq: "Frequently Asked Questions",
+    viewCart: "My Cart",
   },
 
   pageDescriptions: {
@@ -51,6 +52,7 @@ export const English = {
     impact: "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
     fullPost: "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
     faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
+    viewCart: "View your cart and checkout with ease.",
   },
 
   buttons: {
@@ -75,6 +77,11 @@ export const English = {
     saveProfile: 'Save Profile',
     filters: "Filters",
     faq: "Help Center",
+    addToCart: "Add to Cart",
+    stripeSetup: "Stripe Setup",
+    stripeLogin: "Stripe Login",
+    proceedToCheckout: "Proceed to Checkout", 
+    viewCart: "View Cart"
   },
 
   messages: {
@@ -145,6 +152,7 @@ export const English = {
     chooseLanguage: "Choose one or more",
     languagesSpoken: "Languages Spoken",
     taxCode: "Tax Code",
+    dropdownDefault: "Select an option",
   },
 
   postLabels: {
@@ -157,6 +165,19 @@ export const English = {
     clientProfileImage: 'Client Profile Image',
   },
 
+  cartLabels: {
+    product: "Product",
+    quantity: "Quantity",
+    price: "Price", 
+    myCart: "My Cart", 
+    subTotal: "Subtotal", 
+    taxes: "Taxes calculated at checkout", 
+    total: "Total", 
+    emptyCart: "Cart is empty", 
+    orderSummary: "Order Summary",
+    items: "items",
+  },
+
   homePageText: {
     headline: "Everything you need to get the job done.",
     subHeadline: "Providers post services. Customers search posts. Work gets done.",
@@ -164,7 +185,7 @@ export const English = {
   },
 
   menus: {
-    services: 'Find Services',
+    resources: 'Find Resources',
     contactUs: 'Contact Us',
   },
 
@@ -233,6 +254,10 @@ export const English = {
     checkboxGoverningDistrict: "Checkbox for selecting governing district",
     darkMessage: "Toggle between Dark and Light mode",
     closeDialog: "Close Dialog",
+    cart: "Cart",
+    removeFromCart: "Remove From Cart",
+    increaseQuantity: "Increase Quantity",
+    decreaseQuantity: "Decrease Quantity",
   },
 
   headerData: {

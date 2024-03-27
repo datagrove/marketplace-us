@@ -56,7 +56,7 @@ export const ViewFullPost: Component<Props> = (props) => {
         if (session()) {
             try {
                 const { data, error } = await supabase
-                    .from("providerposts")
+                    .from("sellerposts")
                     .select("*")
                     .eq("id", id);
 
@@ -68,11 +68,11 @@ export const ViewFullPost: Component<Props> = (props) => {
                 } else {
                     data?.map(async (item) => {
                         productCategories.forEach(productCategories => {
-                            if (item.service_category.toString() === productCategories.id) {
+                            if (item.product_category.toString() === productCategories.id) {
                                 item.category = productCategories.name
                             }
                         })
-                        delete item.service_category
+                        delete item.product_category
                         item.seller_url = `/${lang}/provider/${item.seller_id}`
                     })
                     setPost(data[0]);
