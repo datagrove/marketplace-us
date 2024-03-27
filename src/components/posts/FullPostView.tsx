@@ -19,7 +19,7 @@ const productCategories = values.productCategoryInfo.categories
 interface Post {
     content: string;
     id: number;
-    category: string;
+    subject: string;
     title: string;
     seller_name: string;
     major_municipality: string;
@@ -68,11 +68,11 @@ export const ViewFullPost: Component<Props> = (props) => {
                 } else {
                     data?.map(async (item) => {
                         productCategories.forEach(productCategories => {
-                            if (item.product_category.toString() === productCategories.id) {
-                                item.category = productCategories.name
+                            if (item.product_subject.toString() === productCategories.id) {
+                                item.subject = productCategories.name
                             }
                         })
-                        delete item.product_category
+                        delete item.product_subject
                         item.seller_url = `/${lang}/provider/${item.seller_id}`
                     })
                     setPost(data[0]);
@@ -305,7 +305,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                     <span class="font-bold">{t('postLabels.location')}</span>{post()?.major_municipality}/{post()?.minor_municipality}/
                     {post()?.governing_district}
                 </p>
-                <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.category}</p>
+                <p class="my-1"><span class="font-bold">{t('postLabels.category')}</span>{post()?.subject}</p>
                 <div class="my-10 prose dark:prose-invert" id="post-content" innerHTML={post()?.content}></div>
                 <div class="mt-4">
                     <a href={`mailto:${post()?.email}`} class="btn-primary">{t('buttons.contact')}</a>

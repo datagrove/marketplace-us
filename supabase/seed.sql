@@ -205,7 +205,7 @@ INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_pho
 -- Data for Name: post_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."post_category" ("id", "category", "language") VALUES
+INSERT INTO "public"."post_subject" ("id", "subject", "language") VALUES
 	(1, 'k6', 1),
 	(2, 'k10', 1),
 	(3, 'k12', 1),
@@ -233,7 +233,7 @@ INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_
 -- Data for Name: seller_post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_category", "content", "location", "user_id", "image_urls", "stripe_price_id", "stripe_product_id") VALUES
+INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_subject", "content", "location", "user_id", "image_urls", "stripe_price_id", "stripe_product_id") VALUES
 	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', 1, 'Content of the first post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala'),
 	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', 2, 'k10 geography course', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU'),
 	(3, '2024-03-05 21:52:06.919336+00', 'Math course', 3, 'math course for k12', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J'),
@@ -318,7 +318,7 @@ SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 -- Name: post_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."post_category_id_seq"', 3, true);
+SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 3, true);
 
 
 --
