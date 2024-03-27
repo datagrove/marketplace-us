@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
@@ -27,21 +27,21 @@ if (user.session === null || user.session === undefined) {
   location.href = `/${lang}/login`;
 }
 
-const { data, error } = await supabase.from("sellerposts").select("*");
+// const { data, error } = await supabase.from("sellerposts").select("*");
 
-data?.map(async (item) => {
-  productCategories.forEach((productCategories) => {
-    if (item.product_category.toString() === productCategories.id) {
-      item.category = productCategories.name;
-    }
-  });
-  delete item.product_category;
+// data?.map(async (item) => {
+//   productCategories.forEach((productCategories) => {
+//     if (item.product_category.toString() === productCategories.id) {
+//       item.category = productCategories.name;
+//     }
+//   });
+//   delete item.product_category;
 
-  if(item.price_id !== null) {
-  const priceData = await stripe.prices.retrieve(item.price_id);
-  item.price = priceData.unit_amount! / 100;
-  }
-});
+//   if (item.price_id !== null) {
+//     const priceData = await stripe.prices.retrieve(item.price_id);
+//     item.price = priceData.unit_amount! / 100;
+//   }
+// });
 
 interface ProviderPost {
   content: string;
@@ -74,6 +74,45 @@ export const ServicesView: Component = () => {
   >([]);
   const [searchString, setSearchString] = createSignal<string>("");
   const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
+
+  onMount(async () => {
+    await fetchPosts();
+  });
+
+  let data;
+
+  async function fetchPosts() {
+    const { data, error } = await supabase
+      .from("sellerposts")
+      .select("*");
+
+    if (!data) {
+      alert("No posts available.");
+    }
+    if (error) {
+      console.log("supabase error: " + error.message);
+    } else {
+      const newItems = await Promise.all(
+        data?.map(async (item) => {
+          productCategories.forEach((productCategories) => {
+            if (item.product_category.toString() === productCategories.id) {
+              item.category = productCategories.name;
+            }
+          });
+          delete item.product_category;
+
+          if (item.price_id !== null) {
+            const priceData = await stripe.prices.retrieve(item.price_id);
+            item.price = priceData.unit_amount! / 100;
+          }
+          return item;
+        })
+      );
+      console.log(newItems.map(item => item.price))
+      setPosts(newItems);
+      setCurrentPosts(newItems);
+    }
+  }
 
   // start the page as displaying all posts
   if (!data) {

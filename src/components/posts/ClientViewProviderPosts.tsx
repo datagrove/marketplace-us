@@ -5,6 +5,7 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import stripe from "@lib/stripe"; 
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
@@ -20,8 +21,6 @@ interface ProviderPost {
   title: string;
   seller_name: string;
   major_municipality: string;
-  // minor_municipality: string;
-  // governing_district: string;
   image_urls: string;
   price: number;
   price_id: string;
@@ -47,15 +46,25 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
     if (error) {
       console.log("supabase error: " + error.message);
     } else {
-      data?.map((item) => {
+      const newItems = await Promise.all(
+      data?.map(async (item) => {
         productCategories.forEach((productCategories) => {
           if (item.product_category.toString() === productCategories.id) {
             item.category = productCategories.name;
           }
         });
         delete item.product_category;
-      });
+
+        if (item.price_id !== null) {
+          const priceData = await stripe.prices.retrieve(item.price_id);
+          item.price = priceData.unit_amount! / 100;
+        }
+        return item;
+      }))
+      ;
       setPosts(data);
+      console.log("Posts")
+      console.log(posts())
     }
   });
   return (

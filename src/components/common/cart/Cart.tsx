@@ -1,7 +1,6 @@
 import {
   Show,
   createEffect,
-  createResource,
   createSignal,
   onMount,
   onCleanup,
