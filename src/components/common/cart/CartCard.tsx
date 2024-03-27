@@ -20,6 +20,7 @@ interface ItemDetails {
   content: string;
   title: string;
   seller_name: string;
+  seller_image?: string;
   image_urls: string | null;
   price?: number;
   price_id: string;
@@ -46,6 +47,10 @@ export const CartCard: Component<Props> = (props) => {
                 item.image_urls.split(",")[0]
               ))
             : (item.image_url = null);
+
+          item.seller_image
+            ? (item.seller_image = await downloadSellerImage(item.seller_image))
+            : (item.seller_image = null);
           // Set the default quantity to 1 This should be replaced with the quantity from the quantity counter in the future
           // item.quantity = 1;
           return item;
@@ -94,9 +99,11 @@ export const CartCard: Component<Props> = (props) => {
 
   const removeItem = async (product_id: string) => {
     let currentItems = items;
-    currentItems = currentItems.filter((item) => item.product_id !== product_id);
-    setItems(currentItems)
-    console.log("Items" + items.map((item) => item.description))
+    currentItems = currentItems.filter(
+      (item) => item.product_id !== product_id
+    );
+    setItems(currentItems);
+    console.log("Items" + items.map((item) => item.description));
     props.deleteItem();
   };
 
@@ -117,11 +124,28 @@ export const CartCard: Component<Props> = (props) => {
     }
   };
 
+  const downloadSellerImage = async (path: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from("user.image")
+        .download(path);
+      if (error) {
+        throw error;
+      }
+      const url = URL.createObjectURL(data);
+      return url;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error downloading image: ", error.message);
+      }
+    }
+  };
+
   return (
     <div class="flex justify-center w-full">
-      <ul class="md:flex md:flex-wrap md:justify-center md:w-full">
+      <ul class="md:flex md:flex-wrap md:w-full">
         {newItems().map((item: any) => (
-          <li class=" w-[99%] py-4 border-b border-border1 dark:border-border1-DM border-opacity-50">
+          <li class=" w-[90%] py-4 border-b border-border1 dark:border-border1-DM border-opacity-50">
             <div class="mb-2 flex flex-col md:flex-row md:justify-start justify-center items-center md:items-start md:h-full  box-content w-full">
               <div class="flex md:w-48 w-full h-full md:h-full md:mr-2 items-center justify-center bg-background1 dark:bg-background1-DM rounded-lg">
                 {item.image_url ? (
@@ -154,26 +178,47 @@ export const CartCard: Component<Props> = (props) => {
                 id="cardContent"
                 class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
               >
-                <div class="w-full h-full border border-yellow-500  grid grid-rows-4 grid-flow-col">
-                  <div class="col-span-2">
-                    <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-2 pr-4 truncate">
+                <div class="w-full h-full grid grid-rows-4 grid-cols-7">
+                  <div class="col-span-4">
+                    <p class="text-2xl font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden truncate w-full">
                       <a href={`/${lang}/posts/${item.id}`}>{item.title}</a>
                     </p>
                   </div>
-                  <div class="col-span-2 border border-blue-500">
-                    <p class="overflow-hidden text-ptext1 dark:text-ptext1-DM text-base mb-1 row-span-1">
+                  <div class="flex col-span-4 col-start-1 items-center">
+                    <div class="inline-block">
+                      {item.seller_image ? (
+                        <img
+                          src={item.seller_image}
+                          alt={
+                            item.seller_image
+                            // TODO Internationalize
+                              ? "Seller Image"
+                              : "No image"
+                          }
+                          class="bg-background1 dark:bg-icon1-DM rounded-full w-8 h-8 object-cover mr-2"
+                        />
+                      ) : (
+                        <svg
+                          viewBox="0 0 512 512"
+                          version="1.1"
+                          class="bg-gray-400 fill-logo w-8 h-8 object-cover mr-2 rounded-full"
+                        >
+                        </svg>
+                      )}
+                    </div>
+                    <p class="overflow-hidden inline-block text-ptext1 dark:text-ptext1-DM text-base mb-1 row-span-1">
                       <a href={`/${lang}/provider/${item.seller_id}`}>
                         {item.seller_name}
                       </a>
                     </p>
                   </div>
-                  <div class="border border-purple-700 row-span-2 col-span-2 flex items-center">
+                  <div class="col-span-4 row-span-2 col-start-1 row-start-3 flex items-center">
                     <p
-                      class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 pt-0.5 overflow-hidden mr-4 prose dark:prose-invert"
+                      class=" text-ptext1 dark:text-ptext1-DM text-sm max-h-[60px] line-clamp-3 mb-2 overflow-hidden prose dark:prose-invert"
                       innerHTML={item.content}
                     ></p>
                   </div>
-                  <div class="col-span-1 col-start-3 row-span-1 border border-green-500">
+                  <div class="col-span-2 col-start-5 row-start-1 flex justify-end">
                     {/* Quantity */}
                     <Quantity
                       quantity={item.quantity}
@@ -181,11 +226,11 @@ export const CartCard: Component<Props> = (props) => {
                       product_id={item.product_id}
                     />
                   </div>
-                  <div class="col-span-1 col-start-4 border border-green-500">
+                  <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2">
                     {/* Price */}
                     {"$" + (item.price * item.quantity).toFixed(2)}
                   </div>
-                  <div class="col-start-4 row-start-4 border border-purple-500 place-content-center text-end">
+                  <div class="col-start-7 row-start-4  place-content-center text-end">
                     {/* Remove All from Cart */}
                     <button
                       class="text-alert1 dark:text-alert1-DM font-bold rounded"

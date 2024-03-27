@@ -1,4 +1,4 @@
-import { Show, createResource, createSignal, onMount } from "solid-js";
+import { onMount } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Component } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
