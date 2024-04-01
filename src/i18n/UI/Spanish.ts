@@ -154,6 +154,11 @@ export const Spanish = {
     languagesSpoken: "Idiomas hablados",
     taxCode: "Código de impuestos",
     dropdownDefault: "Seleccione una opción",
+    subjects: "English, Language Arts, Reading",
+    grades: "PreK - 1",
+    resourceTypes: "Hoja de Cálculo, Actividade, Imprimibles",
+    standards: "1NBT.C.4, K.OA.A.2",
+    fileTypes: "",
   },
 
   postLabels: {

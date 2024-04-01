@@ -153,6 +153,11 @@ export const English = {
     languagesSpoken: "Languages Spoken",
     taxCode: "Tax Code",
     dropdownDefault: "Select an option",
+    subjects: "Subjects",
+    grades: "Grades",
+    resourceTypes: "Types",
+    standards: "Standards",
+    fileTypes: "",
   },
 
   postLabels: {
