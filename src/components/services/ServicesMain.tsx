@@ -3,6 +3,7 @@ import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
+import { MobileViewCard } from "./MobileViewCard";
 import { LocationFilter } from "./LocationFilter";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
@@ -419,7 +420,9 @@ export const ServicesView: Component = () => {
               {t("messages.noPostsSearch")}
             </h1>
           </div>
-          <ViewCard posts={currentPosts()} />
+          {/* <ViewCard posts={currentPosts()} /> */}
+
+          <MobileViewCard posts={ currentPosts() } />
         </div>
       </div>
     </div>
