@@ -1,1 +1,0 @@
-alter table "public"."seller_post"drop constraint"seller_post_product_subject_fkey";
