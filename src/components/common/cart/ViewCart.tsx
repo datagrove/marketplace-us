@@ -121,7 +121,9 @@ export const CartView = () => {
   }
 
   function updateCards() {
+    if (items.length > 0 ){
     fetchItemDetails();
+    }
   }
 
   function shoppingCart() {

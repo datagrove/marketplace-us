@@ -46,6 +46,9 @@ export const Cart = () => {
   window.addEventListener("beforeunload", () => {
     if (items.length > 0) {
       localStorage.setItem("cartItems", JSON.stringify(items));
+    } 
+    if (items.length === 0) {
+      localStorage.removeItem("cartItems");
     }
   });
 
