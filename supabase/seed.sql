@@ -1,4 +1,3 @@
-
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
 --
@@ -105,7 +104,7 @@ INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_pho
 -- Data for Name: post_category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."post_category" ("id", "category", "language") VALUES
+INSERT INTO "public"."post_subject" ("id", "subject", "language") VALUES
 	(1, 'k6', 1),
 	(2, 'k10', 1),
 	(3, 'k12', 1),
@@ -133,16 +132,16 @@ INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_
 -- Data for Name: seller_post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_category", "content", "location", "user_id", "image_urls", "stripe_price_id", "stripe_product_id") VALUES
-	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', 1, 'Content of the first post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala'),
-	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', 2, 'k10 geography course', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU'),
-	(3, '2024-03-05 21:52:06.919336+00', 'Math course', 3, 'math course for k12', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J'),
-	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', 1, 'Content for the second post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo'),
-	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', 3, 'learn programming', 1, 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp'),
-	(7, '2024-03-27 14:25:37.137856+00', 'Test', 7, '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', 6, 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', '0.1236654180882113.svg,0.7931177438497017.svg,0.7728585086209605.svg', 'price_1OyxQ5BRZLMDvS4RJ1oWeAIj', 'prod_PoabbRuN1tqxj0'),
-	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', 5, '<p>test</p>', 11, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK'),
-	(11, '2024-03-27 15:50:36.102267+00', 'New Test', 6, '<p>Test</p>', 12, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR'),
-	(12, '2024-03-27 15:53:32.292584+00', 'Another test', 4, '<p>test</p>', 13, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89');
+ INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_subject", "content", "location", "user_id", "image_urls", "stripe_price_id", "stripe_product_id") VALUES
+ 	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', '{"1"}', 'Content of the first post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala'),
+ 	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', '{"2"}', 'k10 geography course', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU'),
+ 	(3, '2024-03-05 21:52:06.919336+00', 'Math course', '{"3"}', 'math course for k12', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J'),
+ 	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', '{"1"}', 'Content for the second post', 1, '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo'),
+ 	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', '{"3"}', 'learn programming', 1, 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp'),
+ 	(7, '2024-03-27 14:25:37.137856+00', 'Test', '{"7"}', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', 6, 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', '0.1236654180882113.svg,0.7931177438497017.svg,0.7728585086209605.svg', 'price_1OyxQ5BRZLMDvS4RJ1oWeAIj', 'prod_PoabbRuN1tqxj0'),
+ 	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', '{"5"}', '<p>test</p>', 11, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK'),
+ 	(11, '2024-03-27 15:50:36.102267+00', 'New Test', '{"6"}', '<p>Test</p>', 12, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR'),
+ 	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '{"4"}', '<p>test</p>', 13, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89');
 
 
 --
@@ -150,7 +149,7 @@ INSERT INTO "public"."seller_post" ("id", "created_at", "title", "product_catego
 --
 
 INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "location", "seller_phone", "image_url", "seller_id", "language_spoken", "stripe_connected_account_id") VALUES
-	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', 1, '00010001', NULL, 3, '{english}', NULL),
+	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', 1, '00010001', NULL, 3, NULL, NULL),
 	('2024-03-19 19:37:25.638743+00', 'test test', 'a23376db-215d-49c4-9d9d-791c26579543', 2, '16529658956', NULL, 4, NULL, 'acct_1Ow8TSB0tPFjRwUY'),
 	('2024-03-26 13:43:48.52652+00', 'Test2 Test', 'ec946adf-7315-4721-a238-ed600dd153d7', 3, '11234567890', NULL, 5, NULL, 'acct_1OyaI4B1rj93e0iW'),
 	('2024-03-26 21:49:40.736227+00', 'Test test', 'df188225-8970-42a4-a54f-97b303c2b2ed', 4, '11324567890', NULL, 6, NULL, 'acct_1OyhsGBGXYM1FOiH'),
@@ -218,7 +217,7 @@ SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 -- Name: post_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."post_category_id_seq"', 3, true);
+SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 3, true);
 
 
 --

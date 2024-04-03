@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 interface Post {
   content: string;
   id: number;
-  category: string;
+  subject: string;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -120,9 +120,9 @@ export const ViewCard: Component<Props> = (props) => {
                           userId={post.user_id}
                           postImage={post.image_urls}
                         />
+
                       </div>
                     </div>
-
                     <div class="h-1/3">
                       <p class="text-sm md:text-lg font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 line-clamp-2 md:truncate">
                         {post.title}

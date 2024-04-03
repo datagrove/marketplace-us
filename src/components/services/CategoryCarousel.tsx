@@ -32,7 +32,7 @@ import { doc } from "prettier";
 
 let categories: Array<any> = [];
 
-const { data, error } = await supabase.from("post_category").select("*");
+const { data, error } = await supabase.from("post_subject").select("*");
 
 if (error) {
   console.log("supabase error: " + error.message);

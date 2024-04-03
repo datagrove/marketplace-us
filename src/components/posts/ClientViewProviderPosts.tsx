@@ -17,7 +17,8 @@ interface ProviderPost {
   user_id: string;
   content: string;
   id: number;
-  category: string;
+  //TODO: update this to allow a list of Subjects
+  subject: string;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -49,11 +50,11 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
       const newItems = await Promise.all(
       data?.map(async (item) => {
         productCategories.forEach((productCategories) => {
-          if (item.product_category.toString() === productCategories.id) {
-            item.category = productCategories.name;
+          if (item.product_subject.toString() === productCategories.id) {
+            item.subject = productCategories.name;
           }
         });
-        delete item.product_category;
+        delete item.product_subject;
 
         if (item.price_id !== null) {
           const priceData = await stripe.prices.retrieve(item.price_id);
