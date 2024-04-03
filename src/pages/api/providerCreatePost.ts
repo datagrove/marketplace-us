@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
   const title = formData.get("Title");
-  const serviceCategory = formData.get("ServiceCategory");
+  const subject = formData.get("Subject");
   const content = formData.get("Content");
   const country = formData.get("country");
   const tax_code = formData.get("TaxCode");
@@ -31,7 +31,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // Validate the formData - you'll probably want to do more than this
   if (
     !title ||
-    !serviceCategory ||
+    !subject ||
     !content ||
     !country ||
     !tax_code
@@ -137,11 +137,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: categoryId, error: categoryError } = await supabase
-    .from("post_category")
+  const { data: subjectId, error: subjectError } = await supabase
+    .from("post_subject")
     .select("id")
-    .eq("id", serviceCategory);
-  if (categoryError) {
+    .eq("id", subject);
+  if (subjectError) {
     return new Response(
       JSON.stringify({
         message: t("apiErrors.noCategory"),
@@ -176,7 +176,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     title: title,
     content: content,
     location: location[0].id,
-    product_category: categoryId[0].id,
+    product_subject: subjectId[0].id,
     image_urls: imageUrl,
     user_id: user.id,
   };

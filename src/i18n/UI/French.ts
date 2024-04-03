@@ -82,6 +82,8 @@ export const French = {
     stripeLogin: "Connexion à Stripe",
     proceedToCheckout: "Passer à la caisse", 
     viewCart: "Voir le panier",
+    showMore: "Montre Plus",
+    showLess: "Montrer Moins",
   },
 
   messages: {
@@ -152,6 +154,11 @@ export const French = {
     languagesSpoken: "Langues parlées",
     taxCode: "Code fiscal",
     dropdownDefault: "Choisir une option",
+    subjects: "English, Language Arts, Reading",
+    grades: "PreK - 1",
+    resourceTypes: "Des Feuilles de Calcul, Activités, Imprimables",
+    standards: "1NBT.C.4, K.OA.A.2",
+    fileTypes: "",
   },
 
   postLabels: {

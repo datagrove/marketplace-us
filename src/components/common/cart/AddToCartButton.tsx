@@ -70,7 +70,7 @@ export const AddToCart: Component<Props> = (props: Props) => {
     <div class="relative z-10">
       <button
         onclick={(e) => clickHandler(e)}
-        class="btn-primary"
+        class="btn-cart"
         aria-label={t("buttons.addToCart")}
       >
         {t("buttons.addToCart")}

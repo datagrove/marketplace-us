@@ -11,7 +11,7 @@ export async function fetchFilteredPosts(categoryFilters: Array<number>, locatio
     try {
             let query = supabase.from("sellerposts").select("*");
             if(categoryFilters.length !== 0) {    
-                query = query.in('product_category', categoryFilters);
+                query = query.in('product_subject', categoryFilters);
             }
             if(locationFilters.length !== 0) {
                 query = query.in('major_municipality', locationFilters);

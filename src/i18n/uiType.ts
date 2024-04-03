@@ -82,6 +82,8 @@ export interface uiObject {
     stripeLogin: string,
     proceedToCheckout: string, 
     viewCart: string,
+    showMore: string,
+    showLess: string,
   },
 
   messages: {
@@ -154,6 +156,11 @@ export interface uiObject {
     languagesSpoken: string,
     taxCode: string,
     dropdownDefault: string,
+    subjects: string,
+    grades: string,
+    resourceTypes: string,
+    standards: string,
+    fileTypes: string,
   },
 
   postLabels: {
