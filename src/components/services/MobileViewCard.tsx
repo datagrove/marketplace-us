@@ -89,17 +89,9 @@ export const MobileViewCard: Component<Props> = (props) => {
     let showLessID = `${ postID }less`;
     let postContentID = `${ postID }content`;
 
-    console.log("e.target: ", e.target)
-
-    console.log("id: ", postID)
-
-    let showMoreDiv = document.getElementById(postID);
     let showMoreBtn = document.getElementById(showMoreID);
     let showLessBtn = document.getElementById(showLessID);
     let postContent = document.getElementById(postContentID);
-
-    console.log("showMoreBtn: ", showMoreBtn);
-    console.log("showLessBtn: ", showLessBtn);
 
     if(showMoreBtn?.classList.contains("flex")) {
         showMoreBtn.classList.remove("flex");
@@ -116,13 +108,6 @@ export const MobileViewCard: Component<Props> = (props) => {
         postContent?.classList.remove("flex");
         postContent?.classList.add("hidden");
     }
-
-    // if(showMoreBtn?.classList.contains("flex")) {
-    //     showMoreBtn.classList.remove("flex");
-    //     showMoreBtn.classList.add("hidden");
-    //     showLessBtn?.classList.remove("hidden");
-    //     showLessBtn?.classList.add("flex");
-    // }
   }
 
   return (
@@ -276,6 +261,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                         product_id={ post.product_id }
                         quantity={ 1 }
                         buttonClick={ resetQuantity }
+                        creator={ post.user_id }
                     />
                 </div>
             </div>

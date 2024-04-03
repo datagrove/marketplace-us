@@ -113,16 +113,6 @@ export const ViewCard: Component<Props> = (props) => {
                   class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
                   <div class="w-full">
-                    <div class="relative col-span-1 w-full flex align-top justify-end">
-                      <div class="inline-block">
-                        <DeletePostButton
-                          id={post.id}
-                          userId={post.user_id}
-                          postImage={post.image_urls}
-                        />
-
-                      </div>
-                    </div>
                     <div class="h-1/3">
                       <p class="text-sm md:text-lg font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 line-clamp-2 md:truncate">
                         {post.title}
@@ -218,11 +208,21 @@ export const ViewCard: Component<Props> = (props) => {
                           </g>
                       </svg>
 
-                      <p class="text-xs ml-1 my-0.5">Longer File Type</p>
+                      <p class="text-xs ml-1 my-0.5 truncate">Longer File Type</p>
                     </div>
                   </div>
 
-                  <div class="flex flex-col items-end justify-center w-full mb-1">
+                <div class="flex flex-col items-end justify-center w-full mb-1">
+                  <div class="relative col-span-1 w-full flex align-bottom justify-end">
+                      <div class="inline-block">
+                        <DeletePostButton
+                          id={post.id}
+                          userId={post.user_id}
+                          postImage={post.image_urls}
+                        />
+                      </div>
+                    </div>
+
                     <AddToCart
                       description= {post.title}
                       price={post.price}
@@ -231,6 +231,7 @@ export const ViewCard: Component<Props> = (props) => {
                       // quantity= {quantity()}
                       quantity={ 1 }
                       buttonClick={resetQuantity}
+                      creator={ post.user_id }
                     />
                     {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
                   </div>

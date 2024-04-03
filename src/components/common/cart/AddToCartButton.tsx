@@ -1,11 +1,15 @@
-import { onMount } from "solid-js";
+import { onMount, createSignal, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Component } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import cart from "@assets/shopping-cart.svg";
+import type { AuthSession } from "@supabase/supabase-js";
+import supabase from "../../../lib/supabaseClient";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
+
+const { data: User, error: UserError } = await supabase.auth.getSession();
 
 interface Item {
   description: string;
@@ -21,12 +25,21 @@ interface Props {
   price_id: string;
   quantity: number;
   product_id: string;
+  creator: string;
   buttonClick: (event: Event) => void;
 }
 
 export const [items, setItems] = createStore<Item[]>([]);
 
 export const AddToCart: Component<Props> = (props: Props) => {
+  const [session, setSession] = createSignal<AuthSession | null>(null);
+
+  if (UserError) {
+    console.log("User Error: " + UserError.message);
+  } else {
+    setSession(User.session);
+  }
+
   const storedItems = localStorage.getItem("cartItems");
 
   onMount(() => {
@@ -67,14 +80,16 @@ export const AddToCart: Component<Props> = (props: Props) => {
   }
 
   return (
-    <div class="relative z-10">
-      <button
-        onclick={(e) => clickHandler(e)}
-        class="btn-cart"
-        aria-label={t("buttons.addToCart")}
-      >
-        {t("buttons.addToCart")}
-      </button>
-    </div>
+    <Show when={ session()!.user.id !== props.creator}>
+      <div class="relative z-10">
+        <button
+          onclick={(e) => clickHandler(e)}
+          class="btn-cart"
+          aria-label={t("buttons.addToCart")}
+        >
+          {t("buttons.addToCart")}
+        </button>
+      </div>
+    </Show>
   );
 };

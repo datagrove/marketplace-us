@@ -17,6 +17,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { StripeButton } from "./provider/StripeButton";
+import { MobileViewCard } from "@components/services/MobileViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -489,6 +490,9 @@ export const ProviderProfileView: Component = () => {
           <form onSubmit={submit} id="editProfile">
             {/* Container for Mobile View */}
             <Show when={screenSize() === "sm"}>
+
+              {/* <MobileViewCard posts={ currentPosts() }/> */}
+
               <div class="container">
                 {/* Profile Information for Mobile View */}
                 <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
