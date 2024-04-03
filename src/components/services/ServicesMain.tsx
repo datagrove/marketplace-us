@@ -46,7 +46,7 @@ if (user.session === null || user.session === undefined) {
 interface ProviderPost {
   content: string;
   id: number;
-  category: string;
+  subject: string;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -95,11 +95,11 @@ export const ServicesView: Component = () => {
       const newItems = await Promise.all(
         data?.map(async (item) => {
           productCategories.forEach((productCategories) => {
-            if (item.product_category.toString() === productCategories.id) {
-              item.category = productCategories.name;
+            if (item.product_subject.toString() === productCategories.id) {
+              item.subject = productCategories.name;
             }
           });
-          delete item.product_category;
+          delete item.product_subject;
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
@@ -181,11 +181,11 @@ export const ServicesView: Component = () => {
       //Add the categories to the posts in the current language
       allPosts?.map((item) => {
         productCategories.forEach((productCategories) => {
-          if (item.product_category.toString() === productCategories.id) {
-            item.category = productCategories.name;
+          if (item.product_subject.toString() === productCategories.id) {
+            item.subject = productCategories.name;
           }
         });
-        delete item.product_category;
+        delete item.product_subject;
       });
 
       setPosts(allPosts!);
@@ -199,11 +199,11 @@ export const ServicesView: Component = () => {
 
       res.map((post) => {
         productCategories.forEach((productCategory) => {
-          if (post.product_category.toString() === productCategory.id) {
-            post.category = productCategory.name;
+          if (post.product_subject.toString() === productCategory.id) {
+            post.subject = productCategory.name;
           }
         });
-        delete post.product_category;
+        delete post.product_subject;
       });
 
       setPosts(res);

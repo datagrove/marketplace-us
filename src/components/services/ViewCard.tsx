@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 interface Post {
   content: string;
   id: number;
-  category: string;
+  subject: string;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -134,7 +134,7 @@ export const ViewCard: Component<Props> = (props) => {
                              {/*post.governing_district*/}
                           </div>
                           <div class="truncate inline-block max-w-[28%]  md:mt-2 text-ptext2 dark:text-ptext2-DM text-sm md:text-base bg-background2 dark:bg-background2-DM  opacity-[85%] dark:opacity-100 w-fit rounded-lg px-2 ml-1">
-                            {post.category}
+                            {post.subject}
                           </div>
                         </div>
                       </div>
