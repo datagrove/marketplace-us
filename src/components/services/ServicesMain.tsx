@@ -3,6 +3,7 @@ import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
+import { MobileViewCard } from "./MobileViewCard";
 import { LocationFilter } from "./LocationFilter";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
@@ -401,7 +402,7 @@ export const ServicesView: Component = () => {
         <CategoryCarousel filterPosts={setCategoryFilter} />
       </div>
 
-      <div class="flex flex-col items-center md:flex-row md:items-start md:h-full">
+      <div class="flex flex-col items-center md:flex-row md:items-start md:h-full min-w-[270px]">
         <div class="w-11/12 md:mr-4 md:w-56">
           <LocationFilter
             filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
@@ -419,7 +420,14 @@ export const ServicesView: Component = () => {
               {t("messages.noPostsSearch")}
             </h1>
           </div>
-          <ViewCard posts={currentPosts()} />
+          <div class="hidden md:inline">
+            <ViewCard posts={currentPosts()} />
+          </div>
+
+          <div class="inline md:hidden">
+            <MobileViewCard posts={ currentPosts() } />
+          </div>
+
         </div>
       </div>
     </div>

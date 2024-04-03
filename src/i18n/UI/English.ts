@@ -81,7 +81,9 @@ export const English = {
     stripeSetup: "Stripe Setup",
     stripeLogin: "Stripe Login",
     proceedToCheckout: "Proceed to Checkout", 
-    viewCart: "View Cart"
+    viewCart: "View Cart",
+    showMore: "Show More",
+    showLess: "Show Less",
   },
 
   messages: {
@@ -153,6 +155,11 @@ export const English = {
     languagesSpoken: "Languages Spoken",
     taxCode: "Tax Code",
     dropdownDefault: "Select an option",
+    subjects: "Subjects",
+    grades: "Grades",
+    resourceTypes: "Types",
+    standards: "Standards",
+    fileTypes: "",
   },
 
   postLabels: {
