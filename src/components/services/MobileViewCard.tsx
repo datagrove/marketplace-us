@@ -7,6 +7,7 @@ import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import { doc } from "prettier";
 
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -82,11 +83,53 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
   };
 
+  function changeShowBtn(e:Event) {
+    let postID = e?.target.id.slice(0, 1);
+    let showMoreID = `${ postID }more`;
+    let showLessID = `${ postID }less`;
+    let postContentID = `${ postID }content`;
+
+    console.log("e.target: ", e.target)
+
+    console.log("id: ", postID)
+
+    let showMoreDiv = document.getElementById(postID);
+    let showMoreBtn = document.getElementById(showMoreID);
+    let showLessBtn = document.getElementById(showLessID);
+    let postContent = document.getElementById(postContentID);
+
+    console.log("showMoreBtn: ", showMoreBtn);
+    console.log("showLessBtn: ", showLessBtn);
+
+    if(showMoreBtn?.classList.contains("flex")) {
+        showMoreBtn.classList.remove("flex");
+        showMoreBtn.classList.add("hidden");
+        showLessBtn?.classList.remove("hidden");
+        showLessBtn?.classList.add("flex");
+        postContent?.classList.add("flex");
+        postContent?.classList.remove("hidden");
+    } else if(showLessBtn?.classList.contains("flex")) {
+        showLessBtn?.classList.remove("flex");
+        showLessBtn?.classList.add("hidden");
+        showMoreBtn?.classList.remove("hidden");
+        showMoreBtn?.classList.add("flex");
+        postContent?.classList.remove("flex");
+        postContent?.classList.add("hidden");
+    }
+
+    // if(showMoreBtn?.classList.contains("flex")) {
+    //     showMoreBtn.classList.remove("flex");
+    //     showMoreBtn.classList.add("hidden");
+    //     showLessBtn?.classList.remove("hidden");
+    //     showLessBtn?.classList.add("flex");
+    // }
+  }
+
   return (
-    <div>
+    <div class="min-w-[270px]">
         { newPosts().map((post: any) => (
-            <div class="border-2 border-gray-500 my-4">
-                <div class="photo-price border-2 border-blue-400 w-full flex justify-between">
+            <div class="border border-border1 dark:border-border1-DM my-4 rounded">
+                <div class="photo-price w-full flex justify-between">
                     { post.image_url ? (
                         <img
                         src={post.image_url}
@@ -98,14 +141,14 @@ export const MobileViewCard: Component<Props> = (props) => {
                         class="bg-background1 dark:bg-icon1-DM rounded-lg w-full h-full object-cover"
                         />
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="150px" height="150px" viewBox="35 0 186 256" id="Flat" class="border-2 border-red-300 fill-icon1 dark:fill-icon1-DM">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="150px" height="150px" viewBox="35 0 186 256" id="Flat" class="border border-border1 dark:border-border1-DM rounded fill-icon1 dark:fill-icon1-DM">
 
                         <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
                         </svg>
                     )}
 
-                    <div class="content border-2 border-red-900 w-1/2">
-                        <div class="border-2 border-yellow-600 flex items-start justify-end">
+                    <div class="content w-1/2 mr-1">
+                        <div class="flex items-start justify-end">
                             <div class="price-reviews-div inline-block text-end">
                                 <p class="font-bold text-lg">${post.price.toFixed(2)} </p>
 
@@ -117,20 +160,20 @@ export const MobileViewCard: Component<Props> = (props) => {
                             </div>
                         </div>
 
-                        <div class="border-2 border-green-400 flex flex-col items-end justify-end py-1">
+                        <div class="flex flex-col items-end justify-end py-1">
                             <h6 class="text-[10px] font-bold">{t("formLabels.subjects")}</h6>
                             <p class="text-[10px] font-light">English Language Arts</p>
                             <p class="text-[10px] font-light">Reading</p>
                         </div>
 
-                        <div class="border-2 border-green-400 flex flex-col items-end justify-end py-1">
+                        <div class="flex flex-col items-end justify-end py-1">
                             <h6 class="text-[10px] font-bold">{t("formLabels.grades")}</h6>
                             <p class="text-[10px] font-light">PreK-1st</p>
                         </div>
                     </div>
                 </div>
         
-                <div class="title-creator mb-1">
+                <div class="title-creator mb-1 ml-1">
                     <div class="flex py-0.5 line-clamp-2">
                         { post.title }
                     </div>
@@ -150,13 +193,90 @@ export const MobileViewCard: Component<Props> = (props) => {
                 
                 </div>
         
-                <div class="show-more">
+                <div id={ post.id } class="w-full show-more flex flex-wrap items-center" >
+                    <button id={`${ post.id}more`} class="flex justify-center w-full" onclick={ changeShowBtn }>
+                        <p class={`${ post.id}more pr-1 text-htext1 dark:text-htext1-DM`}>{ t("buttons.showMore")}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class={`${ post.id}more w-6 h-6 text-htext1 dark:text-htext1-DM`}>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>        
 
-        
+                    <button id={`${ post.id}less`} class="hidden w-full justify-center" onclick={ changeShowBtn }>
+                        <p class="pr-1 text-htext1 dark:text-htext1-DM">{ t("buttons.showLess")}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-htext1 dark:text-htext1-DM">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+                        </svg>
+                    </button>
+
+                    <div id={`${ post.id }content`}class="hidden flex flex-col justify-start w-full">
+                        <p
+                            class="text-[10px] text-start line-clamp-3 mb-2"
+                        >{ post.content }</p>
+
+                        <div class="flex w-full">
+                            <div class="flex flex-col justify-center items-start w-1/5">
+                                <h6 class="text-[10px] font-bold">{t("formLabels.resourceTypes")}: </h6>
+                                <h6 class="text-[10px] font-bold">{t("formLabels.standards")}: </h6>
+                            </div>
+                            
+                            <div class="flex flex-col justify-center items-start w-4/5">
+                                <p class="text-[10px]">Worksheets, Activities, Printables</p>
+                                <p class="text-[10px]">RF.K.2, RF.K.3, RF.K.3c</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 flex">
+                            <div class="flex justify-start items-center mr-3">
+                                <svg width="12px" height="12px" viewBox="0 0 28 28" version="1.1" class="fill-icon1 dark:fill-icon1-DM">
+                                    <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon1 dark:fill-icon1-DM">
+                                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                                        <path d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z" id="🎨-Color">
+                                        </path>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                                <p class="text-[10px] ml-1 my-0.5">Short</p>
+                            </div>
+
+                            <div class="flex justify-start items-center mr-3">
+                                <svg width="12px" height="12px" viewBox="0 0 28 28" version="1.1" class="fill-icon1 dark:fill-icon1-DM">
+                                    <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon1 dark:fill-icon1-DM">
+                                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                                        <path d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z" id="🎨-Color">
+                                        </path>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                                <p class="text-[10px] ml-1 my-0.5">This is Medium</p>
+                            </div>
+
+                            <div class="flex justify-start items-center mr-3">
+                                <svg width="12px" height="12px" viewBox="0 0 28 28" version="1.1" class="fill-icon1 dark:fill-icon1-DM">
+                                    <g id="🔍-Product-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon1 dark:fill-icon1-DM">
+                                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                                        <path d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z" id="🎨-Color">
+                                        </path>
+                                        </g>
+                                    </g>
+                                </svg>
+
+                                <p class="text-[10px] ml-1 my-0.5">Longer File Type Name</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
         
-                <div class="cart">
-        
+                <div class="cart w-full my-2 px-1">
+                    <AddToCart
+                        description={ post.title }
+                        price={ post.price }
+                        price_id={ post.price_id }
+                        product_id={ post.product_id }
+                        quantity={ 1 }
+                        buttonClick={ resetQuantity }
+                    />
                 </div>
             </div>
         ))}

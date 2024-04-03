@@ -82,6 +82,8 @@ export interface uiObject {
     stripeLogin: string,
     proceedToCheckout: string, 
     viewCart: string,
+    showMore: string,
+    showLess: string,
   },
 
   messages: {

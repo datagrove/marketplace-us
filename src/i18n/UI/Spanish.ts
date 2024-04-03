@@ -82,6 +82,8 @@ export const Spanish = {
     stripeLogin: "Iniciar sesión Stripe",
     proceedToCheckout: "Pasar por la caja", 
     viewCart: "Ver carrito", 
+    showMore: "Mostrar Más",
+    showLess: "Muestra Menos",
   },
 
   messages: {

@@ -81,7 +81,9 @@ export const English = {
     stripeSetup: "Stripe Setup",
     stripeLogin: "Stripe Login",
     proceedToCheckout: "Proceed to Checkout", 
-    viewCart: "View Cart"
+    viewCart: "View Cart",
+    showMore: "Show More",
+    showLess: "Show Less",
   },
 
   messages: {

@@ -82,6 +82,8 @@ export const French = {
     stripeLogin: "Connexion à Stripe",
     proceedToCheckout: "Passer à la caisse", 
     viewCart: "Voir le panier",
+    showMore: "Montre Plus",
+    showLess: "Montrer Moins",
   },
 
   messages: {
