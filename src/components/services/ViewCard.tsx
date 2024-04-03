@@ -142,9 +142,9 @@ export const ViewCard: Component<Props> = (props) => {
                       </div>
                     </div>
 
-                    <div class="hidden md:flex md:h-1/3">
+                    <div class="hidden md:h-1/3 md:line-clamp-3">
                       <p
-                        class=" text-ptext1 dark:text-ptext1-DM text-xs line-clamp-3 overflow-hidden mr-1 prose dark:prose-invert"
+                        class=" text-ptext1 dark:text-ptext1-DM text-xs line-clamp-3 mr-1 prose dark:prose-invert"
                         innerHTML={post.content}
                       ></p>
                     </div>
