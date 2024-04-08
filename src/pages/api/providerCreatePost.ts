@@ -28,6 +28,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
 
+  const [subjects, setSubjects] =
+    createSignal<Array<{ id: number; subject: string }>>();
+  const [subjectPick, setSubjectPick] = createSignal<Array<string>>([]);
   // Validate the formData - you'll probably want to do more than this
   if (
     !title ||
@@ -131,9 +134,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (countryError) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noCountry")),
+        message: t("apiErrors.noCountry"),
       }),
-      { status: 500 }
+      { status: 500 },
     );
   }
 
