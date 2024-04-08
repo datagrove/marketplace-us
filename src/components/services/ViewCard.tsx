@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -7,7 +7,7 @@ import { SocialMediaShares } from "../posts/SocialMediaShares";
 import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-
+import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -34,9 +34,18 @@ interface Props {
   posts: Array<Post>;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ViewCard: Component<Props> = (props) => {
   const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
   const [quantity, setQuantity] = createSignal<number>(1);
+  const [session, setSession] = createSignal<AuthSession | null>(null);
+
+  if (UserError) {
+    console.log("User Error: " + UserError.message);
+  } else {
+    setSession(User.session);
+  }
 
   createEffect(async () => {
     if (props.posts) {
@@ -113,7 +122,7 @@ export const ViewCard: Component<Props> = (props) => {
                   class="flex justify-between px-1 pt-1 text-left w-full md:w-5/6 md:h-full"
                 >
                   <div class="w-full">
-                    <div class="relative col-span-1 w-full flex align-top justify-end">
+                    {/* <div class="relative col-span-1 w-full flex align-top justify-end">
                       <div class="inline-block">
                         <DeletePostButton
                           id={post.id}
@@ -122,7 +131,7 @@ export const ViewCard: Component<Props> = (props) => {
                         />
 
                       </div>
-                    </div>
+                    </div> */}
                     <div class="h-1/3">
                       <p class="text-sm md:text-lg font-bold text-ptext1 dark:text-ptext1-DM overflow-hidden max-h-14 col-span-4 pr-4 line-clamp-2 md:truncate">
                         {post.title}
@@ -223,16 +232,29 @@ export const ViewCard: Component<Props> = (props) => {
                   </div>
 
                   <div class="flex flex-col items-end justify-center w-full mb-1">
-                    <AddToCart
-                      description= {post.title}
-                      price={post.price}
-                      price_id={post.price_id}
-                      product_id={post.product_id}
-                      // quantity= {quantity()}
-                      quantity={ 1 }
-                      buttonClick={resetQuantity}
-                    />
+                    <Show when={ session()!.user.id !== post.user_id }>
+                      <AddToCart
+                        description= {post.title}
+                        price={post.price}
+                        price_id={post.price_id}
+                        product_id={post.product_id}
+                        // quantity= {quantity()}
+                        quantity={ 1 }
+                        buttonClick={resetQuantity}
+                      />
+                    </Show>
                     {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
+
+                    <div class="relative col-span-1 w-full flex align-top justify-end">
+                      <div class="inline-block">
+                        <DeletePostButton
+                          id={post.id}
+                          userId={post.user_id}
+                          postImage={post.image_urls}
+                        />
+
+                      </div>
+                    </div>
                   </div>
                 </div>
 
