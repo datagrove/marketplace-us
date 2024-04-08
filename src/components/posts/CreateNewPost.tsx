@@ -107,6 +107,7 @@ async function postFormData(formData: FormData) {
   });
   const data = await response.json();
   console.log(response.status);
+  console.log(response);
   if (response.status === 200) {
     CreateStripeProductPrice({
       name: String(formData.get("Title")),
@@ -116,6 +117,7 @@ async function postFormData(formData: FormData) {
       access_token: formData.get("access_token") as string,
       refresh_token: formData.get("refresh_token") as string,
       tax_code: formData.get("TaxCode") as string,
+      subject: formData.get("Subject"),
     });
   }
   // I think we are going to do this in the CreateStripeProductPrice component
@@ -293,7 +295,7 @@ export const CreateNewPost: Component = () => {
     if (selectedTaxCode() !== undefined) {
       formData.append("TaxCode", selectedTaxCode()!.value.toString());
     }
-    formData.append("subj", subj);
+    // formData.append("subj", subjects);
     formData.append("subjectArray", JSON.stringify(subjectPick()));
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
@@ -353,7 +355,7 @@ export const CreateNewPost: Component = () => {
             required
           />
         </label>
-
+        {/*
         <label for="ServiceCategory" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.serviceCategory")}:
           <select
@@ -368,9 +370,8 @@ export const CreateNewPost: Component = () => {
             ))}
           </select>
         </label>
-
+        */}
         <br />
-
         <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.postContent")}:
           <textarea
@@ -382,7 +383,6 @@ export const CreateNewPost: Component = () => {
             required
           ></textarea>
         </label>
-
         <div class="mt-6 mb-6">
           <label for="country" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.country")}:
@@ -396,7 +396,6 @@ export const CreateNewPost: Component = () => {
             </select>
           </label>
         </div>
-
         <div class="mt-6 mb-6">
           <label for="taxCode" class="text-ptext1 dark:text-ptext1-DM">
             {t("formLabels.taxCode")}:
@@ -407,7 +406,6 @@ export const CreateNewPost: Component = () => {
             />
           </label>
         </div>
-
         <div class="flex flex-wrap justify-start">
           <label for="subject" class="w-4/12 text-ptext1 dark:text-ptext1-DM">
             <span class="text-alert1 dark:text-alert1-DM">* </span>
@@ -509,7 +507,6 @@ export const CreateNewPost: Component = () => {
             </select>
           </label>
         </div> */}
-
         <div class="flex justify-center mb-4">
           <div class="flex justify-end items-end">
             <div class="flex relative items-center mr-2 w-4 group"></div>
@@ -552,7 +549,6 @@ export const CreateNewPost: Component = () => {
             </div>
           </div>
         </div>
-
         <br />
         <div class="flex justify-center">
           <button class="btn-primary">{t("buttons.post")}</button>

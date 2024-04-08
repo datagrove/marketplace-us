@@ -27,10 +27,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
+  console.log(formData);
 
-  const [subjects, setSubjects] =
-    createSignal<Array<{ id: number; subject: string }>>();
-  const [subjectPick, setSubjectPick] = createSignal<Array<string>>([]);
   // Validate the formData - you'll probably want to do more than this
   if (
     !title ||
