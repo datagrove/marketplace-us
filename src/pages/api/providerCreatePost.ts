@@ -2,6 +2,7 @@ import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
+import { log } from "node_modules/astro/dist/core/logger/core";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
@@ -138,18 +139,19 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  const { data: subjectId, error: subjectError } = await supabase
-    .from("post_subject")
-    .select("id")
-    .eq("id", subject);
-  if (subjectError) {
-    return new Response(
-      JSON.stringify({
-        message: t("apiErrors.noCategory"),
-      }),
-      { status: 500 },
-    );
-  }
+  // const { data: subjectId, error: subjectError } = await supabase
+  //   .from("post_subject")
+  //   .select("id")
+  //   .eq("id", subject);
+  // if (subjectError) {
+  //   console.log(subjectError);
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: t("apiErrors.noCategory"),
+  //     }),
+  //     { status: 500 },
+  //   );
+  // }
 
   let locationSubmission = {
     // minor_municipality: minorMunicipalityId[0].id,
@@ -177,7 +179,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     title: title,
     content: content,
     location: location[0].id,
-    product_subject: subjectId[0].id,
+    product_subject: subject,
     image_urls: imageUrl,
     user_id: user.id,
   };

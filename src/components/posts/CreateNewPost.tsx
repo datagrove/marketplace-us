@@ -117,7 +117,6 @@ async function postFormData(formData: FormData) {
       access_token: formData.get("access_token") as string,
       refresh_token: formData.get("refresh_token") as string,
       tax_code: formData.get("TaxCode") as string,
-      subject: formData.get("Subject"),
     });
   }
   // I think we are going to do this in the CreateStripeProductPrice component
@@ -295,8 +294,9 @@ export const CreateNewPost: Component = () => {
     if (selectedTaxCode() !== undefined) {
       formData.append("TaxCode", selectedTaxCode()!.value.toString());
     }
+    formData.append("location", "1");
     // formData.append("subj", subjects);
-    formData.append("subjectArray", JSON.stringify(subjectPick()));
+    formData.append("Subject", JSON.stringify(subjectPick()));
     if (imageUrl() !== null) {
       formData.append("image_url", imageUrl()!.toString());
     }

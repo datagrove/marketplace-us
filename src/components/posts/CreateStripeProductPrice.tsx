@@ -30,7 +30,6 @@ interface Props {
   access_token: string;
   refresh_token: string;
   tax_code: string;
-  subjects: Array<string>;
 }
 
 export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
@@ -71,7 +70,6 @@ export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
     stripeData.append("access_token", props.access_token);
     stripeData.append("refresh_token", props.refresh_token);
     stripeData.append("lang", lang);
-    stripeData.append("subjects", props.subjects[0]);
     setStripeData(stripeData);
   }
 
