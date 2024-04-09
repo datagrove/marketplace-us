@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -8,7 +8,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import { doc } from "prettier";
-
+import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -35,9 +35,18 @@ interface Props {
   posts: Array<Post>;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const MobileViewCard: Component<Props> = (props) => {
   const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
   const [quantity, setQuantity] = createSignal<number>(1);
+  const [session, setSession] = createSignal<AuthSession | null>(null);
+
+  if (UserError) {
+    console.log("User Error: " + UserError.message);
+  } else {
+    setSession(User.session);
+  }
 
   createEffect(async () => {
     if (props.posts) {
@@ -269,6 +278,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                 </div>
         
                 <div class="cart w-full my-2 px-1">
+                    <Show when={ session()!.user.id !== post.user_id }>
                     <AddToCart
                         description={ post.title }
                         price={ post.price }
@@ -277,6 +287,18 @@ export const MobileViewCard: Component<Props> = (props) => {
                         quantity={ 1 }
                         buttonClick={ resetQuantity }
                     />
+                    </Show>
+
+                    <div class="relative col-span-1 w-full flex align-top justify-end">
+                      <div class="inline-block">
+                        <DeletePostButton
+                          id={post.id}
+                          userId={post.user_id}
+                          postImage={post.image_urls}
+                        />
+
+                      </div>
+                    </div>
                 </div>
             </div>
         ))}
