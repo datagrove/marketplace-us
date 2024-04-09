@@ -138,7 +138,6 @@ export const CreateNewPost: Component = () => {
   const taxCodeOptions: HTMLOptionElement[] = [];
   const [selectedTaxCode, setSelectedTaxCode] =
     createSignal<HTMLOptionElement>();
-
   const [subjects, setSubjects] =
     createSignal<Array<{ id: number; subject: string }>>();
   const [subjectPick, setSubjectPick] = createSignal<Array<string>>([]);
