@@ -1,6 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
+import { MobileViewCard } from "@components/services/MobileViewCard";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
@@ -28,6 +29,7 @@ interface ProviderPost {
   price_id: string;
   quantity: number;
   product_id: string;
+  category: string;
 }
 
 // Get the user session
@@ -79,8 +81,15 @@ export const ViewProviderPosts: Component = () => {
     }
   });
   return (
-    <div>
-      <ViewCard posts={posts()} />
+    <div class="">
+      <div class="hidden md:inline">
+        <ViewCard posts={posts()} />
+      </div>
+
+      <div class="inline md:hidden">
+        <MobileViewCard posts={ posts() } />
+      </div>
+
     </div>
   );
 };
