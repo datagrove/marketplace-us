@@ -8,6 +8,7 @@ import {
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import cart from "@assets/shopping-cart.svg";
 import supabase from "@lib/supabaseClient";
+import { loadStripe } from "@stripe/stripe-js";
 import { CartCard } from "@components/common/cart/CartCard";
 import { items } from "@components/common/cart/AddToCartButton";
 
@@ -33,6 +34,21 @@ interface ItemDetails {
   price_id: string;
   quantity?: number;
   product_id: string;
+}
+
+async function fetchClientCheckoutSecret(){
+  const response = await fetch("/api/createStripeCheckout", {
+    method: "POST",
+  });
+  const { clientSecret } = await response.json();
+  return clientSecret
+}
+
+const stripe = await loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLIC_KEY);
+
+if (stripe === null) {
+  // TODO: Internationalize
+  alert("Can't load Stripe")
 }
 
 export const CartView = () => {
@@ -116,8 +132,12 @@ export const CartView = () => {
     setTotalItems(count);
   });
 
-  function goToCheckout() {
-    window.location.href = `/${lang}/cart`;
+  async function goToCheckout() {
+    const checkout = await stripe!.initEmbeddedCheckout({
+      fetchClientSecret: fetchClientCheckoutSecret,
+    })
+
+    checkout.mount('#checkout');
   }
 
   function updateCards() {
