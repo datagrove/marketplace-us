@@ -550,7 +550,7 @@ export const CreateNewPost: Component = () => {
         </div>
         <br />
         <div class="flex justify-center">
-          <button class="btn-primary">{t("buttons.post")}</button>
+          <button class="border-2">{t("buttons.post")}</button>
         </div>
         <Suspense>
           {response() && (
