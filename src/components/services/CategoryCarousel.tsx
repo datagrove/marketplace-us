@@ -8,11 +8,10 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject;
-const productCategoryData = values.productCategoryInfo;
+const productCategoryData = values.subjectCategoryInfo;
 
 import rightArrow from "../../assets/categoryIcons/circled-right-arrow.svg";
 import leftArrow from "../../assets/categoryIcons/circled-left-arrow.svg";
-import garden from "../../assets/categoryIcons/garden.svg";
 import history from "../../assets/categoryIcons/history.svg";
 import art from "../../assets/categoryIcons/art.svg";
 import geography from "../../assets/categoryIcons/geography.svg";
@@ -81,7 +80,7 @@ categories.map((category) => {
   // }
 });
 
-const categoriesData = productCategoryData.categories;
+const categoriesData = productCategoryData.subjects;
 
 let allCategoryInfo: any[] = [];
 

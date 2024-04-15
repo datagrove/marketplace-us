@@ -17,7 +17,7 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 const { data: user, error: userError } = await supabase.auth.getSession();
 if (userError) {
@@ -47,7 +47,7 @@ if (user.session === null || user.session === undefined) {
 interface ProviderPost {
   content: string;
   id: number;
-  subject: string;
+  subject: Array<string>;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -83,9 +83,7 @@ export const ServicesView: Component = () => {
   let data;
 
   async function fetchPosts() {
-    const { data, error } = await supabase
-      .from("sellerposts")
-      .select("*");
+    const { data, error } = await supabase.from("sellerposts").select("*");
 
     if (!data) {
       alert("No posts available.");
@@ -107,9 +105,9 @@ export const ServicesView: Component = () => {
             item.price = priceData.unit_amount! / 100;
           }
           return item;
-        })
+        }),
       );
-      console.log(newItems.map(item => item.price))
+      console.log(newItems.map((item) => item.price));
       setPosts(newItems);
       setCurrentPosts(newItems);
     }
@@ -154,7 +152,7 @@ export const ServicesView: Component = () => {
       locationFilters(),
       minorLocationFilters(),
       governingLocationFilters(),
-      searchString()
+      searchString(),
     );
 
     if (res === null || res === undefined) {
@@ -174,7 +172,7 @@ export const ServicesView: Component = () => {
         setTimeout(() => {
           //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
           clearAllFilters();
-        }, 3000)
+        }, 3000),
       );
 
       let allPosts = await allFilters.fetchAllPosts();
@@ -215,7 +213,7 @@ export const ServicesView: Component = () => {
   const filterPostsByMajorMunicipality = (location: string) => {
     if (locationFilters().includes(location)) {
       let currentLocationFilters = locationFilters().filter(
-        (el) => el !== location
+        (el) => el !== location,
       );
       setLocationFilters(currentLocationFilters);
     } else {
@@ -255,7 +253,7 @@ export const ServicesView: Component = () => {
     let searchInput = document.getElementById("search") as HTMLInputElement;
     let selectedCategories = document.querySelectorAll(".selected");
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni"
+      "input[type='checkbox'].major-muni",
     ) as NodeListOf<HTMLInputElement>;
     // const minorMuniCheckboxes = document.querySelectorAll(
     //   "input[type='checkbox'].minor-muni"
@@ -310,7 +308,7 @@ export const ServicesView: Component = () => {
 
   const clearMajorMunicipality = () => {
     const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni"
+      "input[type='checkbox'].major-muni",
     ) as NodeListOf<HTMLInputElement>;
 
     majorMuniCheckboxes.forEach((checkbox) => {
@@ -406,8 +404,8 @@ export const ServicesView: Component = () => {
         <div class="w-11/12 md:mr-4 md:w-56">
           <LocationFilter
             filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
-            // filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
-            // filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
+          // filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
+          // filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
           />
         </div>
 
@@ -425,9 +423,8 @@ export const ServicesView: Component = () => {
           </div>
 
           <div class="inline md:hidden">
-            <MobileViewCard posts={ currentPosts() } />
+            <MobileViewCard posts={currentPosts()} />
           </div>
-
         </div>
       </div>
     </div>

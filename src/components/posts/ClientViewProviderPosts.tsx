@@ -5,13 +5,13 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import stripe from "@lib/stripe"; 
+import stripe from "@lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 interface ProviderPost {
   user_id: string;
@@ -48,24 +48,24 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
       console.log("supabase error: " + error.message);
     } else {
       const newItems = await Promise.all(
-      data?.map(async (item) => {
-        productCategories.forEach((productCategories) => {
-          if (item.product_subject.toString() === productCategories.id) {
-            item.subject = productCategories.name;
-          }
-        });
-        delete item.product_subject;
+        data?.map(async (item) => {
+          productCategories.forEach((productCategories) => {
+            if (item.product_subject.toString() === productCategories.id) {
+              item.subject = productCategories.name;
+            }
+          });
+          delete item.product_subject;
 
-        if (item.price_id !== null) {
-          const priceData = await stripe.prices.retrieve(item.price_id);
-          item.price = priceData.unit_amount! / 100;
-        }
-        return item;
-      }))
-      ;
+          if (item.price_id !== null) {
+            const priceData = await stripe.prices.retrieve(item.price_id);
+            item.price = priceData.unit_amount! / 100;
+          }
+          return item;
+        }),
+      );
       setPosts(data);
-      console.log("Posts")
-      console.log(posts())
+      console.log("Posts");
+      console.log(posts());
     }
   });
   return (

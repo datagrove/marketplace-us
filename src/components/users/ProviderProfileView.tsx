@@ -24,7 +24,7 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Provider {
   seller_name: string;
@@ -254,7 +254,7 @@ export const ProviderProfileView: Component = () => {
         } else {
           document.getElementById("country")?.addEventListener("change", () => {
             let municipalitySelect = document.getElementById(
-              "MajorMunicipality"
+              "MajorMunicipality",
             ) as HTMLSelectElement;
 
             let length = municipalitySelect?.length;
@@ -267,12 +267,13 @@ export const ProviderProfileView: Component = () => {
             let filteredMunicipality = majorMunicipality.filter(
               (municipality) =>
                 municipality.country ==
-                (document.getElementById("country") as HTMLSelectElement)?.value
+                (document.getElementById("country") as HTMLSelectElement)
+                  ?.value,
             );
             filteredMunicipality.forEach((municipality) => {
               let municipalityOption = new Option(
                 municipality.major_municipality,
-                municipality.id
+                municipality.id,
               );
               document
                 .getElementById("MajorMunicipality")
@@ -385,7 +386,7 @@ export const ProviderProfileView: Component = () => {
 
     const country = document.getElementById("country") as HTMLSelectElement;
     const majorMunicipality = document.getElementById(
-      "MajorMunicipality"
+      "MajorMunicipality",
     ) as HTMLSelectElement;
     // const minorMunicipality = document.getElementById(
     //   "MinorMunicipality"
@@ -396,7 +397,7 @@ export const ProviderProfileView: Component = () => {
 
     if (
       country.value !== "" ||
-      majorMunicipality.value !== "" 
+      majorMunicipality.value !== ""
       // minorMunicipality.value !== "" ||
       // governingDistrict.value !== ""
     ) {
@@ -406,7 +407,7 @@ export const ProviderProfileView: Component = () => {
       // governingDistrict.required = true;
     } else if (
       country.value === "" &&
-      majorMunicipality.value === "" 
+      majorMunicipality.value === ""
       // minorMunicipality.value === "" &&
       // governingDistrict.value === ""
     ) {
@@ -476,8 +477,8 @@ export const ProviderProfileView: Component = () => {
 
   return (
     <div class="">
-      <StripeButton/>
-      <div class="text-2xl font-bold underline italic text-alert1 dark:text-alert1-DM text-center">
+      <StripeButton />
+      <div class="text-2xl italic font-bold text-center underline text-alert1 dark:text-alert1-DM">
         <Show when={editMode() === true}>
           <h1 class="text-alert1 dark:text-alert1-DM">
             {t("messages.profileEdits")}
@@ -486,30 +487,30 @@ export const ProviderProfileView: Component = () => {
       </div>
       <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
         {/* Left column for md+ View */}
-        <div class="md:col-span-2 md:drop-shadow-lg border border-border1 dark:border-border1-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
+        <div class="justify-center rounded-md border md:col-span-2 md:px-4 md:pb-4 md:mt-4 border-border1 break-after-column md:drop-shadow-lg md:h-fit dark:border-border1-DM">
           <form onSubmit={submit} id="editProfile">
             {/* Container for Mobile View */}
             <Show when={screenSize() === "sm"}>
               <div class="container">
                 {/* Profile Information for Mobile View */}
-                <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
-                  <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                <details class="rounded shadow md:hidden bg-background1 group dark:bg-background1-DM">
+                  <summary class="flex relative flex-wrap items-center list-none rounded cursor-pointer group-open:rounded-b-none group-open:z-[1]">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.profileInfo")}
                     </h2>
-                    <div class="flex w-10 items-center justify-center">
-                      <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
+                    <div class="flex justify-center items-center w-10">
+                      <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open:rotate-90 dark:border-l-border1-DM"></div>
                     </div>
                   </summary>
                   <div class="p-4">
-                    <div class="mb-2 flex justify-center items-center align-items-center">
+                    <div class="flex justify-center items-center mb-2 align-items-center">
                       <Show when={editMode() === false}>
                         <button class="btn-primary" onclick={enableEditMode}>
                           {t("buttons.editProfile")}
                         </button>
                       </Show>
                     </div>
-                    <h2 class="text-xl text-htext1 dark:text-htext1-DM pb-4 font-bold">
+                    <h2 class="pb-4 text-xl font-bold text-htext1 dark:text-htext1-DM">
                       {provider()?.seller_name == ""
                         ? provider()?.first_name + " " + provider()?.last_name
                         : provider()?.seller_name}
@@ -517,10 +518,10 @@ export const ProviderProfileView: Component = () => {
                     <div class="flex justify-center mb-3">
                       <Show when={editMode() === false}>
                         <Show when={typeof providerImage() !== "undefined"}>
-                          <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
+                          <div class="object-contain overflow-hidden relative justify-center w-48 h-48 rounded-full border md:w-48 md:h-48 lg:w-64 lg:h-64 border-border1 dark:border-border1-DM">
                             <img
                               src={providerImage()}
-                              class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                              class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
                               alt={`${t("postLabels.providerProfileImage")} 1`}
                             />
                           </div>
@@ -536,7 +537,7 @@ export const ProviderProfileView: Component = () => {
                         />
                       </Show>
                     </div>
-                    <div class="first-name flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between first-name">
                       <label
                         for="FirstName"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -546,15 +547,15 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="FirstName"
-                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                         >
                           {provider()?.first_name}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
-                        <div class="group flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2 group">
                           <svg
-                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
+                            class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -575,19 +576,18 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.firstName")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <input
                             type="text"
                             id="FirstName"
                             name="FirstName"
-                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                             value={provider()?.first_name}
                             required
                           />
@@ -595,7 +595,7 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                     </div>
 
-                    <div class="last-name flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between last-name">
                       <label
                         for="LastName"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -605,15 +605,15 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="LastName"
-                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                         >
                           {provider()?.last_name}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
-                        <div class="flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full peer"
+                            class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -634,25 +634,24 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.lastName")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <input
                             type="text"
                             id="LastName"
                             name="LastName"
-                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                             value={provider()?.last_name}
                           />
                         </div>
                       </Show>
                     </div>
-                    <div class="provider-name flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between provider-name">
                       <label
                         for="ProviderName"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -662,7 +661,7 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="ProviderName"
-                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                         >
                           {provider()?.seller_name
                             ? provider()?.seller_name
@@ -670,9 +669,9 @@ export const ProviderProfileView: Component = () => {
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
-                        <div class="flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -693,25 +692,24 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.displayName")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <input
                             type="text"
                             id="ProviderName"
                             name="ProviderName"
-                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                             value={provider()?.seller_name}
                           />
                         </div>
                       </Show>
                     </div>
-                    <div class="language flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between language">
                       <label
                         for="language"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -721,16 +719,16 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="language"
-                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                         >
                           {provider()?.languages}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
                         {/* Tool tip could go here */}
-                        <div class="flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -751,17 +749,16 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                            md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.languages")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <div class="flex flex-wrap justify-start">
                             {/* Creates a list of checkboxes that drop down to multiple select */}
-                            <div class=" w-full mb-4">
+                            <div class="mb-4 w-full">
                               {/* <div
                                 class="relative"
                                 onclick={() => languageCheckboxes()}
@@ -769,8 +766,7 @@ export const ProviderProfileView: Component = () => {
 
                                 <p
                                   id="chooseLanguage"
-                                  class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
-                                  after:content-['_^'] after:absolute after:-top-0.5 after:right-2 after:height-[20px] after:width-[20px] after:rotate-180 after:text-inputBorder1 after:dark:text-inputBorder1-DM"
+                                  class="px-1 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background text-ptext1 after:content-[ dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1'_^'] after:absolute after:-top-0.5 after:right-2 after:height-[20px] after:width-[20px] after:rotate-180 after:text-inputBorder1 after:dark:text-inputBorder1-DM"
                                 >
                                   {t("formLabels.chooseLanguage")}{" "}
                                 </p>
@@ -779,7 +775,7 @@ export const ProviderProfileView: Component = () => {
                               </div> */}
                               {/* <div
                                 id="checkboxes"
-                                class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                                class="hidden overflow-y-auto max-h-28 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                               >
                                 <For each={languages()}>
                                   {(language) => (
@@ -803,7 +799,7 @@ export const ProviderProfileView: Component = () => {
                         </div>
                       </Show>
                     </div>
-                    <div class="email-add flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between email-add">
                       <label
                         for="email"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -811,20 +807,20 @@ export const ProviderProfileView: Component = () => {
                         {t("formLabels.email")}:
                       </label>
                       <Show when={editMode() === false}>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <p
                             id="email"
-                            class="rounded px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 mb-4 dark:border-inputBorder1-DM focus:outline-none overflow-auto"
+                            class="overflow-auto px-1 mb-4 rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                           >
                             {provider()?.email}
                           </p>
                         </div>
                       </Show>
                       <Show when={editMode() === true}>
-                        <div class="flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -845,18 +841,17 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.changeEmail")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <input
                             id="email"
                             name="email"
-                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                             type="email"
                             placeholder={t("formLabels.email")}
                             value={provider()?.email}
@@ -864,7 +859,7 @@ export const ProviderProfileView: Component = () => {
                         </div>
                       </Show>
                     </div>
-                    <div class="phone-number flex flex-row flex-wrap justify-between">
+                    <div class="flex flex-row flex-wrap justify-between phone-number">
                       <label
                         for="Phone"
                         class="text-ptext1 dark:text-ptext1-DM"
@@ -874,15 +869,15 @@ export const ProviderProfileView: Component = () => {
                       <Show when={editMode() === false}>
                         <p
                           id="Phone"
-                          class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                          class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                         >
                           {provider()?.seller_phone}
                         </p>
                       </Show>
                       <Show when={editMode() === true}>
-                        <div class="flex items-center relative mr-2">
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -903,18 +898,17 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.providerPhone")}
                           </span>
                         </div>
-                        <div class="basis-full h-0"></div>
+                        <div class="h-0 basis-full"></div>
                         <div class="basis-full">
                           <input
                             type="text"
                             id="Phone"
-                            class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                            class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                             name="Phone"
                             value={provider()?.seller_phone}
                           />
@@ -922,11 +916,11 @@ export const ProviderProfileView: Component = () => {
                       </Show>
                     </div>
                     <Show when={editMode() === true}>
-                      <div class="flex flex-row justify-items-center justify-left mb-2">
-                        <h3 class="font-bold mr-4">Location</h3>
-                        <div class="flex items-center relative mr-2">
+                      <div class="flex flex-row justify-items-center mb-2 justify-left">
+                        <h3 class="mr-4 font-bold">Location</h3>
+                        <div class="flex relative items-center mr-2">
                           <svg
-                            class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                            class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -947,8 +941,7 @@ export const ProviderProfileView: Component = () => {
                           </svg>
 
                           <span
-                            class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 translate-x-1/4 -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                           >
                             {t("toolTips.locationUpdate")}
                           </span>
@@ -964,7 +957,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="country"
-                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                       >
                         {provider()?.country}
                       </p>
@@ -972,7 +965,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="country"
-                        class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                        class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         name="country"
                         oninput={required}
                       >
@@ -981,7 +974,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.country")}
-                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                             {provider()?.country}
                           </p>
                         </label>
@@ -997,7 +990,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="MajorMunicipality"
-                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                       >
                         {provider()?.major_municipality}
                       </p>
@@ -1005,7 +998,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="MajorMunicipality"
-                        class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                        class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         name="MajorMunicipality"
                         oninput={required}
                       >
@@ -1014,7 +1007,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.majorMunicipality")}:
-                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                             {provider()?.major_municipality}
                           </p>
                         </label>
@@ -1030,7 +1023,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === false}>
                       <p
                         id="MinorMunicipality"
-                        class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                       >
                         {provider()?.minor_municipality}
                       </p>
@@ -1038,7 +1031,7 @@ export const ProviderProfileView: Component = () => {
                     <Show when={editMode() === true}>
                       <select
                         id="MinorMunicipality"
-                        class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                        class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         name="MinorMunicipality"
                         oninput={required}
                       >
@@ -1047,7 +1040,7 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.minorMunicipality")}:
-                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                             {provider()?.minor_municipality}
                           </p>
                         </label>
@@ -1061,14 +1054,14 @@ export const ProviderProfileView: Component = () => {
                       {t("formLabels.governingDistrict")}:
                     </label>
                     <Show when={editMode() === false}>
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                         {provider()?.governing_district}
                       </p>
                     </Show>
                     <Show when={editMode() === true}>
                       <select
                         id="GoverningDistrict"
-                        class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                        class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         name="GoverningDistrict"
                         oninput={required}
                       >
@@ -1077,13 +1070,13 @@ export const ProviderProfileView: Component = () => {
                       <div>
                         <label class="text-ptext1 dark:text-ptext1-DM">
                           {t("formLabels.governingDistrict")}:
-                          <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                          <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                             {provider()?.governing_district}
                           </p>
                         </label>
                       </div>
                     </Show>
-                    <div class="mb-2 mt-4 flex justify-center items-center align-items-center">
+                    <div class="flex justify-center items-center mt-4 mb-2 align-items-center">
                       <Show when={editMode() === true}>
                         <button
                           class="btn-primary"
@@ -1098,19 +1091,19 @@ export const ProviderProfileView: Component = () => {
                 </details>
 
                 {/* View Posts for Mobile View */}
-                <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
-                  <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+                <details class="rounded shadow md:hidden bg-background1 group dark:bg-background1-DM">
+                  <summary class="flex relative flex-wrap items-center list-none rounded cursor-pointer group-open:rounded-b-none group-open:z-[1]">
                     <h2 class="flex flex-1 p-4 font-bold text-htext1 dark:text-htext1-DM">
                       {t("formLabels.yourPosts")}
                     </h2>
-                    <div class="flex w-10 items-center justify-center">
-                      <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
+                    <div class="flex justify-center items-center w-10">
+                      <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open:rotate-90 dark:border-l-border1-DM"></div>
                     </div>
                   </summary>
                   <div class="flex flex-col items-center p-2">
-                    <div class="justify-center flex w-fit">
+                    <div class="flex justify-center w-fit">
                       <a
-                        class=" btn-primary md:mx-6 md:mb-4"
+                        class="md:mx-6 md:mb-4 btn-primary"
                         href={`/${lang}/posts/createpost`}
                       >
                         {t("pageTitles.createPost")}
@@ -1129,7 +1122,7 @@ export const ProviderProfileView: Component = () => {
             {/* Profile Information for md+ View */}
             <Show when={screenSize() !== "sm"}>
               <div class="hidden md:block">
-                <h2 class="text-xl text-htext1 dark:text-htext1-DM py-4 font-bold">
+                <h2 class="py-4 text-xl font-bold text-htext1 dark:text-htext1-DM">
                   {provider()?.seller_name == ""
                     ? provider()?.first_name + " " + provider()?.last_name
                     : provider()?.seller_name}
@@ -1137,10 +1130,10 @@ export const ProviderProfileView: Component = () => {
                 <div class="flex justify-center mb-3">
                   <Show when={editMode() === false}>
                     <Show when={typeof providerImage() !== "undefined"}>
-                      <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
+                      <div class="object-contain overflow-hidden relative justify-center w-48 h-48 rounded-full border md:w-48 md:h-48 lg:w-64 lg:h-64 border-border1 dark:border-border1-DM">
                         <img
                           src={providerImage()}
-                          class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                          class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
                           alt={`${t("postLabels.providerProfileImage")} 1`}
                         />
                       </div>
@@ -1157,7 +1150,7 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <div class="first-name flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between first-name">
                   <label
                     for="FirstName"
                     class="text-ptext1 dark:text-ptext1-DM"
@@ -1167,15 +1160,15 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="FirstName"
-                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                     >
                       {provider()?.first_name}
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
-                    <div class="group flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2 group">
                       <svg
-                        class="w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full peer"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none bg-icon1 fill-iconbg1 border-border1 peer dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1196,19 +1189,18 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.firstName")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <input
                         type="text"
                         id="FirstName"
                         name="FirstName"
-                        class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         value={provider()?.first_name}
                         required
                       />
@@ -1216,22 +1208,22 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <div class="last-name flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between last-name">
                   <label for="LastName" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.lastName")}:
                   </label>
                   <Show when={editMode() === false}>
                     <p
                       id="LastName"
-                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                     >
                       {provider()?.last_name}
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
-                    <div class="flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1252,26 +1244,25 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.lastName")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <input
                         type="text"
                         id="LastName"
                         name="LastName"
-                        class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         value={provider()?.last_name}
                       />
                     </div>
                   </Show>
                 </div>
 
-                <div class="provider-name flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between provider-name">
                   <label
                     for="ProviderName"
                     class="text-ptext1 dark:text-ptext1-DM"
@@ -1281,7 +1272,7 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="ProviderName"
-                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                     >
                       {provider()?.seller_name
                         ? provider()?.seller_name
@@ -1289,9 +1280,9 @@ export const ProviderProfileView: Component = () => {
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
-                    <div class="flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1312,26 +1303,25 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.displayName")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <input
                         type="text"
                         id="ProviderName"
                         name="ProviderName"
-                        class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         value={provider()?.seller_name}
                       />
                     </div>
                   </Show>
                 </div>
 
-                <div class="language flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between language">
                   <label for="language" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.languages")}:
                   </label>
@@ -1339,16 +1329,16 @@ export const ProviderProfileView: Component = () => {
                   <Show when={editMode() === false}>
                     <p
                       id="language"
-                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                     >
                       {provider()?.languages}
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
                     {/* Tool tip could go here */}
-                    <div class="flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1369,25 +1359,23 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                            md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.languages")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <div class="flex flex-wrap justify-start">
                         {/* Creates a list of checkboxes that drop down to multiple select */}
-                        {/* <div class=" w-full mb-4">
+                        {/* <div class="mb-4 w-full">
                           <div
                             class="relative"
                             onclick={() => languageCheckboxes()}
                           >
                             <p
                               id="chooseLanguage"
-                              class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM
-                              after:content-['_^'] after:absolute after:-top-0.5 after:right-2 after:height-[20px] after:width-[20px] after:rotate-180 after:text-inputBorder1 after:dark:text-inputBorder1-DM"
+                              class="px-1 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background text-ptext1 after:content-[ dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1'_^'] after:absolute after:-top-0.5 after:right-2 after:height-[20px] after:width-[20px] after:rotate-180 after:text-inputBorder1 after:dark:text-inputBorder1-DM"
                             >
                               {t("formLabels.chooseLanguage")}{" "}
                             </p>
@@ -1396,7 +1384,7 @@ export const ProviderProfileView: Component = () => {
                           </div>
                           <div
                             id="checkboxes"
-                            class="hidden rounded max-h-28 overflow-y-auto focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                            class="hidden overflow-y-auto max-h-28 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                           >
                             <For each={languages()}>
                               {(language) => (
@@ -1419,25 +1407,25 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <div class="email-add flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between email-add">
                   <label for="email" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.email")}:
                   </label>
                   <Show when={editMode() === false}>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <p
                         id="email"
-                        class="rounded px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border mb-4 overflow-auto border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                        class="overflow-auto px-1 mb-4 rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                       >
                         {provider()?.email}
                       </p>
                     </div>
                   </Show>
                   <Show when={editMode() === true}>
-                    <div class="flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1458,18 +1446,17 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.changeEmail")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <input
                         id="email"
                         name="email"
-                        class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         type="email"
                         placeholder={t("formLabels.email")}
                         value={provider()?.email}
@@ -1478,22 +1465,22 @@ export const ProviderProfileView: Component = () => {
                   </Show>
                 </div>
 
-                <div class="phone-number flex flex-row flex-wrap justify-between">
+                <div class="flex flex-row flex-wrap justify-between phone-number">
                   <label for="Phone" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.phone")}:
                   </label>
                   <Show when={editMode() === false}>
                     <p
                       id="Phone"
-                      class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                      class="px-1 mb-4 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                     >
                       {provider()?.seller_phone}
                     </p>
                   </Show>
                   <Show when={editMode() === true}>
-                    <div class="flex items-center relative mr-2">
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1514,18 +1501,17 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 -translate-x-full -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.providerPhone")}
                       </span>
                     </div>
-                    <div class="basis-full h-0"></div>
+                    <div class="h-0 basis-full"></div>
                     <div class="basis-full">
                       <input
                         type="text"
                         id="Phone"
-                        class="rounded w-full mb-4 px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border focus:border-2 border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1 dark:text-ptext2-DM"
+                        class="px-1 mb-4 w-full rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                         name="Phone"
                         value={provider()?.seller_phone}
                       />
@@ -1534,11 +1520,11 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <Show when={editMode() === true}>
-                  <div class="flex flex-row justify-items-center justify-left mb-2">
-                    <h3 class="font-bold mr-4">Location</h3>
-                    <div class="flex items-center relative mr-2">
+                  <div class="flex flex-row justify-items-center mb-2 justify-left">
+                    <h3 class="mr-4 font-bold">Location</h3>
+                    <div class="flex relative items-center mr-2">
                       <svg
-                        class="peer w-4 h-4 border-2 bg-icon1 dark:bg-background1-DM fill-iconbg1 dark:fill-iconbg1-DM  border-border1 dark:border-none rounded-full"
+                        class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
                         version="1.1"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"
@@ -1559,8 +1545,7 @@ export const ProviderProfileView: Component = () => {
                       </svg>
 
                       <span
-                        class="peer-hover:opacity-100 peer-hover:visible invisible transition-opacity bg-background2 dark:bg-background2-DM text-sm text-ptext2 dark:text-ptext2-DM rounded-md absolute 
-                          md:translate-x-1/4 translate-x-1/4 -translate-y-2/3 md:translate-y-0 opacity-0 m-4 mx-auto p-2 w-48"
+                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
                       >
                         {t("toolTips.locationUpdate")}
                       </span>
@@ -1574,7 +1559,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="country"
-                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                   >
                     {provider()?.country}
                   </p>
@@ -1582,7 +1567,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="country"
-                    class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                    class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                     name="country"
                     oninput={required}
                   >
@@ -1591,7 +1576,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.country")}
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                         {provider()?.country}
                       </p>
                     </label>
@@ -1609,7 +1594,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="MajorMunicipality"
-                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                   >
                     {provider()?.major_municipality}
                   </p>
@@ -1617,7 +1602,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="MajorMunicipality"
-                    class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                    class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                     name="MajorMunicipality"
                     oninput={required}
                   >
@@ -1626,7 +1611,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.majorMunicipality")}:
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                         {provider()?.major_municipality}
                       </p>
                     </label>
@@ -1644,7 +1629,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === false}>
                   <p
                     id="MinorMunicipality"
-                    class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none"
+                    class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1"
                   >
                     {provider()?.minor_municipality}
                   </p>
@@ -1652,7 +1637,7 @@ export const ProviderProfileView: Component = () => {
                 <Show when={editMode() === true}>
                   <select
                     id="MinorMunicipality"
-                    class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                    class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                     name="MinorMunicipality"
                     oninput={required}
                   >
@@ -1661,7 +1646,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.minorMunicipality")}:
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                         {provider()?.minor_municipality}
                       </p>
                     </label>
@@ -1677,14 +1662,14 @@ export const ProviderProfileView: Component = () => {
                   {t("formLabels.governingDistrict")}:
                 </label>
                 <Show when={editMode() === false}>
-                  <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                  <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                     {provider()?.governing_district}
                   </p>
                 </Show>
                 <Show when={editMode() === true}>
                   <select
                     id="GoverningDistrict"
-                    class="ml-2 rounded mb-4 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM"
+                    class="mb-4 ml-2 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                     name="GoverningDistrict"
                     oninput={required}
                   >
@@ -1693,7 +1678,7 @@ export const ProviderProfileView: Component = () => {
                   <div>
                     <label class="text-ptext1 dark:text-ptext1-DM">
                       {t("formLabels.governingDistrict")}:
-                      <p class="rounded w-full px-1 focus:border-highlight1 dark:focus:border-highlight1-DM border border-inputBorder1 dark:border-inputBorder1-DM focus:outline-none">
+                      <p class="px-1 w-full rounded border focus:outline-none border-inputBorder1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM focus:border-highlight1">
                         {provider()?.governing_district}
                       </p>
                     </label>
@@ -1714,9 +1699,9 @@ export const ProviderProfileView: Component = () => {
         {/* Right Column Post View and Buttons for md+ View */}
         <div class="md:col-span-3">
           <div class="hidden md:block">
-            <div class="justify-end hidden md:flex mr-4">
+            <div class="hidden justify-end mr-4 md:flex">
               {/* Create Post Button*/}
-              <a class="btn-primary mx-6" href={`/${lang}/posts/createpost`}>
+              <a class="mx-6 btn-primary" href={`/${lang}/posts/createpost`}>
                 {t("pageTitles.createPost")}
               </a>
               {/* Edit Profile Button*/}

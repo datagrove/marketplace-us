@@ -179,11 +179,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     title: title,
     content: content,
     location: location[0].id,
-    product_subject: subject,
+    product_subject: JSON.parse(subject),
     image_urls: imageUrl,
     user_id: user.id,
   };
-
   const { error, data } = await supabase
     .from("seller_post")
     .insert([postSubmission])

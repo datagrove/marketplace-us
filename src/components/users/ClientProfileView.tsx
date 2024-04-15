@@ -20,7 +20,7 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Client {
   display_name: string;
@@ -386,7 +386,7 @@ export const ClientProfileView: Component = () => {
           </h1>
         </Show>
       </div>
-      <div class="m-auto md:max-w-max ">
+      <div class="m-auto md:max-w-max">
         {/* Left column for md+ View */}
         <div class="justify-center rounded-md border md:px-4 md:pb-4 md:mt-4 border-border1 md:drop-shadow-lg md:h-fit dark:border-border1-DM">
           <form onSubmit={submit} id="editProfile">
@@ -462,7 +462,7 @@ export const ClientProfileView: Component = () => {
                       <Show when={editMode() === true}>
                         <div class="flex relative items-center mr-2 group">
                           <svg
-                            class="peer w-4 h-4 bg-background1 dark:bg-background1-DM fill-background1 border border-inputBorder1 dark:border-inputBorder1-DM rounded-full"
+                            class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512"
@@ -482,9 +482,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.firstName")}
                           </span>
                         </div>
@@ -540,9 +538,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.lastName")}
                           </span>
                         </div>
@@ -599,9 +595,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.displayName")}
                           </span>
                         </div>
@@ -659,9 +653,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.changeEmail")}
                           </span>
                         </div>
@@ -717,9 +709,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.clientPhone")}
                           </span>
                         </div>
@@ -761,9 +751,7 @@ export const ClientProfileView: Component = () => {
                             </g>
                           </svg>
 
-                          <span
-                            class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                          >
+                          <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                             {t("toolTips.locationUpdate")}
                           </span>
                         </div>
@@ -1000,9 +988,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.firstName")}
                       </span>
                     </div>
@@ -1055,9 +1041,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.lastName")}
                       </span>
                     </div>
@@ -1114,9 +1098,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.displayName")}
                       </span>
                     </div>
@@ -1171,9 +1153,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.changeEmail")}
                       </span>
                     </div>
@@ -1226,9 +1206,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.clientPhone")}
                       </span>
                     </div>
@@ -1270,9 +1248,7 @@ export const ClientProfileView: Component = () => {
                         </g>
                       </svg>
 
-                      <span
-                        class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                      >
+                      <span class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity translate-x-1/4 -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM">
                         {t("toolTips.locationUpdate")}
                       </span>
                     </div>

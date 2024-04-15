@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Provider {
   seller_name: string;
@@ -141,32 +141,32 @@ export const ClientProviderView: Component<Props> = (props) => {
   return (
     <div class="m-2 md:grid md:grid-cols-5 md:gap-2">
       {/* Left column for md+ View */}
-      <div class="md:col-span-2 md:drop-shadow-lg border border-border1 dark:border-border1-DM md:mt-4 rounded-md md:h-fit md:px-4 md:pb-4 break-after-column justify-center">
+      <div class="justify-center rounded-md border md:col-span-2 md:px-4 md:pb-4 md:mt-4 border-border1 break-after-column md:drop-shadow-lg md:h-fit dark:border-border1-DM">
         {/* Container for Mobile View */}
         <div class="container">
           {/* Provider Info for Mobile View*/}
-          <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
-            <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+          <details class="rounded shadow md:hidden bg-background1 group dark:bg-background1-DM">
+            <summary class="flex relative flex-wrap items-center list-none rounded cursor-pointer group-open:rounded-b-none group-open:z-[1]">
               <h2 class="flex flex-1 p-4 font-bold">
                 {t("formLabels.providerInfo")}
               </h2>
               {/*Creates the Dropdown Arrow*/}
-              <div class="flex w-10 items-center justify-center">
-                <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
+              <div class="flex justify-center items-center w-10">
+                <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open:rotate-90 dark:border-l-border1-DM"></div>
               </div>
             </summary>
             <div class="p-4">
-              <h2 class="text-xl text-ptext1 dark:text-ptext1-DM pb-4 font-bold">
+              <h2 class="pb-4 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
                 {provider()?.seller_name == ""
                   ? provider()?.first_name + " " + provider()?.last_name
                   : provider()?.seller_name}
               </h2>
               <div class="flex justify-center mb-3">
                 <Show when={typeof providerImage() !== "undefined"}>
-                  <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
+                  <div class="object-contain overflow-hidden relative justify-center w-48 h-48 rounded-full border md:w-48 md:h-48 lg:w-64 lg:h-64 border-border1 dark:border-border1-DM">
                     <img
                       src={providerImage()}
-                      class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                      class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
                       alt={`${t("postLabels.ProviderProfileImage")} 1`}
                     />
                   </div>
@@ -184,16 +184,13 @@ export const ClientProviderView: Component<Props> = (props) => {
                 </span>
                 {provider()?.languages}
               </p>
-              <div class="mt-4 flex justify-center">
+              <div class="flex justify-center mt-4">
                 <a href={`mailto:${provider()?.email}`} class="btn-primary">
                   {t("buttons.contact")}
                 </a>
               </div>
-              <div class="mt-4 flex justify-center">
-                <a
-                  href={`tel:${provider()?.seller_phone}`}
-                  class="btn-primary"
-                >
+              <div class="flex justify-center mt-4">
+                <a href={`tel:${provider()?.seller_phone}`} class="btn-primary">
                   {t("buttons.phone")}
                 </a>
               </div>
@@ -201,14 +198,14 @@ export const ClientProviderView: Component<Props> = (props) => {
           </details>
 
           {/* Provider Posts for Mobile View*/}
-          <details class="bg-background1 dark:bg-background1-DM shadow rounded group md:hidden">
-            <summary class="list-none flex flex-wrap items-center cursor-pointer rounded group-open:rounded-b-none group-open:z-[1] relative">
+          <details class="rounded shadow md:hidden bg-background1 group dark:bg-background1-DM">
+            <summary class="flex relative flex-wrap items-center list-none rounded cursor-pointer group-open:rounded-b-none group-open:z-[1]">
               <h2 class="flex flex-1 p-4 font-bold text-ptext1 dark:text-ptext1-DM">
                 {t("formLabels.posts")}
               </h2>
               {/*Creates the Dropdown Arrow*/}
-              <div class="flex w-10 items-center justify-center">
-                <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
+              <div class="flex justify-center items-center w-10">
+                <div class="ml-2 border-8 border-transparent transition-transform border-l-border1 group-open:rotate-90 dark:border-l-border1-DM"></div>
               </div>
             </summary>
             <div class="p-4">
@@ -221,17 +218,17 @@ export const ClientProviderView: Component<Props> = (props) => {
 
         {/* Profile Information for md+ View */}
         <div class="hidden md:block">
-          <h2 class="text-xl text-ptext1 dark:text-ptext1-DM py-4 font-bold">
+          <h2 class="py-4 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
             {provider()?.seller_name == ""
               ? provider()?.first_name + " " + provider()?.last_name
               : provider()?.seller_name}
           </h2>
           <div class="flex justify-center mb-3">
             <Show when={typeof providerImage() !== "undefined"}>
-              <div class="relative w-48 h-48 overflow-hidden rounded-full md:h-48 md:w-48 lg:h-64 lg:w-64 object-contain justify-center border border-border1 dark:border-border1-DM">
+              <div class="object-contain overflow-hidden relative justify-center w-48 h-48 rounded-full border md:w-48 md:h-48 lg:w-64 lg:h-64 border-border1 dark:border-border1-DM">
                 <img
                   src={providerImage()}
-                  class="absolute block -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 object-contain justify-center h-56 md:h-96"
+                  class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
                   alt={`${t("postLabels.ProviderProfileImage")} 1`}
                 />
               </div>
@@ -247,12 +244,12 @@ export const ClientProviderView: Component<Props> = (props) => {
             <span class="font-bold">{t("formLabels.languagesSpoken")}: </span>
             {provider()?.languages}
           </p>
-          <div class="mt-4 flex justify-center">
+          <div class="flex justify-center mt-4">
             <a href={`mailto:${provider()?.email}`} class="btn-primary">
               {t("buttons.contact")}
             </a>
           </div>
-          <div class="mt-4 flex justify-center">
+          <div class="flex justify-center mt-4">
             <a href={`tel:${provider()?.seller_phone}`} class="btn-primary">
               {t("buttons.phone")}
             </a>

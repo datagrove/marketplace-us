@@ -23,7 +23,7 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 
 //get the categories from the language files so they translate with changes in the language picker
-const productCategoryData = values.productCategoryInfo;
+const productCategoryData = values.subjectCategoryInfo;
 
 const excludeTaxCodes = new Set([
   //Website/online dating products
@@ -293,7 +293,6 @@ export const CreateNewPost: Component = () => {
     if (selectedTaxCode() !== undefined) {
       formData.append("TaxCode", selectedTaxCode()!.value.toString());
     }
-    formData.append("location", "1");
     // formData.append("subj", subjects);
     formData.append("Subject", JSON.stringify(subjectPick()));
     if (imageUrl() !== null) {
