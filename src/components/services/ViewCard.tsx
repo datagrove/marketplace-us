@@ -178,7 +178,7 @@ export const ViewCard: Component<Props> = (props) => {
                       </div>
 
                       <div class="w-5/6 text-[10px]">
-                        <p>English, Language Arts, Reading</p>
+                        <p>{post.subject}</p>
                         <p>PreK-1st</p>
                         <p>Worksheets, Activities, Printables</p>
                         <p>1NBT.C.4, K.OA.A.2</p>
