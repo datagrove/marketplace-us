@@ -93,10 +93,17 @@ export const ServicesView: Component = () => {
     } else {
       const newItems = await Promise.all(
         data?.map(async (item) => {
+          item.subject = [];
           productCategories.forEach((productCategories) => {
-            if (item.product_subject.toString() === productCategories.id) {
-              item.subject = productCategories.name;
-            }
+            item.product_subject.map((productSubject: string) => {
+              if (productSubject === productCategories.id) {
+                item.subject.push(productCategories.name);
+                console.log(productCategories.name);
+              }
+            });
+            // if (item.product_subject.toString() === productCategories.id) {
+            //   item.subject = productCategories.name;
+            // }
           });
           delete item.product_subject;
 

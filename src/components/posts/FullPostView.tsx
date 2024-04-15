@@ -19,7 +19,7 @@ const productCategories = values.subjectCategoryInfo.subjects;
 interface Post {
     content: string;
     id: number;
-    subject: Array<string>;
+    product_subject: Array<any>;
     title: string;
     seller_name: string;
     major_municipality: string;
@@ -59,7 +59,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                     .from("sellerposts")
                     .select("*")
                     .eq("id", id);
-                console.log(data);
 
                 if (error) {
                     console.log(error);

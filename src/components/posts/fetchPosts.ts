@@ -8,8 +8,7 @@ const t = useTranslations(lang);
 
 // one giant filter function that includes the logic for all combinations
 export async function fetchFilteredPosts(
-    categoryFilters: Array<number>,
-    // subjectFilters: Array<string>,
+    categoryFilters: any,
     locationFilters: Array<string>,
     minorLocationFilters: Array<string>,
     governingLocationFilters: Array<string>,
@@ -20,24 +19,25 @@ export async function fetchFilteredPosts(
         if (categoryFilters.length !== 0) {
             query = query.in("product_subject", categoryFilters);
         }
-        if (locationFilters.length !== 0) {
-            query = query.in("major_municipality", locationFilters);
-        }
-        if (minorLocationFilters.length !== 0) {
-            query = query.in("minor_municipality", minorLocationFilters);
-        }
-        if (governingLocationFilters.length !== 0) {
-            query = query.in("governing_district", governingLocationFilters);
-        }
-        if (searchString.length !== 0) {
-            query = query.textSearch("title_content", searchString);
-        }
+        // if (locationFilters.length !== 0) {
+        //     // query = query.in("major_municipality", locationFilters);
+        // }
+        // if (minorLocationFilters.length !== 0) {
+        //     // query = query.in("minor_municipality", minorLocationFilters);
+        // }
+        // if (governingLocationFilters.length !== 0) {
+        //     // query = query.in("governing_district", governingLocationFilters);
+        // }
+        // if (searchString.length !== 0) {
+        //     // query = query.textSearch("title_content", searchString);
+        // }
 
         try {
             const { data: posts, error } = await query;
             if (error) {
                 console.log("supabase error: " + error.message);
             } else {
+                console.log(posts);
                 return posts;
             }
         } catch (e) {
