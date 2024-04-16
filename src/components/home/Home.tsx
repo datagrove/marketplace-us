@@ -8,6 +8,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe"; 
 
 const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
 const values = ui[lang] as unknown as uiObject
 const productCategories = values.productCategoryInfo.categories
 
@@ -102,34 +103,42 @@ export const Home: Component = () => {
     
     return (
         <div class=" border-2 border-orange-500">
-            <div id="top-sticky-filter">
-
+            <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-gray-200 py-1 sticky top-0">
+                <h3 class="mx-5">{t("formLabels.grades")}</h3>
+                <h3 class="mx-5">{t("formLabels.subjects")}</h3>
+                <h3 class="mx-5">{t("formLabels.resourceTypes")}</h3>
             </div>
 
-            <div id="header-image">
+            <div id="home-scrolling" class="scroll">
+                <div id="header-image" class="h-24 flex justify-center items-center bg-green-600">
+                    HEADER IMAGE
+                </div>
 
-            </div>
+                <div id="popular-resources" class="w-full my-1">
+                    <h3 class="text-center text-lg py-1">{t("pageTitles.popularResources")}</h3>
+                    <HomeCard posts={ popularPosts() }/>
+                </div>
 
-            <div id="popular-resources" class="border-2 border-blue-500 w-full mb-1">
-                <h3 class="text-center text-lg py-1">Popular Resources</h3>
-                <HomeCard posts={ popularPosts() }/>
-            </div>
+                <div id="home-subject-filter">
+                    <h3 class="text-center text-lg py-1">{t("pageTitles.shopBySubject")}</h3>
+                </div>
 
-            <div id="home-subject-filter">
+                <div id="home-image-1" class="h-36 bg-gray-200 flex justify-center items-center rounded my-8">
+                    Clickable image and text
+                </div>
 
-            </div>
+                <div id="new-resources">
+                    <h3 class="text-center text-lg py-1">{t("pageTitles.newResources")}</h3>
+                    <HomeCard posts={ newPosts() }/>
+                </div>
 
-            <div id="home-image-1">
+                <div id="home-grade-filter">
+                    <h3 class="text-center text-lg py-1">{t("pageTitles.shopByGrade")}</h3>
+                </div>
 
-            </div>
-
-            <div id="new-resources">
-                <h3 class="text-center text-lg py-1">New Resources</h3>
-                <HomeCard posts={ newPosts() }/>
-            </div>
-
-            <div id="home-grade-filter">
-
+                <div id="home-image-1" class="h-36 bg-gray-200 flex justify-center items-center rounded my-8">
+                    Clickable image and text
+                </div>
             </div>
         </div>
     )

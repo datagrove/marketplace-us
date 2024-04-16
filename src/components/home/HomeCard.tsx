@@ -96,14 +96,14 @@ export const HomeCard: Component<Props> = (props) => {
     }
     
     return (
-        <div class="border-2 border-red-300 mb-4 flex justify-center">
+        <div class="mb-4 flex justify-center">
             <ul class="flex">
                 { newPosts().map((post:any) => (
                     <li>
                         {/* { post.id } */}
-                        {`/${lang}/posts/${post.id}`}
-                        <a href={`/${lang}/posts/${post.id}`} class="text-red-500 px-3">Test
+                        {/* {`/${lang}/posts/${post.id}`} */}
                             <div class="border-2 border-border1 dark:border-border1-DM rounded mx-1 p-1 w-48">
+                                <a href={`/${lang}/posts/${post.id}`}>
                                 <div id="homeCard-img" class="flex justify-center items-center">
                                     { post.image_url ? (
                                         <img
@@ -120,10 +120,13 @@ export const HomeCard: Component<Props> = (props) => {
                                         </svg>
                                     )}
                                 </div>
+                                </a>
 
                                 <div id="homeCard-text">
                                     <div>
-                                        <p class="font-bold text-xs text-start line-clamp-2">{ post.title }</p>
+                                        <a href={`/${lang}/posts/${post.id}`}>
+                                        <p class="font-bold text-sm text-start line-clamp-2">{ post.title }</p>
+                                        </a>
                                     </div>
 
                                     <a href={ `/${ lang }/provider/${ post.user_id }` }><div class="flex items-center my-1">
@@ -142,7 +145,7 @@ export const HomeCard: Component<Props> = (props) => {
                                 </div>
 
                                 <div id="homeCard-ratings-price" class="flex items-end">
-                                    <div class="w-2/3 border-2 border-red-400 flex items-end">
+                                    <div class="w-2/3 flex items-end">
                                         <div class="flex items-end justify-start">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
                                                 <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
@@ -153,13 +156,13 @@ export const HomeCard: Component<Props> = (props) => {
                                         </div>
                                     </div>
 
-                                    <div class="border-2 border-green-400 w-1/3 flex items-end justify-end">
+                                    <div class="w-1/3 flex items-end justify-end">
                                         <p class="text-xs font-bold">${ post.price }</p>
                                     </div>
                                 </div>
                             
                             </div>
-                        </a>
+                        {/* </a> */}
                     </li>
                 ))}
             </ul>

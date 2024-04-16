@@ -28,6 +28,10 @@ export interface uiObject {
     offline: string,
     faq: string,
     viewCart: string,
+    popularResources: string,
+    shopBySubject: string,
+    newResources: string,
+    shopByGrade: string,
   },
 
   pageDescriptions: {

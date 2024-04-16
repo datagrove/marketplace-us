@@ -28,6 +28,10 @@ export const Spanish = {
     offline: 'Desconectado',
     faq: "Preguntas frecuentes",
     viewCart: "Mi carrito",
+    popularResources: "Recursos Populares",
+    shopBySubject: "Comprar por Tema",
+    newResources: "Nuevos Recursos",
+    shopByGrade: "Comprar por Grado",
   },
 
   pageDescriptions: {

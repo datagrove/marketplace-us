@@ -28,6 +28,10 @@ export const English = {
     offline: 'Offline',
     faq: "Frequently Asked Questions",
     viewCart: "My Cart",
+    popularResources: "Popular Resources",
+    shopBySubject: "Shop by Subject",
+    newResources: "New Resources",
+    shopByGrade: "Shop by Grade",
   },
 
   pageDescriptions: {
@@ -157,7 +161,7 @@ export const English = {
     dropdownDefault: "Select an option",
     subjects: "Subjects",
     grades: "Grades",
-    resourceTypes: "Types",
+    resourceTypes: "Resource Types",
     standards: "Standards",
     fileTypes: "",
   },

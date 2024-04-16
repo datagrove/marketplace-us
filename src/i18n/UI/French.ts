@@ -28,6 +28,10 @@ export const French = {
     offline: 'Hors ligne',
     faq: "Questions fréquemment posées",
     viewCart: "Mon panier",
+    popularResources: "Ressources Populaires",
+    shopBySubject: "Magasiner par Sujet",
+    newResources: "de Nouvelles Ressources",
+    shopByGrade: "Magasiner par Catégorie",
   },
 
   pageDescriptions: {
