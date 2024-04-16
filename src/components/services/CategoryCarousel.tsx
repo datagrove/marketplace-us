@@ -12,7 +12,6 @@ const productCategoryData = values.productCategoryInfo;
 
 import rightArrow from "../../assets/categoryIcons/circled-right-arrow.svg";
 import leftArrow from "../../assets/categoryIcons/circled-left-arrow.svg";
-import garden from "../../assets/categoryIcons/garden.svg";
 import history from "../../assets/categoryIcons/history.svg";
 import art from "../../assets/categoryIcons/art.svg";
 import geography from "../../assets/categoryIcons/geography.svg";
