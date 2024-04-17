@@ -36,6 +36,10 @@ interface Props {
     id: string | undefined;
 }
 
+function redirectToResourcesPage() {
+    window.location.href = `/${lang}/services`
+}
+
 export const Home: Component = () => {
     const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
     const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
@@ -116,6 +120,7 @@ export const Home: Component = () => {
     return (
         <div class="">
             <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-background2 dark:bg-background2-DM py-1 sticky top-0">
+                <a href={ `/${lang}/services` }><h3 class="hidden md:inline mx-5 text-ptext2 dark:text-ptext2-DM">{t("buttons.browseCatalog")}</h3></a>
                 <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.grades")}</h3>
                 <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.subjects")}</h3>
                 <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.resourceTypes")}</h3>
@@ -124,6 +129,15 @@ export const Home: Component = () => {
             <div id="home-scrolling" class="scroll">
                 <div id="header-image" class="h-24 flex justify-center items-center bg-green-600">
                     HEADER IMAGE
+                </div>
+
+                <div class="flex justify-center md:hidden">
+                    <button 
+                        class="rounded-full bg-btn2 dark:bg-btn2-DM mt-6 mb-4 px-16 py-1 shadow"
+                        onClick={ redirectToResourcesPage }
+                    >
+                        {t("buttons.browseCatalog")}
+                    </button>
                 </div>
 
                 <div id="popular-resources" class="w-full my-1">

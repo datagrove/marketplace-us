@@ -88,6 +88,7 @@ export interface uiObject {
     viewCart: string,
     showMore: string,
     showLess: string,
+    browseCatalog: string,
   },
 
   messages: {

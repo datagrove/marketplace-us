@@ -88,6 +88,7 @@ export const Spanish = {
     viewCart: "Ver carrito", 
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
+    browseCatalog: "Explorar el Catálogo",
   },
 
   messages: {
@@ -160,11 +161,11 @@ export const Spanish = {
     languagesSpoken: "Idiomas hablados",
     taxCode: "Código de impuestos",
     dropdownDefault: "Seleccione una opción",
-    subjects: "English, Language Arts, Reading",
-    grades: "PreK - 1",
-    resourceTypes: "Hoja de Cálculo, Actividade, Imprimibles",
-    standards: "1NBT.C.4, K.OA.A.2",
-    fileTypes: "",
+    subjects: "Asignaturas",
+    grades: "Los Grados",
+    resourceTypes: "Tipos de Recursos",
+    standards: "Estándares",
+    fileTypes: "Tipos de Archivo",
   },
 
   postLabels: {

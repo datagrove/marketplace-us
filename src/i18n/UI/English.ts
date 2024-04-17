@@ -88,6 +88,7 @@ export const English = {
     viewCart: "View Cart",
     showMore: "Show More",
     showLess: "Show Less",
+    browseCatalog: "Browse Catalog"
   },
 
   messages: {

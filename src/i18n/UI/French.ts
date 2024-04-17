@@ -88,6 +88,7 @@ export const French = {
     viewCart: "Voir le panier",
     showMore: "Montre Plus",
     showLess: "Montrer Moins",
+    browseCatalog: "Parcourir le Catalogue",
   },
 
   messages: {
@@ -158,11 +159,11 @@ export const French = {
     languagesSpoken: "Langues parlées",
     taxCode: "Code fiscal",
     dropdownDefault: "Choisir une option",
-    subjects: "English, Language Arts, Reading",
-    grades: "PreK - 1",
-    resourceTypes: "Des Feuilles de Calcul, Activités, Imprimables",
-    standards: "1NBT.C.4, K.OA.A.2",
-    fileTypes: "",
+    subjects: "Sujettes",
+    grades: "Notes",
+    resourceTypes: "Types de Ressources",
+    standards: "Normes",
+    fileTypes: "Types de Fichier",
   },
 
   postLabels: {
