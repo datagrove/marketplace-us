@@ -74,9 +74,9 @@ let light = window.matchMedia(
   "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference",
 ).matches;
 
-export const HomeCategoryCarousel: Component = () => {
+export const HomeSubjectCarousel: Component = () => {
     return (
-        <div class="p-1 my-2 rounded-lg border-2 border-red-400">
+        <div class="p-1 my-2 rounded-lg">
             <div class="flex flex-start justify-between scrollbar-thin overflow-x-auto drop-shadow-md dark:drop-shadow-[0_4px_3px_rgba(97,97,97,1)]  scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thumb-shadow-LM scrollbar-track-background1 dark:scrollbar-thumb-shadow-DM dark:scrollbar-track-background1-DM">
                 <button class="hidden w-12">
                 <img src={leftArrow.src} alt="Left Arrow" />

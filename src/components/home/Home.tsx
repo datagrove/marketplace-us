@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
 import { HomeCard } from "@components/home/HomeCard";
-import { HomeCategoryCarousel } from "@components/home/HomeCategoryCarousel";
+import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
@@ -53,7 +53,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
           .from("sellerposts")
           .select("*")
-          .limit(10)
+          .limit(8)
         if (!data) {
           alert("No posts available.");
         }
@@ -85,7 +85,7 @@ export const Home: Component = () => {
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .limit(10)
+            .limit(8)
         
         if(!data) {
             alert("No posts available");
@@ -114,7 +114,7 @@ export const Home: Component = () => {
     })
 
     return (
-        <div class=" border-2 border-orange-500">
+        <div class="">
             <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-background2 dark:bg-background2-DM py-1 sticky top-0">
                 <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.grades")}</h3>
                 <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.subjects")}</h3>
@@ -128,14 +128,14 @@ export const Home: Component = () => {
 
                 <div id="popular-resources" class="w-full my-1">
                     <h3 class="text-center text-lg py-1">{t("pageTitles.popularResources")}</h3>
-                    <div class="overflow-scroll flex justify-start">
+                    <div class="flex justify-start h-[515px] overflow-scroll md:h-auto max-w-full md:max-w-auto md:overflow-scroll">
                         <HomeCard posts={ popularPosts() }/>
                     </div>
                 </div>
 
                 <div id="home-subject-filter">
                     <h3 class="text-center text-lg py-1">{t("pageTitles.shopBySubject")}</h3>
-                    <HomeCategoryCarousel />
+                    <HomeSubjectCarousel />
                 </div>
 
                 <div id="home-image-1" class="h-36 bg-gray-200 flex justify-center items-center rounded my-8">
@@ -144,7 +144,7 @@ export const Home: Component = () => {
 
                 <div id="new-resources">
                     <h3 class="text-center text-lg py-1">{t("pageTitles.newResources")}</h3>
-                    <div class="overflow-scroll flex justify-start">
+                    <div class="flex justify-start h-[515px] overflow-scroll md:h-auto max-w-full md:max-w-auto md:overflow-scroll">
                         <HomeCard posts={ newPosts() }/>
                     </div>
                 </div>

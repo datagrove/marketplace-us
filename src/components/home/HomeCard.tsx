@@ -97,14 +97,14 @@ export const HomeCard: Component<Props> = (props) => {
     
     return (
         <div class="mb-4 flex justify-center">
-            <ul class="flex">
+            <ul class="flex flex-wrap justify-center md:flex-nowrap">
                 { newPosts().map((post:any) => (
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
-                            <div class="border-2 border-border1 dark:border-border1-DM rounded mx-1 p-1 w-36">
+                            <div class="border-2 border-border1 dark:border-border1-DM rounded mx-2 md:mx-1 p-1 w-40 mb-4 md:mb-0">
                                 <a href={`/${lang}/posts/${post.id}`}>
-                                <div id="homeCard-img" class="flex justify-center items-center border-2 border-blue-400 h-36 w-34">
+                                <div id="homeCard-img" class="flex justify-center items-center h-36 w-34">
                                     { post.image_url ? (
                                         <img
                                             src={ post.image_url }
@@ -114,12 +114,7 @@ export const HomeCard: Component<Props> = (props) => {
                                                 : "No Image"
                                             }
                                         />
-                                    ) : (
-                                        // <svg xmlns="http://www.w3.org/2000/svg" width="200px" height="200px" viewBox="35 0 186 256" id="Flat" class="fill-icon1 dark:fill-icon1-DM">
-                                        //     <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z"/>
-                                        // </svg>
-
-
+                                    ) : (                                        
                                         <svg width="200px" height="200px" viewBox="0 0 152.13541 152.13544" version="1.1" id="svg1"><defs id="defs1"/>
                                             <g id="layer1" transform="translate(-55.18229,-70.37966)"><g style="fill:#000000" id="g1" transform="matrix(0.82682292,0,0,0.82682292,25.416666,40.614035)">
                                             <path d="M 208,36 H 48 A 12.01312,12.01312 0 0 0 36,48 v 160 a 12.01312,12.01312 0 0 0 12,12 h 160 a 12.01312,12.01312 0 0 0 12,-12 V 48 A 12.01312,12.01312 0 0 0 208,36 Z m 4,172 a 4.004,4.004 0 0 1 -4,4 H 48 a 4.004,4.004 0 0 1 -4,-4 v -30.34369 l 33.17187,-33.171 a 4.00208,4.00208 0 0 1 5.65723,0 l 20.68652,20.68652 a 12.011,12.011 0 0 0 16.96973,0 l 44.68652,-44.68652 a 4.00208,4.00208 0 0 1 5.65723,0 L 212,161.65625 Z m 0,-57.65625 -35.51465,-35.51465 a 11.99916,11.99916 0 0 0 -16.96973,0 l -44.68652,44.68652 a 4.00681,4.00681 0 0 1 -5.65723,0 L 88.48535,138.8291 a 12.01009,12.01009 0 0 0 -16.96973,0 L 44,166.34393 V 48 a 4.004,4.004 0 0 1 4,-4 h 160 a 4.004,4.004 0 0 1 4,4 z M 108.001,92 v 0.0019 a 8.001,8.001 0 1 1 0,-0.0019 z" id="path1"/>
@@ -129,10 +124,10 @@ export const HomeCard: Component<Props> = (props) => {
                                 </div>
                                 </a>
 
-                                <div id="homeCard-text" class="border-2 border-green-600">
-                                    <div class="border-2 border-orange-800 h-12">
+                                <div id="homeCard-text" class="">
+                                    <div class="h-12">
                                         <a href={`/${lang}/posts/${post.id}`}>
-                                        <p class="font-bold text-sm text-start line-clamp-2">{ post.title }</p>
+                                        <p class="font-bold text-sm text-start line-clamp-2 pt-2">{ post.title }</p>
                                         </a>
                                     </div>
 
@@ -157,7 +152,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     </a>
                                 </div>
 
-                                <div id="homeCard-ratings-price" class="border-2 border-orange-800 flex items-end">
+                                <div id="homeCard-ratings-price" class="flex items-end">
                                     <div class="w-2/3 flex items-end">
                                         <div class="flex items-end justify-start">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
