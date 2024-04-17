@@ -138,8 +138,8 @@ export const Home: Component = () => {
                     <HomeSubjectCarousel />
                 </div>
 
-                <div id="home-image-1" class="h-36 bg-gray-200 flex justify-center items-center rounded my-8">
-                    Clickable image and text
+                <div id="home-image-1" class="h-36 bg-background2 dark:bg-background2-DM flex justify-center items-center rounded my-8">
+                    <p class="text-ptext2 dark:text-ptext2-DM">Clickable image and text</p>
                 </div>
 
                 <div id="new-resources">
@@ -154,8 +154,8 @@ export const Home: Component = () => {
                     <HomeGradeCarousel />
                 </div>
 
-                <div id="home-image-1" class="h-36 bg-gray-200 flex justify-center items-center rounded my-8">
-                    Clickable image and text
+                <div id="home-image-2" class="h-36 bg-background2 dark:bg-background2-DM flex justify-center items-center rounded my-8">
+                    <p class="text-ptext2 dark:text-ptext2-DM">Clickable image and text</p>
                 </div>
             </div>
         </div>
