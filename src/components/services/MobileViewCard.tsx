@@ -20,6 +20,8 @@ interface Post {
   title: string;
   seller_name: string;
   major_municipality: string;
+  image_url: string | undefined;
+  seller_img: string | undefined;
   // minor_municipality: string;
   // governing_district: string;
   user_id: string;
@@ -184,11 +186,11 @@ export const MobileViewCard: Component<Props> = (props) => {
                 <h6 class="font-bold text-[10px]">
                   {t("formLabels.subjects")}
                 </h6>
-                {post.subject.map((subjectToRender: string) => {
-                  return (
-                    <p class="font-light text-[10px]">{subjectToRender}</p>
-                  );
+                {post.subject.map((post2: string) => {
+                  return <p class="font-light text-[10px]">{post2.subject}</p>;
                 })}
+                <p class="font-light text-[10px]">{post.subject}</p>
+                <p class="font-light text-[10px]">Reading</p>
               </div>
 
               <div class="flex flex-col justify-end items-end py-1">

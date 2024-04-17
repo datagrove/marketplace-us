@@ -65,7 +65,7 @@ export const ServicesView: Component = () => {
   const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
   const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([]);
   const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
-  const [filters, setFilters] = createSignal<Array<number>>([]);
+  const [filters, setFilters] = createSignal<Array<string>>([]);
   const [locationFilters, setLocationFilters] = createSignal<Array<string>>([]);
   const [minorLocationFilters, setMinorLocationFilters] = createSignal<
     Array<string>
@@ -114,7 +114,7 @@ export const ServicesView: Component = () => {
           return item;
         }),
       );
-      console.log(newItems.map((item) => item.price));
+      console.log(newItems.map((item) => item));
       setPosts(newItems);
       setCurrentPosts(newItems);
     }
@@ -138,7 +138,7 @@ export const ServicesView: Component = () => {
     filterPosts();
   };
 
-  const setCategoryFilter = (currentCategory: number) => {
+  const setCategoryFilter = (currentCategory: string) => {
     if (filters().includes(currentCategory)) {
       let currentFilters = filters().filter((el) => el !== currentCategory);
       setFilters(currentFilters);
@@ -186,10 +186,17 @@ export const ServicesView: Component = () => {
 
       //Add the categories to the posts in the current language
       allPosts?.map((item) => {
+        item.subject = [];
         productCategories.forEach((productCategories) => {
-          if (item.product_subject.toString() === productCategories.id) {
-            item.subject = productCategories.name;
-          }
+          item.product_subject.map((productSubject: string) => {
+            if (productSubject === productCategories.id) {
+              item.subject.push(productCategories.name);
+              console.log(productCategories.name);
+            }
+          });
+          // if (item.product_subject.toString() === productCategories.id) {
+          //   item.subject = productCategories.name;
+          // }
         });
         delete item.product_subject;
       });
@@ -204,10 +211,17 @@ export const ServicesView: Component = () => {
       timeouts = [];
 
       res.map((post) => {
-        productCategories.forEach((productCategory) => {
-          if (post.product_subject.toString() === productCategory.id) {
-            post.subject = productCategory.name;
-          }
+        post.subject = [];
+        productCategories.forEach((productCategories) => {
+          post.product_subject.map((productSubject: string) => {
+            if (productSubject === productCategories.id) {
+              post.subject.push(productCategories.name);
+              console.log(productCategories.name);
+            }
+          });
+          // if (item.product_subject.toString() === productCategories.id) {
+          //   item.subject = productCategories.name;
+          // }
         });
         delete post.product_subject;
       });

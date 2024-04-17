@@ -436,7 +436,7 @@ export const English = {
       },
       {
         name: "Science",
-        description: "Science Description",
+        description: "Description Science",
         ariaLabel: "Science",
         id: "6",
       },

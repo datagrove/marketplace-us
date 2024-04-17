@@ -95,7 +95,7 @@ for (let i = 0; i < categoriesData.length; i++) {
 
 interface Props {
   // Define the type for the filterPosts prop
-  filterPosts: (currentCategory: number) => void;
+  filterPosts: (currentCategory: string) => void;
 }
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -117,7 +117,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
               id={item.id}
               class="flex flex-col flex-none justify-start items-center w-20 h-28 catBtn"
               onClick={(e) => {
-                props.filterPosts(item.id);
+                props.filterPosts(item.id.toString());
 
                 let currBtn = e.target;
 

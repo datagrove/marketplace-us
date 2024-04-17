@@ -19,10 +19,12 @@ interface Post {
   title: string;
   seller_name: string;
   major_municipality: string;
+  seller_img: string | undefined;
   // minor_municipality: string;
   // governing_district: string;
   user_id: string;
   image_urls: string | null;
+  image_url: string | undefined;
   price: number;
   price_id: string;
   quantity: number;
@@ -48,14 +50,16 @@ export const ViewCard: Component<Props> = (props) => {
   }
 
   createEffect(async () => {
+    // console.log("View Card Posts")
+    // console.log(props.posts)
     if (props.posts) {
       const updatedPosts = await Promise.all(
-        props.posts.map(async (post: any) => {
+        props.posts.map(async (post: Post) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
               post.image_urls.split(",")[0],
             ))
-            : (post.image_url = null);
+            : (post.image_url = undefined);
           // Set the default quantity to 1
           post.quantity = 1;
           return post;
@@ -94,7 +98,7 @@ export const ViewCard: Component<Props> = (props) => {
   return (
     <div class="flex justify-center w-full min-w-[650px]">
       <ul class="flex flex-wrap justify-center w-full">
-        {newPosts().map((post: any) => (
+        {newPosts().map((post: Post) => (
           <li class="w-[99%]">
             <a href={`/${lang}/posts/${post.id}`}>
               <div class="box-content flex flex-col justify-center items-center mb-2 w-full rounded-lg border border-opacity-25 shadow-md md:flex-row md:justify-start md:items-start md:h-48 dark:border-opacity-25 shadow-shadow-LM border-border1 dark:shadow-shadow-DM dark:border-border1-DM">
@@ -103,7 +107,7 @@ export const ViewCard: Component<Props> = (props) => {
                     <img
                       src={post.image_url}
                       alt={
-                        post.image_urls.split(",")[0]
+                        post.image_urls?.split(",")[0]
                           ? "User Image"
                           : "No image"
                       }
@@ -178,7 +182,7 @@ export const ViewCard: Component<Props> = (props) => {
                       </div>
 
                       <div class="w-5/6 text-[10px]">
-                        <p>{post.subject.join(", ")}</p>
+                        <p>{Array.from(post.subject).join(",")}</p>
                         <p>PreK-1st</p>
                         <p>Worksheets, Activities, Printables</p>
                         <p>1NBT.C.4, K.OA.A.2</p>

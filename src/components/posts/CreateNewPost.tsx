@@ -353,7 +353,7 @@ export const CreateNewPost: Component = () => {
             required
           />
         </label>
-        {/*
+
         <label for="ServiceCategory" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.serviceCategory")}:
           <select
@@ -363,12 +363,12 @@ export const CreateNewPost: Component = () => {
             required
           >
             <option value="">-</option>
-            {productCategoryData.categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+            {productCategoryData.subjects.map((subject) => (
+              <option value={subject.id}>{subject.name}</option>
             ))}
           </select>
         </label>
-        */}
+
         <br />
         <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.postContent")}:
