@@ -17,6 +17,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { StripeButton } from "./provider/StripeButton";
+import { MobileViewCard } from "@components/services/MobileViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -1106,10 +1107,10 @@ export const ProviderProfileView: Component = () => {
                       <div class="border-8 border-transparent border-l-border1 dark:border-l-border1-DM ml-2 group-open:rotate-90 transition-transform"></div>
                     </div>
                   </summary>
-                  <div class="p-2">
-                    <div class="justify-center flex">
+                  <div class="flex flex-col items-center p-2">
+                    <div class="justify-center flex w-fit">
                       <a
-                        class="btn-primary mx-6 mb-4"
+                        class=" btn-primary md:mx-6 md:mb-4"
                         href={`/${lang}/posts/createpost`}
                       >
                         {t("pageTitles.createPost")}
