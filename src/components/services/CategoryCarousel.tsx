@@ -18,7 +18,7 @@ import geography from "../../assets/categoryIcons/geography.svg";
 import math from "../../assets/categoryIcons/math.svg";
 import science from "../../assets/categoryIcons/science.svg";
 import specialty from "../../assets/categoryIcons/specialty.svg";
-import holiday from "../../assets/categoryIcons/history.svg";
+import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
 // import travel from "../../assets/categoryIcons/travel.svg";
 // import worker from "../../assets/categoryIcons/worker.svg";
