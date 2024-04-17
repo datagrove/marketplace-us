@@ -53,7 +53,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
           .from("sellerposts")
           .select("*")
-          .limit(5)
+          .limit(10)
         if (!data) {
           alert("No posts available.");
         }
@@ -85,7 +85,7 @@ export const Home: Component = () => {
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .limit(5)
+            .limit(10)
         
         if(!data) {
             alert("No posts available");
@@ -128,7 +128,9 @@ export const Home: Component = () => {
 
                 <div id="popular-resources" class="w-full my-1">
                     <h3 class="text-center text-lg py-1">{t("pageTitles.popularResources")}</h3>
-                    <HomeCard posts={ popularPosts() }/>
+                    <div class="overflow-scroll flex justify-start">
+                        <HomeCard posts={ popularPosts() }/>
+                    </div>
                 </div>
 
                 <div id="home-subject-filter">
@@ -142,7 +144,9 @@ export const Home: Component = () => {
 
                 <div id="new-resources">
                     <h3 class="text-center text-lg py-1">{t("pageTitles.newResources")}</h3>
-                    <HomeCard posts={ newPosts() }/>
+                    <div class="overflow-scroll flex justify-start">
+                        <HomeCard posts={ newPosts() }/>
+                    </div>
                 </div>
 
                 <div id="home-grade-filter">
