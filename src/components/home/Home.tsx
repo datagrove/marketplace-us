@@ -1,5 +1,6 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal } from "solid-js";
+import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
 import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
@@ -119,12 +120,7 @@ export const Home: Component = () => {
 
     return (
         <div class="">
-            <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-background2 dark:bg-background2-DM py-1 sticky top-0">
-                <a href={ `/${lang}/services` }><h3 class="hidden md:inline mx-5 text-ptext2 dark:text-ptext2-DM">{t("buttons.browseCatalog")}</h3></a>
-                <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.grades")}</h3>
-                <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.subjects")}</h3>
-                <h3 class="mx-5 text-ptext2 dark:text-ptext2-DM">{t("formLabels.resourceTypes")}</h3>
-            </div>
+            <HomeStickyFilters />
 
             <div id="home-scrolling" class="scroll">
                 <div id="header-image" class="h-24 flex justify-center items-center bg-green-600">
