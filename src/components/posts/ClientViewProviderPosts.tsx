@@ -53,7 +53,6 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
             if (item.product_subject.toString() === productCategories.id) {
               item.subject = productCategories.name;
             }
-          });
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
