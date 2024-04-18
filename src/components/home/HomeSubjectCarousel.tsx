@@ -88,8 +88,6 @@ export const HomeSubjectCarousel: Component = () => {
                     id={item.id}
                     class="flex flex-col flex-none justify-start items-center w-20 h-28 catBtn"
                     onClick={(e) => {
-                        // props.filterPosts(item.id);
-
                         let currBtn = e.target;
 
                         if (!currBtn.classList.contains("selected")) {
@@ -97,6 +95,9 @@ export const HomeSubjectCarousel: Component = () => {
                         } else {
                         currBtn.classList.remove("selected");
                         }
+
+                        localStorage.setItem("subjectCarouselSelection", JSON.stringify(currBtn.id))
+                        window.location.href= `/${lang}/services`;
                     }}
                     >
                     <div class="rounded-full bg-iconbg1 dark:bg-iconbg1-DM">

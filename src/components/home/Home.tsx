@@ -136,15 +136,15 @@ export const Home: Component = () => {
                     </button>
                 </div>
 
-                <div id="popular-resources" class="w-full my-1">
-                    <h3 class="text-center text-lg py-1">{t("pageTitles.popularResources")}</h3>
+                <div id="popular-resources" class="w-full my-1 md:mb-8">
+                    <h3 class="text-center text-lg md:text-2xl md:my-4 py-1">{t("pageTitles.popularResources")}</h3>
                     <div class="flex justify-start h-[515px] overflow-scroll md:h-auto max-w-full md:max-w-auto md:overflow-scroll">
                         <HomeCard posts={ popularPosts() }/>
                     </div>
                 </div>
 
-                <div id="home-subject-filter">
-                    <h3 class="text-center text-lg py-1">{t("pageTitles.shopBySubject")}</h3>
+                <div id="home-subject-filter" class="md:mb-8">
+                    <h3 class="text-center text-lg md:text-2xl md:my-4 py-1">{t("pageTitles.shopBySubject")}</h3>
                     <HomeSubjectCarousel />
                 </div>
 
@@ -152,15 +152,15 @@ export const Home: Component = () => {
                     <p class="text-ptext2 dark:text-ptext2-DM">Clickable image and text</p>
                 </div>
 
-                <div id="new-resources">
-                    <h3 class="text-center text-lg py-1">{t("pageTitles.newResources")}</h3>
+                <div id="new-resources" class="md:mb-8">
+                    <h3 class="text-center text-lg md:text-2xl md:my-4 py-1">{t("pageTitles.newResources")}</h3>
                     <div class="flex justify-start h-[515px] overflow-scroll md:h-auto max-w-full md:max-w-auto md:overflow-scroll">
                         <HomeCard posts={ newPosts() }/>
                     </div>
                 </div>
 
-                <div id="home-grade-filter">
-                    <h3 class="text-center text-lg py-1">{t("pageTitles.shopByGrade")}</h3>
+                <div id="home-grade-filter" class="md:mb-8">
+                    <h3 class="text-center text-lg md:text-2xl md:my-4 py-1">{t("pageTitles.shopByGrade")}</h3>
                     <HomeGradeCarousel />
                 </div>
 

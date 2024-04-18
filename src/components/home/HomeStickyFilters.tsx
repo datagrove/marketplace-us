@@ -158,7 +158,7 @@ export const HomeStickyFilters: Component = () => {
     // const [selectSubjects, setSelectedSubjects] = createSignal<Array<{ product_subject: string; id: number }>>([]);
     
     return (
-        <div class="sticky top-0">
+        <div class="sticky top-0 z-50">
             <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-background2 dark:bg-background2-DM py-1 sticky top-0">
                 <a onmouseover={ hideFilterDivs } href={ `/${lang}/services` }><h3 class="hidden md:inline mx-5 text-ptext2 dark:text-ptext2-DM">{t("buttons.browseCatalog")}</h3></a>
                 
