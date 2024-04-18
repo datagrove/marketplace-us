@@ -54,7 +54,6 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
               item.subject = productCategories.name;
             }
           });
-          delete item.product_subject;
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
