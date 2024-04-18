@@ -17,8 +17,10 @@ interface ProviderPost {
   user_id: string;
   content: string;
   id: number;
+  image_url: string | undefined;
+  seller_img: string | undefined;
   //TODO: update this to allow a list of Subjects
-  subject: string;
+  subject: Array<string>;
   title: string;
   seller_name: string;
   major_municipality: string;
@@ -51,14 +53,13 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
         data?.map(async (item) => {
           productCategories.forEach((productCategories) => {
             item.product_subject.map((productSubject: string) => {
-            if (productSubject === productCategories.id) {
-              item.subject.push(productCategories.name);
-              console.log(productCategories.name);
-            }
+              if (productSubject === productCategories.id) {
+                item.subject.push(productCategories.name);
+                console.log(productCategories.name);
+              }
+            });
           });
-        });
-        delete item.product_subject;
-              item.subject = productCategories.name;
+          delete item.product_subject;
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
