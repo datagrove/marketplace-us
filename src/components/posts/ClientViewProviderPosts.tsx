@@ -50,7 +50,14 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
       const newItems = await Promise.all(
         data?.map(async (item) => {
           productCategories.forEach((productCategories) => {
-            if (item.product_subject.toString() === productCategories.id) {
+            item.product_subject.map((productSubject: string) => {
+            if (productSubject === productCategories.id) {
+              item.subject.push(productCategories.name);
+              console.log(productCategories.name);
+            }
+          });
+        });
+        delete item.product_subject;
               item.subject = productCategories.name;
 
           if (item.price_id !== null) {
