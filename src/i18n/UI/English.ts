@@ -88,7 +88,8 @@ export const English = {
     viewCart: "View Cart",
     showMore: "Show More",
     showLess: "Show Less",
-    browseCatalog: "Browse Catalog"
+    browseCatalog: "Browse Catalog",
+    findResources: "Find Resources",
   },
 
   messages: {
@@ -128,6 +129,7 @@ export const English = {
     noClient: "No Client found.",
     noPostsSearch: "No posts match this specific search - please try a different filter or key word",
     noStripeAccount: "You must complete enrollment with Stripe before posting resources.",
+    selectSubject: "Please select at least one subject",
   },
 
   formLabels: {

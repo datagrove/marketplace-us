@@ -89,6 +89,7 @@ export interface uiObject {
     showMore: string,
     showLess: string,
     browseCatalog: string,
+    findResources: string,
   },
 
   messages: {
@@ -128,6 +129,7 @@ export interface uiObject {
     noClient: string,
     noPostsSearch: string,
     noStripeAccount: string,
+    selectSubject: string,
   },
 
   formLabels: {

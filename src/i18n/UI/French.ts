@@ -89,6 +89,7 @@ export const French = {
     showMore: "Montre Plus",
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
+    findResources: "Trouver des Ressources",
   },
 
   messages: {
@@ -127,6 +128,7 @@ export const French = {
     profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
     noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
     noStripeAccount: "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
+    selectSubject: "Veuillez sélectionner au moins un sujet",
   },
   
   formLabels: {

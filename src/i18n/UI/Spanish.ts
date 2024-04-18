@@ -129,6 +129,7 @@ export const Spanish = {
     noClient: "No se encontró ningún cliente.",
     noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
     noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
+    selectSubject: "Por favor, seleccione al menos una asignatura"
   },
 
   formLabels: {
@@ -166,6 +167,7 @@ export const Spanish = {
     resourceTypes: "Tipos de Recursos",
     standards: "Estándares",
     fileTypes: "Tipos de Archivo",
+    findResources: "Encontrar Recursos",
   },
 
   postLabels: {
