@@ -38,21 +38,17 @@ function hideFilterDivs() {
 
 function showGradeFilters() {
     let gradeDiv = document.getElementById("gradeDiv");
-    let subjectDiv = document.getElementById("subjectDiv");
-    let resourceTypeDiv = document.getElementById("resourceTypeDiv");
 
     if(gradeDiv?.classList.contains("hidden")) {
         gradeDiv.classList.remove("hidden");
         gradeDiv.classList.add("inline")
-    }
-
-    if(subjectDiv?.classList.contains("inline")) {
+    
         hideSubjectFilters();
-    }
-    if(resourceTypeDiv?.classList.contains("inline")) {
         hideResourceTypeFilters();
+    } else if(gradeDiv?.classList.contains("inline")) {
+        gradeDiv?.classList.remove("inline");
+        gradeDiv?.classList.add("hidden");
     }
-
 }
 
 function hideGradeFilters() {
@@ -66,20 +62,16 @@ function hideGradeFilters() {
 
 function showSubjectFilters() {
     let subjectDiv = document.getElementById("subjectDiv");
-    let gradeDiv = document.getElementById("gradeDiv");
-    let resourceTypeDiv = document.getElementById("resourceTypeDiv");
-
+    
     if(subjectDiv?.classList.contains("hidden")) {
         subjectDiv.classList.remove("hidden");
         subjectDiv.classList.add("inline")
-    }
 
-    if(gradeDiv?.classList.contains("inline")) {
         hideGradeFilters();
-    }
-
-    if(resourceTypeDiv?.classList.contains("inline")) {
         hideResourceTypeFilters();
+    } else {
+        subjectDiv?.classList.remove("inline");
+        subjectDiv?.classList.add("hidden")
     }
 }
 
@@ -94,20 +86,16 @@ function hideSubjectFilters() {
 
 function showResourceTypeFilters() {
     let resourceTypeFilterDiv = document.getElementById("resourceTypeDiv");
-    let subjectDiv = document.getElementById("subjectDiv");
-    let gradeDiv = document.getElementById("gradeDiv");
 
     if(resourceTypeFilterDiv?.classList.contains("hidden")) {
         resourceTypeFilterDiv.classList.remove("hidden");
-        resourceTypeFilterDiv.classList.add("inline")
-    }
+        resourceTypeFilterDiv.classList.add("inline");
 
-    if(subjectDiv?.classList.contains("inline")) {
         hideSubjectFilters();
-    }
-
-    if(gradeDiv?.classList.contains("inline")) {
         hideGradeFilters();
+    } else if(resourceTypeFilterDiv?.classList.contains("inline")) {
+        resourceTypeFilterDiv?.classList.remove("inline");
+        resourceTypeFilterDiv?.classList.add("hidden");
     }
 }
 
@@ -163,14 +151,14 @@ export const HomeStickyFilters: Component = () => {
                 <a onmouseover={ hideFilterDivs } href={ `/${lang}/services` }><h3 class="hidden md:inline mx-5 text-ptext2 dark:text-ptext2-DM">{t("buttons.browseCatalog")}</h3></a>
                 
                 <div>
-                    <h3 onmouseover={ showGradeFilters }  class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.grades")}</h3>
+                    <h3 onclick={ showGradeFilters } class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.grades")}</h3>
                     <div onmouseleave={ hideGradeFilters } id="gradeDiv" class="hidden border-2 border-border1 dark:border-border1-DM h-64 w-48 absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
                         <p class="px-2">Add Grades here</p>
                     </div>
                 </div>
 
                 <div>
-                    <h3 onmouseover={ showSubjectFilters } class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.subjects")}</h3>
+                    <h3 onclick={ showSubjectFilters} class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.subjects")}</h3>
                     <div onmouseleave={ hideSubjectFilters } id="subjectDiv" class="hidden border-2 border-border1 dark:border-border1-DM absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
                         {/* <p class="px-2">Add Subjects here</p> */}
                         <For each={ subjects() }>
@@ -208,7 +196,7 @@ export const HomeStickyFilters: Component = () => {
                 </div>
 
                 <div>
-                    <h3 onmouseover={ showResourceTypeFilters } class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.resourceTypes")}</h3>
+                    <h3 onclick={ showResourceTypeFilters } class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.resourceTypes")}</h3>
                     <div onmouseleave={ hideResourceTypeFilters } id="resourceTypeDiv" class="hidden border-2 border-border1 dark:border-border1-DM h-64 w-48 absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
                         <p class="px-2">Add Resource Types here</p>
                     </div>
