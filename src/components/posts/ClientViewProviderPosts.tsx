@@ -14,68 +14,68 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 interface ProviderPost {
-  user_id: string;
-  content: string;
-  id: number;
-  image_url: string | undefined;
-  seller_img: string | undefined;
-  //TODO: update this to allow a list of Subjects
-  subject: Array<string>;
-  title: string;
-  seller_name: string;
-  major_municipality: string;
-  image_urls: string;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
+	user_id: string;
+	content: string;
+	id: number;
+	image_url: string | undefined;
+	seller_img: string | undefined;
+	//TODO: update this to allow a list of Subjects
+	subject: Array<string>;
+	title: string;
+	seller_name: string;
+	major_municipality: string;
+	image_urls: string;
+	price: number;
+	price_id: string;
+	quantity: number;
+	product_id: string;
 }
 
 interface Props {
-  id: string | undefined;
+	id: string | undefined;
 }
 
 export const ClientViewProviderPosts: Component<Props> = (props) => {
-  const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
+	const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
 
-  createEffect(async () => {
-    const { data, error } = await supabase
-      .from("sellerposts")
-      .select("*")
-      .eq("seller_id", props.id);
-    if (!data) {
-      alert("No posts available.");
-    }
-    if (error) {
-      console.log("supabase error: " + error.message);
-    } else {
-      const newItems = await Promise.all(
-        data?.map(async (item) => {
-          productCategories.forEach((productCategories) => {
-            item.product_subject.map((productSubject: string) => {
-              if (productSubject === productCategories.id) {
-                item.subject.push(productCategories.name);
-                console.log(productCategories.name);
-              }
-            });
-          });
-          delete item.product_subject;
+	createEffect(async () => {
+		const { data, error } = await supabase
+			.from("sellerposts")
+			.select("*")
+			.eq("seller_id", props.id);
+		if (!data) {
+			alert("No posts available.");
+		}
+		if (error) {
+			console.log("supabase error: " + error.message);
+		} else {
+			const newItems = await Promise.all(
+				data?.map(async (item) => {
+					productCategories.forEach((productCategories) => {
+						item.product_subject.map((productSubject: string) => {
+							if (productSubject === productCategories.id) {
+								item.subject.push(productCategories.name);
+								console.log(productCategories.name);
+							}
+						});
+					});
+					delete item.product_subject;
 
-          if (item.price_id !== null) {
-            const priceData = await stripe.prices.retrieve(item.price_id);
-            item.price = priceData.unit_amount! / 100;
-          }
-          return item;
-        }),
-      );
-      setPosts(data);
-      console.log("Posts");
-      console.log(posts());
-    }
-  });
-  return (
-    <div class="">
-      <ViewCard posts={posts()} />
-    </div>
-  );
+					if (item.price_id !== null) {
+						const priceData = await stripe.prices.retrieve(item.price_id);
+						item.price = priceData.unit_amount! / 100;
+					}
+					return item;
+				}),
+			);
+			setPosts(data);
+			console.log("Posts");
+			console.log(posts());
+		}
+	});
+	return (
+		<div class="">
+			<ViewCard posts={posts()} />
+		</div>
+	);
 };
