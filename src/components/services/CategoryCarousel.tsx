@@ -1,7 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-// import { productCategoryData } from '../../data'
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -20,22 +18,6 @@ import science from "../../assets/categoryIcons/science.svg";
 import specialty from "../../assets/categoryIcons/specialty.svg";
 import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
-// import travel from "../../assets/categoryIcons/travel.svg";
-// import worker from "../../assets/categoryIcons/worker.svg";
-// import palette from "../../assets/categoryIcons/palette.svg";
-// import paw from "../../assets/categoryIcons/paw.svg";
-// import legal from "../../assets/categoryIcons/legal.svg";
-// import engine from "../../assets/categoryIcons/engine-motor.svg";
-// import doctor from "../../assets/categoryIcons/doctor.svg";
-// import construction from "../../assets/categoryIcons/construction-tools.svg";
-// import computer from "../../assets/categoryIcons/computer-and-monitor.svg";
-// import cleaner from "../../assets/categoryIcons/cleaner-man.svg";
-// import beauty from "../../assets/categoryIcons/beauty-salon.svg";
-// import finance from "../../assets/categoryIcons/banking-bank.svg";
-// import financeDM from "../../assets/categoryIcons/banking-bank-DM.svg";
-
-import { currentLanguage } from "../../lib/languageSelectionStore";
-import { doc } from "prettier";
 
 let categories: Array<any> = [];
 
@@ -67,17 +49,6 @@ categories.map((category) => {
   } else if (category.id === 8) {
     category.icon = specialty;
   }
-  // else if (category.id === 9) {
-  //   category.icon = paw;
-  // } else if (category.id === 10) {
-  //   category.icon = legal;
-  // } else if (category.id === 11) {
-  //   category.icon = doctor;
-  // } else if (category.id === 12) {
-  //   category.icon = worker;
-  // } else if (category.id === 13) {
-  //   category.icon = travel;
-  // }
 });
 
 const categoriesData = productCategoryData.subjects;
