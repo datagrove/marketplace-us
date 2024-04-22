@@ -138,6 +138,9 @@ export const CreateNewPost: Component = () => {
   const [selectedTaxCode, setSelectedTaxCode] =
     createSignal<HTMLOptionElement>();
 
+  productCategoryData.subjects.map((item) =>
+    setSubjects([...subjects(), { id: Number(item.id), subject: item.name }]),
+  );
   onMount(() => {
     window.addEventListener("storage", (event) => {
       if (event.key === "theme") {
@@ -191,11 +194,14 @@ export const CreateNewPost: Component = () => {
               /^txcd_1.*/.test(taxCode.id) &&
               //Not in our filter list
               !Array.from(excludeTaxCodes).some((excludeTaxCode) =>
-                excludeTaxCode.test(taxCode.id)
+                excludeTaxCode.test(taxCode.id),
               )
             ) {
               let taxCodeOption = new Option(taxCode.name, taxCode.id);
-              taxCodeOption.setAttribute("data-description", taxCode.description);
+              taxCodeOption.setAttribute(
+                "data-description",
+                taxCode.description,
+              );
               taxCodeOptions.push(taxCodeOption);
             }
           });

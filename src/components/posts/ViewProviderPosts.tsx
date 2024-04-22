@@ -13,7 +13,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.productCategoryInfo.categories;
+const productCategories = values.subjectCategoryInfo.subjects;
 
 // Define the type for the ProviderPost interface
 interface ProviderPost {
@@ -34,7 +34,6 @@ interface ProviderPost {
 
 // Get the user session
 const { data: User, error: UserError } = await supabase.auth.getSession();
-
 
 export const ViewProviderPosts: Component = () => {
   // initialize posts and session
@@ -74,9 +73,9 @@ export const ViewProviderPosts: Component = () => {
             item.price = priceData.unit_amount! / 100;
           }
           return item;
-        })
+        }),
       );
-      console.log(newItems.map(item => item.price))
+      console.log(newItems.map((item) => item.price));
       setPosts(newItems);
     }
   });
@@ -87,9 +86,8 @@ export const ViewProviderPosts: Component = () => {
       </div>
 
       <div class="inline md:hidden">
-        <MobileViewCard posts={ posts() } />
+        <MobileViewCard posts={posts()} />
       </div>
-
     </div>
   );
 };
