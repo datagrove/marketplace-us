@@ -28,6 +28,10 @@ export const Spanish = {
     offline: "Desconectado",
     faq: "Preguntas frecuentes",
     viewCart: "Mi carrito",
+    popularResources: "Recursos Populares",
+    shopBySubject: "Comprar por Tema",
+    newResources: "Nuevos Recursos",
+    shopByGrade: "Comprar por Grado",
   },
 
   pageDescriptions: {
@@ -101,6 +105,7 @@ export const Spanish = {
     viewCart: "Ver carrito",
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
+    browseCatalog: "Explorar el Catálogo",
   },
 
   messages: {
@@ -147,10 +152,9 @@ export const Spanish = {
     profileEdits:
       "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
     noClient: "No se encontró ningún cliente.",
-    noPostsSearch:
-      "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
-    noStripeAccount:
-      "Debes completar la inscripción en Stripe antes de publicar recursos.",
+    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
+    noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
+    selectSubject: "Por favor, seleccione al menos una asignatura"
   },
 
   formLabels: {
@@ -183,11 +187,12 @@ export const Spanish = {
     languagesSpoken: "Idiomas hablados",
     taxCode: "Código de impuestos",
     dropdownDefault: "Seleccione una opción",
-    subjects: "English, Language Arts, Reading",
-    grades: "PreK - 1",
-    resourceTypes: "Hoja de Cálculo, Actividade, Imprimibles",
-    standards: "1NBT.C.4, K.OA.A.2",
-    fileTypes: "",
+    subjects: "Asignaturas",
+    grades: "Los Grados",
+    resourceTypes: "Tipos de Recursos",
+    standards: "Estándares",
+    fileTypes: "Tipos de Archivo",
+    findResources: "Encontrar Recursos",
   },
 
   postLabels: {

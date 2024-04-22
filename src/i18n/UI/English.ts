@@ -28,6 +28,10 @@ export const English = {
     offline: "Offline",
     faq: "Frequently Asked Questions",
     viewCart: "My Cart",
+    popularResources: "Popular Resources",
+    shopBySubject: "Shop by Subject",
+    newResources: "New Resources",
+    shopByGrade: "Shop by Grade",
   },
 
   pageDescriptions: {
@@ -100,6 +104,8 @@ export const English = {
     viewCart: "View Cart",
     showMore: "Show More",
     showLess: "Show Less",
+    browseCatalog: "Browse Catalog",
+    findResources: "Find Resources",
   },
 
   messages: {
@@ -142,10 +148,9 @@ export const English = {
     profileEdits:
       "Profile edits will only be saved after clicking the Save Profile button!",
     noClient: "No Client found.",
-    noPostsSearch:
-      "No posts match this specific search - please try a different filter or key word",
-    noStripeAccount:
-      "You must complete enrollment with Stripe before posting resources.",
+    noPostsSearch: "No posts match this specific search - please try a different filter or key word",
+    noStripeAccount: "You must complete enrollment with Stripe before posting resources.",
+    selectSubject: "Please select at least one subject",
   },
 
   formLabels: {
@@ -180,7 +185,7 @@ export const English = {
     dropdownDefault: "Select an option",
     subjects: "Subjects",
     grades: "Grades",
-    resourceTypes: "Types",
+    resourceTypes: "Resource Types",
     standards: "Standards",
     fileTypes: "",
   },

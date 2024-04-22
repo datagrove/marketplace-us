@@ -2,17 +2,23 @@
 import Layout from "@layouts/PageLayout.astro";
 import { AuthMode } from "@components/common/AuthMode";
 import { SignUpBtn } from "@components/common/SignUpButton";
+import { Home } from "@components/home/Home";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import services from "@assets/services.png";
 import servicesDM from "@assets/servicesDM.png";
+import { postcss } from "tailwindcss";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <Layout pageTitle={t("pageTitles.home")} pageDescription={t("pageDescriptions.home")}>
+  <div class="w-full">
+    <Home client:only="solid-js"/>
+  </div>
+  
   <!-- <h1>{t('pageTitles.home')}</h1> -->
-  <div class="flex flex-col items-start px-2 md:px-0 md:flex-wrap lg:flex-row h-screen">
+  <!-- <div class="flex flex-col items-start px-2 md:px-0 md:flex-wrap lg:flex-row h-screen">
     <div class="mt-6 mb-6 md:mb-0 md:w-2/3 lg:w-1/2">
       <div>
         <h1 class="text-3xl font-bold text-htext1 dark:text-htext1-DM">{t(`homePageText.headline`)}</h1>
@@ -67,7 +73,7 @@ const t = useTranslations(lang);
       </div>
       
     </div>
-  </div>
+  </div> -->
 </Layout>
 
 <script>

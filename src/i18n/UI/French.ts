@@ -28,6 +28,10 @@ export const French = {
     offline: "Hors ligne",
     faq: "Questions fréquemment posées",
     viewCart: "Mon panier",
+    popularResources: "Ressources Populaires",
+    shopBySubject: "Magasiner par Sujet",
+    newResources: "de Nouvelles Ressources",
+    shopByGrade: "Magasiner par Catégorie",
   },
 
   pageDescriptions: {
@@ -102,6 +106,8 @@ export const French = {
     viewCart: "Voir le panier",
     showMore: "Montre Plus",
     showLess: "Montrer Moins",
+    browseCatalog: "Parcourir le Catalogue",
+    findResources: "Trouver des Ressources",
   },
 
   messages: {
@@ -138,20 +144,16 @@ export const French = {
     selectAnImage: "Vous devez sélectionner une image à télécharger.",
     noProvider: "Aucun fournisseur trouvé.",
     translation: "Traductions",
-    translations:
-      " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
-    clickWrap1: "En cliquant sur",
-    clickWrap2: "vous indiquez que vous avez lu et accepté les",
-    fetch: "Récupérer des services",
-    todoFetch:
-      "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
-    mustSignIn: "Vous devez être connecté pour voir les services disponibles.",
-    profileEdits:
-      "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
-    noPostsSearch:
-      "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
-    noStripeAccount:
-      "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
+    translations: " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+    clickWrap1: 'En cliquant sur',
+    clickWrap2: 'vous indiquez que vous avez lu et accepté les',
+    fetch: 'Récupérer des services',
+    todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
+    mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
+    profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+    noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
+    noStripeAccount: "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
+    selectSubject: "Veuillez sélectionner au moins un sujet",
   },
 
   formLabels: {
@@ -184,11 +186,11 @@ export const French = {
     languagesSpoken: "Langues parlées",
     taxCode: "Code fiscal",
     dropdownDefault: "Choisir une option",
-    subjects: "English, Language Arts, Reading",
-    grades: "PreK - 1",
-    resourceTypes: "Des Feuilles de Calcul, Activités, Imprimables",
-    standards: "1NBT.C.4, K.OA.A.2",
-    fileTypes: "",
+    subjects: "Sujettes",
+    grades: "Notes",
+    resourceTypes: "Types de Ressources",
+    standards: "Normes",
+    fileTypes: "Types de Fichier",
   },
 
   postLabels: {

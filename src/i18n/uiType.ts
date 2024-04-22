@@ -3,32 +3,36 @@ export interface uiObject {
   siteDescription: string;
 
   pageTitles: {
-    services: string;
-    signUp: string;
-    login: string;
-    home: string;
-    signIn: string;
-    createClientAccount: string;
-    editClientAccount: string;
-    viewClientAccount: string;
-    createPost: string;
-    createProviderAccount: string;
-    editProviderAccount: string;
-    viewProviderAccount: string;
-    clientViewProviderAccount: string;
-    page404: string;
-    requestPasswordReset: string;
-    resetPassword: string;
-    terms: string;
-    privacy: string;
-    acceptableUse: string;
-    about: string;
-    impact: string;
-    fullPost: string;
-    offline: string;
-    faq: string;
-    viewCart: string;
-  };
+    services: string,
+    signUp: string,
+    login: string,
+    home: string,
+    signIn: string,
+    createClientAccount: string,
+    editClientAccount: string,
+    viewClientAccount: string,
+    createPost: string,
+    createProviderAccount: string,
+    editProviderAccount: string,
+    viewProviderAccount: string,
+    clientViewProviderAccount: string,
+    page404: string,
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
+    acceptableUse: string,
+    about: string,
+    impact: string,
+    fullPost: string,
+    offline: string,
+    faq: string,
+    viewCart: string,
+    popularResources: string,
+    shopBySubject: string,
+    newResources: string,
+    shopByGrade: string,
+  },
 
   pageDescriptions: {
     services: string;
@@ -56,74 +60,77 @@ export interface uiObject {
   };
 
   buttons: {
-    providerProfile: string;
-    editProfile: string;
-    register: string;
-    uploadImage: string;
-    uploading: string;
-    loading: string;
-    login: string;
-    signUp: string;
-    signIn: string;
-    signOut: string;
-    returnHome: string;
-    reset: string;
-    post: string;
-    next: string;
-    previous: string;
-    delete: string;
-    contact: string;
-    phone: string;
-    saveProfile: string;
-    filters: string;
-    faq: string;
-    addToCart: string;
-    stripeSetup: string;
-    stripeLogin: string;
-    proceedToCheckout: string;
-    viewCart: string;
-    showMore: string;
-    showLess: string;
-  };
+    providerProfile: string,
+    editProfile: string,
+    register: string,
+    uploadImage: string,
+    uploading: string,
+    loading: string,
+    login: string,
+    signUp: string,
+    signIn: string,
+    signOut: string,
+    returnHome: string,
+    reset: string,
+    post: string,
+    next: string,
+    previous: string,
+    delete: string,
+    contact: string,
+    phone: string,
+    saveProfile: string,
+    filters: string,
+    faq: string,
+    addToCart: string,
+    stripeSetup: string,
+    stripeLogin: string,
+    proceedToCheckout: string, 
+    viewCart: string,
+    showMore: string,
+    showLess: string,
+    browseCatalog: string,
+    findResources: string,
+  },
 
   messages: {
-    noAccount: string;
-    emailValid: string;
-    emailLackRequirements: string;
-    passwordLength: string;
-    passwordValid: string;
-    passwordLackRequirements: string;
-    phoneLackRequirements: string;
-    phoneValid: string;
-    passwordMatch: string;
-    passwordReset: string;
-    forgotPassword: string;
-    alreadyAccount: string;
-    error404: string;
-    onlyProvider: string;
-    signInAsProvider: string;
-    checkEmail: string;
-    checkConfirmEmail: string;
-    signIn: string;
-    createProviderAccount: string;
-    createClientAccount: string;
-    viewProviderAccount: string;
-    noPosts: string;
-    noPost: string;
-    selectAnImage: string;
-    noProvider: string;
-    translation: string;
-    translations: string;
-    clickWrap1: string;
-    clickWrap2: string;
-    fetch: string;
-    todoFetch: string;
-    mustSignIn: string;
-    profileEdits: string;
-    noClient: string;
-    noPostsSearch: string;
-    noStripeAccount: string;
-  };
+    noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
+    passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
+    passwordMatch: string,
+    passwordReset: string,
+    forgotPassword: string,
+    alreadyAccount: string,
+    error404: string,
+    onlyProvider: string,
+    signInAsProvider: string,
+    checkEmail: string,
+    checkConfirmEmail: string,
+    signIn: string,
+    createProviderAccount: string,
+    createClientAccount: string,
+    viewProviderAccount: string,
+    noPosts: string,
+    noPost: string,
+    selectAnImage: string,
+    noProvider: string,
+    translation: string,
+    translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
+    profileEdits: string,
+    noClient: string,
+    noPostsSearch: string,
+    noStripeAccount: string,
+    selectSubject: string,
+  },
 
   formLabels: {
     title: string;
