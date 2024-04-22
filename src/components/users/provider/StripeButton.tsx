@@ -19,21 +19,19 @@ const { data: stripeData, error: stripeError } = await supabase
 
 if (stripeError) {
   console.log("Stripe Error: " + stripeError.message);
-} 
+}
 if (!stripeData) {
   console.log("No Stripe ID found");
 } else {
-    console.log(stripeData)
+  console.log(stripeData);
 }
 
 // Improvement: This probably shouldn't be needed in the button like this the page should check that before loading the button at all. But this works for now.
-if (stripeData === null ||stripeData.length === 0) {
-    alert(t("messages.noProvider"));
-    location.href = `/${lang}/provider/createaccount`;
+if (stripeData === null || stripeData.length === 0) {
+  alert(t("messages.noProvider"));
+  location.href = `/${lang}/provider/createaccount`;
 }
 const stripeId = stripeData![0].stripe_connected_account_id;
-
-  
 
 const stripeAcctSetup = await stripe.accounts.retrieve(stripeId).then((res) => {
   return res.charges_enabled;
@@ -41,7 +39,8 @@ const stripeAcctSetup = await stripe.accounts.retrieve(stripeId).then((res) => {
 
 export const StripeButton = () => {
   const [isUser, setIsUser] = createSignal<boolean | null>(false);
-  const [accountSetup, setAccountSetup] = createSignal<boolean>(stripeAcctSetup);
+  const [accountSetup, setAccountSetup] =
+    createSignal<boolean>(stripeAcctSetup);
 
   if (User.session === null) {
     // console.log("User don't exist");
@@ -51,11 +50,11 @@ export const StripeButton = () => {
 
   async function stripeSetup() {
     const accountLink = await stripe.accountLinks.create({
-        account: stripeId,
-        refresh_url: SITE.url + "/provider/profile",
-        return_url: SITE.url + "/provider/profile",
-        type: "account_onboarding",
-      });
+      account: stripeId,
+      refresh_url: SITE.url + "/provider/profile",
+      return_url: SITE.url + "/provider/profile",
+      type: "account_onboarding",
+    });
     window.open(accountLink.url, "_blank");
   }
 
@@ -72,14 +71,13 @@ export const StripeButton = () => {
     if (accountSetup() === false) {
       return (
         <div class="">
-        <button
-          onclick={stripeSetup}
-          class="rounded-lg border border-border1 dark:border-border1-DM px-3 py-2 mr-4 md:mr-0 flex"
-          aria-label={t("buttons.stripeSetup")}
-        >
-           {t("buttons.stripeSetup")}
-
-        </button>
+          <button
+            onclick={stripeSetup}
+            class="flex py-2 px-3 mr-4 rounded-lg border md:mr-0 border-border1 dark:border-border1-DM"
+            aria-label={t("buttons.stripeSetup")}
+          >
+            {t("buttons.stripeSetup")}
+          </button>
         </div>
       );
     }
@@ -89,13 +87,13 @@ export const StripeButton = () => {
     if (accountSetup() === true) {
       return (
         <div class="">
-        <button
-          onclick={stripeLogin}
-          class="rounded-lg border border-border1 dark:border-border1-DM px-3 py-2 mr-4 md:mr-0 flex"
-          aria-label={t("buttons.stripeLogin")}
-        >
+          <button
+            onclick={stripeLogin}
+            class="flex py-2 px-3 mr-4 rounded-lg border md:mr-0 border-border1 dark:border-border1-DM"
+            aria-label={t("buttons.stripeLogin")}
+          >
             {t("buttons.stripeLogin")}
-        </button>
+          </button>
         </div>
       );
     }

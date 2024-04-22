@@ -175,14 +175,14 @@ SELECT pg_catalog.setval('"pgsodium"."key_key_id_seq"', 1, false);
 -- Name: Country_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."Country_id_seq"', 1, false);
+SELECT pg_catalog.setval('"public"."Country_id_seq"', 1, true);
 
 
 --
 -- Name: Location_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."Location_id_seq"', 1, true);
+SELECT pg_catalog.setval('"public"."Location_id_seq"', 15, true);
 
 
 --
@@ -196,14 +196,14 @@ SELECT pg_catalog.setval('"public"."governing_district_id_seq"', 1, false);
 -- Name: language_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."language_id_seq"', 1, false);
+SELECT pg_catalog.setval('"public"."language_id_seq"', 1, true);
 
 
 --
 -- Name: major_municipality_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."major_municipality_id_seq"', 1, false);
+SELECT pg_catalog.setval('"public"."major_municipality_id_seq"', 51, true);
 
 
 --
@@ -214,31 +214,31 @@ SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 
 
 --
--- Name: post_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: post_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 3, true);
+SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 8, true);
 
 
 --
 -- Name: seller_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."seller_post_id_seq"', 6, true);
+SELECT pg_catalog.setval('"public"."seller_post_id_seq"', 12, true);
 
 
 --
 -- Name: sellers_seller_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 3, true);
+SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
 
 
 --
 -- Name: hooks_id_seq; Type: SEQUENCE SET; Schema: supabase_functions; Owner: supabase_functions_admin
 --
 
-SELECT pg_catalog.setval('"supabase_functions"."hooks_id_seq"', 1, false);
+SELECT pg_catalog.setval('"supabase_functions"."hooks_id_seq"', 1, true);
 
 
 --
@@ -246,4 +246,3 @@ SELECT pg_catalog.setval('"supabase_functions"."hooks_id_seq"', 1, false);
 --
 
 RESET ALL;
-
