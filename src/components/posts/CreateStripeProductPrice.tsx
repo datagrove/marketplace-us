@@ -16,7 +16,7 @@ async function postStripeData(stripeData: FormData) {
   });
   const data = await response.json();
   if (data.redirect) {
-    alert(data.message); 
+    alert(data.message);
     window.location.href = `/${lang}` + data.redirect;
   }
   return data;
@@ -35,7 +35,11 @@ interface Props {
 export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
   const [stripeData, setStripeData] = createSignal<FormData>();
   const [response] = createResource(stripeData, postStripeData);
-  async function createProduct(name: string, description: string, tax_code: string) {
+  async function createProduct(
+    name: string,
+    description: string,
+    tax_code: string,
+  ) {
     return stripe.products.create({
       name: name,
       description: description,
@@ -52,8 +56,12 @@ export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
   }
 
   async function createPriceAndProduct() {
-    console.log("Stripe Tax Code: " + props.tax_code)
-    const product = await createProduct(props.name, props.description, props.tax_code);
+    console.log("Stripe Tax Code: " + props.tax_code);
+    const product = await createProduct(
+      props.name,
+      props.description,
+      props.tax_code,
+    );
     const price = await createPrice(product, props.price);
     const stripeData = new FormData();
     stripeData.append("price_id", price.id);

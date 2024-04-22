@@ -8,18 +8,17 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject;
-const productCategoryData = values.productCategoryInfo;
+const productCategoryData = values.subjectCategoryInfo;
 
 import rightArrow from "../../assets/categoryIcons/circled-right-arrow.svg";
 import leftArrow from "../../assets/categoryIcons/circled-left-arrow.svg";
-import garden from "../../assets/categoryIcons/garden.svg";
 import history from "../../assets/categoryIcons/history.svg";
 import art from "../../assets/categoryIcons/art.svg";
 import geography from "../../assets/categoryIcons/geography.svg";
 import math from "../../assets/categoryIcons/math.svg";
 import science from "../../assets/categoryIcons/science.svg";
 import specialty from "../../assets/categoryIcons/specialty.svg";
-import holiday from "../../assets/categoryIcons/history.svg";
+import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
 // import travel from "../../assets/categoryIcons/travel.svg";
 // import worker from "../../assets/categoryIcons/worker.svg";
@@ -81,7 +80,7 @@ categories.map((category) => {
   // }
 });
 
-const categoriesData = productCategoryData.categories;
+const categoriesData = productCategoryData.subjects;
 
 let allCategoryInfo: any[] = [];
 
@@ -96,7 +95,7 @@ for (let i = 0; i < categoriesData.length; i++) {
 
 interface Props {
   // Define the type for the filterPosts prop
-  filterPosts: (currentCategory: number) => void;
+  filterPosts: (currentCategory: string) => void;
 }
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -118,7 +117,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
               id={item.id}
               class="flex flex-col flex-none justify-start items-center w-20 h-28 catBtn"
               onClick={(e) => {
-                props.filterPosts(item.id);
+                props.filterPosts(item.id.toString());
 
                 let currBtn = e.target;
 

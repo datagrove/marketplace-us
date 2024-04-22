@@ -2,6 +2,7 @@ import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
+import { log } from "node_modules/astro/dist/core/logger/core";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const formData = await request.formData();
@@ -27,6 +28,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
+  console.log(formData);
 
   // Validate the formData - you'll probably want to do more than this
   if (
@@ -131,24 +133,25 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (countryError) {
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.noCountry")),
-      }),
-      { status: 500 }
-    );
-  }
-
-  const { data: subjectId, error: subjectError } = await supabase
-    .from("post_subject")
-    .select("id")
-    .eq("id", subject);
-  if (subjectError) {
-    return new Response(
-      JSON.stringify({
-        message: t("apiErrors.noCategory"),
+        message: t("apiErrors.noCountry"),
       }),
       { status: 500 },
     );
   }
+
+  // const { data: subjectId, error: subjectError } = await supabase
+  //   .from("post_subject")
+  //   .select("id")
+  //   .eq("id", subject);
+  // if (subjectError) {
+  //   console.log(subjectError);
+  //   return new Response(
+  //     JSON.stringify({
+  //       message: t("apiErrors.noCategory"),
+  //     }),
+  //     { status: 500 },
+  //   );
+  // }
 
   let locationSubmission = {
     // minor_municipality: minorMunicipalityId[0].id,
@@ -176,11 +179,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     title: title,
     content: content,
     location: location[0].id,
-    product_subject: subjectId[0].id,
+    product_subject: JSON.parse(subject),
     image_urls: imageUrl,
     user_id: user.id,
   };
-
   const { error, data } = await supabase
     .from("seller_post")
     .insert([postSubmission])
