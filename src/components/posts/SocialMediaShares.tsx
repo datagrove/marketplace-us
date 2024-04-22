@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
@@ -24,17 +25,11 @@ const emailURL =
 const linkTarget = "_top";
 const windowOptions = "menubar=no,status=no,height=300,width=600";
 
-interface Post {
-    id: number;
-    title: string;
-    image_urls: string | null;
-}
-
 interface Props {
     id: string | undefined;
 }
 
-export const SocialMediaShares: Component<Post> = (props) => {
+export const SocialMediaShares: Component<Partial<Post>> = (props) => {
     const showSocials = async (e: SubmitEvent) => {
         e.preventDefault();
 

@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import { MobileViewCard } from "@components/services/MobileViewCard";
@@ -15,29 +16,13 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-// Define the type for the ProviderPost interface
-interface ProviderPost {
-  content: string;
-  id: number;
-  subject: string;
-  title: string;
-  seller_name: string;
-  major_municipality: string;
-  user_id: string;
-  image_urls: string | null;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
-  category: string;
-}
 
 // Get the user session
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewProviderPosts: Component = () => {
   // initialize posts and session
-  const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
+  const [posts, setPosts] = createSignal<Array<Post>>([]);
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
   if (UserError) {
@@ -61,12 +46,16 @@ export const ViewProviderPosts: Component = () => {
     } else {
       const newItems = await Promise.all(
         data?.map(async (item) => {
-          productCategories.forEach((productCategories) => {
-            if (item.product_subject.toString() === productCategories.id) {
-              item.subject = productCategories.name;
-            }
-          });
-          delete item.product_subject;
+					item.subject = [];
+					productCategories.forEach((productCategories) => {
+						item.product_subject.map((productSubject: string) => {
+							if (productSubject === productCategories.id) {
+								item.subject.push(productCategories.name);
+								console.log(productCategories.name);
+							}
+						});
+					});
+					delete item.product_subject;
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);

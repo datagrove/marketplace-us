@@ -8,8 +8,8 @@ import * as allFilters from "../posts/fetchPosts";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-const values = ui[lang] as unknown as uiObject
-const productCategories = values.productCategoryInfo.categories
+const values = ui[lang] as uiObject
+const productCategories = values.subjectCategoryInfo.subjects
 
 //all subjects in the database
 let subjects_array: Array<{ product_subject: string; id: number }> = [];

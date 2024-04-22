@@ -5,8 +5,8 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
-const values = ui[lang] as unknown as uiObject;
-const productCategoryData = values.productCategoryInfo;
+const values = ui[lang] as uiObject;
+const productCategoryData = values.subjectCategoryInfo;
 
 import rightArrow from "../../assets/categoryIcons/circled-right-arrow.svg";
 import leftArrow from "../../assets/categoryIcons/circled-left-arrow.svg";
@@ -51,7 +51,7 @@ categories.map((category) => {
   }
 });
 
-const categoriesData = productCategoryData.categories;
+const categoriesData = productCategoryData.subjects;
 
 let allCategoryInfo: any[] = [];
 

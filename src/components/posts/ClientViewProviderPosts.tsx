@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import supabase from "../../lib/supabaseClient";
@@ -13,30 +14,12 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-interface ProviderPost {
-	user_id: string;
-	content: string;
-	id: number;
-	image_url: string | undefined;
-	seller_img: string | undefined;
-	//TODO: update this to allow a list of Subjects
-	subject: Array<string>;
-	title: string;
-	seller_name: string;
-	major_municipality: string;
-	image_urls: string;
-	price: number;
-	price_id: string;
-	quantity: number;
-	product_id: string;
-}
-
 interface Props {
 	id: string | undefined;
 }
 
 export const ClientViewProviderPosts: Component<Props> = (props) => {
-	const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
+	const [posts, setPosts] = createSignal<Array<Post>>([]);
 
 	createEffect(async () => {
 		const { data, error } = await supabase
@@ -51,6 +34,7 @@ export const ClientViewProviderPosts: Component<Props> = (props) => {
 		} else {
 			const newItems = await Promise.all(
 				data?.map(async (item) => {
+					item.subject = [];
 					productCategories.forEach((productCategories) => {
 						item.product_subject.map((productSubject: string) => {
 							if (productSubject === productCategories.id) {

@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
@@ -12,25 +13,6 @@ import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-interface Post {
-  content: string;
-  id: number;
-  subject: Array<string>;
-  title: string;
-  seller_name: string;
-  major_municipality: string;
-  image_url: string | undefined;
-  seller_img: string | undefined;
-  // minor_municipality: string;
-  // governing_district: string;
-  user_id: string;
-  image_urls: string | null;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
-}
 
 interface Props {
   // Define the type for the filterPosts prop
@@ -94,13 +76,11 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
   };
 
-  function changeShowBtn(e: Event) {
-    let postID = e?.target.id.slice(0, 1);
+  function changeShowBtn(postId: number) {
+    let postID = postId.toString();
     let showMoreID = `${postID}more`;
     let showLessID = `${postID}less`;
     let postContentID = `${postID}content`;
-
-    console.log("e.target: ", e.target);
 
     console.log("id: ", postID);
 
@@ -138,13 +118,13 @@ export const MobileViewCard: Component<Props> = (props) => {
 
   return (
     <div class="min-w-[270px]">
-      {newPosts().map((post: any) => (
+      {newPosts().map((post: Post) => (
         <div class="my-4 rounded border border-border1 dark:border-border1-DM">
           <div class="flex justify-between w-full photo-price">
             {post.image_url ? (
               <img
                 src={post.image_url}
-                alt={post.image_urls.split(",")[0] ? "User Image" : "No image"}
+                alt={post.image_urls!.split(",")[0] ? "User Image" : "No image"}
                 class="object-cover w-full h-full rounded-lg bg-background1 dark:bg-icon1-DM"
               />
             ) : (
@@ -186,11 +166,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                 <h6 class="font-bold text-[10px]">
                   {t("formLabels.subjects")}
                 </h6>
-                {post.subject.map((post2: string) => {
-                  return <p class="font-light text-[10px]">{post2.subject}</p>;
+                {post.subject.map((subject: string) => {
+                  return <p class="font-light text-[10px]">{subject}</p>;
                 })}
-                <p class="font-light text-[10px]">{post.subject}</p>
-                <p class="font-light text-[10px]">Reading</p>
               </div>
 
               <div class="flex flex-col justify-end items-end py-1">
@@ -223,13 +201,13 @@ export const MobileViewCard: Component<Props> = (props) => {
           </div>
 
           <div
-            id={post.id}
+            id={post.id.toString()}
             class="flex flex-wrap items-center w-full show-more"
           >
             <button
               id={`${post.id}more`}
               class="flex justify-center w-full"
-              onclick={changeShowBtn}
+              onclick={(e) => changeShowBtn(post.id)}
             >
               <p class={`${post.id}more pr-1 text-htext1 dark:text-htext1-DM`}>
                 {t("buttons.showMore")}
@@ -253,7 +231,7 @@ export const MobileViewCard: Component<Props> = (props) => {
             <button
               id={`${post.id}less`}
               class="hidden justify-center w-full"
-              onclick={changeShowBtn}
+              onclick={(e) =>changeShowBtn(post.id)}
             >
               <p class="pr-1 text-htext1 dark:text-htext1-DM">
                 {t("buttons.showLess")}
@@ -276,7 +254,7 @@ export const MobileViewCard: Component<Props> = (props) => {
 
             <div
               id={`${post.id}content`}
-              class="flex hidden flex-col justify-start w-full"
+              class="hidden flex-col justify-start w-full"
             >
               <p class="mb-2 text-[10px] text-start line-clamp-3">
                 {post.content}
@@ -387,7 +365,7 @@ export const MobileViewCard: Component<Props> = (props) => {
           </div>
 
           <div class="px-1 my-2 w-full cart">
-            <Show when={session()!.user.id !== post.user_id}>
+            <Show when={session() === null || session()?.user.id !== post.user_id}>
               <AddToCart
                 description={post.title}
                 price={post.price}

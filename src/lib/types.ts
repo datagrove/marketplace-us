@@ -1,0 +1,23 @@
+export interface Post {
+    //Posts should be pulled from the sellerposts view
+    id: number; //Post ID used for directing to the post details page
+    title: string; //Title of the post
+    content: string; //Main body of the post (HTML)
+    user_id: string; //User ID of the seller
+    image_urls: string | null; //Array of image URLs for the post
+    major_municipality: string; //Municipality of the seller
+    minor_municipality: string; //Minor municipality of the seller
+    governing_district: string; //Governing district of the seller
+    seller_name: string; //Name of the seller
+    seller_id: string; //User ID of the seller, used for directing to the seller details page
+    email: string; //Email of the seller
+    price_id: string; //Stripe Price ID of the post
+    product_id: string; //Stripe Product ID of the post
+    subject: Array<string>; //Array of subject IDs, does not contain actual subject names
+    
+    //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
+    image_url: string | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
+    seller_img: string | undefined; //Profile Image of the seller
+    price: number; //Price of the post
+    quantity: number; //Quantity to add to cart from post
+  }

@@ -18,6 +18,9 @@ interface Item {
   quantity: number;
 }
 
+//Clean up localStorage for testing
+//localStorage.removeItem("cartItems");
+
 export const Cart = () => {
   const [totalItems, setTotalItems] = createSignal(0);
 

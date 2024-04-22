@@ -1,28 +1,29 @@
 import { createSignal, Show, createEffect, onCleanup } from "solid-js";
 import type { Component, JSX } from "solid-js";
+import type { Post } from "@lib/types";
 import { SocialMediaShares } from "./SocialMediaShares";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-interface Post {
-  id: number;
-  title: string;
-  image_urls: string | null;
-}
+// interface Post {
+//   id: number;
+//   title: string;
+//   image_urls: string | null;
+// }
 
-type ModalProps = {
-  children: JSX.Element;
-  // id: string;
-  posts: Array<Post>;
-};
+// type ModalProps = {
+//   children: JSX.Element;
+//   // id: string;
+//   posts: Array<Post>;
+// };
 
 interface Props {
-  posts: Array<Post>;
+  post: Post;
 }
 
-const SocialModal: Component<Post> = function (props) {
+const SocialModal: Component<Props> = (props: Props) => {
   const [isOpen, setIsOpen] = createSignal(false);
 
   function openModal(e: Event) {
@@ -96,9 +97,9 @@ const SocialModal: Component<Post> = function (props) {
           <div class="rounded-lg flex flex-col-reverse items-end w-[75vMin] md:w-[50vMin] h-[58vMin] z-50 bg-background2 dark:bg-background2-DM">
 
             <SocialMediaShares
-              id={props.id}
-              title={props.title}
-              image_urls={props.image_urls}
+              id={props.post.id}
+              title={props.post.title}
+              image_urls={props.post.image_urls}
             />
 
             <button

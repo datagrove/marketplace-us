@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createSignal, createEffect, Show } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ui } from '../../i18n/ui'
@@ -9,26 +10,9 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 // const values = ui[lang] as uiObject
-const values = ui[lang] as unknown as uiObject
-const productCategories = values.productCategoryInfo.categories
+const values = ui[lang] as uiObject
+const productCategories = values.subjectCategoryInfo.subjects
 
-interface Post {
-    content: string;
-    id: number;
-    subject: string;
-    title: string;
-    seller_name: string;
-    seller_img: string;
-    major_municipality: string;
-    // minor_municipality: string;
-    // governing_district: string;
-    user_id: string;
-    image_urls: string | null;
-    price: number;
-    price_id: string;
-    quantity: number;
-    product_id: string;
-  }
 
   interface Props {
     // Define the type for the filterPosts prop

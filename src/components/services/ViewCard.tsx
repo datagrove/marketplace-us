@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
@@ -11,25 +12,6 @@ import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-interface Post {
-  content: string;
-  id: number;
-  subject: Array<string>;
-  title: string;
-  seller_name: string;
-  major_municipality: string;
-  seller_img: string | undefined;
-  // minor_municipality: string;
-  // governing_district: string;
-  user_id: string;
-  image_urls: string | null;
-  image_url: string | undefined;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
-}
 
 interface Props {
   // Define the type for the filterPosts prop
@@ -46,7 +28,12 @@ export const ViewCard: Component<Props> = (props) => {
   if (UserError) {
     console.log("User Error: " + UserError.message);
   } else {
+    if (User.session === null) {
+      console.log("User Session: " + User.session);
+      setSession(null);
+    } else {
     setSession(User.session);
+    }
   }
 
   createEffect(async () => {
@@ -307,7 +294,7 @@ export const ViewCard: Component<Props> = (props) => {
                   </div>
 
                   <div class="flex flex-col justify-center items-end mb-1 w-full">
-                    <Show when={session()!.user.id !== post.user_id}>
+                    <Show when={session() === null || session()?.user.id !== post.user_id}>
                       <AddToCart
                         description={post.title}
                         price={post.price}
