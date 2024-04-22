@@ -467,7 +467,6 @@ export const French = {
         ariaLabel: "Spécialité",
         id: "8",
       },
-      // { name: "Nettoyage", description: "Services de nettoyage", ariaLabel: "Nettoyage", id: "8" },
       // Add more products as needed
     ],
   },
