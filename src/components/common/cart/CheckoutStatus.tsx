@@ -7,6 +7,7 @@ import {
   onMount,
 } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { items, setItems } from "@components/common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -35,6 +36,8 @@ export const CheckoutStatus: Component = () => {
     } else if (session.status === "complete") {
       document.getElementById("success")?.classList.remove("hidden");
       document.getElementById("success")?.classList.add("flex");
+      localStorage.removeItem("cartItems");
+      setItems([]);
     }
   }
 
