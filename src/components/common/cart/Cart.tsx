@@ -5,21 +5,16 @@ import {
   onMount,
   onCleanup,
 } from "solid-js";
+import type { Post } from "@lib/types";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-interface Item {
-  description: string;
-  price: number;
-  price_id: string;
-  quantity: number;
-}
 
 //Clean up localStorage for testing
-//localStorage.removeItem("cartItems");
+// localStorage.removeItem("cartItems");
 
 export const Cart = () => {
   const [totalItems, setTotalItems] = createSignal(0);
@@ -72,7 +67,7 @@ export const Cart = () => {
   function shoppingCart() {
     if (items.length > 0) {
       let total = 0;
-      items.forEach((item: Item) => {
+      items.forEach((item: Post) => {
         total += item.price * item.quantity;
       });
       return (
@@ -84,10 +79,10 @@ export const Cart = () => {
             <div class="inline-block text-start">{t("cartLabels.price")}</div>
           </div>
           <ul>
-            {items.map((item: Item) => (
+            {items.map((item: Post) => (
               <div class="grid justify-between mt-2 border-t-2 border-border1 dark:border-border1-DM pb-2 grid-cols-5">
                 <div class="col-span-3 inline-block mr-2">
-                  {item.description}
+                  {item.title}
                 </div>
 
                 <div class="inline-block text-center">{item.quantity}</div>

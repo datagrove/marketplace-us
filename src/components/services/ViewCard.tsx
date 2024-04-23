@@ -32,7 +32,7 @@ export const ViewCard: Component<Props> = (props) => {
       console.log("User Session: " + User.session);
       setSession(null);
     } else {
-    setSession(User.session);
+      setSession(User.session);
     }
   }
 
@@ -44,13 +44,17 @@ export const ViewCard: Component<Props> = (props) => {
         props.posts.map(async (post: Post) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
-              post.image_urls.split(",")[0],
-            ))
+                post.image_urls.split(",")[0]
+              ))
             : (post.image_url = undefined);
+
+          post.seller_img
+            ? (post.seller_img = await downloadSellerImage(post.seller_img))
+            : null;
           // Set the default quantity to 1
           post.quantity = 1;
           return post;
-        }),
+        })
       );
 
       setNewPosts(updatedPosts);
@@ -69,6 +73,23 @@ export const ViewCard: Component<Props> = (props) => {
     try {
       const { data, error } = await supabase.storage
         .from("post.image")
+        .download(path);
+      if (error) {
+        throw error;
+      }
+      const url = URL.createObjectURL(data);
+      return url;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error downloading image: ", error.message);
+      }
+    }
+  };
+
+  const downloadSellerImage = async (path: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from("user.image")
         .download(path);
       if (error) {
         throw error;
@@ -294,14 +315,14 @@ export const ViewCard: Component<Props> = (props) => {
                   </div>
 
                   <div class="flex flex-col justify-center items-end mb-1 w-full">
-                    <Show when={session() === null || session()?.user.id !== post.user_id}>
+                    <Show
+                      when={
+                        session() === null ||
+                        session()?.user.id !== post.user_id
+                      }
+                    >
                       <AddToCart
-                        description={post.title}
-                        price={post.price}
-                        price_id={post.price_id}
-                        product_id={post.product_id}
-                        // quantity= {quantity()}
-                        quantity={1}
+                        item={{ ...post, quantity: 1 }}
                         buttonClick={resetQuantity}
                       />
                     </Show>

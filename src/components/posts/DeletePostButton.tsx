@@ -84,7 +84,7 @@ export const DeletePostButton: Component<Props> = (props) => {
   //         console.log(data)
 
   return (
-    <Show when={session() !== null && session()!.user.id !== props.userId}>
+    <Show when={session() !== null && session()!.user.id === props.userId}>
       <div class="w-fit h-fit">
         <form onSubmit={deletePost}>
           <button

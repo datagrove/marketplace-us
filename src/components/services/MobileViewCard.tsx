@@ -38,13 +38,18 @@ export const MobileViewCard: Component<Props> = (props) => {
         props.posts.map(async (post: any) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
-              post.image_urls.split(",")[0],
-            ))
+                post.image_urls.split(",")[0]
+              ))
             : (post.image_url = null);
+
+          post.seller_img
+            ? (post.seller_img = await downloadSellerImage(post.seller_img))
+            : null;
+
           // Set the default quantity to 1
           post.quantity = 1;
           return post;
-        }),
+        })
       );
 
       setNewPosts(updatedPosts);
@@ -75,6 +80,24 @@ export const MobileViewCard: Component<Props> = (props) => {
       }
     }
   };
+
+  const downloadSellerImage = async (path: string) => {
+    try {
+      const { data, error } = await supabase.storage
+        .from("user.image")
+        .download(path);
+      if (error) {
+        throw error;
+      }
+      const url = URL.createObjectURL(data);
+      return url;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Error downloading image: ", error.message);
+      }
+    }
+  };
+
 
   function changeShowBtn(postId: number) {
     let postID = postId.toString();
@@ -231,7 +254,7 @@ export const MobileViewCard: Component<Props> = (props) => {
             <button
               id={`${post.id}less`}
               class="hidden justify-center w-full"
-              onclick={(e) =>changeShowBtn(post.id)}
+              onclick={(e) => changeShowBtn(post.id)}
             >
               <p class="pr-1 text-htext1 dark:text-htext1-DM">
                 {t("buttons.showLess")}
@@ -365,13 +388,11 @@ export const MobileViewCard: Component<Props> = (props) => {
           </div>
 
           <div class="px-1 my-2 w-full cart">
-            <Show when={session() === null || session()?.user.id !== post.user_id}>
+            <Show
+              when={session() === null || session()?.user.id !== post.user_id}
+            >
               <AddToCart
-                description={post.title}
-                price={post.price}
-                price_id={post.price_id}
-                product_id={post.product_id}
-                quantity={1}
+                item={{ ...post, quantity: 1 }}
                 buttonClick={resetQuantity}
               />
             </Show>

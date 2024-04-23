@@ -11,7 +11,8 @@
         "@i18n/*" : ["src/i18n/*"],
         "@utils/*" : ["src/utils/*"],
         "@assets/*" : ["src/assets/*"],
-        "@lib/*" : ["src/lib/*"]
+        "@lib/*" : ["src/lib/*"],
+        "@src/*": ["src/*"]
     },
     "types": ["vite-plugin-pwa/client"],
   }
