@@ -412,7 +412,7 @@ export const English = {
       {
         name: "Geography",
         description: "Geography description",
-        ariaLabel: "Gardening",
+        ariaLabel: "Geography",
         id: "1",
       },
       {

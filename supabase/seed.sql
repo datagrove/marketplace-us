@@ -100,20 +100,6 @@ INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_pho
 	('84a298b6-9caf-4305-9bfe-3ea325df9188', '2024-03-05 15:37:01.129356+00', 1, 10001, 'German', NULL);
 
 
---
--- Data for Name: post_category; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "public"."post_subject" ("id", "subject", "language") VALUES
-	(1, 'k6', 1),
-	(2, 'k10', 1),
-	(3, 'k12', 1),
-	(4, 'Holiday', 1),
-	(5, 'Math', 1),
-	(6, 'Science', 1),
-	(7, 'Social Studies', 1),
-	(8, 'Specialty', 1);
-
 
 INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_id", "email") VALUES
 	('2024-03-19 18:42:48.238071+00', 'test', 'test', 'a23376db-215d-49c4-9d9d-791c26579543', 'test4@test.com'),
@@ -212,12 +198,6 @@ SELECT pg_catalog.setval('"public"."major_municipality_id_seq"', 51, true);
 
 SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 
-
---
--- Name: post_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 8, true);
 
 
 --
