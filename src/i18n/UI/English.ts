@@ -148,8 +148,10 @@ export const English = {
     profileEdits:
       "Profile edits will only be saved after clicking the Save Profile button!",
     noClient: "No Client found.",
-    noPostsSearch: "No posts match this specific search - please try a different filter or key word",
-    noStripeAccount: "You must complete enrollment with Stripe before posting resources.",
+    noPostsSearch:
+      "No posts match this specific search - please try a different filter or key word",
+    noStripeAccount:
+      "You must complete enrollment with Stripe before posting resources.",
     selectSubject: "Please select at least one subject",
   },
 
@@ -188,6 +190,8 @@ export const English = {
     resourceTypes: "Resource Types",
     standards: "Standards",
     fileTypes: "",
+    chooseSubject: "Subject(s)",
+    chooseGrade: "Grade Level(s)",
   },
 
   postLabels: {
@@ -249,6 +253,8 @@ export const English = {
       "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider profile. Since this is your legal name, the same first and last name must be used on your client and provider profiles.",
     languages:
       "Please select the languages in which you are able to conduct business. These will be displayed on your profile for clients.",
+    subjects: "Please select all the subjects covered by your resource. These will be used for filtering of resources for shoppers.",
+    grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
   },
 
   apiErrors: {

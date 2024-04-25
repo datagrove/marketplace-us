@@ -168,6 +168,8 @@ export interface uiObject {
     resourceTypes: string;
     standards: string;
     fileTypes: string;
+    chooseSubject: string;
+    chooseGrade: string;
   };
 
   postLabels: {
@@ -217,6 +219,8 @@ export interface uiObject {
     firstNameEdit: string;
     lastNameEdit: string;
     languages: string;
+    subjects: string;
+    grades: string;
   };
 
   apiErrors: {

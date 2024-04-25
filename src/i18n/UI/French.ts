@@ -144,15 +144,20 @@ export const French = {
     selectAnImage: "Vous devez sélectionner une image à télécharger.",
     noProvider: "Aucun fournisseur trouvé.",
     translation: "Traductions",
-    translations: " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
-    clickWrap1: 'En cliquant sur',
-    clickWrap2: 'vous indiquez que vous avez lu et accepté les',
-    fetch: 'Récupérer des services',
-    todoFetch: "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
-    mustSignIn: 'Vous devez être connecté pour voir les services disponibles.',
-    profileEdits: "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
-    noPostsSearch: "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
-    noStripeAccount: "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
+    translations:
+      " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+    clickWrap1: "En cliquant sur",
+    clickWrap2: "vous indiquez que vous avez lu et accepté les",
+    fetch: "Récupérer des services",
+    todoFetch:
+      "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
+    mustSignIn: "Vous devez être connecté pour voir les services disponibles.",
+    profileEdits:
+      "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+    noPostsSearch:
+      "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
+    noStripeAccount:
+      "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
     selectSubject: "Veuillez sélectionner au moins un sujet",
   },
 
@@ -191,6 +196,8 @@ export const French = {
     resourceTypes: "Types de Ressources",
     standards: "Normes",
     fileTypes: "Types de Fichier",
+    chooseSubject: "Sujet(s)",
+    chooseGrade: "Niveau(x) scolaire(s)",
   },
 
   postLabels: {
@@ -253,6 +260,8 @@ export const French = {
       "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un profil client ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos profils client et fournisseur.",
     languages:
       "Veuillez sélectionner les langues dans lesquelles vous êtes capable de faire des affaires. Ceux-ci seront affichés sur votre profil pour les clients.",
+    subjects: "Veuillez sélectionner tous les sujets couverts par votre ressource. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
+    grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
   },
 
   apiErrors: {

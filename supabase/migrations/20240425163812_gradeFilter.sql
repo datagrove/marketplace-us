@@ -112,3 +112,5 @@ SELECT pg_catalog.setval('"public"."grade_level_id_seq"', 16, true);
 --
 
 SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 8, true);
+
+alter table "public"."seller_post" add column "post_grade" text[] not null;
