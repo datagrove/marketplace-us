@@ -352,10 +352,10 @@ export interface uiObject {
   subjectCategoryInfo: {
     subjects: [
       { name: string; description: string; ariaLabel: string; id: "1" },
-      { name: string; description: string; ariaLabel: string; id: "3" },
       { name: string; description: string; ariaLabel: string; id: "2" },
-      { name: string; description: string; ariaLabel: string; id: "5" },
+      { name: string; description: string; ariaLabel: string; id: "3" },
       { name: string; description: string; ariaLabel: string; id: "4" },
+      { name: string; description: string; ariaLabel: string; id: "5" },
       { name: string; description: string; ariaLabel: string; id: "6" },
       { name: string; description: string; ariaLabel: string; id: "7" },
       { name: string; description: string; ariaLabel: string; id: "8" },

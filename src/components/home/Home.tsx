@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createEffect, createSignal } from "solid-js";
 import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
@@ -13,25 +14,8 @@ import * as allFilters from "../posts/fetchPosts";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-const values = ui[lang] as unknown as uiObject
-const productCategories = values.productCategoryInfo.categories
-
-interface ProviderPost {
-    user_id: string;
-    content: string;
-    id: number;
-    //TODO: update this to allow a list of Subjects
-    subject: string;
-    title: string;
-    seller_name: string;
-    seller_img: string;
-    major_municipality: string;
-    image_urls: string;
-    price: number;
-    price_id: string;
-    quantity: number;
-    product_id: string;
-}
+const values = ui[lang] as uiObject
+const productSubjects = values.subjectCategoryInfo.subjects
 
 interface Props {
     id: string | undefined;
@@ -42,10 +26,10 @@ function redirectToResourcesPage() {
 }
 
 export const Home: Component = () => {
-    const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
-    const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
-    const [popularPosts, setPopularPosts] = createSignal<Array<ProviderPost>>([]);
-    const [newPosts, setNewPosts] = createSignal<Array<ProviderPost>>([])
+    const [posts, setPosts] = createSignal<Array<Post>>([]);
+    const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
+    const [popularPosts, setPopularPosts] = createSignal<Array<Post>>([]);
+    const [newPosts, setNewPosts] = createSignal<Array<Post>>([])
     const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
     const [resourceTypeFilters, setResourceTypeFilters] = createSignal<Array<string>>([]);
@@ -67,10 +51,14 @@ export const Home: Component = () => {
         } else {
           const newItems = await Promise.all(
           data?.map(async (item) => {
-            productCategories.forEach((productCategories) => {
-              if (item.product_subject.toString() === productCategories.id) {
-                item.subject = productCategories.name;
-              }
+            item.subject = [];
+            productSubjects.forEach((productCategories) => {
+                item.product_subject.map((productSubject: string) => {
+                    if (productSubject === productCategories.id) {
+                        item.subject.push(productCategories.name);
+                        console.log(productCategories.name);
+                    }
+                });
             });
             delete item.product_subject;
     
@@ -101,12 +89,18 @@ export const Home: Component = () => {
         } else {
             const popItems = await Promise.all(
                 data?.map(async(item) => {
-                    productCategories.forEach((productCategories) => {
-                        if(item.product_subject.toString() === productCategories.id) {
-                            item.subject = productCategories.name;
-                        }
+                    item.subject = [];
+                    productSubjects.forEach((productCategories) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === productCategories.id) {
+                                item.subject.push(productCategories.name);
+                                console.log(productCategories.name);
+                            }
+                        });
                     });
                     delete item.product_subject;
+
+                    
 
                     if(item.price_id !== null) {
                         const priceData = await stripe.prices.retrieve(item.price_id);

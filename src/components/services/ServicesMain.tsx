@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
@@ -19,52 +20,19 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-const { data: user, error: userError } = await supabase.auth.getSession();
-if (userError) {
-  console.log(userError);
-}
-if (user.session === null || user.session === undefined) {
-  alert(t("messages.signIn"));
-  location.href = `/${lang}/login`;
-}
-
-// const { data, error } = await supabase.from("sellerposts").select("*");
-
-// data?.map(async (item) => {
-//   productCategories.forEach((productCategories) => {
-//     if (item.product_category.toString() === productCategories.id) {
-//       item.category = productCategories.name;
-//     }
-//   });
-//   delete item.product_category;
-
-//   if (item.price_id !== null) {
-//     const priceData = await stripe.prices.retrieve(item.price_id);
-//     item.price = priceData.unit_amount! / 100;
-//   }
-// });
-
-interface ProviderPost {
-  content: string;
-  id: number;
-  subject: Array<string>;
-  title: string;
-  seller_name: string;
-  major_municipality: string;
-  // minor_municipality: string;
-  // governing_district: string;
-  user_id: string;
-  image_urls: string;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
-}
+// const { data: user, error: userError } = await supabase.auth.getSession();
+// if (userError) {
+//   console.log(userError);
+// }
+// if (user.session === null || user.session === undefined) {
+//   alert(t("messages.signIn"));
+//   location.href = `/${lang}/login`;
+// }
 
 export const ServicesView: Component = () => {
-  const [posts, setPosts] = createSignal<Array<ProviderPost>>([]);
-  const [searchPost, setSearchPost] = createSignal<Array<ProviderPost>>([]);
-  const [currentPosts, setCurrentPosts] = createSignal<Array<ProviderPost>>([]);
+  const [posts, setPosts] = createSignal<Array<Post>>([]);
+  const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
+  const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
   const [filters, setFilters] = createSignal<Array<string>>([]);
   const [locationFilters, setLocationFilters] = createSignal<Array<string>>([]);
   const [minorLocationFilters, setMinorLocationFilters] = createSignal<
@@ -101,9 +69,6 @@ export const ServicesView: Component = () => {
                 console.log(productCategories.name);
               }
             });
-            // if (item.product_subject.toString() === productCategories.id) {
-            //   item.subject = productCategories.name;
-            // }
           });
           delete item.product_subject;
 

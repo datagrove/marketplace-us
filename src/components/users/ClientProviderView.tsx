@@ -35,11 +35,8 @@ interface Props {
   id: string | undefined;
 }
 
-const { data: User, error: UserError } = await supabase.auth.getSession();
-
 export const ClientProviderView: Component<Props> = (props) => {
   const [provider, setProvider] = createSignal<Provider>();
-  const [session, setSession] = createSignal<AuthSession | null>(null);
   const [providerImage, setProviderImage] = createSignal<string>();
   const [languageSpoken, setLanguageSpoken] = createSignal<string[]>([]);
 
@@ -47,13 +44,12 @@ export const ClientProviderView: Component<Props> = (props) => {
     if (props.id === undefined) {
       location.href = `/${lang}/404`;
     } else if (props.id) {
-      setSession(User.session);
       fetchProvider(+props.id);
     }
   });
 
   const fetchProvider = async (id: number) => {
-    if (session()) {
+
       try {
         const { data, error } = await supabase
           .from("sellerview")
@@ -102,10 +98,6 @@ export const ClientProviderView: Component<Props> = (props) => {
       } catch (error) {
         console.log(error);
       }
-    } else {
-      alert(t("messages.signIn"));
-      location.href = `/${lang}/login`;
-    }
   };
 
   createEffect(async () => {

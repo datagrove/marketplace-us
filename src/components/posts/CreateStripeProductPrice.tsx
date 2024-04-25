@@ -51,6 +51,7 @@ export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
     return stripe.prices.create({
       unit_amount: price,
       currency: "usd",
+      tax_behavior: "exclusive",
       product: product.id,
     });
   }

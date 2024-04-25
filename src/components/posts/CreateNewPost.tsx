@@ -23,7 +23,7 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 
 //get the categories from the language files so they translate with changes in the language picker
-const productCategoryData = values.productCategoryInfo;
+const productCategoryData = values.subjectCategoryInfo;
 
 const excludeTaxCodes = new Set([
   //Website/online dating products
@@ -108,9 +108,15 @@ async function postFormData(formData: FormData) {
   const data = await response.json();
   console.log(response.status);
   if (response.status === 200) {
+
+    //Get plain text description
+    let tmpDiv = document.createElement("div");
+    tmpDiv.innerHTML = formData.get("Content") as string;
+    let description = tmpDiv.textContent || tmpDiv.innerText || "";
+
     CreateStripeProductPrice({
       name: String(formData.get("Title")),
-      description: formData.get("Content") as string,
+      description: description,
       price: parseInt(formData.get("Price") as string),
       id: data.id,
       access_token: formData.get("access_token") as string,
@@ -138,9 +144,9 @@ export const CreateNewPost: Component = () => {
   const [selectedTaxCode, setSelectedTaxCode] =
     createSignal<HTMLOptionElement>();
 
-  productCategoryData.subjects.map((item) =>
-    setSubjects([...subjects(), { id: Number(item.id), subject: item.name }]),
-  );
+  // productCategoryData.subjects.map((item) =>
+  //   setSubjects([...subjects(), { id: Number(item.id), subject: item.name }]),
+  // );
   onMount(() => {
     window.addEventListener("storage", (event) => {
       if (event.key === "theme") {
@@ -318,8 +324,8 @@ export const CreateNewPost: Component = () => {
             required
           >
             <option value="">-</option>
-            {productCategoryData.categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+            {productCategoryData.subjects.map((subject) => (
+              <option value={subject.id}>{subject.name}</option>
             ))}
           </select>
         </label>

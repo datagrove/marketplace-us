@@ -106,7 +106,6 @@ export const ClientProfileView: Component = () => {
   });
 
   const fetchClient = async (user_id: string) => {
-    if (session()) {
       try {
         const { data, error } = await supabase
           .from("clientview")
@@ -126,10 +125,7 @@ export const ClientProfileView: Component = () => {
       } catch (error) {
         console.log(error);
       }
-    } else {
-      alert(t("messages.signIn"));
-      location.href = `/${lang}/login`;
-    }
+
   };
 
   createEffect(async () => {

@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import type { Post } from "@lib/types";
 import { createSignal, createEffect } from "solid-js";
 import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
@@ -8,34 +9,14 @@ import { items, setItems } from "@components/common/cart/AddToCartButton";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-interface Item {
-  description: string;
-  price: number;
-  price_id: string;
-  quantity: number;
-  product_id: string;
-}
-
-interface ItemDetails {
-  content: string;
-  title: string;
-  seller_name: string;
-  seller_image?: string;
-  image_urls: string | null;
-  price?: number;
-  price_id: string;
-  quantity?: number;
-  product_id: string;
-}
-
 interface Props {
   // Define the type for the filterPosts prop
-  items: Array<ItemDetails>;
+  items: Array<Post>;
   deleteItem: () => void;
 }
 
 export const CartCard: Component<Props> = (props) => {
-  const [newItems, setNewItems] = createSignal<Array<ItemDetails>>([]);
+  const [newItems, setNewItems] = createSignal<Array<Post>>([]);
   const [quantity, setQuantity] = createSignal<number>(0);
 
   createEffect(async () => {
@@ -46,11 +27,11 @@ export const CartCard: Component<Props> = (props) => {
             ? (item.image_url = await downloadImage(
                 item.image_urls.split(",")[0]
               ))
-            : (item.image_url = null);
+            : null;
 
-          item.seller_image
-            ? (item.seller_image = await downloadSellerImage(item.seller_image))
-            : (item.seller_image = null);
+          item.seller_img
+            ? (item.seller_img = await downloadSellerImage(item.seller_img))
+            : null;
           // Set the default quantity to 1 This should be replaced with the quantity from the quantity counter in the future
           // item.quantity = 1;
           return item;
@@ -65,8 +46,8 @@ export const CartCard: Component<Props> = (props) => {
     console.log("Card Card Update Quantity");
     setQuantity(quantity);
     if (product_id) {
-      const updatedItems: Array<ItemDetails> = await Promise.all(
-        props.items.map(async (item: ItemDetails) => {
+      const updatedItems: Array<Post> = await Promise.all(
+        props.items.map(async (item: Post) => {
           if (item.product_id === product_id) {
             item.quantity = quantity;
           }
@@ -76,14 +57,12 @@ export const CartCard: Component<Props> = (props) => {
       setNewItems(updatedItems);
       console.log("Updated Items: " + updatedItems);
 
-      const cartItems: Array<Item> = await Promise.all(
-        props.items.map(async (oldItem: ItemDetails) => {
-          let item: Item = {
-            description: oldItem.title,
+      const cartItems: Array<Post> = await Promise.all(
+        props.items.map(async (oldItem: Post) => {
+          let item: Post = {
+            ...oldItem,
             price: oldItem.price ? oldItem.price : 0,
-            price_id: oldItem.price_id,
             quantity: oldItem.quantity ? oldItem.quantity : 0,
-            product_id: oldItem.product_id,
           };
           if (oldItem.product_id === product_id) {
             item.quantity = quantity;
@@ -103,7 +82,7 @@ export const CartCard: Component<Props> = (props) => {
       (item) => item.product_id !== product_id
     );
     setItems(currentItems);
-    console.log("Items" + items.map((item) => item.description));
+    console.log("Items" + items.map((item) => item.title));
     props.deleteItem();
   };
 

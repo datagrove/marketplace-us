@@ -6,8 +6,8 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
-const values = ui[lang] as unknown as uiObject;
-const productCategoryData = values.productCategoryInfo;
+const values = ui[lang] as uiObject;
+const productCategoryData = values.subjectCategoryInfo;
 
 function selectGradeCarousel(gradeBtn: any) {
     localStorage.setItem("selectedGradeCarousel", JSON.stringify(gradeBtn.id));

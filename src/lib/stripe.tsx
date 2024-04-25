@@ -4,7 +4,11 @@ const stripeKey = import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY
 let stripe = null;
 
 try {
-    stripe = new Stripe(stripeKey);
+    stripe = new Stripe(stripeKey,
+        {
+            typescript: true,
+            apiVersion: '2023-10-16',
+        });
     if (stripe === null) {
         console.log("Stripe is null");
     } 
@@ -14,4 +18,4 @@ try {
     }
 }
 
-export default stripe!;
+export default stripe! as Stripe;
