@@ -6,8 +6,8 @@ import { SITE } from '@src/config'
 import type { Post } from "@lib/types";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
-  const items = await request.json();
-  console.log("checkout items: " + items)
+  const data = await request.json();
+  console.log("checkout items: " + data.orderItems)
 
   //Just console.log the formData for troubleshooting
 //   const lang = formData.get("lang");
@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
-    !items
+    !data
   ) {
     return new Response(
       JSON.stringify({
@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   let lineItems: {price: string, quantity: number}[] = [];
 
-  items.map((item: Post) => {
+  data.orderItems.map((item: Post) => {
       lineItems.push({price: item.price_id, quantity: item.quantity})
   })
   //Get the session from supabase (for the server side) based on the access and refresh tokens
@@ -111,6 +111,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     mode: 'payment',
     return_url: `${SITE.devUrl}/return.html?session_id={CHECKOUT_SESSION_ID}`,
     automatic_tax: {enabled: true},
+    metadata: {
+        orderNumber: data.orderNumber
+    }
   });
   
 

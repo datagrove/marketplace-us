@@ -19,21 +19,60 @@ const t = useTranslations(lang);
 console.log("Items to send to checkout: ");
 console.log(items);
 
-async function fetchClientCheckoutSecret(){
+async function fetchClientCheckoutSecret() {
   const response = await fetch("/api/createStripeCheckout", {
     method: "POST",
-    body: JSON.stringify(items),
+    body: JSON.stringify({
+      orderItems: JSON.stringify(items),
+      // orderNumber: orderNumber,
+    }),
   });
   const { clientSecret } = await response.json();
-  return clientSecret
+  return clientSecret;
 }
 
 const stripe = await loadStripe(import.meta.env.PUBLIC_VITE_STRIPE_PUBLIC_KEY);
 
 if (stripe === null) {
   // TODO: Internationalize
-  alert("Can't load Stripe")
+  alert("Can't load Stripe");
 }
+
+// let orderNumber: string;
+// let refresh_token: string | undefined;
+// let access_token: string | undefined;
+
+// async function fetchSession() {
+//   const { data: User, error: UserError } = await supabase.auth.getSession();
+//   if (User) {
+//     access_token = User.session!.access_token;
+//     refresh_token = User.session!.refresh_token;
+//   }
+//   if (UserError) {
+//     console.log("Supabase Error: " + UserError.message);
+//   }
+// }
+
+// async function createOrder() {
+//   await fetchSession();
+//   const response = await fetch("/api/createOrder", {
+//     method: "POST",
+//     //TODO: send custom data with order number
+//     body: JSON.stringify({
+//       orderItems: JSON.stringify(items),
+//       lang: lang,
+//       refresh_token: refresh_token,
+//       access_token: access_token,
+//     }),
+//   });
+//   const data = await response.json();
+//   if (response.status !== 200) {
+//     alert(data.message);
+//   }
+//   if (data.orderNumber) {
+//     orderNumber = data.orderNumber;
+//   }
+// }
 
 export const CheckoutView = () => {
   const [totalItems, setTotalItems] = createSignal(0);
@@ -42,10 +81,9 @@ export const CheckoutView = () => {
   const [oldItems, setOldItems] = createSignal<Post[]>([]);
 
   onMount(async () => {
-    await fetchClientCheckoutSecret()
-    await mountCheckout()
-  })
-
+    await fetchClientCheckoutSecret();
+    await mountCheckout();
+  });
 
   createEffect(() => {
     let count = 0;
@@ -58,10 +96,9 @@ export const CheckoutView = () => {
   async function mountCheckout() {
     const checkout = await stripe!.initEmbeddedCheckout({
       fetchClientSecret: fetchClientCheckoutSecret,
-    })
+    });
 
-    checkout.mount('#checkout');
-
+    checkout.mount("#checkout");
   }
 
   // function updateCards() {
