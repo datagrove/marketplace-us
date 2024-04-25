@@ -314,6 +314,7 @@ export const English = {
     removeFromCart: "Remove From Cart",
     increaseQuantity: "Increase Quantity",
     decreaseQuantity: "Decrease Quantity",
+    checkboxGrade: "Checkbox for selecting grade level",
   },
 
   headerData: {
@@ -470,10 +471,10 @@ export const English = {
   clearFilters: {
     filterButtons: [
       { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
-      { text: "Clear Categories", ariaLabel: "Clear Categories" },
+      { text: "Clear Subjects", ariaLabel: "Clear Subjects" },
       {
-        text: "Clear Major Municipality",
-        ariaLabel: "Clear Major Municipality",
+        text: "Clear Grade",
+        ariaLabel: "Clear Grade",
       },
       {
         text: "Clear Minor Municipality",

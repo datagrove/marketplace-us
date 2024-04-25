@@ -19,54 +19,55 @@ import specialty from "../../assets/categoryIcons/specialty.svg";
 import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
 
-let categories: Array<any> = [];
+let subjects: Array<any> = [];
 
 const { data, error } = await supabase.from("post_subject").select("*");
 
 if (error) {
   console.log("supabase error: " + error.message);
 } else {
-  data.forEach((category) => {
-    categories.push({ category: category.category, id: category.id });
+  console.log(data)
+  data.forEach((subject) => {
+    subjects.push({ subject: subject.subject, id: subject.id });
   });
 }
 
-categories.map((category) => {
-  if (category.id === 1) {
-    category.icon = geography;
-  } else if (category.id === 2) {
-    category.icon = history;
-  } else if (category.id === 3) {
-    category.icon = art;
-  } else if (category.id === 4) {
-    category.icon = holiday;
-  } else if (category.id === 5) {
-    category.icon = math;
-  } else if (category.id === 6) {
-    category.icon = science;
-  } else if (category.id === 7) {
-    category.icon = social;
-  } else if (category.id === 8) {
-    category.icon = specialty;
+subjects.map((subject) => {
+  if (subject.id === 1) {
+    subject.icon = geography;
+  } else if (subject.id === 2) {
+    subject.icon = history;
+  } else if (subject.id === 3) {
+    subject.icon = art;
+  } else if (subject.id === 4) {
+    subject.icon = holiday;
+  } else if (subject.id === 5) {
+    subject.icon = math;
+  } else if (subject.id === 6) {
+    subject.icon = science;
+  } else if (subject.id === 7) {
+    subject.icon = social;
+  } else if (subject.id === 8) {
+    subject.icon = specialty;
   }
 });
 
-const categoriesData = productCategoryData.subjects;
+const subjectData = productCategoryData.subjects;
 
-let allCategoryInfo: any[] = [];
+let allSubjectInfo: any[] = [];
 
-for (let i = 0; i < categoriesData.length; i++) {
-  allCategoryInfo.push({
-    ...categoriesData[i],
-    ...categories.find(
-      (itmInner) => itmInner.id.toString() === categoriesData[i].id,
+for (let i = 0; i < subjectData.length; i++) {
+  allSubjectInfo.push({
+    ...subjectData[i],
+    ...subjects.find(
+      (itmInner) => itmInner.id.toString() === subjectData[i].id,
     ),
   });
 }
 
 interface Props {
   // Define the type for the filterPosts prop
-  filterPosts: (currentCategory: string) => void;
+  filterPosts: (currentSubject: string) => void;
 }
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -83,7 +84,7 @@ export const CategoryCarousel: Component<Props> = (props) => {
         </button>
 
         <div class="flex justify-between items-start pt-2 w-full h-[7.5rem]">
-          {allCategoryInfo?.map((item) => (
+          {allSubjectInfo?.map((item) => (
             <button
               id={item.id}
               class="flex flex-col flex-none justify-start items-center w-20 h-28 catBtn"

@@ -277,6 +277,7 @@ export interface uiObject {
     removeFromCart: string;
     increaseQuantity: string;
     decreaseQuantity: string;
+    checkboxGrade: string;
   };
 
   headerData: {

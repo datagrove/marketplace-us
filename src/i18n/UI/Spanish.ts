@@ -320,6 +320,7 @@ export const Spanish = {
     removeFromCart: "Quitar del carrito",
     increaseQuantity: "Aumentar cantidad",
     decreaseQuantity: "Disminuir cantidad",
+    checkboxGrade: "Casilla de verificación para seleccionar el nivel de grado",
   },
 
   headerData: {

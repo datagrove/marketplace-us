@@ -327,6 +327,7 @@ export const French = {
     removeFromCart: "Supprimer du panier",
     increaseQuantity: "Augmenter la quantité",
     decreaseQuantity: "Diminuer la quantité",
+    checkboxGrade: "Case à cocher pour sélectionner le niveau scolaire",
   },
 
   headerData: {

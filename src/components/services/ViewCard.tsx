@@ -140,16 +140,6 @@ export const ViewCard: Component<Props> = (props) => {
                   class="flex justify-between px-1 pt-1 w-full text-left md:w-5/6 md:h-full"
                 >
                   <div class="w-full">
-                    {/* <div class="flex relative col-span-1 justify-end w-full align-top">
-                      <div class="inline-block">
-                        <DeletePostButton
-                          id={post.id}
-                          userId={post.user_id}
-                          postImage={post.image_urls}
-                        />
-
-                      </div>
-                    </div> */}
                     <div class="h-1/3">
                       <p class="overflow-hidden col-span-4 pr-4 max-h-14 text-sm font-bold md:text-lg text-ptext1 line-clamp-2 md:truncate dark:text-ptext1-DM">
                         {post.title}
@@ -190,8 +180,8 @@ export const ViewCard: Component<Props> = (props) => {
                       </div>
 
                       <div class="w-5/6 text-[10px]">
-                        <p>{Array.from(post.subject).join(",")}</p>
-                        <p>PreK-1st</p>
+                        <p>{Array.from(post.subject!).join(", ")}</p>
+                        <p>{post.grade!.join(", ")}</p>
                         <p>Worksheets, Activities, Printables</p>
                         <p>1NBT.C.4, K.OA.A.2</p>
                       </div>
