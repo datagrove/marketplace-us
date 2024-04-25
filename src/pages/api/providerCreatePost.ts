@@ -19,10 +19,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const access_token = formData.get("access_token");
   const refresh_token = formData.get("refresh_token");
   const title = formData.get("Title");
-  const subject = formData.get("Subject");
+  const subject = formData.get("subject");
   const content = formData.get("Content");
   const country = formData.get("country");
   const tax_code = formData.get("TaxCode");
+  const gradeLevel = formData.get("grade");
   // const majorMunicipality = formData.get("MajorMunicipality");
   // const minorMunicipality = formData.get("MinorMunicipality");
   // const governingDistrict = formData.get("GoverningDistrict");
@@ -35,11 +36,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     !title ||
     !subject ||
     !content ||
-    !country ||
-    !tax_code
-    // !minorMunicipality ||
-    // !majorMunicipality ||
-    // !governingDistrict
+    !tax_code ||
+    !gradeLevel
   ) {
     return new Response(
       JSON.stringify({
@@ -85,101 +83,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  // const { data: districtId, error: districtError } = await supabase
-  //   .from("governing_district")
-  //   .select("id")
-  //   .eq("id", governingDistrict);
-  // if (districtError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: t("apiErrors.noDistrict"),
-  //     }),
-  //     { status: 500 },
-  //   );
-  // }
-
-  // const { data: minorMunicipalityId, error: minorMunicipalityError } =
-  //   await supabase
-  //     .from("minor_municipality")
-  //     .select("id")
-  //     .eq("id", minorMunicipality);
-  // if (minorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: (t("apiErrors.noMinorMunicipality")),
-  //     }),
-  //     { status: 500 }
-  //   );
-  // }
-
-  // const { data: majorMunicipalityId, error: majorMunicipalityError } =
-  //   await supabase
-  //     .from("major_municipality")
-  //     .select("id")
-  //     .eq("id", majorMunicipality);
-  // if (majorMunicipalityError) {
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: t("apiErrors.noMajorMunicipality"),
-  //     }),
-  //     { status: 500 },
-  //   );
-  // }
-
-  const { data: countryId, error: countryError } = await supabase
-    .from("country")
-    .select("id")
-    .eq("id", country);
-  if (countryError) {
-    return new Response(
-      JSON.stringify({
-        message: t("apiErrors.noCountry"),
-      }),
-      { status: 500 },
-    );
-  }
-
-  // const { data: subjectId, error: subjectError } = await supabase
-  //   .from("post_subject")
-  //   .select("id")
-  //   .eq("id", subject);
-  // if (subjectError) {
-  //   console.log(subjectError);
-  //   return new Response(
-  //     JSON.stringify({
-  //       message: t("apiErrors.noCategory"),
-  //     }),
-  //     { status: 500 },
-  //   );
-  // }
-
-  let locationSubmission = {
-    // minor_municipality: minorMunicipalityId[0].id,
-    // major_municipality: majorMunicipalityId[0].id,
-    // governing_district: districtId[0].id,
-    country: countryId[0].id,
-    user_id: user.id,
-  };
-
-  const { error: locationError, data: location } = await supabase
-    .from("location")
-    .insert([locationSubmission])
-    .select("id");
-  if (locationError) {
-    console.log(locationError);
-    return new Response(
-      JSON.stringify({
-        message: t("apiErrors.locationError"),
-      }),
-      { status: 500 },
-    );
-  }
-
   let postSubmission = {
     title: title,
     content: content,
-    location: location[0].id,
-    product_subject: JSON.parse(subject),
+    product_subject: JSON.parse(subject as string),
+    post_grade: JSON.parse(gradeLevel as string),
     image_urls: imageUrl,
     user_id: user.id,
   };
