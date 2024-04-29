@@ -29,6 +29,7 @@ interface Props {
   setUppyRef: (uppy: Uppy<Record<string, unknown>, Record<string, unknown>>) => void;
   setUploadFinished: (uploadFinished: boolean) => void;
   onUpload: (filePath: string) => void;
+  removeFile: (filePath: string) => void;
 }
 
 export const UploadFiles: Component<Props> = (props: Props) => {
@@ -65,6 +66,11 @@ export const UploadFiles: Component<Props> = (props: Props) => {
         width: "100%",
         height: "100%",
         hideUploadButton: true,
+        doneButtonHandler: () => {
+          null
+        },
+        hideProgressAfterFinish: true,
+        showRemoveButtonAfterComplete: true,
       })
       .use(Tus, {
         endpoint: supbaseStorageURL,
@@ -91,6 +97,13 @@ export const UploadFiles: Component<Props> = (props: Props) => {
       }
 
       console.error(`Error uploading file ${file.name}:`, error);
+    });
+
+    uppy.on("file-removed", (file, reason) => {
+      if (reason === "removed-by-user") {
+        console.log(`File ${file.name} was removed by user.`);
+        props.removeFile(file.name);
+      }
     });
 
     props.setUppyRef(uppy);

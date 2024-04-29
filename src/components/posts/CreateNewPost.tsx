@@ -614,6 +614,9 @@ export const CreateNewPost: Component = () => {
             onUpload={(url: string) => {
               setResourceURL([...resourceURL(), url]);
             }}
+            removeFile={(url: string) => {
+              setResourceURL(resourceURL().filter((u) => u !== url));
+            }}
             setUploadFinished={(uploadFinished) => setUploadFinished(uploadFinished)}
           />
           <div id="uploadResource" class="w-full"></div>
