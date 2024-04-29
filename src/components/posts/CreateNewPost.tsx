@@ -18,6 +18,8 @@ import { createStore } from "solid-js/store";
 import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
 import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
+import { UploadFiles } from "@components/posts/UploadResource";
+import Uppy from "@uppy/core";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -100,6 +102,8 @@ const excludeTaxCodes = new Set([
   /^txcd_10502.*/,
 ]);
 
+let uploadFilesRef: any;
+
 async function postFormData(formData: FormData) {
   const info = formData;
   const response = await fetch("/api/providerCreatePost", {
@@ -123,6 +127,10 @@ async function postFormData(formData: FormData) {
       refresh_token: formData.get("refresh_token") as string,
       tax_code: formData.get("TaxCode") as string,
     });
+
+    if (uploadFilesRef) {
+      uploadFilesRef.upload();
+    }
   }
   // I think we are going to do this in the CreateStripeProductPrice component
   // if (data.redirect) {
@@ -238,6 +246,7 @@ export const CreateNewPost: Component = () => {
 
   async function submit(e: SubmitEvent) {
     e.preventDefault();
+
     const formData = new FormData(e.target as HTMLFormElement);
     formData.append("access_token", session()?.access_token!);
     formData.append("refresh_token", session()?.refresh_token!);
@@ -541,6 +550,11 @@ export const CreateNewPost: Component = () => {
               setSelectedOption={setSelectedTaxCode}
             />
           </label>
+        </div>
+
+        <div>
+          <UploadFiles target={'#uploadResource'} bucket="resources" setUppyRef={(uppy) => (uploadFilesRef = uppy)} />
+          <div id="uploadResource" class="w-full"></div>
         </div>
 
         <div class="mb-4 flex justify-center">
