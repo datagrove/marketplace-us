@@ -55,6 +55,23 @@ export const ViewFullPost: Component<Props> = (props) => {
                 });
             });
             delete item.product_subject;
+
+            const { data: gradeData, error: gradeError } = await supabase
+            .from("grade_level")
+            .select("*");
+
+          if (gradeError) {
+            console.log("supabase error: " + gradeError.message);
+          } else {
+            item.grade = [];
+            gradeData.forEach((databaseGrade) => {
+              item.post_grade.map((itemGrade: string) => {
+                if (itemGrade === databaseGrade.id.toString()) {
+                  item.grade.push(databaseGrade.grade);
+                }
+              });
+            });
+          }
         });
         setPost(data[0]);
         console.log(post());

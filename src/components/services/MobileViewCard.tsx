@@ -189,14 +189,16 @@ export const MobileViewCard: Component<Props> = (props) => {
                 <h6 class="font-bold text-[10px]">
                   {t("formLabels.subjects")}
                 </h6>
-                {post.subject.map((subject: string) => {
+                {post.subject!.map((subject: string) => {
                   return <p class="font-light text-[10px]">{subject}</p>;
                 })}
               </div>
 
               <div class="flex flex-col justify-end items-end py-1">
                 <h6 class="font-bold text-[10px]">{t("formLabels.grades")}</h6>
-                <p class="font-light text-[10px]">PreK-1st</p>
+                {post.grade!.map((grade: string) => {
+                  return <p class="font-light text-[10px]">{grade}</p>;
+                })}
               </div>
             </div>
           </div>

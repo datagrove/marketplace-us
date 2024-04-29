@@ -13,9 +13,12 @@ export interface Post {
     email: string; //Email of the seller
     price_id: string; //Stripe Price ID of the post
     product_id: string; //Stripe Product ID of the post
-    subject: Array<string>; //Array of subject IDs, does not contain actual subject names
+    product_subject: Array<string>; //Array of subject IDs, does not contain actual subject names
+    post_grade: Array<string>; //Array of grade IDs, does not contain actual grade names
     
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
+    subject : Array<string> | null; //Array of subject names
+    grade : Array<string> | null; //Array of grade names
     image_url: string | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
     seller_img: string | undefined; //Profile Image of the seller
     price: number; //Price of the post

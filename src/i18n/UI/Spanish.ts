@@ -193,6 +193,8 @@ export const Spanish = {
     standards: "Estándares",
     fileTypes: "Tipos de Archivo",
     findResources: "Encontrar Recursos",
+    chooseSubject: "Asunto(s)",
+    chooseGrade: "Nivel(es) de grado",
   },
 
   postLabels: {
@@ -254,6 +256,8 @@ export const Spanish = {
       "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de cliente y proveedor.",
     languages:
       "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
+      subjects: "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
+    grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
   },
 
   apiErrors: {
@@ -316,6 +320,7 @@ export const Spanish = {
     removeFromCart: "Quitar del carrito",
     increaseQuantity: "Aumentar cantidad",
     decreaseQuantity: "Disminuir cantidad",
+    checkboxGrade: "Casilla de verificación para seleccionar el nivel de grado",
   },
 
   headerData: {

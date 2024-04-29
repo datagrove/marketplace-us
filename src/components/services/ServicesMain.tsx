@@ -5,7 +5,7 @@ import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
-import { LocationFilter } from "./LocationFilter";
+import { GradeFilter } from "./GradeFilter";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -20,27 +20,12 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-// const { data: user, error: userError } = await supabase.auth.getSession();
-// if (userError) {
-//   console.log(userError);
-// }
-// if (user.session === null || user.session === undefined) {
-//   alert(t("messages.signIn"));
-//   location.href = `/${lang}/login`;
-// }
-
 export const ServicesView: Component = () => {
   const [posts, setPosts] = createSignal<Array<Post>>([]);
   const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
   const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
   const [filters, setFilters] = createSignal<Array<string>>([]);
-  const [locationFilters, setLocationFilters] = createSignal<Array<string>>([]);
-  const [minorLocationFilters, setMinorLocationFilters] = createSignal<
-    Array<string>
-  >([]);
-  const [governingLocationFilters, setGoverningLocationFilters] = createSignal<
-    Array<string>
-  >([]);
+  const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
   const [searchString, setSearchString] = createSignal<string>("");
   const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
 
@@ -59,6 +44,7 @@ export const ServicesView: Component = () => {
     if (error) {
       console.log("supabase error: " + error.message);
     } else {
+      console.log(data);
       const newItems = await Promise.all(
         data?.map(async (item) => {
           item.subject = [];
@@ -66,18 +52,34 @@ export const ServicesView: Component = () => {
             item.product_subject.map((productSubject: string) => {
               if (productSubject === productCategories.id) {
                 item.subject.push(productCategories.name);
-                console.log(productCategories.name);
               }
             });
           });
           delete item.product_subject;
+
+          const { data: gradeData, error: gradeError } = await supabase
+            .from("grade_level")
+            .select("*");
+
+          if (gradeError) {
+            console.log("supabase error: " + gradeError.message);
+          } else {
+            item.grade = [];
+            gradeData.forEach((databaseGrade) => {
+              item.post_grade.map((itemGrade: string) => {
+                if (itemGrade === databaseGrade.id.toString()) {
+                  item.grade.push(databaseGrade.grade);
+                }
+              });
+            });
+          }
 
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
             item.price = priceData.unit_amount! / 100;
           }
           return item;
-        }),
+        })
       );
       console.log(newItems.map((item) => item));
       setPosts(newItems);
@@ -121,10 +123,8 @@ export const ServicesView: Component = () => {
 
     const res = await allFilters.fetchFilteredPosts(
       filters(),
-      locationFilters(),
-      minorLocationFilters(),
-      governingLocationFilters(),
-      searchString(),
+      gradeFilters(),
+      searchString()
     );
 
     if (res === null || res === undefined) {
@@ -144,30 +144,47 @@ export const ServicesView: Component = () => {
         setTimeout(() => {
           //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
           clearAllFilters();
-        }, 3000),
+        }, 3000)
       );
 
       let allPosts = await allFilters.fetchAllPosts();
 
       //Add the categories to the posts in the current language
-      allPosts?.map((item) => {
+      const allUpdatedPosts = await Promise.all(
+      allPosts ? allPosts.map(async (item) => {
         item.subject = [];
         productCategories.forEach((productCategories) => {
           item.product_subject.map((productSubject: string) => {
             if (productSubject === productCategories.id) {
               item.subject.push(productCategories.name);
-              console.log(productCategories.name);
             }
           });
-          // if (item.product_subject.toString() === productCategories.id) {
-          //   item.subject = productCategories.name;
-          // }
         });
         delete item.product_subject;
-      });
 
-      setPosts(allPosts!);
-      setCurrentPosts(allPosts!);
+        const { data: gradeData, error: gradeError } = await supabase
+          .from("grade_level")
+          .select("*");
+
+        if (gradeError) {
+          console.log("supabase error: " + gradeError.message);
+        } else {
+          item.grade = [];
+          gradeData.forEach((databaseGrade) => {
+            item.post_grade.map((itemGrade: string) => {
+              if (itemGrade === databaseGrade.id.toString()) {
+                item.grade.push(databaseGrade.grade);
+              }
+            });
+          });
+        }
+        return item
+      }) : []
+    );
+
+      console.log(allUpdatedPosts);
+      setPosts(allUpdatedPosts!);
+      setCurrentPosts(allUpdatedPosts!);
     } else {
       for (let i = 0; i < timeouts.length; i++) {
         clearTimeout(timeouts[i]);
@@ -175,162 +192,110 @@ export const ServicesView: Component = () => {
 
       timeouts = [];
 
-      res.map((post) => {
-        post.subject = [];
-        productCategories.forEach((productCategories) => {
-          post.product_subject.map((productSubject: string) => {
-            if (productSubject === productCategories.id) {
-              post.subject.push(productCategories.name);
-              console.log(productCategories.name);
-            }
+      let resPosts = await Promise.all(
+        res.map(async (item) => {
+          item.subject = [];
+          productCategories.forEach((productCategories) => {
+            item.product_subject.map((productSubject: string) => {
+              if (productSubject === productCategories.id) {
+                item.subject.push(productCategories.name);
+                console.log(productCategories.name);
+              }
+            });
           });
-          // if (item.product_subject.toString() === productCategories.id) {
-          //   item.subject = productCategories.name;
-          // }
-        });
-        delete post.product_subject;
-      });
+          delete item.product_subject;
 
-      setPosts(res);
-      setCurrentPosts(res);
+          const { data: gradeData, error: gradeError } = await supabase
+            .from("grade_level")
+            .select("*");
+
+          if (gradeError) {
+            console.log("supabase error: " + gradeError.message);
+          } else {
+            item.grade = [];
+            gradeData.forEach((databaseGrade) => {
+              item.post_grade.map((itemGrade: string) => {
+                if (itemGrade === databaseGrade.id.toString()) {
+                  item.grade.push(databaseGrade.grade);
+                }
+              });
+            });
+          }
+          return item;
+        })
+      );
+
+      console.log("res", resPosts);
+      setPosts(resPosts);
+      setCurrentPosts(resPosts);
     }
   };
 
-  const filterPostsByMajorMunicipality = (location: string) => {
-    if (locationFilters().includes(location)) {
-      let currentLocationFilters = locationFilters().filter(
-        (el) => el !== location,
-      );
-      setLocationFilters(currentLocationFilters);
+  const filterPostsByGrade = (grade: string) => {
+    if (gradeFilters().includes(grade)) {
+      let currentGradeFilters = gradeFilters().filter((el) => el !== grade);
+      setGradeFilters(currentGradeFilters);
     } else {
-      setLocationFilters([...locationFilters(), location]);
+      setGradeFilters([...gradeFilters(), grade]);
     }
 
     filterPosts();
   };
 
-  // const filterPostsByMinorMunicipality = (location: string) => {
-  //   if (minorLocationFilters().includes(location)) {
-  //     let currentLocationFilters = minorLocationFilters().filter(
-  //       (el) => el !== location
-  //     );
-  //     setMinorLocationFilters(currentLocationFilters);
-  //   } else {
-  //     setMinorLocationFilters([...minorLocationFilters(), location]);
-  //   }
-  //
-  //   filterPosts();
-  // };
-  //
-  // const filterPostsByGoverningDistrict = (location: string) => {
-  //   if (governingLocationFilters().includes(location)) {
-  //     let currentLocationFilters = governingLocationFilters().filter(
-  //       (el) => el !== location
-  //     );
-  //     setGoverningLocationFilters(currentLocationFilters);
-  //   } else {
-  //     setGoverningLocationFilters([...governingLocationFilters(), location]);
-  //   }
-  //
-  //   filterPosts();
-  // };
-
   const clearAllFilters = () => {
     let searchInput = document.getElementById("search") as HTMLInputElement;
-    let selectedCategories = document.querySelectorAll(".selected");
-    const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni",
+    let selectedSubjects = document.querySelectorAll(".selected");
+    const gradeCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].grade"
     ) as NodeListOf<HTMLInputElement>;
-    // const minorMuniCheckboxes = document.querySelectorAll(
-    //   "input[type='checkbox'].minor-muni"
-    // ) as NodeListOf<HTMLInputElement>;
-    // const districtCheckboxes = document.querySelectorAll(
-    //   "input[type='checkbox'].district"
-    // ) as NodeListOf<HTMLInputElement>;
 
     if (searchInput.value !== null) {
       searchInput.value = "";
     }
 
-    selectedCategories.forEach((category) => {
-      category.classList.remove("selected");
+    selectedSubjects.forEach((subject) => {
+      subject.classList.remove("selected");
     });
 
-    selectedCategories.forEach((category) => {
-      category.classList.remove("selected");
+    selectedSubjects.forEach((subject) => {
+      subject.classList.remove("selected");
     });
 
-    majorMuniCheckboxes.forEach((checkbox) => {
+    gradeCheckboxes.forEach((checkbox) => {
       if (checkbox && checkbox.checked) checkbox.click();
     });
 
-    // minorMuniCheckboxes.forEach((checkbox) => {
-    //   if (checkbox && checkbox.checked) checkbox.click();
-    // });
-    //
-    // districtCheckboxes.forEach((checkbox) => {
-    //   if (checkbox && checkbox.checked) checkbox.click();
-    // });
-    //
     setSearchPost([]);
     setSearchString("");
     setFilters([]);
-    setLocationFilters([]);
-    // setMinorLocationFilters([]);
-    // setGoverningLocationFilters([]);
+    setGradeFilters([]);
     filterPosts();
   };
 
-  const clearServiceCategories = () => {
-    let selectedCategories = document.querySelectorAll(".selected");
+  const clearSubjects = () => {
+    let selectedSubjects = document.querySelectorAll(".selected");
 
-    selectedCategories.forEach((category) => {
-      category.classList.remove("selected");
+    selectedSubjects.forEach((subject) => {
+      subject.classList.remove("selected");
     });
 
     setFilters([]);
     filterPosts();
   };
 
-  const clearMajorMunicipality = () => {
-    const majorMuniCheckboxes = document.querySelectorAll(
-      "input[type='checkbox'].major-muni",
+  const clearGrade = () => {
+    const gradeCheckboxes = document.querySelectorAll(
+      "input[type='checkbox'].grade"
     ) as NodeListOf<HTMLInputElement>;
 
-    majorMuniCheckboxes.forEach((checkbox) => {
+    gradeCheckboxes.forEach((checkbox) => {
       if (checkbox && checkbox.checked) checkbox.click();
     });
 
-    setLocationFilters([]);
+    setGradeFilters([]);
     filterPosts();
   };
 
-  // const clearMinorMunicipality = () => {
-  //   const minorMuniCheckboxes = document.querySelectorAll(
-  //     "input[type='checkbox'].minor-muni"
-  //   ) as NodeListOf<HTMLInputElement>;
-  //
-  //   minorMuniCheckboxes.forEach((checkbox) => {
-  //     if (checkbox && checkbox.checked) checkbox.click();
-  //   });
-  //
-  //   setMinorLocationFilters([]);
-  //   filterPosts();
-  // };
-  //
-  // const clearDistrict = () => {
-  //   const districtCheckboxes = document.querySelectorAll(
-  //     "input[type='checkbox'].district"
-  //   ) as NodeListOf<HTMLInputElement>;
-  //
-  //   districtCheckboxes.forEach((checkbox) => {
-  //     if (checkbox && checkbox.checked) checkbox.click();
-  //   });
-  //
-  //   setGoverningLocationFilters([]);
-  //   filterPosts();
-  // };
-  //
   return (
     <div class="">
       <div>
@@ -349,7 +314,7 @@ export const ServicesView: Component = () => {
 
         <button
           class="clearBtnRectangle"
-          onclick={clearServiceCategories}
+          onclick={clearSubjects}
           aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
         >
           <p class="text-xs">{t("clearFilters.filterButtons.1.text")}</p>
@@ -357,29 +322,11 @@ export const ServicesView: Component = () => {
 
         <button
           class="clearBtnRectangle"
-          onclick={clearMajorMunicipality}
+          onclick={clearGrade}
           aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
         >
           <p class="text-xs">{t("clearFilters.filterButtons.2.text")}</p>
         </button>
-
-        {/*
-        <button
-          class="clearBtnRectangle"
-          onclick={clearMinorMunicipality}
-          aria-label={t("clearFilters.filterButtons.3.ariaLabel")}
-        >
-          <p class="text-xs">{t("clearFilters.filterButtons.3.text")}</p>
-        </button>
-
-        <button
-          class="clearBtnRectangle"
-          onclick={clearDistrict}
-          aria-label={t("clearFilters.filterButtons.4.ariaLabel")}
-        >
-          <p class="text-xs">{t("clearFilters.filterButtons.4.text")}</p>
-        </button>
-        */}
       </div>
 
       <div class="h-fit">
@@ -388,11 +335,7 @@ export const ServicesView: Component = () => {
 
       <div class="flex flex-col items-center md:flex-row md:items-start md:h-full min-w-[270px]">
         <div class="w-11/12 md:mr-4 md:w-56">
-          <LocationFilter
-            filterPostsByMajorMunicipality={filterPostsByMajorMunicipality}
-          // filterPostsByMinorMunicipality={filterPostsByMinorMunicipality}
-          // filterPostsByGoverningDistrict={filterPostsByGoverningDistrict}
-          />
+          <GradeFilter filterPostsByGrade={filterPostsByGrade} />
         </div>
 
         <div class="items-center w-11/12 md:flex-1">

@@ -9,32 +9,25 @@ const t = useTranslations(lang);
 
 // one giant filter function that includes the logic for all combinations
 export async function fetchFilteredPosts(
-    categoryFilters: Array<string>,
+    subjectFilters: Array<string>,
     // subjectFilters: Array<string>,
-    locationFilters: Array<string>,
-    minorLocationFilters: Array<string>,
-    governingLocationFilters: Array<string>,
+    gradeFilters: Array<string>,
     searchString: string,
 ) {
     try {
         let query = supabase.from("sellerposts").select("*");
-        if (categoryFilters.length !== 0) {
-            query = query.overlaps("product_subject", categoryFilters);
+        if (subjectFilters.length !== 0) {
+            query = query.overlaps("product_subject", subjectFilters);
         }
-        if (locationFilters.length !== 0) {
-            query = query.in("major_municipality", locationFilters);
-        }
-        if (minorLocationFilters.length !== 0) {
-            query = query.in("minor_municipality", minorLocationFilters);
-        }
-        if (governingLocationFilters.length !== 0) {
-            query = query.in("governing_district", governingLocationFilters);
+        if (gradeFilters.length !== 0) {
+            query = query.overlaps("post_grade", gradeFilters);
         }
         if (searchString.length !== 0) {
             query = query.textSearch("title_content", searchString);
         }
 
         try {
+            console.log(query);
             const { data: posts, error } = await query;
             if (error) {
                 console.log("supabase error: " + error.code + error.message);

@@ -57,6 +57,23 @@ export const ViewProviderPosts: Component = () => {
 					});
 					delete item.product_subject;
 
+          const { data: gradeData, error: gradeError } = await supabase
+            .from("grade_level")
+            .select("*");
+
+          if (gradeError) {
+            console.log("supabase error: " + gradeError.message);
+          } else {
+            item.grade = [];
+            gradeData.forEach((databaseGrade) => {
+              item.post_grade.map((itemGrade: string) => {
+                if (itemGrade === databaseGrade.id.toString()) {
+                  item.grade.push(databaseGrade.grade);
+                }
+              });
+            });
+          }
+
           if (item.price_id !== null) {
             const priceData = await stripe.prices.retrieve(item.price_id);
             item.price = priceData.unit_amount! / 100;
