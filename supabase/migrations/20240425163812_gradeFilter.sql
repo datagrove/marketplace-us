@@ -133,7 +133,7 @@ alter table "public"."seller_post" add column "post_grade" text[] not null;
 
 alter table "public"."seller_post" drop column "location" CASCADE;
 
-create or replace view "public"."sellerposts" as  SELECT seller_post.id,
+CREATE OR REPLACE VIEW "public"."sellerposts" WITH ("security_invoker"='on') AS SELECT seller_post.id,
     seller_post.title,
     seller_post.content,
     seller_post.user_id,
