@@ -11,6 +11,8 @@ import "@uppy/dashboard/dist/style.min.css";
 import Tus from "@uppy/tus";
 import RemoteSources from "@uppy/remote-sources";
 
+import { v4 as uuidv4 } from "uuid";
+
 const supabaseUrl = import.meta.env.PUBLIC_VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.PUBLIC_VITE_SUPABASE_ANON_KEY;
 
@@ -25,6 +27,8 @@ interface Props {
   target: string;
   bucket: string;
   setUppyRef: (uppy: Uppy<Record<string, unknown>, Record<string, unknown>>) => void;
+  setUploadFinished: (uploadFinished: boolean) => void;
+  onUpload: (filePath: string) => void;
 }
 
 export const UploadFiles: Component<Props> = (props: Props) => {
@@ -43,7 +47,16 @@ export const UploadFiles: Component<Props> = (props: Props) => {
   let uppy: Uppy<Record<string, unknown>, Record<string, unknown>> ;
 
   onMount(() => {
-    uppy = new Uppy()
+    uppy = new Uppy({
+      onBeforeFileAdded: (currentFile, files) => {
+        const modifiedFile = {
+          ...currentFile,
+          name: `${uuidv4()}`,
+        }
+        return modifiedFile
+      },
+      autoProceed: true,
+    })
       .use(Dashboard, {
         inline: true,
         target: props.target,
@@ -68,7 +81,8 @@ export const UploadFiles: Component<Props> = (props: Props) => {
           "contentType",
           "cacheControl",
         ],
-      });
+      }
+    );
 
     uppy.on("upload-error", (file, error) => {
       if (!file) {
@@ -92,7 +106,7 @@ export const UploadFiles: Component<Props> = (props: Props) => {
         ...file.meta,
         ...supabaseMetadata,
       };
-
+      props.onUpload(file.name);
       console.log("file added", file);
     });
 
@@ -101,6 +115,7 @@ export const UploadFiles: Component<Props> = (props: Props) => {
         "Upload complete! We’ve uploaded these files:",
         result.successful
       );
+      props.setUploadFinished(true)
     });
     onCleanup(() => {
       uppy.close();
