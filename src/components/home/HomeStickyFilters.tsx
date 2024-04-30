@@ -16,7 +16,11 @@ let subjects_array: Array<{ product_subject: string; id: number }> = [];
 //selected subjects
 let selected_subjects_array: Array<string> = [];
 
+let grades_array: Array<{ product_grade: string; id: number }> = [];
+let selected_grades_array: Array<string> = [];
+
 const { data: subject, error: subject_error } = await supabase.from("post_subject").select("subject, id");
+const { data: grade, error: grade_error } = await supabase.from("grade_level").select("id, grade");
 
 if(subject_error) {
     console.error("supabase error: " + subject_error.message);
@@ -30,6 +34,18 @@ if(subject_error) {
     subjects_array.sort((a, b) => a.product_subject > b.product_subject ? 0 : -1, );
 }
 
+if(grade_error) {
+    console.error("supabase error: " + grade_error);
+} else {
+    grade.forEach((grade) => {
+        grades_array.push({
+            product_grade: grade.grade,
+            id: grade.id,
+        });
+    });
+    grades_array.sort((a, b) => a.product_grade > b.product_grade ? 0 : -1);
+}   
+
 function hideFilterDivs() {
     hideGradeFilters();
     hideSubjectFilters();
@@ -41,12 +57,12 @@ function showGradeFilters() {
 
     if(gradeDiv?.classList.contains("hidden")) {
         gradeDiv.classList.remove("hidden");
-        gradeDiv.classList.add("inline")
+        gradeDiv.classList.add("flex")
     
         hideSubjectFilters();
         hideResourceTypeFilters();
-    } else if(gradeDiv?.classList.contains("inline")) {
-        gradeDiv?.classList.remove("inline");
+    } else if(gradeDiv?.classList.contains("flex")) {
+        gradeDiv?.classList.remove("flex");
         gradeDiv?.classList.add("hidden");
     }
 }
@@ -54,8 +70,8 @@ function showGradeFilters() {
 function hideGradeFilters() {
     let gradeDiv = document.getElementById("gradeDiv");
 
-    if(gradeDiv?.classList.contains("inline")) {
-        gradeDiv.classList.remove("inline");
+    if(gradeDiv?.classList.contains("flex")) {
+        gradeDiv.classList.remove("flex");
         gradeDiv.classList.add("hidden")
     }
 }
@@ -117,7 +133,16 @@ function addSelectedSubject(id: any) {
     selected_subjects_array.push(id)
 }
 
-function fetchFilteredResources() {
+function addSelectedGrade(id: any) {
+    let gradeErrorMessage = document.getElementById("selectGradeMessage");
+
+    gradeErrorMessage?.classList.remove("inline");
+    gradeErrorMessage?.classList.add("hidden");
+
+    selected_grades_array.push(id);
+}
+
+function fetchSubjectFilteredResources() {
     if(selected_subjects_array.length < 1) {
         let errorMessage = document.getElementById("selectSubjectMessage");
         let subjectCheckboxes = document.getElementsByClassName("subjectCheckbox");
@@ -141,19 +166,73 @@ function fetchFilteredResources() {
     }
 }
 
+function fetchGradeFilteredResources() {
+    if(selected_grades_array.length < 1) {
+        let errorMessage = document.getElementById("selectGradeMessage");
+        let gradeCheckboxes = document.getElementsByClassName("gradeCheckbox");
+
+        errorMessage?.classList.remove("hidden");
+        errorMessage?.classList.add("inline");
+
+        let check = setInterval(function() {
+            for(let i = 0; i < gradeCheckboxes.length; i++) {
+                gradeCheckboxes[i].addEventListener("change", () => {
+                    clearInterval(check);
+                })
+            }
+            errorMessage?.classList.remove("inline");
+            errorMessage?.classList.add("hidden");
+
+        }, 5000);
+    } else {
+        localStorage.setItem("selectedGrades", JSON.stringify(selected_grades_array))
+        window.location.href= `/${lang}/services`;
+    }
+}
+
 export const HomeStickyFilters: Component = () => {
     const [subjects, setSubjects] = createSignal<Array<{ product_subject: string; id: number} >>(subjects_array)
     // const [selectSubjects, setSelectedSubjects] = createSignal<Array<{ product_subject: string; id: number }>>([]);
     
     return (
-        <div class="sticky top-0 z-50">
+        <div class="sticky top-0 z-40">
             <div id="top-sticky-filter" class="flex justify-center items-center w-full bg-background2 dark:bg-background2-DM py-1 sticky top-0">
                 <a onmouseover={ hideFilterDivs } href={ `/${lang}/services` }><h3 class="hidden md:inline mx-5 text-ptext2 dark:text-ptext2-DM">{t("buttons.browseCatalog")}</h3></a>
                 
                 <div>
                     <h3 onclick={ showGradeFilters } class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.grades")}</h3>
-                    <div onmouseleave={ hideGradeFilters } id="gradeDiv" class="hidden border-2 border-border1 dark:border-border1-DM h-64 w-48 absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
-                        <p class="px-2">Add Grades here</p>
+                    <div onmouseleave={ hideGradeFilters } id="gradeDiv" class="hidden border-2 border-border1 dark:border-border1-DM flex-wrap justify-center h-fit w-48 absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
+                        <For each={ grades_array }>
+                            {(grade) => (
+                                <div class="flex pl-2 pr-4 w-1/2">
+                                    <div>
+                                        <input 
+                                            aria-label="replace"
+                                            type="checkbox"
+                                            onClick={ () => addSelectedGrade(grade.id) }
+                                            class="gradeCheckbox"
+                                        />
+                                    </div>
+
+                                    <div class="pl-1">
+                                        { grade.product_grade }
+                                    </div>
+                                </div>
+                            )}
+                        </For>
+
+                        <div class="flex flex-col justify-center items-center">
+                            <div id="selectGradeMessage" class="hidden text-alert1 dark:text-alert1-DM text-center italic px-2">
+                                {t("messages.selectGrade")}
+                            </div>
+                            
+                            <button
+                                class="px-4 mx-2 my-2 py-1 rounded-full bg-btn2 dark:bg-btn2-DM"
+                                onclick={ fetchGradeFilteredResources }
+                            >
+                                {t("buttons.findResources")}
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -161,9 +240,9 @@ export const HomeStickyFilters: Component = () => {
                     <h3 onclick={ showSubjectFilters} class="mx-5 text-ptext2 dark:text-ptext2-DM relative">{t("formLabels.subjects")}</h3>
                     <div onmouseleave={ hideSubjectFilters } id="subjectDiv" class="hidden border-2 border-border1 dark:border-border1-DM absolute top-8 rounded bg-background1 dark:bg-background1-DM z-50">
                         {/* <p class="px-2">Add Subjects here</p> */}
-                        <For each={ subjects() }>
+                        <For each={ subjects_array }>
                             {(subject) => (
-                                <div class="flex pl-1 pr-4">
+                                <div class="flex pl-2 pr-4">
                                     <div>
                                         <input 
                                             aria-label="replace"
@@ -187,7 +266,7 @@ export const HomeStickyFilters: Component = () => {
                             
                             <button
                                 class="px-4 mx-2 my-2 py-1 rounded-full bg-btn2 dark:bg-btn2-DM"
-                                onclick={ fetchFilteredResources }
+                                onclick={ fetchSubjectFilteredResources }
                             >
                                 {t("buttons.findResources")}
                             </button>

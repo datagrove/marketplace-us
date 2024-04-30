@@ -154,7 +154,8 @@ export const Spanish = {
     noClient: "No se encontró ningún cliente.",
     noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
     noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
-    selectSubject: "Por favor, seleccione al menos una asignatura"
+    selectSubject: "Por favor, seleccione al menos una asignatura",
+    selectGrade: "Por favor, seleccione al menos un grado",
   },
 
   formLabels: {

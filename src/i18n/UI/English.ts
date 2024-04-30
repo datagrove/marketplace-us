@@ -153,6 +153,7 @@ export const English = {
     noStripeAccount:
       "You must complete enrollment with Stripe before posting resources.",
     selectSubject: "Please select at least one subject",
+    selectGrade: "Please select at least one grade",
   },
 
   formLabels: {

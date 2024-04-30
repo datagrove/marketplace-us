@@ -130,6 +130,7 @@ export interface uiObject {
     noPostsSearch: string,
     noStripeAccount: string,
     selectSubject: string,
+    selectGrade: string,
   },
 
   formLabels: {
