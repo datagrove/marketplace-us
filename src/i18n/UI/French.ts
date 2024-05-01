@@ -108,6 +108,8 @@ export const French = {
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
+    follow: "Suivre",
+    following: "Suivante",
   },
 
   messages: {
@@ -233,6 +235,10 @@ export const French = {
   menus: {
     resources: "Trouver des ressources",
     contactUs: "Contactez-nous",
+    details: "Détails",
+    description: "Description",
+    reviews: "Commentaires",
+    qA: "Questions/Réponses",
   },
 
   toolTips: {

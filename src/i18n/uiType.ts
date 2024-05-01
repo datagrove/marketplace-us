@@ -90,6 +90,8 @@ export interface uiObject {
     showLess: string,
     browseCatalog: string,
     findResources: string,
+    follow: string,
+    following: string,
   },
 
   messages: {
@@ -204,6 +206,10 @@ export interface uiObject {
   menus: {
     resources: string;
     contactUs: string;
+    details: string,
+    description: string,
+    reviews: string,
+    qA: string,
   };
 
   toolTips: {

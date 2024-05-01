@@ -106,6 +106,8 @@ export const English = {
     showLess: "Show Less",
     browseCatalog: "Browse Catalog",
     findResources: "Find Resources",
+    follow: "Follow",
+    following: "Following",
   },
 
   messages: {
@@ -189,7 +191,7 @@ export const English = {
     grades: "Grades",
     resourceTypes: "Resource Types",
     standards: "Standards",
-    fileTypes: "",
+    fileTypes: "File Types",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
   },
@@ -227,6 +229,10 @@ export const English = {
   menus: {
     resources: "Find Resources",
     contactUs: "Contact Us",
+    details: "Details",
+    description: "Description",
+    reviews: "Reviews",
+    qA: "Q&A",
   },
 
   toolTips: {

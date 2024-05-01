@@ -106,6 +106,8 @@ export const Spanish = {
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
     browseCatalog: "Explorar el Catálogo",
+    follow: "Seguir",
+    following: "Siguiente",
   },
 
   messages: {
@@ -229,6 +231,10 @@ export const Spanish = {
   menus: {
     resources: "Buscar Recursos",
     contactUs: "Contáctenos",
+    details: "Detalles",
+    description: "Descripción",
+    reviews: "Opiniones",
+    qA: "Sección de Preguntas",
   },
 
   toolTips: {
