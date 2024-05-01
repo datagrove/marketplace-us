@@ -28,6 +28,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // const minorMunicipality = formData.get("MinorMunicipality");
   // const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
+  const resourceUrl = formData.get("resource_url");
   console.log("imageURL: " + imageUrl);
   console.log(formData);
 
@@ -37,7 +38,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     !subject ||
     !content ||
     !tax_code ||
-    !gradeLevel
+    !gradeLevel ||
+    !resourceUrl
   ) {
     return new Response(
       JSON.stringify({
@@ -90,6 +92,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     post_grade: JSON.parse(gradeLevel as string),
     image_urls: imageUrl,
     user_id: user.id,
+    resource_urls: resourceUrl,
   };
   const { error, data } = await supabase
     .from("seller_post")
