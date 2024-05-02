@@ -5,9 +5,6 @@ export interface Post {
     content: string; //Main body of the post (HTML)
     user_id: string; //User ID of the seller
     image_urls: string | null; //Array of image URLs for the post
-    major_municipality: string; //Municipality of the seller
-    minor_municipality: string; //Minor municipality of the seller
-    governing_district: string; //Governing district of the seller
     seller_name: string; //Name of the seller
     seller_id: string; //User ID of the seller, used for directing to the seller details page
     email: string; //Email of the seller

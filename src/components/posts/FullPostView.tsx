@@ -243,6 +243,8 @@ export const ViewFullPost: Component<Props> = (props) => {
     );
   }
 
+  console.log(post());
+
   return (
     <div class="flex">
       <div class="w-[98%]">
@@ -363,6 +365,10 @@ export const ViewFullPost: Component<Props> = (props) => {
         <p class="my-1">
           <span class="font-bold">{t("postLabels.categories")}</span>
           {post()?.subject}
+        </p>
+        <p class="my-1">
+          <span class="font-bold">{t("postLabels.categories")}</span>
+          {post()?.grade}
         </p>
         <div
           class="my-10 prose dark:prose-invert"

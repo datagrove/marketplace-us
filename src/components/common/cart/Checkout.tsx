@@ -35,13 +35,21 @@ if (stripe === null) {
   alert("Can't load Stripe")
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const CheckoutView = () => {
   const [totalItems, setTotalItems] = createSignal(0);
   const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
   const [cartTotal, setCartTotal] = createSignal(0);
   const [oldItems, setOldItems] = createSignal<Post[]>([]);
+  const [user, setUser] = createSignal<boolean>(false);
 
   onMount(async () => {
+    // setUser(User.session!.user.role === "authenticated");
+    // if (user() === false) {
+
+    // }
+    await createOrder()
     await fetchClientCheckoutSecret()
     await mountCheckout()
   })
@@ -54,6 +62,12 @@ export const CheckoutView = () => {
     });
     setTotalItems(count);
   });
+
+  async function createOrder() {
+    const response = await supabase.from("orders").insert({
+      
+    })
+  }
 
   async function mountCheckout() {
     const checkout = await stripe!.initEmbeddedCheckout({

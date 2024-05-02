@@ -9,6 +9,8 @@ import type { Post } from "@lib/types";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { CartCard } from "@components/common/cart/CartCard";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
+import { AuthMode } from "@components/common/AuthMode";
+import { CartAuthMode } from "./CartAuthMode";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -32,6 +34,10 @@ export const CartView = () => {
   async function goToCheckout() {
     console.log("Checkout")
     window.location.href = `/${lang}/checkout`;
+  }
+
+  async function checkoutAsGuest() {
+    console.log("Checkout As Guest")
   }
 
   function updateCards() {
@@ -95,14 +101,10 @@ export const CartView = () => {
             </div>
           </div>
 
-          <button
-            class="btn-primary"
-            onclick={goToCheckout}
-            aria-label={t("buttons.proceedToCheckout")}
-          >
-            {/* TODO: Style*/}
-            {t("buttons.proceedToCheckout")}
-          </button>
+          <div class="">
+          <CartAuthMode goToCheckout={goToCheckout} checkoutAsGuest={checkoutAsGuest}/>
+          </div>
+
         </div>
       </div>
     </div>
