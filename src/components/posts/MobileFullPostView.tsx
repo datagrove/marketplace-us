@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show, For } from "solid-js";
+import { createSignal, createEffect, Show, For, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { ui } from "../../i18n/ui";
@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
+const postSubjects = values.subjectCategoryInfo.subjects;
 
 interface Props {
   id: string | undefined;
@@ -22,11 +22,11 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
     const [post, setPost] = createSignal<Post>();
     const [postImages, setPostImages] = createSignal<string[]>([]);
 
-    createEffect(() => {
+    onMount(async() => {
         if (props.id === undefined) {
           location.href = `/${lang}/404`;
         } else if (props.id) {
-          fetchPost(+props.id);
+          await fetchPost(+props.id);
         }
     });
 
@@ -43,36 +43,41 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             alert(t("messages.noPost"));
             location.href = `/${lang}/services`;
         } else {
-            data?.map(async (item) => {
-                item.subject = [];
-                productCategories.forEach((productCategories) => {
-                    item.product_subject.map((productSubject: string) => {
-                        if (productSubject === productCategories.id) {
-                            item.subject.push(productCategories.name);
-                            console.log(productCategories.name);
+            const updatedPost = await Promise.all (
+                data?.map(async (item) => {
+                    item.subject = [];
+                    postSubjects.forEach((postSubject) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === postSubject.id) {
+                                item.subject.push(postSubject.name);
+                                console.log(postSubject.name);
+                            }
+                        });
+                    });
+                    delete item.product_subject;
+    
+                    const { data: gradeData, error: gradeError } = await supabase
+                    .from("grade_level")
+                    .select("*");
+    
+                    if (gradeError) {
+                    console.log("supabase error: " + gradeError.message);
+                    } else {
+                    item.grade = [];
+                    gradeData.forEach((databaseGrade) => {
+                        item.post_grade.map((itemGrade: string) => {
+                        if (itemGrade === databaseGrade.id.toString()) {
+                            item.grade.push(databaseGrade.grade);
                         }
+                        });
                     });
-                });
-                delete item.product_subject;
-
-                const { data: gradeData, error: gradeError } = await supabase
-                .from("grade_level")
-                .select("*");
-
-                if (gradeError) {
-                console.log("supabase error: " + gradeError.message);
-                } else {
-                item.grade = [];
-                gradeData.forEach((databaseGrade) => {
-                    item.post_grade.map((itemGrade: string) => {
-                    if (itemGrade === databaseGrade.id.toString()) {
-                        item.grade.push(databaseGrade.grade);
                     }
-                    });
-                });
-                }
-            });
-        setPost(data[0]);
+                    return item;
+                })
+            )
+
+        console.log(updatedPost[0])
+        setPost(updatedPost[0]);
         console.log("post() from fetchPost function: " + post());
         console.log(post());
         console.log(post().post_grade)
@@ -309,13 +314,21 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 <div id="post-details-div" class="inline">
                     <div>
                         <p class="font-light uppercase">{t("formLabels.grades")}</p>
-
+                        {/* { post().content } */}
                         {/* { post().post_grade }  */}
-                        {/* <div>
-                            <For each={ post().post_grade }>{(grade) => 
+                        <div>
+
+                            {/* <For each={ post().post_grade }>{(grade) => 
                                 <li>{ grade }</li>
-                            }</For>
-                        </div> */}
+                            }</For> */}
+
+                            {/* { post().grade } */}
+                            {/* <p>{post().grade!.join(", ")}</p> */}
+
+                            {/* <p>{ post().content }</p> */}
+
+                            {/* { post().grade } */}
+                        </div>
 
                     </div>
 
@@ -344,8 +357,8 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                         </svg>
                     </button>
                 </div>
-
-                <p id="post-description-div" class="hidden">{post()?.content}</p>
+                {/* <p>{ post()?.grade.join(", ") }</p> */}
+                <p id="post-description-div" class="hidden">{post()?.content} { post()?.grade.join(", ") }</p>
             </div>
 
             <div id="reviews" class="mb-2">
