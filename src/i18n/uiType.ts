@@ -92,6 +92,7 @@ export interface uiObject {
     findResources: string,
     follow: string,
     following: string,
+    top: string,
   },
 
   messages: {
@@ -133,6 +134,7 @@ export interface uiObject {
     noStripeAccount: string,
     selectSubject: string,
     comingSoon: string,
+    report: string,
   },
 
   formLabels: {

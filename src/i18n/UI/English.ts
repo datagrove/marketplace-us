@@ -108,6 +108,7 @@ export const English = {
     findResources: "Find Resources",
     follow: "Follow",
     following: "Following",
+    top: "Back to Top",
   },
 
   messages: {
@@ -156,6 +157,7 @@ export const English = {
       "You must complete enrollment with Stripe before posting resources.",
     selectSubject: "Please select at least one subject",
     comingSoon: "Coming soon!",
+    report: "Report this resource to LearnGrove",
   },
 
   formLabels: {

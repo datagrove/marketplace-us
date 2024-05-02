@@ -110,6 +110,7 @@ export const French = {
     findResources: "Trouver des Ressources",
     follow: "Suivre",
     following: "Suivante",
+    top: "Retour au Sommet",
   },
 
   messages: {
@@ -162,6 +163,7 @@ export const French = {
       "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
     selectSubject: "Veuillez sélectionner au moins un sujet",
     comingSoon: "À venir!",
+    report: "Signaler cette ressource à LearnGrove",
   },
 
   formLabels: {

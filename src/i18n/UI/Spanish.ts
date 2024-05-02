@@ -108,6 +108,7 @@ export const Spanish = {
     browseCatalog: "Explorar el Catálogo",
     follow: "Seguir",
     following: "Siguiente",
+    top: "Volver Arriba",
   },
 
   messages: {
@@ -157,7 +158,8 @@ export const Spanish = {
     noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
     noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
     selectSubject: "Por favor, seleccione al menos una asignatura",
-    comingSoon: "¡Muy pronto!"
+    comingSoon: "¡Muy pronto!",
+    report: "Reportar este recurso a LearnGrove",
   },
 
   formLabels: {

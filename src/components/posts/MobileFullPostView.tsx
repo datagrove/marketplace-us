@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, For } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import { ui } from "../../i18n/ui";
@@ -73,7 +73,9 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 }
             });
         setPost(data[0]);
+        console.log("post() from fetchPost function: " + post());
         console.log(post());
+        console.log(post().post_grade)
         }
     } catch (error) {
         console.log(error);
@@ -173,8 +175,6 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
             qaArrow?.classList.remove("rotate-180");
         }
-
-
     };
 
     function testClick(e) {
@@ -202,7 +202,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
     };
 
     return (
-        <div class="border-2 border-red-400 w-96 mb-48">
+        <div class="border-2 border-red-400 w-96 h-full mb-48">
             <div>
                 <p class="text-2xl font-bold">{ post()?.title }</p>
             </div>
@@ -309,6 +309,14 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 <div id="post-details-div" class="inline">
                     <div>
                         <p class="font-light uppercase">{t("formLabels.grades")}</p>
+
+                        {/* { post().post_grade }  */}
+                        {/* <div>
+                            <For each={ post().post_grade }>{(grade) => 
+                                <li>{ grade }</li>
+                            }</For>
+                        </div> */}
+
                     </div>
 
                     <div>
@@ -367,12 +375,21 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
             </div>
 
-            <div>
-                Report
+            <div class="flex items-center">
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 24 24" class="fill-alert1 dark:fill-alert1-DM">
+                    <g data-name="Layer 2">
+                    <g data-name="flag">
+                    <polyline points="24 24 0 24 0 0" opacity="0"/>
+                    <path d="M19.27 4.68a1.79 1.79 0 0 0-1.6-.25 7.53 7.53 0 0 1-2.17.28 8.54 8.54 0 0 1-3.13-.78A10.15 10.15 0 0 0 8.5 3c-2.89 0-4 1-4.2 1.14a1 1 0 0 0-.3.72V20a1 1 0 0 0 2 0v-4.3a6.28 6.28 0 0 1 2.5-.41 8.54 8.54 0 0 1 3.13.78 10.15 10.15 0 0 0 3.87.93 7.66 7.66 0 0 0 3.5-.7 1.74 1.74 0 0 0 1-1.55V6.11a1.77 1.77 0 0 0-.73-1.43zM18 14.59a6.32 6.32 0 0 1-2.5.41 8.36 8.36 0 0 1-3.13-.79 10.34 10.34 0 0 0-3.87-.92 9.51 9.51 0 0 0-2.5.29V5.42A6.13 6.13 0 0 1 8.5 5a8.36 8.36 0 0 1 3.13.79 10.34 10.34 0 0 0 3.87.92 9.41 9.41 0 0 0 2.5-.3z"/>
+                    </g>
+                    </g>
+                </svg>
+
+                <a href="mailto:info@learngrove.co"><p class="pl-1 italic text-light">{t("messages.report")}</p></a>
             </div>
 
-            <div>
-                Back to Top
+            <div class="flex justify-end sticky bottom-0">
+                <p>{t("buttons.top")}</p>
             </div>
 
         </div>
