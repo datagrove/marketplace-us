@@ -105,10 +105,104 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
         } catch (error) {
           console.log(error);
         }
-      };
+    };
+
+    function changeDetails() {
+        let detailsDiv = document.getElementById("post-details-div");
+        let detailsArrow = document.getElementById("details-arrow")
+
+        if(detailsDiv?.classList.contains("hidden")) {
+            detailsDiv?.classList.remove("hidden");
+            detailsDiv?.classList.add("inline");
+            
+            detailsArrow?.classList.add("rotate-180");
+        } else if(detailsDiv?.classList.contains("inline")){
+            detailsDiv?.classList.remove("inline");
+            detailsDiv?.classList.add("hidden");
+
+            detailsArrow?.classList.remove("rotate-180");
+        }
+    };
+
+    function changeDescription() {
+        let descriptionDiv = document.getElementById("post-description-div");
+        let descriptionArrow = document.getElementById("description-arrow")
+
+        if(descriptionDiv?.classList.contains("hidden")) {
+            descriptionDiv?.classList.remove("hidden");
+            descriptionDiv?.classList.add("inline");
+            
+            descriptionArrow?.classList.add("rotate-180");
+        } else if(descriptionDiv?.classList.contains("inline")){
+            descriptionDiv?.classList.remove("inline");
+            descriptionDiv?.classList.add("hidden");
+
+            descriptionArrow?.classList.remove("rotate-180");
+        }
+    };
+
+    function changeReviews() {
+        let reviewsDiv = document.getElementById("post-reviews-div");
+        let reviewsArrow = document.getElementById("reviews-arrow")
+
+        if(reviewsDiv?.classList.contains("hidden")) {
+            reviewsDiv?.classList.remove("hidden");
+            reviewsDiv?.classList.add("inline");
+            
+            reviewsArrow?.classList.add("rotate-180");
+        } else if(reviewsDiv?.classList.contains("inline")){
+            reviewsDiv?.classList.remove("inline");
+            reviewsDiv?.classList.add("hidden");
+
+            reviewsArrow?.classList.remove("rotate-180");
+        }
+    };
+
+    function changeQA() {
+        let qaDiv = document.getElementById("post-qa-div");
+        let qaArrow = document.getElementById("qa-arrow")
+
+        if(qaDiv?.classList.contains("hidden")) {
+            qaDiv?.classList.remove("hidden");
+            qaDiv?.classList.add("inline");
+            
+            qaArrow?.classList.add("rotate-180");
+        } else if(qaDiv?.classList.contains("inline")){
+            qaDiv?.classList.remove("inline");
+            qaDiv?.classList.add("hidden");
+
+            qaArrow?.classList.remove("rotate-180");
+        }
+
+
+    };
+
+    function testClick(e) {
+        e.preventDefault();
+        
+        let currLinkID = e.currentTarget.id; // <a> element id
+        let currEl = document.getElementById(currLinkID); // <a> element clicked
+        let allLinks = document.getElementsByClassName("tabLink"); // all links
+
+        if(!currEl.classList.contains("border-b-2")) {
+            Array.from(allLinks).forEach(function(link) {
+                link.classList.remove("border-b-2");
+                link.classList.remove("border-green-500");
+                console.log("link classList after: " + link.classList)
+            })
+            
+            currEl.classList.add("border-b-2");
+            currEl.classList.add("border-green-500");
+        };
+
+        let sectionID = currLinkID.slice(0, -4);
+        let jumpToSection = `#${ sectionID }`;
+        console.log("jumpToSection: ", jumpToSection);
+        window.location.href = jumpToSection;
+    };
 
     return (
-        <div class="border-2 border-red-400 w-96">
+        <div class="border-2 border-red-400 w-96 mb-48">
             <div>
                 <p class="text-2xl font-bold">{ post()?.title }</p>
             </div>
@@ -194,42 +288,83 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             </div>
 
             <div class="flex justify-start pb-2 border-b border-border1 dark:border-border1-DM">
-                <p class="mr-6 border-b-2 border-green-500">{t("menus.details")}</p>
-                <p class="mr-6 border-b-2 border-green-500">{t("menus.description")}</p>
-                <p class="mr-6 border-b-2 border-green-500">{t("menus.reviews")}</p>
-                <p class="mr-6 border-b-2 border-green-500">{t("menus.qA")}</p>
+                <a href="#details" id="detailsLink" class="tabLink border-b-2 border-green-500 mr-6" onClick={ testClick }><p id="details-text" class="">{t("menus.details")}</p></a>
+                <a href="#description" id="descriptionLink" class="tabLink mr-6" onClick={ testClick }><p id="description-text" class="">{t("menus.description")}</p></a>
+                <a href="#reviews" id="reviewsLink" class="tabLink mr-6" onClick={ testClick } ><p id="reviews-text" class="">{t("menus.reviews")}</p></a>
+                <a href="#qa" id="qaLink" class="tabLink mr-6" onClick={ testClick }><p id="qa-text" class="">{t("menus.qA")}</p></a>
             </div>
 
-            <div>
-                <p class="text-lg">{t("menus.details")}</p>
+            <div id="details" class="mb-2">
+                <div class="flex justify-between">
+                    <p class="text-lg">{t("menus.details")}</p>
 
-                <div>
-                    <p class="font-light uppercase">{t("formLabels.grades")}</p>
+                    <button onClick={ changeDetails }>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="details-arrow" class="stroke-icon1 dark:stroke-icon1-DM rotate-180">
+                            <polyline points="19 12 12 19 5 12" />
+                        </svg>
+                    </button>
+                    
                 </div>
 
-                <div>
-                    <p class="font-light uppercase">{t("formLabels.subjects")}</p>
-                </div>
+                <div id="post-details-div" class="inline">
+                    <div>
+                        <p class="font-light uppercase">{t("formLabels.grades")}</p>
+                    </div>
 
-                <div>
-                    <p class="font-light uppercase">{t("formLabels.resourceTypes")}</p>
-                </div>
+                    <div>
+                        <p class="font-light uppercase">{t("formLabels.subjects")}</p>
+                    </div>
 
-                <div>
-                    <p class="font-light uppercase">{t("formLabels.fileTypes")}</p>
+                    <div>
+                        <p class="font-light uppercase">{t("formLabels.resourceTypes")}</p>
+                    </div>
+
+                    <div>
+                        <p class="font-light uppercase">{t("formLabels.fileTypes")}</p>
+                    </div>
                 </div>
+                
+                
             </div>
 
-            <div>
-                Description
+            <div id="description" class="mb-2">
+                <div class="flex justify-between">
+                    <p class="text-lg">{t("menus.description")}</p>
+                    <button onClick={ changeDescription }>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="description-arrow" class="stroke-icon1 dark:stroke-icon1-DM">
+                            <polyline points="19 12 12 19 5 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <p id="post-description-div" class="hidden">{post()?.content}</p>
             </div>
 
-            <div>
-                Reviews
+            <div id="reviews" class="mb-2">
+                <div class="flex justify-between">
+                    <p class="text-lg">{t("menus.reviews")}</p>
+                    <button onClick={ changeReviews }>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="reviews-arrow" class="stroke-icon1 dark:stroke-icon1-DM">
+                            <polyline points="19 12 12 19 5 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <p id="post-reviews-div" class="hidden italic">{t("messages.comingSoon")}</p>
             </div>
 
-            <div>
-                Q&A
+            <div id="qa" class="mb-2">
+                <div class="flex justify-between">
+                    <p class="text-lg">{t("menus.qA")}</p>
+                    <button onClick={ changeQA }>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="qa-arrow" class="stroke-icon1 dark:stroke-icon1-DM">
+                            <polyline points="19 12 12 19 5 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <p id="post-qa-div" class="hidden italic">{t("messages.comingSoon")}</p>
+
             </div>
 
             <div>

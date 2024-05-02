@@ -132,6 +132,7 @@ export interface uiObject {
     noPostsSearch: string,
     noStripeAccount: string,
     selectSubject: string,
+    comingSoon: string,
   },
 
   formLabels: {

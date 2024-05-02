@@ -161,6 +161,7 @@ export const French = {
     noStripeAccount:
       "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
     selectSubject: "Veuillez sélectionner au moins un sujet",
+    comingSoon: "À venir!",
   },
 
   formLabels: {
