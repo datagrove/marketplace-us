@@ -44,8 +44,8 @@ export const ViewCard: Component<Props> = (props) => {
         props.posts.map(async (post: Post) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
-                post.image_urls.split(",")[0]
-              ))
+              post.image_urls.split(",")[0],
+            ))
             : (post.image_url = undefined);
 
           post.seller_img
@@ -54,7 +54,7 @@ export const ViewCard: Component<Props> = (props) => {
           // Set the default quantity to 1
           post.quantity = 1;
           return post;
-        })
+        }),
       );
 
       setNewPosts(updatedPosts);
@@ -191,7 +191,7 @@ export const ViewCard: Component<Props> = (props) => {
 
                 <div class="flex flex-col justify-between items-end pr-1 w-1/4 h-full">
                   <div class="inline-block w-full price-reviews-div text-end">
-                    <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
+                    <p class="text-lg font-bold">${post.price.toFixed()} </p>
 
                     <div class="flex justify-end items-center w-full reviews-div text-end">
                       <svg
@@ -308,7 +308,8 @@ export const ViewCard: Component<Props> = (props) => {
                     <Show
                       when={
                         session() === null ||
-                        session()?.user.id !== post.user_id
+                        (session()?.user.id !== post.user_id &&
+                          post.price != null)
                       }
                     >
                       <AddToCart

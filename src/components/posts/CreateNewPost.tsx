@@ -117,17 +117,17 @@ async function postFormData(formData: FormData) {
     let tmpDiv = document.createElement("div");
     tmpDiv.innerHTML = formData.get("Content") as string;
     let description = tmpDiv.textContent || tmpDiv.innerText || "";
-
-    CreateStripeProductPrice({
-      name: String(formData.get("Title")),
-      description: description,
-      price: parseInt(formData.get("Price") as string),
-      id: data.id,
-      access_token: formData.get("access_token") as string,
-      refresh_token: formData.get("refresh_token") as string,
-      tax_code: formData.get("TaxCode") as string,
-    });
-
+    if ((formData.get("Price") as string) != "") {
+      CreateStripeProductPrice({
+        name: String(formData.get("Title")),
+        description: description,
+        price: parseInt(formData.get("Price") as string),
+        id: data.id,
+        access_token: formData.get("access_token") as string,
+        refresh_token: formData.get("refresh_token") as string,
+        tax_code: formData.get("TaxCode") as string,
+      });
+    }
     // if (uploadFilesRef) {
     //   uploadFilesRef.upload();
     // }
@@ -159,6 +159,7 @@ export const CreateNewPost: Component = () => {
   const [gradePick, setGradePick] = createSignal<Array<string>>([]);
   const [uploadFinished, setUploadFinished] = createSignal(false);
   const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
+  const [price, setPrice] = createSignal<string>("");
 
   onMount(() => {
     window.addEventListener("storage", (event) => {
@@ -207,13 +208,13 @@ export const CreateNewPost: Component = () => {
               /^txcd_1.*/.test(taxCode.id) &&
               //Not in our filter list
               !Array.from(excludeTaxCodes).some((excludeTaxCode) =>
-                excludeTaxCode.test(taxCode.id)
+                excludeTaxCode.test(taxCode.id),
               )
             ) {
               let taxCodeOption = new Option(taxCode.name, taxCode.id);
               taxCodeOption.setAttribute(
                 "data-description",
-                taxCode.description
+                taxCode.description,
               );
               taxCodeOptions.push(taxCodeOption);
             }
@@ -243,7 +244,7 @@ export const CreateNewPost: Component = () => {
         setSubjects([
           ...subjects(),
           { id: Number(subject.id), subject: subject.name },
-        ])
+        ]),
       );
     } else {
       alert(t("messages.signInAsProvider"));
@@ -259,7 +260,7 @@ export const CreateNewPost: Component = () => {
     formData.append("refresh_token", session()?.refresh_token!);
     formData.append("lang", lang);
     //TODO: Collect Price from Form
-    formData.append("Price", "2000");
+    formData.append("Price", price());
     if (selectedTaxCode() !== undefined) {
       formData.append("TaxCode", selectedTaxCode()!.value.toString());
     }
@@ -315,8 +316,8 @@ export const CreateNewPost: Component = () => {
       if (subjectPick().includes((e.target as HTMLInputElement).value)) {
         setSubjectPick(
           subjectPick().filter(
-            (value) => value !== (e.target as HTMLInputElement).value
-          )
+            (value) => value !== (e.target as HTMLInputElement).value,
+          ),
         );
       }
     }
@@ -337,8 +338,8 @@ export const CreateNewPost: Component = () => {
       if (gradePick().includes((e.target as HTMLInputElement).value)) {
         setGradePick(
           gradePick().filter(
-            (value) => value !== (e.target as HTMLInputElement).value
-          )
+            (value) => value !== (e.target as HTMLInputElement).value,
+          ),
         );
       }
     }
@@ -617,16 +618,23 @@ export const CreateNewPost: Component = () => {
             removeFile={(url: string) => {
               setResourceURL(resourceURL().filter((u) => u !== url));
             }}
-            setUploadFinished={(uploadFinished) => setUploadFinished(uploadFinished)}
+            setUploadFinished={(uploadFinished) =>
+              setUploadFinished(uploadFinished)
+            }
           />
           <div id="uploadResource" class="w-full"></div>
         </div>
 
-        
-
         <br />
         <div class="flex justify-center">
-          <button id="post" disabled={!uploadFinished()} class={`border-2 text-2xl ${uploadFinished() ? "btn-primary" : "btn-disabled"}`}>{t("buttons.post")}</button>
+          <button
+            id="post"
+            disabled={!uploadFinished()}
+            class={`border-2 text-2xl ${uploadFinished() ? "btn-primary" : "btn-disabled"
+              }`}
+          >
+            {t("buttons.post")}
+          </button>
         </div>
         <Suspense>
           {response() && (
