@@ -1,41 +1,41 @@
 create table "public"."order_details" (
-    "OrderNumber" uuid not null,
-    "ProductID" bigint not null,
-    "Quantity" bigint
+    "order_number" uuid not null,
+    "product_id" bigint not null,
+    "quantity" bigint
 );
 
 
 alter table "public"."order_details" enable row level security;
 
 create table "public"."orders" (
-    "OrderNumber" uuid not null default gen_random_uuid(),
-    "OrderDate" timestamp with time zone not null default now(),
-    "CustomerID" uuid not null default auth.uid(),
-    "OrderStatus" text not null default ''::text
+    "order_number" uuid not null default gen_random_uuid(),
+    "order_date" timestamp with time zone not null default now(),
+    "customer_id" uuid not null default auth.uid(),
+    "order_status" text not null default ''::text
 );
 
 
 alter table "public"."orders" enable row level security;
 
-CREATE UNIQUE INDEX "order_details_pkey" ON public."order_details" USING btree ("OrderNumber", "ProductID");
+CREATE UNIQUE INDEX "order_details_pkey" ON public."order_details" USING btree ("order_number", "product_id");
 
-CREATE UNIQUE INDEX "orders_pkey" ON public."orders" USING btree ("OrderNumber");
+CREATE UNIQUE INDEX "orders_pkey" ON public."orders" USING btree ("order_number");
 
 alter table "public"."order_details" add constraint "order_details_pkey" PRIMARY KEY using index "order_details_pkey";
 
 alter table "public"."orders" add constraint "orders_pkey" PRIMARY KEY using index "orders_pkey";
 
-alter table "public"."order_details" add constraint "public_order_details_OrderNumber_fkey" FOREIGN KEY ("OrderNumber") REFERENCES "orders"("OrderNumber") not valid;
+alter table "public"."order_details" add constraint "public_order_details_order_number_fkey" FOREIGN KEY ("order_number") REFERENCES "orders"("order_number");
 
-alter table "public"."order_details" validate constraint "public_order_details_OrderNumber_fkey";
+alter table "public"."order_details" validate constraint "public_order_details_order_number_fkey";
 
-alter table "public"."order_details" add constraint "public_order_details_ProductID_fkey" FOREIGN KEY ("ProductID") REFERENCES seller_post(id) not valid;
+alter table "public"."order_details" add constraint "public_order_details_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES seller_post(id);
 
-alter table "public"."order_details" validate constraint "public_order_details_ProductID_fkey";
+alter table "public"."order_details" validate constraint "public_order_details_product_id_fkey";
 
-alter table "public"."orders" add constraint "public_orders_CustomerID_fkey" FOREIGN KEY ("CustomerID") REFERENCES clients(user_id) not valid;
+alter table "public"."orders" add constraint "public_orders_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES auth.users(id);
 
-alter table "public"."orders" validate constraint "public_orders_CustomerID_fkey";
+alter table "public"."orders" validate constraint "public_orders_customer_id_fkey";
 
 grant delete on table "public"."order_details" to "anon";
 
@@ -127,3 +127,59 @@ create foreign data wrapper stripe_wrapper
   handler stripe_fdw_handler
   validator stripe_fdw_validator;
 
+CREATE OR REPLACE FUNCTION public.create_order(customerid UUID, product_details JSONB)
+ RETURNS uuid as $$
+DECLARE
+  new_order_number UUID;  -- Variable to store the generated order number
+BEGIN
+    -- Insert a new order and return the generated order number
+    INSERT INTO orders (customer_id, order_date) 
+    VALUES (customerid, NOW())  -- Use the current date for orderDate
+    RETURNING order_number INTO new_order_number;  -- Get the generated order number
+
+    -- Insert the order details for each Product ID
+    INSERT INTO order_details (order_number, product_id, quantity)
+  SELECT new_order_number, (product_detail->>'product_id')::int, (product_detail->>'quantity')::int
+  FROM jsonb_array_elements(product_details) AS product_detail;
+    -- If everything is successful, return the new order number
+    RETURN new_order_number;
+
+  -- Handle exceptions (rollback if there's an error)
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE;     -- Re-raise the exception
+END;
+$$ LANGUAGE plpgsql;
+
+
+create policy "Enable insert for authenticated users only"
+on "public"."order_details"
+as permissive
+for insert
+to authenticated
+with check (true);
+
+
+create policy "Enable insert for authenticated users only"
+on "public"."orders"
+as permissive
+for insert
+to authenticated
+with check (true);
+
+create policy "Allow select for owners"
+on "public"."order_details"
+as permissive
+for select
+to authenticated
+using ((( SELECT auth.uid() AS uid) = ( SELECT orders.customer_id
+   FROM orders
+  WHERE (orders.order_number = order_details.order_number))));
+
+
+create policy "Enable select based on customer_id"
+on "public"."orders"
+as permissive
+for select
+to authenticated
+using ((auth.uid() = customer_id));

@@ -11,6 +11,7 @@ import { CartCard } from "@components/common/cart/CartCard";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
 import { AuthMode } from "@components/common/AuthMode";
 import { CartAuthMode } from "./CartAuthMode";
+import supabase from "@lib/supabaseClient";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -38,6 +39,8 @@ export const CartView = () => {
 
   async function checkoutAsGuest() {
     console.log("Checkout As Guest")
+    await supabase.auth.signInAnonymously();
+    window.location.href = `/${lang}/checkout`;
   }
 
   function updateCards() {

@@ -8,11 +8,17 @@ import {
 } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
+import type Stripe from "stripe";
+import supabase from "@lib/supabaseClient";
+import type { Post } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const CheckoutStatus: Component = () => {
+  const [session, setSession] = createSignal<Stripe.Checkout.Session>();
+  const [products, setProducts] = createSignal<Partial<Post>[]>([]);
+
   onMount(async () => {
     await CurrentCheckoutStatus();
   });
@@ -29,16 +35,46 @@ export const CheckoutStatus: Component = () => {
       }
     );
     const res = await response.json();
-    const session = res.session;
+    const session = res.session as Stripe.Checkout.Session;
+    if (session) {
+      setSession(session);
+    }
 
     if (session.status === "open") {
       window.location.replace(`/${lang}/checkout`);
     } else if (session.status === "complete") {
+      console.log(session);
+      await fetchOrderedItems();
       document.getElementById("success")?.classList.remove("hidden");
       document.getElementById("success")?.classList.add("flex");
       localStorage.removeItem("cartItems");
       setItems([]);
     }
+  }
+
+  async function fetchOrderedItems() {
+    console.log(session());
+    const { data: orderedItems, error } = await supabase
+      .from("order_details")
+      .select("*")
+      .eq("order_number", session()?.metadata?.orderId);
+    if (error) {
+      console.log("Order Details Error: " + error.code + " " + error.message);
+      return;
+    }
+    const orderedItemsIds = orderedItems?.map((item) => item.product_id);
+    const { data: products, error: productsError } = await supabase
+      .from("seller_post")
+      .select("title, resource_urls")
+      .in("id", orderedItemsIds);
+    if (productsError) {
+      console.log(
+        "Products Error: " + productsError.code + " " + productsError.message
+      );
+      return;
+    }
+    console.log(products);
+    setProducts(products);
   }
 
   return (
@@ -55,12 +91,28 @@ export const CheckoutStatus: Component = () => {
             fill="currentColor"
           ></path>
         </svg>
-        {/* <p>{t("checkout.success")}</p> */}
+        {/* <p>{t("checkout.success")}</p> TODO: Internationalize*/}
         <p class="text-3xl font-bold">Success!</p>
-        {/* <p>{t("checkout.thanks")}</p> */}
+        {/* <p>{t("checkout.thanks")}</p> TODO: Internationalize*/}
         <p class="italic">Thank you for your order</p>
       </div>
-      <div class="border border-red-500"></div>
+      <div class="border border-red-500">
+        {/* TODO: Internationalize */}
+        <div>Order ID: {session()?.metadata?.orderId}</div>
+        {/* TODO: Internationalize */}
+        <div>
+          Total: ${" "}
+          {session()?.amount_total
+            ? (session()!.amount_total! / 100).toFixed(2)
+            : 0}
+        </div>
+        <div>
+          {/* TODO: Clean up rendering */}
+          {products().map((item) => (
+            <p>{item.title}</p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
