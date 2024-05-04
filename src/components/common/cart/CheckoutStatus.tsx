@@ -16,6 +16,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const CheckoutStatus: Component = () => {
+  // TODO: Merge anonymous user to a real user with stripe email
   const [session, setSession] = createSignal<Stripe.Checkout.Session>();
   const [products, setProducts] = createSignal<Partial<Post>[]>([]);
 
