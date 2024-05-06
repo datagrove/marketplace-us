@@ -111,6 +111,7 @@ export const French = {
     follow: "Suivre",
     following: "Suivante",
     top: "Retour au Sommet",
+    freeDownload: "Téléchargement Gratuit",
   },
 
   messages: {
@@ -203,6 +204,7 @@ export const French = {
     fileTypes: "Types de Fichier",
     chooseSubject: "Sujet(s)",
     chooseGrade: "Niveau(x) scolaire(s)",
+    pages: "Pages",
   },
 
   postLabels: {

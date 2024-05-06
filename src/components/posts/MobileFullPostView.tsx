@@ -8,6 +8,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import { FreeDownloadButton } from "@components/common/cart/FreeDownloadButton";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -213,6 +214,15 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
         let currEl = document.getElementById(currLinkID); // <a> element clicked
         let allLinks = document.getElementsByClassName("tabLink"); // all links
 
+        let detailsDiv = document.getElementById("post-details-div");
+        let detailsArrow = document.getElementById("details-arrow");
+        let descriptionDiv = document.getElementById("post-description-div");
+        let descriptionArrow = document.getElementById("description-arrow");
+        let reviewsDiv = document.getElementById("post-reviews-div");
+        let reviewsArrow = document.getElementById("reviews-arrow");
+        let qaDiv = document.getElementById("post-qa-div");
+        let qaArrow = document.getElementById("qa-arrow");
+
         if(!currEl.classList.contains("border-b-2")) {
             Array.from(allLinks).forEach(function(link) {
                 link.classList.remove("border-b-2");
@@ -222,6 +232,66 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             currEl.classList.add("border-b-2");
             currEl.classList.add("border-green-500");
         };
+
+        console.log(currLinkID)
+
+        if(currLinkID === "detailsLink") {
+            changeDetails();
+            window.location.href="#details";
+        }
+
+        if(currLinkID === "descriptionLink") {
+            changeDescription();
+            window.location.href="#description";
+        }
+
+        if(currLinkID === "reviewsLink") {
+            changeReviews();
+            window.location.href="#reviews";
+        }
+
+        if(currLinkID === "qaLink") {
+            changeQA();
+            window.location.href="#qa"
+        }
+
+        // if(currLinkID === "detailsLink") {
+        //     if(detailsDiv.classList.contains("hidden")) {
+        //         detailsDiv.classList.remove("hidden");
+        //         detailsDiv.classList.add("inline");
+    
+        //         detailsArrow.classList.add("rotate");
+
+        //         window.location.href="#details";
+        //     }
+        // } else if(currLinkID === "descriptionLink") {
+        //     if(descriptionDiv.classList.contains("hidden")) {
+        //         descriptionDiv.classList.remove("hidden");
+        //         descriptionDiv.classList.add("inline");
+    
+        //         descriptionArrow.classList.add("rotate");
+
+        //         window.location.href="#description";
+        //     }
+        // } else if(currLinkID === "reviewsLink") {
+        //     if(reviewsDiv.classList.contains("hidden")) {
+        //         reviewsDiv.classList.remove("hidden");
+        //         reviewsDiv.classList.add("inline");
+    
+        //         reviewsArrow.classList.add("rotate");
+
+        //         window.location.href="#reviews";
+        //     }            
+        // } else if(currLinkID === "qaLink") {
+        //     if(qaDiv.classList.contains("hidden")) {
+        //         qaDiv.classList.remove("hidden");
+        //         qaDiv.classList.add("inline");
+    
+        //         qaArrow.classList.add("rotate");
+
+        //         window.location.href="#qa";
+        //     }
+        // }
 
         let sectionID = currLinkID.slice(0, -4);
         let jumpToSection = `#${ sectionID }`;
@@ -251,8 +321,8 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
     }
 
     return (
-        <div class="w-96 h-full mb-48 px-1">
-            <div id="full-resource-title">
+        <div id="mobile-full-card" class="relative w-96 h-full px-1">
+            <div id="full-resource-title" class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM">
                 <p class="text-2xl font-bold">{ post()?.title }</p>
             </div>
 
@@ -288,9 +358,11 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
             <div id="creator-followers-div" class="flex w-full items-center">
                 <div id="creator-img-div" class="flex justify-center w-16 h-16 items-center bg-gray-300 rounded-full">
-                    <svg fill="none" width="40px" height="40px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
-                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"/>
-                    </svg>
+                    <a href={`/${ lang }/provider/${ post()?.seller_id }`}>
+                        <svg fill="none" width="40px" height="40px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"/>
+                        </svg>
+                    </a>
                 </div>
 
                 <div id="creator-follower-text-div" class="ml-1 w-5/6">
@@ -307,7 +379,10 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
                         <div>
 
-                        <button class="flex items-center justify-center bg-btn1 dark:bg-btn1-DM rounded-full px-4 text-ptext2 dark:ptext-DM mx-4">
+                        <button 
+                            class="flex items-center justify-center bg-btn1 dark:bg-btn1-DM rounded-full px-4 text-ptext2 dark:ptext-DM mx-4"
+                            onClick={() => (alert(t("messages.comingSoon")))}
+                        >
                             <svg width="18px" height="20px" viewBox="0 0 24 24" fill="none" class="mx-0.5">
                                 <circle cx="9" cy="7" r="4" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
                                 <path d="M2 21V17C2 15.8954 2.89543 15 4 15H14C15.1046 15 16 15.8954 16 17V21" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
@@ -393,7 +468,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 
             </div>
 
-            <div id="cart-price-div" class="flex flex-col my-4">
+            <div id="cart-price-div" class="flex flex-col my-4 sticky top-0 bg-background1 dark:bg-background1-DM">
                 <div class="flex justify-end mx-1">
                     {/* TODO: fix hardcoding of price */}
                     <p class="text-2xl font-bold">$3.99</p>
@@ -405,6 +480,8 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                         updateQuantity={ updateQuantity }
                     />
                     <div class="w-full ml-4">
+                        {/* TODO: Add FreeDownloadButton component if resource is free */}
+                        
                         <AddToCart 
                             item={{ ...post(), quantity: 1}}
                             buttonClick={ resetQuantity }
@@ -413,14 +490,14 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 </div>
             </div>
 
-            <div class="flex justify-start pb-2 border-b border-border1 dark:border-border1-DM">
+            <div class="flex justify-start pb-2 ">
                 <a href="#details" id="detailsLink" class="tabLink border-b-2 border-green-500 mr-6" onClick={ tabLinkClick }><p id="details-text" class="">{t("menus.details")}</p></a>
                 <a href="#description" id="descriptionLink" class="tabLink mr-6" onClick={ tabLinkClick }><p id="description-text" class="">{t("menus.description")}</p></a>
                 <a href="#reviews" id="reviewsLink" class="tabLink mr-6" onClick={ tabLinkClick } ><p id="reviews-text" class="">{t("menus.reviews")}</p></a>
                 <a href="#qa" id="qaLink" class="tabLink mr-6" onClick={ tabLinkClick }><p id="qa-text" class="">{t("menus.qA")}</p></a>
             </div>
 
-            <div id="details" class="mb-2">
+            <div id="details" class="mb-2 border-t border-border1 dark:border-border1-DM">
                 <div class="flex justify-between">
                     <p class="text-lg">{t("menus.details")}</p>
 
@@ -462,12 +539,17 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                         {/* TODO: add file type to database and then populate */}
                         {/* { post()?.file_type.join(", ")} */}
                     </div>
-                </div>
-                
-                
+                    
+                    <div>
+                        <p class="font-light uppercase mt-4">{t("formLabels.pages")}</p>
+                        <p class="italic">{t("messages.comingSoon")}</p>
+                        {/* TODO: add file type to database and then populate */}
+                        {/* { post()?.file_type.join(", ")} */}
+                    </div>
+                </div>                
             </div>
 
-            <div id="description" class="mb-2">
+            <div id="description" class="mb-2 border-t border-border1 dark:border-border1-DM">
                 <div class="flex justify-between">
                     <p class="text-lg">{t("menus.description")}</p>
                     <button onClick={ changeDescription }>
@@ -480,7 +562,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 <p id="post-description-div" class="hidden">{ post()?.content } { post()?.grade.join(", ") }</p>
             </div>
 
-            <div id="reviews" class="mb-2">
+            <div id="reviews" class="mb-2 border-t border-border1 dark:border-border1-DM">
                 <div class="flex justify-between">
                     <p class="text-lg">{t("menus.reviews")}</p>
                     <button onClick={ changeReviews }>
@@ -493,7 +575,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 <p id="post-reviews-div" class="hidden italic">{t("messages.comingSoon")}</p>
             </div>
 
-            <div id="qa" class="mb-2">
+            <div id="qa" class="mb-2 border-t border-border1 dark:border-border1-DM">
                 <div class="flex justify-between">
                     <p class="text-lg">{t("menus.qA")}</p>
                     <button onClick={ changeQA }>
@@ -507,7 +589,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
             </div>
 
-            <div class="flex items-center">
+            <div class="flex justify-start items-center w-fit">
                 <svg fill="none" width="20px" height="20px" viewBox="0 0 24 24" class="fill-alert1 dark:fill-alert1-DM">
                     <g data-name="Layer 2">
                     <g data-name="flag">
@@ -520,8 +602,10 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 <a href="mailto:info@learngrove.co"><p class="pl-1 italic text-light">{t("messages.report")}</p></a>
             </div>
 
-            <div class="flex justify-end sticky bottom-0">
-                <a href="#full-resource-title"><p>{t("buttons.top")}</p></a>
+            <div class="w-full flex justify-end items-center">
+                <div class="flex justify-end items-end mt-2 px-2 bg-background2 dark:bg-background2-DM w-fit">
+                    <a href="#mobile-full-card"><p class="text-ptext2 dark:text-ptext2-DM">{t("buttons.top")}</p></a>
+                </div>
             </div>
 
         </div>

@@ -58,7 +58,7 @@ export const Quantity: Component<Props> = (props: Props) => {
         type="text"
         inputMode="numeric"
         pattern="/^\d+$/"
-        class="w-8 text-center text-black"
+        class="w-8 text-center text-ptext1 bg-background1 dark:bg-background1-DM dark:text-ptext1-DM"
         onInput={(e) => inputHandler(e)}
         value={updateQuantity()}
         onclick={(e) => {

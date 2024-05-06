@@ -93,6 +93,7 @@ export interface uiObject {
     follow: string,
     following: string,
     top: string,
+    freeDownload: string,
   },
 
   messages: {
@@ -175,6 +176,7 @@ export interface uiObject {
     fileTypes: string;
     chooseSubject: string;
     chooseGrade: string;
+    pages: string;
   };
 
   postLabels: {

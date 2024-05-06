@@ -109,6 +109,7 @@ export const English = {
     follow: "Follow",
     following: "Following",
     top: "Back to Top",
+    freeDownload: "Free Download",
   },
 
   messages: {
@@ -197,6 +198,7 @@ export const English = {
     fileTypes: "File Types",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
+    pages: "Pages",
   },
 
   postLabels: {
