@@ -18,15 +18,33 @@ interface Props {
   id: string | undefined;
 }
 
+
+
 export const MobileViewFullPost: Component<Props> = (props)=> {
+    const test1 = ["../../../src/assets/services.png"]
+    const test2 = ["../../../src/assets/services.png", "../../../src/assets/question.svg", "../../../src/assets/servicesDM.png", "../../../src/assets/userImagePlaceholder.svg", "../../../src/assets/attention-mark.svg"]
+    
     const [post, setPost] = createSignal<Post>();
     const [postImages, setPostImages] = createSignal<string[]>([]);
+    const [testImages, setTestImages] = createSignal<string[]>([]);
+
+    setTestImages(test2);
 
     onMount(async() => {
         if (props.id === undefined) {
           location.href = `/${lang}/404`;
         } else if (props.id) {
           await fetchPost(+props.id);
+        }
+    });
+
+    onMount(async() => {
+        if(post() !== undefined) {
+            if(post()?.image_urls === undefined || post()?.image_urls === null) {
+    
+            } else {
+                await downloadImages(post()?.image_urls!);
+            }
         }
     });
 
@@ -78,9 +96,6 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
         console.log(updatedPost[0])
         setPost(updatedPost[0]);
-        console.log("post() from fetchPost function: " + post());
-        console.log(post());
-        console.log(post().post_grade)
         }
     } catch (error) {
         console.log(error);
@@ -182,7 +197,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
         }
     };
 
-    function testClick(e) {
+    function tabLinkClick(e) {
         e.preventDefault();
         
         let currLinkID = e.currentTarget.id; // <a> element id
@@ -193,7 +208,6 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             Array.from(allLinks).forEach(function(link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
-                console.log("link classList after: " + link.classList)
             })
             
             currEl.classList.add("border-b-2");
@@ -202,13 +216,31 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
         let sectionID = currLinkID.slice(0, -4);
         let jumpToSection = `#${ sectionID }`;
-        console.log("jumpToSection: ", jumpToSection);
         window.location.href = jumpToSection;
     };
 
+    function imageClick(e) {
+        e.preventDefault();
+
+        let currImageID = e.currentTarget.id;
+        let currImage = document.getElementById(currImageID);
+        let allImages = document.getElementsByClassName("imageLink");
+        let firstImage = document.getElementById("first-image");
+
+        if(!currImage.classList.contains("border-b-2")) {
+            Array.from(allImages).forEach(function(image) {
+                image.classList.remove("border-b-2");
+                image.classList.remove("border-green-500");
+            })
+            
+            currImage.classList.add("border-b-2");
+            currImage.classList.add("border-green-500");
+        };
+    }
+
     return (
         <div class="border-2 border-red-400 w-96 h-full mb-48">
-            <div>
+            <div id="full-resource-title">
                 <p class="text-2xl font-bold">{ post()?.title }</p>
             </div>
 
@@ -284,8 +316,37 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 </div>
             </div>
 
-            <div>
-                Images div
+            <div id="images">
+                <Show when={ testImages().length > 0 }>
+                    <div class="border-2 border-blue-400 rounded my-2">
+                        <img 
+                            src={ testImages()[0]}
+                            id="first-image"
+                            class="rounded flex justify-center items-center"
+                            alt={`${t("postLabels.image")}`}
+                        />
+                        
+                    </div>
+
+                    <Show when={ testImages().length > 1 }>
+                        <div class="flex justify-between my-2">
+                            { testImages().map((image: string, index: number) => (
+                                <div 
+                                    id={ index.toString() }
+                                    class="imageLink w-1/6 h-16 flex justify-center items-center"
+                                    onClick={ imageClick }
+                                >
+                                    <img 
+                                        src={ image } 
+                                        class="rounded mb-1"
+                                        alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </Show>
+                </Show>
+                
             </div>
 
             <div>
@@ -293,10 +354,10 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             </div>
 
             <div class="flex justify-start pb-2 border-b border-border1 dark:border-border1-DM">
-                <a href="#details" id="detailsLink" class="tabLink border-b-2 border-green-500 mr-6" onClick={ testClick }><p id="details-text" class="">{t("menus.details")}</p></a>
-                <a href="#description" id="descriptionLink" class="tabLink mr-6" onClick={ testClick }><p id="description-text" class="">{t("menus.description")}</p></a>
-                <a href="#reviews" id="reviewsLink" class="tabLink mr-6" onClick={ testClick } ><p id="reviews-text" class="">{t("menus.reviews")}</p></a>
-                <a href="#qa" id="qaLink" class="tabLink mr-6" onClick={ testClick }><p id="qa-text" class="">{t("menus.qA")}</p></a>
+                <a href="#details" id="detailsLink" class="tabLink border-b-2 border-green-500 mr-6" onClick={ tabLinkClick }><p id="details-text" class="">{t("menus.details")}</p></a>
+                <a href="#description" id="descriptionLink" class="tabLink mr-6" onClick={ tabLinkClick }><p id="description-text" class="">{t("menus.description")}</p></a>
+                <a href="#reviews" id="reviewsLink" class="tabLink mr-6" onClick={ tabLinkClick } ><p id="reviews-text" class="">{t("menus.reviews")}</p></a>
+                <a href="#qa" id="qaLink" class="tabLink mr-6" onClick={ tabLinkClick }><p id="qa-text" class="">{t("menus.qA")}</p></a>
             </div>
 
             <div id="details" class="mb-2">
@@ -313,35 +374,33 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
 
                 <div id="post-details-div" class="inline">
                     <div>
-                        <p class="font-light uppercase">{t("formLabels.grades")}</p>
-                        {/* { post().content } */}
-                        {/* { post().post_grade }  */}
-                        <div>
-
-                            {/* <For each={ post().post_grade }>{(grade) => 
-                                <li>{ grade }</li>
-                            }</For> */}
-
-                            {/* { post().grade } */}
-                            {/* <p>{post().grade!.join(", ")}</p> */}
-
-                            {/* <p>{ post().content }</p> */}
-
-                            {/* { post().grade } */}
+                        <p class="font-light uppercase mt-1">{t("formLabels.grades")}</p>
+                        <div class="flex">
+                            { post()?.post_grade.join(", ")}
                         </div>
-
                     </div>
 
                     <div>
-                        <p class="font-light uppercase">{t("formLabels.subjects")}</p>
+                        <p class="font-light uppercase mt-4">{t("formLabels.subjects")}</p>
+                        <div class="flex">
+                            { post()?.subject.join(", ")}
+                        </div>
                     </div>
 
                     <div>
-                        <p class="font-light uppercase">{t("formLabels.resourceTypes")}</p>
+                        <p class="font-light uppercase mt-4">{t("formLabels.resourceTypes")}</p>
+                        <div>
+                            <p class="italic">{t("messages.comingSoon")}</p>
+                            {/* TODO: add resource type to database and then populate */}
+                            {/* { post()?.resource_type.join(", ")} */}
+                        </div>
                     </div>
 
                     <div>
-                        <p class="font-light uppercase">{t("formLabels.fileTypes")}</p>
+                        <p class="font-light uppercase mt-4">{t("formLabels.fileTypes")}</p>
+                        <p class="italic">{t("messages.comingSoon")}</p>
+                        {/* TODO: add file type to database and then populate */}
+                        {/* { post()?.file_type.join(", ")} */}
                     </div>
                 </div>
                 
@@ -358,7 +417,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                     </button>
                 </div>
                 {/* <p>{ post()?.grade.join(", ") }</p> */}
-                <p id="post-description-div" class="hidden">{post()?.content} { post()?.grade.join(", ") }</p>
+                <p id="post-description-div" class="hidden">{ post()?.content } { post()?.grade.join(", ") }</p>
             </div>
 
             <div id="reviews" class="mb-2">
@@ -402,7 +461,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             </div>
 
             <div class="flex justify-end sticky bottom-0">
-                <p>{t("buttons.top")}</p>
+                <a href="#full-resource-title"><p>{t("buttons.top")}</p></a>
             </div>
 
         </div>
