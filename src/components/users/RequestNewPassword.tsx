@@ -26,7 +26,7 @@ export const NewPassword: Component = () => {
     } finally {
         setLoading(false)
         alert(t('messages.checkEmail'))
-        location.href=`/${lang}`
+        location.href=`/${lang}/password/reset`
     }
 }
 

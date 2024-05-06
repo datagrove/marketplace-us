@@ -19,6 +19,7 @@ export const CheckoutStatus: Component = () => {
   // TODO: Merge anonymous user to a real user with stripe email
   const [session, setSession] = createSignal<Stripe.Checkout.Session>();
   const [products, setProducts] = createSignal<Partial<Post>[]>([]);
+  const [paid, setPaid] = createSignal(false);
 
   onMount(async () => {
     await CurrentCheckoutStatus();
@@ -46,10 +47,46 @@ export const CheckoutStatus: Component = () => {
     } else if (session.status === "complete") {
       console.log(session);
       await fetchOrderedItems();
+      await convertUser(session.customer_details?.email as string);
       document.getElementById("success")?.classList.remove("hidden");
       document.getElementById("success")?.classList.add("flex");
       localStorage.removeItem("cartItems");
+      if (session.payment_status === "paid") {
+        setPaid(true);
+      }
       setItems([]);
+    }
+  }
+
+  async function convertUser(email: string) {
+    const {data: {user : currentUser}} = await supabase.auth.getUser();
+    console.log(currentUser);
+    //@ts-ignore
+    if (currentUser && currentUser.is_anonymous) {
+      console.log('The current user is anonymous')
+      const { data, error } = await supabase.from('auth.users').update({email: email}).eq('id', currentUser?.id)
+      if(error) {
+        console.log(error)
+      }
+      console.log(data)
+      // const {data, error } = await supabase.auth.updateUser({
+      //   email: email
+      // })
+      // if(error) {
+      //   console.log(error)
+      // }
+      // console.log(data)
+      // const response = await fetch("/api/convertAnonUser", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     userId: currentUser?.id,
+      //     email: session()?.customer_details?.email
+      //   })
+      // });
+      // const res = await response.json();
+      // console.log(res);
+    } else {
+      console.log('The current user is not anonymous')
     }
   }
 
@@ -110,7 +147,11 @@ export const CheckoutStatus: Component = () => {
         <div>
           {/* TODO: Clean up rendering */}
           {products().map((item) => (
-            <p>{item.title}</p>
+            <div class="grid grid-cols-2">
+              <p>{item.title}</p>
+              {/* TODO: Fix to actually allow download */}
+              <button disabled={!paid()}>Download Button</button>
+            </div>
           ))}
         </div>
       </div>
