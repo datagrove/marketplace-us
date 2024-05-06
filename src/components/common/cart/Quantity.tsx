@@ -46,10 +46,10 @@ export const Quantity: Component<Props> = (props: Props) => {
   }
 
   return (
-    <div class="flex relative z-10">
+    <div class="flex relative z-10 border border-border1 dark:border-border1-DM rounded w-fit px-3">
       <button
         onclick={(e) => decrease(e)}
-        class="btn-primary inline-block"
+        class="inline-block"
         aria-label={t("ariaLabels.decreaseQuantity")}
       >
         -
@@ -58,7 +58,7 @@ export const Quantity: Component<Props> = (props: Props) => {
         type="text"
         inputMode="numeric"
         pattern="/^\d+$/"
-        class="w-12 text-center text-black"
+        class="w-8 text-center text-black"
         onInput={(e) => inputHandler(e)}
         value={updateQuantity()}
         onclick={(e) => {
@@ -68,7 +68,7 @@ export const Quantity: Component<Props> = (props: Props) => {
       ></input>
       <button
         onclick={(e) => increase(e)}
-        class="btn-primary inline-block"
+        class="inline-block"
         aria-label={t("ariaLabels.increaseQuantity")}
       >
         +

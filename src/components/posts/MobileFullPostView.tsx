@@ -6,6 +6,8 @@ import { DeletePostButton } from "../posts/DeletePostButton";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { AddToCart } from "@components/common/cart/AddToCartButton";
+import { Quantity } from "@components/common/cart/Quantity";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -18,8 +20,6 @@ interface Props {
   id: string | undefined;
 }
 
-
-
 export const MobileViewFullPost: Component<Props> = (props)=> {
     const test1 = ["../../../src/assets/services.png"]
     const test2 = ["../../../src/assets/services.png", "../../../src/assets/question.svg", "../../../src/assets/servicesDM.png", "../../../src/assets/userImagePlaceholder.svg", "../../../src/assets/attention-mark.svg"]
@@ -27,6 +27,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
     const [post, setPost] = createSignal<Post>();
     const [postImages, setPostImages] = createSignal<string[]>([]);
     const [testImages, setTestImages] = createSignal<string[]>([]);
+    const [quantity, setQuantity] = createSignal<number>(1);
 
     setTestImages(test2);
 
@@ -110,6 +111,14 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
           }
         }
     });
+
+    const updateQuantity = (quantity: number) => {
+        setQuantity(quantity);
+    };
+
+    const resetQuantity = () => {
+        setQuantity(1);
+    };
 
     const downloadImages = async (image_Urls: string) => {
         try {
@@ -384,8 +393,24 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 
             </div>
 
-            <div>
-                Add to Cart div
+            <div id="cart-price-div" class="flex flex-col my-4">
+                <div class="flex justify-end mx-1">
+                    {/* TODO: fix hardcoding of price */}
+                    <p class="text-2xl font-bold">$3.99</p>
+                </div>
+
+                <div class="flex justify-between my-2">
+                    <Quantity 
+                        quantity={ 1 }
+                        updateQuantity={ updateQuantity }
+                    />
+                    <div class="w-full ml-4">
+                        <AddToCart 
+                            item={{ ...post(), quantity: 1}}
+                            buttonClick={ resetQuantity }
+                        />
+                    </div>
+                </div>
             </div>
 
             <div class="flex justify-start pb-2 border-b border-border1 dark:border-border1-DM">
