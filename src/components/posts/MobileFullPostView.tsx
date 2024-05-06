@@ -225,7 +225,8 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
         let currImageID = e.currentTarget.id;
         let currImage = document.getElementById(currImageID);
         let allImages = document.getElementsByClassName("imageLink");
-        let firstImage = document.getElementById("first-image");
+        let mainImage = document.getElementById("main-image");
+        let arrayIndex = Number(currImageID.slice(-1));
 
         if(!currImage.classList.contains("border-b-2")) {
             Array.from(allImages).forEach(function(image) {
@@ -236,10 +237,12 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
             currImage.classList.add("border-b-2");
             currImage.classList.add("border-green-500");
         };
+
+        mainImage.setAttribute('src', testImages()[arrayIndex])
     }
 
     return (
-        <div class="border-2 border-red-400 w-96 h-full mb-48">
+        <div class="w-96 h-full mb-48 px-1">
             <div id="full-resource-title">
                 <p class="text-2xl font-bold">{ post()?.title }</p>
             </div>
@@ -316,32 +319,64 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                 </div>
             </div>
 
-            <div id="images">
+            <div id="images" class="flex flex-col items-center justify-center">
                 <Show when={ testImages().length > 0 }>
-                    <div class="border-2 border-blue-400 rounded my-2">
-                        <img 
-                            src={ testImages()[0]}
-                            id="first-image"
-                            class="rounded flex justify-center items-center"
-                            alt={`${t("postLabels.image")}`}
-                        />
-                        
-                    </div>
+                    <Show when={ testImages().length === 1}>
+                        <div class="border border-gray-400 flex justify-center items-center rounded my-2 h-[375px] w-[375px]">
+                            <img 
+                                src={ testImages()[0]}
+                                id="one-image"
+                                class="rounded flex justify-center items-center dark:bg-background1"
+                                alt={`${t("postLabels.image")}`}
+                            />
+                            
+                        </div>
+                    </Show>
 
                     <Show when={ testImages().length > 1 }>
-                        <div class="flex justify-between my-2">
+                        <div class="flex justify-center items-center border border-gray-400 rounded my-2 p-1 h-[375px] w-[375px]">
+                            <img 
+                                src={ testImages()[0]}
+                                id="main-image"
+                                class="rounded dark:bg-background1"
+                                alt={`${t("postLabels.image")}`}
+                            />
+                            
+                        </div>
+
+                        <div class="flex justify-between my-4">
                             { testImages().map((image: string, index: number) => (
-                                <div 
-                                    id={ index.toString() }
-                                    class="imageLink w-1/6 h-16 flex justify-center items-center"
-                                    onClick={ imageClick }
-                                >
-                                    <img 
-                                        src={ image } 
-                                        class="rounded mb-1"
-                                        alt={ `${t("postLabels.image")} ${ index + 2 }`}
-                                    />
+                                <div class="flex justify-center items-center w-1/6 h-16">
+                                    { index === 0 ? (
+                                        <div 
+                                        // id={ index.toString() }
+                                        id={`img${ index.toString() }`}
+                                        class="imageLink border-b-2 border-green-500 h-16 flex justify-center items-center"
+                                        onClick={ imageClick }
+                                        >
+                                            <img 
+                                            src={ image } 
+                                            class="rounded mb-2"
+                                            alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div 
+                                        // id={ index.toString() }
+                                        id={`img${ index.toString() }`}
+                                        class="imageLink flex justify-center items-center h-16"
+                                        onClick={ imageClick }
+                                        >
+                                            <img 
+                                            src={ image } 
+                                            class="rounded mb-2 dark:bg-background1"
+                                            alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                                            />
+                                        </div>
+                                    )}
+                                    
                                 </div>
+
                             ))}
                         </div>
                     </Show>
