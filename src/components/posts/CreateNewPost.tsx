@@ -117,17 +117,17 @@ async function postFormData(formData: FormData) {
     let tmpDiv = document.createElement("div");
     tmpDiv.innerHTML = formData.get("Content") as string;
     let description = tmpDiv.textContent || tmpDiv.innerText || "";
-    if ((formData.get("Price") as string) != "") {
-      CreateStripeProductPrice({
-        name: String(formData.get("Title")),
-        description: description,
-        price: parseInt(formData.get("Price") as string),
-        id: data.id,
-        access_token: formData.get("access_token") as string,
-        refresh_token: formData.get("refresh_token") as string,
-        tax_code: formData.get("TaxCode") as string,
-      });
-    }
+    // if ((formData.get("Price") as string) != "") {
+    CreateStripeProductPrice({
+      name: String(formData.get("Title")),
+      description: description,
+      price: parseInt(formData.get("Price") as string),
+      id: data.id,
+      access_token: formData.get("access_token") as string,
+      refresh_token: formData.get("refresh_token") as string,
+      tax_code: formData.get("TaxCode") as string,
+    });
+    // }
     // if (uploadFilesRef) {
     //   uploadFilesRef.upload();
     // }
@@ -160,6 +160,7 @@ export const CreateNewPost: Component = () => {
   const [uploadFinished, setUploadFinished] = createSignal(false);
   const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
   const [price, setPrice] = createSignal<string>("");
+  const [isFree, setIsFree] = createSignal<boolean>(false)
 
   onMount(() => {
     window.addEventListener("storage", (event) => {
@@ -359,7 +360,8 @@ export const CreateNewPost: Component = () => {
 
   return (
     <div>
-      <form onSubmit={submit}>
+      {/* <form onSubmit={submit}> */}
+      <form onSubmit={() => console.log(submit)}>
         <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.title")}:
           <input
@@ -605,6 +607,23 @@ export const CreateNewPost: Component = () => {
               setSelectedOption={setSelectedTaxCode}
             />
           </label>
+        </div>
+        <div
+          class="text-black-600"
+        >
+          <input
+            type="checkbox"
+            id="isFreeCheckbox"
+            value={""}
+            onChange={() => setIsFree(!isFree())}
+          />
+          <input
+            type="text"
+            id="Price"
+            value={""}
+            onChange={(e) => setPrice(e.currentTarget.value)}
+          />
+
         </div>
 
         <div>
