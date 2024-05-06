@@ -7,6 +7,8 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
+import { AddToCart } from "@components/common/cart/AddToCartButton";
+import { Quantity } from "@components/common/cart/Quantity";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -20,8 +22,15 @@ interface Props {
 }
 
 export const ViewFullPost: Component<Props> = (props) => {
+  const test1 = ["../../../src/assets/services.png"]
+  const test2 = ["../../../src/assets/services.png", "../../../src/assets/question.svg", "../../../src/assets/servicesDM.png", "../../../src/assets/userImagePlaceholder.svg", "../../../src/assets/attention-mark.svg"]
+  
   const [post, setPost] = createSignal<Post>();
   const [postImages, setPostImages] = createSignal<string[]>([]);
+  const [testImages, setTestImages] = createSignal<string[]>([]);
+  const [quantity, setQuantity] = createSignal<number>(1);
+
+  setTestImages(test2);
 
   createEffect(() => {
     if (props.id === undefined) {
@@ -243,151 +252,201 @@ export const ViewFullPost: Component<Props> = (props) => {
     );
   }
 
+  function imageClick(e) {
+    e.preventDefault();
+
+    let currImageID = e.currentTarget.id;
+    let currImage = document.getElementById(currImageID);
+    let allImages = document.getElementsByClassName("imageLink");
+    let mainImage = document.getElementById("main-image");
+    let arrayIndex = Number(currImageID.slice(-1));
+
+    if(!currImage.classList.contains("border-b-2")) {
+        Array.from(allImages).forEach(function(image) {
+            image.classList.remove("border-b-2");
+            image.classList.remove("border-green-500");
+        })
+        
+        currImage.classList.add("border-b-2");
+        currImage.classList.add("border-green-500");
+    };
+
+    mainImage.setAttribute('src', testImages()[arrayIndex])
+  }
+
   return (
     <div class="flex">
-      <div class="w-[98%]">
-        <h2 class="pb-4 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
-          {post()?.title}
-        </h2>
-
-        {/* <SocialModal id={ ost.id } title={ post.title } image_urls={ post.image_urls }/> */}
-
-        <Show when={postImages().length > 0}>
-          <div class="relative w-full">
-            <div class="overflow-hidden relative h-56 rounded-lg md:h-96">
-              <div class="slide">
-                <img
-                  src={postImages()[0]}
-                  class="block object-contain absolute top-1/2 left-1/2 h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
-                  alt={`${t("postLabels.image")} 1`}
-                />
-              </div>
-              <Show when={postImages().length > 1}>
-                {postImages()
-                  .slice(1)
-                  .map((image: string, index: number) => (
-                    <div class="hidden slide">
-                      <img
-                        src={image}
-                        class="block object-contain absolute top-1/2 left-1/2 h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
-                        alt={`${t("postLabels.image")} ${index + 2}`}
-                      />
-                    </div>
-                  ))}
-              </Show>
-            </div>
-            <Show when={postImages().length > 1}>
-              <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
-                <button
-                  type="button"
-                  class="w-3 h-3 rounded-full cursor-pointer dot bg-background1 dark:bg-background1-DM"
-                  aria-label={`${t("postLabels.slide")} 1`}
-                  onClick={() => currentSlide(1)}
-                ></button>
-                {postImages()
-                  .slice(1)
-                  .map((image: string, index: number) => (
-                    <button
-                      type="button"
-                      class="w-3 h-3 rounded-full cursor-pointer dot bg-background1 dark:bg-background1-DM"
-                      aria-label={`${t("postLabels.slide")} ${index + 1}`}
-                      onClick={() => currentSlide(index + 2)}
-                    ></button>
-                  ))}
-              </div>
-              <button
-                type="button"
-                class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer focus:outline-none group"
-                onclick={() => moveSlide(-1)}
-              >
-                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full group-focus:ring-4 group-focus:ring-white group-focus:outline-none bg-white/30 dark:bg-white/50 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70 group-hover:bg-white/50">
-                  <svg
-                    class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 1 1 5l4 4"
+      <div id="image-title-details-cart-div" class="flex">
+        <div id="images-div" class="flex flex-col items-center justify-center w-1/2 mr-1">
+          <Show when={ testImages().length > 0 }>
+            <Show when={ testImages().length === 1}>
+                <div class="border border-gray-400 flex justify-center items-center rounded h-[400px] w-[400px]">
+                    <img 
+                        src={ testImages()[0]}
+                        id="one-image"
+                        class="rounded flex justify-center items-center dark:bg-background1"
+                        alt={`${t("postLabels.image")}`}
                     />
-                  </svg>
-                  <span class="sr-only">{t("buttons.previous")}</span>
-                </span>
-              </button>
-              <button
-                type="button"
-                class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer focus:outline-none group"
-                onclick={() => moveSlide(1)}
-              >
-                <span class="inline-flex justify-center items-center w-10 h-10 rounded-full group-focus:ring-4 group-focus:ring-white group-focus:outline-none bg-white/30 dark:bg-white/50 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70 group-hover:bg-white/50">
-                  <svg
-                    class="w-4 h-4 text-[#4A4A4A] dark:text-gray-800"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="m1 9 4-4-4-4"
-                    />
-                  </svg>
-                  <span class="sr-only">{t("buttons.next")}</span>
-                </span>
-              </button>
+                    
+                </div>
             </Show>
+
+            <Show when={ testImages().length > 1 }>
+              <div class="w-full flex flex-col justify-start">
+                <div class="flex justify-center items-center border border-gray-400 rounded h-[400px] max-w-[3400px]">
+                    <img 
+                        src={ testImages()[0]}
+                        id="main-image"
+                        class="rounded dark:bg-background1"
+                        alt={`${t("postLabels.image")}`}
+                    />
+                    
+                </div>
+
+                  <div class="flex justify-between my-4">
+                    { testImages().map((image: string, index: number) => (
+                      <div class="flex justify-center items-center w-1/6 h-16">
+                        { index === 0 ? (
+                          <div 
+                          // id={ index.toString() }
+                          id={`img${ index.toString() }`}
+                          class="imageLink border-b-2 border-green-500 h-16 flex justify-center items-center"
+                          onClick={ imageClick }
+                          >
+                              <img 
+                              src={ image } 
+                              class="rounded mb-2"
+                              alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                              />
+                          </div>
+                        ) : (
+                          <div 
+                          // id={ index.toString() }
+                          id={`img${ index.toString() }`}
+                          class="imageLink flex justify-center items-center h-16"
+                          onClick={ imageClick }
+                          >
+                              <img 
+                              src={ image } 
+                              class="rounded mb-2 dark:bg-background1"
+                              alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                              />
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+            </Show>
+          </Show>
+        </div>
+
+        <div id="details-cart-div" class="border-2 border-red-400 w-1/2 ml-1">
+          <div id="title-div">
+              <div>
+                <h3 class="font-bold text-2xl">{ post()?.title }</h3>
+              </div>
           </div>
-        </Show>
-        <p class="my-1">
-          <span class="font-bold">{t("postLabels.provider")}</span>
-          <a
-            href={`/${lang}/provider/${post()?.seller_id}`}
-            class="text-link1 dark:text-link1-DM dark:hover:bg-link1Hov-DM hover:text-link1Hov"
-          >
-            {post()?.seller_name}
-          </a>
-        </p>
-        {/* <p class="my-1">
-                    <span class="font-bold">{t("postLabels.location")}</span>
-                    {post()?.major_municipality}/{post()?.minor_municipality}/
-                    {post()?.governing_district}
-                </p> */}
-        <p class="my-1">
-          <span class="font-bold">{t("postLabels.categories")}</span>
-          {post()?.subject}
-        </p>
-        <div
-          class="my-10 prose dark:prose-invert"
-          id="post-content"
-          innerHTML={post()?.content}
-        ></div>
-        <div class="mt-4">
-          <a href={`mailto:${post()?.email}`} class="btn-primary">
-            {t("buttons.contact")}
-          </a>
+
+          <div id="ratings-div" class="flex flex-col border-2 border-yellow-500 my-1">
+            <div id="ratings-stars-div" class="flex border-2 border-orange-400 w-fit mr-2">
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
+                </svg>
+
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
+                </svg>
+
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
+                </svg>
+
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
+                </svg>
+
+                <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
+                </svg>
+            </div>
+
+            {/* TODO: fix hard coding */}
+            <div id="ratings-text-div" class="flex">
+              <p class="font-bold">4.9</p>
+              <p>(30.3K ratings)</p>
+            </div>
+          </div>
+
+          <div id="creator-followers-div" class="flex w-full items-center border-2 border-purple-400">
+            <div id="creator-img-div" class="flex justify-center w-16 h-16 items-center bg-gray-300 rounded-full">
+                <a href={`/${ lang }/provider/${ post()?.seller_id }`}>
+                    <svg fill="none" width="40px" height="40px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
+                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div id="creator-text-div" class="ml-1">
+              <div>
+                  <a href={`/${ lang }/provider/${ post()?.seller_id }`}>
+                      <p class="font-bold">{ post()?.seller_name }</p>
+                  </a>
+              </div>
+
+              <div class="flex items-center">
+                <div>
+                    117.1K Followers
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="follower-div" class="flex border-2 border-blue-400">
+            <button 
+              class="flex items-center justify-center bg-btn1 dark:bg-btn1-DM rounded-full px-4 my-2 text-ptext2 dark:ptext-DM"
+              onClick={() => (alert(t("messages.comingSoon")))}
+            >
+              <svg width="18px" height="20px" viewBox="0 0 24 24" fill="none" class="mx-0.5">
+                  <circle cx="9" cy="7" r="4" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
+                  <path d="M2 21V17C2 15.8954 2.89543 15 4 15H14C15.1046 15 16 15.8954 16 17V21" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
+                  <path d="M19 8V14M16 11H22" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
+              </svg>
+              <p class="mx-0.5 text-sm">{t("buttons.follow")}</p>
+            </button>
+
+            <button class="hidden items-center justify-center bg-btn1 dark:bg-btn1-DM rounded-full px-4 text-ptext2 dark:ptext-DM mx-4">
+                <svg width="18px" height="20px" viewBox="0 0 24 24" fill="none" class="mx-0.5">
+                    <circle cx="9" cy="7" r="4" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
+                    <path d="M2 21V17C2 15.8954 2.89543 15 4 15H14C15.1046 15 16 15.8954 16 17V21" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
+                </svg>
+                {/* TODO: language file updated in mobile version */}
+                <p class="mx-0.5 text-sm">{t("buttons.following")}</p>
+            </button>
+          </div>
         </div>
-        <div class="flex justify-center mt-4">
-          <DeletePostButton
-            id={+props.id!}
-            userId={post()?.user_id !== undefined ? post()!.user_id : ""}
-            postImage={post()?.image_urls}
-          />
+
+        <div id="add-cart-div">
+
         </div>
+
+        
+
       </div>
 
-      <div>
-        <SocialModal
-          post={post()!}
-        />
-      </div>
+      <div id="resource-info-div">
+
+    </div>
+
+
+
+
+
+
+
+
+
+  
     </div>
   );
 };
