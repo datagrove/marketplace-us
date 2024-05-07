@@ -203,214 +203,215 @@ export const MobileViewCard: Component<Props> = (props) => {
                 </div>
               </div>
             </div>
+          </a>
 
-            <div class="mb-1 ml-1 title-creator">
-              <div class="flex py-0.5 line-clamp-2">{post.title}</div>
+          <div class="mb-1 ml-1 title-creator">
+            <div class="flex py-0.5 line-clamp-2">{post.title}</div>
+              <a href={`/${ lang }/provider/${ post?.seller_id }`}>
+                <div class="flex items-center border-2 w-fit pr-4 py-1">
+                  {post.seller_img ? (
+                    <img src={post.seller_img} alt="Seller image" />
+                  ) : (
+                    <svg
+                      width="24px"
+                      height="24px"
+                      class="mr-1 w-4 h-4 rounded-full border-2 md:w-auto md:h-auto border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM"
+                      viewBox="0 0 32 32"
+                    >
+                      <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                    </svg>
+                  )}
+                  <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
+                    {post.seller_name}
+                  </p>
+                </div>
+              </a>
+          </div>
+            
+          <div
+            id={post.id.toString()}
+            class="flex flex-wrap items-center w-full show-more"
+          >
+            <button
+              id={`${post.id}more`}
+              class="flex justify-center w-full"
+              onclick={(e) => changeShowBtn(post.id)}
+            >
+              <p class={`${post.id}more pr-1 text-htext1 dark:text-htext1-DM`}>
+                {t("buttons.showMore")}
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class={`${post.id}more w-6 h-6 text-htext1 dark:text-htext1-DM`}
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
 
-              <div class="flex items-center">
-                {post.seller_img ? (
-                  <img src={post.seller_img} alt="Seller image" />
-                ) : (
-                  <svg
-                    width="24px"
-                    height="24px"
-                    class="mr-1 w-4 h-4 rounded-full border-2 md:w-auto md:h-auto border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM"
-                    viewBox="0 0 32 32"
-                  >
-                    <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                  </svg>
-                )}
-                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
-                  {post.seller_name}
-                </p>
-              </div>
-            </div>
+            <button
+              id={`${post.id}less`}
+              class="hidden justify-center w-full"
+              onclick={(e) => changeShowBtn(post.id)}
+            >
+              <p class="pr-1 text-htext1 dark:text-htext1-DM">
+                {t("buttons.showLess")}
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6 text-htext1 dark:text-htext1-DM"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m4.5 15.75 7.5-7.5 7.5 7.5"
+                />
+              </svg>
+            </button>
 
             <div
-              id={post.id.toString()}
-              class="flex flex-wrap items-center w-full show-more"
+              id={`${post.id}content`}
+              class="hidden flex-col justify-start w-full"
             >
-              <button
-                id={`${post.id}more`}
-                class="flex justify-center w-full"
-                onclick={(e) => changeShowBtn(post.id)}
-              >
-                <p class={`${post.id}more pr-1 text-htext1 dark:text-htext1-DM`}>
-                  {t("buttons.showMore")}
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class={`${post.id}more w-6 h-6 text-htext1 dark:text-htext1-DM`}
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
-              </button>
+              <p class="mb-2 text-[10px] text-start line-clamp-3">
+                {post.content}
+              </p>
 
-              <button
-                id={`${post.id}less`}
-                class="hidden justify-center w-full"
-                onclick={(e) => changeShowBtn(post.id)}
-              >
-                <p class="pr-1 text-htext1 dark:text-htext1-DM">
-                  {t("buttons.showLess")}
-                </p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6 text-htext1 dark:text-htext1-DM"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m4.5 15.75 7.5-7.5 7.5 7.5"
-                  />
-                </svg>
-              </button>
-
-              <div
-                id={`${post.id}content`}
-                class="hidden flex-col justify-start w-full"
-              >
-                <p class="mb-2 text-[10px] text-start line-clamp-3">
-                  {post.content}
-                </p>
-
-                <div class="flex w-full">
-                  <div class="flex flex-col justify-center items-start w-1/5">
-                    <h6 class="font-bold text-[10px]">
-                      {t("formLabels.resourceTypes")}:{" "}
-                    </h6>
-                    <h6 class="font-bold text-[10px]">
-                      {t("formLabels.standards")}:{" "}
-                    </h6>
-                  </div>
-
-                  <div class="flex flex-col justify-center items-start w-4/5">
-                    <p class="text-[10px]">Worksheets, Activities, Printables</p>
-                    <p class="text-[10px]">RF.K.2, RF.K.3, RF.K.3c</p>
-                  </div>
+              <div class="flex w-full">
+                <div class="flex flex-col justify-center items-start w-1/5">
+                  <h6 class="font-bold text-[10px]">
+                    {t("formLabels.resourceTypes")}:{" "}
+                  </h6>
+                  <h6 class="font-bold text-[10px]">
+                    {t("formLabels.standards")}:{" "}
+                  </h6>
                 </div>
 
-                <div class="flex mt-2">
-                  <div class="flex justify-start items-center mr-3">
-                    <svg
-                      width="12px"
-                      height="12px"
-                      viewBox="0 0 28 28"
-                      version="1.1"
+                <div class="flex flex-col justify-center items-start w-4/5">
+                  <p class="text-[10px]">Worksheets, Activities, Printables</p>
+                  <p class="text-[10px]">RF.K.2, RF.K.3, RF.K.3c</p>
+                </div>
+              </div>
+
+              <div class="flex mt-2">
+                <div class="flex justify-start items-center mr-3">
+                  <svg
+                    width="12px"
+                    height="12px"
+                    viewBox="0 0 28 28"
+                    version="1.1"
+                    class="fill-icon1 dark:fill-icon1-DM"
+                  >
+                    <g
+                      id="🔍-Product-Icons"
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
                       class="fill-icon1 dark:fill-icon1-DM"
                     >
-                      <g
-                        id="🔍-Product-Icons"
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                        class="fill-icon1 dark:fill-icon1-DM"
-                      >
-                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
-                          <path
-                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                            id="🎨-Color"
-                          ></path>
-                        </g>
+                      <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                        <path
+                          d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
+                          id="🎨-Color"
+                        ></path>
                       </g>
-                    </svg>
+                    </g>
+                  </svg>
 
-                    <p class="my-0.5 ml-1 text-[10px]">Short</p>
-                  </div>
+                  <p class="my-0.5 ml-1 text-[10px]">Short</p>
+                </div>
 
-                  <div class="flex justify-start items-center mr-3">
-                    <svg
-                      width="12px"
-                      height="12px"
-                      viewBox="0 0 28 28"
-                      version="1.1"
+                <div class="flex justify-start items-center mr-3">
+                  <svg
+                    width="12px"
+                    height="12px"
+                    viewBox="0 0 28 28"
+                    version="1.1"
+                    class="fill-icon1 dark:fill-icon1-DM"
+                  >
+                    <g
+                      id="🔍-Product-Icons"
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
                       class="fill-icon1 dark:fill-icon1-DM"
                     >
-                      <g
-                        id="🔍-Product-Icons"
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                        class="fill-icon1 dark:fill-icon1-DM"
-                      >
-                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
-                          <path
-                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                            id="🎨-Color"
-                          ></path>
-                        </g>
+                      <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                        <path
+                          d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
+                          id="🎨-Color"
+                        ></path>
                       </g>
-                    </svg>
+                    </g>
+                  </svg>
 
-                    <p class="my-0.5 ml-1 text-[10px]">This is Medium</p>
-                  </div>
+                  <p class="my-0.5 ml-1 text-[10px]">This is Medium</p>
+                </div>
 
-                  <div class="flex justify-start items-center mr-3">
-                    <svg
-                      width="12px"
-                      height="12px"
-                      viewBox="0 0 28 28"
-                      version="1.1"
+                <div class="flex justify-start items-center mr-3">
+                  <svg
+                    width="12px"
+                    height="12px"
+                    viewBox="0 0 28 28"
+                    version="1.1"
+                    class="fill-icon1 dark:fill-icon1-DM"
+                  >
+                    <g
+                      id="🔍-Product-Icons"
+                      stroke="none"
+                      stroke-width="1"
+                      fill="none"
+                      fill-rule="evenodd"
                       class="fill-icon1 dark:fill-icon1-DM"
                     >
-                      <g
-                        id="🔍-Product-Icons"
-                        stroke="none"
-                        stroke-width="1"
-                        fill="none"
-                        fill-rule="evenodd"
-                        class="fill-icon1 dark:fill-icon1-DM"
-                      >
-                        <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
-                          <path
-                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                            id="🎨-Color"
-                          ></path>
-                        </g>
+                      <g id="ic_fluent_checkmark_28_filled" fill-rule="nonzero">
+                        <path
+                          d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
+                          id="🎨-Color"
+                        ></path>
                       </g>
-                    </svg>
+                    </g>
+                  </svg>
 
-                    <p class="my-0.5 ml-1 text-[10px]">Longer File Type Name</p>
-                  </div>
+                  <p class="my-0.5 ml-1 text-[10px]">Longer File Type Name</p>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="px-1 my-2 w-full cart">
-              <Show
-                when={session() === null || session()?.user.id !== post.user_id}
-              >
-                <AddToCart
-                  item={{ ...post, quantity: 1 }}
-                  buttonClick={resetQuantity}
+          <div class="px-1 my-2 w-full cart">
+            <Show
+              when={session() === null || session()?.user.id !== post.user_id}
+            >
+              <AddToCart
+                item={{ ...post, quantity: 1 }}
+                buttonClick={resetQuantity}
+              />
+            </Show>
+
+            <div class="flex relative col-span-1 justify-end w-full align-top">
+              <div class="inline-block">
+                <DeletePostButton
+                  id={post.id}
+                  userId={post.user_id}
+                  postImage={post.image_urls}
                 />
-              </Show>
-
-              <div class="flex relative col-span-1 justify-end w-full align-top">
-                <div class="inline-block">
-                  <DeletePostButton
-                    id={post.id}
-                    userId={post.user_id}
-                    postImage={post.image_urls}
-                  />
-                </div>
               </div>
             </div>
-          </a>
+          </div>
         </div>
       ))}
     </div>

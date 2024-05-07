@@ -406,7 +406,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
                 <div class="flex justify-between w-full px-1">
                   { testImages().map((image: string, index: number) => (
-                    <div class="flex justify-center items-center w-1/6 h-16">
+                    <div class="flex justify-center items-center w-1/6 h-16 md:mt-2">
                       { index === 0 ? (
                         <div 
                         // id={ index.toString() }
@@ -568,8 +568,8 @@ export const ViewFullPost: Component<Props> = (props) => {
         <div id="desktop-tabs-div" class="flex justify-start pb-2 mb-2 border-b border-gray-400">
           <a href="#detailsLg" id="detailsLgLink" class="tabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.details")}</p></a>
           <a href="#descriptionLg" id="descriptionLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.description")}</p></a>
-          <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.reviews")}</p></a>
-          <a href="#qaLg" id="qaLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.qa")}</p></a>
+          <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.reviews")}</p></a>
+          <a href="#qaLg" id="qaLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.qA")}</p></a>
         </div>
 
         <div id="lg-details-div" class="inline">

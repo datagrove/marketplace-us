@@ -299,22 +299,28 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
     };
 
     function imageClick(e) {
-        e.preventDefault();
+        e.preventDefault(); 
 
-        let currImageID = e.currentTarget.id;
-        let currImage = document.getElementById(currImageID);
-        let allImages = document.getElementsByClassName("imageLink");
-        let mainImage = document.getElementById("main-image");
-        let arrayIndex = Number(currImageID.slice(-1));
+        let mobileCurrImageID = e.currentTarget.id;
+        let mobileCurrImage = document.getElementById(mobileCurrImageID);
+        let allMobileImages = document.getElementsByClassName("mobileImageLink");
+        let mainImage = document.getElementById("mobile-main-image");
+        let arrayIndex = Number(mobileCurrImageID.slice(-1));
 
-        if(!currImage.classList.contains("border-b-2")) {
-            Array.from(allImages).forEach(function(image) {
+        console.log(mobileCurrImage)
+
+        console.log(Array.from(allMobileImages))
+
+        if(!mobileCurrImage.classList.contains("border-b-2")) {
+            Array.from(allMobileImages).forEach(function(image) {
+                console.log(image.classList)
+                console.log("Test")
                 image.classList.remove("border-b-2");
                 image.classList.remove("border-green-500");
             })
             
-            currImage.classList.add("border-b-2");
-            currImage.classList.add("border-green-500");
+            mobileCurrImage.classList.add("border-b-2");
+            mobileCurrImage.classList.add("border-green-500");
         };
 
         mainImage.setAttribute('src', testImages()[arrayIndex])
@@ -421,7 +427,7 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                         <div class="flex justify-center items-center border border-gray-400 rounded my-2 p-1 h-[375px] w-[375px]">
                             <img 
                                 src={ testImages()[0]}
-                                id="main-image"
+                                id="mobile-main-image"
                                 class="rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
@@ -434,9 +440,9 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                                     { index === 0 ? (
                                         <div 
                                         // id={ index.toString() }
-                                        id={`img${ index.toString() }`}
-                                        class="imageLink border-b-2 border-green-500 h-16 flex justify-center items-center"
-                                        onClick={ imageClick }
+                                        id={`mobileImg${ index.toString() }`}
+                                        class="mobileImageLink border-b-2 border-green-500 h-16 flex justify-center items-center"
+                                        onClick={ (e) => imageClick(e) }
                                         >
                                             <img 
                                             src={ image } 
@@ -447,9 +453,9 @@ export const MobileViewFullPost: Component<Props> = (props)=> {
                                     ) : (
                                         <div 
                                         // id={ index.toString() }
-                                        id={`img${ index.toString() }`}
-                                        class="imageLink flex justify-center items-center h-16"
-                                        onClick={ imageClick }
+                                        id={`mobileImg${ index.toString() }`}
+                                        class="mobileImageLink flex justify-center items-center h-16"
+                                        onClick={ (e) => imageClick(e) }
                                         >
                                             <img 
                                             src={ image } 
