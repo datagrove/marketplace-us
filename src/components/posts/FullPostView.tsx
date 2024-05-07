@@ -383,7 +383,7 @@ export const ViewFullPost: Component<Props> = (props) => {
         </div>
       </div>
 
-      <div>
+      <div class="">
         <SocialModal
           post={post()!}
         />
