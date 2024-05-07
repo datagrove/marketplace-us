@@ -195,6 +195,7 @@ export const Spanish = {
     findResources: "Encontrar Recursos",
     chooseSubject: "Asunto(s)",
     chooseGrade: "Nivel(es) de grado",
+    pages: "Paginas",
   },
 
   postLabels: {

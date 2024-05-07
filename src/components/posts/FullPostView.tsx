@@ -99,6 +99,14 @@ export const ViewFullPost: Component<Props> = (props) => {
     }
   });
 
+  const updateQuantity = (quantity: number) => {
+    setQuantity(quantity);
+  };
+
+  const resetQuantity = () => {
+      setQuantity(1);
+  };
+
   const downloadImages = async (image_Urls: string) => {
     try {
       const imageUrls = image_Urls.split(",");
@@ -274,13 +282,106 @@ export const ViewFullPost: Component<Props> = (props) => {
     mainImage.setAttribute('src', testImages()[arrayIndex])
   }
 
+  function lgTabLinkClick(e) {
+    e.preventDefault();
+
+    let currLinkId = e.currentTarget.id;
+    let currEl = document.getElementById(currLinkId);
+    let allLgLinks = document.getElementsByClassName("tabLinkLg");
+
+    let details = document.getElementById("lg-details-div");
+    let description = document.getElementById("lg-description-div");
+    let reviews = document.getElementById("lg-reviews-div");
+    let qa = document.getElementById("lg-qa-div");
+
+    if(!currEl.classList.contains("border-b-2")) {
+      Array.from(allLgLinks).forEach(function(link) {
+          link.classList.remove("border-b-2");
+          link.classList.remove("border-green-500");
+      })
+      
+      currEl.classList.add("border-b-2");
+      currEl.classList.add("border-green-500");
+    };
+
+    if(currLinkId === "detailsLgLink") {
+      details.classList.remove("hidden");
+      details.classList.add("inline");
+
+      closeDescription();
+      closeReviews();
+      closeQA();
+    } else if(currLinkId === "descriptionLgLink") {
+      description.classList.remove("hidden");
+      description.classList.add("inline");
+
+      closeDetails();
+      closeReviews();
+      closeQA();
+    } else if(currLinkId === "reviewsLgLink") {
+      reviews.classList.remove("hidden");
+      reviews.classList.add("inline");
+
+      closeDetails();
+      closeDescription();
+      closeQA();
+    } else if(currLinkId === "qaLgLink") {
+      qa.classList.remove("hidden");
+      qa.classList.add("inline");
+
+      closeDetails();
+      closeDescription();
+      closeReviews();
+    }
+
+
+  }
+
+  function closeDetails() {
+    console.log("change details function")
+
+    let details = document.getElementById("lg-details-div");
+
+    if(details.classList.contains("inline")) {
+      details.classList.remove("inline");
+      details.classList.add("hidden");
+    }
+  };
+
+  function closeDescription() {
+    let description = document.getElementById("lg-description-div");
+    
+    if(description.classList.contains("inline")) {
+      description.classList.remove("inline");
+      description.classList.add("hidden");
+    }
+  };
+
+  function closeReviews() {
+    let reviews = document.getElementById("lg-reviews-div");
+    
+    if(reviews.classList.contains("inline")) {
+      reviews.classList.remove("inline");
+      reviews.classList.add("hidden");
+    }
+  };
+
+  function closeQA() {
+    let qa = document.getElementById("lg-qa-div");
+
+    if(qa.classList.contains("inline")) {
+      qa.classList.remove("inline");
+      qa.classList.add("hidden");
+    }
+  }
+
   return (
-    <div class="flex">
+    <div class="">
       <div id="image-title-details-cart-div" class="flex">
-        <div id="images-div" class="flex flex-col items-center justify-center w-1/2 mr-1">
+        <div id="images-div" class="flex flex-col items-center justify-center w-[300px] h-[300px] mr-1 lg:w-[400px] lg:h-[400px]">
           <Show when={ testImages().length > 0 }>
             <Show when={ testImages().length === 1}>
-                <div class="border border-gray-400 flex justify-center items-center rounded h-[400px] w-[400px]">
+                <div class="border border-gray-400 flex justify-center items-center rounded h-[300px] w-[300px]">
                     <img 
                         src={ testImages()[0]}
                         id="one-image"
@@ -292,8 +393,8 @@ export const ViewFullPost: Component<Props> = (props) => {
             </Show>
 
             <Show when={ testImages().length > 1 }>
-              <div class="w-full flex flex-col justify-start">
-                <div class="flex justify-center items-center border border-gray-400 rounded h-[400px] max-w-[3400px]">
+              <div class="w-full flex flex-col justify-center items-center">
+                <div class="flex justify-center items-center border border-gray-400 rounded h-[250px] w-[250px] lg:h-[330px] lg:w-[330px]">
                     <img 
                         src={ testImages()[0]}
                         id="main-image"
@@ -303,14 +404,14 @@ export const ViewFullPost: Component<Props> = (props) => {
                     
                 </div>
 
-                  <div class="flex justify-between my-4">
+                  <div class="flex justify-between">
                     { testImages().map((image: string, index: number) => (
                       <div class="flex justify-center items-center w-1/6 h-16">
                         { index === 0 ? (
                           <div 
                           // id={ index.toString() }
                           id={`img${ index.toString() }`}
-                          class="imageLink border-b-2 border-green-500 h-16 flex justify-center items-center"
+                          class="imageLink border-b-2 border-green-500 h-16 w-16 flex justify-center items-center"
                           onClick={ imageClick }
                           >
                               <img 
@@ -323,7 +424,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                           <div 
                           // id={ index.toString() }
                           id={`img${ index.toString() }`}
-                          class="imageLink flex justify-center items-center h-16"
+                          class="imageLink flex justify-center items-center h-16 w-16"
                           onClick={ imageClick }
                           >
                               <img 
@@ -341,15 +442,15 @@ export const ViewFullPost: Component<Props> = (props) => {
           </Show>
         </div>
 
-        <div id="details-cart-div" class="border-2 border-red-400 w-1/2 ml-1">
+        <div id="details-cart-div" class="w-2/3 ml-1">
           <div id="title-div">
               <div>
                 <h3 class="font-bold text-2xl">{ post()?.title }</h3>
               </div>
           </div>
 
-          <div id="ratings-div" class="flex flex-col border-2 border-yellow-500 my-1">
-            <div id="ratings-stars-div" class="flex border-2 border-orange-400 w-fit mr-2">
+          <div id="ratings-div" class="flex flex-col my-1">
+            <div id="ratings-stars-div" class="flex w-fit mr-2">
                 <svg fill="none" width="20px" height="20px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
                     <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z"/>
                 </svg>
@@ -378,7 +479,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             </div>
           </div>
 
-          <div id="creator-followers-div" class="flex w-full items-center border-2 border-purple-400">
+          <div id="creator-followers-div" class="flex w-full items-center mt-4">
             <div id="creator-img-div" class="flex justify-center w-16 h-16 items-center bg-gray-300 rounded-full">
                 <a href={`/${ lang }/provider/${ post()?.seller_id }`}>
                     <svg fill="none" width="40px" height="40px" viewBox="0 0 32 32" class="fill-icon1 dark:fill-icon1-DM">
@@ -387,7 +488,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 </a>
             </div>
 
-            <div id="creator-text-div" class="ml-1">
+            <div id="creator-text-div" class="ml-2">
               <div>
                   <a href={`/${ lang }/provider/${ post()?.seller_id }`}>
                       <p class="font-bold">{ post()?.seller_name }</p>
@@ -402,7 +503,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             </div>
           </div>
 
-          <div id="follower-div" class="flex border-2 border-blue-400">
+          <div id="follower-div" class="flex">
             <button 
               class="flex items-center justify-center bg-btn1 dark:bg-btn1-DM rounded-full px-4 my-2 text-ptext2 dark:ptext-DM"
               onClick={() => (alert(t("messages.comingSoon")))}
@@ -424,19 +525,142 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <p class="mx-0.5 text-sm">{t("buttons.following")}</p>
             </button>
           </div>
+
+          <div id="resource-info-div" class="my-2">
+            <div class="flex">
+              <div id="resource-labels" class="flex flex-col justify-end items-end w-2/5 mr-2">
+                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.grades")}</p>
+                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.subjects")}</p>
+                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.resourceTypes")}</p>
+                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.fileTypes")}</p>
+                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.pages")}</p>
+
+              </div>
+
+              {/* TODO: language files updated in mobile styles merge */}
+              <div id="resource-information" class="w-3/5 ml-2">
+                <p class="text-xs lg:text-lg truncate">{ post()?.post_grade.join(", ") }</p>
+                <p class="text-xs lg:text-lg truncate">{ post()?.subject.join(", ") }</p>
+                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
+                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
+                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
+              </div>
+            </div>
+          </div>
+          
+          {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
+          <div id="add-cart-div" class="flex justify-end my-8 mr-2">
+            <Quantity 
+              quantity={ 1 }
+              updateQuantity={ updateQuantity }
+            />
+            <div class=" ml-4">
+              {/* TODO: Add FreeDownloadButton component if resource is free */}
+              
+              <AddToCart 
+                item={{ ...post(), quantity: 1}}
+                buttonClick={ resetQuantity }
+              />
+            </div>
+          </div>
         </div>
-
-        <div id="add-cart-div">
-
-        </div>
-
-        
-
       </div>
 
-      <div id="resource-info-div">
+      <div id="description-tabs-div" class="">
+        {/* TODO: language file in mobile merge is updated, remove hardcoded text upon merge */}
+        <div id="desktop-tabs-div" class="flex justify-start pb-2 mb-2">
+          <a href="#detailsLg" id="detailsLgLink" class="tabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.details")}Details</p></a>
+          <a href="#descriptionLg" id="descriptionLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.description")}Description</p></a>
+          <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.reviews")}Reviews</p></a>
+          <a href="#qaLg" id="qaLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.qa")}Q&A</p></a>
+        </div>
 
-    </div>
+        <div id="lg-details-div" class="inline">
+          <div class="flex justify-between">
+            {/* TODO: Language file correct and updated in mobile component merge, delete hardcoding upon merging this branch */}
+            {/* <p class="text-lg">{t("menus.details")}Details</p> */}
+
+            {/* <button onClick={ changeDetails }>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="details-arrow" class="stroke-icon1 dark:stroke-icon1-DM rotate-180">
+                    <polyline points="19 12 12 19 5 12" />
+                </svg>
+            </button> */}
+          </div>
+
+          <div id="" class="inline">
+            <div>
+                <p class="font-light uppercase mt-1">{t("formLabels.grades")}</p>
+                <div class="flex">
+                    { post()?.post_grade.join(", ")}
+                </div>
+            </div>
+
+            <div>
+                <p class="font-light uppercase mt-4">{t("formLabels.subjects")}</p>
+                <div class="flex">
+                    { post()?.subject.join(", ")}
+                </div>
+            </div>
+
+            <div>
+                <p class="font-light uppercase mt-4">{t("formLabels.resourceTypes")}</p>
+                <div>
+                    <p class="italic">{t("messages.comingSoon")}</p>
+                    {/* TODO: add resource type to database and then populate */}
+                    {/* { post()?.resource_type.join(", ")} */}
+                </div>
+            </div>
+
+            <div>
+                <p class="font-light uppercase mt-4">{t("formLabels.fileTypes")}</p>
+                <p class="italic">{t("messages.comingSoon")}</p>
+                {/* TODO: add file type to database and then populate */}
+                {/* { post()?.file_type.join(", ")} */}
+            </div>
+                    
+            <div>
+                <p class="font-light uppercase mt-4">{t("formLabels.pages")}</p>
+                <p class="italic">{t("messages.comingSoon")}</p>
+                {/* TODO: add file type to database and then populate */}
+                {/* { post()?.file_type.join(", ")} */}
+            </div>
+          </div>        
+        </div>
+
+        <div id="lg-description-div" class="hidden">
+          <div class="flex justify-between">
+            {/* TODO: Language file in mobile merge is updated, delete this hardcoding upon merging */}
+            {/* <p class="text-lg">{t("menus.description")}Description</p> */}
+              {/* <button>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="description-arrow" class="stroke-icon1 dark:stroke-icon1-DM">
+                      <polyline points="19 12 12 19 5 12" />
+                  </svg>
+              </button> */}
+          </div>
+                {/* <p>{ post()?.grade.join(", ") }</p> */}
+           <p>{post()?.content }</p>
+        </div>
+
+        <div id="lg-reviews-div" class="hidden">
+          <div class="flex justify-between">
+            {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
+            {/* <p class="text-lg">{t("menus.reviews")}Reviews</p> */}
+          </div>
+          {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
+          <p id="" class="italic">{t("messages.comingSoon")}Coming soon!</p>
+        </div>
+
+        <div id="lg-qa-div" class="hidden">
+          <div class="flex justify-between">
+            {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
+            {/* <p class="text-lg">{t("menus.qA")}Q&A</p> */}
+          </div>
+          {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
+          <p id="" class="italic">{t("messages.comingSoon")}Coming soon!</p>
+        </div>
+      </div>
+
+
 
 
 

@@ -11,7 +11,7 @@ const { param } = Astro.params;
 
 <Layout pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param} pageDescription={t("pageTitles.clientViewProviderAccount") + " " + param + " " + t("pageDescriptions.clientViewProviderAccount")}>
   <div
-    class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center w-96 md:w-5/6"
+    class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center min-w-96 md:w-5/6 max-w-[950px]"
   >
     <div class="w-full">
       <ViewFullPost id={param} client:only="solid-js" />

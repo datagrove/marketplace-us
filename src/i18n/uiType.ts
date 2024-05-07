@@ -170,6 +170,7 @@ export interface uiObject {
     fileTypes: string;
     chooseSubject: string;
     chooseGrade: string;
+    pages: string,
   };
 
   postLabels: {

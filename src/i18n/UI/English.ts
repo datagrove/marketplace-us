@@ -189,9 +189,10 @@ export const English = {
     grades: "Grades",
     resourceTypes: "Resource Types",
     standards: "Standards",
-    fileTypes: "",
+    fileTypes: "File Types",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
+    pages: "Pages",
   },
 
   postLabels: {

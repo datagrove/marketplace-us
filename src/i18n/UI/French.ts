@@ -198,6 +198,7 @@ export const French = {
     fileTypes: "Types de Fichier",
     chooseSubject: "Sujet(s)",
     chooseGrade: "Niveau(x) scolaire(s)",
+    pages: "Pages",
   },
 
   postLabels: {
