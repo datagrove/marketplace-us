@@ -9,6 +9,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
+import { DownloadBtn } from "./DownloadBtn.tsx"
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -326,10 +327,12 @@ export const ViewCard: Component<Props> = (props) => {
 
                     <Show
                       when={
-                        post.price === undefined
+                        session() !== null &&
+                        (session()?.user.id !== post.user_id &&
+                          post.price === undefined)
                       }
                     >
-                      <button>Download</button>
+                      <DownloadBtn />
                     </Show>
                     <div class="flex relative col-span-1 justify-end w-full align-top">
                       <div class="inline-block">
