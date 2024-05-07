@@ -67,7 +67,7 @@ export const English = {
       "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
     about:
       "Discover the story behind TodoServis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
-    impact:
+    impact:=======
       "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
     fullPost:
       "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
@@ -107,6 +107,10 @@ export const English = {
     browseCatalog: "Browse Catalog",
     findResources: "Find Resources",
     download: "Download",
+    follow: "Follow",
+    following: "Following",
+    top: "Back to Top",
+    freeDownload: "Free Download",
   },
 
   messages: {
@@ -154,6 +158,8 @@ export const English = {
     noStripeAccount:
       "You must complete enrollment with Stripe before posting resources.",
     selectSubject: "Please select at least one subject",
+    comingSoon: "Coming soon!",
+    report: "Report this resource to LearnGrove",
   },
 
   formLabels: {
@@ -190,9 +196,10 @@ export const English = {
     grades: "Grades",
     resourceTypes: "Resource Types",
     standards: "Standards",
-    fileTypes: "",
+    fileTypes: "File Types",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
+    pages: "Pages",
   },
 
   postLabels: {
@@ -228,6 +235,10 @@ export const English = {
   menus: {
     resources: "Find Resources",
     contactUs: "Contact Us",
+    details: "Details",
+    description: "Description",
+    reviews: "Reviews",
+    qA: "Q&A",
   },
 
   toolTips: {

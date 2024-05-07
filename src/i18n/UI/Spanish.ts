@@ -106,7 +106,11 @@ export const Spanish = {
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
     browseCatalog: "Explorar el Catálogo",
-    download: "Descargar"
+    download: "Descargar",
+    follow: "Seguir",
+    following: "Siguiente",
+    top: "Volver Arriba",
+    freeDownload: "Descarga Gratis",
   },
 
   messages: {
@@ -155,7 +159,9 @@ export const Spanish = {
     noClient: "No se encontró ningún cliente.",
     noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
     noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
-    selectSubject: "Por favor, seleccione al menos una asignatura"
+    selectSubject: "Por favor, seleccione al menos una asignatura",
+    comingSoon: "¡Muy pronto!",
+    report: "Reportar este recurso a LearnGrove",
   },
 
   formLabels: {
@@ -196,6 +202,7 @@ export const Spanish = {
     findResources: "Encontrar Recursos",
     chooseSubject: "Asunto(s)",
     chooseGrade: "Nivel(es) de grado",
+    pages: "Paginas",
   },
 
   postLabels: {
@@ -230,6 +237,10 @@ export const Spanish = {
   menus: {
     resources: "Buscar Recursos",
     contactUs: "Contáctenos",
+    details: "Detalles",
+    description: "Descripción",
+    reviews: "Opiniones",
+    qA: "Sección de Preguntas",
   },
 
   toolTips: {

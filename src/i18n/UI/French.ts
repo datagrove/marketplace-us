@@ -109,6 +109,10 @@ export const French = {
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
     download: "Télécharger",
+    follow: "Suivre",
+    following: "Suivante",
+    top: "Retour au Sommet",
+    freeDownload: "Téléchargement Gratuit",
   },
 
   messages: {
@@ -160,6 +164,8 @@ export const French = {
     noStripeAccount:
       "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
     selectSubject: "Veuillez sélectionner au moins un sujet",
+    comingSoon: "À venir!",
+    report: "Signaler cette ressource à LearnGrove",
   },
 
   formLabels: {
@@ -199,6 +205,7 @@ export const French = {
     fileTypes: "Types de Fichier",
     chooseSubject: "Sujet(s)",
     chooseGrade: "Niveau(x) scolaire(s)",
+    pages: "Pages",
   },
 
   postLabels: {
@@ -234,6 +241,10 @@ export const French = {
   menus: {
     resources: "Trouver des ressources",
     contactUs: "Contactez-nous",
+    details: "Détails",
+    description: "Description",
+    reviews: "Commentaires",
+    qA: "Questions/Réponses",
   },
 
   toolTips: {
