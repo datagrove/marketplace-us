@@ -1,6 +1,7 @@
 import type { Component } from "solid-js";
 import {
   For,
+  Show,
   Suspense,
   createEffect,
   createResource,
@@ -117,20 +118,20 @@ async function postFormData(formData: FormData) {
     let tmpDiv = document.createElement("div");
     tmpDiv.innerHTML = formData.get("Content") as string;
     let description = tmpDiv.textContent || tmpDiv.innerText || "";
-    // if ((formData.get("Price") as string) != "") {
-    CreateStripeProductPrice({
-      name: String(formData.get("Title")),
-      description: description,
-      price: parseInt(formData.get("Price") as string),
-      id: data.id,
-      access_token: formData.get("access_token") as string,
-      refresh_token: formData.get("refresh_token") as string,
-      tax_code: formData.get("TaxCode") as string,
-    });
-    // }
-    // if (uploadFilesRef) {
-    //   uploadFilesRef.upload();
-    // }
+    if ((formData.get("Price") as string) != "") {
+      CreateStripeProductPrice({
+        name: String(formData.get("Title")),
+        description: description,
+        price: parseInt(formData.get("Price") as string),
+        id: data.id,
+        access_token: formData.get("access_token") as string,
+        refresh_token: formData.get("refresh_token") as string,
+        tax_code: formData.get("TaxCode") as string,
+      });
+    }
+    if (uploadFilesRef) {
+      uploadFilesRef.upload();
+    }
   }
   // I think we are going to do this in the CreateStripeProductPrice component
   // if (data.redirect) {
@@ -360,8 +361,7 @@ export const CreateNewPost: Component = () => {
 
   return (
     <div>
-      {/* <form onSubmit={submit}> */}
-      <form onSubmit={() => console.log(submit)}>
+      <form onSubmit={submit}>
         <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
           {t("formLabels.title")}:
           <input
@@ -617,13 +617,14 @@ export const CreateNewPost: Component = () => {
             value={""}
             onChange={() => setIsFree(!isFree())}
           />
-          <input
-            type="text"
-            id="Price"
-            value={""}
-            onChange={(e) => setPrice(e.currentTarget.value)}
-          />
-
+          <Show when={!isFree()}>
+            <input
+              type="text"
+              id="Price"
+              value={""}
+              onChange={(e) => setPrice(e.currentTarget.value)}
+            />
+          </Show>
         </div>
 
         <div>
