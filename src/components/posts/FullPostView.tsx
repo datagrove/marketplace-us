@@ -45,18 +45,18 @@ export const ViewFullPost: Component<Props> = (props) => {
         location.href = `/${lang}/services`;
       } else {
         data?.map(async (item) => {
-            item.subject = [];
-            productCategories.forEach((productCategories) => {
-                item.product_subject.map((productSubject: string) => {
-                    if (productSubject === productCategories.id) {
-                        item.subject.push(productCategories.name);
-                        console.log(productCategories.name);
-                    }
-                });
+          item.subject = [];
+          productCategories.forEach((productCategories) => {
+            item.product_subject.map((productSubject: string) => {
+              if (productSubject === productCategories.id) {
+                item.subject.push(productCategories.name);
+                console.log(productCategories.name);
+              }
             });
-            delete item.product_subject;
+          });
+          delete item.product_subject;
 
-            const { data: gradeData, error: gradeError } = await supabase
+          const { data: gradeData, error: gradeError } = await supabase
             .from("grade_level")
             .select("*");
 
@@ -203,9 +203,9 @@ export const ViewFullPost: Component<Props> = (props) => {
       encodeURIComponent(currPage);
     window.open(
       "https://www.facebook.com/sharer/sharer.php?u=" +
-        encodeURIComponent(currPage) +
-        "&t=" +
-        text,
+      encodeURIComponent(currPage) +
+      "&t=" +
+      text,
       "",
       "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
     );

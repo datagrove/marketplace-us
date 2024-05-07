@@ -192,8 +192,6 @@ export const English = {
     fileTypes: "",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
-    pricePost: "Price",
-    isResourceFree: "Free Resource",
   },
 
   postLabels: {
@@ -257,6 +255,9 @@ export const English = {
       "Please select the languages in which you are able to conduct business. These will be displayed on your profile for clients.",
     subjects: "Please select all the subjects covered by your resource. These will be used for filtering of resources for shoppers.",
     grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
+    pricePost: "Price",
+    isResourceFree: "Free Resource",
+    free: "Free",
   },
 
   apiErrors: {

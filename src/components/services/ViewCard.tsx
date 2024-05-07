@@ -191,8 +191,13 @@ export const ViewCard: Component<Props> = (props) => {
 
                 <div class="flex flex-col justify-between items-end pr-1 w-1/4 h-full">
                   <div class="inline-block w-full price-reviews-div text-end">
-                    <p class="text-lg font-bold">${post.price.toFixed()} </p>
+                    <Show when={post.price}>
+                      <p class="text-lg font-bold">${post.price} </p>
+                    </Show>
 
+                    <Show when={!post.price}>
+                      <p class="text-lg font-bold">{t("toolTips.free")}</p>
+                    </Show>
                     <div class="flex justify-end items-center w-full reviews-div text-end">
                       <svg
                         width="12px"
@@ -309,7 +314,7 @@ export const ViewCard: Component<Props> = (props) => {
                       when={
                         session() === null ||
                         (session()?.user.id !== post.user_id &&
-                          post.price != null)
+                          post.price !== undefined)
                       }
                     >
                       <AddToCart
@@ -319,6 +324,13 @@ export const ViewCard: Component<Props> = (props) => {
                     </Show>
                     {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
 
+                    <Show
+                      when={
+                        post.price === undefined
+                      }
+                    >
+                      <button>Download</button>
+                    </Show>
                     <div class="flex relative col-span-1 justify-end w-full align-top">
                       <div class="inline-block">
                         <DeletePostButton

@@ -38,8 +38,8 @@ export const MobileViewCard: Component<Props> = (props) => {
         props.posts.map(async (post: any) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
-                post.image_urls.split(",")[0]
-              ))
+              post.image_urls.split(",")[0]
+            ))
             : (post.image_url = null);
 
           post.seller_img
@@ -166,8 +166,13 @@ export const MobileViewCard: Component<Props> = (props) => {
             <div class="mr-1 w-1/2 content">
               <div class="flex justify-end items-start">
                 <div class="inline-block price-reviews-div text-end">
-                  <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
+                  <Show when={post.price}>
+                    <p class="text-lg font-bold">${post.price} </p>
+                  </Show>
 
+                  <Show when={!post.price}>
+                    <p class="text-lg font-bold">{t("toolTips.free")}</p>
+                  </Show>
                   <div class="flex justify-end items-center w-full reviews-div text-end">
                     <svg
                       width="12px"

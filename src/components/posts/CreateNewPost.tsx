@@ -609,8 +609,8 @@ export const CreateNewPost: Component = () => {
           </label>
         </div>
         {/* Price Implementation */}
-        <div class="mb-2 flex flex-col justfify-evenly ">
-          <div class="flex mb-2">
+        <div class="mb-3 flex flex-col justfify-evenly ">
+          <div class="flex ">
             <p>
               {t("toolTips.isResourceFree")}
             </p>
@@ -623,9 +623,9 @@ export const CreateNewPost: Component = () => {
             />
           </div>
           <Show when={!isFree()}>
-            <div class="flex">
+            <div class="flex mt-2">
               <p>
-                {t("toolTips.price")}
+                {t("toolTips.pricePost")}
               </p>
               <input
                 type="text"

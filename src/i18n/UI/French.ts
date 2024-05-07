@@ -264,6 +264,7 @@ export const French = {
     grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
     pricePost: "Le Prix",
     isResourceFree: "ressource gratuite",
+    free: "Gratuit",
   },
 
   apiErrors: {

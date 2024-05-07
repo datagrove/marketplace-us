@@ -223,6 +223,7 @@ export interface uiObject {
     grades: string;
     pricePost: string;
     isResourceFree: string;
+    free: string,
   };
 
   apiErrors: {

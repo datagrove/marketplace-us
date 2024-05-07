@@ -260,6 +260,7 @@ export const Spanish = {
     grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
     pricePost: "Precio",
     isResourceFree: "Recurso Gratuito",
+    free: "Gratis",
   },
 
   apiErrors: {
