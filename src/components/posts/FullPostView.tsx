@@ -521,7 +521,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                     <circle cx="9" cy="7" r="4" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
                     <path d="M2 21V17C2 15.8954 2.89543 15 4 15H14C15.1046 15 16 15.8954 16 17V21" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-icon2 dark:stroke-icon2-DM"/>
                 </svg>
-                {/* TODO: language file updated in mobile version */}
                 <p class="mx-0.5 text-sm">{t("buttons.following")}</p>
             </button>
           </div>
@@ -537,13 +536,12 @@ export const ViewFullPost: Component<Props> = (props) => {
 
               </div>
 
-              {/* TODO: language files updated in mobile styles merge */}
               <div id="resource-information" class="w-3/5 ml-2">
                 <p class="text-xs lg:text-md truncate">{ post()?.post_grade.join(", ") }</p>
                 <p class="text-xs lg:text-md truncate">{ post()?.subject.join(", ") }</p>
-                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
-                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
-                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
+                <p class="italic lg:text-md text-xs truncate">{t("messages.comingSoon")}</p>
+                <p class="italic lg:text-md text-xs truncate">{t("messages.comingSoon")}</p>
+                <p class="italic lg:text-md text-xs truncate">{t("messages.comingSoon")}</p>
               </div>
             </div>
           </div>
@@ -567,18 +565,16 @@ export const ViewFullPost: Component<Props> = (props) => {
       </div>
 
       <div id="description-tabs-div" class="mt-2 2xl:mt-0">
-        {/* TODO: language file in mobile merge is updated, remove hardcoded text upon merge */}
         <div id="desktop-tabs-div" class="flex justify-start pb-2 mb-2 border-b border-gray-400">
-          <a href="#detailsLg" id="detailsLgLink" class="tabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.details")}Details</p></a>
-          <a href="#descriptionLg" id="descriptionLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.description")}Description</p></a>
-          <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.reviews")}Reviews</p></a>
-          <a href="#qaLg" id="qaLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.qa")}Q&A</p></a>
+          <a href="#detailsLg" id="detailsLgLink" class="tabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.details")}</p></a>
+          <a href="#descriptionLg" id="descriptionLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.description")}</p></a>
+          <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.reviews")}</p></a>
+          <a href="#qaLg" id="qaLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.qa")}</p></a>
         </div>
 
         <div id="lg-details-div" class="inline">
           <div class="flex justify-between">
-            {/* TODO: Language file correct and updated in mobile component merge, delete hardcoding upon merging this branch */}
-            {/* <p class="text-lg">{t("menus.details")}Details</p> */}
+            {/* <p class="text-lg">{t("menus.details")}</p> */}
 
             {/* <button onClick={ changeDetails }>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="details-arrow" class="stroke-icon1 dark:stroke-icon1-DM rotate-180">
@@ -646,27 +642,21 @@ export const ViewFullPost: Component<Props> = (props) => {
             {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
             {/* <p class="text-lg">{t("menus.reviews")}Reviews</p> */}
           </div>
-          {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
-          <p id="" class="italic">{t("messages.comingSoon")}Coming soon!</p>
+          <p id="" class="italic">{t("messages.comingSoon")}</p>
         </div>
 
         <div id="lg-qa-div" class="hidden">
           <div class="flex justify-between">
-            {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
-            {/* <p class="text-lg">{t("menus.qA")}Q&A</p> */}
+            {/* <p class="text-lg">{t("menus.qA")}</p> */}
           </div>
-          {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
-          <p id="" class="italic">{t("messages.comingSoon")}Coming soon!</p>
+          <p id="" class="italic">{t("messages.comingSoon")}</p>
         </div>
       </div>
 
       <div class="w-full flex justify-end items-center">
         <div class="flex justify-end items-end mt-2 px-2 bg-background2 dark:bg-background2-DM w-fit">
-            {/* TODO: Delete hardcoded text, buttons.top is correct and coded in mobile pull request */}
-            <a href="#large-full-card-div"><p class="text-ptext2 dark:text-ptext2-DM">{t("buttons.top")}Back to Top</p></a>
+            <a href="#large-full-card-div"><p class="text-ptext2 dark:text-ptext2-DM">{t("buttons.top")}</p></a>
         </div>
-      </div>
-
     </div>
   );
 };

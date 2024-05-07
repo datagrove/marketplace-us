@@ -2,6 +2,7 @@
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { ViewFullPost } from "@components/posts/FullPostView";
+import { MobileViewFullPost } from "@components/posts/MobileFullPostView";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -13,8 +14,12 @@ const { param } = Astro.params;
   <div
     class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center min-w-96 md:w-5/6 max-w-[950px] h-full"
   >
-    <div class="w-full">
+    <div class="hidden md:inline w-full px-6 pb-6">
       <ViewFullPost id={param} client:only="solid-js" />
+    </div>
+
+    <div class="md:hidden">
+      <MobileViewFullPost id={ param } client:only="solid-js" />
     </div>
   </div>
 </Layout>

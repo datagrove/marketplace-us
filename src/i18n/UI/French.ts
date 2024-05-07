@@ -108,6 +108,10 @@ export const French = {
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
+    follow: "Suivre",
+    following: "Suivante",
+    top: "Retour au Sommet",
+    freeDownload: "Téléchargement Gratuit",
   },
 
   messages: {
@@ -159,6 +163,8 @@ export const French = {
     noStripeAccount:
       "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
     selectSubject: "Veuillez sélectionner au moins un sujet",
+    comingSoon: "À venir!",
+    report: "Signaler cette ressource à LearnGrove",
   },
 
   formLabels: {
@@ -234,6 +240,10 @@ export const French = {
   menus: {
     resources: "Trouver des ressources",
     contactUs: "Contactez-nous",
+    details: "Détails",
+    description: "Description",
+    reviews: "Commentaires",
+    qA: "Questions/Réponses",
   },
 
   toolTips: {
