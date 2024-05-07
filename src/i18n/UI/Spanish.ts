@@ -106,6 +106,7 @@ export const Spanish = {
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
     browseCatalog: "Explorar el Catálogo",
+    download: "Descargar"
   },
 
   messages: {

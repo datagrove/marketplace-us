@@ -108,6 +108,7 @@ export const French = {
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
+    download: "Télécharger",
   },
 
   messages: {

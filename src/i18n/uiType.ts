@@ -90,6 +90,7 @@ export interface uiObject {
     showLess: string,
     browseCatalog: string,
     findResources: string,
+    download: string,
   },
 
   messages: {

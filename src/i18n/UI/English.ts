@@ -106,6 +106,7 @@ export const English = {
     showLess: "Show Less",
     browseCatalog: "Browse Catalog",
     findResources: "Find Resources",
+    download: "Download",
   },
 
   messages: {

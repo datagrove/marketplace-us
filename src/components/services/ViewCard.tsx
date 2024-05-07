@@ -313,9 +313,9 @@ export const ViewCard: Component<Props> = (props) => {
                   <div class="flex flex-col justify-center items-end mb-1 w-full">
                     <Show
                       when={
-                        session() === null ||
-                        (session()?.user.id !== post.user_id &&
-                          post.price !== undefined)
+                        (session() === null ||
+                          session()?.user.id !== post.user_id) &&
+                        post.price !== undefined
                       }
                     >
                       <AddToCart
@@ -327,9 +327,9 @@ export const ViewCard: Component<Props> = (props) => {
 
                     <Show
                       when={
-                        session() !== null &&
-                        (session()?.user.id !== post.user_id &&
-                          post.price === undefined)
+                        (session() === null ||
+                          session()?.user.id !== post.user_id) &&
+                        post.price === undefined
                       }
                     >
                       <DownloadBtn />
