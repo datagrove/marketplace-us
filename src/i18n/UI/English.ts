@@ -106,6 +106,10 @@ export const English = {
     showLess: "Show Less",
     browseCatalog: "Browse Catalog",
     findResources: "Find Resources",
+    follow: "Follow",
+    following: "Following",
+    top: "Back to Top",
+    freeDownload: "Free Download",
   },
 
   messages: {
@@ -153,6 +157,8 @@ export const English = {
     noStripeAccount:
       "You must complete enrollment with Stripe before posting resources.",
     selectSubject: "Please select at least one subject",
+    comingSoon: "Coming soon!",
+    report: "Report this resource to LearnGrove",
   },
 
   formLabels: {
@@ -189,9 +195,10 @@ export const English = {
     grades: "Grades",
     resourceTypes: "Resource Types",
     standards: "Standards",
-    fileTypes: "",
+    fileTypes: "File Types",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
+    pages: "Pages",
   },
 
   postLabels: {
@@ -227,6 +234,10 @@ export const English = {
   menus: {
     resources: "Find Resources",
     contactUs: "Contact Us",
+    details: "Details",
+    description: "Description",
+    reviews: "Reviews",
+    qA: "Q&A",
   },
 
   toolTips: {

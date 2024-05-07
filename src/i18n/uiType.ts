@@ -90,6 +90,10 @@ export interface uiObject {
     showLess: string,
     browseCatalog: string,
     findResources: string,
+    follow: string,
+    following: string,
+    top: string,
+    freeDownload: string,
   },
 
   messages: {
@@ -130,6 +134,8 @@ export interface uiObject {
     noPostsSearch: string,
     noStripeAccount: string,
     selectSubject: string,
+    comingSoon: string,
+    report: string,
   },
 
   formLabels: {
@@ -170,6 +176,7 @@ export interface uiObject {
     fileTypes: string;
     chooseSubject: string;
     chooseGrade: string;
+    pages: string,
   };
 
   postLabels: {
@@ -204,6 +211,10 @@ export interface uiObject {
   menus: {
     resources: string;
     contactUs: string;
+    details: string,
+    description: string,
+    reviews: string,
+    qA: string,
   };
 
   toolTips: {
