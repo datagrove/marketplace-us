@@ -376,9 +376,9 @@ export const ViewFullPost: Component<Props> = (props) => {
   }
 
   return (
-    <div class="">
+    <div id="large-full-card-div" class="h-full">
       <div id="image-title-details-cart-div" class="flex">
-        <div id="images-div" class="flex flex-col items-center justify-center w-[300px] h-[300px] mr-1 lg:w-[400px] lg:h-[400px]">
+        <div id="images-div" class="flex flex-col items-center justify-center w-[300px] mr-1 lg:w-[400px] lg:h-[400px]">
           <Show when={ testImages().length > 0 }>
             <Show when={ testImages().length === 1}>
                 <div class="border border-gray-400 flex justify-center items-center rounded h-[300px] w-[300px]">
@@ -393,8 +393,8 @@ export const ViewFullPost: Component<Props> = (props) => {
             </Show>
 
             <Show when={ testImages().length > 1 }>
-              <div class="w-full flex flex-col justify-center items-center">
-                <div class="flex justify-center items-center border border-gray-400 rounded h-[250px] w-[250px] lg:h-[330px] lg:w-[330px]">
+              <div class="w-full h-full flex flex-col justify-center items-center">
+                <div class="flex justify-center items-center border border-gray-400 rounded h-[290px] w-[290px] lg:h-[330px] lg:w-[330px]">
                     <img 
                         src={ testImages()[0]}
                         id="main-image"
@@ -404,40 +404,40 @@ export const ViewFullPost: Component<Props> = (props) => {
                     
                 </div>
 
-                  <div class="flex justify-between">
-                    { testImages().map((image: string, index: number) => (
-                      <div class="flex justify-center items-center w-1/6 h-16">
-                        { index === 0 ? (
-                          <div 
-                          // id={ index.toString() }
-                          id={`img${ index.toString() }`}
-                          class="imageLink border-b-2 border-green-500 h-16 w-16 flex justify-center items-center"
-                          onClick={ imageClick }
-                          >
-                              <img 
-                              src={ image } 
-                              class="rounded mb-2"
-                              alt={ `${t("postLabels.image")} ${ index + 2 }`}
-                              />
-                          </div>
-                        ) : (
-                          <div 
-                          // id={ index.toString() }
-                          id={`img${ index.toString() }`}
-                          class="imageLink flex justify-center items-center h-16 w-16"
-                          onClick={ imageClick }
-                          >
-                              <img 
-                              src={ image } 
-                              class="rounded mb-2 dark:bg-background1"
-                              alt={ `${t("postLabels.image")} ${ index + 2 }`}
-                              />
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                <div class="flex justify-between w-full px-1">
+                  { testImages().map((image: string, index: number) => (
+                    <div class="flex justify-center items-center w-1/6 h-16">
+                      { index === 0 ? (
+                        <div 
+                        // id={ index.toString() }
+                        id={`img${ index.toString() }`}
+                        class="imageLink border-b-2 border-green-500 h-14 w-14 flex justify-center items-center"
+                        onClick={ imageClick }
+                        >
+                            <img 
+                            src={ image } 
+                            class="rounded mb-2"
+                            alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                            />
+                        </div>
+                      ) : (
+                        <div 
+                        // id={ index.toString() }
+                        id={`img${ index.toString() }`}
+                        class="imageLink flex justify-center items-center h-16 w-16"
+                        onClick={ imageClick }
+                        >
+                            <img 
+                            src={ image } 
+                            class="rounded mb-2 dark:bg-background1"
+                            alt={ `${t("postLabels.image")} ${ index + 2 }`}
+                            />
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
+              </div>
             </Show>
           </Show>
         </div>
@@ -529,27 +529,27 @@ export const ViewFullPost: Component<Props> = (props) => {
           <div id="resource-info-div" class="my-2">
             <div class="flex">
               <div id="resource-labels" class="flex flex-col justify-end items-end w-2/5 mr-2">
-                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.grades")}</p>
-                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.subjects")}</p>
-                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.resourceTypes")}</p>
-                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.fileTypes")}</p>
-                <p class="uppercase font-light text-xs lg:text-lg">{ t("formLabels.pages")}</p>
+                <p class="uppercase font-light text-xs lg:text-md">{ t("formLabels.grades")}</p>
+                <p class="uppercase font-light text-xs lg:text-md">{ t("formLabels.subjects")}</p>
+                <p class="uppercase font-light text-xs lg:text-md">{ t("formLabels.resourceTypes")}</p>
+                <p class="uppercase font-light text-xs lg:text-md">{ t("formLabels.fileTypes")}</p>
+                <p class="uppercase font-light text-xs lg:text-md">{ t("formLabels.pages")}</p>
 
               </div>
 
               {/* TODO: language files updated in mobile styles merge */}
               <div id="resource-information" class="w-3/5 ml-2">
-                <p class="text-xs lg:text-lg truncate">{ post()?.post_grade.join(", ") }</p>
-                <p class="text-xs lg:text-lg truncate">{ post()?.subject.join(", ") }</p>
-                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
-                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
-                <p class="italic lg:text-lg text-xs truncate">Coming soon!</p>
+                <p class="text-xs lg:text-md truncate">{ post()?.post_grade.join(", ") }</p>
+                <p class="text-xs lg:text-md truncate">{ post()?.subject.join(", ") }</p>
+                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
+                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
+                <p class="italic lg:text-md text-xs truncate">Coming soon!</p>
               </div>
             </div>
           </div>
           
           {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
-          <div id="add-cart-div" class="flex justify-end my-8 mr-2">
+          <div id="add-cart-div" class="flex justify-end mt-8 mb-1 mr-2">
             <Quantity 
               quantity={ 1 }
               updateQuantity={ updateQuantity }
@@ -566,9 +566,9 @@ export const ViewFullPost: Component<Props> = (props) => {
         </div>
       </div>
 
-      <div id="description-tabs-div" class="">
+      <div id="description-tabs-div" class="mt-2 2xl:mt-0">
         {/* TODO: language file in mobile merge is updated, remove hardcoded text upon merge */}
-        <div id="desktop-tabs-div" class="flex justify-start pb-2 mb-2">
+        <div id="desktop-tabs-div" class="flex justify-start pb-2 mb-2 border-b border-gray-400">
           <a href="#detailsLg" id="detailsLgLink" class="tabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.details")}Details</p></a>
           <a href="#descriptionLg" id="descriptionLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menus.description")}Description</p></a>
           <a href="#reviewsLg" id="reviewsLgLink" class="tabLinkLg mr-10" onClick={ lgTabLinkClick }><p class="text-xl">{t("menu.reviews")}Reviews</p></a>
@@ -660,17 +660,13 @@ export const ViewFullPost: Component<Props> = (props) => {
         </div>
       </div>
 
+      <div class="w-full flex justify-end items-center">
+        <div class="flex justify-end items-end mt-2 px-2 bg-background2 dark:bg-background2-DM w-fit">
+            {/* TODO: Delete hardcoded text, buttons.top is correct and coded in mobile pull request */}
+            <a href="#large-full-card-div"><p class="text-ptext2 dark:text-ptext2-DM">{t("buttons.top")}Back to Top</p></a>
+        </div>
+      </div>
 
-
-
-
-
-
-
-
-
-
-  
     </div>
   );
 };
