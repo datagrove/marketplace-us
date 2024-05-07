@@ -20,16 +20,33 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-//   const { data, error } = await supabase.auth.admin.updateUserById(user_id, {
-//       email: response.email,
-//   })
+  const { data, error } = await supabase.auth.admin.updateUserById(user_id, {
+      email: response.email, 
+      email_confirm: true,
+  })
 
+  if (error) {
+    return new Response(
+      JSON.stringify({
+        message: error.message,
+      }),
+      { status: 400 }
+    );
+  }
 
+  if (data.user !== null) {
   // If everything works send a success response
   return new Response(
     JSON.stringify({
       message: "Success",
     }),
     { status: 200 }
+  );
+}
+return new Response(
+    JSON.stringify({
+      message: "Failure",
+    }),
+    { status: 400 }
   );
 };

@@ -23,7 +23,7 @@ export const Auth: Component = (props) => {
   const t = useTranslations(lang);
   const regularExpressionPassword =
     /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-  const regularExpressionEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  const regularExpressionEmail = /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 
   const handleLogin = async (e: SubmitEvent) => {
@@ -84,14 +84,26 @@ export const Auth: Component = (props) => {
             email: data.user?.email,
           };
 
-
-          //Todo: Update RLS to allow anyone to insert into the profile table
           const { data: profileData, error: profileError } = await supabase
             .from("profiles")
             .insert([profileSubmission]);
           if (profileError) {
             console.log(profileError.message);
             alert(t("apiErrors.profileCreateError"));
+            return
+          }
+
+          let clientSubmission = {
+            display_name: null,
+            client_phone: null,
+            user_id: data.user?.id,
+            image_url: null
+          }
+
+          const { data: clientData, error: clientError } = await supabase.from("clients").insert([clientSubmission]);
+          if (clientError) {
+            console.log(clientError.message);
+            alert(t("apiErrors.clientCreateProfileError"));
             return
           }
 

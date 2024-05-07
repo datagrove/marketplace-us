@@ -64,18 +64,13 @@ export const CheckoutStatus: Component = () => {
     //@ts-ignore
     if (currentUser && currentUser.is_anonymous) {
       console.log('The current user is anonymous')
-      const { data, error } = await supabase.from('auth.users').update({email: email}).eq('id', currentUser?.id)
+      const {data, error } = await supabase.auth.updateUser({
+        email: email
+      })
       if(error) {
         console.log(error)
       }
       console.log(data)
-      // const {data, error } = await supabase.auth.updateUser({
-      //   email: email
-      // })
-      // if(error) {
-      //   console.log(error)
-      // }
-      // console.log(data)
       // const response = await fetch("/api/convertAnonUser", {
       //   method: "POST",
       //   body: JSON.stringify({

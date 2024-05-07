@@ -183,3 +183,21 @@ as permissive
 for select
 to authenticated
 using ((auth.uid() = customer_id));
+
+drop view if exists "public"."clientview";
+
+alter table "public"."clients" drop constraint "clients_location_fkey"
+drop view if exists "public"."clientview"                             
+alter table "public"."clients" drop column "location" 
+
+CREATE OR REPLACE VIEW "public"."clientview" WITH ("security_invoker"='on') AS
+ SELECT "clients"."user_id",
+    "clients"."created_at",
+    "clients"."display_name",
+    "clients"."client_phone",
+    "clients"."image_url",
+    "profiles"."first_name",
+    "profiles"."last_name",
+    "profiles"."email"
+   FROM (("public"."clients"
+     LEFT JOIN "public"."profiles" ON (("clients"."user_id" = "profiles"."user_id"))));
