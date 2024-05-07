@@ -657,6 +657,7 @@ export const ViewFullPost: Component<Props> = (props) => {
         <div class="flex justify-end items-end mt-2 px-2 bg-background2 dark:bg-background2-DM w-fit">
             <a href="#large-full-card-div"><p class="text-ptext2 dark:text-ptext2-DM">{t("buttons.top")}</p></a>
         </div>
+      </div>
     </div>
   );
 };
