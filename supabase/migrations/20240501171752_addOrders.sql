@@ -186,9 +186,9 @@ using ((auth.uid() = customer_id));
 
 drop view if exists "public"."clientview";
 
-alter table "public"."clients" drop constraint "clients_location_fkey"
-drop view if exists "public"."clientview"                             
-alter table "public"."clients" drop column "location" 
+alter table "public"."clients" drop constraint "clients_location_fkey";
+
+alter table "public"."clients" drop column "location"; 
 
 CREATE OR REPLACE VIEW "public"."clientview" WITH ("security_invoker"='on') AS
  SELECT "clients"."user_id",
@@ -201,3 +201,12 @@ CREATE OR REPLACE VIEW "public"."clientview" WITH ("security_invoker"='on') AS
     "profiles"."email"
    FROM (("public"."clients"
      LEFT JOIN "public"."profiles" ON (("clients"."user_id" = "profiles"."user_id"))));
+
+drop policy "Enable insert for authenticated users only" on "public"."clients";
+
+create policy "Enable insert for anon and authenticated users"
+on "public"."clients"
+as permissive
+for insert
+to authenticated, anon
+with check (true);
