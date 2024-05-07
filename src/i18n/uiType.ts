@@ -84,7 +84,7 @@ export interface uiObject {
     addToCart: string,
     stripeSetup: string,
     stripeLogin: string,
-    proceedToCheckout: string, 
+    proceedToCheckout: string,
     viewCart: string,
     showMore: string,
     showLess: string,
@@ -98,7 +98,7 @@ export interface uiObject {
     emailLackRequirements: string,
     passwordLength: string,
     passwordValid: string,
-    passwordLackRequirements: string, 
+    passwordLackRequirements: string,
     phoneLackRequirements: string,
     phoneValid: string,
     passwordMatch: string,
@@ -221,6 +221,8 @@ export interface uiObject {
     languages: string;
     subjects: string;
     grades: string;
+    price: string;
+    isResourceFree: string;
   };
 
   apiErrors: {

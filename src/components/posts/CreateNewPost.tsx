@@ -608,22 +608,31 @@ export const CreateNewPost: Component = () => {
             />
           </label>
         </div>
-        <div
-          class="text-black-600"
-        >
-          <input
-            type="checkbox"
-            id="isFreeCheckbox"
-            value={""}
-            onChange={() => setIsFree(!isFree())}
-          />
-          <Show when={!isFree()}>
+        {/* Price Implementation */}
+        <div class="mb-2 flex flex-col justfify-evenly ">
+          <div class="flex mb-2">
+            <p>
+              {t("toolTips.price")}
+            </p>
             <input
-              type="text"
-              id="Price"
+              type="checkbox"
+              id="isFreeCheckbox"
+              class=" w-4 border-2 ml-2 "
               value={""}
-              onChange={(e) => setPrice(e.currentTarget.value)}
+              onChange={() => setIsFree(!isFree())}
             />
+          </div>
+          <Show when={!isFree()}>
+            <div class="flex">
+              <p class="">Price:</p>
+              <input
+                type="text"
+                class="flex ml-1 rounded w-1/12 px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "
+                id="Price"
+                value={""}
+                onChange={(e) => setPrice(e.currentTarget.value)}
+              />
+            </div>
           </Show>
         </div>
 
@@ -663,7 +672,7 @@ export const CreateNewPost: Component = () => {
             </p>
           )}
         </Suspense>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
