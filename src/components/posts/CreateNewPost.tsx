@@ -612,7 +612,7 @@ export const CreateNewPost: Component = () => {
         <div class="mb-2 flex flex-col justfify-evenly ">
           <div class="flex mb-2">
             <p>
-              {t("toolTips.price")}
+              {t("toolTips.isResourceFree")}
             </p>
             <input
               type="checkbox"
@@ -624,7 +624,9 @@ export const CreateNewPost: Component = () => {
           </div>
           <Show when={!isFree()}>
             <div class="flex">
-              <p class="">Price:</p>
+              <p>
+                {t("toolTips.price")}
+              </p>
               <input
                 type="text"
                 class="flex ml-1 rounded w-1/12 px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "

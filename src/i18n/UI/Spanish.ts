@@ -258,8 +258,8 @@ export const Spanish = {
       "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
     subjects: "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
     grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
-    price: "Precio",
-    isFreeResource: "Recurso Gratuito",
+    pricePost: "Precio",
+    isResourceFree: "Recurso Gratuito",
   },
 
   apiErrors: {

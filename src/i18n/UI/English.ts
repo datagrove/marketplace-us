@@ -192,7 +192,7 @@ export const English = {
     fileTypes: "",
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
-    price: "Price",
+    pricePost: "Price",
     isResourceFree: "Free Resource",
   },
 

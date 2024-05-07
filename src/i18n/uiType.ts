@@ -221,7 +221,7 @@ export interface uiObject {
     languages: string;
     subjects: string;
     grades: string;
-    price: string;
+    pricePost: string;
     isResourceFree: string;
   };
 
