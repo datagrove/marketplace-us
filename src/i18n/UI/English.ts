@@ -227,6 +227,11 @@ export const English = {
   menus: {
     resources: "Find Resources",
     contactUs: "Contact Us",
+    profile: "Profile",
+    ratingsReviews: "Ratings and Reviews",
+    questions: "Questions",
+    freeDownload: "Free Download",
+    providerResources: "Resources",
   },
 
   toolTips: {

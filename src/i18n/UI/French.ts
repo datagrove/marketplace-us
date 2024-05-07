@@ -233,6 +233,11 @@ export const French = {
   menus: {
     resources: "Trouver des ressources",
     contactUs: "Contactez-nous",
+    profile: "Profil",
+    ratingsReviews: "Notes et Avis",
+    questions: "Des Questions",
+    freeDownload: "Téléchargement Gratuit",
+    providerResources: "Ressources",
   },
 
   toolTips: {

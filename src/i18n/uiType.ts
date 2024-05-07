@@ -204,6 +204,11 @@ export interface uiObject {
   menus: {
     resources: string;
     contactUs: string;
+    profile: string;
+    ratingsReviews: string;
+    questions: string;
+    freeDownload: string;
+    providerResources: string;
   };
 
   toolTips: {

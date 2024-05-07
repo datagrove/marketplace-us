@@ -229,6 +229,11 @@ export const Spanish = {
   menus: {
     resources: "Buscar Recursos",
     contactUs: "Contáctenos",
+    profile: "Perfil",
+    ratingsReviews: "Puntajes y Reseñas",
+    questions: "Preguntas",
+    freeDownload: "Descarga Gratis",
+    providerResources: "Recursos",
   },
 
   toolTips: {
