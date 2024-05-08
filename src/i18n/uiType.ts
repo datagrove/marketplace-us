@@ -209,6 +209,7 @@ export interface uiObject {
     questions: string;
     freeDownload: string;
     providerResources: string;
+    payouts: string;
   };
 
   toolTips: {

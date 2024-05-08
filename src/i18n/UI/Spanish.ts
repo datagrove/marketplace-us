@@ -234,6 +234,7 @@ export const Spanish = {
     questions: "Preguntas",
     freeDownload: "Descarga Gratis",
     providerResources: "Recursos",
+    payouts: "Mis Pagos",
   },
 
   toolTips: {

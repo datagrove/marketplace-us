@@ -232,6 +232,7 @@ export const English = {
     questions: "Questions",
     freeDownload: "Free Download",
     providerResources: "Resources",
+    payouts: "My Payouts",
   },
 
   toolTips: {

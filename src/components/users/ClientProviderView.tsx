@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ClientViewProviderPosts } from "../posts/ClientViewProviderPosts";
 import type { AuthSession } from "@supabase/supabase-js";
@@ -39,12 +39,19 @@ export const ClientProviderView: Component<Props> = (props) => {
     const [provider, setProvider] = createSignal<Provider>();
     const [providerImage, setProviderImage] = createSignal<string>();
     const [languageSpoken, setLanguageSpoken] = createSignal<string[]>([]);
+
+    onMount(() => {
+        fetchProvider(+props?.id)
+        
+        console.log("provider: ", provider())
+        console.log(props?.id)
+    });
   
     createEffect(() => {
       if (props.id === undefined) {
         location.href = `/${lang}/404`;
-      } else if (props.id) {
-        fetchProvider(+props.id);
+      } else if (props?.id) {
+        fetchProvider(+props?.id);
       }
     });
   
@@ -92,8 +99,9 @@ export const ClientProviderView: Component<Props> = (props) => {
   
             //set display list of languages for provider
             data[0].languages = languageSpoken().join(", ");
-  
+
             setProvider(data[0]);
+            console.log("test")
           }
         } catch (error) {
           console.log(error);
@@ -314,15 +322,17 @@ export const ClientProviderView: Component<Props> = (props) => {
 
             <div id="client-provider-view-tabs-content-div" class="mt-2 mx-4">
                 <div id="client-provider-view-tabs" class="flex mb-4"> 
-                    <a href="#profileClientView" id="clientProviderViewProfileLink" class="clientViewtabLinkLg border-b-2 border-green-500 mr-10 inline" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.profile")}</p></a>
-                    <a href="#resourcesClientView" id="clientProviderViewResourcesLink" class="clientViewtabLinkLg mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.providerResources")}</p></a>
-                    <a href="#ratingsClientView" id="clientProviderViewRatingsLink" class="clientViewtabLinkLg mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.ratingsReviews")}</p></a>
-                    <a href="#questionsClientView" id="clientProviderViewQuestionsLink" class="clientViewtabLinkLg mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.questions")}</p></a>
-                    <a href="#downloadClientView" id="clientProviderViewDownloadLink" class="clientViewtabLinkLg mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.freeDownload")}</p></a>
+                    <a href="#profileClientView" id="clientProviderViewProfileLink" class="clientViewtabLinkLg border-b-2 border-green-500 mr-4 md:mr-6 lg:mr-10 inline" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.profile")}</p></a>
+                    <a href="#resourcesClientView" id="clientProviderViewResourcesLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.providerResources")}</p></a>
+                    <a href="#ratingsClientView" id="clientProviderViewRatingsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.ratingsReviews")}</p></a>
+                    <a href="#questionsClientView" id="clientProviderViewQuestionsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.questions")}</p></a>
+                    <a href="#downloadClientView" id="clientProviderViewDownloadLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a>
                 </div>
 
                 <div id="clientProviderViewProfile" class="inline">
                     Profile
+
+                    
                 </div>
 
                 <div id="clientProviderViewResources" class="hidden">

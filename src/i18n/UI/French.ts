@@ -238,6 +238,7 @@ export const French = {
     questions: "Des Questions",
     freeDownload: "Téléchargement Gratuit",
     providerResources: "Ressources",
+    payouts: "Mes Paiements",
   },
 
   toolTips: {
