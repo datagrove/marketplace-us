@@ -166,6 +166,7 @@ export const French = {
     selectSubject: "Veuillez sélectionner au moins un sujet",
     comingSoon: "À venir!",
     report: "Signaler cette ressource à LearnGrove",
+    free: "Gratuit",
   },
 
   formLabels: {
@@ -206,6 +207,8 @@ export const French = {
     chooseSubject: "Sujet(s)",
     chooseGrade: "Niveau(x) scolaire(s)",
     pages: "Pages",
+    pricePost: "Le Prix",
+    isResourceFree: "ressource gratuite",
   },
 
   postLabels: {
@@ -274,9 +277,6 @@ export const French = {
       "Veuillez sélectionner les langues dans lesquelles vous êtes capable de faire des affaires. Ceux-ci seront affichés sur votre profil pour les clients.",
     subjects: "Veuillez sélectionner tous les sujets couverts par votre ressource. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
     grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
-    pricePost: "Le Prix",
-    isResourceFree: "ressource gratuite",
-    free: "Gratuit",
   },
 
   apiErrors: {

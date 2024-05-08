@@ -138,6 +138,7 @@ export interface uiObject {
     selectSubject: string,
     comingSoon: string,
     report: string,
+    free: string,
   },
 
   formLabels: {
@@ -179,6 +180,8 @@ export interface uiObject {
     chooseSubject: string;
     chooseGrade: string;
     pages: string,
+    pricePost: string;
+    isResourceFree: string;
   };
 
   postLabels: {
@@ -234,9 +237,6 @@ export interface uiObject {
     languages: string;
     subjects: string;
     grades: string;
-    pricePost: string;
-    isResourceFree: string;
-    free: string,
   };
 
   apiErrors: {

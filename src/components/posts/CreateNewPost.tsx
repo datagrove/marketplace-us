@@ -20,7 +20,7 @@ import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
 import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
-import Uppy from "@uppy/core";
+
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -612,7 +612,7 @@ export const CreateNewPost: Component = () => {
         <div class="mb-3 flex flex-col justfify-evenly ">
           <div class="flex ">
             <p>
-              {t("toolTips.isResourceFree")}
+              {t("formLabels.isResourceFree")}
             </p>
             <input
               type="checkbox"
@@ -625,13 +625,13 @@ export const CreateNewPost: Component = () => {
           <Show when={!isFree()}>
             <div class="flex mt-2">
               <p>
-                {t("toolTips.pricePost")}
+                {t("formLabels.pricePost")}
               </p>
               <input
                 type="text"
-                class="flex ml-1 rounded w-1/12 px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "
+                class="flex ml-1 rounded w-full px-1 border border-inputBorder1 dark:border-inputBorder1-DM focus:border-highlight1 dark:focus:border-highlight1-DM focus:border-2 focus:outline-none bg-background1 dark:bg-background2-DM text-ptext1  dark:text-ptext2-DM "
                 id="Price"
-                value={""}
+                value={"0.00"}
                 onChange={(e) => setPrice(e.currentTarget.value)}
               />
             </div>
@@ -639,6 +639,7 @@ export const CreateNewPost: Component = () => {
         </div>
 
         <div>
+          {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */}
           <UploadFiles
             target={"#uploadResource"}
             bucket="resources"
@@ -661,7 +662,7 @@ export const CreateNewPost: Component = () => {
           <button
             id="post"
             disabled={!uploadFinished()}
-            class={`border-2 text-2xl ${uploadFinished() ? "btn-primary" : "btn-disabled"
+            class={`text-2xl ${uploadFinished() ? "btn-primary" : "btn-disabled"
               }`}
           >
             {t("buttons.post")}

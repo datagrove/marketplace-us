@@ -197,7 +197,7 @@ export const ViewCard: Component<Props> = (props) => {
                     </Show>
 
                     <Show when={!post.price}>
-                      <p class="text-lg font-bold">{t("toolTips.free")}</p>
+                      <p class="text-lg font-bold">{t("messages.free")}</p>
                     </Show>
                     <div class="flex justify-end items-center w-full reviews-div text-end">
                       <svg

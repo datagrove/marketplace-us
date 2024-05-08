@@ -162,6 +162,7 @@ export const Spanish = {
     selectSubject: "Por favor, seleccione al menos una asignatura",
     comingSoon: "¡Muy pronto!",
     report: "Reportar este recurso a LearnGrove",
+    free: "GRATIS",
   },
 
   formLabels: {
@@ -203,6 +204,8 @@ export const Spanish = {
     chooseSubject: "Asunto(s)",
     chooseGrade: "Nivel(es) de grado",
     pages: "Paginas",
+    pricePost: "Precio",
+    isResourceFree: "Recurso Gratuito",
   },
 
   postLabels: {
@@ -270,9 +273,6 @@ export const Spanish = {
       "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
     subjects: "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
     grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
-    pricePost: "Precio",
-    isResourceFree: "Recurso Gratuito",
-    free: "Gratis",
   },
 
   apiErrors: {
