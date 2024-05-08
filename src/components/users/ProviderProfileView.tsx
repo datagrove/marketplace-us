@@ -267,11 +267,11 @@ interface Provider {
 
     return (
         <div>
-            <form onSubmit={ submit } id="creatorEditProfile">
+            <form onSubmit={ submit } id="creatorEditProfile" class="mx-1">
             <div id="provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM relative">
                 <Show when={editMode() === false}>
                     <Show when={ providerImage() }>
-                        <div class="object-contain overflow-hidden flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-12">
+                        <div class="object-contain overflow-hidden flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-4 md:left-12">
                             <img
                                 src={providerImage()}
                                 class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
@@ -281,7 +281,7 @@ interface Provider {
                     </Show>
 
                     <Show when={ !providerImage() }>
-                        <div class="flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-12">
+                        <div class="flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-4 md:left-12">
                             <svg width="120px" height="120px" viewBox="0 0 48 48" version="1.1" class="fill-icon2 dark:fill-icon2-DM">
                                 <g id="🔍-System-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon2 dark:fill-icon2-DM">
                                     <g fill="none" fill-rule="nonzero" class="fill-icon2 dark:fill-icon2-DM">
@@ -304,20 +304,50 @@ interface Provider {
                 </Show>
             </div>
 
-            <div class="italic font-bold text-end mt-2 underline text-alert1 dark:text-alert1-DM">
+            <div class="flex justify-end">
+                <Show when={ editMode() === true && window.screen.width < 768 }>
+                    <button
+                        type="submit"
+                        form="creatorEditProfile"
+                    >
+                        <svg width="60px" height="60px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
+                            <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
+                        </svg>
+                    </button>
+                </Show>
+            </div>
+
+
+
+            <div class="italic font-bold text-center md:text-end md:mt-2 underline text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
-                    <h1 class="text-alert1 dark:text-alert1-DM">
+                    <h1 class="text-alert1 dark:text-alert1-DM mt-[36px]">
                         {t("messages.profileEdits")}
                     </h1>
                 </Show>
             </div>
 
-            <div id="provider-view-username-reviews-edit" class="mt-10 w-full">
-                <div class="grid md:grid-cols-[525px_50px_150px] lg:grid-cols-[750px_50px_150px] xl:grid-cols-[900px_50px_200px]">
+            <div id="provider-view-username-reviews-edit" class="mt-4 md:mt-10 w-full">
+                <Show when={ !editMode() }>
+                    <div class="md:hidden flex justify-end mb-2">
+                        <button
+                            class="btn-primary flex items-center justify-center w-1/2"
+                            onClick={ () => window.location.href=`/${lang}/posts/createpost` }
+                        >
+                            <svg fill="none" width="20px" height="20px" viewBox="0 0 1920 1920" class="fill-icon2 dark:fill-icon2-DM pr-1">
+                                <path d="M915.744 213v702.744H213v87.842h702.744v702.744h87.842v-702.744h702.744v-87.842h-702.744V213z" fill-rule="evenodd"/>
+                            </svg>
+                            <p class="pl-1 text-lg font-light">{t("pageTitles.createPost")}</p>
+                        </button>
+                    </div>
+                </Show>
+                
+
+                <div class="flex items-center md:grid md:grid-cols-[525px_50px_150px] lg:grid-cols-[750px_50px_150px] xl:grid-cols-[900px_50px_200px]">
                     <div class="provider-name-edit-button-div">
                         <Show when={ editMode() === false }>
-                            <div class="">
-                                <h2 class="lg:text-2xl font-bold line-clamp-2">
+                            <div class="mr-2 md:mr-0">
+                                <h2 class="text-lg lg:text-2xl font-bold line-clamp-2">
                                     {provider()?.seller_name == ""
                                     ? provider()?.first_name + " " + provider()?.last_name
                                     : provider()?.seller_name}
@@ -327,6 +357,11 @@ interface Provider {
 
                         <Show when={editMode() === true}>
                             <div class="basis-full">
+                                <label
+                                    for="SellerName"
+                                    class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                >{t("formLabels.providerName")}: &nbsp;
+                                </label>
                                 <input
                                     type="text"
                                     id="ProviderName"
@@ -348,7 +383,7 @@ interface Provider {
                                 </svg>
                             </Show>
                             
-                            <Show when={ editMode() === true }>
+                            <Show when={ editMode() === true && window.screen.width >=768 }>
                                 <button
                                     type="submit"
                                     form="creatorEditProfile"
@@ -361,7 +396,7 @@ interface Provider {
                         </button>
                     </div>
 
-                    <div class="add-resource-div flex justify-end items-center w-full">
+                    <div class="hidden create-post-div md:flex justify-end items-center w-full">
                         <button
                             class="btn-primary flex items-center justify-center w-full"
                             onClick={ () => window.location.href=`/${lang}/posts/createpost` }
@@ -404,13 +439,13 @@ interface Provider {
                 </div>
             </div>
 
-            <div id="provider-view-tabs-content-div" class="mt-2">
+            <div id="provider-view-tabs-content-div" class="mt-8 md:mt-2">
                 <div id="provider-view-tabs" class="flex mb-4"> 
                     <a href="#profileCreatorView" id="creatorViewProfileLink" class="providerViewtabLinkLg border-b-2 border-green-500 mr-2 md:mr-6 lg:mr-10 inline" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.profile")}</p></a>
                     <a href="#resourcesCreatorView" id="creatorViewResourcesLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.providerResources")}</p></a>
-                    <a href="#ratingsCreatorView" id="creatorViewRatingsLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.ratingsReviews")}</p></a>
+                    <a href="#ratingsCreatorView" id="creatorViewRatingsLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.reviews")}</p></a>
                     <a href="#questionsCreatorView" id="creatorViewQuestionsLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.questions")}</p></a>
-                    <a href="#downloadCreatorView" id="creatorViewDownloadLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a>
+                    {/* <a href="#downloadCreatorView" id="creatorViewDownloadLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a> */}
                     <a href="#payoutsCreatorView" id="creatorViewPayoutsLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.payouts")}</p></a>
                 </div>
 

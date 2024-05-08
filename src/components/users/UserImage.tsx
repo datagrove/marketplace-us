@@ -89,7 +89,7 @@ const UserImage: Component<Props> = (props) => {
   };
 
   return (
-    <div class="absolute top-6 left-12">
+    <div class="absolute top-6 left-4 md:left-12">
       <div aria-live="polite" class="w-36 border-2 border-gray-400 rounded-full flex-row text-center justify-center h-36">
         {imageUrl() ? (
           <img
