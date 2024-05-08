@@ -67,7 +67,7 @@ export const English = {
       "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
     about:
       "Discover the story behind TodoServis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
-    impact:=======
+    impact:
       "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
     fullPost:
       "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
