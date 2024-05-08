@@ -87,7 +87,7 @@ export const Cart = () => {
 
                 <div class="inline-block text-center">{item.quantity}</div>
                 <div class="inline-block text-start">
-                  ${item.price}
+                  ${item.price.toFixed(2)}
                 </div>
               </div>
             ))}

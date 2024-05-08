@@ -193,7 +193,7 @@ export const ViewCard: Component<Props> = (props) => {
                 <div class="flex flex-col justify-between items-end pr-1 w-1/4 h-full">
                   <div class="inline-block w-full price-reviews-div text-end">
                     <Show when={post.price}>
-                      <p class="text-lg font-bold">${post.price} </p>
+                      <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
                     </Show>
 
                     <Show when={!post.price}>
