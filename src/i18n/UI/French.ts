@@ -108,6 +108,7 @@ export const French = {
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
+    download: "Télécharger",
     follow: "Suivre",
     following: "Suivante",
     top: "Retour au Sommet",
@@ -273,6 +274,9 @@ export const French = {
       "Veuillez sélectionner les langues dans lesquelles vous êtes capable de faire des affaires. Ceux-ci seront affichés sur votre profil pour les clients.",
     subjects: "Veuillez sélectionner tous les sujets couverts par votre ressource. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
     grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
+    pricePost: "Le Prix",
+    isResourceFree: "ressource gratuite",
+    free: "Gratuit",
   },
 
   apiErrors: {
