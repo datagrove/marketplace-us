@@ -267,15 +267,28 @@ interface Provider {
 
     return (
         <div>
-            <div id="provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM">
+            <form onSubmit={ submit } id="creatorEditProfile">
+            <div id="provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM relative">
                 <Show when={editMode() === false}>
-                    <Show when={typeof providerImage() !== "undefined"}>
-                        <div class="object-contain overflow-hidden relative justify-center w-24 h-24 rounded-full border md:w-24 md:h-24 lg:w-24 lg:h-24 border-border1 dark:border-border1-DM">
+                    <Show when={ providerImage() }>
+                        <div class="object-contain overflow-hidden flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-12">
                             <img
-                            src={providerImage()}
-                            class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
-                            alt={`${t("postLabels.providerProfileImage")} 1`}
+                                src={providerImage()}
+                                class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
+                                alt={`${t("postLabels.providerProfileImage")} 1`}
                             />
+                        </div>
+                    </Show>
+
+                    <Show when={ !providerImage() }>
+                        <div class="flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-12">
+                            <svg width="120px" height="120px" viewBox="0 0 48 48" version="1.1" class="fill-icon2 dark:fill-icon2-DM">
+                                <g id="🔍-System-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon2 dark:fill-icon2-DM">
+                                    <g fill="none" fill-rule="nonzero" class="fill-icon2 dark:fill-icon2-DM">
+                                        <path d="M35.7502,28 C38.0276853,28 39.8876578,29.7909151 39.9950978,32.0427546 L40,32.2487 L40,33 C40,36.7555 38.0583,39.5669 35.0798,41.3802 C32.1509,43.1633 28.2139,44 24,44 C19.7861,44 15.8491,43.1633 12.9202,41.3802 C10.0319285,39.6218485 8.11862909,36.9249713 8.00532378,33.3388068 L8,33 L8,32.2489 C8,29.9703471 9.79294995,28.1122272 12.0440313,28.0048972 L12.2499,28 L35.7502,28 Z M24,4 C29.5228,4 34,8.47715 34,14 C34,19.5228 29.5228,24 24,24 C18.4772,24 14,19.5228 14,14 C14,8.47715 18.4772,4 24,4 Z" id="🎨-Color"></path>
+                                    </g>
+                                </g>
+                            </svg>
                         </div>
                     </Show>
                 </Show>
@@ -291,7 +304,7 @@ interface Provider {
                 </Show>
             </div>
 
-            <div class="text-xl italic font-bold text-end mt-4 underline text-alert1 dark:text-alert1-DM">
+            <div class="italic font-bold text-end mt-2 underline text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">
                         {t("messages.profileEdits")}
@@ -313,43 +326,12 @@ interface Provider {
                         </Show>
 
                         <Show when={editMode() === true}>
-                            <div class="flex relative items-center mr-2">
-                                <svg
-                                    class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                >
-                                    <g>
-                                    <path
-                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                    />
-                                    </g>
-                                </svg>
-
-                                <span
-                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                                >
-                                    {t("toolTips.displayName")}
-                                </span>
-                            </div>
-
-                            <div class="h-0 basis-full"></div>
-
                             <div class="basis-full">
                                 <input
                                     type="text"
                                     id="ProviderName"
                                     name="ProviderName"
-                                    class="px-1 mb-4 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
+                                    class="px-1 my-4 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
                                     value={provider()?.seller_name}
                                 />
                             </div>
@@ -367,9 +349,14 @@ interface Provider {
                             </Show>
                             
                             <Show when={ editMode() === true }>
-                                <svg width="30px" height="30px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
-                                    <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
-                                </svg>
+                                <button
+                                    type="submit"
+                                    form="creatorEditProfile"
+                                >
+                                    <svg width="30px" height="30px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
+                                        <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
+                                    </svg>
+                                </button>
                             </Show>
                         </button>
                     </div>
@@ -433,7 +420,7 @@ interface Provider {
                             for="FirstName"
                             class="text-ptext1 dark:text-ptext1-DM font-bold"
                         >
-                            {t("formLabels.firstName")}:
+                            {t("formLabels.firstName")}: &nbsp;
                         </label>
 
                         <Show when={editMode() === false}>
@@ -446,35 +433,6 @@ interface Provider {
                         </Show>
 
                         <Show when={editMode() === true}>
-                            <div class="flex relative items-center mr-2">
-                                <svg
-                                    class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                >
-                                    <g>
-                                    <path
-                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                    />
-                                    </g>
-                                </svg>
-
-                                <span
-                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                                >
-                                    {t("toolTips.firstName")}
-                                </span>
-                            </div>
-
                             <div class="">
                                 <input
                                     type="text"
@@ -493,7 +451,7 @@ interface Provider {
                             for="LastName"
                             class="text-ptext1 dark:text-ptext1-DM font-bold"
                         >
-                            {t("formLabels.lastName")}:
+                            {t("formLabels.lastName")}: &nbsp;
                         </label>
 
                         <Show when={editMode() === false}>
@@ -506,34 +464,6 @@ interface Provider {
                         </Show>
 
                         <Show when={editMode() === true}>
-                            <div class="flex relative items-center mr-2">
-                                <svg
-                                    class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                >
-                                <g>
-                                    <path
-                                    d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                                C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                                c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                                s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                                c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                                c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                                C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                                c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                                C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                    />
-                                </g>
-                                </svg>
-
-                                <span
-                                class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                                >
-                                {t("toolTips.lastName")}
-                                </span>
-                            </div>
                             <div class="">
                                 <input
                                 type="text"
@@ -562,35 +492,6 @@ interface Provider {
                         </Show>
 
                         <Show when={ editMode() === true }>
-                            <div class="flex relative items-center mr-2">
-                                <svg
-                                    class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                    version="1.1"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                >
-                                    <g>
-                                    <path
-                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                    />
-                                    </g>
-                                </svg>
-
-                                <span
-                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
-                                >
-                                    {t("toolTips.changeEmail")}
-                                </span>
-                            </div>
-                            
                             <div class="">
                                 <input
                                     id="email"
@@ -626,6 +527,7 @@ interface Provider {
                     <StripeButton />
                 </div>
             </div>
+            </form>
         </div>
     )
   }
