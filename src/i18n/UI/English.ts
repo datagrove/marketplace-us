@@ -106,6 +106,7 @@ export const English = {
     showLess: "Show Less",
     browseCatalog: "Browse Catalog",
     findResources: "Find Resources",
+    download: "Download",
     follow: "Follow",
     following: "Following",
     top: "Back to Top",
@@ -159,6 +160,7 @@ export const English = {
     selectSubject: "Please select at least one subject",
     comingSoon: "Coming soon!",
     report: "Report this resource to LearnGrove",
+    free: "FREE",
   },
 
   formLabels: {
@@ -199,6 +201,8 @@ export const English = {
     chooseSubject: "Subject(s)",
     chooseGrade: "Grade Level(s)",
     pages: "Pages",
+    pricePost: "Price",
+    isResourceFree: "Free Resource",
   },
 
   postLabels: {

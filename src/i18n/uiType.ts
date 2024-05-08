@@ -84,16 +84,18 @@ export interface uiObject {
     addToCart: string,
     stripeSetup: string,
     stripeLogin: string,
-    proceedToCheckout: string, 
+    proceedToCheckout: string,
     viewCart: string,
     showMore: string,
     showLess: string,
     browseCatalog: string,
     findResources: string,
+    download: string,
     follow: string,
     following: string,
     top: string,
     freeDownload: string,
+
   },
 
   messages: {
@@ -102,7 +104,7 @@ export interface uiObject {
     emailLackRequirements: string,
     passwordLength: string,
     passwordValid: string,
-    passwordLackRequirements: string, 
+    passwordLackRequirements: string,
     phoneLackRequirements: string,
     phoneValid: string,
     passwordMatch: string,
@@ -136,6 +138,7 @@ export interface uiObject {
     selectSubject: string,
     comingSoon: string,
     report: string,
+    free: string,
   },
 
   formLabels: {
@@ -177,6 +180,8 @@ export interface uiObject {
     chooseSubject: string;
     chooseGrade: string;
     pages: string,
+    pricePost: string;
+    isResourceFree: string;
   };
 
   postLabels: {

@@ -44,7 +44,7 @@ export const Cart = () => {
   window.addEventListener("beforeunload", () => {
     if (items.length > 0) {
       localStorage.setItem("cartItems", JSON.stringify(items));
-    } 
+    }
     if (items.length === 0) {
       localStorage.removeItem("cartItems");
     }
@@ -98,7 +98,7 @@ export const Cart = () => {
               ${total.toFixed(2)}
             </div>
             <div class="col-span-5 text-xs italic text-center mt-4 mb-1">
-            {t("cartLabels.taxes")}
+              {t("cartLabels.taxes")}
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@ export const Cart = () => {
     }
   }
 
-  function hideMenu () {
+  function hideMenu() {
     document.getElementById("cartItems")?.classList.add("hidden")
     document.getElementById("cartBackdrop")?.classList.add("hidden")
   }
@@ -168,7 +168,7 @@ export const Cart = () => {
           </div>
         </Show>
       </button>
-      <div id="cartBackdrop" class="cartBackdrop absolute h-full w-screen top-0 left-0 hidden" onClick={()=> hideMenu()}>
+      <div id="cartBackdrop" class="cartBackdrop absolute h-full w-screen top-0 left-0 hidden" onClick={() => hideMenu()}>
         {/* This allows that if someone clicks anywhere outside the modal the modal will hide */}
       </div>
       <div

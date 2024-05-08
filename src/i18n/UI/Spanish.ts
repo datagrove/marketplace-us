@@ -106,6 +106,7 @@ export const Spanish = {
     showMore: "Mostrar Más",
     showLess: "Muestra Menos",
     browseCatalog: "Explorar el Catálogo",
+    download: "Descargar",
     follow: "Seguir",
     following: "Siguiente",
     top: "Volver Arriba",
@@ -161,6 +162,7 @@ export const Spanish = {
     selectSubject: "Por favor, seleccione al menos una asignatura",
     comingSoon: "¡Muy pronto!",
     report: "Reportar este recurso a LearnGrove",
+    free: "GRATIS",
   },
 
   formLabels: {
@@ -202,6 +204,8 @@ export const Spanish = {
     chooseSubject: "Asunto(s)",
     chooseGrade: "Nivel(es) de grado",
     pages: "Paginas",
+    pricePost: "Precio",
+    isResourceFree: "Recurso Gratuito",
   },
 
   postLabels: {
@@ -267,7 +271,7 @@ export const Spanish = {
       "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de cliente y proveedor.",
     languages:
       "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
-      subjects: "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
+    subjects: "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
     grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
   },
 

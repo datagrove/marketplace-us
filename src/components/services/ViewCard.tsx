@@ -9,6 +9,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
+import { DownloadBtn } from "./DownloadBtn.tsx"
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -44,8 +45,8 @@ export const ViewCard: Component<Props> = (props) => {
         props.posts.map(async (post: Post) => {
           post.image_urls
             ? (post.image_url = await downloadImage(
-                post.image_urls.split(",")[0]
-              ))
+              post.image_urls.split(",")[0],
+            ))
             : (post.image_url = undefined);
 
           post.seller_img
@@ -54,7 +55,7 @@ export const ViewCard: Component<Props> = (props) => {
           // Set the default quantity to 1
           post.quantity = 1;
           return post;
-        })
+        }),
       );
 
       setNewPosts(updatedPosts);
@@ -191,8 +192,13 @@ export const ViewCard: Component<Props> = (props) => {
 
                 <div class="flex flex-col justify-between items-end pr-1 w-1/4 h-full">
                   <div class="inline-block w-full price-reviews-div text-end">
-                    <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
+                    <Show when={post.price}>
+                      <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
+                    </Show>
 
+                    <Show when={!post.price}>
+                      <p class="text-lg font-bold">{t("messages.free")}</p>
+                    </Show>
                     <div class="flex justify-end items-center w-full reviews-div text-end">
                       <svg
                         width="12px"
@@ -307,8 +313,9 @@ export const ViewCard: Component<Props> = (props) => {
                   <div class="flex flex-col justify-center items-end mb-1 w-full">
                     <Show
                       when={
-                        session() === null ||
-                        session()?.user.id !== post.user_id
+                        (session() === null ||
+                          session()?.user.id !== post.user_id) &&
+                        post.price !== undefined
                       }
                     >
                       <AddToCart
@@ -318,6 +325,15 @@ export const ViewCard: Component<Props> = (props) => {
                     </Show>
                     {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
 
+                    <Show
+                      when={
+                        (session() === null ||
+                          session()?.user.id !== post.user_id) &&
+                        post.price === undefined
+                      }
+                    >
+                      <DownloadBtn />
+                    </Show>
                     <div class="flex relative col-span-1 justify-end w-full align-top">
                       <div class="inline-block">
                         <DeletePostButton

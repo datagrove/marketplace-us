@@ -108,6 +108,7 @@ export const French = {
     showLess: "Montrer Moins",
     browseCatalog: "Parcourir le Catalogue",
     findResources: "Trouver des Ressources",
+    download: "Télécharger",
     follow: "Suivre",
     following: "Suivante",
     top: "Retour au Sommet",
@@ -165,6 +166,7 @@ export const French = {
     selectSubject: "Veuillez sélectionner au moins un sujet",
     comingSoon: "À venir!",
     report: "Signaler cette ressource à LearnGrove",
+    free: "Gratuit",
   },
 
   formLabels: {
@@ -205,6 +207,8 @@ export const French = {
     chooseSubject: "Sujet(s)",
     chooseGrade: "Niveau(x) scolaire(s)",
     pages: "Pages",
+    pricePost: "Le Prix",
+    isResourceFree: "ressource gratuite",
   },
 
   postLabels: {

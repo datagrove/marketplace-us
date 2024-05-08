@@ -98,7 +98,6 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
   };
 
-
   function changeShowBtn(postId: number) {
     let postID = postId.toString();
     let showMoreID = `${postID}more`;
@@ -148,7 +147,9 @@ export const MobileViewCard: Component<Props> = (props) => {
               {post.image_url ? (
                 <img
                   src={post.image_url}
-                  alt={post.image_urls!.split(",")[0] ? "User Image" : "No image"}
+                  alt={
+                    post.image_urls!.split(",")[0] ? "User Image" : "No image"
+                  }
                   class="object-cover w-full h-full rounded-lg bg-background1 dark:bg-icon1-DM"
                 />
               ) : (
@@ -167,7 +168,13 @@ export const MobileViewCard: Component<Props> = (props) => {
               <div class="mr-1 w-1/2 content">
                 <div class="flex justify-end items-start">
                   <div class="inline-block price-reviews-div text-end">
-                    <p class="text-lg font-bold">${post.price.toFixed(2)} </p>
+                    <Show when={post.price}>
+                      <p class="text-lg font-bold">${post.price} </p>
+                    </Show>
+
+                    <Show when={!post.price}>
+                      <p class="text-lg font-bold">{t("messages.free")}</p>
+                    </Show>
 
                     <div class="flex justify-end items-center w-full reviews-div text-end">
                       <svg
@@ -196,7 +203,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                 </div>
 
                 <div class="flex flex-col justify-end items-end py-1">
-                  <h6 class="font-bold text-[10px]">{t("formLabels.grades")}</h6>
+                  <h6 class="font-bold text-[10px]">
+                    {t("formLabels.grades")}
+                  </h6>
                   {post.grade!.map((grade: string) => {
                     return <p class="font-light text-[10px]">{grade}</p>;
                   })}
@@ -207,27 +216,27 @@ export const MobileViewCard: Component<Props> = (props) => {
 
           <div class="mb-1 ml-1 title-creator">
             <div class="flex py-0.5 line-clamp-2">{post.title}</div>
-              <a href={`/${ lang }/provider/${ post?.seller_id }`}>
-                <div class="flex items-center border-2 w-fit pr-4 py-1">
-                  {post.seller_img ? (
-                    <img src={post.seller_img} alt="Seller image" />
-                  ) : (
-                    <svg
-                      width="24px"
-                      height="24px"
-                      class="mr-1 w-4 h-4 rounded-full border-2 md:w-auto md:h-auto border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM"
-                      viewBox="0 0 32 32"
-                    >
-                      <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                    </svg>
-                  )}
-                  <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
-                    {post.seller_name}
-                  </p>
-                </div>
-              </a>
+            <a href={`/${lang}/provider/${post?.seller_id}`}>
+              <div class="flex items-center border-2 w-fit pr-4 py-1">
+                {post.seller_img ? (
+                  <img src={post.seller_img} alt="Seller image" />
+                ) : (
+                  <svg
+                    width="24px"
+                    height="24px"
+                    class="mr-1 w-4 h-4 rounded-full border-2 md:w-auto md:h-auto border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM"
+                    viewBox="0 0 32 32"
+                  >
+                    <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                  </svg>
+                )}
+                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
+                  {post.seller_name}
+                </p>
+              </div>
+            </a>
           </div>
-            
+
           <div
             id={post.id.toString()}
             class="flex flex-wrap items-center w-full show-more"
