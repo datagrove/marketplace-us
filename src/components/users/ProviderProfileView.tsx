@@ -60,7 +60,7 @@ interface Provider {
   
   const { data: User, error: UserError } = await supabase.auth.getSession();
 
-  export const ProviderProfileView: Component<Props> = (props) => {
+  export const ProviderProfileView: Component = () => {
     const [provider, setProvider] = createSignal<Provider>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [providerImage, setProviderImage] = createSignal<string>("");
@@ -113,10 +113,11 @@ interface Provider {
         setEditMode(!editMode());
     };
     
-    function providerViewTabClick(e) {
+    function providerViewTabClick(e: Event) {
         e.preventDefault();
 
-        let currLinkId = e.currentTarget.id;
+        let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
+        // let currLinkId = e.currentTarget?.id;
         let currEl = document.getElementById(currLinkId);
         let allLgLinks = document.getElementsByClassName("providerViewtabLinkLg");
 
@@ -127,19 +128,19 @@ interface Provider {
         let downloads = document.getElementById("providerViewDownload");
         let payouts = document.getElementById("providerViewPayouts");
 
-        if(!currEl.classList.contains("border-b-2")) {
+        if(!currEl?.classList.contains("border-b-2")) {
             Array.from(allLgLinks).forEach(function(link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
             })
             
-            currEl.classList.add("border-b-2");
-            currEl.classList.add("border-green-500");
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
         };
 
         if(currLinkId === "creatorViewProfileLink") {
-            profile.classList.remove("hidden");
-            profile.classList.add("inline");
+            profile?.classList.remove("hidden");
+            profile?.classList.add("inline");
 
             closeResources();
             closeRatings();
@@ -147,8 +148,8 @@ interface Provider {
             closeDownloads();
             closePayouts();
         } else if(currLinkId === "creatorViewResourcesLink") {
-            resources.classList.remove("hidden");
-            resources.classList.add("inline");
+            resources?.classList.remove("hidden");
+            resources?.classList.add("inline");
 
             closeProfile();
             closeRatings();
@@ -156,8 +157,8 @@ interface Provider {
             closeDownloads();
             closePayouts();
         } else if(currLinkId === "creatorViewRatingsLink") {
-            ratings.classList.remove("hidden");
-            ratings.classList.add("inline");
+            ratings?.classList.remove("hidden");
+            ratings?.classList.add("inline");
 
             closeProfile();
             closeResources();
@@ -165,8 +166,8 @@ interface Provider {
             closeDownloads();
             closePayouts();
         } else if(currLinkId === "creatorViewQuestionsLink") {
-            questions.classList.remove("hidden");
-            questions.classList.add("inline");
+            questions?.classList.remove("hidden");
+            questions?.classList.add("inline");
 
             closeProfile();
             closeRatings();
@@ -174,8 +175,8 @@ interface Provider {
             closeDownloads();
             closePayouts();
         } else if(currLinkId === "creatorViewDownloadLink") {
-            downloads.classList.remove("hidden");
-            downloads.classList.add("inline");
+            downloads?.classList.remove("hidden");
+            downloads?.classList.add("inline");
 
             closeProfile();
             closeRatings();
@@ -183,8 +184,8 @@ interface Provider {
             closeQuestions();
             closePayouts();
         } else if(currLinkId === "creatorViewPayoutsLink") {
-            payouts.classList.remove("hidden");
-            payouts.classList.add("inline");
+            payouts?.classList.remove("hidden");
+            payouts?.classList.add("inline");
 
             closeProfile();
             closeRatings();
@@ -197,16 +198,16 @@ interface Provider {
     function closeProfile() {
         let profile = document.getElementById("providerViewProfile");
 
-        if(profile.classList.contains("inline")) {
-            profile.classList.remove("inline");
-            profile.classList.add("hidden");
+        if(profile?.classList.contains("inline")) {
+            profile?.classList.remove("inline");
+            profile?.classList.add("hidden");
         }
     };
 
     function closeResources() {
         let resources = document.getElementById("providerViewResources");
 
-        if(resources.classList.contains("inline")) {
+        if(resources?.classList.contains("inline")) {
             resources.classList.remove("inline");
             resources.classList.add("hidden")
         }
@@ -215,7 +216,7 @@ interface Provider {
     function closeRatings() {
         let ratings = document.getElementById("providerViewRatings");
 
-        if(ratings.classList.contains("inline")) {
+        if(ratings?.classList.contains("inline")) {
             ratings.classList.remove("inline");
             ratings.classList.add("hidden")
         }
@@ -224,7 +225,7 @@ interface Provider {
     function closeQuestions() {
         let questions = document.getElementById("providerViewQuestions");
 
-        if(questions.classList.contains("inline")) {
+        if(questions?.classList.contains("inline")) {
             questions.classList.remove("inline");
             questions.classList.add("hidden")
         }
@@ -233,7 +234,7 @@ interface Provider {
     function closeDownloads() {
         let downloads = document.getElementById("providerViewDownload");
 
-        if(downloads.classList.contains("inline")) {
+        if(downloads?.classList.contains("inline")) {
             downloads.classList.remove("inline");
             downloads.classList.add("hidden")
         }
@@ -242,7 +243,7 @@ interface Provider {
     function closePayouts() {
         let payouts = document.getElementById("providerViewPayouts");
 
-        if(payouts.classList.contains("inline")) {
+        if(payouts?.classList.contains("inline")) {
             payouts.classList.remove("inline");
             payouts.classList.add("hidden")
         }
@@ -252,8 +253,10 @@ interface Provider {
         e.preventDefault();
         console.log("Submitted!");
         const formData = new FormData(e.target as HTMLFormElement);
-        for (let pair of formData.entries()) {
-          console.log(pair[0] + ", " + pair[1]);
+
+        for (let pair of formData?.entries()) {
+            console.log("pair of entries")
+            console.log(pair[0] + ", " + pair[1]);
         }
         formData.append("access_token", session()?.access_token!);
         formData.append("refresh_token", session()?.refresh_token!);

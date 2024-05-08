@@ -43,9 +43,11 @@ export const ClientProviderView: Component<Props> = (props) => {
     const [largeScreen, setLargeScreen] = createSignal<boolean>(false);
 
     onMount(() => {
-        fetchProvider(+props?.id)
+      if(props.id !== null && props.id !== undefined) {
+        fetchProvider(+props.id)
         
         console.log("test on Mount" + provider()?.email)
+      }
     });
   
     createEffect(() => {
@@ -155,10 +157,10 @@ export const ClientProviderView: Component<Props> = (props) => {
       }
     };
 
-    function providerViewTabClick(e) {
+    function providerViewTabClick(e: Event) {
         e.preventDefault();
 
-        let currLinkId = e.currentTarget.id;
+        let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
         let currEl = document.getElementById(currLinkId);
         let allClientViewLinks = document.getElementsByClassName("clientViewtabLinkLg");
 
@@ -168,51 +170,51 @@ export const ClientProviderView: Component<Props> = (props) => {
         let clientViewQuestions = document.getElementById("clientProviderViewQuestions");
         let clientViewDownload = document.getElementById("clientProviderViewDownload");
         
-        if(!currEl.classList.contains("border-b-2")) {
+        if(!currEl?.classList.contains("border-b-2")) {
             Array.from(allClientViewLinks).forEach(function(link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
             })
             
-            currEl.classList.add("border-b-2");
-            currEl.classList.add("border-green-500");
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
         };
 
         if(currLinkId === "clientProviderViewProfileLink") {
-            clientViewProfile.classList.remove("hidden");
-            clientViewProfile.classList.add("inline");
+            clientViewProfile?.classList.remove("hidden");
+            clientViewProfile?.classList.add("inline");
 
             closeResources();
             closeRatings();
             closeQuestions();
             closeDownloads();
         } else if(currLinkId === "clientProviderViewResourcesLink") {
-            clientViewResources.classList.remove("hidden");
-            clientViewResources.classList.add("inline");
+            clientViewResources?.classList.remove("hidden");
+            clientViewResources?.classList.add("inline");
 
             closeProfile();
             closeRatings();
             closeQuestions();
             closeDownloads();
         } else if(currLinkId === "clientProviderViewRatingsLink") {
-            clientViewRatings.classList.remove("hidden");
-            clientViewRatings.classList.add("inline");
+            clientViewRatings?.classList.remove("hidden");
+            clientViewRatings?.classList.add("inline");
 
             closeProfile();
             closeResources();
             closeQuestions();
             closeDownloads();
         } else if(currLinkId === "clientProviderViewQuestionsLink") {
-            clientViewQuestions.classList.remove("hidden");
-            clientViewQuestions.classList.add("inline");
+            clientViewQuestions?.classList.remove("hidden");
+            clientViewQuestions?.classList.add("inline");
 
             closeProfile();
             closeResources();
             closeRatings();
             closeDownloads();
         } else if(currLinkId === "clientProviderViewDownloadLink") {
-            clientViewDownload.classList.remove("hidden");
-            clientViewDownload.classList.add("inline");
+            clientViewDownload?.classList.remove("hidden");
+            clientViewDownload?.classList.add("inline");
             
             closeProfile();
             closeResources();
@@ -225,7 +227,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     function closeProfile() {
         let profile = document.getElementById("clientProviderViewProfile");
 
-        if(profile.classList.contains("inline")) {
+        if(profile?.classList.contains("inline")) {
             profile.classList.remove("inline");
             profile.classList.add("hidden");
         }
@@ -234,7 +236,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     function closeResources() {
         let resources = document.getElementById("clientProviderViewResources");
 
-        if(resources.classList.contains("inline")) {
+        if(resources?.classList.contains("inline")) {
             resources.classList.remove("inline");
             resources.classList.add("hidden");
         }
@@ -243,7 +245,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     function closeRatings() {
         let ratings = document.getElementById("clientProviderViewRatings");
 
-        if(ratings.classList.contains("inline")) {
+        if(ratings?.classList.contains("inline")) {
             ratings.classList.remove("inline");
             ratings.classList.add("hidden");
         }
@@ -252,7 +254,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     function closeQuestions() {
         let questions = document.getElementById("clientProviderViewQuestions");
 
-        if(questions.classList.contains("inline")) {
+        if(questions?.classList.contains("inline")) {
             questions.classList.remove("inline");
             questions.classList.add("hidden");
         }
@@ -261,7 +263,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     function closeDownloads() {
         let downloads = document.getElementById("clientProviderViewDownload");
 
-        if(downloads.classList.contains("inline")) {
+        if(downloads?.classList.contains("inline")) {
             downloads.classList.remove("inline");
             downloads.classList.add("hidden");
         }
