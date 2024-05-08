@@ -95,6 +95,7 @@ export interface uiObject {
         following: string;
         top: string;
         freeDownload: string;
+        addedToCart: string;
     };
 
     messages: {

@@ -107,6 +107,7 @@ export const English = {
         following: "Following",
         top: "Back to Top",
         freeDownload: "Free Download",
+        addedToCart: "Added to Cart!",
     },
 
     messages: {
@@ -157,7 +158,7 @@ export const English = {
         selectSubject: "Please select at least one subject",
         comingSoon: "Coming soon!",
         report: "Report this resource to LearnGrove",
-        free: "FREE",
+        free: "FREE!",
     },
 
     formLabels: {

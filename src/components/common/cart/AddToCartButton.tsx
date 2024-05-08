@@ -28,9 +28,11 @@ export const AddToCart: Component<Props> = (props: Props) => {
         e.preventDefault();
         e.stopPropagation();
 
-        let itemInCart = false;
+        var elem = document.getElementById(`add-to-cart-${props.item.product_id}`);
+        elem?.classList.add("animate-click");
+        console.log(elem);
 
-        console.log(props.item);
+        let itemInCart = false;
 
         const updatedItems = items.map((item: Post) => {
             if (item.product_id === props.item.product_id) {
@@ -39,21 +41,20 @@ export const AddToCart: Component<Props> = (props: Props) => {
                     ...item,
                     quantity: item.quantity + props.item.quantity,
                 };
-            }
-            console.log(item);
+            };
             return item;
         });
 
         if (!itemInCart) {
             const newItem = props.item;
             setItems([...updatedItems, newItem]);
-            console.log(items);
+            elem!.innerText = t("buttons.addedToCart");
         } else {
             setItems(updatedItems);
+            elem!.innerText = t("buttons.addedToCart")
         }
 
         props.buttonClick(e);
-        console.log(items);
     }
 
     return (
@@ -62,6 +63,10 @@ export const AddToCart: Component<Props> = (props: Props) => {
                 onclick={(e) => clickHandler(e)}
                 class="btn-cart"
                 aria-label={t("buttons.addToCart")}
+                id={`add-to-cart-${props.item.product_id}`}
+                onAnimationEnd={(elem) => {
+                    elem.target.classList.remove("animate-click");
+                }}
             >
                 {t("buttons.addToCart")}
             </button>

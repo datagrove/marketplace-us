@@ -8,6 +8,7 @@ import {
 import type { Post } from "@lib/types";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { CartCard } from "@components/common/cart/CartCard";
+import { CartCardMobile } from "@components/common/cart/CartCardMobile";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
 import { AuthMode } from "@components/common/AuthMode";
 import { CartAuthMode } from "./CartAuthMode";
@@ -63,8 +64,16 @@ export const CartView = () => {
                     <div class="text-start text-3xl font-bold">
                         {t("cartLabels.myCart")}
                     </div>
-                    <div class="max-h-screen overflow-auto">
-                        <CartCard items={items} deleteItem={updateCards} />
+                    <div class="overflow-auto md:max-h-screen">
+                        <Show when={window.innerWidth <= 767}>
+                            <CartCardMobile
+                                items={items}
+                                deleteItem={updateCards}
+                            />
+                        </Show>
+                        <Show when={window.innerWidth > 767}>
+                            <CartCard items={items} deleteItem={updateCards} />
+                        </Show>
                     </div>
                 </div>
             );
@@ -80,16 +89,15 @@ export const CartView = () => {
     }
 
     return (
-        <div class="grid grid-cols-3">
+        <div class="flex flex-col md:grid md:grid-cols-3">
             <div class="col-span-2 inline-block">
                 <div>{shoppingCart()}</div>
             </div>
-            <div class="col-span-1 inline-block justify-center">
-                {/* TODO: Internationalization */}
+            <div class="md:col-span-1 md:inline-block justify-center px-2 md:px-0">
                 <div class="mb-2 text-start text-xl">
                     {t("cartLabels.orderSummary")}
                 </div>
-                <div class="h-fit border border-border1 p-2 dark:border-border1-DM">
+                <div class="border border-border1 p-2 dark:border-border1-DM md:h-fit">
                     <div class="mb-4">
                         <div class="flex justify-between">
                             <div class="inline-block text-start font-bold">

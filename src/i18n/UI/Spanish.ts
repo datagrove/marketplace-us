@@ -106,6 +106,7 @@ export const Spanish = {
         following: "Siguiente",
         top: "Volver Arriba",
         freeDownload: "Descarga Gratis",
+        addedToCart: "¡Añadido al carrito!",
     },
 
     messages: {
@@ -162,7 +163,7 @@ export const Spanish = {
         selectSubject: "Por favor, seleccione al menos una asignatura",
         comingSoon: "¡Muy pronto!",
         report: "Reportar este recurso a LearnGrove",
-        free: "GRATIS",
+        free: "¡GRATIS!",
     },
 
     formLabels: {

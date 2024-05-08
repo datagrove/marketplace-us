@@ -17,15 +17,17 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 ---
 
 <Layout {pageTitle} {pageDescription}>
-    <div class="">
+    <div class="flex flex-col min-h-screen">
         <div class="header">
             <Header {...headerData} />
         </div>
-        <main class="flex justify-center min-h-screen">
-            <slot />
+        <main class="flex-grow">
+            <div class="flex justify-center">
+                <slot />
+            </div>
         </main>
         <div
-            class={`footer ${stickyFooter ? "sticky bottom-0 z-50" : ""} bottom-0 z-50`}
+            class={`footer ${stickyFooter ? "sticky" : ""} bottom-0 z-50`}
         >
             <Footer {...footerData} />
         </div>

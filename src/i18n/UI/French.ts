@@ -108,6 +108,7 @@ export const French = {
         following: "Suivante",
         top: "Retour au Sommet",
         freeDownload: "Téléchargement Gratuit",
+        addedToCart: "Ajouté au panier !",
     },
 
     messages: {
@@ -163,7 +164,7 @@ export const French = {
         selectSubject: "Veuillez sélectionner au moins un sujet",
         comingSoon: "À venir!",
         report: "Signaler cette ressource à LearnGrove",
-        free: "Gratuit",
+        free: "Gratuit !",
     },
 
     formLabels: {
