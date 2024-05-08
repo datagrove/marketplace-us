@@ -6,20 +6,22 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-
 const classes = () => {
-  if (lang === "en" || lang === "fr") {
-    return "underline text-link1 dark:text-link1-DM";
-  } else if (lang === "es") {
-    return "";
-  }
+    if (lang === "en" || lang === "fr") {
+        return "underline text-link1 dark:text-link1-DM";
+    } else if (lang === "es") {
+        return "";
+    }
 };
 ---
 
-<Layout pageTitle={t("pageTitles.impact")} pageDescription={t("pageDescriptions.impact")}>
-  <div class="mx-6">
-    <div class="prose dark:prose-invert">
-      <Content />
+<Layout
+    pageTitle={t("pageTitles.impact")}
+    pageDescription={t("pageDescriptions.impact")}
+>
+    <div class="mx-6">
+        <div class="prose dark:prose-invert">
+            <Content />
+        </div>
     </div>
-  </div>
 </Layout>

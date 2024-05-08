@@ -4,47 +4,48 @@
 
 @layer components {
     .btn-primary {
-        @apply bg-btn1 hover:translate-y-0.5 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM font-bold py-2 px-4 border-b-2 border-shadow-LM dark:border-shadow-DM shadow-shadow-LM dark:shadow-shadow-DM rounded-full max-h-14 shadow-md md:text-[1vw];
+        @apply max-h-14 rounded-full border-b-2 border-shadow-LM bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md shadow-shadow-LM hover:translate-y-0.5 dark:border-shadow-DM dark:bg-btn1-DM dark:text-btn1Text-DM dark:shadow-shadow-DM md:text-[1vw];
     }
 
     .btn-secondary {
-        @apply fill-none hover:translate-y-0.5 text-btn1 dark:text-btn1-DM py-2 px-4 border border-btn1-DM rounded-full max-h-14 shadow-md md:text-[1vw];
+        @apply max-h-14 rounded-full border border-btn1-DM fill-none px-4 py-2 text-btn1 shadow-md hover:translate-y-0.5 dark:text-btn1-DM md:text-[1vw];
     }
 
     .btn-disabled {
-        @apply bg-gray-500 text-btn1Text dark:text-btn1Text-DM font-bold py-2 px-4 rounded-full max-h-14 md:text-[1vw];
+        @apply max-h-14 rounded-full bg-gray-500 px-4 py-2 font-bold text-btn1Text dark:text-btn1Text-DM md:text-[1vw];
     }
 
     .btn-cart {
-        @apply bg-btn1 hover:translate-y-0.5 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM md:font-bold py-1 md:py-2 md:px-4 rounded-full max-h-14 md:text-[1vw] w-full md:w-auto;
+        @apply max-h-14 w-full rounded-full bg-btn1 py-1 text-btn1Text hover:translate-y-0.5 dark:bg-btn1-DM dark:text-btn1Text-DM md:w-auto md:px-4 md:py-2 md:text-[1vw] md:font-bold;
     }
 
     button > * {
-        @apply pointer-events-none
+        @apply pointer-events-none;
     }
 
     .selected {
-        @apply border-b-4 border-highlight1 dark:border-highlight1-DM
+        @apply border-b-4 border-highlight1 dark:border-highlight1-DM;
     }
 
     .clearBtn {
-        @apply flex justify-center items-center border border-alert1 dark:border-alert1-DM text-alert1 dark:text-alert1-DM rounded-full p-2 mx-1.5 h-4 w-4
+        @apply mx-1.5 flex h-4 w-4 items-center justify-center rounded-full border border-alert1 p-2 text-alert1 dark:border-alert1-DM dark:text-alert1-DM;
     }
 
     .clearBtnRectangle {
-        @apply flex rounded border border-gray-600 dark:border-gray-300 px-2 mt-2 text-gray-600 dark:text-gray-300 drop-shadow-md mx-1;
+        @apply mx-1 mt-2 flex rounded border border-gray-600 px-2 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300;
     }
 
     .socialBtn {
-        @apply border border-border2 dark:border-border2-DM rounded-lg flex py-2 px-1 text-ptext2 dark:text-ptext2-DM w-full items-center
+        @apply flex w-full items-center rounded-lg border border-border2 px-1 py-2 text-ptext2 dark:border-border2-DM dark:text-ptext2-DM;
     }
 
     .gradeHomeSelectBtn {
-        @apply flex justify-center items-center h-20 w-20 md:h-24 md:w-24 mr-2 my-2 border-2 md:border-4 text-ptext1 dark:text-ptext1-DM border-border1 dark:border-border1-DM rounded-full
+        @apply my-2 mr-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-border1 text-ptext1 dark:border-border1-DM dark:text-ptext1-DM md:h-24 md:w-24 md:border-4;
     }
-
 }
 
 @layer utilities {
-    .iti { width: 100%; }
+    .iti {
+        width: 100%;
+    }
 }

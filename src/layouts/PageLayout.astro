@@ -1,31 +1,33 @@
 ---
-import Layout from '../layouts/BaseLayout.astro';
+import Layout from "../layouts/BaseLayout.astro";
 import Footer from "../components/common/Footer.astro";
 import Header from "../components/common/Header.astro";
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-import { ui } from '../i18n/ui'
-import type { uiObject } from '../i18n/uiType';
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { ui } from "../i18n/ui";
+import type { uiObject } from "../i18n/uiType";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const values = ui[lang] as uiObject
+const values = ui[lang] as uiObject;
 
 const headerData = values.headerData;
-const footerData = values.footerData
+const footerData = values.footerData;
 
-
-const {pageTitle, pageDescription, stickyFooter = true } = Astro.props
+const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 ---
+
 <Layout {pageTitle} {pageDescription}>
-  <div class="">
-    <div class="header">
-      <Header {...headerData} />
+    <div class="">
+        <div class="header">
+            <Header {...headerData} />
+        </div>
+        <main class="flex justify-center min-h-screen">
+            <slot />
+        </main>
+        <div
+            class={`footer ${stickyFooter ? "sticky bottom-0 z-50" : ""} bottom-0 z-50`}
+        >
+            <Footer {...footerData} />
+        </div>
     </div>
-    <main class="flex justify-center min-h-screen">
-      <slot />
-    </main>
-    <div class={`footer ${stickyFooter ? 'sticky bottom-0 z-50' : ''} bottom-0 z-50`}>
-      <Footer {...footerData} />
-    </div>
-  </div>
 </Layout>

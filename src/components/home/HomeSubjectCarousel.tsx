@@ -24,31 +24,31 @@ let categories: Array<any> = [];
 const { data, error } = await supabase.from("post_subject").select("*");
 
 if (error) {
-  console.log("supabase error: " + error.message);
+    console.log("supabase error: " + error.message);
 } else {
-  data.forEach((category) => {
-    categories.push({ category: category.category, id: category.id });
-  });
+    data.forEach((category) => {
+        categories.push({ category: category.category, id: category.id });
+    });
 }
 
 categories.map((category) => {
-  if (category.id === 1) {
-    category.icon = geography;
-  } else if (category.id === 2) {
-    category.icon = history;
-  } else if (category.id === 3) {
-    category.icon = art;
-  } else if (category.id === 4) {
-    category.icon = holiday;
-  } else if (category.id === 5) {
-    category.icon = math;
-  } else if (category.id === 6) {
-    category.icon = science;
-  } else if (category.id === 7) {
-    category.icon = social;
-  } else if (category.id === 8) {
-    category.icon = specialty;
-  }
+    if (category.id === 1) {
+        category.icon = geography;
+    } else if (category.id === 2) {
+        category.icon = history;
+    } else if (category.id === 3) {
+        category.icon = art;
+    } else if (category.id === 4) {
+        category.icon = holiday;
+    } else if (category.id === 5) {
+        category.icon = math;
+    } else if (category.id === 6) {
+        category.icon = science;
+    } else if (category.id === 7) {
+        category.icon = social;
+    } else if (category.id === 8) {
+        category.icon = specialty;
+    }
 });
 
 const categoriesData = productCategoryData.subjects;
@@ -56,12 +56,12 @@ const categoriesData = productCategoryData.subjects;
 let allCategoryInfo: any[] = [];
 
 for (let i = 0; i < categoriesData.length; i++) {
-  allCategoryInfo.push({
-    ...categoriesData[i],
-    ...categories.find(
-      (itmInner) => itmInner.id.toString() === categoriesData[i].id,
-    ),
-  });
+    allCategoryInfo.push({
+        ...categoriesData[i],
+        ...categories.find(
+            (itmInner) => itmInner.id.toString() === categoriesData[i].id
+        ),
+    });
 }
 
 interface Props {
@@ -71,59 +71,62 @@ interface Props {
 
 let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 let light = window.matchMedia(
-  "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference",
+    "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference"
 ).matches;
 
 export const HomeSubjectCarousel: Component = () => {
     return (
-        <div class="p-1 my-2 rounded-lg">
-            <div class="flex flex-start justify-between scrollbar-thin overflow-x-auto drop-shadow-md dark:drop-shadow-[0_4px_3px_rgba(97,97,97,1)]  scrollbar-track-rounded-full scrollbar-thumb-rounded-full scrollbar-thumb-shadow-LM scrollbar-track-background1 dark:scrollbar-thumb-shadow-DM dark:scrollbar-track-background1-DM">
+        <div class="my-2 rounded-lg p-1">
+            <div class="flex-start flex justify-between overflow-x-auto drop-shadow-md scrollbar-thin scrollbar-track-background1  scrollbar-thumb-shadow-LM scrollbar-track-rounded-full scrollbar-thumb-rounded-full dark:drop-shadow-[0_4px_3px_rgba(97,97,97,1)] dark:scrollbar-track-background1-DM dark:scrollbar-thumb-shadow-DM">
                 <button class="hidden w-12">
-                <img src={leftArrow.src} alt="Left Arrow" />
+                    <img src={leftArrow.src} alt="Left Arrow" />
                 </button>
 
-                <div class="flex justify-between items-start pt-2 w-full h-[7.5rem]">
-                {allCategoryInfo?.map((item) => (
-                    <button
-                    id={item.id}
-                    class="flex flex-col flex-none justify-start items-center w-20 h-28 catBtn"
-                    onClick={(e) => {
-                        let currBtn = e.target;
+                <div class="flex h-[7.5rem] w-full items-start justify-between pt-2">
+                    {allCategoryInfo?.map((item) => (
+                        <button
+                            id={item.id}
+                            class="catBtn flex h-28 w-20 flex-none flex-col items-center justify-start"
+                            onClick={(e) => {
+                                let currBtn = e.target;
 
-                        if (!currBtn.classList.contains("selected")) {
-                        currBtn.classList.add("selected");
-                        } else {
-                        currBtn.classList.remove("selected");
-                        }
+                                if (!currBtn.classList.contains("selected")) {
+                                    currBtn.classList.add("selected");
+                                } else {
+                                    currBtn.classList.remove("selected");
+                                }
 
-                        localStorage.setItem("subjectCarouselSelection", JSON.stringify(currBtn.id))
-                        window.location.href= `/${lang}/services`;
-                    }}
-                    >
-                    <div class="rounded-full bg-iconbg1 dark:bg-iconbg1-DM">
-                        {item.icon && item.icon.src ? (
-                        <img
-                            src={item.icon.src}
-                            alt={item.ariaLabel + " Icon"}
-                            title={item.description}
-                            class="p-1 m-2 w-12 h-12"
-                        />
-                        ) : null}
-                    </div>
+                                localStorage.setItem(
+                                    "subjectCarouselSelection",
+                                    JSON.stringify(currBtn.id)
+                                );
+                                window.location.href = `/${lang}/services`;
+                            }}
+                        >
+                            <div class="rounded-full bg-iconbg1 dark:bg-iconbg1-DM">
+                                {item.icon && item.icon.src ? (
+                                    <img
+                                        src={item.icon.src}
+                                        alt={item.ariaLabel + " Icon"}
+                                        title={item.description}
+                                        class="m-2 h-12 w-12 p-1"
+                                    />
+                                ) : null}
+                            </div>
 
-                    <div class="flex flex-row justify-center items-center h-44">
-                        <p class="text-xs text-center text-ptext1 dark:text-ptext2-DM">
-                        {item.name}{" "}
-                        </p>
-                    </div>
-                    </button>
-                ))}
+                            <div class="flex h-44 flex-row items-center justify-center">
+                                <p class="text-center text-xs text-ptext1 dark:text-ptext2-DM">
+                                    {item.name}{" "}
+                                </p>
+                            </div>
+                        </button>
+                    ))}
                 </div>
 
                 <button class="hidden w-12">
-                <img src={rightArrow.src} alt="Right Arrow" />
+                    <img src={rightArrow.src} alt="Right Arrow" />
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};

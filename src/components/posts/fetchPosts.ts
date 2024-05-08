@@ -12,7 +12,7 @@ export async function fetchFilteredPosts(
     subjectFilters: Array<string>,
     // subjectFilters: Array<string>,
     gradeFilters: Array<string>,
-    searchString: string,
+    searchString: string
 ) {
     try {
         let query = supabase.from("sellerposts").select("*");
@@ -35,11 +35,13 @@ export async function fetchFilteredPosts(
                 const newItems = await Promise.all(
                     posts?.map(async (item) => {
                         if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(item.price_id);
+                            const priceData = await stripe.prices.retrieve(
+                                item.price_id
+                            );
                             item.price = priceData.unit_amount! / 100;
                         }
                         return item;
-                    }),
+                    })
                 );
                 console.log(newItems);
                 return newItems;
@@ -64,11 +66,13 @@ export async function fetchAllPosts() {
             const newItems = await Promise.all(
                 allPosts?.map(async (item) => {
                     if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(item.price_id);
+                        const priceData = await stripe.prices.retrieve(
+                            item.price_id
+                        );
                         item.price = priceData.unit_amount! / 100;
                     }
                     return item;
-                }),
+                })
             );
             return newItems;
         }

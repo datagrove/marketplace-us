@@ -11,40 +11,44 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const AuthMode: Component = () => {
-  const [authMode, setAuthMode] = createSignal<"signed_in" | "signed_out">(
-    "signed_in"
-  );
+    const [authMode, setAuthMode] = createSignal<"signed_in" | "signed_out">(
+        "signed_in"
+    );
 
-  createEffect(() => {
-    supabase.auth.onAuthStateChange((_event, session) => {
-      currentSession.set(session);
+    createEffect(() => {
+        supabase.auth.onAuthStateChange((_event, session) => {
+            currentSession.set(session);
+        });
+
+        if (useStore(currentSession)() === null) {
+            setAuthMode("signed_out");
+        } else if (useStore(currentSession)() !== null) {
+            setAuthMode("signed_in");
+        }
     });
 
-    if (useStore(currentSession)() === null) {
-      setAuthMode("signed_out");
-    } else if (useStore(currentSession)() !== null) {
-      setAuthMode("signed_in");
-    }
-  });
-
-  return (
-    <div>
-      {/* If the auth mode is sign in then return the sign in button */}
-      {authMode() === "signed_in" ? (
-        <SignOut />
-      ) : //Else if the auth mode is sign up then return the sign out button
-      authMode() === "signed_out" ? (
+    return (
         <div>
-          <form>
-            <button class="" type="submit" formaction={`/${lang}/login`}>
-              {t("pageTitles.signIn")}
-            </button>
-          </form>
+            {/* If the auth mode is sign in then return the sign in button */}
+            {authMode() === "signed_in" ? (
+                <SignOut />
+            ) : //Else if the auth mode is sign up then return the sign out button
+            authMode() === "signed_out" ? (
+                <div>
+                    <form>
+                        <button
+                            class=""
+                            type="submit"
+                            formaction={`/${lang}/login`}
+                        >
+                            {t("pageTitles.signIn")}
+                        </button>
+                    </form>
+                </div>
+            ) : (
+                // Else return an error if it is neither auth mode
+                "Error"
+            )}
         </div>
-      ) : (
-        // Else return an error if it is neither auth mode
-        "Error"
-      )}
-    </div>
-  );
+    );
 };

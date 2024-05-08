@@ -11,66 +11,65 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 interface Props {
-  goToCheckout: () => void;
-  checkoutAsGuest: () => void;
+    goToCheckout: () => void;
+    checkoutAsGuest: () => void;
 }
 
 export const CartAuthMode: Component<Props> = (props) => {
-  const [authMode, setAuthMode] = createSignal<"signed_in" | "signed_out">(
-    "signed_out"
-  );
+    const [authMode, setAuthMode] = createSignal<"signed_in" | "signed_out">(
+        "signed_out"
+    );
 
-  createEffect(() => {
-    supabase.auth.onAuthStateChange((_event, session) => {
-      currentSession.set(session);
+    createEffect(() => {
+        supabase.auth.onAuthStateChange((_event, session) => {
+            currentSession.set(session);
+        });
+
+        if (useStore(currentSession)() === null) {
+            setAuthMode("signed_out");
+        } else if (useStore(currentSession)() !== null) {
+            setAuthMode("signed_in");
+        }
     });
 
-    if (useStore(currentSession)() === null) {
-      setAuthMode("signed_out");
-    } else if (useStore(currentSession)() !== null) {
-      setAuthMode("signed_in");
-    }
-  });
-
-  return (
-    <div>
-      {/* If the auth mode is sign in then return the sign in button */}
-      {authMode() === "signed_in" ? (
-        <button
-          class=""
-          onclick={props.goToCheckout}
-          aria-label={t("buttons.proceedToCheckout")}
-        >
-          {/* TODO: Style*/}
-          {t("buttons.proceedToCheckout")}
-        </button>
-      ) : //Else if the auth mode is sign up then return the sign out button
-      authMode() === "signed_out" ? (
-        <div class="inline-block">
-          <button
-            class="btn-secondary inline max-w-1/2"
-            onclick={props.checkoutAsGuest}
-            // TODO: INTERNATIONALIZE
-            aria-label="checkout as guest"
-          >
-            {/* TODO: Internationalize*/}
-            Checkout as Guest
-          </button>
-          <form class="inline max-w-1/2">
-            <button
-              class="btn-primary"
-              type="submit"
-              formaction={`/${lang}/login`}
-            >
-              {t("pageTitles.signIn")}
-            </button>
-          </form>
-          
+    return (
+        <div>
+            {/* If the auth mode is sign in then return the sign in button */}
+            {authMode() === "signed_in" ? (
+                <button
+                    class=""
+                    onclick={props.goToCheckout}
+                    aria-label={t("buttons.proceedToCheckout")}
+                >
+                    {/* TODO: Style*/}
+                    {t("buttons.proceedToCheckout")}
+                </button>
+            ) : //Else if the auth mode is sign up then return the sign out button
+            authMode() === "signed_out" ? (
+                <div class="inline-block">
+                    <button
+                        class="btn-secondary max-w-1/2 inline"
+                        onclick={props.checkoutAsGuest}
+                        // TODO: INTERNATIONALIZE
+                        aria-label="checkout as guest"
+                    >
+                        {/* TODO: Internationalize*/}
+                        Checkout as Guest
+                    </button>
+                    <form class="max-w-1/2 inline">
+                        <button
+                            class="btn-primary"
+                            type="submit"
+                            formaction={`/${lang}/login`}
+                        >
+                            {t("pageTitles.signIn")}
+                        </button>
+                    </form>
+                </div>
+            ) : (
+                // Else return an error if it is neither auth mode
+                "Error"
+            )}
         </div>
-      ) : (
-        // Else return an error if it is neither auth mode
-        "Error"
-      )}
-    </div>
-  );
+    );
 };

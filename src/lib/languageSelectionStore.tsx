@@ -1,3 +1,3 @@
-import { persistentAtom } from '@nanostores/persistent'
+import { persistentAtom } from "@nanostores/persistent";
 
-export const currentLanguage = persistentAtom<string>('en');
+export const currentLanguage = persistentAtom<string>("en");

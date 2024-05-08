@@ -1,79 +1,88 @@
 ---
 //This should probably be re-writted in Solid or something but for now I think it works
-import { Icon } from 'astro-icon/components';
+import { Icon } from "astro-icon/components";
 
-import { SITE } from '../../config';
+import { SITE } from "../../config";
 
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-
 export interface Props {
-  label?: string;
-  class?: string;
-  iconClass?: string;
-  iconName?: string;
+    label?: string;
+    class?: string;
+    iconClass?: string;
+    iconName?: string;
 }
 
 const {
-  label = t('ariaLabels.darkMessage'),
-  class:
-    className = 'text-ptext1 dark:text-ptext1-DM hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center',
-  iconClass = 'w-6 h-6',
-  iconName = 'tabler:sun',
+    label = t("ariaLabels.darkMessage"),
+    class: className = "text-ptext1 dark:text-ptext1-DM hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 inline-flex items-center",
+    iconClass = "w-6 h-6",
+    iconName = "tabler:sun",
 } = Astro.props;
 ---
 
 {
-  !(SITE?.defaultTheme && SITE.defaultTheme.endsWith(':only')) && (
-    <button id="themeToggle" type="button" class={className} aria-label={label} data-aw-toggle-color-scheme>
-      <Icon name={iconName} class={iconClass} />
-    </button>
-  )
+    !(SITE?.defaultTheme && SITE.defaultTheme.endsWith(":only")) && (
+        <button
+            id="themeToggle"
+            type="button"
+            class={className}
+            aria-label={label}
+            data-aw-toggle-color-scheme
+        >
+            <Icon name={iconName} class={iconClass} />
+        </button>
+    )
 }
 
 <script is:inline>
     const theme = (() => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-        return localStorage.getItem('theme');
-      }
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
-        return 'light';
+        if (
+            typeof localStorage !== "undefined" &&
+            localStorage.getItem("theme")
+        ) {
+            return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+        }
+        return "light";
     })();
-  
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark');
+
+    if (theme === "light") {
+        document.documentElement.classList.remove("dark");
     } else {
-      document.documentElement.classList.add('dark');
-    }
-  
-    updateLocalStorage = (key, newValue) =>  {
-      const oldValue = localStorage.getItem(key);
-      localStorage.setItem(key, newValue);
-
-      const storageEvent = new StorageEvent('storage', {
-        key: key,
-        oldValue: oldValue,
-        newValue: newValue,
-        url: window.location.href,
-        storageArea: localStorage
-      });
-
-      window.dispatchEvent(storageEvent);
+        document.documentElement.classList.add("dark");
     }
 
-    updateLocalStorage ('theme', theme);
-  
+    updateLocalStorage = (key, newValue) => {
+        const oldValue = localStorage.getItem(key);
+        localStorage.setItem(key, newValue);
+
+        const storageEvent = new StorageEvent("storage", {
+            key: key,
+            oldValue: oldValue,
+            newValue: newValue,
+            url: window.location.href,
+            storageArea: localStorage,
+        });
+
+        window.dispatchEvent(storageEvent);
+    };
+
+    updateLocalStorage("theme", theme);
+
     const handleToggleClick = () => {
-      const element = document.documentElement;
-      element.classList.toggle("dark");
-  
-      const isDark = element.classList.contains("dark");
-      updateLocalStorage("theme", isDark ? "dark" : "light");
-    }
-  
-    document.getElementById("themeToggle").addEventListener("click", handleToggleClick);
-  </script>
+        const element = document.documentElement;
+        element.classList.toggle("dark");
+
+        const isDark = element.classList.contains("dark");
+        updateLocalStorage("theme", isDark ? "dark" : "light");
+    };
+
+    document
+        .getElementById("themeToggle")
+        .addEventListener("click", handleToggleClick);
+</script>
