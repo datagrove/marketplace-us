@@ -6,6 +6,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { ViewProviderPosts } from "@components/posts/ViewProviderPosts";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -43,8 +44,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     onMount(() => {
         fetchProvider(+props?.id)
         
-        console.log("provider: ", provider())
-        console.log(props?.id)
+        console.log("test on Mount" + provider()?.email)
     });
   
     createEffect(() => {
@@ -252,12 +252,29 @@ export const ClientProviderView: Component<Props> = (props) => {
 
     return (
         <div id="client-provider-view-lg" class="">
-            <div id="client-provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM">
-                <img 
-                    src={ providerImage() }
-                    alt={ `${t("postLabels.ProviderProfileImage")} 1` }
-                    class="rounded-full h-40 w-40 border-2 border-gray-400 absolute top-24 left-12"
-                />
+            <div id="client-provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM relative">
+                <Show when={ providerImage() }>
+                  <div class="relative">
+                    <img 
+                        src={ providerImage() }
+                        alt={ `${t("postLabels.ProviderProfileImage")} 1` }
+                        class="rounded-full h-40 w-40 border-2 border-gray-400 absolute top-12"
+                    />
+                  </div>
+                </Show>
+
+                <Show when={ !providerImage() }>
+                  <div class="flex justify-center items-center border-2 border-gray-400 bg-background2 dark:bg-background2-DM rounded-full h-36 w-36 absolute top-6 left-12">
+                    <svg width="120px" height="120px" viewBox="0 0 48 48" version="1.1" class="fill-icon2 dark:fill-icon2-DM">
+                        <g id="🔍-System-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" class="fill-icon2 dark:fill-icon2-DM">
+                            <g fill="none" fill-rule="nonzero" class="fill-icon2 dark:fill-icon2-DM">
+                                <path d="M35.7502,28 C38.0276853,28 39.8876578,29.7909151 39.9950978,32.0427546 L40,32.2487 L40,33 C40,36.7555 38.0583,39.5669 35.0798,41.3802 C32.1509,43.1633 28.2139,44 24,44 C19.7861,44 15.8491,43.1633 12.9202,41.3802 C10.0319285,39.6218485 8.11862909,36.9249713 8.00532378,33.3388068 L8,33 L8,32.2489 C8,29.9703471 9.79294995,28.1122272 12.0440313,28.0048972 L12.2499,28 L35.7502,28 Z M24,4 C29.5228,4 34,8.47715 34,14 C34,19.5228 29.5228,24 24,24 C18.4772,24 14,19.5228 14,14 C14,8.47715 18.4772,4 24,4 Z" id="🎨-Color"></path>
+                            </g>
+                        </g>
+                    </svg>
+                  </div>
+                </Show>
+                
             </div>
 
             <div id="client-provider-view-username-reviews-follow" class="mt-10 mx-4">
@@ -330,25 +347,36 @@ export const ClientProviderView: Component<Props> = (props) => {
                 </div>
 
                 <div id="clientProviderViewProfile" class="inline">
-                    Profile
+                  <Show when={ provider()?.email }>
+                    <div class="flex">
+                        <p class="font-bold">{t("formLabels.email")}:&nbsp;</p>
+                        <a href={`mailto:${ provider()?.email }`}><p>{ provider()?.email }</p></a>
+                    </div>
+                  </Show>
 
-                    
+                  <Show when={ provider()?.email == undefined }>
+                    <div class="flex">
+                        <p class="font-bold">{t("formLabels.email")}:&nbsp;</p>
+                        <p class="italic">{ t("messages.emailNotProvided") }</p>
+                    </div>
+                  </Show>
+                  
                 </div>
 
                 <div id="clientProviderViewResources" class="hidden">
-                    Resources
+                  <ClientViewProviderPosts id={ props.id } />
                 </div>
 
                 <div id="clientProviderViewRatings" class="hidden">
-                    Ratings
+                    <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
                 <div id="clientProviderViewQuestions" class="hidden">
-                    Questions
+                  <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
                 <div id="clientProviderViewDownload" class="hidden">
-                    Downloads
+                  <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
             </div>
 

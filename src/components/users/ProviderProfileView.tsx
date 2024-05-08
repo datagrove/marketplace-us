@@ -60,7 +60,7 @@ interface Provider {
   
   const { data: User, error: UserError } = await supabase.auth.getSession();
 
-  export const ProviderProfileView: Component = () => {
+  export const ProviderProfileView: Component<Props> = (props) => {
     const [provider, setProvider] = createSignal<Provider>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [providerImage, setProviderImage] = createSignal<string>("");
@@ -76,6 +76,39 @@ interface Provider {
       createSignal<Array<{ id: number; language: string; checked: boolean }>>();
     const [languagePick, setLanguagePick] = createSignal<Array<string>>([]);
 
+    createEffect(() => {
+        setSession(User.session);
+        if (typeof session() !== "undefined") {
+          fetchProvider(session()?.user.id!);
+        }
+    });
+
+    const fetchProvider = async (user_id: string) => {
+        if (session()) {
+          try {
+            const { data, error } = await supabase
+              .from("sellerview")
+              .select("*")
+              .eq("user_id", user_id);
+            console.log(data);
+    
+            if (error) {
+              console.log(error);
+            } else if (data[0] === undefined) {
+              alert(t("messages.noProvider"));
+              location.href = `/${lang}/provider/createaccount`;
+            } else {
+              setProvider(data[0]);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          alert(t("messages.signIn"));
+          location.href = `/${lang}/login`;
+        }
+      };
+    
     const enableEditMode = () => {
         setEditMode(!editMode());
     };
@@ -215,27 +248,112 @@ interface Provider {
         }
     };
 
+    function submit(e: SubmitEvent) {
+        e.preventDefault();
+        console.log("Submitted!");
+        const formData = new FormData(e.target as HTMLFormElement);
+        for (let pair of formData.entries()) {
+          console.log(pair[0] + ", " + pair[1]);
+        }
+        formData.append("access_token", session()?.access_token!);
+        formData.append("refresh_token", session()?.refresh_token!);
+        formData.append("lang", lang);
+        formData.append("languageArray", JSON.stringify(languagePick()));
+        if (imageUrl() !== null) {
+          formData.append("image_url", imageUrl()!);
+        }
+        setFormData(formData);
+    };
+
     return (
         <div>
             <div id="provider-view-header" class="h-36 w-full bg-background2 dark:bg-background2-DM">
-                <img 
-                    src={ providerImage() }
-                    alt={ `${t("postLabels.ProviderProfileImage")} 1` }
-                    class="rounded-full h-40 w-40 border-2 border-gray-400 absolute top-24 left-28"
-                />
+                <Show when={editMode() === false}>
+                    <Show when={typeof providerImage() !== "undefined"}>
+                        <div class="object-contain overflow-hidden relative justify-center w-24 h-24 rounded-full border md:w-24 md:h-24 lg:w-24 lg:h-24 border-border1 dark:border-border1-DM">
+                            <img
+                            src={providerImage()}
+                            class="block object-contain absolute top-1/2 left-1/2 justify-center h-56 -translate-x-1/2 -translate-y-1/2 md:h-96"
+                            alt={`${t("postLabels.providerProfileImage")} 1`}
+                            />
+                        </div>
+                    </Show>
+                </Show>
+
+                <Show when={editMode() === true}>
+                    <UserImage
+                        url={imageUrl()}
+                        size={150}
+                        onUpload={(e: Event, url: string) => {
+                        setImageUrl(url);
+                        }}
+                    />
+                </Show>
+            </div>
+
+            <div class="text-xl italic font-bold text-end mt-4 underline text-alert1 dark:text-alert1-DM">
+                <Show when={editMode() === true}>
+                    <h1 class="text-alert1 dark:text-alert1-DM">
+                        {t("messages.profileEdits")}
+                    </h1>
+                </Show>
             </div>
 
             <div id="provider-view-username-reviews-edit" class="mt-10 w-full">
                 <div class="grid md:grid-cols-[525px_50px_150px] lg:grid-cols-[750px_50px_150px] xl:grid-cols-[900px_50px_200px]">
                     <div class="provider-name-edit-button-div">
-                        <div class="">
-                            <h2 class="lg:text-2xl font-bold line-clamp-2">
-                                {provider()?.seller_name == ""
-                                ? provider()?.first_name + " " + provider()?.last_name
-                                : provider()?.seller_name}
-                                A NAME 
-                            </h2>
-                        </div>
+                        <Show when={ editMode() === false }>
+                            <div class="">
+                                <h2 class="lg:text-2xl font-bold line-clamp-2">
+                                    {provider()?.seller_name == ""
+                                    ? provider()?.first_name + " " + provider()?.last_name
+                                    : provider()?.seller_name}
+                                </h2>
+                            </div>
+                        </Show>
+
+                        <Show when={editMode() === true}>
+                            <div class="flex relative items-center mr-2">
+                                <svg
+                                    class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <g>
+                                    <path
+                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                    />
+                                    </g>
+                                </svg>
+
+                                <span
+                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
+                                >
+                                    {t("toolTips.displayName")}
+                                </span>
+                            </div>
+
+                            <div class="h-0 basis-full"></div>
+
+                            <div class="basis-full">
+                                <input
+                                    type="text"
+                                    id="ProviderName"
+                                    name="ProviderName"
+                                    class="px-1 mb-4 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
+                                    value={provider()?.seller_name}
+                                />
+                            </div>
+                      </Show>
                     </div>
 
                     <div id="provider-edit-btn-div" class="flex items-center justify-center">
@@ -310,27 +428,202 @@ interface Provider {
                 </div>
 
                 <div id="providerViewProfile" class="inline">
-                    Profile
+                    <div class="first-name flex my-2">
+                        <label
+                            for="FirstName"
+                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                        >
+                            {t("formLabels.firstName")}:
+                        </label>
+
+                        <Show when={editMode() === false}>
+                            <p
+                                id="FirstName"
+                                class="px-1"
+                            >
+                            {provider()?.first_name}
+                            </p>
+                        </Show>
+
+                        <Show when={editMode() === true}>
+                            <div class="flex relative items-center mr-2">
+                                <svg
+                                    class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <g>
+                                    <path
+                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                    />
+                                    </g>
+                                </svg>
+
+                                <span
+                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
+                                >
+                                    {t("toolTips.firstName")}
+                                </span>
+                            </div>
+
+                            <div class="">
+                                <input
+                                    type="text"
+                                    id="FirstName"
+                                    name="FirstName"
+                                    class="px-1 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
+                                    value={provider()?.first_name}
+                                    required
+                                />
+                            </div>
+                        </Show>
+                    </div>
+
+                    <div class="last-name flex my-2">
+                        <label
+                            for="LastName"
+                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                        >
+                            {t("formLabels.lastName")}:
+                        </label>
+
+                        <Show when={editMode() === false}>
+                            <p
+                                id="LastName"
+                                class="px-1"
+                            >
+                                {provider()?.last_name}
+                            </p>
+                        </Show>
+
+                        <Show when={editMode() === true}>
+                            <div class="flex relative items-center mr-2">
+                                <svg
+                                    class="w-4 h-4 rounded-full border peer bg-background1 fill-background1 border-inputBorder1 dark:bg-background1-DM dark:border-inputBorder1-DM"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                <g>
+                                    <path
+                                    d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                    />
+                                </g>
+                                </svg>
+
+                                <span
+                                class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
+                                >
+                                {t("toolTips.lastName")}
+                                </span>
+                            </div>
+                            <div class="">
+                                <input
+                                type="text"
+                                id="LastName"
+                                name="LastName"
+                                class="px-1 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
+                                value={provider()?.last_name}
+                                />
+                            </div>
+                        </Show>
+                    </div>
+
+                    <div class="email flex my-2">
+                        <label
+                            for="email"
+                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                        >
+                            {t("formLabels.email")}: &nbsp;
+                        </label>
+
+                        <Show when={ editMode() === false }>
+                            <div class="flex">
+                                {/* <p class="font-bold">{t("formLabels.email")}:&nbsp;</p> */}
+                                <a href={`mailto:${ provider()?.email }`}><p>{ provider()?.email }</p></a>
+                            </div>
+                        </Show>
+
+                        <Show when={ editMode() === true }>
+                            <div class="flex relative items-center mr-2">
+                                <svg
+                                    class="w-4 h-4 rounded-full border-2 dark:border-none peer bg-icon1 fill-iconbg1 border-border1 dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <g>
+                                    <path
+                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                    />
+                                    </g>
+                                </svg>
+
+                                <span
+                                    class="absolute invisible p-2 m-4 mx-auto w-48 text-sm rounded-md opacity-0 transition-opacity -translate-x-full -translate-y-2/3 md:translate-x-1/4 md:translate-y-0 peer-hover:opacity-100 peer-hover:visible bg-background2 text-ptext2 dark:bg-background2-DM dark:text-ptext2-DM"
+                                >
+                                    {t("toolTips.changeEmail")}
+                                </span>
+                            </div>
+                            
+                            <div class="">
+                                <input
+                                    id="email"
+                                    name="email"
+                                    class="px-1 rounded border focus:border-2 focus:outline-none border-inputBorder1 bg-background1 text-ptext1 dark:focus:border-highlight1-DM dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM focus:border-highlight1"
+                                    type="email"
+                                    placeholder={t("formLabels.email")}
+                                    value={provider()?.email}
+                                />
+                            </div>
+                        </Show>
+                    </div>
+                    
                 </div>
 
                 <div id="providerViewResources" class="hidden">
-                    Resources
+                    <ViewProviderPosts />
                 </div>
 
                 <div id="providerViewRatings" class="hidden">
-                    Ratings
+                    <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
                 <div id="providerViewQuestions" class="hidden">
-                    Questions
+                    <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
                 <div id="providerViewDownload" class="hidden">
-                    Downloads
+                    <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
                 <div id="providerViewPayouts" class="hidden">
-                    Payouts
+                    <StripeButton />
                 </div>
             </div>
         </div>
