@@ -212,6 +212,7 @@ export interface uiObject {
     freeDownload: string;
     providerResources: string;
     payouts: string;
+    reviews: string;
   };
 
   toolTips: {

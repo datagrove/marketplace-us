@@ -236,6 +236,7 @@ export const Spanish = {
     freeDownload: "Descarga Gratis",
     providerResources: "Recursos",
     payouts: "Mis Pagos",
+    reviews: "Opiniones"
   },
 
   toolTips: {

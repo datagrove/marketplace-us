@@ -40,6 +40,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     const [provider, setProvider] = createSignal<Provider>();
     const [providerImage, setProviderImage] = createSignal<string>();
     const [languageSpoken, setLanguageSpoken] = createSignal<string[]>([]);
+    const [largeScreen, setLargeScreen] = createSignal<boolean>(false);
 
     onMount(() => {
         fetchProvider(+props?.id)
@@ -54,6 +55,22 @@ export const ClientProviderView: Component<Props> = (props) => {
         fetchProvider(+props?.id);
       }
     });
+
+    // createEffect(() => {
+    //   if(window.screen.width >= 768) {
+    //     setLargeScreen(true);
+    //   } else if(window.screen.width < 768) {
+    //     setLargeScreen(false);
+    //   }
+    // })
+
+    window.onresize = function() {
+      if(window.screen.width >= 768) {
+        setLargeScreen(true);
+      } else if(window.screen.width < 768) {
+        setLargeScreen(false);
+      }
+    }
   
     const fetchProvider = async (id: number) => {
   
@@ -335,15 +352,23 @@ export const ClientProviderView: Component<Props> = (props) => {
                         </button>
                     </div>
                 </div>
+
+                <div class="flex justify-center items-center my-4">
+                  <button class="md:hidden btn-primary">
+                    {t("menus.freeDownload")}
+                  </button>
+                </div>
             </div>
 
             <div id="client-provider-view-tabs-content-div" class="mt-2 mx-4">
-                <div id="client-provider-view-tabs" class="flex mb-4"> 
-                    <a href="#profileClientView" id="clientProviderViewProfileLink" class="clientViewtabLinkLg border-b-2 border-green-500 mr-4 md:mr-6 lg:mr-10 inline" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.profile")}</p></a>
-                    <a href="#resourcesClientView" id="clientProviderViewResourcesLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.providerResources")}</p></a>
-                    <a href="#ratingsClientView" id="clientProviderViewRatingsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.ratingsReviews")}</p></a>
-                    <a href="#questionsClientView" id="clientProviderViewQuestionsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.questions")}</p></a>
-                    <a href="#downloadClientView" id="clientProviderViewDownloadLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a>
+                <div id="client-provider-view-tabs" class="mt-8 md:mt-0 flex mb-4"> 
+                    <a href="#profileClientView" id="clientProviderViewProfileLink" class="clientViewtabLinkLg border-b-2 border-green-500 mr-4 md:mr-6 lg:mr-10 inline" onClick={ providerViewTabClick }><p class=" lg:text-xl font-bold">{t("menus.profile")}</p></a>
+                    <a href="#resourcesClientView" id="clientProviderViewResourcesLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.providerResources")}</p></a>
+                    <a href="#ratingsClientView" id="clientProviderViewRatingsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.reviews")}</p></a>
+                    <a href="#questionsClientView" id="clientProviderViewQuestionsLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="lg:text-xl font-bold">{t("menus.questions")}</p></a>
+                    <a href="#downloadClientView" id="clientProviderViewDownloadLink" class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="hidden md:inline text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a>
+
+                    
                 </div>
 
                 <div id="clientProviderViewProfile" class="inline">

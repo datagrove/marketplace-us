@@ -240,6 +240,7 @@ export const French = {
     freeDownload: "Téléchargement Gratuit",
     providerResources: "Ressources",
     payouts: "Mes Paiements",
+    reviews: "Commentaires",
   },
 
   toolTips: {
