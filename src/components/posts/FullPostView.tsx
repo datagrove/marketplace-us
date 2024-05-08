@@ -375,6 +375,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     }
   }
 
+
   return (
     <div id="large-full-card-div" class="h-full">
       <div id="image-title-details-cart-div" class="flex">
@@ -633,6 +634,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                   </svg>
               </button> */}
           </div>
+
                 {/* <p>{ post()?.grade.join(", ") }</p> */}
            <p>{post()?.content }</p>
         </div>

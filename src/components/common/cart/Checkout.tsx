@@ -19,14 +19,18 @@ const t = useTranslations(lang);
 console.log("Items to send to checkout: ");
 console.log(items);
 
-async function fetchClientCheckoutSecret(){
-  const response = await fetch("/api/createStripeCheckout", {
-    method: "POST",
-    body: JSON.stringify(items),
-  });
-  const { clientSecret } = await response.json();
-  return clientSecret
-}
+// async function fetchClientCheckoutSecret(orderId: string){
+//   const response = await fetch("/api/createStripeCheckout", {
+//     method: "POST",
+//     body: JSON.stringify({
+//       items: items,
+//       userId: User.session?.user.id,
+//       orderId: orderId
+//     })
+//   });
+//   const { clientSecret } = await response.json();
+//   return clientSecret
+// }
 
 const stripe = await loadStripe(import.meta.env.PUBLIC_VITE_STRIPE_PUBLIC_KEY);
 
@@ -35,16 +39,38 @@ if (stripe === null) {
   alert("Can't load Stripe")
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const CheckoutView = () => {
   const [totalItems, setTotalItems] = createSignal(0);
   const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
   const [cartTotal, setCartTotal] = createSignal(0);
   const [oldItems, setOldItems] = createSignal<Post[]>([]);
+  const [user, setUser] = createSignal<boolean>(false);
+  const [orderId, setOrderId] = createSignal<string>("");
 
   onMount(async () => {
+    // setUser(User.session!.user.role === "authenticated");
+    // if (user() === false) {
+
+    // }
+    await createOrder()
     await fetchClientCheckoutSecret()
     await mountCheckout()
   })
+
+  async function fetchClientCheckoutSecret(){
+    const response = await fetch("/api/createStripeCheckout", {
+      method: "POST",
+      body: JSON.stringify({
+        items: items,
+        userId: User.session?.user.id,
+        orderId: orderId()
+      })
+    });
+    const { clientSecret } = await response.json();
+    return clientSecret
+  }
 
 
   createEffect(() => {
@@ -55,6 +81,15 @@ export const CheckoutView = () => {
     setTotalItems(count);
   });
 
+  async function createOrder() {
+    const productDetails = items.map((item) => ({ product_id: item.id, quantity: item.quantity}))
+    console.log(productDetails)
+    const { data, error } = await supabase.rpc('create_order', { customerid: User.session?.user.id, product_details: productDetails });
+    console.log("Order: ")
+    setOrderId(data);
+    console.log("Order ID: " + orderId());
+  }
+
   async function mountCheckout() {
     const checkout = await stripe!.initEmbeddedCheckout({
       fetchClientSecret: fetchClientCheckoutSecret,
@@ -63,44 +98,6 @@ export const CheckoutView = () => {
     checkout.mount('#checkout');
 
   }
-
-  // function updateCards() {
-  //   if (items.length > 0 ){
-  //   console.log(items)
-  //   }
-  // }
-
-  // function shoppingCart() {
-  //   if (items.length > 0) {
-  //     let total = 0;
-  //     {
-  //       console.log("items in cart: " + items.length);
-  //       console.log("Item Details: " + itemsDetails());
-  //     }
-  //     items.forEach((item: Post) => {
-  //       total += item.price * item.quantity;
-  //     });
-  //     setCartTotal(total);
-  //     return (
-  //       <div class="">
-  //         <div class="text-3xl font-bold text-start">
-  //           {t("cartLabels.myCart")}
-  //         </div>
-  //         <div class="max-h-screen overflow-auto">
-  //           <CartCard items={items} deleteItem={updateCards} />
-  //         </div>
-  //       </div>
-  //     );
-  //   } else {
-  //     setCartTotal(0);
-  //     return (
-  //       //TODO: Revisit Styling
-  //       <div class="">
-  //         <div>{t("cartLabels.emptyCart")}</div>
-  //       </div>
-  //     );
-  //   }
-  // }
 
   // ADD EMAIL TO SEND FOR CONTACT US
 
