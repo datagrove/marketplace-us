@@ -4,28 +4,28 @@
 // const t = useTranslations(lang);
 
 const CONFIG = {
-  name: "LearnGrove",
+    name: "LearnGrove",
 
-  title: "LearnGrove",
-  description: "HomeSchool description",
-  //NEED TO ADD NEW URL
-  url: "https://learngrove.co",
-  devUrl: "http://localhost:4321",
-  //NEED TO ADD NEW URL
-  pagesDevUrl: "https://pwa.NEWURL.pages.dev",
+    title: "LearnGrove",
+    description: "HomeSchool description",
+    //NEED TO ADD NEW URL
+    url: "https://learngrove.co",
+    devUrl: "http://localhost:4321",
+    //NEED TO ADD NEW URL
+    pagesDevUrl: "https://pwa.NEWURL.pages.dev",
 
-  defaultTheme: "system", // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
-  themeColor: "#1DD762",
+    defaultTheme: "system", // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
+    themeColor: "#1DD762",
 
-  language: "es",
-  textDirection: "ltr",
+    language: "es",
+    textDirection: "ltr",
 
-  dateFormatter: new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  }),
+    dateFormatter: new Intl.DateTimeFormat("en", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "UTC",
+    }),
 };
 
 export const SITE = { ...CONFIG };

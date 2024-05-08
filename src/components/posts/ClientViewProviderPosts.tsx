@@ -15,68 +15,69 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Props {
-  id: string | undefined;
+    id: string | undefined;
 }
 
 export const ClientViewProviderPosts: Component<Props> = (props) => {
-  const [posts, setPosts] = createSignal<Array<Post>>([]);
+    const [posts, setPosts] = createSignal<Array<Post>>([]);
 
-  createEffect(async () => {
-    const { data, error } = await supabase
-      .from("sellerposts")
-      .select("*")
-      .eq("seller_id", props.id);
-    if (!data) {
-      alert("No posts available.");
-    }
-    if (error) {
-      console.log("supabase error: " + error.message);
-    } else {
-      const newItems = await Promise.all(
-        data?.map(async (item) => {
-          item.subject = [];
-          productCategories.forEach((productCategories) => {
-            item.product_subject.map((productSubject: string) => {
-              if (productSubject === productCategories.id) {
-                item.subject.push(productCategories.name);
-                console.log(productCategories.name);
-              }
-            });
-          });
-          delete item.product_subject;
+    createEffect(async () => {
+        const { data, error } = await supabase
+            .from("sellerposts")
+            .select("*")
+            .eq("seller_id", props.id);
+        if (!data) {
+            alert("No posts available.");
+        }
+        if (error) {
+            console.log("supabase error: " + error.message);
+        } else {
+            const newItems = await Promise.all(
+                data?.map(async (item) => {
+                    item.subject = [];
+                    productCategories.forEach((productCategories) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === productCategories.id) {
+                                item.subject.push(productCategories.name);
+                                console.log(productCategories.name);
+                            }
+                        });
+                    });
+                    delete item.product_subject;
 
-          const { data: gradeData, error: gradeError } = await supabase
-            .from("grade_level")
-            .select("*");
+                    const { data: gradeData, error: gradeError } =
+                        await supabase.from("grade_level").select("*");
 
-          if (gradeError) {
-            console.log("supabase error: " + gradeError.message);
-          } else {
-            item.grade = [];
-            gradeData.forEach((databaseGrade) => {
-              item.post_grade.map((itemGrade: string) => {
-                if (itemGrade === databaseGrade.id.toString()) {
-                  item.grade.push(databaseGrade.grade);
-                }
-              });
-            });
-          }
+                    if (gradeError) {
+                        console.log("supabase error: " + gradeError.message);
+                    } else {
+                        item.grade = [];
+                        gradeData.forEach((databaseGrade) => {
+                            item.post_grade.map((itemGrade: string) => {
+                                if (itemGrade === databaseGrade.id.toString()) {
+                                    item.grade.push(databaseGrade.grade);
+                                }
+                            });
+                        });
+                    }
 
-          if (item.price_id !== null) {
-            const priceData = await stripe.prices.retrieve(item.price_id);
-            item.price = priceData.unit_amount! / 100;
-          }
-          return item;
-        })
-      );
-      setPosts(data);
-      console.log("Posts");
-      console.log(posts());
-    }
-  });
-  return (
-    <div class="">
-      <ViewCard posts={posts()} />
-    </div>
-  );
+                    if (item.price_id !== null) {
+                        const priceData = await stripe.prices.retrieve(
+                            item.price_id
+                        );
+                        item.price = priceData.unit_amount! / 100;
+                    }
+                    return item;
+                })
+            );
+            setPosts(data);
+            console.log("Posts");
+            console.log(posts());
+        }
+    });
+    return (
+        <div class="">
+            <ViewCard posts={posts()} />
+        </div>
+    );
 };

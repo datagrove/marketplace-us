@@ -9,19 +9,15 @@ const t = useTranslations(lang);
 
 interface Props {
     item: Post;
-    buttonClick: (event: Event) => void
+    buttonClick: (event: Event) => void;
 }
 
 export const [items, setItems] = createStore<Post[]>([]);
 
 export const FreeDownloadButton: Component<Props> = (props: Props) => {
-
-
     return (
         <div class="relative z-10 w-full">
-            <button>
-                {t("buttons.freeDownload")}
-            </button>
+            <button>{t("buttons.freeDownload")}</button>
         </div>
-    )
-}
+    );
+};

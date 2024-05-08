@@ -7,8 +7,11 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<Layout pageTitle={t("pageTitles.viewClientAccount")} pageDescription={t("pageDescriptions.viewClientAccount")}>
-  <div>
-    <ClientProfileView client:only="solid-js" />
-  </div>
+<Layout
+    pageTitle={t("pageTitles.viewClientAccount")}
+    pageDescription={t("pageDescriptions.viewClientAccount")}
+>
+    <div>
+        <ClientProfileView client:only="solid-js" />
+    </div>
 </Layout>

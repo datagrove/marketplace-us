@@ -30,18 +30,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     // const minorMunicipality = formData.get("MinorMunicipality");
     const governingDistrict = formData.get("GoverningDistrict");
     const postalArea = formData.get("PostalArea");
-    const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
+    const imageUrl = formData.get("image_url")
+        ? formData.get("image_url")
+        : null;
     console.log("imageURL: " + imageUrl);
 
     // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
-    if (
-        !firstName ||
-        !lastName ||
-        !phone
-    ) {
+    if (!firstName || !lastName || !phone) {
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.missingFields")),
+                message: t("apiErrors.missingFields"),
             }),
             { status: 400 }
         );
@@ -56,7 +54,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (sessionError) {
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.noSession")),
+                message: t("apiErrors.noSession"),
             }),
             { status: 500 }
         );
@@ -68,7 +66,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (!sessionData?.session) {
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.noSession")),
+                message: t("apiErrors.noSession"),
             }),
             { status: 500 }
         );
@@ -80,25 +78,26 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (!user) {
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.noUser")),
+                message: t("apiErrors.noUser"),
             }),
             { status: 500 }
         );
     }
 
     if (user.email !== email) {
-        const { data, error } = await supabase.auth.updateUser({ email: email!.toString() });
+        const { data, error } = await supabase.auth.updateUser({
+            email: email!.toString(),
+        });
         if (error) {
             return new Response(
                 JSON.stringify({
-                    message: (t("apiErrors.emailError")),
+                    message: t("apiErrors.emailError"),
                 }),
                 { status: 500 }
             );
         }
         console.log(data);
     }
-
 
     //Check if a profile exists
     const { data: profileExists, error: profileExistsError } = await supabase
@@ -118,7 +117,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             email: email,
         };
 
-
         //Submit to the profile table and select it back (the select back is not entirely necessary)
         const { data: profileData, error: profileError } = await supabase
             .from("profiles")
@@ -129,14 +127,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             console.log(profileError);
             return new Response(
                 JSON.stringify({
-                    message: (t("apiErrors.profileEditError")),
+                    message: t("apiErrors.profileEditError"),
                 }),
                 { status: 500 }
             );
         }
         console.log(profileData);
     }
-
 
     let location;
 
@@ -145,7 +142,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         // !country ||
         // !majorMunicipality ||
         // !minorMunicipality ||
-        !governingDistrict) {
+        !governingDistrict
+    ) {
         location = null;
     } else {
         //Make a new location submission to the location table
@@ -159,7 +157,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             user_id: user.id,
         };
 
-
         //Insert the submission to the location table and select it back from the database
         const { error: locationError, data: locationData } = await supabase
             .from("location")
@@ -169,7 +166,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             console.log(locationError);
             return new Response(
                 JSON.stringify({
-                    message: (t("apiErrors.locationError")),
+                    message: t("apiErrors.locationError"),
                 }),
                 { status: 500 }
             );
@@ -194,7 +191,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             location: location.id,
             image_url: imageUrl,
         };
-    };
+    }
 
     //submit to the clients table and select it back
     const { error, data } = await supabase
@@ -207,14 +204,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log(error);
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.clientEditProfileError")),
+                message: t("apiErrors.clientEditProfileError"),
             }),
             { status: 500 }
         );
     } else if (!data) {
         return new Response(
             JSON.stringify({
-                message: (t("apiErrors.noProfileData")),
+                message: t("apiErrors.noProfileData"),
             }),
             { status: 500 }
         );
@@ -222,12 +219,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log("Profile Data: " + JSON.stringify(data[0]));
     }
 
-
-
     // If everything works send a success response
     return new Response(
         JSON.stringify({
-            message: (t("apiErrors.success")),
+            message: t("apiErrors.success"),
             redirect: "/client/profile",
         }),
         { status: 200 }

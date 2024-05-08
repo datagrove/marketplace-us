@@ -5,48 +5,47 @@ import { SITE } from "@src/config";
 import type { Post } from "@lib/types";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
-  const response = await request.json();
-  const user_id = response.userId;
+    const response = await request.json();
+    const user_id = response.userId;
 
+    // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
+    if (!user_id) {
+        return new Response(
+            JSON.stringify({
+                //TODO Internationalize
+                message: "No User ID",
+            }),
+            { status: 400 }
+        );
+    }
 
-  // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
-  if (!user_id) {
+    const { data, error } = await supabase.auth.admin.updateUserById(user_id, {
+        email: response.email,
+        email_confirm: true,
+    });
+
+    if (error) {
+        return new Response(
+            JSON.stringify({
+                message: error.message,
+            }),
+            { status: 400 }
+        );
+    }
+
+    if (data.user !== null) {
+        // If everything works send a success response
+        return new Response(
+            JSON.stringify({
+                message: "Success",
+            }),
+            { status: 200 }
+        );
+    }
     return new Response(
-      JSON.stringify({
-        //TODO Internationalize
-        message: "No User ID",
-      }),
-      { status: 400 }
+        JSON.stringify({
+            message: "Failure",
+        }),
+        { status: 400 }
     );
-  }
-
-  const { data, error } = await supabase.auth.admin.updateUserById(user_id, {
-      email: response.email, 
-      email_confirm: true,
-  })
-
-  if (error) {
-    return new Response(
-      JSON.stringify({
-        message: error.message,
-      }),
-      { status: 400 }
-    );
-  }
-
-  if (data.user !== null) {
-  // If everything works send a success response
-  return new Response(
-    JSON.stringify({
-      message: "Success",
-    }),
-    { status: 200 }
-  );
-}
-return new Response(
-    JSON.stringify({
-      message: "Failure",
-    }),
-    { status: 400 }
-  );
 };

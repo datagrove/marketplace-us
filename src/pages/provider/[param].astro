@@ -4,15 +4,21 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { ClientProviderView } from "@components/users/ClientProviderView";
 import { ClientViewProviderPosts } from "@components/posts/ClientViewProviderPosts";
 
-
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const { param } = Astro.params;
 ---
 
-<Layout pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param} pageDescription={t("pageTitles.clientViewProviderAccount") + " " + param + " " + t("pageDescriptions.clientViewProviderAccount")}>
+<Layout
+    pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param}
+    pageDescription={t("pageTitles.clientViewProviderAccount") +
+        " " +
+        param +
+        " " +
+        t("pageDescriptions.clientViewProviderAccount")}
+>
     <div class="w-full">
-      <ClientProviderView id={param} client:only="solid-js" />
+        <ClientProviderView id={param} client:only="solid-js" />
     </div>
 </Layout>
