@@ -37,9 +37,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
     !firstName ||
-    !lastName ||
-    !phone ||
-    language?.length === 0
+    !lastName 
   ) {
     return new Response(
       JSON.stringify({
@@ -139,64 +137,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(profileData);
   }
 
-
-  let location;
-
-  //If any location fields are blank then set location to null
-  if (!country ||
-    // !majorMunicipality ||
-    // !minorMunicipality ||
-    !governingDistrict) {
-    location = null;
-  } else {
-    //Make a new location submission to the location table
-   
-    //Build our submission to the location table keys need to match the field in the database you are trying to fill.
-    let locationSubmission = {
-      // minor_municipality: minorMunicipality,
-      // major_municipality: majorMunicipality,
-      governing_district: governingDistrict,
-      country: country,
-      user_id: user.id,
-    };
-
-
-    //Insert the submission to the location table and select it back from the database
-    const { error: locationError, data: locationData } = await supabase
-      .from("location")
-      .insert([locationSubmission])
-      .select("id");
-    if (locationError) {
-      console.log(locationError);
-      return new Response(
-        JSON.stringify({
-          message: (t("apiErrors.locationError")),
-        }),
-        { status: 500 }
-      );
-    }
-    location = locationData[0];
-  }
   //Build our submission to the providers table including the location id from the select from the location table on line 158
   let submission;
 
-  //If the location is null then leave the current value for location
-  if (location === null) {
-    submission = {
-      seller_name: providerName,
-      seller_phone: phone,
-      image_url: imageUrl,
-      language_spoken: language,
-    };
-  } else {
-    //Update the location with the new location
-    submission = {
-      seller_name: providerName,
-      seller_phone: phone,
-      location: location.id,
-      image_url: imageUrl,
-      language_spoken: language,
-    };
+  submission = {
+    seller_name: providerName,
+    image_url: imageUrl,
   };
 
   //submit to the providers table and select it back
@@ -224,8 +170,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   } else {
     console.log("Profile Data: " + JSON.stringify(data[0]));
   }
-
-
 
   // If everything works send a success response
   return new Response(

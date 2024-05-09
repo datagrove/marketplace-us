@@ -245,6 +245,35 @@ interface Provider {
         }
     };
 
+    createEffect(async () => {
+        if (provider() !== undefined) {
+          if (
+            provider()?.image_url === undefined ||
+            provider()?.image_url === null
+          ) {
+          } else {
+            await downloadImage(provider()?.image_url!);
+            setImageUrl(provider()?.image_url!);
+            console.log(imageUrl());
+          }
+        }
+      });
+    
+      const downloadImage = async (image_Url: string) => {
+        try {
+          const { data, error } = await supabase.storage
+            .from("user.image")
+            .download(image_Url);
+          if (error) {
+            throw error;
+          }
+          const url = URL.createObjectURL(data);
+          setProviderImage(url);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
     const enableEditMode = (e: Event) => {
         console.log("in the enableEditMode function")
         // e.preventDefault();
@@ -574,6 +603,13 @@ interface Provider {
                     <StripeButton />
                 </div>
             </div>
+            <Suspense>
+              {response() && (
+                <p class="mt-2 font-bold text-center text-alert1 dark:text-alert1-DM">
+                  {response().message}
+                </p>
+              )}
+            </Suspense>
             </form>
         </div>
     )
