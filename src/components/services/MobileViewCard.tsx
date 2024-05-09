@@ -141,7 +141,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class="min-w-[270px]">
+        <div class="w-[300px] md:min-w-[270px]">
             {newPosts().map((post: Post) => (
                 <div class="my-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
@@ -320,24 +320,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 {post.content}
                             </p>
 
-                            <div class="grid grid-cols-[85px_1fr] grid-rows-2">
-                                <div class="">
-                                    <h6 class="text-[10px] font-bold">
+                            <div class="grid grid-cols-[100px_1fr] grid-rows-2">
+
+                                    <h6 class="text-[10px] text-start font-bold">
                                         {t("formLabels.resourceTypes")}:{" "}
                                     </h6>
-                                    <h6 class="text-[10px] font-bold">
-                                        {t("formLabels.standards")}:{" "}
-                                    </h6>
-                                </div>
-
-                                <div class="">
-                                    <p class="text-[10px]">
+                                    <p class="text-[10px] text-start truncate">
                                         Worksheets, Activities, Printables
                                     </p>
-                                    <p class="text-[10px]">
+                                    
+                                    <h6 class="text-[10px] text-start font-bold">
+                                        {t("formLabels.standards")}:{" "}
+                                    </h6>
+                                    <p class="text-[10px] text-start truncate">
                                         RF.K.2, RF.K.3, RF.K.3c
                                     </p>
-                                </div>
+
                             </div>
 
                             <div class="mt-2 flex">

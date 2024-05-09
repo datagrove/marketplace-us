@@ -374,7 +374,7 @@ export const ServicesView: Component = () => {
                         <ViewCard posts={currentPosts()} />
                     </div>
 
-                    <div class="inline md:hidden">
+                    <div class="md:hidden flex justify-center">
                         <MobileViewCard posts={currentPosts()} />
                     </div>
                 </div>
