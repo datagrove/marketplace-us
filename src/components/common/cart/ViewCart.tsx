@@ -4,6 +4,7 @@ import {
     createResource,
     createSignal,
     onMount,
+    useContext,
 } from "solid-js";
 import type { Post } from "@lib/types";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
@@ -13,6 +14,8 @@ import { items, setItems } from "@components/common/cart/AddToCartButton";
 import { AuthMode } from "@components/common/AuthMode";
 import { CartAuthMode } from "./CartAuthMode";
 import supabase from "@lib/supabaseClient";
+import { useWindowSize } from "@components/common/WindowSize";
+import { WindowSizeContext } from "@components/common/WindowSize";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -22,6 +25,7 @@ export const CartView = () => {
     const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
     const [cartTotal, setCartTotal] = createSignal(0);
     const [oldItems, setOldItems] = createSignal<Post[]>([]);
+    const screenSize = useWindowSize();
 
     createEffect(() => {
         let count = 0;
@@ -64,14 +68,14 @@ export const CartView = () => {
                     <div class="text-start text-3xl font-bold">
                         {t("cartLabels.myCart")}
                     </div>
-                    <div class="overflow-auto md:max-h-screen">
-                        <Show when={window.innerWidth <= 767}>
+                    <div id="cartCards" class="overflow-auto">
+                        <Show when={screenSize() === "sm"}>
                             <CartCardMobile
                                 items={items}
                                 deleteItem={updateCards}
                             />
                         </Show>
-                        <Show when={window.innerWidth > 767}>
+                        <Show when={screenSize() !== "sm"}>
                             <CartCard items={items} deleteItem={updateCards} />
                         </Show>
                     </div>
@@ -90,10 +94,11 @@ export const CartView = () => {
 
     return (
         <div class="flex flex-col md:grid md:grid-cols-3">
-            <div class="col-span-2 inline-block">
+            Window Size: {screenSize()}
+            <div class="col-span-2 inline-block mb-10">
                 <div>{shoppingCart()}</div>
             </div>
-            <div class="md:col-span-1 md:inline-block justify-center px-2 md:px-0">
+            <div class="md:col-span-1 md:inline-block justify-center px-2 md:px-0 sticky pb-3 bottom-[110px] bg-background1 dark:bg-background1-DM z-40">
                 <div class="mb-2 text-start text-xl">
                     {t("cartLabels.orderSummary")}
                 </div>
