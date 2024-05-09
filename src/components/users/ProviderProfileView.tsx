@@ -109,10 +109,6 @@ interface Provider {
         }
       };
     
-    const enableEditMode = () => {
-        setEditMode(!editMode());
-    };
-    
     function providerViewTabClick(e: Event) {
         e.preventDefault();
 
@@ -249,9 +245,19 @@ interface Provider {
         }
     };
 
+    const enableEditMode = (e: Event) => {
+        console.log("in the enableEditMode function")
+        // e.preventDefault();
+        // e.stopPropagation();
+        
+        // setEditMode(!editMode());
+
+        setEditMode(true);
+    };
+
     function submit(e: SubmitEvent) {
-        e.preventDefault();
-        console.log("Submitted!");
+        // e.preventDefault();
+        console.log("In the submit function");
         const formData = new FormData(e.target as HTMLFormElement);
 
         for (let pair of formData?.entries()) {
@@ -266,6 +272,8 @@ interface Provider {
           formData.append("image_url", imageUrl()!);
         }
         setFormData(formData);
+
+        // setEditMode(false);
     };
 
     return (
@@ -308,10 +316,11 @@ interface Provider {
             </div>
 
             <div class="flex justify-end">
-                <Show when={ editMode() === true && window.screen.width < 768 }>
+                <Show when={ editMode() === true }>
                     <button
                         type="submit"
                         form="creatorEditProfile"
+                        class=""
                     >
                         <svg width="60px" height="60px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
                             <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
@@ -320,11 +329,9 @@ interface Provider {
                 </Show>
             </div>
 
-
-
             <div class="italic font-bold text-center md:text-end md:mt-2 underline text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
-                    <h1 class="text-alert1 dark:text-alert1-DM mt-[36px]">
+                    <h1 class="text-alert1 dark:text-alert1-DM mt-[12px]">
                         {t("messages.profileEdits")}
                     </h1>
                 </Show>
@@ -377,26 +384,28 @@ interface Provider {
                     </div>
 
                     <div id="provider-edit-btn-div" class="flex items-center justify-center">
-                        <button 
-                            onClick={ enableEditMode }
-                        >
-                            <Show when={ editMode() !== true }>
-                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" class="fill-icon1 dark:fill-icon1-DM stroke-icon2 dark:stroke-icon2-DM xl:w-[50px] xl:h-[50px]">
+                        <Show when={ !editMode() }>
+                            <button 
+                                onClick={ enableEditMode }
+                                class=""
+                            >
+                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" id="pencil-svg" class="fill-icon1 dark:fill-icon1-DM stroke-icon2 dark:stroke-icon2-DM xl:w-[50px] xl:h-[50px]">
                                     <path d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781" stroke="none" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </Show>
+                            </button>
+                        </Show>
                             
-                            <Show when={ editMode() === true && window.screen.width >=768 }>
-                                <button
-                                    type="submit"
-                                    form="creatorEditProfile"
-                                >
-                                    <svg width="30px" height="30px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
-                                        <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
-                                    </svg>
-                                </button>
-                            </Show>
-                        </button>
+                        {/* <Show when={ editMode() === true && window.screen.width < 768 }>
+                            <button
+                                type="submit"
+                                form="creatorEditProfile"
+                                class="border-2 border-yellow-400"
+                            >
+                                <svg width="30px" height="30px" viewBox="0 0 24 24" id="large-save-icon" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon1 fill-icon1 dark:fill-icon1-DM xl:w-[50px] xl:h-[50px]"> 
+                                    <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
+                                </svg>
+                            </button>
+                        </Show> */}
                     </div>
 
                     <div class="hidden create-post-div md:flex justify-end items-center w-full">
