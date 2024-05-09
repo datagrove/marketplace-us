@@ -110,7 +110,7 @@ export const ViewCard: Component<Props> = (props) => {
         <div class="flex w-full min-w-[650px] justify-center">
             <ul class="flex w-full flex-wrap justify-center">
                 {newPosts().map((post: Post) => (
-                    <li class="w-[99%]">
+                    <li class="w-[99%]" >
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex w-full flex-col items-center justify-center rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM md:h-48 md:flex-row md:items-start md:justify-start">
                                 <div class="flex h-36 w-36 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM md:mr-2 md:h-48 md:w-48">
@@ -177,8 +177,8 @@ export const ViewCard: Component<Props> = (props) => {
                                             ></p>
                                         </div>
 
-                                        <div class="details-div flex h-1/3">
-                                            <div class="w-1/6 text-[10px]">
+                                        <div class="details-div grid grid-cols-[85px_1fr] grid-rows-4 h-1/3">
+                                            <div class="text-[10px]">
                                                 <h6>
                                                     {t("formLabels.subjects")}:{" "}
                                                 </h6>
@@ -196,18 +196,18 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </h6>
                                             </div>
 
-                                            <div class="w-5/6 text-[10px]">
-                                                <p>
+                                            <div class="text-[10px]">
+                                                <p class="truncate">
                                                     {Array.from(
                                                         post.subject!
                                                     ).join(", ")}
                                                 </p>
-                                                <p>{post.grade!.join(", ")}</p>
-                                                <p>
+                                                <p class="truncate">{post.grade!.join(", ")}</p>
+                                                <p class="truncate">
                                                     Worksheets, Activities,
                                                     Printables
                                                 </p>
-                                                <p>1NBT.C.4, K.OA.A.2</p>
+                                                <p class="truncate">1NBT.C.4, K.OA.A.2</p>
                                             </div>
                                         </div>
                                     </div>

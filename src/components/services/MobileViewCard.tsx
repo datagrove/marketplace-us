@@ -235,7 +235,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                     <div class="title-creator mb-1 ml-1">
                         <div class="line-clamp-2 flex py-0.5">{post.title}</div>
                         <a href={`/${lang}/provider/${post?.seller_id}`}>
-                            <div class="flex w-fit items-center border-2 py-1 pr-4">
+                            <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
                                     <img
                                         src={post.seller_img}
@@ -320,8 +320,8 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 {post.content}
                             </p>
 
-                            <div class="flex w-full">
-                                <div class="flex w-1/5 flex-col items-start justify-center">
+                            <div class="grid grid-cols-[85px_1fr] grid-rows-2">
+                                <div class="">
                                     <h6 class="text-[10px] font-bold">
                                         {t("formLabels.resourceTypes")}:{" "}
                                     </h6>
@@ -330,7 +330,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     </h6>
                                 </div>
 
-                                <div class="flex w-4/5 flex-col items-start justify-center">
+                                <div class="">
                                     <p class="text-[10px]">
                                         Worksheets, Activities, Printables
                                     </p>
