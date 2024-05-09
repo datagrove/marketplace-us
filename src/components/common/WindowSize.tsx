@@ -1,17 +1,10 @@
-import type { Accessor } from "solid-js";
-import {
-    createSignal,
-    createContext,
-    useContext,
-    onMount,
-    onCleanup,
-    Suspense,
-    type JSX,
-} from "solid-js";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
+import type { Component } from "solid-js";
+import { windowSize } from "@components/common/WindowSizeStore";
+import { onMount, onCleanup } from "solid-js";
+
+export const WindowSize: Component = () => {
+    
 
 const setSize = () => {
     if (window.innerWidth <= 767) {
@@ -27,40 +20,19 @@ const setSize = () => {
     }
 };
 
-const [screenSize, setScreenSize] = createSignal<
-        "sm" | "md" | "lg" | "xl" | "2xl"
-    >(setSize());
-export const WindowSizeContext = createContext();
+const handleResize = () => {
+    windowSize.set(setSize());
+}
 
-export function WindowSizeProvider (props: any) {
-    const [screenSize, setScreenSize] = createSignal<
-        "sm" | "md" | "lg" | "xl" | "2xl"
-    >(setSize());
+onMount(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+})
 
-    const resize = () => {
-        setScreenSize(setSize());
-        console.log(screenSize());
-    }
+onCleanup(() => {
+    window.removeEventListener("resize", handleResize);
+})
 
-    onMount(() => {
-        window.addEventListener("resize", resize);
-        setSize();
-    });
+return (null)
 
-    onCleanup(() => {
-        window.removeEventListener("resize", resize);
-    });
-
-    return (
-        <WindowSizeContext.Provider value={screenSize}>
-            {props.children}
-        </WindowSizeContext.Provider>
-    );
-};
-
-export function useWindowSize() {
-    const context = useContext(WindowSizeContext);
-    if (!context) {
-        throw new Error('Missing Context');
-    } else return context;
 }

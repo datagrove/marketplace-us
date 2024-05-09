@@ -14,8 +14,10 @@ import { items, setItems } from "@components/common/cart/AddToCartButton";
 import { AuthMode } from "@components/common/AuthMode";
 import { CartAuthMode } from "./CartAuthMode";
 import supabase from "@lib/supabaseClient";
-import { useWindowSize } from "@components/common/WindowSize";
-import { WindowSizeContext } from "@components/common/WindowSize";
+// import { useWindowSize } from "@components/common/WindowSize";
+// import { WindowSizeContext } from "@components/common/WindowSize";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -25,7 +27,7 @@ export const CartView = () => {
     const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
     const [cartTotal, setCartTotal] = createSignal(0);
     const [oldItems, setOldItems] = createSignal<Post[]>([]);
-    const screenSize = useWindowSize();
+    const screenSize = useStore(windowSize);
 
     createEffect(() => {
         let count = 0;
@@ -94,7 +96,6 @@ export const CartView = () => {
 
     return (
         <div class="flex flex-col md:grid md:grid-cols-3">
-            Window Size: {screenSize()}
             <div class="col-span-2 inline-block mb-10">
                 <div>{shoppingCart()}</div>
             </div>
