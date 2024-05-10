@@ -19,6 +19,9 @@ import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
 import stripe from "@lib/stripe";
 import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
+
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -53,47 +56,16 @@ export const ClientProfileView: Component = () => {
     const [clientImage, setClientImage] = createSignal<string>();
     const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
-    const [screenSize, setScreenSize] = createSignal<
-        "sm" | "md" | "lg" | "xl" | "2xl"
-    >();
+    const screenSize = useStore(windowSize);
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
 
-    const setSize = (e: Event) => {
-        if (window.innerWidth <= 767) {
-            setScreenSize("sm");
-        } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
-            setScreenSize("md");
-        } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
-            setScreenSize("lg");
-        } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
-            setScreenSize("xl");
-        } else {
-            setScreenSize("2xl");
-        }
-    };
 
     onMount(async () => {
-        window.addEventListener("resize", setSize);
-        if (window.innerWidth <= 767) {
-            setScreenSize("sm");
-        } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
-            setScreenSize("md");
-        } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
-            setScreenSize("lg");
-        } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
-            setScreenSize("xl");
-        } else {
-            setScreenSize("2xl");
-        }
         setSession(User?.session);
         await fetchClient(User?.session?.user.id!);
         await getPurchasedItems();
-    });
-
-    onCleanup(() => {
-        window.removeEventListener("resize", setSize);
     });
 
     // createEffect(async () => {

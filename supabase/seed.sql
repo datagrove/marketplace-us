@@ -96,8 +96,17 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 -- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."clients" ("user_id", "created_at", "client_phone", "display_name", "image_url") VALUES
-	('84a298b6-9caf-4305-9bfe-3ea325df9188', '2024-03-05 15:37:01.129356+00', 10001, 'German', NULL);
+INSERT INTO "public"."clients" ("user_id", "created_at", "display_name", "image_url") VALUES
+	('a23376db-215d-49c4-9d9d-791c26579543', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('df188225-8970-42a4-a54f-97b303c2b2ed', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('bae9af94-3ee7-47dd-9389-181cd5906814', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('ec946adf-7315-4721-a238-ed600dd153d7', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('b78eab21-c34e-41ef-9a72-64ee49f4cbc0', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('f885208b-ef4a-4f75-8543-a808db576a13', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('df10c4ca-2f2a-4ff1-b2c6-68a51ca94cf9', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('2ae7eb64-750a-42b9-8d8d-c8b9bf780092', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
+	('111d3bed-1c92-4cf5-a66f-2ecaf3e717c3', '2024-03-05 15:37:01.129356+00',  NULL, NULL);
 
 
 
