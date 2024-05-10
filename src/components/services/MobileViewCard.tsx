@@ -141,7 +141,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class="min-w-[270px]">
+        <div class="w-[300px] md:min-w-[270px]">
             {newPosts().map((post: Post) => (
                 <div class="my-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
@@ -235,7 +235,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                     <div class="title-creator mb-1 ml-1">
                         <div class="line-clamp-2 flex py-0.5">{post.title}</div>
                         <a href={`/${lang}/provider/${post?.seller_id}`}>
-                            <div class="flex w-fit items-center border-2 py-1 pr-4">
+                            <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
                                     <img
                                         src={post.seller_img}
@@ -320,24 +320,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 {post.content}
                             </p>
 
-                            <div class="flex w-full">
-                                <div class="flex w-1/5 flex-col items-start justify-center">
-                                    <h6 class="text-[10px] font-bold">
+                            <div class="grid grid-cols-[100px_1fr] grid-rows-2">
+
+                                    <h6 class="text-[10px] text-start font-bold">
                                         {t("formLabels.resourceTypes")}:{" "}
                                     </h6>
-                                    <h6 class="text-[10px] font-bold">
-                                        {t("formLabels.standards")}:{" "}
-                                    </h6>
-                                </div>
-
-                                <div class="flex w-4/5 flex-col items-start justify-center">
-                                    <p class="text-[10px]">
+                                    <p class="text-[10px] text-start truncate">
                                         Worksheets, Activities, Printables
                                     </p>
-                                    <p class="text-[10px]">
+                                    
+                                    <h6 class="text-[10px] text-start font-bold">
+                                        {t("formLabels.standards")}:{" "}
+                                    </h6>
+                                    <p class="text-[10px] text-start truncate">
                                         RF.K.2, RF.K.3, RF.K.3c
                                     </p>
-                                </div>
+
                             </div>
 
                             <div class="mt-2 flex">
