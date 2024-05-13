@@ -16,7 +16,7 @@
     }
 
     .btn-cart {
-        @apply max-h-14 w-full rounded-full bg-btn1 py-1 text-btn1Text hover:translate-y-0.5 dark:bg-btn1-DM dark:text-btn1Text-DM md:w-auto md:px-4 md:py-2 md:text-[1vw] md:font-bold;
+        @apply max-h-14 w-full rounded-full bg-btn1 py-1 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM md:w-auto md:px-4 md:py-2 md:text-[1vw] md:font-bold;
     }
 
     button > * {

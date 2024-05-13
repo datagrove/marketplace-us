@@ -22,30 +22,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     // const firstName = formData.get("FirstName");
     // const lastName = formData.get("LastName");
     const providerName = formData.get("ProviderName");
-    const phone = formData.get("Phone");
-    const country = formData.get("country");
-    const majorMunicipality = formData.get("MajorMunicipality");
+
     const imageUrl = formData.get("image_url")
         ? formData.get("image_url")
         : null;
     console.log("imageURL: " + imageUrl);
 
     // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
-    if (
-        !phone ||
-        !country ||
-        !majorMunicipality
-        // !minorMunicipality ||
-        // !governingDistrict ||
-        // language?.length === 0
-    ) {
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.missingFields"),
-            }),
-            { status: 400 }
-        );
-    }
+
 
     //Get the session from supabase (for the server side) based on the access and refresh tokens
     const { data: sessionData, error: sessionError } =
@@ -105,64 +89,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    /*Each of these retrieves the appropriate id from the database for the area level
-  (governing district, minor municipality, major municipality, country)
-  in order to make a proper submission to the location table */
-
-    const { data: majorMunicipalityId, error: majorMunicipalityError } =
-        await supabase
-            .from("major_municipality")
-            .select("id")
-            .eq("id", majorMunicipality);
-    if (majorMunicipalityError) {
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.noMajorMunicipality"),
-            }),
-            { status: 500 }
-        );
-    }
-
-    const { data: countryId, error: countryError } = await supabase
-        .from("country")
-        .select("id")
-        .eq("id", country);
-    if (countryError) {
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.noCountry"),
-            }),
-            { status: 500 }
-        );
-    }
-
-    //Build our submission to the location table keys need to match the field in the database you are trying to fill.
-    let locationSubmission = {
-        major_municipality: majorMunicipalityId[0].id,
-        country: countryId[0].id,
-        user_id: user.id,
-    };
-
-    //Insert the submission to the location table and select it back from the database
-    const { error: locationError, data: location } = await supabase
-        .from("location")
-        .insert([locationSubmission])
-        .select("id");
-    if (locationError) {
-        console.log(locationError);
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.locationError"),
-            }),
-            { status: 500 }
-        );
-    }
 
     //Build our submission to the providers table including the location id from the select from the location table on line 158
     let submission = {
         seller_name: providerName,
-        seller_phone: phone,
-        location: location[0].id,
         user_id: user.id,
         image_url: imageUrl,
     };

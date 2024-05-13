@@ -75,7 +75,7 @@ export const French = {
     buttons: {
         providerProfile: "Mon profil fournisseur",
         editProfile: "Editer le profil",
-        register: "Enregistrer",
+        register: "Commencer l'enregistrement Stripe",
         uploadImage: "Télécharger l'image",
         uploading: "Téléchargement ...",
         loading: "Chargement ...",
@@ -108,6 +108,7 @@ export const French = {
         following: "Suivante",
         top: "Retour au Sommet",
         freeDownload: "Téléchargement Gratuit",
+        addedToCart: "Ajouté au panier !",
     },
 
   messages: {
@@ -163,6 +164,7 @@ export const French = {
     comingSoon: "À venir!",
     report: "Signaler cette ressource à LearnGrove",
     free: "Gratuit",
+    freeResourceCreated: "Ressource gratuite créée !",
   },
 
     formLabels: {

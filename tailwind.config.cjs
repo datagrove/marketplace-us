@@ -85,6 +85,15 @@ module.exports = {
 					}
 				}
 			},
+			keyframes: {
+				click: {
+				  "0%, 100%": { transform: "translateY(0px)" },
+				  "50%": { transform: "translateY(0.125rem)" }
+				}
+			  },
+			  animation: {
+				click: "click 200ms ease-in-out"
+			  },
 			inset: {
 				'2': '2px',
 			},

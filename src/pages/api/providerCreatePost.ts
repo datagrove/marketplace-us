@@ -2,7 +2,6 @@ import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
-import { log } from "node_modules/astro/dist/core/logger/core";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
@@ -23,6 +22,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const content = formData.get("Content");
     const country = formData.get("country");
     const tax_code = formData.get("TaxCode");
+    const price = formData.get("Price");
     const gradeLevel = formData.get("grade");
     // const majorMunicipality = formData.get("MajorMunicipality");
     // const minorMunicipality = formData.get("MinorMunicipality");
@@ -39,9 +39,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         !title ||
         !subject ||
         !content ||
-        !tax_code ||
         !gradeLevel ||
-        !resourceUrl
+        !resourceUrl ||
+        (price !== null && !tax_code) ||
+        price === ""
     ) {
         return new Response(
             JSON.stringify({

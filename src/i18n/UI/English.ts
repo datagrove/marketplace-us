@@ -74,7 +74,7 @@ export const English = {
     buttons: {
         providerProfile: "My Provider Profile",
         editProfile: "Edit Profile",
-        register: "Register",
+        register: "Start Stripe Registration",
         uploadImage: "Upload Image",
         uploading: "Uploading ...",
         loading: "Loading...",
@@ -107,6 +107,7 @@ export const English = {
         following: "Following",
         top: "Back to Top",
         freeDownload: "Free Download",
+        addedToCart: "Added to Cart!",
     },
 
   messages: {
@@ -158,6 +159,7 @@ export const English = {
     emailNotProvided: "Email not provided",
     report: "Report this resource to LearnGrove",
     free: "FREE",
+    freeResourceCreated: "Free Resource Created!",
   },
 
     formLabels: {

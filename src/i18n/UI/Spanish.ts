@@ -74,7 +74,7 @@ export const Spanish = {
     buttons: {
         providerProfile: "Mi Perfil de Proveedor",
         editProfile: "Editar Perfil",
-        register: "Registro",
+        register: "Iniciar registro de Stripe",
         uploadImage: "Cargar Imagen",
         uploading: "Cargando ...",
         loading: "Cargando...",
@@ -106,6 +106,7 @@ export const Spanish = {
         following: "Siguiente",
         top: "Volver Arriba",
         freeDownload: "Descarga Gratis",
+        addedToCart: "¡Añadido al carrito!",
     },
 
   messages: {
@@ -159,7 +160,9 @@ export const Spanish = {
     comingSoon: "¡Muy pronto!",
     report: "Reportar este recurso a LearnGrove",
     free: "GRATIS",
+    freeResourceCreated: "¡Recurso gratuito creado!",
   },
+
 
     formLabels: {
         title: "Título",

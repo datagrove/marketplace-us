@@ -95,6 +95,7 @@ export interface uiObject {
         following: string;
         top: string;
         freeDownload: string;
+        addedToCart: string;
     };
 
   messages: {
@@ -139,6 +140,7 @@ export interface uiObject {
     emailNotProvided: string,
     report: string;
     free: string;
+    freeResourceCreated: string;
   },
 
 
