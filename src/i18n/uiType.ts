@@ -185,6 +185,7 @@ export interface uiObject {
         pages: string;
         pricePost: string;
         isResourceFree: string;
+        about: string;
     };
 
     postLabels: {

@@ -207,6 +207,7 @@ export const French = {
         pages: "Pages",
         pricePost: "Le Prix",
         isResourceFree: "ressource gratuite",
+        about: "À propos",
     },
 
     postLabels: {

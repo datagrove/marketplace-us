@@ -21,25 +21,27 @@ interface Props {
 }
 
 export const TinyComp = (props: Props) => {
+    const [mode, setMode] = createSignal(props.mode); // Moved inside the component's body
+
+    const currentEditor = tinymce.get(props.id);
+
     const initializeTinyMCE = async () => {
         console.log(tinymce.get(props.id));
-        if (
-            tinymce.get(props.id) !== null &&
-            tinymce.get(props.id) !== undefined
-        ) {
-            tinymce.get(props.id)!.destroy();
+
+        if (currentEditor) {
+            currentEditor.destroy();
             console.log("tinymce destroyed");
         }
-        console.log("intializing tinymce " + props.mode);
+        console.log("intializing tinymce " + mode());
         tinymce.init({
             selector: props.id,
             max_width: 384,
             skin_url:
-                props.mode === "dark"
+                mode() === "dark"
                     ? "/tinymce/skins/ui/oxide-dark"
                     : "/tinymce/skins/ui/oxide",
             content_css:
-                props.mode === "dark"
+                mode() === "dark"
                     ? "/tinymce/skins/content/dark/content.min.css"
                     : "/tinymce/skins/content/default/content.min.css",
             promotion: false,
@@ -60,15 +62,6 @@ export const TinyComp = (props: Props) => {
         });
     };
 
-    // onMount(() => {
-    //   window.addEventListener("storage", (event) => {
-    //     if (event.key === "theme") {
-    //       //@ts-ignore
-    //       initializeTinyMCE();
-    //     }
-    //   });
-    // });
-
     onMount(() => {
         const script = document.createElement("script");
         script.src = "/tinymce/tinymce.min.js";
@@ -86,11 +79,8 @@ export const TinyComp = (props: Props) => {
                     // console.log("tinymce loaded");
                     initializeTinyMCE();
                     return () => {
-                        if (
-                            tinymce.get(props.id) !== null &&
-                            tinymce.get(props.id) !== undefined
-                        ) {
-                            tinymce.get(props.id)!.destroy();
+                        if (currentEditor) {
+                            currentEditor.destroy();
                             console.log("tinymce destroyed");
                         }
                     };
@@ -102,13 +92,9 @@ export const TinyComp = (props: Props) => {
         document.body.appendChild(script);
     });
 
-    createSignal(props.mode);
     onCleanup(() => {
-        if (
-            tinymce.get(props.id) !== null &&
-            tinymce.get(props.id) !== undefined
-        ) {
-            tinymce.get(props.id)!.destroy();
+        if (currentEditor) {
+            currentEditor.destroy();
             console.log("tinymce destroyed");
         }
     });

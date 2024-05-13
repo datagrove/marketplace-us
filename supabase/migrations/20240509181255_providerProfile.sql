@@ -6,6 +6,8 @@ alter table "public"."sellers" drop column "location";
 
 alter table "public"."sellers" drop column "seller_phone";
 
+alter table "public"."sellers" add column "seller_about" text;
+
 CREATE OR REPLACE VIEW "public"."sellerview" WITH ("security_invoker"='on') AS
  SELECT "sellers"."user_id",
     "sellers"."created_at",
@@ -14,10 +16,10 @@ CREATE OR REPLACE VIEW "public"."sellerview" WITH ("security_invoker"='on') AS
     "sellers"."seller_id",
     "profiles"."first_name",
     "profiles"."last_name",
-    "profiles"."email"
+    "profiles"."email",
+    "sellers"."seller_about"
    FROM (("public"."sellers"
      LEFT JOIN "public"."profiles" ON (("sellers"."user_id" = "profiles"."user_id"))));
 
 ALTER TABLE "public"."sellerview" OWNER TO "postgres"; 
 
-alter table "public"."sellers" add column "seller_about" text;
