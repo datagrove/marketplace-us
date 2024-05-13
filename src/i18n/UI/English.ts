@@ -74,7 +74,7 @@ export const English = {
     buttons: {
         providerProfile: "My Provider Profile",
         editProfile: "Edit Profile",
-        register: "Register",
+        register: "Start Stripe Registration",
         uploadImage: "Upload Image",
         uploading: "Uploading ...",
         loading: "Loading...",

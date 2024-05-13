@@ -75,7 +75,7 @@ export const French = {
     buttons: {
         providerProfile: "Mon profil fournisseur",
         editProfile: "Editer le profil",
-        register: "Enregistrer",
+        register: "Commencer l'enregistrement Stripe",
         uploadImage: "Télécharger l'image",
         uploading: "Téléchargement ...",
         loading: "Chargement ...",
