@@ -19,3 +19,5 @@ CREATE OR REPLACE VIEW "public"."sellerview" WITH ("security_invoker"='on') AS
      LEFT JOIN "public"."profiles" ON (("sellers"."user_id" = "profiles"."user_id"))));
 
 ALTER TABLE "public"."sellerview" OWNER TO "postgres"; 
+
+alter table "public"."sellers" add column "seller_about" text;
