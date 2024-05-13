@@ -159,6 +159,7 @@ export const English = {
     emailNotProvided: "Email not provided",
     report: "Report this resource to LearnGrove",
     free: "FREE",
+    freeResourceCreated: "Free Resource Created!",
   },
 
     formLabels: {

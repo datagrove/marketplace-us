@@ -160,6 +160,7 @@ export const Spanish = {
     comingSoon: "¡Muy pronto!",
     report: "Reportar este recurso a LearnGrove",
     free: "GRATIS",
+    freeResourceCreated: "¡Recurso gratuito creado!",
   },
 
 

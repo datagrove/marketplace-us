@@ -127,10 +127,13 @@ async function postFormData(formData: FormData) {
                 refresh_token: formData.get("refresh_token") as string,
                 tax_code: formData.get("TaxCode") as string,
             });
+        } else if ((formData.get("Price") as string) == null) {
+            alert(data.message + " " + t("messages.freeResourceCreated"));
+            window.location.href = `/${lang}/provider/profile`;
         }
-        if (uploadFilesRef) {
-            uploadFilesRef.upload();
-        }
+        // if (uploadFilesRef) {
+        //     uploadFilesRef.upload();
+        // }
     }
     // I think we are going to do this in the CreateStripeProductPrice component
     // if (data.redirect) {
@@ -274,11 +277,11 @@ export const CreateNewPost: Component = () => {
         formData.append("access_token", session()?.access_token!);
         formData.append("refresh_token", session()?.refresh_token!);
         formData.append("lang", lang);
-        //TODO: Collect Price from Form
-        if(isFree()){
+        if (isFree()) {
             formData.delete("Price");
         } else {
-            formData.append("Price", price());}
+            formData.set("Price", price());
+        }
 
         if (selectedTaxCode() !== undefined) {
             formData.append("TaxCode", selectedTaxCode()!.value.toString());
@@ -358,18 +361,15 @@ export const CreateNewPost: Component = () => {
         console.log(subjectPick());
     }
 
-    function formatPrice (resourcePrice: string) {
+    function formatPrice(resourcePrice: string) {
         if (resourcePrice.indexOf(".") === -1) {
             setPrice(resourcePrice + "00");
-            console.log(price());
         } else if (resourcePrice.indexOf(".") >= 0) {
             setPrice(resourcePrice.replace(".", ""));
-            console.log(price());
         } else {
-            console.log("Price error")
+            console.log("Price error");
         }
     }
-    
 
     function setGradeArray(e: Event) {
         if ((e.target as HTMLInputElement).checked) {
@@ -649,20 +649,19 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 <Show when={isFree() === false}>
-                <div class="mb-6 mt-6">
-                    <label
-                        for="taxCode"
-                        class="text-ptext1 dark:text-ptext1-DM"
-                    >
-                        {t("formLabels.taxCode")}:
-                       
-                        <Dropdown
-                            options={taxCodeOptions}
-                            selectedOption={selectedTaxCode()!}
-                            setSelectedOption={setSelectedTaxCode}
-                        />   
-                    </label>
-                </div>
+                    <div class="mb-6 mt-6">
+                        <label
+                            for="taxCode"
+                            class="text-ptext1 dark:text-ptext1-DM"
+                        >
+                            {t("formLabels.taxCode")}:
+                            <Dropdown
+                                options={taxCodeOptions}
+                                selectedOption={selectedTaxCode()!}
+                                setSelectedOption={setSelectedTaxCode}
+                            />
+                        </label>
+                    </div>
                 </Show>
                 {/* Price Implementation */}
                 <div class="justfify-evenly mb-3 flex flex-col ">
@@ -688,7 +687,7 @@ export const CreateNewPost: Component = () => {
                                 id="Price"
                                 name="Price"
                                 placeholder={"0.00"}
-                                onInput={(e) =>formatPrice(e.target.value)}
+                                onInput={(e) => formatPrice(e.target.value)}
                             />
                         </div>
                     </Show>

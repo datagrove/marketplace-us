@@ -164,6 +164,7 @@ export const French = {
     comingSoon: "À venir!",
     report: "Signaler cette ressource à LearnGrove",
     free: "Gratuit",
+    freeResourceCreated: "Ressource gratuite créée !",
   },
 
     formLabels: {

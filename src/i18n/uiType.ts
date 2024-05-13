@@ -140,6 +140,7 @@ export interface uiObject {
     emailNotProvided: string,
     report: string;
     free: string;
+    freeResourceCreated: string;
   },
 
 
