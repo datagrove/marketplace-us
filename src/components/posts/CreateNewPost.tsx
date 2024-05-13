@@ -117,7 +117,7 @@ async function postFormData(formData: FormData) {
         let tmpDiv = document.createElement("div");
         tmpDiv.innerHTML = formData.get("Content") as string;
         let description = tmpDiv.textContent || tmpDiv.innerText || "";
-        if ((formData.get("Price") as string) != "") {
+        if ((formData.get("Price") as string) != null) {
             CreateStripeProductPrice({
                 name: String(formData.get("Title")),
                 description: description,
@@ -275,7 +275,11 @@ export const CreateNewPost: Component = () => {
         formData.append("refresh_token", session()?.refresh_token!);
         formData.append("lang", lang);
         //TODO: Collect Price from Form
-        formData.append("Price", price());
+        if(isFree()){
+            formData.delete("Price");
+        } else {
+            formData.append("Price", price());}
+
         if (selectedTaxCode() !== undefined) {
             formData.append("TaxCode", selectedTaxCode()!.value.toString());
         }
@@ -353,6 +357,19 @@ export const CreateNewPost: Component = () => {
         }
         console.log(subjectPick());
     }
+
+    function formatPrice (resourcePrice: string) {
+        if (resourcePrice.indexOf(".") === -1) {
+            setPrice(resourcePrice + "00");
+            console.log(price());
+        } else if (resourcePrice.indexOf(".") >= 0) {
+            setPrice(resourcePrice.replace(".", ""));
+            console.log(price());
+        } else {
+            console.log("Price error")
+        }
+    }
+    
 
     function setGradeArray(e: Event) {
         if ((e.target as HTMLInputElement).checked) {
@@ -631,19 +648,22 @@ export const CreateNewPost: Component = () => {
                     </div>
                 </div>
 
+                <Show when={isFree() === false}>
                 <div class="mb-6 mt-6">
                     <label
                         for="taxCode"
                         class="text-ptext1 dark:text-ptext1-DM"
                     >
                         {t("formLabels.taxCode")}:
+                       
                         <Dropdown
                             options={taxCodeOptions}
                             selectedOption={selectedTaxCode()!}
                             setSelectedOption={setSelectedTaxCode}
-                        />
+                        />   
                     </label>
                 </div>
+                </Show>
                 {/* Price Implementation */}
                 <div class="justfify-evenly mb-3 flex flex-col ">
                     <div class="flex ">
@@ -660,13 +680,15 @@ export const CreateNewPost: Component = () => {
                         <div class="mt-2 flex">
                             <p>{t("formLabels.pricePost")}</p>
                             <input
-                                type="text"
+                                required
+                                type="number"
+                                min={1}
+                                step={0.01}
                                 class="ml-1 flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                                 id="Price"
-                                value={"0.00"}
-                                onChange={(e) =>
-                                    setPrice(e.currentTarget.value)
-                                }
+                                name="Price"
+                                placeholder={"0.00"}
+                                onInput={(e) =>formatPrice(e.target.value)}
                             />
                         </div>
                     </Show>
