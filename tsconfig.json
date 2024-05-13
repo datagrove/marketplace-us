@@ -15,5 +15,8 @@
         "@src/*": ["src/*"]
     },
     "types": ["vite-plugin-pwa/client"],
+    "lib": [
+      "dom.iterable"
+    ]
   }
 }

@@ -84,7 +84,10 @@ module.exports = {
 						},
 					}
 				}
-			}
+			},
+			inset: {
+				'2': '2px',
+			},
 		},
 	},
 	plugins: [
