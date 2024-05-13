@@ -109,62 +109,59 @@ export const Spanish = {
         addedToCart: "¡Añadido al carrito!",
     },
 
-    messages: {
-        noAccount: "¿No tienes una cuenta? Haz click aquí para ",
-        emailValid: "Dirección de correo electrónico válida",
-        emailLackRequirements:
-            "El correo electrónico no cumple con los requisitos",
-        passwordLength:
-            "La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *",
-        passwordValid: "Contraseña valida",
-        passwordLackRequirements: "Contraseña no cumple con los requisitos",
-        phoneLackRequirements:
-            "Por favor ingrese un número de teléfono válido.",
-        phoneValid: "Número de teléfono válido",
-        passwordMatch: "Las contraseñas no coinciden",
-        passwordReset: "Restablecimiento de contraseña",
-        forgotPassword: "¿Olvidaste tu contraseña? Haz click aquí para",
-        alreadyAccount: "¿Ya tienes una cuenta? Haz click aquí para",
-        error404: "Algo salió mal",
-        onlyProvider: "Solo los proveedores pueden crear publicaciones.",
-        signInAsProvider:
-            "Inicie sesión en un perfil de proveedor para poder publicar.",
-        checkEmail:
-            "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
-        checkConfirmEmail:
-            "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
-        signIn: "Inicie sesión para acceder a esta página",
-        createProviderAccount:
-            "Inicie sesión para crear un perfil de proveedor",
-        createClientAccount: "Inicie sesión para crear un perfil de cliente",
-        viewProviderAccount:
-            "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
-        noPosts: "No hay publicaciones disponibles",
-        noPost: "Publicación no encontrada",
-        selectAnImage: "Debe seleccionar una imagen para cargar.",
-        noProvider: "No se encontró ningún proveedor.",
-        noValue: "Sin valor",
-        translation: "Las traducciones",
-        translations:
-            " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
-        clickWrap1: "Al hacer clic en",
-        clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
-        fetch: "Obtener Servicios",
-        todoFetch:
-            "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
-        mustSignIn: "Debes iniciar sesión para ver los servicios disponibles.",
-        profileEdits:
-            "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
-        noClient: "No se encontró ningún cliente.",
-        noPostsSearch:
-            "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
-        noStripeAccount:
-            "Debes completar la inscripción en Stripe antes de publicar recursos.",
-        selectSubject: "Por favor, seleccione al menos una asignatura",
-        comingSoon: "¡Muy pronto!",
-        report: "Reportar este recurso a LearnGrove",
-        free: "¡GRATIS!",
-    },
+  messages: {
+    noAccount: "¿No tienes una cuenta? Haz click aquí para ",
+    emailValid: "Dirección de correo electrónico válida",
+    emailLackRequirements: "El correo electrónico no cumple con los requisitos",
+    passwordLength:
+      "La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *",
+    passwordValid: "Contraseña valida",
+    passwordLackRequirements: "Contraseña no cumple con los requisitos",
+    phoneLackRequirements: "Por favor ingrese un número de teléfono válido.",
+    phoneValid: "Número de teléfono válido",
+    passwordMatch: "Las contraseñas no coinciden",
+    passwordReset: "Restablecimiento de contraseña",
+    forgotPassword: "¿Olvidaste tu contraseña? Haz click aquí para",
+    alreadyAccount: "¿Ya tienes una cuenta? Haz click aquí para",
+    error404: "Algo salió mal",
+    onlyProvider: "Solo los proveedores pueden crear publicaciones.",
+    signInAsProvider:
+      "Inicie sesión en un perfil de proveedor para poder publicar.",
+    checkEmail:
+      "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
+    checkConfirmEmail:
+      "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
+    signIn: "Inicie sesión para acceder a esta página",
+    createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
+    createClientAccount: "Inicie sesión para crear un perfil de cliente",
+    viewProviderAccount:
+      "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
+    noPosts: "No hay publicaciones disponibles",
+    noPost: "Publicación no encontrada",
+    selectAnImage: "Debe seleccionar una imagen para cargar.",
+    noProvider: "No se encontró ningún proveedor.",
+    noValue: "Sin valor",
+    translation: "Las traducciones",
+    translations:
+      " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
+    clickWrap1: "Al hacer clic en",
+    clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
+    fetch: "Obtener Servicios",
+    todoFetch:
+      "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
+    mustSignIn: "Debes iniciar sesión para ver los servicios disponibles.",
+    profileEdits:
+      "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
+    noClient: "No se encontró ningún cliente.",
+    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
+    noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
+    selectSubject: "Por favor, seleccione al menos una asignatura",
+    emailNotProvided: "Correo electrónico no proporcionado",
+    comingSoon: "¡Muy pronto!",
+    report: "Reportar este recurso a LearnGrove",
+    free: "GRATIS",
+  },
+
 
     formLabels: {
         title: "Título",
@@ -232,20 +229,26 @@ export const Spanish = {
         items: "elementos",
     },
 
-    homePageText: {
-        headline: "Todo lo que necesitas para hacer el trabajo.",
-        subHeadline:
-            "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
-        ariaLabel: "Imagen para el marcador de posición de información",
-    },
-    menus: {
-        resources: "Buscar Recursos",
-        contactUs: "Contáctenos",
-        details: "Detalles",
-        description: "Descripción",
-        reviews: "Opiniones",
-        qA: "Sección de Preguntas",
-    },
+  homePageText: {
+    headline: "Todo lo que necesitas para hacer el trabajo.",
+    subHeadline:
+      "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
+    ariaLabel: "Imagen para el marcador de posición de información",
+  },
+  menus: {
+    resources: "Buscar Recursos",
+    contactUs: "Contáctenos",
+    profile: "Perfil",
+    ratingsReviews: "Puntajes y Reseñas",
+    questions: "Preguntas",
+    freeDownload: "Descarga Gratis",
+    providerResources: "Recursos",
+    payouts: "Mis Pagos",
+    reviews: "Opiniones",
+    details: "Detalles",
+    description: "Descripción",
+    qA: "Sección de Preguntas",
+  },
 
     toolTips: {
         providerPhone:

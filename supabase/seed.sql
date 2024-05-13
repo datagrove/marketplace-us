@@ -143,13 +143,13 @@ INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_
 -- Data for Name: sellers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "location", "seller_phone", "image_url", "seller_id", "language_spoken", "stripe_connected_account_id") VALUES
-	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', 1, '00010001', NULL, 3, NULL, NULL),
-	('2024-03-19 19:37:25.638743+00', 'test test', 'a23376db-215d-49c4-9d9d-791c26579543', 2, '16529658956', NULL, 4, NULL, 'acct_1Ow8TSB0tPFjRwUY'),
-	('2024-03-26 13:43:48.52652+00', 'Test2 Test', 'ec946adf-7315-4721-a238-ed600dd153d7', 3, '11234567890', NULL, 5, NULL, 'acct_1OyaI4B1rj93e0iW'),
-	('2024-03-26 21:49:40.736227+00', 'Test test', 'df188225-8970-42a4-a54f-97b303c2b2ed', 4, '11324567890', NULL, 6, NULL, 'acct_1OyhsGBGXYM1FOiH'),
-	('2024-03-27 14:23:47.653382+00', 'Test test', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', 5, '14567897890', '0.64703476555166.svg', 7, NULL, 'acct_1OyxOKB0i6JTeUGm'),
-	('2024-03-27 15:18:06.611913+00', 'TEST test', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', 9, '14561231456', '0.4842527203758755.png', 8, NULL, 'acct_1OyyEsBI0fpQ1wEW');
+INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "image_url", "seller_id", "language_spoken", "stripe_connected_account_id") VALUES
+	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 3, NULL, NULL),
+	('2024-03-19 19:37:25.638743+00', 'test test', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 4, NULL, 'acct_1Ow8TSB0tPFjRwUY'),
+	('2024-03-26 13:43:48.52652+00', 'Test2 Test', 'ec946adf-7315-4721-a238-ed600dd153d7', NULL, 5, NULL, 'acct_1OyaI4B1rj93e0iW'),
+	('2024-03-26 21:49:40.736227+00', 'Test test', 'df188225-8970-42a4-a54f-97b303c2b2ed', NULL, 6, NULL, 'acct_1OyhsGBGXYM1FOiH'),
+	('2024-03-27 14:23:47.653382+00', 'Test test', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', NULL, 7, NULL, 'acct_1OyxOKB0i6JTeUGm'),
+	('2024-03-27 15:18:06.611913+00', 'TEST test', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 8, NULL, 'acct_1OyyEsBI0fpQ1wEW');
 
 
 --

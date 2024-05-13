@@ -94,6 +94,9 @@ module.exports = {
 			  animation: {
 				click: "click 200ms ease-in-out"
 			  }
+			inset: {
+				'2': '2px',
+			},
 		},
 	},
 	plugins: [

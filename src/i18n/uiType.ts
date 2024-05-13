@@ -98,48 +98,50 @@ export interface uiObject {
         addedToCart: string;
     };
 
-    messages: {
-        noAccount: string;
-        emailValid: string;
-        emailLackRequirements: string;
-        passwordLength: string;
-        passwordValid: string;
-        passwordLackRequirements: string;
-        phoneLackRequirements: string;
-        phoneValid: string;
-        passwordMatch: string;
-        passwordReset: string;
-        forgotPassword: string;
-        alreadyAccount: string;
-        error404: string;
-        onlyProvider: string;
-        signInAsProvider: string;
-        checkEmail: string;
-        checkConfirmEmail: string;
-        signIn: string;
-        createProviderAccount: string;
-        createClientAccount: string;
-        viewProviderAccount: string;
-        noPosts: string;
-        noPost: string;
-        selectAnImage: string;
-        noProvider: string;
-        translation: string;
-        translations: string;
-        clickWrap1: string;
-        clickWrap2: string;
-        fetch: string;
-        todoFetch: string;
-        mustSignIn: string;
-        profileEdits: string;
-        noClient: string;
-        noPostsSearch: string;
-        noStripeAccount: string;
-        selectSubject: string;
-        comingSoon: string;
-        report: string;
-        free: string;
-    };
+  messages: {
+    noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
+    passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
+    passwordMatch: string,
+    passwordReset: string,
+    forgotPassword: string,
+    alreadyAccount: string,
+    error404: string,
+    onlyProvider: string,
+    signInAsProvider: string,
+    checkEmail: string,
+    checkConfirmEmail: string,
+    signIn: string,
+    createProviderAccount: string,
+    createClientAccount: string,
+    viewProviderAccount: string,
+    noPosts: string,
+    noPost: string,
+    selectAnImage: string,
+    noProvider: string,
+    translation: string,
+    translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
+    profileEdits: string,
+    noClient: string,
+    noPostsSearch: string,
+    noStripeAccount: string,
+    selectSubject: string,
+    comingSoon: string,
+    emailNotProvided: string,
+    report: string;
+    free: string;
+  },
+
 
     formLabels: {
         title: string;
@@ -213,14 +215,20 @@ export interface uiObject {
         ariaLabel: string;
     };
 
-    menus: {
-        resources: string;
-        contactUs: string;
-        details: string;
-        description: string;
-        reviews: string;
-        qA: string;
-    };
+  menus: {
+    resources: string;
+    contactUs: string;
+    profile: string;
+    ratingsReviews: string;
+    questions: string;
+    freeDownload: string;
+    providerResources: string;
+    payouts: string;
+    reviews: string;
+    details: string;
+    description: string;
+     qA: string;
+  };
 
     toolTips: {
         providerPhone: string;
