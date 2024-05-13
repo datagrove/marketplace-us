@@ -1,14 +1,14 @@
-import { English } from './UI/English';
-import { Spanish } from './UI/Spanish';
-import { French } from './UI/French';
+import { English } from "./UI/English";
+import { Spanish } from "./UI/Spanish";
+import { French } from "./UI/French";
 
 export const languages = {
-    en: 'English',
-    es: 'Español',
-    fr: 'Français',
-}
+    en: "English",
+    es: "Español",
+    fr: "Français",
+};
 
-export const defaultLang = 'en';
+export const defaultLang = "en";
 
 export const ui = {
     en: {
@@ -20,4 +20,4 @@ export const ui = {
     fr: {
         ...French,
     },
-}
+};

@@ -8,14 +8,14 @@ const t = useTranslations(lang);
 ---
 
 <PageLayout
-  pageTitle={t("pageTitles.viewCart")}
-  pageDescription={t("pageDescriptions.viewCart")}
+    pageTitle={t("pageTitles.viewCart")}
+    pageDescription={t("pageDescriptions.viewCart")}
 >
-  <div
-    class="text-center mt-4 mb-8 bg-background1 dark:bg-background1-DM w-full"
-  >
-    <div class="">
-      <CartView client:only="solid-js" />
+    <div
+        class="text-center mt-4 mb-8 bg-background1 dark:bg-background1-DM w-full"
+    >
+        <div class="">
+            <CartView client:only="solid-js" />
+        </div>
     </div>
-  </div>
 </PageLayout>

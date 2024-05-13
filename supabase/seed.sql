@@ -96,8 +96,8 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 -- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."clients" ("user_id", "created_at", "location", "client_phone", "display_name", "image_url") VALUES
-	('84a298b6-9caf-4305-9bfe-3ea325df9188', '2024-03-05 15:37:01.129356+00', 1, 10001, 'German', NULL);
+INSERT INTO "public"."clients" ("user_id", "created_at", "client_phone", "display_name", "image_url") VALUES
+	('84a298b6-9caf-4305-9bfe-3ea325df9188', '2024-03-05 15:37:01.129356+00', 10001, 'German', NULL);
 
 
 

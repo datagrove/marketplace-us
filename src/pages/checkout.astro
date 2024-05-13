@@ -5,19 +5,16 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
 ---
 
 <PageLayout
-  pageTitle={t("pageTitles.viewCart")}
-  pageDescription={t("pageDescriptions.viewCart")}
-  stickyFooter={false}
+    pageTitle={t("pageTitles.viewCart")}
+    pageDescription={t("pageDescriptions.viewCart")}
+    stickyFooter={false}
 >
-  <div
-    class="mt-4 bg-background1 dark:bg-background1-DM w-full"
-  >
-    <div class="">
-      <CheckoutView client:only="solid-js" />
+    <div class="mt-4 bg-background1 dark:bg-background1-DM w-full">
+        <div class="">
+            <CheckoutView client:only="solid-js" />
+        </div>
     </div>
-  </div>
 </PageLayout>
