@@ -202,6 +202,7 @@ export const English = {
         pages: "Pages",
         pricePost: "Price",
         isResourceFree: "Free Resource",
+        about: "About",
     },
 
     postLabels: {

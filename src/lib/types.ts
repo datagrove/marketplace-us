@@ -32,3 +32,15 @@ export interface Client {
     first_name: string;
     last_name: string;
 }
+
+export interface Provider {
+    seller_name: string;
+    seller_id: number;
+    user_id: string;
+    image_url: string | null;
+    email: string;
+    created_at: string;
+    first_name: string;
+    last_name: string;
+    seller_about: string;
+}

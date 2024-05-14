@@ -171,7 +171,7 @@ export const CreateNewPost: Component = () => {
         window.addEventListener("storage", (event) => {
             if (event.key === "theme") {
                 setMode({ theme: event.newValue });
-                console.log("Theme changed: " + mode.theme);
+                mountTiny();
             }
         });
     });
@@ -397,9 +397,9 @@ export const CreateNewPost: Component = () => {
         console.log(gradePick());
     }
 
-    createEffect(() => {
+    function mountTiny() {
         TinyComp({ id: "#Content", mode: mode.theme });
-    });
+    };
 
     return (
         <div>
@@ -426,6 +426,7 @@ export const CreateNewPost: Component = () => {
                         placeholder={t("formLabels.enterPostContent")}
                         rows="10"
                         required
+                        ref={mountTiny}
                     ></textarea>
                 </label>
 

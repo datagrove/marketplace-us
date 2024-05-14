@@ -23,16 +23,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const firstName = formData.get("FirstName");
   const lastName = formData.get("LastName");
   const providerName = formData.get("ProviderName");
-  const phone = formData.get("Phone");
   const email = formData.get("email");
-  const country = formData.get("country");
-  // const majorMunicipality = formData.get("MajorMunicipality");
-  // const minorMunicipality = formData.get("MinorMunicipality");
-  const governingDistrict = formData.get("GoverningDistrict");
-  const postalArea = formData.get("PostalArea");
+  const sellerAbout = formData.get("AboutContent");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
-  const language = JSON.parse(formData.get("languageArray")! as string);
+
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
   if (
@@ -143,6 +138,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   submission = {
     seller_name: providerName,
     image_url: imageUrl,
+    seller_about: sellerAbout,
   };
 
   //submit to the providers table and select it back

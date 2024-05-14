@@ -205,6 +205,7 @@ export const Spanish = {
         pages: "Paginas",
         pricePost: "Precio",
         isResourceFree: "Recurso Gratuito",
+        about: "Acerca",
     },
 
     postLabels: {

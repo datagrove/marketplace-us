@@ -156,7 +156,7 @@ export const HomeStickyFilters: Component = () => {
     // const [selectSubjects, setSelectedSubjects] = createSignal<Array<{ product_subject: string; id: number }>>([]);
 
     return (
-        <div class="sticky top-0 z-50">
+        <div class="sticky top-0 z-40">
             <div
                 id="top-sticky-filter"
                 class="sticky top-0 flex w-full items-center justify-center bg-background2 py-1 dark:bg-background2-DM"
@@ -177,7 +177,7 @@ export const HomeStickyFilters: Component = () => {
                     <div
                         onmouseleave={hideGradeFilters}
                         id="gradeDiv"
-                        class="absolute top-8 z-50 hidden h-64 w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-8 z-40 hidden h-64 w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
                         <p class="px-2">Add Grades here</p>
                     </div>
@@ -193,7 +193,7 @@ export const HomeStickyFilters: Component = () => {
                     <div
                         onmouseleave={hideSubjectFilters}
                         id="subjectDiv"
-                        class="absolute top-8 z-50 hidden rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-8 z-40 hidden rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
                         {/* <p class="px-2">Add Subjects here</p> */}
                         <For each={subjects()}>
@@ -245,7 +245,7 @@ export const HomeStickyFilters: Component = () => {
                     <div
                         onmouseleave={hideResourceTypeFilters}
                         id="resourceTypeDiv"
-                        class="absolute top-8 z-50 hidden h-64 w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-8 z-40 hidden h-64 w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
                         <p class="px-2">Add Resource Types here</p>
                     </div>

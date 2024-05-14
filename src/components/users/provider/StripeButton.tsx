@@ -11,6 +11,11 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+if (User.session === null) {
+    console.log("User is null");
+    alert(t("messages.signIn"));
+    location.href = `/${lang}/login`;
+}
 
 const { data: stripeData, error: stripeError } = await supabase
     .from("sellers")
@@ -43,7 +48,7 @@ export const StripeButton = () => {
         createSignal<boolean>(stripeAcctSetup);
 
     if (User.session === null) {
-        // console.log("User don't exist");
+        //User is null
     } else {
         setIsUser(User.session!.user.role === "authenticated");
     }
