@@ -38,6 +38,8 @@ if (stripeData === null || stripeData.length === 0) {
 }
 const stripeId = stripeData![0].stripe_connected_account_id;
 
+
+//Check if Stripe account has been set up, TODO: May want to check if we should change this to check for capabilities vs charges_enabled.
 const stripeAcctSetup = await stripe.accounts.retrieve(stripeId).then((res) => {
     return res.charges_enabled;
 });

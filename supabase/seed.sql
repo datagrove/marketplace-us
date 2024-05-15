@@ -144,7 +144,7 @@ INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_
 --
 
 INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "image_url", "seller_id", "language_spoken", "stripe_connected_account_id") VALUES
-	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 3, NULL, NULL),
+	('2024-03-05 15:42:34.225911+00', 'German', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 3, NULL, 'acct_1Otw7FPdu3Mnre1j'),
 	('2024-03-19 19:37:25.638743+00', 'test test', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 4, NULL, 'acct_1Ow8TSB0tPFjRwUY'),
 	('2024-03-26 13:43:48.52652+00', 'Test2 Test', 'ec946adf-7315-4721-a238-ed600dd153d7', NULL, 5, NULL, 'acct_1OyaI4B1rj93e0iW'),
 	('2024-03-26 21:49:40.736227+00', 'Test test', 'df188225-8970-42a4-a54f-97b303c2b2ed', NULL, 6, NULL, 'acct_1OyhsGBGXYM1FOiH'),

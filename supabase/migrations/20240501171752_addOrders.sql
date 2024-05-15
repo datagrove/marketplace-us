@@ -11,7 +11,7 @@ create table "public"."orders" (
     "order_number" uuid not null default gen_random_uuid(),
     "order_date" timestamp with time zone not null default now(),
     "customer_id" uuid not null default auth.uid(),
-    "order_status" text not null default ''::text
+    "order_status" boolean not null default FALSE
 );
 
 

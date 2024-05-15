@@ -44,6 +44,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             userId: response.userId,
             orderId: response.orderId,
         },
+        consent_collection: { terms_of_service: "required", promotions: "auto" },
+        payment_intent_data: {
+            transfer_group: response.orderId
+        }
     });
 
     // If everything works send a success response
