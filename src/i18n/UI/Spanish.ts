@@ -107,6 +107,7 @@ export const Spanish = {
         top: "Volver Arriba",
         freeDownload: "Descarga Gratis",
         addedToCart: "¡Añadido al carrito!",
+        resetPassword: "Restablecer la Contraseña",
     },
 
   messages: {
@@ -161,6 +162,7 @@ export const Spanish = {
     report: "Reportar este recurso a LearnGrove",
     free: "GRATIS",
     freeResourceCreated: "¡Recurso gratuito creado!",
+    noPurchasedItems: "Parece que aún no has comprado nada. ¡Ies hora de empezar a comprar!",
   },
 
 
@@ -250,6 +252,9 @@ export const Spanish = {
     details: "Detalles",
     description: "Descripción",
     qA: "Sección de Preguntas",
+    purchases: "Compras",
+    favorites: "Favoritas",
+    following: "Siguiente",
   },
 
     toolTips: {

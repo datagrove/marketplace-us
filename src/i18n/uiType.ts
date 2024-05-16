@@ -96,6 +96,7 @@ export interface uiObject {
         top: string;
         freeDownload: string;
         addedToCart: string;
+        resetPassword: string;
     };
 
   messages: {
@@ -141,6 +142,7 @@ export interface uiObject {
     report: string;
     free: string;
     freeResourceCreated: string;
+    noPurchasedItems: string;
   },
 
 
@@ -229,7 +231,10 @@ export interface uiObject {
     reviews: string;
     details: string;
     description: string;
-     qA: string;
+    qA: string;
+    purchases: string;
+    favorites: string;
+    following: string;
   };
 
     toolTips: {

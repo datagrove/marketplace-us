@@ -108,6 +108,7 @@ export const English = {
         top: "Back to Top",
         freeDownload: "Free Download",
         addedToCart: "Added to Cart!",
+        resetPassword: "Reset Password",
     },
 
   messages: {
@@ -148,7 +149,7 @@ export const English = {
     todoFetch: "Todo, the service dog, will fetch you the services you need!",
     mustSignIn: "You must be signed in to view available services.",
     profileEdits:
-      "Profile edits will only be saved after clicking the Save Profile button!",
+      "Profile edits will only be saved after clicking the save button",
     noClient: "No Client found.",
     noPostsSearch:
       "No posts match this specific search - please try a different filter or key word",
@@ -160,6 +161,7 @@ export const English = {
     report: "Report this resource to LearnGrove",
     free: "FREE",
     freeResourceCreated: "Free Resource Created!",
+    noPurchasedItems: "Looks like you haven't purchased anything yet - time to get shopping!",
   },
 
     formLabels: {
@@ -248,6 +250,9 @@ export const English = {
     details: "Details",
     description: "Description",
     qA: "Q&A",
+    purchases: "Purchases",
+    favorites: "Favorites",
+    following: "Following",
   },
 
 

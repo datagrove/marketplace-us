@@ -109,6 +109,7 @@ export const French = {
         top: "Retour au Sommet",
         freeDownload: "Téléchargement Gratuit",
         addedToCart: "Ajouté au panier !",
+        resetPassword: "Réinitialiser le Mot de Passe",
     },
 
   messages: {
@@ -165,6 +166,7 @@ export const French = {
     report: "Signaler cette ressource à LearnGrove",
     free: "Gratuit",
     freeResourceCreated: "Ressource gratuite créée !",
+    noPurchasedItems: "On dirait que vous n’avez encore rien acheté. Il est temps de faire du shopping!",
   },
 
     formLabels: {
@@ -253,6 +255,9 @@ export const French = {
     details: "Détails",
     description: "Description",
     qA: "Questions/Réponses",
+    purchases: "Achats",
+    favorites: "Favoris",
+    following: "Suivante",
   },
 
     toolTips: {

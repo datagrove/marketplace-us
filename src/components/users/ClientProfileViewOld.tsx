@@ -251,8 +251,8 @@ export const ClientProfileView: Component = () => {
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
     return (
-        <div class="">
-            <div class="text-center text-xl font-bold italic text-alert1 dark:text-alert1-DM">
+        <div class="border-2 border-blue-400">
+            <div class="text-center text-2xl font-bold italic text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">
                         {t("messages.profileEdits")}
@@ -261,7 +261,7 @@ export const ClientProfileView: Component = () => {
             </div>
             <div class="m-auto md:max-w-max">
                 {/* Left column for md+ View */}
-                <div class="justify-center border border-border1 dark:border-border1-DM md:mt-4 md:h-fit md:px-4 md:pb-4 md:drop-shadow-lg">
+                <div class="justify-center rounded-md border border-border1 dark:border-border1-DM md:mt-4 md:h-fit md:px-4 md:pb-4 md:drop-shadow-lg">
                     <form onSubmit={submit} id="editProfile">
                         {/* Container for Mobile View */}
                         <Show when={screenSize() === "sm"}>
@@ -276,23 +276,72 @@ export const ClientProfileView: Component = () => {
                         {/* Profile Information for md+ View */}
                         <Show when={screenSize() !== "sm"}>
                             <div class="hidden md:block">
-                                <div class="first-name border-2 border-red-500">
+                                <div class="flex flex-row justify-between">
+                                    <h2 class="py-4 text-xl font-bold text-htext1 dark:text-htext1-DM">
+                                        {client()?.display_name == null
+                                            ? client()?.first_name +
+                                              " " +
+                                              client()?.last_name
+                                            : client()?.display_name}
+                                    </h2>
+                                    <div class="align-items-center flex items-center justify-center py-2">
+                                        <Show when={editMode() === false}>
+                                            <button
+                                                class="btn-primary"
+                                                onclick={enableEditMode}
+                                            >
+                                                {t("buttons.editProfile")}
+                                            </button>
+                                        </Show>
+                                    </div>
+                                </div>
+                                <div class="mb-3 flex justify-center">
+                                    <Show when={editMode() === false}>
+                                        <Show
+                                            when={
+                                                typeof clientImage() !==
+                                                "undefined"
+                                            }
+                                        >
+                                            <div class="relative h-48 w-48 justify-center overflow-hidden rounded-full border border-border1 object-contain dark:border-border1-DM md:h-48 md:w-48 lg:h-64 lg:w-64">
+                                                <img
+                                                    src={clientImage()}
+                                                    class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
+                                                    alt={`${t("postLabels.clientProfileImage")} 1`}
+                                                />
+                                                {/* TODO: Fix Internationalization */}
+                                            </div>
+                                        </Show>
+                                    </Show>
+                                    <Show when={editMode() === true}>
+                                        <UserImage
+                                            url={imageUrl()}
+                                            size={150}
+                                            onUpload={(
+                                                e: Event,
+                                                url: string
+                                            ) => {
+                                                setImageUrl(url);
+                                            }}
+                                        />
+                                    </Show>
+                                </div>
+
+                                <div class="first-name flex flex-row flex-wrap justify-between">
                                     <label
                                         for="FirstName"
                                         class="text-ptext1 dark:text-ptext1-DM"
                                     >
                                         {t("formLabels.firstName")}:
                                     </label>
-
                                     <Show when={editMode() === false}>
                                         <p
                                             id="FirstName"
-                                            class="mb-4 w-full px-1"
+                                            class="mb-4 w-full rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
                                         >
                                             {client()?.first_name}
                                         </p>
                                     </Show>
-
                                     <Show when={editMode() === true}>
                                         <div class="group relative mr-2 flex items-center">
                                             <svg
@@ -567,7 +616,7 @@ export const ClientProfileView: Component = () => {
                                 </div>
                             </div>
                         </Show>
-{/* 
+
                         <Show when={editMode() === true}>
                             <div class="align-items-center mb-2 mt-4 flex items-center justify-center">
                                 <button
@@ -578,7 +627,7 @@ export const ClientProfileView: Component = () => {
                                     {t("buttons.saveProfile")}
                                 </button>
                             </div>
-                        </Show> */}
+                        </Show>
 
                         <Suspense>
                             {response() && (
@@ -589,14 +638,11 @@ export const ClientProfileView: Component = () => {
                         </Suspense>
                     </form>
                 </div>
-                <Show when={ screenSize() !== "sm"}>
-                    <div>
-                        {/* TODO: Clean up internationalize, probably make new cards  */}
-                        Purchases:
-                        <ViewCard posts={purchasedItems()} />
-                    </div>
-                </Show>
-                
+                <div>
+                    {/* TODO: Clean up internationalize, probably make new cards  */}
+                    Purchases:
+                    <ViewCard posts={purchasedItems()} />
+                </div>
             </div>
         </div>
     );
