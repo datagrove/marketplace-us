@@ -110,57 +110,58 @@ export const English = {
         addedToCart: "Added to Cart!",
     },
 
-  messages: {
-    noAccount: "Don't have an account? Click here to ",
-    emailValid: "Valid email address",
-    emailLackRequirements: "Email does not meet requirements",
-    passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
-    passwordValid: "Valid password",
-    passwordLackRequirements: "Password does not meet requirements",
-    phoneLackRequirements: "Please enter a valid phone number.",
-    phoneValid: "Valid phone number",
-    passwordMatch: "Passwords do not match",
-    passwordReset: "Password Reset",
-    forgotPassword: "Forgot your password? Click here to",
-    alreadyAccount: "Already have an account? Click here to",
-    error404: "Something went wrong",
-    onlyProvider: "Only providers can create posts.",
-    signInAsProvider: "Please create a provider profile before posting.",
-    checkEmail:
-      "Check your email for the reset link! If you did not receive the email, please check your spam folder. Links are valid for 24 hours.",
-    checkConfirmEmail:
-      "If this email is not already registered, you will receive an email confirmation link. Please check your spam folder if you did not receive the email. Links are valid for 24 hours.",
-    signIn: "Please sign in to access this page.",
-    createProviderAccount: "Please sign in to create a provider profile.",
-    createClientAccount: "Please sign in to create a client profile.",
-    viewProviderAccount:
-      "You do not have a provider profile. Please create one to view your provider profile.",
-    noPosts: "No posts available.",
-    noPost: "Post Not Found",
-    selectAnImage: "You must select an image to upload.",
-    noProvider: "No Provider found.",
-    translation: `Translations`,
-    translations:
-      " are provided for convenience only. The official binding language is Spanish.",
-    clickWrap1: "By clicking",
-    clickWrap2: "you are indicating that you have read and agree to the",
-    fetch: "Fetch Services",
-    todoFetch: "Todo, the service dog, will fetch you the services you need!",
-    mustSignIn: "You must be signed in to view available services.",
-    profileEdits:
-      "Profile edits will only be saved after clicking the Save Profile button!",
-    noClient: "No Client found.",
-    noPostsSearch:
-      "No posts match this specific search - please try a different filter or key word",
-    noStripeAccount:
-      "You must complete enrollment with Stripe before posting resources.",
-    selectSubject: "Please select at least one subject",
-    comingSoon: "Coming soon!",
-    emailNotProvided: "Email not provided",
-    report: "Report this resource to LearnGrove",
-    free: "FREE",
-    freeResourceCreated: "Free Resource Created!",
-  },
+    messages: {
+        noAccount: "Don't have an account? Click here to ",
+        emailValid: "Valid email address",
+        emailLackRequirements: "Email does not meet requirements",
+        passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
+        passwordValid: "Valid password",
+        passwordLackRequirements: "Password does not meet requirements",
+        phoneLackRequirements: "Please enter a valid phone number.",
+        phoneValid: "Valid phone number",
+        passwordMatch: "Passwords do not match",
+        passwordReset: "Password Reset",
+        forgotPassword: "Forgot your password? Click here to",
+        alreadyAccount: "Already have an account? Click here to",
+        error404: "Something went wrong",
+        onlyProvider: "Only providers can create posts.",
+        signInAsProvider: "Please create a provider profile before posting.",
+        checkEmail:
+            "Check your email for the reset link! If you did not receive the email, please check your spam folder. Links are valid for 24 hours.",
+        checkConfirmEmail:
+            "If this email is not already registered, you will receive an email confirmation link. Please check your spam folder if you did not receive the email. Links are valid for 24 hours.",
+        signIn: "Please sign in to access this page.",
+        createProviderAccount: "Please sign in to create a provider profile.",
+        createClientAccount: "Please sign in to create a client profile.",
+        viewProviderAccount:
+            "You do not have a provider profile. Please create one to view your provider profile.",
+        noPosts: "No posts available.",
+        noPost: "Post Not Found",
+        selectAnImage: "You must select an image to upload.",
+        noProvider: "No Provider found.",
+        translation: `Translations`,
+        translations:
+            " are provided for convenience only. The official binding language is Spanish.",
+        clickWrap1: "By clicking",
+        clickWrap2: "you are indicating that you have read and agree to the",
+        fetch: "Fetch Services",
+        todoFetch:
+            "Todo, the service dog, will fetch you the services you need!",
+        mustSignIn: "You must be signed in to view available services.",
+        profileEdits:
+            "Profile edits will only be saved after clicking the Save Profile button!",
+        noClient: "No Client found.",
+        noPostsSearch:
+            "No posts match this specific search - please try a different filter or key word",
+        noStripeAccount:
+            "You must complete enrollment with Stripe before posting resources.",
+        selectSubject: "Please select at least one subject",
+        comingSoon: "Coming soon!",
+        emailNotProvided: "Email not provided",
+        report: "Report this resource to LearnGrove",
+        free: "FREE",
+        freeResourceCreated: "Free Resource Created!",
+    },
 
     formLabels: {
         title: "Title",
@@ -203,6 +204,7 @@ export const English = {
         pricePost: "Price",
         isResourceFree: "Free Resource",
         about: "About",
+        platformSupport: "Platform Support",
     },
 
     postLabels: {
@@ -235,21 +237,20 @@ export const English = {
         ariaLabel: "Placeholder info image",
     },
 
-  menus: {
-    resources: "Find Resources",
-    contactUs: "Contact Us",
-    profile: "Profile",
-    ratingsReviews: "Ratings and Reviews",
-    questions: "Questions",
-    freeDownload: "Free Download",
-    providerResources: "Resources",
-    payouts: "My Payouts",
-    reviews: "Reviews",
-    details: "Details",
-    description: "Description",
-    qA: "Q&A",
-  },
-
+    menus: {
+        resources: "Find Resources",
+        contactUs: "Contact Us",
+        profile: "Profile",
+        ratingsReviews: "Ratings and Reviews",
+        questions: "Questions",
+        freeDownload: "Free Download",
+        providerResources: "Resources",
+        payouts: "My Payouts",
+        reviews: "Reviews",
+        details: "Details",
+        description: "Description",
+        qA: "Q&A",
+    },
 
     toolTips: {
         providerPhone:
@@ -279,6 +280,8 @@ export const English = {
         subjects:
             "Please select all the subjects covered by your resource. These will be used for filtering of resources for shoppers.",
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
+        contribution:
+            "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your provider profile. If you set platform support to 0% you will still be charged for processing fees.",
     },
 
     apiErrors: {

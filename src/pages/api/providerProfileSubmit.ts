@@ -18,6 +18,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     //set the formData fields to variables
     const access_token = formData.get("access_token");
     const refresh_token = formData.get("refresh_token");
+    const contribution = formData.get("contribution");
 
     // const firstName = formData.get("FirstName");
     // const lastName = formData.get("LastName");
@@ -95,6 +96,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         seller_name: providerName,
         user_id: user.id,
         image_url: imageUrl,
+        contribution: contribution,
     };
 
     //submit to the providers table and select it back

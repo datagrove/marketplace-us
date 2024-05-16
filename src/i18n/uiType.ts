@@ -186,6 +186,7 @@ export interface uiObject {
         pricePost: string;
         isResourceFree: string;
         about: string;
+        platformSupport: string;
     };
 
     postLabels: {
@@ -247,6 +248,7 @@ export interface uiObject {
         languages: string;
         subjects: string;
         grades: string;
+        contribution: string;
     };
 
     apiErrors: {

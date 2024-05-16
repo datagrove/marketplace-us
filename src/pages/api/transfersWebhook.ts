@@ -71,21 +71,30 @@ export const POST: APIRoute = async function ({ request }: any) {
                         const transfers = await getOrderDetails(
                             data.metadata!.orderId
                         );
-                        transfers?.map(async (transfer) => {
-                            if (
-                                transfer.price &&
-                                transfer.connected_account &&
-                                charge
-                            ) {
-                                createTransfer(
-                                    //set the transfer amount as 80% of the price*quantity
-                                    transfer.price * transfer.quantity * 0.8,
-                                    transfer.connected_account,
-                                    transfer.order_number,
-                                    charge
-                                );
-                            }
-                        });
+
+                        if (transfers) {
+                            const baseFee = 0.3 / transfers.length;
+
+                            transfers.map(async (transfer) => {
+                                if (
+                                    transfer.price &&
+                                    transfer.connected_account &&
+                                    charge &&
+                                    transfer.contribution
+                                ) {
+                                    createTransfer(
+                                        //set the transfer amount as 80% of the price*quantity
+                                        (transfer.price *
+                                    transfer.quantity *
+                                    0.96 - baseFee) *
+                                    (1 - transfer.contribution / 100),
+                                        transfer.connected_account,
+                                        transfer.order_number,
+                                        charge
+                                    );
+                                }
+                            });
+                        }
                     } catch (err) {
                         console.log(err);
                     }
@@ -93,44 +102,51 @@ export const POST: APIRoute = async function ({ request }: any) {
                 }
             }
             case "checkout.session.async_payment_succeeded": {
+                try {
+                    await supabase
+                        .from("orders")
+                        .update({
+                            order_status: true,
+                        })
+                        .eq("order_number", data.metadata!.orderId);
 
-                    try {
-                        await supabase
-                            .from("orders")
-                            .update({
-                                order_status: true,
-                            })
-                            .eq("order_number", data.metadata!.orderId);
+                    //Get Charge Id
+                    const charge = (
+                        await stripe().paymentIntents.retrieve(
+                            data.payment_intent as string
+                        )
+                    ).latest_charge as string;
 
-                        //Get Charge Id
-                        const charge = (
-                            await stripe().paymentIntents.retrieve(
-                                data.payment_intent as string
-                            )
-                        ).latest_charge as string;
+                    const transfers = await getOrderDetails(
+                        data.metadata!.orderId
+                    );
+                    if (transfers) {
+                        const baseFee = 0.3 / transfers.length;
 
-                        const transfers = await getOrderDetails(
-                            data.metadata!.orderId
-                        );
-                        transfers?.map(async (transfer) => {
+                        transfers.map(async (transfer) => {
                             if (
                                 transfer.price &&
                                 transfer.connected_account &&
-                                charge
+                                charge &&
+                                transfer.contribution
                             ) {
                                 createTransfer(
-                                    //set the transfer amount as 80% of the price*quantity
-                                    transfer.price * transfer.quantity * 0.8,
+                                    //set the transfer amount as 96% of the price*quantity - base fee and voluntary contribution
+                                    (transfer.price *
+                                transfer.quantity *
+                                0.96 - baseFee) *
+                                (1 - transfer.contribution / 100),
                                     transfer.connected_account,
                                     transfer.order_number,
                                     charge
                                 );
                             }
                         });
-                    } catch (err) {
-                        console.log(err);
                     }
-                    break;
+                } catch (err) {
+                    console.log(err);
+                }
+                break;
             }
             default:
                 console.log(`Unhandled event type ${event.type}`);
@@ -228,7 +244,7 @@ async function getOrderDetails(orderId: string) {
     //Get the seller's stripe connected account id and add it to the orderedProducts
     const { data: sellers, error: sellersError } = await supabase
         .from("sellers")
-        .select("user_id, stripe_connected_account_id")
+        .select("user_id, stripe_connected_account_id, contribution")
         .in(
             "user_id",
             orderedProducts.map((item) => item.user_id)
@@ -251,7 +267,8 @@ async function getOrderDetails(orderId: string) {
         quantity: number;
         price: number | null;
         connected_account: string;
-    }[] = [];
+        contribution: number;
+    }[];
 
     transfers = orderedProducts.map((orderedProduct) => {
         const seller = sellers?.find(
@@ -261,11 +278,13 @@ async function getOrderDetails(orderId: string) {
             return {
                 ...orderedProduct,
                 connected_account: seller.stripe_connected_account_id,
+                contribution: seller.contribution,
             };
         } else {
             return {
                 ...orderedProduct,
                 connected_account: "",
+                contribution: null,
             };
         }
     });

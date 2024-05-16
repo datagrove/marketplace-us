@@ -65,7 +65,7 @@ export const ProviderProfileView: Component = () => {
         if (typeof session() === "undefined") {
             alert(t("messages.signIn"));
         }
-    })
+    });
 
     createEffect(() => {
         setSession(User.session);
@@ -757,8 +757,8 @@ export const ProviderProfileView: Component = () => {
                                         name="AboutContent"
                                         class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                                         rows="10"
-                                        required
                                         ref={mountTiny}
+                                        value={provider()?.seller_about}
                                     ></textarea>
                                 </div>
                             </Show>
@@ -782,6 +782,35 @@ export const ProviderProfileView: Component = () => {
                     </div>
 
                     <div id="providerViewPayouts" class="hidden">
+                        <div class="contribution my-2 flex">
+                            <label
+                                for="contribution"
+                                class="font-bold text-ptext1 dark:text-ptext1-DM"
+                            >
+                                {t("formLabels.platformSupport")}: &nbsp;
+                            </label>
+
+                            <Show when={editMode() === false}>
+                                <p id="contribution" class="px-1">
+                                    {provider()?.contribution}%
+                                </p>
+                            </Show>
+
+                            <Show when={editMode() === true}>
+                                <div class="">
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        max={100}
+                                        step={1}
+                                        id="contribution"
+                                        name="contribution"
+                                        class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                        value={provider()?.contribution}
+                                    />%
+                                </div>
+                            </Show>
+                        </div>
                         <StripeButton />
                     </div>
                 </div>

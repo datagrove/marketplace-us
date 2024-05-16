@@ -4,11 +4,11 @@
 
 @layer components {
     .btn-primary {
-        @apply max-h-14 rounded-full border-b-2 border-shadow-LM bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md shadow-shadow-LM hover:translate-y-0.5 dark:border-shadow-DM dark:bg-btn1-DM dark:text-btn1Text-DM dark:shadow-shadow-DM md:text-[1vw];
+        @apply cursor-pointer max-h-14 rounded-full bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md active:animate-click dark:bg-btn1-DM dark:text-btn1Text-DM md:text-[1vw];
     }
 
     .btn-secondary {
-        @apply max-h-14 rounded-full border border-btn1-DM fill-none px-4 py-2 text-btn1 shadow-md hover:translate-y-0.5 dark:text-btn1-DM md:text-[1vw];
+        @apply max-h-14 rounded-full border border-btn1-DM fill-none px-4 py-2 text-btn1 shadow-md active:animate-click dark:text-btn1-DM md:text-[1vw];
     }
 
     .btn-disabled {

@@ -206,6 +206,7 @@ export const Spanish = {
         pricePost: "Precio",
         isResourceFree: "Recurso Gratuito",
         about: "Acerca",
+        platformSupport: "Soporte de plataforma",
     },
 
     postLabels: {
@@ -280,6 +281,7 @@ export const Spanish = {
         subjects:
             "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
         grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
+        contribution: "Elige qué porcentaje de tu precio puedes contribuir al mantenimiento y desarrollo de la plataforma. Plataformas similares se llevan entre el 11% y el 45% de tus ventas. Queremos darle el poder de respaldar la plataforma en función del valor que proporciona. ¿No estás seguro de la cantidad correcta? Recomendamos comenzar con el 15%, puedes actualizarlo más adelante en tu perfil de proveedor.",
     },
 
     apiErrors: {

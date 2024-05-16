@@ -208,6 +208,7 @@ export const French = {
         pricePost: "Le Prix",
         isResourceFree: "ressource gratuite",
         about: "À propos",
+        platformSupport: "Prise en charge de la plateforme",
     },
 
     postLabels: {
@@ -283,6 +284,7 @@ export const French = {
         subjects:
             "Veuillez sélectionner tous les sujets couverts par votre ressource. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
         grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
+        contribution: "Choisissez quel pourcentage de votre prix vous pouvez contribuer à la maintenance et au développement de la plateforme. Les plateformes similaires représentent entre 11 % et 45 % de vos ventes. Nous voulons vous donner le pouvoir de prendre en charge la plateforme en fonction de la valeur qu'elle apporte. Vous ne savez pas quel est le bon montant ? Nous vous recommandons de commencer à 15 %, vous pourrez le mettre à jour ultérieurement dans votre profil de fournisseur.",
     },
 
     apiErrors: {
