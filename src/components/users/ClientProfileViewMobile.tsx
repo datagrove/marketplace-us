@@ -538,7 +538,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                     </div>
 
                     <div>
-                        <Show when={ props.editMode === false }>
+                        <Show when={ props.editMode === true }>
                             <button class="font-bold" onClick={ resetPassword } >
                                 {t("buttons.resetPassword")}
                             </button>
