@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, Show } from "solid-js";
 import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { Quantity } from "@components/common/cart/Quantity";
@@ -217,10 +217,14 @@ export const CartCardMobile: Component<Props> = (props) => {
                                     </div>
                                     <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2">
                                         {/* Price */}
-                                        {"$" +
-                                            (
+                                        <Show when={item.price}>
+                                            ${(
                                                 item.price * item.quantity
                                             ).toFixed(2)}
+                                        </Show>
+                                        <Show when={!item.price}>
+                                            {t("messages.free")}
+                                        </Show>
                                     </div>
                                     <div class="col-start-7 row-start-3  place-content-center text-end">
                                         {/* Remove All from Cart */}

@@ -16,22 +16,6 @@ import { items, setItems } from "@components/common/cart/AddToCartButton";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-console.log("Items to send to checkout: ");
-console.log(items);
-
-// async function fetchClientCheckoutSecret(orderId: string){
-//   const response = await fetch("/api/createStripeCheckout", {
-//     method: "POST",
-//     body: JSON.stringify({
-//       items: items,
-//       userId: User.session?.user.id,
-//       orderId: orderId
-//     })
-//   });
-//   const { clientSecret } = await response.json();
-//   return clientSecret
-// }
-
 const stripe = await loadStripe(import.meta.env.PUBLIC_VITE_STRIPE_PUBLIC_KEY);
 
 if (stripe === null) {
@@ -40,6 +24,8 @@ if (stripe === null) {
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
+const donation_amount = localStorage.getItem("donation_amount");
 
 export const CheckoutView = () => {
     const [totalItems, setTotalItems] = createSignal(0);
@@ -50,10 +36,6 @@ export const CheckoutView = () => {
     const [orderId, setOrderId] = createSignal<string>("");
 
     onMount(async () => {
-        // setUser(User.session!.user.role === "authenticated");
-        // if (user() === false) {
-
-        // }
         await createOrder();
         await fetchClientCheckoutSecret();
         await mountCheckout();
@@ -66,6 +48,7 @@ export const CheckoutView = () => {
                 items: items,
                 userId: User.session?.user.id,
                 orderId: orderId(),
+                donation_amount: donation_amount,
             }),
         });
         const { clientSecret } = await response.json();

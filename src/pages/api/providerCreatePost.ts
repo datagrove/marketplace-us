@@ -41,7 +41,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         !content ||
         !gradeLevel ||
         !resourceUrl ||
-        (price !== null && !tax_code) ||
+        !tax_code ||
         price === ""
     ) {
         return new Response(

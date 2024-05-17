@@ -128,15 +128,16 @@ INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_
 --
 
  INSERT INTO "public"."seller_post" ("id", "created_at", "title", "content", "user_id", "image_urls", "stripe_price_id", "stripe_product_id", "product_subject", "post_grade") VALUES
-	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', 'Content of the first post',  '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala', '{1, 2, 3}', '{1, 2, 3}'),
-	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', 'k10 geography course', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU', '{2,6,7}', '{1}'),
-	(3, '2024-03-05 21:52:06.919336+00', 'Math course', 'math course for k12', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J', '{3}', '{1}'),
-	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', 'Content for the second post', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo', '{1}', '{1}'),
-	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', 'learn programming', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp', '{3 ,4, 5}', '{1, 4, 6}'),
+	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>',  '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala', '{1, 2, 3}', '{1, 2, 3}'),
+	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU', '{2,6,7}', '{1}'),
+	(3, '2024-03-05 21:52:06.919336+00', 'Math course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J', '{3}', '{1}'),
+	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo', '{1}', '{1}'),
+	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', '<p>test learn programming</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp', '{3 ,4, 5}', '{1, 4, 6}'),
 	(7, '2024-03-27 14:25:37.137856+00', 'Test', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', NULL, 'price_1OyxQ5BRZLMDvS4RJ1oWeAIj', 'prod_PoabbRuN1tqxj0', '{7}', '{1}'),
 	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK', '{5}', '{1}'),
 	(11, '2024-03-27 15:50:36.102267+00', 'New Test', '<p>Test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR', '{6}', '{1}'),
-	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89', '{4}', '{1}');
+	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89', '{4}', '{1}'),
+	(13, '2024-05-17 16:10:12.692569+00', 'Free Post Test', '<p>Test free post</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, NULL, NULL, '{3}', '{3}', '983a7d0e-ce17-4912-8e27-13c2ba57321c');
 
 
 --
@@ -156,7 +157,7 @@ INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "image_u
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 2, true);
+SELECT pg_catalog.setval('"auth"."refresh_tokens_id_seq"', 4, true);
 
 
 --
@@ -186,6 +187,12 @@ SELECT pg_catalog.setval('"public"."Location_id_seq"', 15, true);
 
 SELECT pg_catalog.setval('"public"."governing_district_id_seq"', 1, false);
 
+--
+-- Name: grade_level_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"public"."grade_level_id_seq"', 16, true);
+
 
 --
 -- Name: language_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
@@ -207,13 +214,17 @@ SELECT pg_catalog.setval('"public"."major_municipality_id_seq"', 51, true);
 
 SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 
+--
+-- Name: post_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
 
+SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 8, true);
 
 --
 -- Name: seller_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."seller_post_id_seq"', 12, true);
+SELECT pg_catalog.setval('"public"."seller_post_id_seq"', 13, true);
 
 
 --

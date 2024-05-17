@@ -350,8 +350,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             when={
                                                 (session() === null ||
                                                     session()?.user.id !==
-                                                        post.user_id) &&
-                                                post.price !== undefined
+                                                        post.user_id) 
                                             }
                                         >
                                             <AddToCart
@@ -361,7 +360,7 @@ export const ViewCard: Component<Props> = (props) => {
                                         </Show>
                                         {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
 
-                                        <Show
+                                        {/* <Show
                                             when={
                                                 (session() === null ||
                                                     session()?.user.id !==
@@ -370,7 +369,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             }
                                         >
                                             <DownloadBtn />
-                                        </Show>
+                                        </Show> */}
                                         <div class="relative col-span-1 flex w-full justify-end align-top">
                                             <div class="inline-block">
                                                 <DeletePostButton

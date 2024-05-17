@@ -27,12 +27,23 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const lineItems: [] = items.map((item: Post) => {
+    let lineItems: any[] = items.map((item: Post) => {
         return {
             price: item.price_id,
             quantity: item.quantity,
         };
     });
+
+    lineItems.push({
+        price_data: {
+            currency: "usd",
+            // Need to capture the donation amount
+            unit_amount: response.donation_amount * 100,
+            product: 'prod_Q7jrvANf1W8KVn',
+            tax_behavior: "exclusive",
+        },
+        quantity: 1,
+    })
 
     const session = await stripe.checkout.sessions.create({
         ui_mode: "embedded",
