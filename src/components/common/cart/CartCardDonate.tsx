@@ -48,7 +48,19 @@ export const CartCardDonate: Component<Props> = (props) => {
                                     </p>
                                 </div>
                                 <div class="col-span-4 col-start-1 flex items-center">
-                                    <div class="inline-block">
+                                <button class="btn-primary" onclick={() => setDonation(10)}>
+                                            $10
+                                        </button>
+                                        <button class="btn-primary" onclick={() => setDonation(15)}>
+                                            $15
+                                        </button>
+                                        <button class="btn-primary" onclick={() => setDonation(25)}>
+                                            $25
+                                        </button>
+                                        <button class="btn-primary" onclick={() => setDonation(50)}>
+                                            $50
+                                        </button>
+                                    {/* <div class="inline-block">
                                         <img
                                             src={
                                                 "src/assets/LearnGroveLogoBWNoText.svg"
@@ -60,7 +72,7 @@ export const CartCardDonate: Component<Props> = (props) => {
                                     </div>
                                     <p class="row-span-1 mb-1 inline-block overflow-hidden text-base text-ptext1 dark:text-ptext1-DM">
                                         LearnGrove
-                                    </p>
+                                    </p> */}
                                 </div>
                                 <div class="col-span-4 col-start-1 row-span-2 row-start-3 flex items-center">
                                     <p class=" prose mb-2 line-clamp-3 max-h-[60px] overflow-hidden text-sm text-ptext1 dark:prose-invert dark:text-ptext1-DM">
@@ -72,16 +84,15 @@ export const CartCardDonate: Component<Props> = (props) => {
                                         education accessible to all.
                                     </p>
                                 </div>
-                                <div class="col-span-1 col-start-7 row-start-1 flex justify-end">
+                                <div class="col-span-2 col-start-6 row-start-1 flex justify-end mx-3">
                                     {/* Price */}
                                     <p class="mr-2 place-content-center">$</p>
                                     <input
-                                        class="w-full flex rounded border border-border1 dark:border-border1-DM bg-background1 text-center text-ptext1 dark:bg-background1-DM dark:text-ptext1-DM"
+                                        class="flex w-full rounded border border-border1 bg-background1 text-center text-ptext1 dark:border-border1-DM dark:bg-background1-DM dark:text-ptext1-DM"
                                         type="number"
-                                        value={5}
                                         min={0}
                                         step={1}
-                                        placeholder="5"
+                                        value={donation()}
                                         oninput={(e => setDonation(Number((e.target as HTMLInputElement).value)))}
                                     />
                                 </div>

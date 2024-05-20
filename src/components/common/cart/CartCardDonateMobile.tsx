@@ -48,7 +48,16 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                         </p>
                                     </div>
                                     <div class="col-span-4 col-start-1 flex items-center">
-                                        <div class="inline-block">
+                                        <button class="btn-primary" onclick={() => setDonation(10)}>
+                                            $10
+                                        </button>
+                                        <button class="btn-primary" onclick={() => setDonation(15)}>
+                                            $15
+                                        </button>
+                                        <button class="btn-primary" onclick={() => setDonation(25)}>
+                                            $25
+                                        </button>
+                                        {/* <div class="inline-block">
                                             <img
                                                 src={
                                                     "src/assets/LearnGroveLogoBWNoText.svg"
@@ -60,7 +69,7 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                         </div>
                                         <p class="inline-block overflow-hidden text-sm text-ptext1 dark:text-ptext1-DM">
                                             LearnGrove
-                                        </p>
+                                        </p> */}
                                     </div>
                                     
                                     <div class="col-span-2 col-start-6 row-start-1 flex justify-end pl-2">
@@ -73,7 +82,7 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                             type="number"
                                             min={0}
                                             step={1}
-                                            placeholder="5"
+                                            value={donation()}
                                             oninput={(e) =>
                                                 setDonation(
                                                     Number(
