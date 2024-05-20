@@ -108,6 +108,8 @@ export const English = {
         top: "Back to Top",
         freeDownload: "Free Download",
         addedToCart: "Added to Cart!",
+        finishStripeSetup: "Go to Stripe Dashboard",
+        requestStripePayout: "Request Payout",
     },
 
     messages: {
@@ -161,6 +163,12 @@ export const English = {
         report: "Report this resource to LearnGrove",
         free: "FREE",
         freeResourceCreated: "Free Resource Created!",
+        insufficientStripeBalance:
+            "Insufficient Stripe balance, check your stripe dashboard for more information.",
+        payoutRequested: "Success! You have requested your Stripe payout of",
+        payoutSetup: "Please complete your Stripe account setup to proceed. Your account must have payouts enabled before you can request a payout. Click Go To Stripe Dashboard to complete this step.",
+        requestPayout: "Click the Request Payout button to request your Stripe payout. You will be charged $2.25 to your account balance and the remainder will be sent to your bank account or debit card based on your Stripe settings. For your most up to date Stripe Balance, please visit your stripe dashboard.",
+        currentBalance: "Your current balance is approximately:",
     },
 
     formLabels: {

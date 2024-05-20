@@ -6,6 +6,7 @@ import { Show, createSignal } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import stripe from "@lib/stripe";
 import { SITE } from "src/config";
+import { e } from "dist/_astro/web.BcDbsQ9z";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -55,7 +56,10 @@ export const StripeButton = () => {
         setIsUser(User.session!.user.role === "authenticated");
     }
 
-    async function stripeSetup() {
+    async function stripeSetup(e:Event) {
+        e.preventDefault()
+        e.stopPropagation()
+
         const accountLink = await stripe.accountLinks.create({
             account: stripeId,
             refresh_url: SITE.url + "/provider/profile",
@@ -65,7 +69,10 @@ export const StripeButton = () => {
         window.open(accountLink.url, "_blank");
     }
 
-    async function stripeLogin() {
+    async function stripeLogin(e:Event) {
+        e.preventDefault()
+        e.stopPropagation()
+
         const loginLink = await stripe.accounts.createLoginLink(stripeId);
         window.open(loginLink.url, "_blank");
     }
@@ -79,7 +86,7 @@ export const StripeButton = () => {
             return (
                 <div class="">
                     <button
-                        onclick={stripeSetup}
+                        onclick={(e) =>stripeSetup(e)}
                         class="mr-4 flex rounded-lg border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
                         aria-label={t("buttons.stripeSetup")}
                     >
@@ -95,7 +102,7 @@ export const StripeButton = () => {
             return (
                 <div class="">
                     <button
-                        onclick={stripeLogin}
+                        onclick={(e) => stripeLogin(e)}
                         class="mr-4 flex rounded-lg border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
                         aria-label={t("buttons.stripeLogin")}
                     >

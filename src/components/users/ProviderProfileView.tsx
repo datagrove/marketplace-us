@@ -17,7 +17,8 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { createStore } from "solid-js/store";
-import { StripeButton } from "./provider/StripeButton";
+import { StripeButton } from "@components/users/provider/StripeButton";
+import { PayoutButton } from "@components/users/provider/PayoutButton";
 import { MobileViewCard } from "@components/services/MobileViewCard";
 import type { Provider } from "@lib/types";
 import { TinyComp } from "@components/posts/TinyComp";
@@ -812,6 +813,7 @@ export const ProviderProfileView: Component = () => {
                             </Show>
                         </div>
                         <StripeButton />
+                        <PayoutButton />
                     </div>
                 </div>
                 <Suspense>

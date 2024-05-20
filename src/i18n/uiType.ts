@@ -96,6 +96,8 @@ export interface uiObject {
         top: string;
         freeDownload: string;
         addedToCart: string;
+        finishStripeSetup: string;
+        requestStripePayout: string;
     };
 
   messages: {
@@ -141,6 +143,11 @@ export interface uiObject {
     report: string;
     free: string;
     freeResourceCreated: string;
+    insufficientStripeBalance: string;
+    payoutRequested: string;
+    payoutSetup: string;
+    requestPayout: string;
+    currentBalance: string;
   },
 
 
