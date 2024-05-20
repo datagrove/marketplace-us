@@ -61,6 +61,9 @@ export const CartView = () => {
         if (amount > 0) {
             localStorage.setItem("donation_amount", amount.toString());
             setDonation(amount);
+        } else {
+            localStorage.setItem("donation_amount", "0");
+            setDonation(0);
         }
     }
 
@@ -88,12 +91,12 @@ export const CartView = () => {
                                 items={items}
                                 deleteItem={updateCards}
                             />
-                            <CartCardDonateMobile
+                            {/* <CartCardDonateMobile
                                 onSetDonation={updateDonation}
-                            />
+                            /> */}
                         </Show>
                         <Show when={screenSize() !== "sm"}>
-                            <CartCardDonate onSetDonation={updateDonation} />
+                            {/* <CartCardDonate onSetDonation={updateDonation} /> */}
                             <CartCard items={items} deleteItem={updateCards} />
                         </Show>
                     </div>
@@ -107,17 +110,17 @@ export const CartView = () => {
                     <div class="pb-4 text-2xl font-bold md:mr-14 md:border-b">
                         {t("cartLabels.emptyCart")}
                         <div class="p-2">
-                        <button class="btn-primary w-full whitespace-nowrap">
-                            {t("menus.resources")}
-                        </button>
+                            <button class="btn-primary whitespace-nowrap sm:w-full md:w-1/3">
+                                {t("menus.resources")}
+                            </button>
                         </div>
                     </div>
-                    <Show when={screenSize() === "sm"}>
+                    {/* <Show when={screenSize() === "sm"}>
                         <CartCardDonateMobile onSetDonation={updateDonation} />
                     </Show>
                     <Show when={screenSize() !== "sm"}>
                         <CartCardDonate onSetDonation={updateDonation} />
-                    </Show>
+                    </Show> */}
                 </div>
             );
         }
@@ -127,6 +130,14 @@ export const CartView = () => {
         <div class="flex flex-col md:grid md:grid-cols-3">
             <div class="col-span-2 mb-10 inline-block">
                 <div>{shoppingCart()}</div>
+                <div>
+                    <Show when={screenSize() === "sm"}>
+                        <CartCardDonateMobile onSetDonation={updateDonation} />
+                    </Show>
+                    <Show when={screenSize() !== "sm"}>
+                        <CartCardDonate onSetDonation={updateDonation} />
+                    </Show>
+                </div>
             </div>
             <div class="sticky bottom-[110px] z-40 justify-center bg-background1 px-2 pb-3 dark:bg-background1-DM md:col-span-1 md:inline-block md:px-0">
                 <div class="mb-2 text-start text-xl">

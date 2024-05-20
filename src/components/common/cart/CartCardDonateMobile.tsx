@@ -71,7 +71,6 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                         <input
                                             class="flex w-full rounded border border-border1 bg-background1 text-center text-ptext1 dark:border-border1-DM dark:bg-background1-DM dark:text-ptext1-DM"
                                             type="number"
-                                            value={5}
                                             min={0}
                                             step={1}
                                             placeholder="5"
