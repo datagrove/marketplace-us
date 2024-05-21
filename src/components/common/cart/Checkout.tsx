@@ -29,17 +29,29 @@ const donation_amount = localStorage.getItem("donation_amount");
 
 export const CheckoutView = () => {
     const [totalItems, setTotalItems] = createSignal(0);
-    const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
-    const [cartTotal, setCartTotal] = createSignal(0);
-    const [oldItems, setOldItems] = createSignal<Post[]>([]);
-    const [user, setUser] = createSignal<boolean>(false);
     const [orderId, setOrderId] = createSignal<string>("");
+    const [orderTotal, setOrderTotal] = createSignal<number>(0);
+    const [zeroOrder, setZeroOrder] = createSignal<boolean>(false);
 
     onMount(async () => {
+        console.log(items)
         await createOrder();
+        await getTotal();
         await fetchClientCheckoutSecret();
         await mountCheckout();
     });
+
+    async function getTotal () {
+        let total = 0
+        items.map((item) => {
+            total += item.price * item.quantity
+        })
+        total += donation_amount ? parseInt(donation_amount) : 0 
+        setOrderTotal(total)
+        if (orderTotal() === 0) {
+            setZeroOrder(true)
+        }
+    }
 
     async function fetchClientCheckoutSecret() {
         const response = await fetch("/api/createStripeCheckout", {
@@ -49,6 +61,7 @@ export const CheckoutView = () => {
                 userId: User.session?.user.id,
                 orderId: orderId(),
                 donation_amount: donation_amount,
+                zeroOrder: zeroOrder(),
             }),
         });
         const { clientSecret } = await response.json();
@@ -61,6 +74,7 @@ export const CheckoutView = () => {
             count += item.quantity;
         });
         setTotalItems(count);
+        getTotal();
     });
 
     async function createOrder() {

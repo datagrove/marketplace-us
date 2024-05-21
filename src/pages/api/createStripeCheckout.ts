@@ -8,8 +8,11 @@ import type { Post } from "@lib/types";
 export const POST: APIRoute = async ({ request, redirect }) => {
     const response = await request.json();
     const items = response.items;
+    const zeroOrder = response.zeroOrder;
     console.log("checkout items: " + items);
     console.log("user Id: " + response.userId);
+
+
 
     //Just console.log the formData for troubleshooting
     //   const lang = formData.get("lang");
@@ -50,7 +53,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         line_items: lineItems,
         mode: "payment",
         return_url: `${SITE.devUrl}/return.html?session_id={CHECKOUT_SESSION_ID}`,
-        automatic_tax: { enabled: true },
+        automatic_tax: { enabled: !zeroOrder },
         metadata: {
             userId: response.userId,
             orderId: response.orderId,
@@ -58,7 +61,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         consent_collection: { terms_of_service: "required", promotions: "auto" },
         payment_intent_data: {
             transfer_group: response.orderId
-        }
+        },
+        billing_address_collection: "auto",
     });
 
     // If everything works send a success response

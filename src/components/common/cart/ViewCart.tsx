@@ -28,7 +28,6 @@ export const CartView = () => {
     const [totalItems, setTotalItems] = createSignal(0);
     const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
     const [cartTotal, setCartTotal] = createSignal(0);
-    const [oldItems, setOldItems] = createSignal<Post[]>([]);
     const [donation, setDonation] = createSignal(0);
     const screenSize = useStore(windowSize);
 
@@ -65,6 +64,10 @@ export const CartView = () => {
             localStorage.setItem("donation_amount", "0");
             setDonation(0);
         }
+    }
+
+    async function goToResources() {
+        window.location.href = `/${lang}/services`;
     }
 
     function shoppingCart() {
@@ -110,7 +113,7 @@ export const CartView = () => {
                     <div class="pb-4 text-2xl font-bold md:mr-14 md:border-b">
                         {t("cartLabels.emptyCart")}
                         <div class="p-2">
-                            <button class="btn-primary whitespace-nowrap sm:w-full md:w-1/3">
+                            <button class="btn-primary whitespace-nowrap sm:w-full md:w-1/3" onClick={goToResources}>
                                 {t("menus.resources")}
                             </button>
                         </div>
