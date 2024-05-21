@@ -21,7 +21,7 @@ interface Props {
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
-export const ViewCard: Component<Props> = (props) => {
+export const ClientViewCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
@@ -350,33 +350,11 @@ export const ViewCard: Component<Props> = (props) => {
                                     </div>
 
                                     <div class="mb-1 flex w-full flex-col items-end justify-center">
-                                        <Show
-                                            when={
-                                                (session() === null ||
-                                                    session()?.user.id !==
-                                                        post.user_id) &&
-                                                post.price !== undefined
-                                            }
-                                        >
-                                            <AddToCart
-                                                item={{ ...post, quantity: 1 }}
-                                                buttonClick={resetQuantity}
-                                            />
-                                        </Show>
                                         {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
 
-                                        <Show
-                                            when={
-                                                (session() === null ||
-                                                    session()?.user.id !==
-                                                        post.user_id) &&
-                                                post.price === undefined
-                                            }
-                                        >
-                                            <DownloadBtn
-                                                item={{ ...post, quantity: 1 }}
-                                            />
-                                        </Show>
+                                        <DownloadBtn
+                                            item={{ ...post, quantity: 1 }}
+                                        />
                                         <div class="relative col-span-1 flex w-full justify-end align-top">
                                             <div class="inline-block">
                                                 <DeletePostButton
