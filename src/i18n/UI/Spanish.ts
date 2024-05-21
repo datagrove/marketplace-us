@@ -255,6 +255,8 @@ export const Spanish = {
     purchases: "Compras",
     favorites: "Favoritas",
     following: "Siguiente",
+    purchased: "Comprado el ",
+    updated: "Actualizado el ",
   },
 
     toolTips: {

@@ -235,6 +235,8 @@ export interface uiObject {
     purchases: string;
     favorites: string;
     following: string;
+    purchased: string;
+    updated: string;
   };
 
     toolTips: {

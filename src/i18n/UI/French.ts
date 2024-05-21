@@ -258,6 +258,8 @@ export const French = {
     purchases: "Achats",
     favorites: "Favoris",
     following: "Suivante",
+    purchased: "Acheté le ",
+    updated: "Dernière mise à jour le ",
   },
 
     toolTips: {

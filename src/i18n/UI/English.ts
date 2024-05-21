@@ -253,6 +253,8 @@ export const English = {
     purchases: "Purchases",
     favorites: "Favorites",
     following: "Following",
+    purchased: "Purchased on ",
+    updated: "Last Updated ",
   },
 
 

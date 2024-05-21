@@ -17,11 +17,11 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { Client } from "@lib/types";
 import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
+import { ViewClientPurchases } from "@components/posts/ViewClientPurchases";
 import stripe from "@lib/stripe";
 import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -550,7 +550,8 @@ export const ClientProfileView: Component = () => {
                                 <Show when={ tabSelected() === "purchases"}>
                                     <Show when={ purchasedItems() }>
                                         <div>
-                                            <ViewCard posts={purchasedItems()} />
+                                            {/* <ViewCard posts={purchasedItems()} /> */}
+                                            <ViewClientPurchases />
                                         </div>
                                     </Show>
 
@@ -558,6 +559,9 @@ export const ClientProfileView: Component = () => {
                                         <p class="italic mb-6">{t("messages.noPurchasedItems")}</p>
                                         <a href={ `/${lang}/services`} class="btn-primary">{t("buttons.browseCatalog")}</a>
                                     </Show>
+
+                                    
+                                    
                                 </Show>
 
                                 <Show when={ tabSelected() === "favorites"}>
@@ -595,11 +599,11 @@ export const ClientProfileView: Component = () => {
                         </Suspense>
                     </form>
                 </div>
-                <Show when={ screenSize() !== "sm"}>
+                {/* <Show when={ screenSize() !== "sm"}>
                     <div>
                         <ViewCard posts={purchasedItems()} />
                     </div>
-                </Show>
+                </Show> */}
                 
             </div>
         </div>
