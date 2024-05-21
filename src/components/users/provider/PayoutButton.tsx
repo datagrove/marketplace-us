@@ -3,7 +3,6 @@ import { Show, createSignal } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import stripe from "@lib/stripe";
 import { SITE } from "src/config";
-import { e } from "dist/_astro/web.BcDbsQ9z";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
