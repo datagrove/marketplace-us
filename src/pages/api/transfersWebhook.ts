@@ -3,12 +3,12 @@ import type { APIRoute } from "astro";
 import supabase from "@lib/supabaseClientServiceRole";
 // import  {DatabaseSubmit} from '../lib/OrderSubmit'
 
-const stripe = () =>
+const stripe =
     new Stripe(import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY, {
         apiVersion: "2023-10-16",
     });
 
-const endpointSecret = () => import.meta.env.PUBLIC_VITE_STRIPE_ENDPOINT_SECRET;
+const endpointSecret = import.meta.env.PUBLIC_VITE_STRIPE_ENDPOINT_SECRET;
 
 export const POST: APIRoute = async function ({ request }: any) {
     // console.log("Post triggered");
@@ -34,7 +34,7 @@ export const POST: APIRoute = async function ({ request }: any) {
     let event;
 
     try {
-        event = await stripe().webhooks.constructEventAsync(
+        event = await stripe.webhooks.constructEventAsync(
             body,
             sig,
             endpointSecret()
@@ -63,7 +63,7 @@ export const POST: APIRoute = async function ({ request }: any) {
 
                         //Get Charge Id
                         const charge = (
-                            await stripe().paymentIntents.retrieve(
+                            await stripe.paymentIntents.retrieve(
                                 data.payment_intent as string
                             )
                         ).latest_charge as string;
@@ -112,7 +112,7 @@ export const POST: APIRoute = async function ({ request }: any) {
 
                     //Get Charge Id
                     const charge = (
-                        await stripe().paymentIntents.retrieve(
+                        await stripe.paymentIntents.retrieve(
                             data.payment_intent as string
                         )
                     ).latest_charge as string;
@@ -228,7 +228,7 @@ async function getOrderDetails(orderId: string) {
     orderedProducts = await Promise.all(
         orderedProducts.map(async (orderedProduct) => {
             if (orderedProduct.stripe_price_id) {
-                const price = await stripe().prices.retrieve(
+                const price = await stripe.prices.retrieve(
                     orderedProduct.stripe_price_id
                 );
                 orderedProduct.price = price.unit_amount;
@@ -299,11 +299,11 @@ async function createTransfer(
     orderId: string,
     charge: string
 ) {
-    const account = await stripe().accounts.retrieve(connected_account);
+    const account = await stripe.accounts.retrieve(connected_account);
     if (account) {
         // console.log(account);
         if (account.capabilities?.transfers === "active") {
-            const transfer = await stripe().transfers.create({
+            const transfer = await stripe.transfers.create({
                 amount: amount,
                 currency: "usd",
                 destination: connected_account,
