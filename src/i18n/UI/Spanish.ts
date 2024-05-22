@@ -55,7 +55,7 @@ export const Spanish = {
             "Descubra más sobre este proveedor. Explore su perfil y los recursos disponibles.",
         page404: "404 Pagina no encontrada",
         requestPasswordReset:
-            "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta TodoServis. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
+            "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta LearnGrove. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
         resetPassword:
             "Restablezca su contraseña de forma segura en LearnGrove. Siga el enlace de su correo electrónico para elegir una nueva contraseña.",
         terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en Inglés.",
@@ -332,14 +332,14 @@ export const Spanish = {
         embedLink: "Insertar enlace",
         textLink: "Enlace de texto",
         disclaimer:
-            "TodoServis no tiene control sobre la información de ningún sitio externo. TodoServis no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso TodoServis será responsable del uso que usted haga de un sitio vinculado.",
+            "LearnGrove no tiene control sobre la información de ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado.",
         shareButton: "Botón de compartir",
         closeShareMenu: "Cerrar menú Compartir",
     },
 
     ariaLabels: {
-        todo: "Logotipo de TodoServis Volver a la página de inicio",
-        logo: "Logotipo de TodoServis",
+        todo: "Logotipo de LearnGrove Volver a la página de inicio",
+        logo: "Logotipo de LearnGrove",
         navigation: "Navegación",
         checkboxMajorMunicipality:
             "Casilla de verificación para seleccionar Provincia",
@@ -397,7 +397,7 @@ export const Spanish = {
                 links: [
                     {
                         text: "Contáctenos",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: 'Community Forum', href: '#' },
                     // { text: 'Professional Services', href: '#' },

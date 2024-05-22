@@ -55,7 +55,7 @@ export const French = {
             "Découvrez-en davantage sur ce fournisseur. Explorez leur profil et les ressources disponibles.",
         page404: "404 Page non trouvée",
         requestPasswordReset:
-            "Mot de passe oublié? Demandez une réinitialisation sécurisée du mot de passe pour votre profil TodoServis. Entrez votre email et suivez les instructions pour retrouver l'accès.",
+            "Mot de passe oublié? Demandez une réinitialisation sécurisée du mot de passe pour votre profil LearnGrove. Entrez votre email et suivez les instructions pour retrouver l'accès.",
         resetPassword:
             "Réinitialisez votre mot de passe en toute sécurité avec LearnGrove. Suivez le lien de votre e-mail pour choisir un nouveau mot de passe.",
         terms: "Consultez nos termes et conditions. Remarque : les traductions sont fournies à titre gracieux, les termes officiels contraignants sont en anglais.",
@@ -337,14 +337,14 @@ export const French = {
         embedLink: "Intégrer le lien",
         textLink: "Lien texte",
         disclaimer:
-            "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
+            "LearnGrove n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas LearnGrove ne sera responsable de votre utilisation d'un site lié.",
         shareButton: "Bouton Partager",
         closeShareMenu: "Fermer le menu Partager",
     },
 
     ariaLabels: {
-        todo: "TodoServis Logo Retour à la page d'accueil",
-        logo: "Logo TodoServis",
+        todo: "LearnGrove Logo Retour à la page d'accueil",
+        logo: "Logo LearnGrove",
         navigation: "La navigation",
         checkboxMajorMunicipality:
             "Case à cocher pour sélectionner la grande municipalité",
@@ -401,7 +401,7 @@ export const French = {
                 links: [
                     {
                         text: "Contactez-nous",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: string, href: string },
                     // { text: string, href: string },

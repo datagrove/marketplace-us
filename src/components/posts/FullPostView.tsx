@@ -274,7 +274,7 @@ export const ViewFullPost: Component<Props> = (props) => {
         const testLink =
             whatsappUrl +
             // TODO Update to LearnGrove
-            "Check%20out%20this%20awesome%20service%20on%20TodoServis! ";
+            "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
         window.open(
             testLink + encodeURIComponent(currPage),
             "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"

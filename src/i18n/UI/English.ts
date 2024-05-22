@@ -327,14 +327,14 @@ export const English = {
         embedLink: "Embed Link",
         textLink: "Text Link",
         disclaimer:
-            "TodoServis has no control over information at any external site. TodoServis is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall TodoServis be responsible for your use of a linked site.",
+            "LearnGrove has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall LearnGrove be responsible for your use of a linked site.",
         shareButton: "Share Button",
         closeShareMenu: "Close Share Menu",
     },
 
     ariaLabels: {
-        todo: "TodoServis Logo Return to Homepage",
-        logo: "TodoServis Logo",
+        todo: "LearnGrove Logo Return to Homepage",
+        logo: "LearnGrove Logo",
         navigation: "Navigation",
         checkboxMajorMunicipality: "Checkbox for selecting major municipality",
         checkboxMinorMunicipality: "Checkbox for selecting minor municipality",
@@ -388,7 +388,7 @@ export const English = {
                 links: [
                     {
                         text: "Contact Us",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: 'Community Forum', href: '#' },
                     // { text: 'Professional Services', href: '#' },
