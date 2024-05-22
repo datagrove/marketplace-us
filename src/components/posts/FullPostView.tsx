@@ -9,6 +9,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import stripe from "@lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -18,7 +19,7 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Props {
-    id: string | undefined;
+    postId: string | undefined;
 }
 
 export const ViewFullPost: Component<Props> = (props) => {
@@ -39,10 +40,10 @@ export const ViewFullPost: Component<Props> = (props) => {
     setTestImages(test2);
 
     createEffect(() => {
-        if (props.id === undefined) {
+        if (props.postId === undefined) {
             location.href = `/${lang}/404`;
-        } else if (props.id) {
-            fetchPost(+props.id);
+        } else if (props.postId) {
+            fetchPost(+props.postId);
         }
     });
 
@@ -59,36 +60,56 @@ export const ViewFullPost: Component<Props> = (props) => {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/services`;
             } else {
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
+                const newItem: Post[] = await Promise.all(
+                    data?.map(async (item) => {
+                        item.subject = [];
+                        productCategories.forEach((productCategories) => {
+                            item.product_subject.map(
+                                (productSubject: string) => {
+                                    if (
+                                        productSubject === productCategories.id
+                                    ) {
+                                        item.subject.push(
+                                            productCategories.name
+                                        );
+                                    }
                                 }
-                            });
+                            );
                         });
-                    }
-                });
-                setPost(data[0]);
-                console.log(post());
+                        delete item.product_subject;
+
+                        const { data: gradeData, error: gradeError } =
+                            await supabase.from("grade_level").select("*");
+
+                        if (gradeError) {
+                            console.log(
+                                "supabase error: " + gradeError.message
+                            );
+                        } else {
+                            item.grade = [];
+                            gradeData.forEach((databaseGrade) => {
+                                item.post_grade.map((itemGrade: string) => {
+                                    if (
+                                        itemGrade ===
+                                        databaseGrade.id.toString()
+                                    ) {
+                                        item.grade.push(databaseGrade.grade);
+                                    }
+                                });
+                            });
+                        }
+
+                        if (item.price_id !== null) {
+                            const priceData = await stripe.prices.retrieve(
+                                item.price_id
+                            );
+                            item.price = priceData.unit_amount! / 100;
+                        }
+                        return item;
+                    })
+                );
+                setPost(newItem[0]);
+                // console.log(newItem[0]);
             }
         } catch (error) {
             console.log(error);
@@ -268,32 +289,34 @@ export const ViewFullPost: Component<Props> = (props) => {
         );
     }
 
-    function imageClick(e) {
+    function imageClick(e: Event) {
         e.preventDefault();
 
-        let currImageID = e.currentTarget.id;
+        let currImageDiv = e.currentTarget as HTMLDivElement;
+        let currImageID = currImageDiv.id;
         let currImage = document.getElementById(currImageID);
         let allImages = document.getElementsByClassName("imageLink");
         let mainImage = document.getElementById("main-image");
         let arrayIndex = Number(currImageID.slice(-1));
 
-        if (!currImage.classList.contains("border-b-2")) {
+        if (!currImage?.classList.contains("border-b-2")) {
             Array.from(allImages).forEach(function (image) {
                 image.classList.remove("border-b-2");
                 image.classList.remove("border-green-500");
             });
 
-            currImage.classList.add("border-b-2");
-            currImage.classList.add("border-green-500");
+            currImage?.classList.add("border-b-2");
+            currImage?.classList.add("border-green-500");
         }
 
-        mainImage.setAttribute("src", testImages()[arrayIndex]);
+        mainImage?.setAttribute("src", testImages()[arrayIndex]);
     }
 
-    function lgTabLinkClick(e) {
+    function lgTabLinkClick(e: Event) {
         e.preventDefault();
 
-        let currLinkId = e.currentTarget.id;
+        let currLinkDiv = e.currentTarget as HTMLAnchorElement;
+        let currLinkId = currLinkDiv.id;
         let currEl = document.getElementById(currLinkId);
         let allLgLinks = document.getElementsByClassName("tabLinkLg");
 
@@ -302,40 +325,40 @@ export const ViewFullPost: Component<Props> = (props) => {
         let reviews = document.getElementById("lg-reviews-div");
         let qa = document.getElementById("lg-qa-div");
 
-        if (!currEl.classList.contains("border-b-2")) {
+        if (!currEl?.classList.contains("border-b-2")) {
             Array.from(allLgLinks).forEach(function (link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
             });
 
-            currEl.classList.add("border-b-2");
-            currEl.classList.add("border-green-500");
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
         }
 
         if (currLinkId === "detailsLgLink") {
-            details.classList.remove("hidden");
-            details.classList.add("inline");
+            details?.classList.remove("hidden");
+            details?.classList.add("inline");
 
             closeDescription();
             closeReviews();
             closeQA();
         } else if (currLinkId === "descriptionLgLink") {
-            description.classList.remove("hidden");
-            description.classList.add("inline");
+            description?.classList.remove("hidden");
+            description?.classList.add("inline");
 
             closeDetails();
             closeReviews();
             closeQA();
         } else if (currLinkId === "reviewsLgLink") {
-            reviews.classList.remove("hidden");
-            reviews.classList.add("inline");
+            reviews?.classList.remove("hidden");
+            reviews?.classList.add("inline");
 
             closeDetails();
             closeDescription();
             closeQA();
         } else if (currLinkId === "qaLgLink") {
-            qa.classList.remove("hidden");
-            qa.classList.add("inline");
+            qa?.classList.remove("hidden");
+            qa?.classList.add("inline");
 
             closeDetails();
             closeDescription();
@@ -348,7 +371,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
         let details = document.getElementById("lg-details-div");
 
-        if (details.classList.contains("inline")) {
+        if (details?.classList.contains("inline")) {
             details.classList.remove("inline");
             details.classList.add("hidden");
         }
@@ -357,7 +380,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     function closeDescription() {
         let description = document.getElementById("lg-description-div");
 
-        if (description.classList.contains("inline")) {
+        if (description?.classList.contains("inline")) {
             description.classList.remove("inline");
             description.classList.add("hidden");
         }
@@ -366,7 +389,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     function closeReviews() {
         let reviews = document.getElementById("lg-reviews-div");
 
-        if (reviews.classList.contains("inline")) {
+        if (reviews?.classList.contains("inline")) {
             reviews.classList.remove("inline");
             reviews.classList.add("hidden");
         }
@@ -375,7 +398,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     function closeQA() {
         let qa = document.getElementById("lg-qa-div");
 
-        if (qa.classList.contains("inline")) {
+        if (qa?.classList.contains("inline")) {
             qa.classList.remove("inline");
             qa.classList.add("hidden");
         }
@@ -659,7 +682,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     {post()?.post_grade.join(", ")}
                                 </p>
                                 <p class="lg:text-md truncate text-xs">
-                                    {post()?.subject.join(", ")}
+                                    {post()?.subject?.join(", ")}
                                 </p>
                                 <p class="lg:text-md truncate text-xs italic">
                                     {t("messages.comingSoon")}
@@ -687,7 +710,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {/* TODO: Add FreeDownloadButton component if resource is free */}
 
                             <AddToCart
-                                item={{ ...post(), quantity: 1 }}
+                                item={{ ...post()!, quantity: 1 }}
                                 buttonClick={resetQuantity}
                             />
                         </div>
@@ -759,7 +782,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                             <p class="mt-4 font-light uppercase">
                                 {t("formLabels.subjects")}
                             </p>
-                            <div class="flex">{post()?.subject.join(", ")}</div>
+                            <div class="flex">
+                                {post()?.subject?.join(", ")}
+                            </div>
                         </div>
 
                         <div>

@@ -61,7 +61,9 @@ export const Cart = () => {
         if (items.length > 0) {
             let total = 0;
             items.forEach((item: Post) => {
+                if (item.price){
                 total += item.price * item.quantity;
+                }
             });
             return (
                 <div>
@@ -90,7 +92,12 @@ export const Cart = () => {
                                     {item.quantity}
                                 </div>
                                 <div class="inline-block text-start">
+                                    <Show when={item.price}>
                                     ${item.price.toFixed(2)}
+                                    </Show>
+                                    <Show when={!item.price}>
+                                    {t("messages.free")}
+                                    </Show>
                                 </div>
                             </div>
                         ))}

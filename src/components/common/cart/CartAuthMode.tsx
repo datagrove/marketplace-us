@@ -37,7 +37,7 @@ export const CartAuthMode: Component<Props> = (props) => {
             {/* If the auth mode is sign in then return the sign in button */}
             {authMode() === "signed_in" ? (
                 <button
-                    class=""
+                    class="btn-primary"
                     onclick={props.goToCheckout}
                     aria-label={t("buttons.proceedToCheckout")}
                 >

@@ -109,63 +109,73 @@ export const French = {
         top: "Retour au Sommet",
         freeDownload: "Téléchargement Gratuit",
         addedToCart: "Ajouté au panier !",
+        finishStripeSetup: "Accédez au tableau de bord Stripe",
+        requestStripePayout: "Demande Paiement",
     },
 
-  messages: {
-    noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
-    emailValid: "Adresse e-mail valide",
-    emailLackRequirements: "L'e-mail ne répond pas aux exigences",
-    passwordLength:
-      "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
-    passwordValid: "Mot de passe valide",
-    passwordLackRequirements: "Le mot de passe ne répond pas aux exigences",
-    phoneLackRequirements:
-      "S'il vous plaît entrer un numéro de téléphone valide.",
-    phoneValid: "Numéro de téléphone valide",
-    passwordMatch: "Les mots de passe ne correspondent pas",
-    passwordReset: "Réinitialisation du mot de passe",
-    forgotPassword: "Mot de passe oublié? Cliquez ici pour",
-    alreadyAccount: "Vous avez déjà un compte ? Cliquez ici pour",
-    error404: "Une erreur est survenue",
-    onlyProvider: "Seuls les fournisseurs peuvent créer des publications.",
-    signInAsProvider:
-      "Veuillez vous connecter à un profil de fournisseur avant de publier.",
-    checkEmail:
-      "Vérifiez votre courrier électronique pour le lien de réinitialisation ! Si vous n'avez pas reçu l'e-mail, veuillez vérifier votre dossier spam. Les liens sont valables 24 heures.",
-    checkConfirmEmail:
-      "Si cet email n'est pas déjà enregistré, vous recevrez un lien de confirmation par email. Veuillez vérifier votre dossier spam si vous n'avez pas reçu l'e-mail. Les liens sont valables 24 heures.",
-    signIn: "Veuillez vous connecter pour accéder à cette page.",
-    createProviderAccount:
-      "Veuillez vous connecter pour créer un profil de fournisseur.",
-    createClientAccount: "Veuillez vous connecter pour créer un profil client.",
-    viewProviderAccount:
-      "Vous n'avez pas de profil fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
-    noPosts: "Aucune publication disponible.",
-    noPost: "Message introuvable",
-    selectAnImage: "Vous devez sélectionner une image à télécharger.",
-    noProvider: "Aucun fournisseur trouvé.",
-    translation: "Traductions",
-    translations:
-      " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
-    clickWrap1: "En cliquant sur",
-    clickWrap2: "vous indiquez que vous avez lu et accepté les",
-    fetch: "Récupérer des services",
-    todoFetch:
-      "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
-    mustSignIn: "Vous devez être connecté pour voir les services disponibles.",
-    profileEdits:
-      "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
-    noPostsSearch:
-      "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
-    noStripeAccount:
-      "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
-    selectSubject: "Veuillez sélectionner au moins un sujet",
-    emailNotProvided: "Email non fourni",
-    comingSoon: "À venir!",
-    report: "Signaler cette ressource à LearnGrove",
-    free: "Gratuit",
-    freeResourceCreated: "Ressource gratuite créée !",
-  },
+    messages: {
+        noAccount: "Vous n'avez pas de compte ? Cliquez ici pour ",
+        emailValid: "Adresse e-mail valide",
+        emailLackRequirements: "L'e-mail ne répond pas aux exigences",
+        passwordLength:
+            "Le mot de passe doit être \n - au moins 6 caractères \n - contenir au moins un chiffre \n - contient au moins une lettre majuscule \n - contenir au moins une lettre minuscule \n - ccontenir au moins un caractère spécial: \n   ! @ # $ % ^ & *",
+        passwordValid: "Mot de passe valide",
+        passwordLackRequirements: "Le mot de passe ne répond pas aux exigences",
+        phoneLackRequirements:
+            "S'il vous plaît entrer un numéro de téléphone valide.",
+        phoneValid: "Numéro de téléphone valide",
+        passwordMatch: "Les mots de passe ne correspondent pas",
+        passwordReset: "Réinitialisation du mot de passe",
+        forgotPassword: "Mot de passe oublié? Cliquez ici pour",
+        alreadyAccount: "Vous avez déjà un compte ? Cliquez ici pour",
+        error404: "Une erreur est survenue",
+        onlyProvider: "Seuls les fournisseurs peuvent créer des publications.",
+        signInAsProvider:
+            "Veuillez vous connecter à un profil de fournisseur avant de publier.",
+        checkEmail:
+            "Vérifiez votre courrier électronique pour le lien de réinitialisation ! Si vous n'avez pas reçu l'e-mail, veuillez vérifier votre dossier spam. Les liens sont valables 24 heures.",
+        checkConfirmEmail:
+            "Si cet email n'est pas déjà enregistré, vous recevrez un lien de confirmation par email. Veuillez vérifier votre dossier spam si vous n'avez pas reçu l'e-mail. Les liens sont valables 24 heures.",
+        signIn: "Veuillez vous connecter pour accéder à cette page.",
+        createProviderAccount:
+            "Veuillez vous connecter pour créer un profil de fournisseur.",
+        createClientAccount:
+            "Veuillez vous connecter pour créer un profil client.",
+        viewProviderAccount:
+            "Vous n'avez pas de profil fournisseur, veuillez en créer un pour voir votre profil fournisseur.",
+        noPosts: "Aucune publication disponible.",
+        noPost: "Message introuvable",
+        selectAnImage: "Vous devez sélectionner une image à télécharger.",
+        noProvider: "Aucun fournisseur trouvé.",
+        translation: "Traductions",
+        translations:
+            " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+        clickWrap1: "En cliquant sur",
+        clickWrap2: "vous indiquez que vous avez lu et accepté les",
+        fetch: "Récupérer des services",
+        todoFetch:
+            "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
+        mustSignIn:
+            "Vous devez être connecté pour voir les services disponibles.",
+        profileEdits:
+            "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
+        noPostsSearch:
+            "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
+        noStripeAccount:
+            "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
+        selectSubject: "Veuillez sélectionner au moins un sujet",
+        emailNotProvided: "Email non fourni",
+        comingSoon: "À venir!",
+        report: "Signaler cette ressource à LearnGrove",
+        free: "Gratuit",
+        freeResourceCreated: "Ressource gratuite créée !",
+        insufficientStripeBalance:
+            "Solde Stripe insuffisant, consultez votre tableau de bord Stripe pour plus d'informations.",
+        payoutRequested: "Succès! Vous avez demandé votre paiement Stripe de",
+        payoutSetup: "Veuillez terminer la configuration de votre compte Stripe pour continuer. Les paiements doivent être activés sur votre compte avant de pouvoir demander un paiement. Cliquez sur Aller au tableau de bord Stripe pour terminer cette étape.",
+        requestPayout: "Cliquez sur le bouton Demander un paiement pour demander votre paiement Stripe. Vous serez facturé 2,25 $ sur le solde de votre compte et le reste sera envoyé sur votre compte bancaire ou votre carte de débit en fonction de vos paramètres Stripe. Pour obtenir votre solde Stripe le plus à jour, veuillez visiter votre tableau de bord Stripe.",
+        currentBalance: "Votre solde actuel est d'environ :",
+    },
 
     formLabels: {
         title: "Titre",
@@ -208,6 +218,7 @@ export const French = {
         pricePost: "Le Prix",
         isResourceFree: "ressource gratuite",
         about: "À propos",
+        platformSupport: "Prise en charge de la plateforme",
     },
 
     postLabels: {
@@ -240,20 +251,20 @@ export const French = {
         ariaLabel: "Image d'information d'espace réservé",
     },
 
-  menus: {
-    resources: "Trouver des ressources",
-    contactUs: "Contactez-nous",
-    profile: "Profil",
-    ratingsReviews: "Notes et Avis",
-    questions: "Des Questions",
-    freeDownload: "Téléchargement Gratuit",
-    providerResources: "Ressources",
-    payouts: "Mes Paiements",
-    reviews: "Commentaires",
-    details: "Détails",
-    description: "Description",
-    qA: "Questions/Réponses",
-  },
+    menus: {
+        resources: "Trouver des ressources",
+        contactUs: "Contactez-nous",
+        profile: "Profil",
+        ratingsReviews: "Notes et Avis",
+        questions: "Des Questions",
+        freeDownload: "Téléchargement Gratuit",
+        providerResources: "Ressources",
+        payouts: "Mes Paiements",
+        reviews: "Commentaires",
+        details: "Détails",
+        description: "Description",
+        qA: "Questions/Réponses",
+    },
 
     toolTips: {
         providerPhone:
@@ -283,6 +294,8 @@ export const French = {
         subjects:
             "Veuillez sélectionner tous les sujets couverts par votre ressource. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
         grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
+        contribution:
+            "Choisissez quel pourcentage de votre prix vous pouvez contribuer à la maintenance et au développement de la plateforme. Les plateformes similaires représentent entre 11 % et 45 % de vos ventes. Nous voulons vous donner le pouvoir de prendre en charge la plateforme en fonction de la valeur qu'elle apporte. Vous ne savez pas quel est le bon montant ? Nous vous recommandons de commencer à 15 %, vous pourrez le mettre à jour ultérieurement dans votre profil de fournisseur.",
     },
 
     apiErrors: {

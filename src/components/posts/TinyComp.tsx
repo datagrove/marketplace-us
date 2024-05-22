@@ -1,18 +1,13 @@
-import { createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 
-import tinymce, { type Editor } from "tinymce";
+import tinymce from "tinymce";
 
 //New tiny imports
-
 import "tinymce/models/dom";
-
 import "tinymce/themes/silver";
-
 import "tinymce/icons/default";
-
 import "tinymce/plugins/lists";
-
 import "tinymce/plugins/quickbars";
 
 interface Props {
@@ -21,35 +16,26 @@ interface Props {
 }
 
 export const TinyComp = (props: Props) => {
-    const [mode, setMode] = createSignal(props.mode); // Moved inside the component's body
-
+    const [mode, setMode] = createSignal(props.mode);
     const currentEditor = tinymce.get(props.id);
 
     const initializeTinyMCE = async () => {
-        console.log(tinymce.get(props.id));
-
-        if (currentEditor) {
+        if(currentEditor) {
             currentEditor.destroy();
-            console.log("tinymce destroyed");
         }
-        console.log("intializing tinymce " + mode());
-        tinymce.init({
+        console.log(props.id)
+        // Initialize TinyMCE
+        await tinymce.init({
             selector: props.id,
             max_width: 384,
-            skin_url:
-                mode() === "dark"
-                    ? "/tinymce/skins/ui/oxide-dark"
-                    : "/tinymce/skins/ui/oxide",
-            content_css:
-                mode() === "dark"
-                    ? "/tinymce/skins/content/dark/content.min.css"
-                    : "/tinymce/skins/content/default/content.min.css",
+            skin_url: mode() === "dark" ? "/tinymce/skins/ui/oxide-dark" : "/tinymce/skins/ui/oxide",
+            content_css: mode() === "dark" ? "/tinymce/skins/content/dark/content.min.css" : "/tinymce/skins/content/default/content.min.css",
             promotion: false,
             plugins: "lists, quickbars",
             quickbars_image_toolbar: false,
             quickbars_insert_toolbar: false,
             toolbar: [
-                "undo redo | bold italic |alignleft aligncenter alignright",
+                "undo redo | bold italic | alignleft aligncenter alignright",
                 "styles bullist numlist outdent indent",
             ],
             toolbar_mode: "wrap",
@@ -62,41 +48,43 @@ export const TinyComp = (props: Props) => {
         });
     };
 
-    onMount(() => {
-        const script = document.createElement("script");
-        script.src = "/tinymce/tinymce.min.js";
-        script.async = true;
-        script.onload = () => {
-            const listPlugin = document.createElement("script");
-            listPlugin.src = "/tinymce/plugins/lists/plugin.min.js";
-            listPlugin.async = true;
-            listPlugin.onload = () => {
-                const quickBarsPlugin = document.createElement("script");
-                quickBarsPlugin.src =
-                    "/tinymce/plugins/quickbars/plugin.min.js";
-                quickBarsPlugin.async = true;
-                quickBarsPlugin.onload = () => {
-                    // console.log("tinymce loaded");
-                    initializeTinyMCE();
-                    return () => {
-                        if (currentEditor) {
-                            currentEditor.destroy();
-                            console.log("tinymce destroyed");
-                        }
-                    };
-                };
-                document.body.appendChild(quickBarsPlugin);
-            };
-            document.body.appendChild(listPlugin);
-        };
-        document.body.appendChild(script);
-    });
+    const removeScripts = () => {
+        const scripts = document.querySelectorAll("script[src^='/tinymce/']");
+        scripts.forEach((script) => script.remove());
+    };
 
-    onCleanup(() => {
-        if (currentEditor) {
-            currentEditor.destroy();
-            console.log("tinymce destroyed");
+    const loadScripts = async () => {
+        const loadScript = (src: string) => {
+            return new Promise<void>((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = src;
+                script.async = true;
+                script.onload = () => resolve();
+                script.onerror = (error) => reject(error);
+                document.body.appendChild(script);
+            });
+        };
+
+        try {
+            await loadScript("/tinymce/tinymce.min.js");
+            await loadScript("/tinymce/plugins/lists/plugin.min.js");
+            await loadScript("/tinymce/plugins/quickbars/plugin.min.js");
+            await initializeTinyMCE();
+        } catch (error) {
+            console.error("Failed to load TinyMCE scripts:", error);
         }
+    };
+
+    createEffect(() => {
+        removeScripts();
+        loadScripts();
+
+        return () => {
+            const currentEditor = tinymce.get(props.id);
+            if (currentEditor) {
+                currentEditor.destroy();
+            }
+        };
     });
 
     return null;

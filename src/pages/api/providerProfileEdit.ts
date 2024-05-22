@@ -25,6 +25,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const providerName = formData.get("ProviderName");
   const email = formData.get("email");
   const sellerAbout = formData.get("AboutContent");
+  const contribution = formData.get("contribution");
   const imageUrl = formData.get("image_url") ? formData.get("image_url") : null;
   console.log("imageURL: " + imageUrl);
 
@@ -139,6 +140,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     seller_name: providerName,
     image_url: imageUrl,
     seller_about: sellerAbout,
+    contribution: contribution,
   };
 
   //submit to the providers table and select it back

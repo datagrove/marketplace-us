@@ -16,22 +16,6 @@ import { items, setItems } from "@components/common/cart/AddToCartButton";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-console.log("Items to send to checkout: ");
-console.log(items);
-
-// async function fetchClientCheckoutSecret(orderId: string){
-//   const response = await fetch("/api/createStripeCheckout", {
-//     method: "POST",
-//     body: JSON.stringify({
-//       items: items,
-//       userId: User.session?.user.id,
-//       orderId: orderId
-//     })
-//   });
-//   const { clientSecret } = await response.json();
-//   return clientSecret
-// }
-
 const stripe = await loadStripe(import.meta.env.PUBLIC_VITE_STRIPE_PUBLIC_KEY);
 
 if (stripe === null) {
@@ -41,23 +25,33 @@ if (stripe === null) {
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
+const donation_amount = localStorage.getItem("donation_amount");
+
 export const CheckoutView = () => {
     const [totalItems, setTotalItems] = createSignal(0);
-    const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
-    const [cartTotal, setCartTotal] = createSignal(0);
-    const [oldItems, setOldItems] = createSignal<Post[]>([]);
-    const [user, setUser] = createSignal<boolean>(false);
     const [orderId, setOrderId] = createSignal<string>("");
+    const [orderTotal, setOrderTotal] = createSignal<number>(0);
+    const [zeroOrder, setZeroOrder] = createSignal<boolean>(false);
 
     onMount(async () => {
-        // setUser(User.session!.user.role === "authenticated");
-        // if (user() === false) {
-
-        // }
+        console.log(items)
         await createOrder();
+        await getTotal();
         await fetchClientCheckoutSecret();
         await mountCheckout();
     });
+
+    async function getTotal () {
+        let total = 0
+        items.map((item) => {
+            total += item.price * item.quantity
+        })
+        total += donation_amount ? parseInt(donation_amount) : 0 
+        setOrderTotal(total)
+        if (orderTotal() === 0) {
+            setZeroOrder(true)
+        }
+    }
 
     async function fetchClientCheckoutSecret() {
         const response = await fetch("/api/createStripeCheckout", {
@@ -66,6 +60,8 @@ export const CheckoutView = () => {
                 items: items,
                 userId: User.session?.user.id,
                 orderId: orderId(),
+                donation_amount: donation_amount,
+                zeroOrder: zeroOrder(),
             }),
         });
         const { clientSecret } = await response.json();
@@ -78,6 +74,7 @@ export const CheckoutView = () => {
             count += item.quantity;
         });
         setTotalItems(count);
+        getTotal();
     });
 
     async function createOrder() {
