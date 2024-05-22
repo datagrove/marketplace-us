@@ -67,7 +67,7 @@ export const CartView = () => {
     }
 
     async function goToResources() {
-        window.location.href = `/${lang}/services`;
+        window.location.href = `/${lang}/resources`;
     }
 
     function shoppingCart() {

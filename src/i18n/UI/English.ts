@@ -3,7 +3,7 @@ export const English = {
     siteDescription: "Everything you need to get the job done.",
 
     pageTitles: {
-        services: "Services",
+        services: "Resources",
         signUp: "Sign Up",
         login: "Login",
         home: "Home",
@@ -36,37 +36,37 @@ export const English = {
 
     pageDescriptions: {
         services:
-            "Find the services you need to get the job done. Search for keywords, filter by category, and filter by location to find what you need. View post previews and click on a post to learn more.",
-        signUp: "Provider your email and create a password to signup to search services or post services on TodoServis.",
-        login: "Enter your email and password to login to TodoServis.",
-        home: "TodoServis, home to everything you need to get the job done.",
+            "Find the resources you need to for your learner. Search for keywords, and filter by category to find what you need. View previews and click on a card to learn more.",
+        signUp: "Provide your email and create a password to signup to post resources on LearnGrove.",
+        login: "Enter your email and password to login to LearnGrove.",
+        home: "LearnGrove, your source for quality learning!",
         // signIn: string,
         createClientAccount:
-            "Join TodoServis as a client and unlock a world of services. Sign up today to find and connect with top service providers in your area.",
+            "Join LearnGrove unlock a world of learning resources. Sign up today to find the resources you need for your learning journey.",
         viewClientAccount:
-            "Access and manage your client profile information effortlessly on TodoServis.",
+            "Access and manage your client profile information effortlessly on LearnGrove.",
         createPost:
-            "Create a post including title, category, description, location, and images to offer your service on TodoServis.",
+            "List a resource including title, category, description, and images to offer your resource on LearnGrove.",
         createProviderAccount:
-            "Create a Provider Profile to start posting your services on TodoServis.",
+            "Create a Provider Profile to start posting your resources on LearnGrove.",
         viewProviderAccount:
-            "Manage your provider profile details and review your posts on TodoServis.",
+            "Manage your provider profile details and review your posts on LearnGrove.",
         clientViewProviderAccount:
-            "Discover more about this provider. Explore their profile and available services.",
+            "Discover more about this provider. Explore their profile and available resources.",
         page404: "404 - page not found",
         requestPasswordReset:
-            "Forgot your password? Request a secure password reset for your TodoServis account. Enter your email and follow the instructions to regain access.",
+            "Forgot your password? Request a secure password reset for your LearnGrove account. Enter your email and follow the instructions to regain access.",
         resetPassword:
-            "Reset your password securely with TodoServis. Follow the link from your email to choose a new password.",
-        terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in Spanish.",
+            "Reset your password securely with LearnGrove. Follow the link from your email to choose a new password.",
+        terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in English.",
         privacy:
-            "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
+            "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in English.",
         acceptableUse:
-            "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
-        about: "Discover the story behind TodoServis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
-        impact: "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
+            "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in English.",
+        about: "Discover the story behind LearnGrove – who we are, our mission, and our passion for helping support learning facilitators and connect learners with the right resources. Learn about our team and the values that drive us. Join us on our journey!",
+        impact: "Explore the meaningful impact of LearnGrove. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
         fullPost:
-            "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
+            "Read more about this resource. Explore additional images and the full description of the resource.",
         faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
         viewCart: "View your cart and checkout with ease.",
     },
@@ -149,7 +149,7 @@ export const English = {
         fetch: "Fetch Services",
         todoFetch:
             "Todo, the service dog, will fetch you the services you need!",
-        mustSignIn: "You must be signed in to view available services.",
+        mustSignIn: "You must be signed in to view available resources.",
         profileEdits:
             "Profile edits will only be saved after clicking the Save Profile button!",
         noClient: "No Client found.",
@@ -261,11 +261,7 @@ export const English = {
     },
 
     toolTips: {
-        providerPhone:
-            "Each provider profile must have a unique phone number. This number will be available to clients in order to  contact you regarding your services. We require all users to provide valid phone numbers as part of our efforts to ensure the safety of our users.",
-        clientPhone:
-            "We require clients to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number may be used by providers to contact you regarding quotes for requested services.",
-        firstName:
+       firstName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
         lastName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
@@ -322,7 +318,7 @@ export const English = {
     },
 
     socialModal: {
-        shareService: "Share this service",
+        shareService: "Share this resource",
         twitterX: "Share on X",
         facebook: "Facebook",
         WhatsApp: "WhatsApp",

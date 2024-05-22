@@ -53,7 +53,7 @@ export const ClientRouting = () => {
     return (
         <Show when={isUser}>
             <div>
-                <a href={`/${lang}/services`} class=" ">
+                <a href={`/${lang}/resources`} class=" ">
                     {t("menus.resources")}
                 </a>
             </div>

@@ -86,7 +86,7 @@ export const ClientProviderView: Component<Props> = (props) => {
             console.log(error);
           } else if (data[0] === undefined) {
             alert(t("messages.noProvider"));
-            location.href = `/${lang}/services`;
+            location.href = `/${lang}/resources`;
           } else {
             let languageArray = data[0].language_spoken;
             console.log("Languages Array: " + languageArray);

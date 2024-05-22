@@ -241,8 +241,6 @@ export interface uiObject {
   };
 
     toolTips: {
-        providerPhone: string;
-        clientPhone: string;
         firstName: string;
         lastName: string;
         displayName: string;

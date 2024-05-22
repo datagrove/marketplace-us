@@ -3,7 +3,7 @@ export const Spanish = {
     siteDescription: "Todo lo que necesitas para hacer el trabajo.",
 
     pageTitles: {
-        services: "Servicios",
+        services: "Recursos",
         signUp: "Registrarse",
         login: "Iniciar Sesión",
         home: "Inicio",
@@ -36,37 +36,37 @@ export const Spanish = {
 
     pageDescriptions: {
         services:
-            "Encuentre los servicios que necesita para realizar el trabajo. Busque palabras clave, filtre por categoría y filtre por ubicación para encontrar lo que necesita. Vea vistas previas de publicaciones y haga clic en una publicación para obtener más información.",
-        signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse para buscar servicios o publicar servicios en TodoServis.",
-        login: "Ingrese su correo electrónico y contraseña para iniciar sesión en TodoServis.",
-        home: "TodoServis, el hogar de todo lo que necesita para realizar el trabajo.",
+            "Encuentre los recursos que necesita para su alumno. Busque palabras clave y filtre por categoría para encontrar lo que necesita. Vea vistas previas y haga clic en una tarjeta para obtener más información.",
+        signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse y publicar recursos en LearnGrove.",
+        login: "Ingrese su correo electrónico y contraseña para iniciar sesión en LearnGrove.",
+        home: "LearnGrove, ¡su fuente de aprendizaje de calidad!",
         // signIn: string,
         createClientAccount:
-            "Únete a TodoServis como cliente y desbloquea un mundo de servicios. Regístrese hoy para encontrar y conectarse con los principales proveedores de servicios en su área.",
+            "Únase a LearnGrove y desbloquee un mundo de recursos de aprendizaje. Regístrese hoy para encontrar los recursos que necesita para su viaje de aprendizaje.",
         viewClientAccount:
-            "Acceda y administre la información de su perfil de cliente sin esfuerzo en TodoServis.",
+            "Acceda y administre la información de su perfil de cliente sin esfuerzo en LearnGrove.",
         createPost:
-            "Crea una publicación incluyendo título, categoría, descripción e imágenes para ofrecer sus servicios en TodoServis.",
+            "Enumere un recurso que incluya título, categoría, descripción e imágenes para ofrecer su recurso en LearnGrove.",
         createProviderAccount:
-            "Cree una perfil de proveedor para comenzar a publicar sus servicios en TodoServis",
+            "Cree un perfil de proveedor para comenzar a publicar sus recursos en LearnGrove.",
         viewProviderAccount:
-            "Administre los detalles de su perfil de proveedor y revise sus publicaciones en TodoServis.",
+            "Administre los detalles de su perfil de proveedor y revise sus publicaciones en LearnGrove.",
         clientViewProviderAccount:
-            "Descubra más sobre este proveedor. Explore su perfil y los servicios disponibles.",
+            "Descubra más sobre este proveedor. Explore su perfil y los recursos disponibles.",
         page404: "404 Pagina no encontrada",
         requestPasswordReset:
             "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta TodoServis. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
         resetPassword:
-            "Restablezca su contraseña de forma segura en TodoServis. Siga el enlace de su correo electrónico para elegir una nueva contraseña.",
-        terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en español.",
+            "Restablezca su contraseña de forma segura en LearnGrove. Siga el enlace de su correo electrónico para elegir una nueva contraseña.",
+        terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en Inglés.",
         privacy:
-            "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
+            "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en Inglés.",
         acceptableUse:
-            "Revise nuestra política de uso aceptable. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
-        about: "Descubra la historia detrás de TodoServis: quiénes somos, nuestra misión y nuestra pasión por ayudar a revolucionar la forma en que las personas y las empresas encuentran y brindan servicios. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
-        impact: "Explore el impacto significativo de TodoServis. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
+            "Revise nuestra política de uso aceptable. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en Inglés.",
+        about: "Descubra la historia detrás de LearnGrove: quiénes somos, nuestra misión y nuestra pasión por ayudar a apoyar a los facilitadores de aprendizaje y conectar a los estudiantes con los recursos adecuados. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
+        impact: "Explore el impacto significativo de LearnGrove. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
         fullPost:
-            "Lea más sobre este servicio y comuníquese con el proveedor si está interesado. Explora imágenes adicionales y la descripción completa del servicio.",
+            "Lea más sobre este recurso. Explore imágenes adicionales y la descripción completa del recurso.",
         faq: "Explore nuestra completa página de preguntas frecuentes para obtener respuestas a preguntas comunes sobre nuestros servicios, políticas y más.",
         viewCart: "Vea su carrito y realice el pago con facilidad.",
     },
@@ -154,7 +154,7 @@ export const Spanish = {
         fetch: "Obtener Servicios",
         todoFetch:
             "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
-        mustSignIn: "Debes iniciar sesión para ver los servicios disponibles.",
+        mustSignIn: "Debes iniciar sesión para ver los recursos disponibles.",
         profileEdits:
             "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
         noClient: "No se encontró ningún cliente.",
@@ -266,10 +266,6 @@ export const Spanish = {
     },
 
     toolTips: {
-        providerPhone:
-            "Cada perfil de proveedor debe tener un número de teléfono único. Este número estará disponible para los clientes para poder contactarlo con respecto a sus servicios. Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios.",
-        clientPhone:
-            "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
         firstName:
             "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
         lastName:
@@ -327,7 +323,7 @@ export const Spanish = {
     },
 
     socialModal: {
-        shareService: "Comparte este servicio",
+        shareService: "Comparte este recurso",
         twitterX: "Compartir en X",
         facebook: "Facebook",
         WhatsApp: "WhatsApp",

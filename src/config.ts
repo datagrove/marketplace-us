@@ -12,7 +12,7 @@ const CONFIG = {
     url: "https://learngrove.co",
     devUrl: "http://localhost:4321",
     //NEED TO ADD NEW URL
-    pagesDevUrl: "https://pwa.NEWURL.pages.dev",
+    pagesDevUrl: "https://marketplace-us.pages.dev",
 
     defaultTheme: "system", // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
     themeColor: "#1DD762",
