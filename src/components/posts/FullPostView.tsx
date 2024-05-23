@@ -58,7 +58,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 console.log(error);
             } else if (data[0] === undefined) {
                 alert(t("messages.noPost"));
-                location.href = `/${lang}/services`;
+                location.href = `/${lang}/resources`;
             } else {
                 const newItem: Post[] = await Promise.all(
                     data?.map(async (item) => {
@@ -273,7 +273,8 @@ export const ViewFullPost: Component<Props> = (props) => {
         const currPage = extractWindowLink();
         const testLink =
             whatsappUrl +
-            "Check%20out%20this%20awesome%20service%20on%20TodoServis! ";
+            // TODO Update to LearnGrove
+            "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
         window.open(
             testLink + encodeURIComponent(currPage),
             "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"

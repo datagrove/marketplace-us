@@ -9,6 +9,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import { FreeDownloadButton } from "@components/common/cart/FreeDownloadButton";
+import stripe from "@lib/stripe"
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -18,7 +19,7 @@ const values = ui[lang] as uiObject;
 const postSubjects = values.subjectCategoryInfo.subjects;
 
 interface Props {
-    id: string | undefined;
+    postId: string | undefined;
 }
 
 export const MobileViewFullPost: Component<Props> = (props) => {
@@ -39,10 +40,10 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     setTestImages(test2);
 
     onMount(async () => {
-        if (props.id === undefined) {
+        if (props.postId === undefined) {
             location.href = `/${lang}/404`;
-        } else if (props.id) {
-            await fetchPost(+props.id);
+        } else if (props.postId) {
+            await fetchPost(+props.postId);
         }
     });
 
@@ -69,7 +70,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 console.log(error);
             } else if (data[0] === undefined) {
                 alert(t("messages.noPost"));
-                location.href = `/${lang}/services`;
+                location.href = `/${lang}/resources`;
             } else {
                 const updatedPost = await Promise.all(
                     data?.map(async (item) => {
@@ -106,6 +107,14 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 });
                             });
                         }
+
+                        if (item.price_id !== null) {
+                            const priceData = await stripe.prices.retrieve(
+                                item.price_id
+                            );
+                            item.price = priceData.unit_amount! / 100;
+                        }
+
                         return item;
                     })
                 );
@@ -224,10 +233,11 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         }
     }
 
-    function tabLinkClick(e) {
+    function tabLinkClick(e: Event) {
         e.preventDefault();
 
-        let currLinkID = e.currentTarget.id; // <a> element id
+        let currLinkEl = e.currentTarget as HTMLAnchorElement
+        let currLinkID = currLinkEl.id; // <a> element id
         let currEl = document.getElementById(currLinkID); // <a> element clicked
         let allLinks = document.getElementsByClassName("tabLink"); // all links
 
@@ -240,14 +250,14 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         let qaDiv = document.getElementById("post-qa-div");
         let qaArrow = document.getElementById("qa-arrow");
 
-        if (!currEl.classList.contains("border-b-2")) {
+        if (!currEl?.classList.contains("border-b-2")) {
             Array.from(allLinks).forEach(function (link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
             });
 
-            currEl.classList.add("border-b-2");
-            currEl.classList.add("border-green-500");
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
         }
 
         console.log(currLinkID);
@@ -315,10 +325,11 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         window.location.href = jumpToSection;
     }
 
-    function imageClick(e) {
+    function imageClick(e: Event) {
         e.preventDefault();
 
-        let mobileCurrImageID = e.currentTarget.id;
+        let mobileCurrImageEle = e.currentTarget as HTMLDivElement
+        let mobileCurrImageID = mobileCurrImageEle.id;
         let mobileCurrImage = document.getElementById(mobileCurrImageID);
         let allMobileImages =
             document.getElementsByClassName("mobileImageLink");
@@ -329,7 +340,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
         console.log(Array.from(allMobileImages));
 
-        if (!mobileCurrImage.classList.contains("border-b-2")) {
+        if (!mobileCurrImage?.classList.contains("border-b-2")) {
             Array.from(allMobileImages).forEach(function (image) {
                 console.log(image.classList);
                 console.log("Test");
@@ -337,11 +348,11 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 image.classList.remove("border-green-500");
             });
 
-            mobileCurrImage.classList.add("border-b-2");
-            mobileCurrImage.classList.add("border-green-500");
+            mobileCurrImage?.classList.add("border-b-2");
+            mobileCurrImage?.classList.add("border-green-500");
         }
 
-        mainImage.setAttribute("src", testImages()[arrayIndex]);
+        mainImage?.setAttribute("src", testImages()[arrayIndex]);
     }
 
     return (
@@ -598,7 +609,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         {/* TODO: Add FreeDownloadButton component if resource is free */}
 
                         <AddToCart
-                            item={{ ...post(), quantity: 1 }}
+                            item={{ ...post()!, quantity: 1 }}
                             buttonClick={resetQuantity}
                         />
                     </div>
@@ -685,7 +696,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <p class="mt-4 font-light uppercase">
                             {t("formLabels.subjects")}
                         </p>
-                        <div class="flex">{post()?.subject.join(", ")}</div>
+                        <div class="flex">{post()?.subject?.join(", ")}</div>
                     </div>
 
                     <div>
@@ -744,7 +755,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </div>
                 {/* <p>{ post()?.grade.join(", ") }</p> */}
                 <p id="post-description-div" class="hidden">
-                    {post()?.content} {post()?.grade.join(", ")}
+                    {post()?.content} {post()?.grade?.join(", ")}
                 </p>
             </div>
 

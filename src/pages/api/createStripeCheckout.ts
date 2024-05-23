@@ -52,7 +52,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         ui_mode: "embedded",
         line_items: lineItems,
         mode: "payment",
-        return_url: `${SITE.devUrl}/return.html?session_id={CHECKOUT_SESSION_ID}`,
+        return_url: `${SITE.pagesDevUrl}/return.html?session_id={CHECKOUT_SESSION_ID}`,
         automatic_tax: { enabled: !zeroOrder },
         metadata: {
             userId: response.userId,

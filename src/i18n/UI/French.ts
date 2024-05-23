@@ -3,7 +3,7 @@ export const French = {
     siteDescription: "Tout ce dont vous avez besoin pour faire le travail.",
 
     pageTitles: {
-        services: "prestations de service",
+        services: "Ressources",
         signUp: "S'inscrire",
         login: "Connexion",
         home: "Maison",
@@ -36,37 +36,37 @@ export const French = {
 
     pageDescriptions: {
         services:
-            "Trouvez les services dont vous avez besoin pour accomplir votre travail. Recherchez des mots-clés, filtrez par catégorie et filtrez par emplacement pour trouver ce dont vous avez besoin. Affichez les aperçus des articles et cliquez sur un article pour en savoir plus.",
-        signUp: "Fournissez votre e-mail et créez un mot de passe pour vous inscrire pour rechercher des services ou publier des services sur TodoServis.",
-        login: "Entrez votre email et votre mot de passe pour vous connecter à TodoServis.",
-        home: "TodoServis, où vous trouverez tout ce dont vous avez besoin pour accomplir votre travail.",
+            "Trouvez les ressources dont vous avez besoin pour votre apprenant. Recherchez des mots-clés et filtrez par catégorie pour trouver ce dont vous avez besoin. Affichez les aperçus et cliquez sur une carte pour en savoir plus.",
+        signUp: "Fournissez votre e-mail et créez un mot de passe pour vous inscrire et publier des ressources sur LearnGrove.",
+        login: "Entrez votre e-mail et votre mot de passe pour vous connecter à LearnGrove.",
+        home: "LearnGrove, votre source d'apprentissage de qualité !",
         // signIn: string,
         createClientAccount:
-            "Rejoignez TodoServis en tant que client et débloquez un monde de services. Inscrivez-vous aujourd'hui pour trouver et entrer en contact avec les meilleurs fournisseurs de services de votre région.",
+            "Rejoignez LearnGrove et débloquez un monde de ressources d'apprentissage. Inscrivez-vous aujourd'hui pour trouver les ressources dont vous avez besoin pour votre parcours d'apprentissage.",
         viewClientAccount:
-            "Accédez et gérez les informations de votre profil client sans effort sur TodoServis.",
+            "Accédez et gérez les informations de votre profil client sans effort sur LearnGrove.",
         createPost:
-            "Créez une publication comprenant un titre, une catégorie, une description, un emplacement et des images pour proposer votre service sur TodoServis.",
+            "Répertoriez une ressource comprenant le titre, la catégorie, la description et les images pour proposer votre ressource sur LearnGrove.",
         createProviderAccount:
-            "Créez un profil fournisseur pour commencer à publier vos services sur TodoServis",
+            "Créez un profil de fournisseur pour commencer à publier vos ressources sur LearnGrove.",
         viewProviderAccount:
-            "Gérez les détails de votre profil fournisseur et consultez vos publications sur TodoServis.",
+            "Gérez les détails de votre profil de fournisseur et consultez vos publications sur LearnGrove.",
         clientViewProviderAccount:
-            "Découvrez-en davantage sur ce fournisseur. Explorez leur profil et les services disponibles.",
+            "Découvrez-en davantage sur ce fournisseur. Explorez leur profil et les ressources disponibles.",
         page404: "404 Page non trouvée",
         requestPasswordReset:
-            "Mot de passe oublié? Demandez une réinitialisation sécurisée du mot de passe pour votre profil TodoServis. Entrez votre email et suivez les instructions pour retrouver l'accès.",
+            "Mot de passe oublié? Demandez une réinitialisation sécurisée du mot de passe pour votre profil LearnGrove. Entrez votre email et suivez les instructions pour retrouver l'accès.",
         resetPassword:
-            "Réinitialisez votre mot de passe en toute sécurité avec TodoServis. Suivez le lien de votre e-mail pour choisir un nouveau mot de passe.",
-        terms: "Consultez nos termes et conditions. Remarque : les traductions sont fournies à titre gracieux, les termes officiels contraignants sont en espagnol.",
+            "Réinitialisez votre mot de passe en toute sécurité avec LearnGrove. Suivez le lien de votre e-mail pour choisir un nouveau mot de passe.",
+        terms: "Consultez nos termes et conditions. Remarque : les traductions sont fournies à titre gracieux, les termes officiels contraignants sont en anglais.",
         privacy:
-            "Consultez notre politique de confidentialité. Veuillez noter que les traductions sont fournies à titre gracieux, la politique officielle contraignante est en espagnol.",
+            "Consultez notre politique de confidentialité. Veuillez noter que les traductions sont fournies à titre gracieux, la politique officielle contraignante est en anglais.",
         acceptableUse:
-            "Consultez notre politique d’utilisation acceptable. Veuillez noter que les traductions sont fournies à titre gracieux et que la politique officielle contraignante est en espagnol.",
-        about: "Découvrez l'histoire de TodoServis – qui nous sommes, notre mission et notre passion de contribuer à révolutionner la façon dont les particuliers et les entreprises trouvent et fournissent des services. Découvrez notre équipe et les valeurs qui nous animent. Rejoignez-nous dans notre voyage !",
-        impact: "Découvrez l’impact significatif de TodoServis. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
+            "Consultez notre politique d’utilisation acceptable. Veuillez noter que les traductions sont fournies à titre gracieux et que la politique officielle contraignante est en anglais.",
+        about: "Découvrez l'histoire derrière LearnGrove – qui nous sommes, notre mission et notre passion pour aider à soutenir les facilitateurs d'apprentissage et à connecter les apprenants aux bonnes ressources. Découvrez notre équipe et les valeurs qui nous animent. Rejoignez-nous dans notre voyage !",
+        impact: "Découvrez l’impact significatif de LearnGrove. Découvrez comment nous faisons la différence et apprenez-en davantage sur nos projets et nos contributions à un changement positif.",
         fullPost:
-            "En savoir plus sur ce service et contacter le fournisseur si vous êtes intéressé. Découvrez des images supplémentaires et la description complète du service.",
+            "En savoir plus sur cette ressource. Explorez des images supplémentaires et la description complète de la ressource.",
         faq: "Explorez notre page FAQ complète pour obtenir des réponses aux questions courantes sur nos services, nos politiques et bien plus encore.",
         viewCart:
             "Consultez votre panier et passez à la caisse en toute simplicité.",
@@ -156,7 +156,7 @@ export const French = {
         todoFetch:
             "Todo, le chien d'assistance, ira vous chercher les services dont vous avez besoin!",
         mustSignIn:
-            "Vous devez être connecté pour voir les services disponibles.",
+            "Vous devez être connecté pour voir les ressources disponibles.",
         profileEdits:
             "Les modifications du profil ne seront enregistrées qu'après avoir cliqué sur le bouton Enregistrer le profil !",
         noPostsSearch:
@@ -267,10 +267,6 @@ export const French = {
     },
 
     toolTips: {
-        providerPhone:
-            "Chaque profil de fournisseur doit avoir un numéro de téléphone unique. Ce numéro sera à la disposition des clients afin de vous contacter concernant vos services. Nous demandons à tous les utilisateurs de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs.",
-        clientPhone:
-            "Nous demandons aux clients de fournir des numéros de téléphone valides dans le cadre de nos efforts pour assurer la sécurité de nos utilisateurs. Ce numéro peut être utilisé par les fournisseurs pour vous contacter concernant les devis des services demandés.",
         firstName:
             "Il doit s'agir de votre nom légal tel qu'il apparaît sur votre carte d'identité officielle. Si vous ne fournissez pas de nom d'affichage, votre prénom et votre nom seront affichés à la place.",
         lastName:
@@ -332,7 +328,7 @@ export const French = {
     },
 
     socialModal: {
-        shareService: "Partager ce service",
+        shareService: "Partager ce ressource",
         twitterX: "Partager sur X",
         facebook: "Facebook",
         WhatsApp: "WhatsApp",
@@ -341,14 +337,14 @@ export const French = {
         embedLink: "Intégrer le lien",
         textLink: "Lien texte",
         disclaimer:
-            "TodoServis n'a aucun contrôle sur les informations contenues dans aucun site externe. TodoServis n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas TodoServis ne sera responsable de votre utilisation d'un site lié.",
+            "LearnGrove n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas LearnGrove ne sera responsable de votre utilisation d'un site lié.",
         shareButton: "Bouton Partager",
         closeShareMenu: "Fermer le menu Partager",
     },
 
     ariaLabels: {
-        todo: "TodoServis Logo Retour à la page d'accueil",
-        logo: "Logo TodoServis",
+        todo: "LearnGrove Logo Retour à la page d'accueil",
+        logo: "Logo LearnGrove",
         navigation: "La navigation",
         checkboxMajorMunicipality:
             "Case à cocher pour sélectionner la grande municipalité",
@@ -405,7 +401,7 @@ export const French = {
                 links: [
                     {
                         text: "Contactez-nous",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: string, href: string },
                     // { text: string, href: string },
