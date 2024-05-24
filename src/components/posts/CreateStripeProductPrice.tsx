@@ -61,7 +61,7 @@ export const CreateStripeProductPrice: Component<Props> = (props: Props) => {
         const product = await createProduct(
             props.name,
             props.description,
-            props.tax_code
+            props.tax_code == "" ? 'txcd_10000000' : props.tax_code
         );
         const price = await createPrice(product, props.price);
         const stripeData = new FormData();

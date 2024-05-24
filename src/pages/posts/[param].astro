@@ -22,7 +22,7 @@ const { param } = Astro.params;
         class="border border-border1 dark:border-border1-DM rounded flex flex-col items-center min-w-96 md:w-5/6 max-w-[950px] h-full"
     >
         <div class="hidden md:inline w-full px-6 pb-6">
-            <ViewFullPost id={param} client:only="solid-js" />
+            <ViewFullPost postId={param} client:only="solid-js" />
         </div>
 
         <div class="md:hidden">

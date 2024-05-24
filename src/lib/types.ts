@@ -43,4 +43,5 @@ export interface Provider {
     first_name: string;
     last_name: string;
     seller_about: string;
+    contribution: number;
 }

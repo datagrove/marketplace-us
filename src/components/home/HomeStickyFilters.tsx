@@ -144,7 +144,7 @@ function fetchFilteredResources() {
             "selectedSubjects",
             JSON.stringify(selected_subjects_array)
         );
-        window.location.href = `/${lang}/services`;
+        window.location.href = `/${lang}/resources`;
     }
 }
 
@@ -161,7 +161,7 @@ export const HomeStickyFilters: Component = () => {
                 id="top-sticky-filter"
                 class="sticky top-0 flex w-full items-center justify-center bg-background2 py-1 dark:bg-background2-DM"
             >
-                <a onmouseover={hideFilterDivs} href={`/${lang}/services`}>
+                <a onmouseover={hideFilterDivs} href={`/${lang}/resources`}>
                     <h3 class="mx-5 hidden text-ptext2 dark:text-ptext2-DM md:inline">
                         {t("buttons.browseCatalog")}
                     </h3>

@@ -22,7 +22,7 @@ interface Props {
 }
 
 function redirectToResourcesPage() {
-    window.location.href = `/${lang}/services`;
+    window.location.href = `/${lang}/resources`;
 }
 
 export const Home: Component = () => {

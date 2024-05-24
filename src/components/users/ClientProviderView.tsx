@@ -76,51 +76,51 @@ export const ClientProviderView: Component<Props> = (props) => {
 
     const fetchProvider = async (id: number) => {
         try {
-            const { data, error } = await supabase
-                .from("sellerview")
-                .select("*")
-                .eq("seller_id", id);
+          const { data, error } = await supabase
+            .from("sellerview")
+            .select("*")
+            .eq("seller_id", id);
+  
+          if (error) {
+            console.log(error);
+          } else if (data[0] === undefined) {
+            alert(t("messages.noProvider"));
+            location.href = `/${lang}/resources`;
+          } else {
+            let languageArray = data[0].language_spoken;
+            console.log("Languages Array: " + languageArray);
+            languageArray?.map((language: number) => {
+              if (language == 1) {
+                setLanguageSpoken([...languageSpoken(), "English"]);
+              }
+  
+              if (language == 2) {
+                setLanguageSpoken([...languageSpoken(), "Español"]);
+              }
+  
+              if (language == 3) {
+                setLanguageSpoken([...languageSpoken(), "Français"]);
+              }
+  
+              if (language == 4) {
+                setLanguageSpoken([...languageSpoken(), "Chinese"]);
+              }
+  
+              if (language == 5) {
+                setLanguageSpoken([...languageSpoken(), "German"]);
+              }
+  
+              if (language == 6) {
+                setLanguageSpoken([...languageSpoken(), "French"]);
+              }
+            });
+  
+            //set display list of languages for provider
+            data[0].languages = languageSpoken().join(", ");
 
-            if (error) {
-                console.log(error);
-            } else if (data[0] === undefined) {
-                alert(t("messages.noProvider"));
-                location.href = `/${lang}/services`;
-            } else {
-                let languageArray = data[0].language_spoken;
-                console.log("Languages Array: " + languageArray);
-                languageArray?.map((language: number) => {
-                    if (language == 1) {
-                        setLanguageSpoken([...languageSpoken(), "English"]);
-                    }
-
-                    if (language == 2) {
-                        setLanguageSpoken([...languageSpoken(), "Español"]);
-                    }
-
-                    if (language == 3) {
-                        setLanguageSpoken([...languageSpoken(), "Français"]);
-                    }
-
-                    if (language == 4) {
-                        setLanguageSpoken([...languageSpoken(), "Chinese"]);
-                    }
-
-                    if (language == 5) {
-                        setLanguageSpoken([...languageSpoken(), "German"]);
-                    }
-
-                    if (language == 6) {
-                        setLanguageSpoken([...languageSpoken(), "French"]);
-                    }
-                });
-
-                //set display list of languages for provider
-                data[0].languages = languageSpoken().join(", ");
-
-                setProvider(data[0]);
-                console.log("test");
-            }
+            setProvider(data[0]);
+            console.log("test")
+          }
         } catch (error) {
             console.log(error);
         }

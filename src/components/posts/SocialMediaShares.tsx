@@ -19,8 +19,9 @@ const xUrl = "https://twitter.com/intent/tweet?text=Check%20this%20out!%20";
 const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
 const fbMessengerUrl = "fb-messenger://share/?link=";
 const whatsappUrl = "https://wa.me/?text=";
+// TODO Internationalize
 const emailURL =
-    "mailto:?subject=Check this out this service from TodoServis!&body=Check%20out%20this%20service:%20";
+    "mailto:?subject=Check this out this resource from LearnGrove!&body=Check%20out%20this%resouce:%20";
 
 const linkTarget = "_top";
 const windowOptions = "menubar=no,status=no,height=300,width=600";
@@ -49,15 +50,17 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
         }
     };
 
-    const currPostLink = `www.todoservis.com/${lang}/posts/${props.id}`;
+    // TODO Update to use SITE
+    const currPostLink = `learngrove.co/${lang}/posts/${props.id}`;
     const fbShareLink = facebookUrl + currPostLink;
 
     function xShare(e: Event) {
         e.stopPropagation();
         e.preventDefault();
 
+        // TODO Update to use SITE
         window.open(
-            xUrl + `www.todoservis.com/${lang}/posts/${props.id}`,
+            xUrl + `learngrove.co/${lang}/posts/${props.id}`,
             "_blank",
             windowOptions
         );
@@ -80,8 +83,9 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
 
         window.open(
             whatsappUrl +
+            // TODO Update to use SITE
                 encodeURIComponent(
-                    `www.todoservis.com/${lang}/posts/${props.id}`
+                    `learngrove.co/${lang}/posts/${props.id}`
                 ),
             windowOptions
         );
@@ -94,7 +98,8 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
         window.open(
             emailURL +
                 encodeURIComponent(
-                    `www.todoservis.com/${lang}/posts/${props.id}`
+                    // TODO Update to use SITE
+                    `learngrove.co/${lang}/posts/${props.id}`
                 )
         );
     }
@@ -124,7 +129,7 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
         e.preventDefault();
 
         let message =
-            "Check%20out%20this%20great%20service%20from%20TodoServis!%20";
+            "Check%20out%20this%20great%resource%20from%20LearnGrove!%20";
 
         window.open(
             "sms:?&body=" + message + currPostLink,

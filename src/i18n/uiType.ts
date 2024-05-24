@@ -96,52 +96,59 @@ export interface uiObject {
         top: string;
         downloadResources: string;
         addedToCart: string;
+        finishStripeSetup: string;
+        requestStripePayout: string;
     };
 
-    messages: {
-        noAccount: string;
-        emailValid: string;
-        emailLackRequirements: string;
-        passwordLength: string;
-        passwordValid: string;
-        passwordLackRequirements: string;
-        phoneLackRequirements: string;
-        phoneValid: string;
-        passwordMatch: string;
-        passwordReset: string;
-        forgotPassword: string;
-        alreadyAccount: string;
-        error404: string;
-        onlyProvider: string;
-        signInAsProvider: string;
-        checkEmail: string;
-        checkConfirmEmail: string;
-        signIn: string;
-        createProviderAccount: string;
-        createClientAccount: string;
-        viewProviderAccount: string;
-        noPosts: string;
-        noPost: string;
-        selectAnImage: string;
-        noProvider: string;
-        translation: string;
-        translations: string;
-        clickWrap1: string;
-        clickWrap2: string;
-        fetch: string;
-        todoFetch: string;
-        mustSignIn: string;
-        profileEdits: string;
-        noClient: string;
-        noPostsSearch: string;
-        noStripeAccount: string;
-        selectSubject: string;
-        comingSoon: string;
-        emailNotProvided: string;
-        report: string;
-        free: string;
-        freeResourceCreated: string;
-    };
+  messages: {
+    noAccount: string,
+    emailValid: string,
+    emailLackRequirements: string,
+    passwordLength: string,
+    passwordValid: string,
+    passwordLackRequirements: string, 
+    phoneLackRequirements: string,
+    phoneValid: string,
+    passwordMatch: string,
+    passwordReset: string,
+    forgotPassword: string,
+    alreadyAccount: string,
+    error404: string,
+    onlyProvider: string,
+    signInAsProvider: string,
+    checkEmail: string,
+    checkConfirmEmail: string,
+    signIn: string,
+    createProviderAccount: string,
+    createClientAccount: string,
+    viewProviderAccount: string,
+    noPosts: string,
+    noPost: string,
+    selectAnImage: string,
+    noProvider: string,
+    translation: string,
+    translations: string,
+    clickWrap1: string,
+    clickWrap2: string,
+    fetch: string,
+    todoFetch: string,
+    mustSignIn: string,
+    profileEdits: string,
+    noClient: string,
+    noPostsSearch: string,
+    noStripeAccount: string,
+    selectSubject: string,
+    comingSoon: string,
+    emailNotProvided: string,
+    report: string;
+    free: string;
+    freeResourceCreated: string;
+    insufficientStripeBalance: string;
+    payoutRequested: string;
+    payoutSetup: string;
+    requestPayout: string;
+    currentBalance: string;
+  },
 
     formLabels: {
         title: string;
@@ -185,6 +192,7 @@ export interface uiObject {
         pricePost: string;
         isResourceFree: string;
         about: string;
+        platformSupport: string;
     };
 
     postLabels: {
@@ -232,8 +240,6 @@ export interface uiObject {
     };
 
     toolTips: {
-        providerPhone: string;
-        clientPhone: string;
         firstName: string;
         lastName: string;
         displayName: string;
@@ -246,6 +252,7 @@ export interface uiObject {
         languages: string;
         subjects: string;
         grades: string;
+        contribution: string;
     };
 
     apiErrors: {
