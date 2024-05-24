@@ -149,7 +149,7 @@ export const ViewClientPurchases: Component = () => {
                 );
 
                 itemsOrdered?.sort(function (a, b) {
-                    return a.purchaseDate.localeCompare(b.purchaseDate);
+                    return b.purchaseDate.localeCompare(a.purchaseDate);
                 });
 
                 console.log(itemsOrdered)
