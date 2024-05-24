@@ -3,7 +3,7 @@ export const English = {
     siteDescription: "Everything you need to get the job done.",
 
     pageTitles: {
-        services: "Services",
+        services: "Resources",
         signUp: "Sign Up",
         login: "Login",
         home: "Home",
@@ -36,37 +36,37 @@ export const English = {
 
     pageDescriptions: {
         services:
-            "Find the services you need to get the job done. Search for keywords, filter by category, and filter by location to find what you need. View post previews and click on a post to learn more.",
-        signUp: "Provider your email and create a password to signup to search services or post services on TodoServis.",
-        login: "Enter your email and password to login to TodoServis.",
-        home: "TodoServis, home to everything you need to get the job done.",
+            "Find the resources you need to for your learner. Search for keywords, and filter by category to find what you need. View previews and click on a card to learn more.",
+        signUp: "Provide your email and create a password to signup to post resources on LearnGrove.",
+        login: "Enter your email and password to login to LearnGrove.",
+        home: "LearnGrove, your source for quality learning!",
         // signIn: string,
         createClientAccount:
-            "Join TodoServis as a client and unlock a world of services. Sign up today to find and connect with top service providers in your area.",
+            "Join LearnGrove unlock a world of learning resources. Sign up today to find the resources you need for your learning journey.",
         viewClientAccount:
-            "Access and manage your client profile information effortlessly on TodoServis.",
+            "Access and manage your client profile information effortlessly on LearnGrove.",
         createPost:
-            "Create a post including title, category, description, location, and images to offer your service on TodoServis.",
+            "List a resource including title, category, description, and images to offer your resource on LearnGrove.",
         createProviderAccount:
-            "Create a Provider Profile to start posting your services on TodoServis.",
+            "Create a Provider Profile to start posting your resources on LearnGrove.",
         viewProviderAccount:
-            "Manage your provider profile details and review your posts on TodoServis.",
+            "Manage your provider profile details and review your posts on LearnGrove.",
         clientViewProviderAccount:
-            "Discover more about this provider. Explore their profile and available services.",
+            "Discover more about this provider. Explore their profile and available resources.",
         page404: "404 - page not found",
         requestPasswordReset:
-            "Forgot your password? Request a secure password reset for your TodoServis account. Enter your email and follow the instructions to regain access.",
+            "Forgot your password? Request a secure password reset for your LearnGrove account. Enter your email and follow the instructions to regain access.",
         resetPassword:
-            "Reset your password securely with TodoServis. Follow the link from your email to choose a new password.",
-        terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in Spanish.",
+            "Reset your password securely with LearnGrove. Follow the link from your email to choose a new password.",
+        terms: "Review our Terms and Conditions. Please note, the translations are provided as a courtesy, the official binding terms are in English.",
         privacy:
-            "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
+            "Review our privacy policy. Please note, the translations are provided as a courtesy, the official binding policy is in English.",
         acceptableUse:
-            "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in Spanish.",
-        about: "Discover the story behind TodoServis – who we are, our mission, and our passion for helping revolutionize the way individuals and businesses find and provide services. Learn about our team and the values that drive us. Join us on our journey!",
-        impact: "Explore the meaningful impact of TodoServis. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
+            "Review our acceptable use policy. Please note, the translations are provided as a courtesy, the official binding policy is in English.",
+        about: "Discover the story behind LearnGrove – who we are, our mission, and our passion for helping support learning facilitators and connect learners with the right resources. Learn about our team and the values that drive us. Join us on our journey!",
+        impact: "Explore the meaningful impact of LearnGrove. Discover how we're making a difference and learn more about our projects, and contributions to positive change.",
         fullPost:
-            "Read more about this service and contact the provider if interested. Explore additional images and the full description of the service.",
+            "Read more about this resource. Explore additional images and the full description of the resource.",
         faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
         viewCart: "View your cart and checkout with ease.",
     },
@@ -106,63 +106,72 @@ export const English = {
         follow: "Follow",
         following: "Following",
         top: "Back to Top",
-        freeDownload: "Free Download",
+        downloadResources: "Download",
         addedToCart: "Added to Cart!",
         resetPassword: "Reset Password",
+        finishStripeSetup: "Go to Stripe Dashboard",
+        requestStripePayout: "Request Payout",
     },
 
-  messages: {
-    noAccount: "Don't have an account? Click here to ",
-    emailValid: "Valid email address",
-    emailLackRequirements: "Email does not meet requirements",
-    passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
-    passwordValid: "Valid password",
-    passwordLackRequirements: "Password does not meet requirements",
-    phoneLackRequirements: "Please enter a valid phone number.",
-    phoneValid: "Valid phone number",
-    passwordMatch: "Passwords do not match",
-    passwordReset: "Password Reset",
-    forgotPassword: "Forgot your password? Click here to",
-    alreadyAccount: "Already have an account? Click here to",
-    error404: "Something went wrong",
-    onlyProvider: "Only providers can create posts.",
-    signInAsProvider: "Please create a provider profile before posting.",
-    checkEmail:
-      "Check your email for the reset link! If you did not receive the email, please check your spam folder. Links are valid for 24 hours.",
-    checkConfirmEmail:
-      "If this email is not already registered, you will receive an email confirmation link. Please check your spam folder if you did not receive the email. Links are valid for 24 hours.",
-    signIn: "Please sign in to access this page.",
-    createProviderAccount: "Please sign in to create a provider profile.",
-    createClientAccount: "Please sign in to create a client profile.",
-    viewProviderAccount:
-      "You do not have a provider profile. Please create one to view your provider profile.",
-    noPosts: "No posts available.",
-    noPost: "Post Not Found",
-    selectAnImage: "You must select an image to upload.",
-    noProvider: "No Provider found.",
-    translation: `Translations`,
-    translations:
-      " are provided for convenience only. The official binding language is Spanish.",
-    clickWrap1: "By clicking",
-    clickWrap2: "you are indicating that you have read and agree to the",
-    fetch: "Fetch Services",
-    todoFetch: "Todo, the service dog, will fetch you the services you need!",
-    mustSignIn: "You must be signed in to view available services.",
-    profileEdits:
-      "Profile edits will only be saved after clicking the save button",
-    noClient: "No Client found.",
-    noPostsSearch:
-      "No posts match this specific search - please try a different filter or key word",
-    noStripeAccount:
-      "You must complete enrollment with Stripe before posting resources.",
-    selectSubject: "Please select at least one subject",
-    comingSoon: "Coming soon!",
-    emailNotProvided: "Email not provided",
-    report: "Report this resource to LearnGrove",
-    free: "FREE",
-    freeResourceCreated: "Free Resource Created!",
-    noPurchasedItems: "Looks like you haven't purchased anything yet - time to get shopping!",
-  },
+    messages: {
+        noAccount: "Don't have an account? Click here to ",
+        emailValid: "Valid email address",
+        emailLackRequirements: "Email does not meet requirements",
+        passwordLength: `Password must be \n - at least 6 characters long \n - contain at least one number \n - contain at least one uppercase letter \n - contain at least one lowercase letter \n - contain at least one special character: \n   ! @ # $ % ^ & *`,
+        passwordValid: "Valid password",
+        passwordLackRequirements: "Password does not meet requirements",
+        phoneLackRequirements: "Please enter a valid phone number.",
+        phoneValid: "Valid phone number",
+        passwordMatch: "Passwords do not match",
+        passwordReset: "Password Reset",
+        forgotPassword: "Forgot your password? Click here to",
+        alreadyAccount: "Already have an account? Click here to",
+        error404: "Something went wrong",
+        onlyProvider: "Only providers can create posts.",
+        signInAsProvider: "Please create a provider profile before posting.",
+        checkEmail:
+            "Check your email for the reset link! If you did not receive the email, please check your spam folder. Links are valid for 24 hours.",
+        checkConfirmEmail:
+            "If this email is not already registered, you will receive an email confirmation link. Please check your spam folder if you did not receive the email. Links are valid for 24 hours.",
+        signIn: "Please sign in to access this page.",
+        createProviderAccount: "Please sign in to create a provider profile.",
+        createClientAccount: "Please sign in to create a client profile.",
+        viewProviderAccount:
+            "You do not have a provider profile. Please create one to view your provider profile.",
+        noPosts: "No posts available.",
+        noPost: "Post Not Found",
+        selectAnImage: "You must select an image to upload.",
+        noProvider: "No Provider found.",
+        translation: `Translations`,
+        translations:
+            " are provided for convenience only. The official binding language is Spanish.",
+        clickWrap1: "By clicking",
+        clickWrap2: "you are indicating that you have read and agree to the",
+        fetch: "Fetch Services",
+        todoFetch:
+            "Todo, the service dog, will fetch you the services you need!",
+        mustSignIn: "You must be signed in to view available resources.",
+        profileEdits:
+            "Profile edits will only be saved after clicking the Save Profile button!",
+        noClient: "No Client found.",
+        noPostsSearch:
+            "No posts match this specific search - please try a different filter or key word",
+        noStripeAccount:
+            "You must complete enrollment with Stripe before posting resources.",
+        selectSubject: "Please select at least one subject",
+        comingSoon: "Coming soon!",
+        emailNotProvided: "Email not provided",
+        report: "Report this resource to LearnGrove",
+        free: "FREE",
+        freeResourceCreated: "Free Resource Created!",
+        noPurchasedItems: "Looks like you haven't purchased anything yet - time to get shopping!",
+        insufficientStripeBalance:
+            "Insufficient Stripe balance, check your stripe dashboard for more information.",
+        payoutRequested: "Success! You have requested your Stripe payout of",
+        payoutSetup: "Please complete your Stripe account setup to proceed. Your account must have payouts enabled before you can request a payout. Click Go To Stripe Dashboard to complete this step.",
+        requestPayout: "Click the Request Payout button to request your Stripe payout. You will be charged $2.25 to your account balance and the remainder will be sent to your bank account or debit card based on your Stripe settings. For your most up to date Stripe Balance, please visit your stripe dashboard.",
+        currentBalance: "Your current balance is approximately:",
+    },
 
     formLabels: {
         title: "Title",
@@ -205,6 +214,7 @@ export const English = {
         pricePost: "Price",
         isResourceFree: "Free Resource",
         about: "About",
+        platformSupport: "Platform Support",
     },
 
     postLabels: {
@@ -257,13 +267,8 @@ export const English = {
     updated: "Last Updated ",
   },
 
-
     toolTips: {
-        providerPhone:
-            "Each provider profile must have a unique phone number. This number will be available to clients in order to  contact you regarding your services. We require all users to provide valid phone numbers as part of our efforts to ensure the safety of our users.",
-        clientPhone:
-            "We require clients to provide valid phone numbers as part of our efforts to ensure the safety of our users. This number may be used by providers to contact you regarding quotes for requested services.",
-        firstName:
+       firstName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
         lastName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
@@ -286,6 +291,8 @@ export const English = {
         subjects:
             "Please select all the subjects covered by your resource. These will be used for filtering of resources for shoppers.",
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
+        contribution:
+            "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your provider profile. If you set platform support to 0% you will still be charged for processing fees.",
     },
 
     apiErrors: {
@@ -318,7 +325,7 @@ export const English = {
     },
 
     socialModal: {
-        shareService: "Share this service",
+        shareService: "Share this resource",
         twitterX: "Share on X",
         facebook: "Facebook",
         WhatsApp: "WhatsApp",
@@ -327,14 +334,14 @@ export const English = {
         embedLink: "Embed Link",
         textLink: "Text Link",
         disclaimer:
-            "TodoServis has no control over information at any external site. TodoServis is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall TodoServis be responsible for your use of a linked site.",
+            "LearnGrove has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall LearnGrove be responsible for your use of a linked site.",
         shareButton: "Share Button",
         closeShareMenu: "Close Share Menu",
     },
 
     ariaLabels: {
-        todo: "TodoServis Logo Return to Homepage",
-        logo: "TodoServis Logo",
+        todo: "LearnGrove Logo Return to Homepage",
+        logo: "LearnGrove Logo",
         navigation: "Navigation",
         checkboxMajorMunicipality: "Checkbox for selecting major municipality",
         checkboxMinorMunicipality: "Checkbox for selecting minor municipality",
@@ -388,7 +395,7 @@ export const English = {
                 links: [
                     {
                         text: "Contact Us",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: 'Community Forum', href: '#' },
                     // { text: 'Professional Services', href: '#' },

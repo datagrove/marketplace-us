@@ -11,7 +11,7 @@ const productCategoryData = values.subjectCategoryInfo;
 
 function selectGradeCarousel(gradeBtn: any) {
     localStorage.setItem("selectedGradeCarousel", JSON.stringify(gradeBtn.id));
-    window.location.href = `/${lang}/services`;
+    window.location.href = `/${lang}/resources`;
 }
 
 export const HomeGradeCarousel: Component = () => {

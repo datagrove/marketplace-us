@@ -94,9 +94,11 @@ export interface uiObject {
         follow: string;
         following: string;
         top: string;
-        freeDownload: string;
+        downloadResources: string;
         addedToCart: string;
         resetPassword: string;
+        finishStripeSetup: string;
+        requestStripePayout: string;
     };
 
   messages: {
@@ -143,8 +145,12 @@ export interface uiObject {
     free: string;
     freeResourceCreated: string;
     noPurchasedItems: string;
+    insufficientStripeBalance: string;
+    payoutRequested: string;
+    payoutSetup: string;
+    requestPayout: string;
+    currentBalance: string;
   },
-
 
     formLabels: {
         title: string;
@@ -188,6 +194,7 @@ export interface uiObject {
         pricePost: string;
         isResourceFree: string;
         about: string;
+        platformSupport: string;
     };
 
     postLabels: {
@@ -240,8 +247,6 @@ export interface uiObject {
   };
 
     toolTips: {
-        providerPhone: string;
-        clientPhone: string;
         firstName: string;
         lastName: string;
         displayName: string;
@@ -254,6 +259,7 @@ export interface uiObject {
         languages: string;
         subjects: string;
         grades: string;
+        contribution: string;
     };
 
     apiErrors: {

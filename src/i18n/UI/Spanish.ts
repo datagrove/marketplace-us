@@ -3,7 +3,7 @@ export const Spanish = {
     siteDescription: "Todo lo que necesitas para hacer el trabajo.",
 
     pageTitles: {
-        services: "Servicios",
+        services: "Recursos",
         signUp: "Registrarse",
         login: "Iniciar Sesión",
         home: "Inicio",
@@ -36,37 +36,37 @@ export const Spanish = {
 
     pageDescriptions: {
         services:
-            "Encuentre los servicios que necesita para realizar el trabajo. Busque palabras clave, filtre por categoría y filtre por ubicación para encontrar lo que necesita. Vea vistas previas de publicaciones y haga clic en una publicación para obtener más información.",
-        signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse para buscar servicios o publicar servicios en TodoServis.",
-        login: "Ingrese su correo electrónico y contraseña para iniciar sesión en TodoServis.",
-        home: "TodoServis, el hogar de todo lo que necesita para realizar el trabajo.",
+            "Encuentre los recursos que necesita para su alumno. Busque palabras clave y filtre por categoría para encontrar lo que necesita. Vea vistas previas y haga clic en una tarjeta para obtener más información.",
+        signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse y publicar recursos en LearnGrove.",
+        login: "Ingrese su correo electrónico y contraseña para iniciar sesión en LearnGrove.",
+        home: "LearnGrove, ¡su fuente de aprendizaje de calidad!",
         // signIn: string,
         createClientAccount:
-            "Únete a TodoServis como cliente y desbloquea un mundo de servicios. Regístrese hoy para encontrar y conectarse con los principales proveedores de servicios en su área.",
+            "Únase a LearnGrove y desbloquee un mundo de recursos de aprendizaje. Regístrese hoy para encontrar los recursos que necesita para su viaje de aprendizaje.",
         viewClientAccount:
-            "Acceda y administre la información de su perfil de cliente sin esfuerzo en TodoServis.",
+            "Acceda y administre la información de su perfil de cliente sin esfuerzo en LearnGrove.",
         createPost:
-            "Crea una publicación incluyendo título, categoría, descripción e imágenes para ofrecer sus servicios en TodoServis.",
+            "Enumere un recurso que incluya título, categoría, descripción e imágenes para ofrecer su recurso en LearnGrove.",
         createProviderAccount:
-            "Cree una perfil de proveedor para comenzar a publicar sus servicios en TodoServis",
+            "Cree un perfil de proveedor para comenzar a publicar sus recursos en LearnGrove.",
         viewProviderAccount:
-            "Administre los detalles de su perfil de proveedor y revise sus publicaciones en TodoServis.",
+            "Administre los detalles de su perfil de proveedor y revise sus publicaciones en LearnGrove.",
         clientViewProviderAccount:
-            "Descubra más sobre este proveedor. Explore su perfil y los servicios disponibles.",
+            "Descubra más sobre este proveedor. Explore su perfil y los recursos disponibles.",
         page404: "404 Pagina no encontrada",
         requestPasswordReset:
-            "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta TodoServis. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
+            "¿Olvidaste tu contraseña? Solicite un restablecimiento seguro de contraseña para su cuenta LearnGrove. Introduce tu correo electrónico y sigue las instrucciones para recuperar el acceso.",
         resetPassword:
-            "Restablezca su contraseña de forma segura en TodoServis. Siga el enlace de su correo electrónico para elegir una nueva contraseña.",
-        terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en español.",
+            "Restablezca su contraseña de forma segura en LearnGrove. Siga el enlace de su correo electrónico para elegir una nueva contraseña.",
+        terms: "Revisa nuestros términos y condiciones. Tenga en cuenta que las traducciones se proporcionan como cortesía; los términos oficiales vinculantes están en Inglés.",
         privacy:
-            "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
+            "Revise nuestra política de privacidad. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en Inglés.",
         acceptableUse:
-            "Revise nuestra política de uso aceptable. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en español.",
-        about: "Descubra la historia detrás de TodoServis: quiénes somos, nuestra misión y nuestra pasión por ayudar a revolucionar la forma en que las personas y las empresas encuentran y brindan servicios. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
-        impact: "Explore el impacto significativo de TodoServis. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
+            "Revise nuestra política de uso aceptable. Tenga en cuenta que las traducciones se proporcionan como cortesía, la política oficial vinculante está en Inglés.",
+        about: "Descubra la historia detrás de LearnGrove: quiénes somos, nuestra misión y nuestra pasión por ayudar a apoyar a los facilitadores de aprendizaje y conectar a los estudiantes con los recursos adecuados. Conozca nuestro equipo y los valores que nos impulsan. ¡Únase a nosotros en nuestro viaje!",
+        impact: "Explore el impacto significativo de LearnGrove. Descubra cómo estamos marcando la diferencia y obtenga más información sobre nuestros proyectos y nuestras contribuciones al cambio positivo.",
         fullPost:
-            "Lea más sobre este servicio y comuníquese con el proveedor si está interesado. Explora imágenes adicionales y la descripción completa del servicio.",
+            "Lea más sobre este recurso. Explore imágenes adicionales y la descripción completa del recurso.",
         faq: "Explore nuestra completa página de preguntas frecuentes para obtener respuestas a preguntas comunes sobre nuestros servicios, políticas y más.",
         viewCart: "Vea su carrito y realice el pago con facilidad.",
     },
@@ -105,65 +105,78 @@ export const Spanish = {
         follow: "Seguir",
         following: "Siguiente",
         top: "Volver Arriba",
-        freeDownload: "Descarga Gratis",
+        downloadResources: "Descargar",
         addedToCart: "¡Añadido al carrito!",
         resetPassword: "Restablecer la Contraseña",
+        finishStripeSetup: "Ir al panel de Stripe",
+        requestStripePayout: "Solicitud de Pago",
     },
 
-  messages: {
-    noAccount: "¿No tienes una cuenta? Haz click aquí para ",
-    emailValid: "Dirección de correo electrónico válida",
-    emailLackRequirements: "El correo electrónico no cumple con los requisitos",
-    passwordLength:
-      "La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *",
-    passwordValid: "Contraseña valida",
-    passwordLackRequirements: "Contraseña no cumple con los requisitos",
-    phoneLackRequirements: "Por favor ingrese un número de teléfono válido.",
-    phoneValid: "Número de teléfono válido",
-    passwordMatch: "Las contraseñas no coinciden",
-    passwordReset: "Restablecimiento de contraseña",
-    forgotPassword: "¿Olvidaste tu contraseña? Haz click aquí para",
-    alreadyAccount: "¿Ya tienes una cuenta? Haz click aquí para",
-    error404: "Algo salió mal",
-    onlyProvider: "Solo los proveedores pueden crear publicaciones.",
-    signInAsProvider:
-      "Inicie sesión en un perfil de proveedor para poder publicar.",
-    checkEmail:
-      "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
-    checkConfirmEmail:
-      "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
-    signIn: "Inicie sesión para acceder a esta página",
-    createProviderAccount: "Inicie sesión para crear un perfil de proveedor",
-    createClientAccount: "Inicie sesión para crear un perfil de cliente",
-    viewProviderAccount:
-      "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
-    noPosts: "No hay publicaciones disponibles",
-    noPost: "Publicación no encontrada",
-    selectAnImage: "Debe seleccionar una imagen para cargar.",
-    noProvider: "No se encontró ningún proveedor.",
-    noValue: "Sin valor",
-    translation: "Las traducciones",
-    translations:
-      " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
-    clickWrap1: "Al hacer clic en",
-    clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
-    fetch: "Obtener Servicios",
-    todoFetch:
-      "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
-    mustSignIn: "Debes iniciar sesión para ver los servicios disponibles.",
-    profileEdits:
-      "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
-    noClient: "No se encontró ningún cliente.",
-    noPostsSearch: "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
-    noStripeAccount: "Debes completar la inscripción en Stripe antes de publicar recursos.",
-    selectSubject: "Por favor, seleccione al menos una asignatura",
-    emailNotProvided: "Correo electrónico no proporcionado",
-    comingSoon: "¡Muy pronto!",
-    report: "Reportar este recurso a LearnGrove",
-    free: "GRATIS",
-    freeResourceCreated: "¡Recurso gratuito creado!",
-    noPurchasedItems: "Parece que aún no has comprado nada. ¡Ies hora de empezar a comprar!",
-  },
+    messages: {
+        noAccount: "¿No tienes una cuenta? Haz click aquí para ",
+        emailValid: "Dirección de correo electrónico válida",
+        emailLackRequirements:
+            "El correo electrónico no cumple con los requisitos",
+        passwordLength:
+            "La contraseña debe ser \n - al menos 6 caracteres de largo \n - contener al menos un número \n - contener una letra mayúscula \n - contener  1 letra minúscula \n - contener al menos carácter especial: \n   ! @ # $ % ^ & *",
+        passwordValid: "Contraseña valida",
+        passwordLackRequirements: "Contraseña no cumple con los requisitos",
+        phoneLackRequirements:
+            "Por favor ingrese un número de teléfono válido.",
+        phoneValid: "Número de teléfono válido",
+        passwordMatch: "Las contraseñas no coinciden",
+        passwordReset: "Restablecimiento de contraseña",
+        forgotPassword: "¿Olvidaste tu contraseña? Haz click aquí para",
+        alreadyAccount: "¿Ya tienes una cuenta? Haz click aquí para",
+        error404: "Algo salió mal",
+        onlyProvider: "Solo los proveedores pueden crear publicaciones.",
+        signInAsProvider:
+            "Inicie sesión en un perfil de proveedor para poder publicar.",
+        checkEmail:
+            "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
+        checkConfirmEmail:
+            "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
+        signIn: "Inicie sesión para acceder a esta página",
+        createProviderAccount:
+            "Inicie sesión para crear un perfil de proveedor",
+        createClientAccount: "Inicie sesión para crear un perfil de cliente",
+        viewProviderAccount:
+            "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
+        noPosts: "No hay publicaciones disponibles",
+        noPost: "Publicación no encontrada",
+        selectAnImage: "Debe seleccionar una imagen para cargar.",
+        noProvider: "No se encontró ningún proveedor.",
+        noValue: "Sin valor",
+        translation: "Las traducciones",
+        translations:
+            " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
+        clickWrap1: "Al hacer clic en",
+        clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
+        fetch: "Obtener Servicios",
+        todoFetch:
+            "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
+        mustSignIn: "Debes iniciar sesión para ver los recursos disponibles.",
+        profileEdits:
+            "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
+        noClient: "No se encontró ningún cliente.",
+        noPostsSearch:
+            "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
+        noStripeAccount:
+            "Debes completar la inscripción en Stripe antes de publicar recursos.",
+        selectSubject: "Por favor, seleccione al menos una asignatura",
+        emailNotProvided: "Correo electrónico no proporcionado",
+        comingSoon: "¡Muy pronto!",
+        report: "Reportar este recurso a LearnGrove",
+        free: "GRATIS",
+        freeResourceCreated: "¡Recurso gratuito creado!",
+        noPurchasedItems: "Parece que aún no has comprado nada. ¡Ies hora de empezar a comprar!",
+        insufficientStripeBalance:
+            "Saldo de Stripe insuficiente. Consulta tu panel de Stripe para obtener más información.",
+        payoutRequested: "¡Éxito! Has solicitado tu pago Stripe de",
+        payoutSetup: "Complete la configuración de su cuenta Stripe para continuar. Su cuenta debe tener pagos habilitados antes de que pueda solicitar un pago. Haga clic en Ir al panel de Stripe para completar este paso.",
+        requestPayout: "Haga clic en el botón Solicitar pago para solicitar su pago de Stripe. Se le cobrarán $2,25 al saldo de su cuenta y el resto se enviará a su cuenta bancaria o tarjeta de débito según su configuración de Stripe. Para conocer el saldo de Stripe más actualizado, visita tu panel de Stripe.",
+        currentBalance: "Su saldo actual es aproximadamente:",
+    },
 
 
     formLabels: {
@@ -208,6 +221,7 @@ export const Spanish = {
         pricePost: "Precio",
         isResourceFree: "Recurso Gratuito",
         about: "Acerca",
+        platformSupport: "Soporte de plataforma",
     },
 
     postLabels: {
@@ -232,7 +246,6 @@ export const Spanish = {
         orderSummary: "Resumen del pedido",
         items: "elementos",
     },
-
   homePageText: {
     headline: "Todo lo que necesitas para hacer el trabajo.",
     subHeadline:
@@ -260,10 +273,6 @@ export const Spanish = {
   },
 
     toolTips: {
-        providerPhone:
-            "Cada perfil de proveedor debe tener un número de teléfono único. Este número estará disponible para los clientes para poder contactarlo con respecto a sus servicios. Requerimos que todos los usuarios proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios.",
-        clientPhone:
-            "Requerimos que los clientes proporcionen números de teléfono válidos como parte de nuestros esfuerzos para garantizar la seguridad de nuestros usuarios. Este número puede ser utilizado por los proveedores para contactarlo con respecto a las cotizaciones de los servicios solicitados.",
         firstName:
             "Este debe ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido en su lugar.",
         lastName:
@@ -287,6 +296,8 @@ export const Spanish = {
         subjects:
             "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
         grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
+        contribution:
+            "Elige qué porcentaje de tu precio puedes contribuir al mantenimiento y desarrollo de la plataforma. Plataformas similares se llevan entre el 11% y el 45% de tus ventas. Queremos darle el poder de respaldar la plataforma en función del valor que proporciona. ¿No estás seguro de la cantidad correcta? Recomendamos comenzar con el 15%, puedes actualizarlo más adelante en tu perfil de proveedor.",
     },
 
     apiErrors: {
@@ -319,7 +330,7 @@ export const Spanish = {
     },
 
     socialModal: {
-        shareService: "Comparte este servicio",
+        shareService: "Comparte este recurso",
         twitterX: "Compartir en X",
         facebook: "Facebook",
         WhatsApp: "WhatsApp",
@@ -328,14 +339,14 @@ export const Spanish = {
         embedLink: "Insertar enlace",
         textLink: "Enlace de texto",
         disclaimer:
-            "TodoServis no tiene control sobre la información de ningún sitio externo. TodoServis no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso TodoServis será responsable del uso que usted haga de un sitio vinculado.",
+            "LearnGrove no tiene control sobre la información de ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado.",
         shareButton: "Botón de compartir",
         closeShareMenu: "Cerrar menú Compartir",
     },
 
     ariaLabels: {
-        todo: "Logotipo de TodoServis Volver a la página de inicio",
-        logo: "Logotipo de TodoServis",
+        todo: "Logotipo de LearnGrove Volver a la página de inicio",
+        logo: "Logotipo de LearnGrove",
         navigation: "Navegación",
         checkboxMajorMunicipality:
             "Casilla de verificación para seleccionar Provincia",
@@ -393,7 +404,7 @@ export const Spanish = {
                 links: [
                     {
                         text: "Contáctenos",
-                        href: "mailto:support@todoservis.com",
+                        href: "mailto:support@learngrove.co",
                     },
                     // { text: 'Community Forum', href: '#' },
                     // { text: 'Professional Services', href: '#' },

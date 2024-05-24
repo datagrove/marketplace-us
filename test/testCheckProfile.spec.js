@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
-  await page.goto('https://todoservis.com/');
+  await page.goto('https://learngrove.co/');
   await page.getByRole('button', { name: 'Iniciar Sesión' }).click();
   await page.getByPlaceholder('Correo Electrónico').click();
   await page.getByPlaceholder('Correo Electrónico').fill('germanzarkovich@gmail.com');

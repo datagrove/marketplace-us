@@ -100,7 +100,7 @@ export const HomeSubjectCarousel: Component = () => {
                                     "subjectCarouselSelection",
                                     JSON.stringify(currBtn.id)
                                 );
-                                window.location.href = `/${lang}/services`;
+                                window.location.href = `/${lang}/resources`;
                             }}
                         >
                             <div class="rounded-full bg-iconbg1 dark:bg-iconbg1-DM">

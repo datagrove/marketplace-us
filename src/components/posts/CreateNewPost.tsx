@@ -278,13 +278,16 @@ export const CreateNewPost: Component = () => {
         formData.append("refresh_token", session()?.refresh_token!);
         formData.append("lang", lang);
         if (isFree()) {
-            formData.delete("Price");
+            setPrice("0");  
+            formData.set("Price", price());
         } else {
             formData.set("Price", price());
         }
 
         if (selectedTaxCode() !== undefined) {
             formData.append("TaxCode", selectedTaxCode()!.value.toString());
+        } else if (price() === "0") {
+            formData.append("TaxCode", "txcd_10000000");
         }
 
         if (subjectPick() !== undefined) {
