@@ -3,10 +3,9 @@ import type { APIRoute } from "astro";
 import supabase from "@lib/supabaseClientServiceRole";
 // import  {DatabaseSubmit} from '../lib/OrderSubmit'
 
-const stripe =
-    new Stripe(import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY, {
-        apiVersion: "2023-10-16",
-    });
+const stripe = new Stripe(import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY, {
+    apiVersion: "2023-10-16",
+});
 
 const endpointSecret = import.meta.env.PUBLIC_VITE_STRIPE_ENDPOINT_SECRET;
 
@@ -37,7 +36,7 @@ export const POST: APIRoute = async function ({ request }: any) {
         event = await stripe.webhooks.constructEventAsync(
             body,
             sig,
-            endpointSecret()
+            endpointSecret
         );
         console.log(`Event Type: ${event.type}`);
     } catch (err: any) {
@@ -61,39 +60,44 @@ export const POST: APIRoute = async function ({ request }: any) {
                             })
                             .eq("order_number", data.metadata!.orderId);
 
-                        //Get Charge Id
-                        const charge = (
-                            await stripe.paymentIntents.retrieve(
-                                data.payment_intent as string
-                            )
-                        ).latest_charge as string;
+                        if (data.payment_intent !== null) {
+                            //Get Charge Id
+                            const charge = (
+                                await stripe.paymentIntents.retrieve(
+                                    data.payment_intent as string
+                                )
+                            ).latest_charge as string;
 
-                        const transfers = await getOrderDetails(
-                            data.metadata!.orderId
-                        );
+                            const transfers = await getOrderDetails(
+                                data.metadata!.orderId
+                            );
 
-                        if (transfers) {
-                            const baseFee = 0.3 / transfers.length;
+                            if (transfers) {
+                                const baseFee = 0.3 / transfers.length;
 
-                            transfers.map(async (transfer) => {
-                                if (
-                                    transfer.price &&
-                                    transfer.connected_account &&
-                                    charge &&
-                                    transfer.contribution
-                                ) {
-                                    createTransfer(
-                                        //set the transfer amount as 80% of the price*quantity
-                                        (transfer.price *
-                                    transfer.quantity *
-                                    0.96 - baseFee) *
-                                    (1 - transfer.contribution / 100),
-                                        transfer.connected_account,
-                                        transfer.order_number,
-                                        charge
-                                    );
-                                }
-                            });
+                                transfers.map(async (transfer) => {
+                                    if (
+                                        transfer.price &&
+                                        transfer.connected_account &&
+                                        charge &&
+                                        transfer.contribution
+                                    ) {
+                                        createTransfer(
+                                            //set the transfer amount as 80% of the price*quantity
+                                            (transfer.price *
+                                                transfer.quantity *
+                                                0.96 -
+                                                baseFee) *
+                                                (1 -
+                                                    transfer.contribution /
+                                                        100),
+                                            transfer.connected_account,
+                                            transfer.order_number,
+                                            charge
+                                        );
+                                    }
+                                });
+                            }
                         }
                     } catch (err) {
                         console.log(err);
@@ -132,10 +136,9 @@ export const POST: APIRoute = async function ({ request }: any) {
                             ) {
                                 createTransfer(
                                     //set the transfer amount as 96% of the price*quantity - base fee and voluntary contribution
-                                    (transfer.price *
-                                transfer.quantity *
-                                0.96 - baseFee) *
-                                (1 - transfer.contribution / 100),
+                                    (transfer.price * transfer.quantity * 0.96 -
+                                        baseFee) *
+                                        (1 - transfer.contribution / 100),
                                     transfer.connected_account,
                                     transfer.order_number,
                                     charge
