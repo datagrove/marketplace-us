@@ -21,7 +21,7 @@ import stripe from "@lib/stripe";
 import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-
+import { ClientViewCard } from "@components/services/ClientViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -60,7 +60,6 @@ export const ClientProfileView: Component = () => {
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
-
 
     onMount(async () => {
         setSession(User?.session);
@@ -641,7 +640,7 @@ export const ClientProfileView: Component = () => {
                 <div>
                     {/* TODO: Clean up internationalize, probably make new cards  */}
                     Purchases:
-                    <ViewCard posts={purchasedItems()} />
+                    <ClientViewCard posts={purchasedItems()} />
                 </div>
             </div>
         </div>

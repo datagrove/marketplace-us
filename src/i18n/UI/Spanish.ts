@@ -105,7 +105,7 @@ export const Spanish = {
         follow: "Seguir",
         following: "Siguiente",
         top: "Volver Arriba",
-        freeDownload: "Descarga Gratis",
+        downloadResources: "Descargar",
         addedToCart: "¡Añadido al carrito!",
         finishStripeSetup: "Ir al panel de Stripe",
         requestStripePayout: "Solicitud de Pago",

@@ -106,7 +106,7 @@ export const English = {
         follow: "Follow",
         following: "Following",
         top: "Back to Top",
-        freeDownload: "Free Download",
+        downloadResources: "Download",
         addedToCart: "Added to Cart!",
         finishStripeSetup: "Go to Stripe Dashboard",
         requestStripePayout: "Request Payout",

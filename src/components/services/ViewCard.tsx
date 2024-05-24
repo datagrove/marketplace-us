@@ -9,7 +9,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "./DownloadBtn.tsx";
+import { DownloadBtn } from "@components/common/cart/DownloadBtn";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -110,7 +110,7 @@ export const ViewCard: Component<Props> = (props) => {
         <div class="flex w-full min-w-[650px] justify-center">
             <ul class="flex w-full flex-wrap justify-center">
                 {newPosts().map((post: Post) => (
-                    <li class="w-[99%]" >
+                    <li class="w-[99%]">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex w-full flex-col items-center justify-center rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM md:h-48 md:flex-row md:items-start md:justify-start">
                                 <div class="flex h-36 w-36 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM md:mr-2 md:h-48 md:w-48">
@@ -177,7 +177,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             ></p>
                                         </div>
 
-                                        <div class="details-div grid grid-cols-[85px_1fr] grid-rows-4 h-1/3">
+                                        <div class="details-div grid h-1/3 grid-cols-[85px_1fr] grid-rows-4">
                                             <div class="text-[10px]">
                                                 <h6>
                                                     {t("formLabels.subjects")}:{" "}
@@ -202,12 +202,16 @@ export const ViewCard: Component<Props> = (props) => {
                                                         post.subject!
                                                     ).join(", ")}
                                                 </p>
-                                                <p class="truncate">{post.grade!.join(", ")}</p>
+                                                <p class="truncate">
+                                                    {post.grade!.join(", ")}
+                                                </p>
                                                 <p class="truncate">
                                                     Worksheets, Activities,
                                                     Printables
                                                 </p>
-                                                <p class="truncate">1NBT.C.4, K.OA.A.2</p>
+                                                <p class="truncate">
+                                                    1NBT.C.4, K.OA.A.2
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -368,8 +372,11 @@ export const ViewCard: Component<Props> = (props) => {
                                                 post.price === undefined
                                             }
                                         >
-                                            <DownloadBtn />
-                                        </Show> */}
+                                            <DownloadBtn
+                                                item={{ ...post, quantity: 1 }}
+                                            />
+                                        </Show>
+
                                         <div class="relative col-span-1 flex w-full justify-end align-top">
                                             <div class="inline-block">
                                                 <DeletePostButton

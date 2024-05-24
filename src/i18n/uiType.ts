@@ -94,7 +94,7 @@ export interface uiObject {
         follow: string;
         following: string;
         top: string;
-        freeDownload: string;
+        downloadResources: string;
         addedToCart: string;
         finishStripeSetup: string;
         requestStripePayout: string;
@@ -149,7 +149,6 @@ export interface uiObject {
     requestPayout: string;
     currentBalance: string;
   },
-
 
     formLabels: {
         title: string;
@@ -225,20 +224,20 @@ export interface uiObject {
         ariaLabel: string;
     };
 
-  menus: {
-    resources: string;
-    contactUs: string;
-    profile: string;
-    ratingsReviews: string;
-    questions: string;
-    freeDownload: string;
-    providerResources: string;
-    payouts: string;
-    reviews: string;
-    details: string;
-    description: string;
-     qA: string;
-  };
+    menus: {
+        resources: string;
+        contactUs: string;
+        profile: string;
+        ratingsReviews: string;
+        questions: string;
+        freeDownload: string;
+        providerResources: string;
+        payouts: string;
+        reviews: string;
+        details: string;
+        description: string;
+        qA: string;
+    };
 
     toolTips: {
         firstName: string;

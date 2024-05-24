@@ -107,7 +107,7 @@ export const French = {
         follow: "Suivre",
         following: "Suivante",
         top: "Retour au Sommet",
-        freeDownload: "Téléchargement Gratuit",
+        downloadResources: "Téléchargement",
         addedToCart: "Ajouté au panier !",
         finishStripeSetup: "Accédez au tableau de bord Stripe",
         requestStripePayout: "Demande Paiement",
