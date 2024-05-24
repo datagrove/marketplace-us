@@ -105,69 +105,14 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
         }
     };
 
-    // const getItemDates = async() => {
-    //     const { data: orderDetail, error } = await supabase
-    //         .from("order_details")
-    //         .select("*")
-    //         .eq("product_id", productID())
-
-    //     if (error) {
-    //         console.log("Orders Error: " + error.code + " " + error.message);
-    //         return;
-    //     }
-
-    //     let orderNumber = orderDetail[0].order_number;
-
-    //     const { data: order, error: orderError } = await supabase
-    //         .from("orders")
-    //         .select("*")
-    //         .eq("order_number", orderNumber)
-
-    //     if(orderError) {
-    //         console.log("orderError: " + orderError.code + " " + orderError.message);
-    //         return;
-    //     }
-
-    //     // const { data: createdDate, error: createdDateError } = await supabase
-    //     //     .from("seller_post")
-    //     //     .select("created_at")
-    //     //     .eq("id", post.id);
-
-    //     // if(createdDateError) {
-    //     //     console.log("orderError: " + createdDateError.code + " " + createdDateError.message);
-    //     //     return;
-    //     // }
-
-    //     setOrderDate(order[0].order_date);
-    //     // setUpdatedDate(createdDate[0].created_at);
-
-    //     console.log("order date type?: ", typeof(order[0].order_date));
-
-    //     console.log(orderDetail)
-    //     console.log(orderDetail[0].product_id) // 5
-    //     console.log(orderDetail[0].order_number)
-    // };
-
-    // const getUpdatedDate = async(post: Post) => {
-    //     const { data: createdDate, error: createdDateError } = await supabase
-    //         .from("seller_post")
-    //         .select("created_at")
-    //         .eq("id", post.id);
-
-    //     if(createdDateError) {
-    //         console.log("orderError: " + createdDateError.code + " " + createdDateError.message);
-    //         return;
-    //     }
-
-    //     console.log("createAt from getUpdatedDate function: ", createdDate[0])
-    // }
+    
 
     return (
-        <div class="border-2 border-black">
+        <div class="">
             {purchasedItems().map((post) => (
-                <div class="flex">
+                <div class="flex border-b-2 mb-4 pb-2">
                     {/* { setProductID(post.id) } */}
-                    <div class="purchased-item-image-reviews w-[110px] border border-blue-400">
+                    <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">
                             {post.image_url ? (
                                 <img
@@ -235,7 +180,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                         </div>
                     </div>
 
-                    <div class="purchased-item-text-buttons ml-2 w-full border border-red-400">
+                    <div class="purchased-item-text-buttons ml-2 w-full">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <h1 class="line-clamp-2 font-bold">{post.title}</h1>
                         </a>
