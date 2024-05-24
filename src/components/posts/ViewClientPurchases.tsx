@@ -47,11 +47,12 @@ export const ViewClientPurchases: Component = () => {
             console.log("Orders Error: " + error.code + " " + error.message);
             return;
         }
+
         const orderedItemsIds = orders?.map((order) => order.order_number);
 
         const { data: orderDetails, error: orderDetailsError } = await supabase
             .from("order_details")
-            .select("product_id")
+            .select("product_id, order_number")
             .in("order_number", orderedItemsIds);
         if (orderDetailsError) {
             console.log(
@@ -61,12 +62,29 @@ export const ViewClientPurchases: Component = () => {
                     orderDetailsError.message
             );
         }
+
+        const itemsOrdered = orderDetails?.map((item) => {
+            const order = orders.find(
+                (order) => order.order_number === item.order_number
+            );
+            if (order) {
+                return {
+                    ...item,
+                    purchaseDate: new Date(order.order_date).toISOString(),
+                };
+            } else {
+                return {
+                    ...item,
+                    purchaseDate: new Date("2000-01-01").toISOString(),
+                };
+            }
+        });
+
         const products = orderDetails?.map((item) => item.product_id);
-        console.log(products);
         if (products !== undefined) {
             const { data: productsInfo, error: productsInfoError } =
                 await supabase
-                    .from("sellerposts")
+                    .from("seller_post")
                     .select("*")
                     .in("id", products);
             if (productsInfoError) {
@@ -78,6 +96,7 @@ export const ViewClientPurchases: Component = () => {
                 );
                 return;
             } else {
+                console.log(productsInfo)
                 const newItems = await Promise.all(
                     productsInfo?.map(async (item) => {
                         item.subject = [];
@@ -118,16 +137,40 @@ export const ViewClientPurchases: Component = () => {
                             });
                         }
 
-                        if (item.price_id !== null) {
+                        if (item.stripe_price_id !== null) {
                             const priceData = await stripe.prices.retrieve(
-                                item.price_id
+                                item.stripe_price_id
                             );
                             item.price = priceData.unit_amount! / 100;
                         }
+                        console.log(item)
                         return item;
                     })
                 );
-                setPurchasedItems(newItems);
+
+                itemsOrdered?.sort(function (a, b) {
+                    return a.purchaseDate.localeCompare(b.purchaseDate);
+                });
+
+                console.log(itemsOrdered)
+                console.log(newItems)
+
+                const newItemsDates = newItems.map((item) => {
+                    const orderInfo = itemsOrdered?.find(
+                        (order) => (order.product_id === item.id)
+                    );
+                    if (orderInfo){
+                        return {
+                            ...item,
+                            purchaseDate: orderInfo.purchaseDate
+                        }
+                    }
+                    return item;
+                });
+
+                console.log(newItemsDates)
+
+                setPurchasedItems(newItemsDates);
                 console.log(purchasedItems());
             }
         }
@@ -155,66 +198,12 @@ export const ViewClientPurchases: Component = () => {
         }
     };
 
-    createEffect(async () => {
-        const { data, error } = await supabase
-            .from("sellerpost")
-            .select("all")
-            .eq("user_id", session()!.user.id);
-
-            console.log("in ViewClientPurchases createEffect")
-
-            
-            // if (error) {
-            //     console.log("supabase error: " + error.message);
-            // } else {
-            //     const newItems = await Promise.all(
-            //         data?.map(async (item) => {
-            //             item.subject = [];
-            //             productCategories.forEach((productCategories) => {
-            //                 item.product_subject.map((productSubject: string) => {
-            //                     if (productSubject === productCategories.id) {
-            //                         item.subject.push(productCategories.name);
-            //                         console.log(productCategories.name);
-            //                     }
-            //                 });
-            //             });
-            //             delete item.product_subject;
-    
-            //             const { data: gradeData, error: gradeError } =
-            //                 await supabase.from("grade_level").select("*");
-    
-            //             if (gradeError) {
-            //                 console.log("supabase error: " + gradeError.message);
-            //             } else {
-            //                 item.grade = [];
-            //                 gradeData.forEach((databaseGrade) => {
-            //                     item.post_grade.map((itemGrade: string) => {
-            //                         if (itemGrade === databaseGrade.id.toString()) {
-            //                             item.grade.push(databaseGrade.grade);
-            //                         }
-            //                     });
-            //                 });
-            //             }
-    
-            //             if (item.price_id !== null) {
-            //                 const priceData = await stripe.prices.retrieve(
-            //                     item.price_id
-            //                 );
-            //                 item.price = priceData.unit_amount! / 100;
-            //             }
-            //             return item;
-            //         })
-            //     );
-            //     console.log(newItems.map((item) => item.price));
-            //     setPurchasedItems(newItems);
-            // }
-        })
 
     return (
         <div>
-            <div>
-                <ViewPurchaseCard posts={ purchasedItems() } />
+            <div id="Cards">
+                <ViewPurchaseCard posts={purchasedItems()} />
             </div>
         </div>
-    )
-}
+    );
+};

@@ -65,7 +65,7 @@ export const ClientProfileView: Component = () => {
     onMount(async () => {
         setSession(User?.session);
         await fetchClient(User?.session?.user.id!);
-        await getPurchasedItems();
+        // await getPurchasedItems();
     });
 
     // createEffect(async () => {
@@ -548,17 +548,18 @@ export const ClientProfileView: Component = () => {
                                 </Show>
 
                                 <Show when={ tabSelected() === "purchases"}>
-                                    <Show when={ purchasedItems() }>
+                                    {/* Change to just call ViewClientPurchases make decision about which to show in there */}
+                                    {/* <Show when={ purchasedItems() }> */}
                                         <div>
                                             {/* <ViewCard posts={purchasedItems()} /> */}
                                             <ViewClientPurchases />
                                         </div>
-                                    </Show>
+                                    {/* </Show>
 
                                     <Show when={ purchasedItems().length < 1} >
                                         <p class="italic mb-6">{t("messages.noPurchasedItems")}</p>
                                         <a href={ `/${lang}/services`} class="btn-primary">{t("buttons.browseCatalog")}</a>
-                                    </Show>
+                                    </Show> */}
 
                                     
                                     
