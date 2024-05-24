@@ -15,7 +15,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         arrayUrls.map(async (resourceUrl: string) => {
             const { data, error } = await supabase.storage
                 .from("resources")
-                .createSignedUrl(resourceUrl, 30, { download: true });
+                .createSignedUrl(resourceUrl, 60, { download: true });
 
             if (data) {
                 return data.signedUrl;

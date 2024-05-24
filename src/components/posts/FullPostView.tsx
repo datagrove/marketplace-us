@@ -9,6 +9,8 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import type { AuthSession } from "@supabase/supabase-js";
+import { DownloadBtn } from "@components/common/cart/DownloadBtn";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -21,6 +23,7 @@ interface Props {
     id: string | undefined;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ViewFullPost: Component<Props> = (props) => {
     const test1 = ["../../../src/assets/services.png"];
     const test2 = [
@@ -36,6 +39,18 @@ export const ViewFullPost: Component<Props> = (props) => {
     const [testImages, setTestImages] = createSignal<string[]>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
 
+    const [session, setSession] = createSignal<AuthSession | null>(null);
+
+    if (UserError) {
+        console.log("User Error: " + UserError.message);
+    } else {
+        if (User.session === null) {
+            console.log("User Session: " + User.session);
+            setSession(null);
+        } else {
+            setSession(User.session);
+        }
+    }
     setTestImages(test2);
 
     createEffect(() => {
@@ -674,6 +689,19 @@ export const ViewFullPost: Component<Props> = (props) => {
                         </div>
                     </div>
 
+                    {/* <Show */}
+                    {/*   when={ */}
+                    {/*     ( */}
+                    {/*       session() === null */}
+                    {/*       //     || */}
+                    {/*       //   session()?.user.id !== */}
+                    {/*       //   post().user_id) && */}
+                    {/*       // post().price === undefined */}
+                    {/*     ) */}
+                    {/*   } */}
+                    {/* > */}
+
+                    {/* </Show> */}
                     {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
                     <div
                         id="add-cart-div"
@@ -686,10 +714,21 @@ export const ViewFullPost: Component<Props> = (props) => {
                         <div class=" ml-4">
                             {/* TODO: Add FreeDownloadButton component if resource is free */}
 
+                            {/* TODO: Change resetQuantity because it is not neccesary in free  */}
+                            <DownloadBtn
+                                item={{ ...post() }}
+                                buttonClick={resetQuantity}
+                            />
+
                             <AddToCart
                                 item={{ ...post(), quantity: 1 }}
                                 buttonClick={resetQuantity}
                             />
+                        </div>
+                        <div class="my-4 flex items-center justify-center">
+                            <button class="btn-primary md:hidden">
+                                {t("menus.freeDownload")}
+                            </button>
                         </div>
                     </div>
                 </div>

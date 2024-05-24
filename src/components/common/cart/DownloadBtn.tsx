@@ -20,16 +20,33 @@ async function DownloadFiles(resource_urls: string) {
         body: JSON.stringify({ resourceUrls: resource_urls }),
     });
     const data = await response.json();
-    console.log(data);
-    data.downloadLinks.map((link: string) => {
-        let newUrl = new URL(link);
-        console.log(newUrl);
-        window.location.assign(newUrl);
-        // window.open(newUrl, "_blank");
-    });
+    // for (let i = 0; i < data.downloadLinks.length(); i++) {
+    //     let newUrl = new URL(data);
+    //     window.location.assign(newUrl);
+    //     window.open(newUrl, "_blank");
+    const getWithForOf = async () => {
+        for (const links of data.downloadLinks) {
+            let newUrl = new URL(links);
+            console.log(newUrl);
+            await window.location.assign(newUrl);
+            window.open(newUrl, "_blank");
+        }
+        console.timeEnd("for of");
+    };
+    getWithForOf();
+
+    // data.downloadLinks.map((link: string) => {
+    //     let newUrl = new URL(link);
+    //     window.location.assign(newUrl);
+    //     window.open(newUrl, "_blank");
+    // });
     if (response.status == 200) {
         alert("success Download");
     }
+}
+
+async function sleep(seconds: number) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
