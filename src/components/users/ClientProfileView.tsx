@@ -336,7 +336,7 @@ export const ClientProfileView: Component = () => {
                                             <h1 class="text-3xl">{ client()?.display_name }</h1>
                                         </Show>
 
-                                        <Show when={ !client()?.display_name.length }>
+                                        <Show when={ !client()?.display_name }>
                                             <h1 class="text-3xl">{ client()?.first_name } { client()?.last_name }</h1>
                                         </Show>
                                     </div>
