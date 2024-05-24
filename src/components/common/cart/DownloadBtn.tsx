@@ -20,39 +20,23 @@ async function DownloadFiles(resource_urls: string) {
         body: JSON.stringify({ resourceUrls: resource_urls }),
     });
     const data = await response.json();
-    // for (let i = 0; i < data.downloadLinks.length(); i++) {
-    //     let newUrl = new URL(data);
-    //     window.location.assign(newUrl);
-    //     window.open(newUrl, "_blank");
-    const getWithForOf = async () => {
+    const openAllDownloadUrls = async () => {
         for (const links of data.downloadLinks) {
             let newUrl = new URL(links);
-            console.log(newUrl);
             await window.location.assign(newUrl);
             window.open(newUrl, "_blank");
         }
-        console.timeEnd("for of");
     };
-    getWithForOf();
+    openAllDownloadUrls();
 
-    // data.downloadLinks.map((link: string) => {
-    //     let newUrl = new URL(link);
-    //     window.location.assign(newUrl);
-    //     window.open(newUrl, "_blank");
-    // });
     if (response.status == 200) {
         alert("success Download");
     }
 }
 
-async function sleep(seconds: number) {
-    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
-}
-
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const DownloadBtn: Component<Props> = (props: Props) => {
-    const [client, setClient] = createSignal<Client>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [purchasedItems, setPurchasedItems] = createSignal<
         Array<{ resource_urls: string; id: number }>
@@ -152,9 +136,13 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         }
     }
     return (
-        <div class="btn-primary relative z-10 w-full">
-            <button onclick={(e) => initializeDownload(e)}>
-                {t("buttons.freeDownload")}
+        <div class="relative z-10 w-full">
+            <button
+                class="btn-cart my-2 w-full shadow-none"
+                aria-label={t("buttons.downloadResources")}
+                onclick={(e) => initializeDownload(e)}
+            >
+                {t("buttons.downloadResources")}
             </button>
         </div>
     );

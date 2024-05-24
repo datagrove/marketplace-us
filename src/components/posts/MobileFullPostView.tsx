@@ -8,6 +8,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import { DownloadBtn } from "@components/common/cart/DownloadBtn";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -600,6 +601,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             item={{ ...post(), quantity: 1 }}
                             buttonClick={resetQuantity}
                         />
+                        <DownloadBtn item={{ ...post(), quantity: 1 }} />
                     </div>
                 </div>
             </div>

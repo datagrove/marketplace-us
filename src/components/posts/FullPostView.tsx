@@ -715,13 +715,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {/* TODO: Add FreeDownloadButton component if resource is free */}
 
                             {/* TODO: Change resetQuantity because it is not neccesary in free  */}
-                            <DownloadBtn
-                                item={{ ...post() }}
-                                buttonClick={resetQuantity}
-                            />
 
                             <AddToCart
                                 item={{ ...post(), quantity: 1 }}
+                                buttonClick={resetQuantity}
+                            />
+                            <DownloadBtn
+                                item={{ ...post() }}
                                 buttonClick={resetQuantity}
                             />
                         </div>
