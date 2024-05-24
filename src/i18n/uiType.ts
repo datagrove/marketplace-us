@@ -96,6 +96,7 @@ export interface uiObject {
         top: string;
         downloadResources: string;
         addedToCart: string;
+        resetPassword: string;
         finishStripeSetup: string;
         requestStripePayout: string;
     };
@@ -143,6 +144,7 @@ export interface uiObject {
     report: string;
     free: string;
     freeResourceCreated: string;
+    noPurchasedItems: string;
     insufficientStripeBalance: string;
     payoutRequested: string;
     payoutSetup: string;
@@ -224,20 +226,25 @@ export interface uiObject {
         ariaLabel: string;
     };
 
-    menus: {
-        resources: string;
-        contactUs: string;
-        profile: string;
-        ratingsReviews: string;
-        questions: string;
-        freeDownload: string;
-        providerResources: string;
-        payouts: string;
-        reviews: string;
-        details: string;
-        description: string;
-        qA: string;
-    };
+  menus: {
+    resources: string;
+    contactUs: string;
+    profile: string;
+    ratingsReviews: string;
+    questions: string;
+    freeDownload: string;
+    providerResources: string;
+    payouts: string;
+    reviews: string;
+    details: string;
+    description: string;
+    qA: string;
+    purchases: string;
+    favorites: string;
+    following: string;
+    purchased: string;
+    updated: string;
+  };
 
     toolTips: {
         firstName: string;

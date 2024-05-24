@@ -17,11 +17,11 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { Client } from "@lib/types";
 import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
+import { ViewClientPurchases } from "@components/posts/ViewClientPurchases";
 import stripe from "@lib/stripe";
 import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import { ClientViewCard } from "@components/services/ClientViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -60,11 +60,13 @@ export const ClientProfileView: Component = () => {
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
+    const [tabSelected, setTabSelected] = createSignal<string>("profile");
+
 
     onMount(async () => {
         setSession(User?.session);
         await fetchClient(User?.session?.user.id!);
-        await getPurchasedItems();
+        // await getPurchasedItems();
     });
 
     // createEffect(async () => {
@@ -246,12 +248,60 @@ export const ClientProfileView: Component = () => {
         setFormData(formData);
     }
 
+    const resetPassword = () => {
+        window.location.href = `/${lang}/password/reset`;
+    }
+
+    const tabClick = (e: Event) => {
+        e.preventDefault();
+
+        let profileLink = document.getElementById("user-profile-tab-profile-link");
+        let purchaseLink = document.getElementById("user-profile-tab-purchases-link");
+        let favoritesLink = document.getElementById("user-profile-tab-favorites-link");
+        let followingLink = document.getElementById("user-profile-tab-following-link");
+        let allLinks = document.getElementsByClassName("user-profile-tab-link");
+
+        const element = e.currentTarget as HTMLElement
+        const currElID = element.id;
+
+        let currEl = document.getElementById(currElID);
+
+        Array.from(allLinks).forEach(function(link) {
+            link.classList.remove("border-b-2");
+            link.classList.remove("border-green-500");
+        })
+
+        if(currElID === "user-profile-tab-profile-link") {
+            setTabSelected("profile");
+
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
+        } else if(currElID === "user-profile-tab-purchases-link") {
+            setTabSelected("purchases");
+
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
+        } else if(currElID === "user-profile-tab-favorites-link") {
+            setTabSelected("favorites");
+
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
+        } else if(currElID === "user-profile-tab-following-link") {
+            setTabSelected("following");
+
+            currEl?.classList.add("border-b-2");
+            currEl?.classList.add("border-green-500");
+        } else if(currElID === "user-profile-settings-btn") {
+            setTabSelected("settings");
+        }
+    }
+
     //TODO: Edit profile button is hidden until we enable clients editing their profile
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
     return (
         <div class="">
-            <div class="text-center text-2xl font-bold italic text-alert1 dark:text-alert1-DM">
+            <div class="text-center text-xl font-bold italic text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">
                         {t("messages.profileEdits")}
@@ -260,7 +310,7 @@ export const ClientProfileView: Component = () => {
             </div>
             <div class="m-auto md:max-w-max">
                 {/* Left column for md+ View */}
-                <div class="justify-center rounded-md border border-border1 dark:border-border1-DM md:mt-4 md:h-fit md:px-4 md:pb-4 md:drop-shadow-lg">
+                <div class="justify-center border border-border1 dark:border-border1-DM md:mt-4 md:h-fit md:px-4 md:pb-4 md:drop-shadow-lg">
                     <form onSubmit={submit} id="editProfile">
                         {/* Container for Mobile View */}
                         <Show when={screenSize() === "sm"}>
@@ -274,345 +324,259 @@ export const ClientProfileView: Component = () => {
 
                         {/* Profile Information for md+ View */}
                         <Show when={screenSize() !== "sm"}>
-                            <div class="hidden md:block">
-                                <div class="flex flex-row justify-between">
-                                    <h2 class="py-4 text-xl font-bold text-htext1 dark:text-htext1-DM">
-                                        {client()?.display_name == null
-                                            ? client()?.first_name +
-                                              " " +
-                                              client()?.last_name
-                                            : client()?.display_name}
-                                    </h2>
-                                    <div class="align-items-center flex items-center justify-center py-2">
-                                        <Show when={editMode() === false}>
+                            <div class="">
+                                <div class="h-36 bg-background2 dark:bg-background2-DM relative">
+                                    <div class="flex items-center justify-center rounded-full h-40 w-40 border border-border2 dark:border-border2-DM absolute left-12 top-4 bg-background2 dark:bg-background2">
+                                        <p class="text-ptext2 dark:ptext2-DM md:text-6xl lg:text-7xl xl:text-8xl">{ client()?.first_name.slice(0, 1) }{ client()?.last_name.slice(0, 1) }</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center mt-12 mb-6">
+                                    <div class="flex items-center justify-center">
+                                        <Show when={ client()?.display_name }>
+                                            <h1 class="text-3xl">{ client()?.display_name }</h1>
+                                        </Show>
+
+                                        <Show when={ !client()?.display_name }>
+                                            <h1 class="text-3xl">{ client()?.first_name } { client()?.last_name }</h1>
+                                        </Show>
+                                    </div>
+
+                                    <div class="flex items-center justify-center">
+                                        <Show when={ editMode() === false}>
                                             <button
-                                                class="btn-primary"
-                                                onclick={enableEditMode}
+                                                class="ml-2"
+                                                onclick={ enableEditMode }
                                             >
-                                                {t("buttons.editProfile")}
+                                                <svg width="25px" height="25px" viewBox="0 0 24 24" fill="none" class="stroke-icon2 fill-icon1 dark:fill-icon1-DM dark:stroke-icon2-DM">
+                                                    <path d="M13.0207 5.82839L15.8491 2.99996L20.7988 7.94971L17.9704 10.7781M13.0207 5.82839L3.41405 15.435C3.22652 15.6225 3.12116 15.8769 3.12116 16.1421V20.6776H7.65669C7.92191 20.6776 8.17626 20.5723 8.3638 20.3847L17.9704 10.7781M13.0207 5.82839L17.9704 10.7781" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                            </button>
+                                        </Show>
+
+                                        <Show when={ editMode() === true }>
+                                            <button
+                                                class="ml-2"
+                                                type="submit"
+                                                form="editProfile"
+                                            >
+                                                <svg width="25px" height="25px" viewBox="0 0 24 24" role="img" aria-labelledby="saveIconTitle" stroke="none" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="none" class="stroke-icon2 dark:stroke-icon2-DM fill-icon1 dark:fill-icon1-DM"> 
+                                                    <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z"/> <rect width="10" height="8" x="7" y="13"/> <rect width="8" height="5" x="8" y="3"/> 
+                                                </svg>
+                                            </button>
+                                        </Show>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="user-profile-tabs my-4 flex items-center justify-between border-b border-gray-300 pb-2">
+                                    <div class="">
+                                        <a id="user-profile-tab-profile-link" class="user-profile-tab-link font-bold mr-4 border-b-2 border-green-500 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.profile")}</a>
+                                        <a id="user-profile-tab-purchases-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.purchases")}</a>
+                                        <a id="user-profile-tab-favorites-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.favorites")}</a>
+                                        <a id="user-profile-tab-following-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.following")}</a>
+                                    </div>
+                                    
+                                    <button id="user-profile-settings-btn" class="flex items-center" onClick={ tabClick }>
+                                        <svg fill="none" width="20px" height="20px" viewBox="0 0 50 50" class="fill-icon1 dark:fill-icon1-DM"><path d="M25 34c-5 0-9-4-9-9s4-9 9-9 9 4 9 9-4 9-9 9zm0-16c-3.9 0-7 3.1-7 7s3.1 7 7 7 7-3.1 7-7-3.1-7-7-7z"/>
+                                            <path d="M27.7 44h-5.4l-1.5-4.6c-1-.3-2-.7-2.9-1.2l-4.4 2.2-3.8-3.8 2.2-4.4c-.5-.9-.9-1.9-1.2-2.9L6 27.7v-5.4l4.6-1.5c.3-1 .7-2 1.2-2.9l-2.2-4.4 3.8-3.8 4.4 2.2c.9-.5 1.9-.9 2.9-1.2L22.3 6h5.4l1.5 4.6c1 .3 2 .7 2.9 1.2l4.4-2.2 3.8 3.8-2.2 4.4c.5.9.9 1.9 1.2 2.9l4.6 1.5v5.4l-4.6 1.5c-.3 1-.7 2-1.2 2.9l2.2 4.4-3.8 3.8-4.4-2.2c-.9.5-1.9.9-2.9 1.2L27.7 44zm-4-2h2.6l1.4-4.3.5-.1c1.2-.3 2.3-.8 3.4-1.4l.5-.3 4 2 1.8-1.8-2-4 .3-.5c.6-1 1.1-2.2 1.4-3.4l.1-.5 4.3-1.4v-2.6l-4.3-1.4-.1-.5c-.3-1.2-.8-2.3-1.4-3.4l-.3-.5 2-4-1.8-1.8-4 2-.5-.3c-1.1-.6-2.2-1.1-3.4-1.4l-.5-.1L26.3 8h-2.6l-1.4 4.3-.5.1c-1.2.3-2.3.8-3.4 1.4l-.5.3-4-2-1.8 1.8 2 4-.3.5c-.6 1-1.1 2.2-1.4 3.4l-.1.5L8 23.7v2.6l4.3 1.4.1.5c.3 1.2.8 2.3 1.4 3.4l.3.5-2 4 1.8 1.8 4-2 .5.3c1.1.6 2.2 1.1 3.4 1.4l.5.1 1.4 4.3z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <Show when={ tabSelected() === "profile"}>
+                                    <div class="first-name flex">
+                                        <label
+                                            for="FirstName"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                        >
+                                            {t("formLabels.firstName")}: &nbsp
+                                        </label>
+
+                                        <Show when={editMode() === false}>
+                                            <p
+                                                id="FirstName"
+                                                class="mb-4 px-1"
+                                            >
+                                                {client()?.first_name}
+                                            </p>
+                                        </Show>
+
+                                        <Show when={editMode() === true}>
+                                            <div class="">
+                                                <input
+                                                    type="text"
+                                                    id="FirstName"
+                                                    name="FirstName"
+                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                                    value={client()?.first_name}
+                                                    required
+                                                />
+                                            </div>
+                                        </Show>
+                                    </div>
+
+                                    <div class="last-name flex flex-wrap">
+                                        <label
+                                            for="LastName"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                        >
+                                            {t("formLabels.lastName")}: &nbsp
+                                        </label>
+                                        <Show when={editMode() === false}>
+                                            <p
+                                                id="LastName"
+                                                class="mb-4 "
+                                            >
+                                                {client()?.last_name}
+                                            </p>
+                                        </Show>
+                                        <Show when={editMode() === true}>
+                                            <div class="">
+                                                <input
+                                                    type="text"
+                                                    id="LastName"
+                                                    name="LastName"
+                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                                    value={client()?.last_name}
+                                                />
+                                            </div>
+                                        </Show>
+                                    </div>
+
+                                    <div class="display-name flex flex-wrap">
+                                        <label
+                                            for="DisplayName"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                        >
+                                            {t("formLabels.displayName")}: &nbsp
+                                        </label>
+                                        <Show when={editMode() === false}>
+                                            <p
+                                                id="DisplayName"
+                                                class="mb-4 "
+                                            >
+                                                {client()?.display_name
+                                                    ? client()?.display_name
+                                                    : t("formLabels.noValue")}
+                                            </p>
+                                        </Show>
+                                        <Show when={editMode() === true}>
+                                            <div class="">
+                                                <input
+                                                    type="text"
+                                                    id="DisplayName"
+                                                    name="DisplayName"
+                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                                    value={client()?.display_name}
+                                                />
+                                            </div>
+                                        </Show>
+                                    </div>
+
+                                    <div class="email-add flex flex-wrap">
+                                        <label
+                                            for="email"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                        >
+                                            {t("formLabels.email")}: &nbsp
+                                        </label>
+                                        <Show when={editMode() === false}>
+                                            <div class="">
+                                                <p
+                                                    id="email"
+                                                    class="mb-4 "
+                                                >
+                                                    {client()?.email}
+                                                </p>
+                                            </div>
+                                        </Show>
+                                        <Show when={editMode() === true}>
+                                            <div class="">
+                                                <input
+                                                    id="email"
+                                                    name="email"
+                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                                    type="email"
+                                                    placeholder={t(
+                                                        "formLabels.email"
+                                                    )}
+                                                    value={client()?.email}
+                                                />
+                                            </div>
+                                        </Show>
+                                    </div>
+
+                                    <div class="phone-number flex flex-wrap">
+                                        <label
+                                            for="Phone"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                        >
+                                            {t("formLabels.phone")}: &nbsp
+                                        </label>
+                                        <Show when={editMode() === false}>
+                                            <p
+                                                id="Phone"
+                                                class="mb-4"
+                                            >
+                                                {client()?.client_phone
+                                                    ? client()?.client_phone
+                                                    : t("formLabels.noValue")}
+                                            </p>
+                                        </Show>
+                                        <Show when={editMode() === true}>
+                                            <div class="basis-full">
+                                                <input
+                                                    type="text"
+                                                    id="Phone"
+                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                                    name="Phone"
+                                                    value={
+                                                        client()?.client_phone || ""
+                                                    }
+                                                />
+                                            </div>
+                                        </Show>
+                                    </div>
+
+                                    <div>
+                                        <Show when={ editMode() === true }>
+                                            <button class="font-bold" onClick={ resetPassword } >
+                                                {t("buttons.resetPassword")}
                                             </button>
                                         </Show>
                                     </div>
-                                </div>
-                                <div class="mb-3 flex justify-center">
-                                    <Show when={editMode() === false}>
-                                        <Show
-                                            when={
-                                                typeof clientImage() !==
-                                                "undefined"
-                                            }
-                                        >
-                                            <div class="relative h-48 w-48 justify-center overflow-hidden rounded-full border border-border1 object-contain dark:border-border1-DM md:h-48 md:w-48 lg:h-64 lg:w-64">
-                                                <img
-                                                    src={clientImage()}
-                                                    class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
-                                                    alt={`${t("postLabels.clientProfileImage")} 1`}
-                                                />
-                                                {/* TODO: Fix Internationalization */}
-                                            </div>
-                                        </Show>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <UserImage
-                                            url={imageUrl()}
-                                            size={150}
-                                            onUpload={(
-                                                e: Event,
-                                                url: string
-                                            ) => {
-                                                setImageUrl(url);
-                                            }}
-                                        />
-                                    </Show>
-                                </div>
+                                </Show>
 
-                                <div class="first-name flex flex-row flex-wrap justify-between">
-                                    <label
-                                        for="FirstName"
-                                        class="text-ptext1 dark:text-ptext1-DM"
-                                    >
-                                        {t("formLabels.firstName")}:
-                                    </label>
-                                    <Show when={editMode() === false}>
-                                        <p
-                                            id="FirstName"
-                                            class="mb-4 w-full rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                        >
-                                            {client()?.first_name}
-                                        </p>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <div class="group relative mr-2 flex items-center">
-                                            <svg
-                                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                                version="1.1"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512"
-                                            >
-                                                <g>
-                                                    <path
-                                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                                    />
-                                                </g>
-                                            </svg>
+                                <Show when={ tabSelected() === "purchases"}>
+                                    {/* Change to just call ViewClientPurchases make decision about which to show in there */}
+                                    {/* <Show when={ purchasedItems() }> */}
+                                        <div>
+                                            {/* <ViewCard posts={purchasedItems()} /> */}
+                                            <ViewClientPurchases />
+                                        </div>
+                                    {/* </Show>
 
-                                            <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
-                                                {t("toolTips.firstName")}
-                                            </span>
-                                        </div>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <input
-                                                type="text"
-                                                id="FirstName"
-                                                name="FirstName"
-                                                class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                value={client()?.first_name}
-                                                required
-                                            />
-                                        </div>
-                                    </Show>
-                                </div>
+                                    <Show when={ purchasedItems().length < 1} >
+                                        <p class="italic mb-6">{t("messages.noPurchasedItems")}</p>
+                                        <a href={ `/${lang}/services`} class="btn-primary">{t("buttons.browseCatalog")}</a>
+                                    </Show> */}
 
-                                <div class="last-name flex flex-row flex-wrap justify-between">
-                                    <label
-                                        for="LastName"
-                                        class="text-ptext1 dark:text-ptext1-DM"
-                                    >
-                                        {t("formLabels.lastName")}:
-                                    </label>
-                                    <Show when={editMode() === false}>
-                                        <p
-                                            id="LastName"
-                                            class="mb-4 w-full rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                        >
-                                            {client()?.last_name}
-                                        </p>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <div class="relative mr-2 flex items-center">
-                                            <svg
-                                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                                version="1.1"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512"
-                                            >
-                                                <g>
-                                                    <path
-                                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                                    />
-                                                </g>
-                                            </svg>
+                                    
+                                    
+                                </Show>
 
-                                            <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
-                                                {t("toolTips.lastName")}
-                                            </span>
-                                        </div>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <input
-                                                type="text"
-                                                id="LastName"
-                                                name="LastName"
-                                                class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                value={client()?.last_name}
-                                            />
-                                        </div>
-                                    </Show>
-                                </div>
+                                <Show when={ tabSelected() === "favorites"}>
+                                    <p class="italic">{t("messages.comingSoon")}</p>
+                                </Show>
 
-                                <div class="display-name flex flex-row flex-wrap justify-between">
-                                    <label
-                                        for="DisplayName"
-                                        class="text-ptext1 dark:text-ptext1-DM"
-                                    >
-                                        {t("formLabels.displayName")}:
-                                    </label>
-                                    <Show when={editMode() === false}>
-                                        <p
-                                            id="DisplayName"
-                                            class="mb-4 w-full rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                        >
-                                            {client()?.display_name
-                                                ? client()?.display_name
-                                                : t("formLabels.noValue")}
-                                        </p>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <div class="relative mr-2 flex items-center">
-                                            <svg
-                                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                                version="1.1"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512"
-                                            >
-                                                <g>
-                                                    <path
-                                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                                    />
-                                                </g>
-                                            </svg>
+                                <Show when={ tabSelected() === "following"}>
+                                    <p class="italic">{t("messages.comingSoon")}</p>
+                                </Show>
 
-                                            <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
-                                                {t("toolTips.displayName")}
-                                            </span>
-                                        </div>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <input
-                                                type="text"
-                                                id="DisplayName"
-                                                name="DisplayName"
-                                                class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                value={client()?.display_name}
-                                            />
-                                        </div>
-                                    </Show>
-                                </div>
-
-                                <div class="email-add flex flex-row flex-wrap justify-between">
-                                    <label
-                                        for="email"
-                                        class="text-ptext1 dark:text-ptext1-DM"
-                                    >
-                                        {t("formLabels.email")}:
-                                    </label>
-                                    <Show when={editMode() === false}>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <p
-                                                id="email"
-                                                class="mb-4 overflow-auto rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                            >
-                                                {client()?.email}
-                                            </p>
-                                        </div>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <div class="relative mr-2 flex items-center">
-                                            <svg
-                                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                                version="1.1"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512"
-                                            >
-                                                <g>
-                                                    <path
-                                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                                    />
-                                                </g>
-                                            </svg>
-
-                                            <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
-                                                {t("toolTips.changeEmail")}
-                                            </span>
-                                        </div>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <input
-                                                id="email"
-                                                name="email"
-                                                class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                type="email"
-                                                placeholder={t(
-                                                    "formLabels.email"
-                                                )}
-                                                value={client()?.email}
-                                            />
-                                        </div>
-                                    </Show>
-                                </div>
-
-                                <div class="phone-number flex flex-row flex-wrap justify-between">
-                                    <label
-                                        for="Phone"
-                                        class="text-ptext1 dark:text-ptext1-DM"
-                                    >
-                                        {t("formLabels.phone")}:
-                                    </label>
-                                    <Show when={editMode() === false}>
-                                        <p
-                                            id="Phone"
-                                            class="mb-4 w-full rounded border border-inputBorder1 px-1 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                        >
-                                            {client()?.client_phone
-                                                ? client()?.client_phone
-                                                : t("formLabels.noValue")}
-                                        </p>
-                                    </Show>
-                                    <Show when={editMode() === true}>
-                                        <div class="relative mr-2 flex items-center">
-                                            <svg
-                                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                                version="1.1"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512"
-                                            >
-                                                <g>
-                                                    <path
-                                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                                    />
-                                                </g>
-                                            </svg>
-
-                                            <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
-                                                {t("toolTips.clientPhone")}
-                                            </span>
-                                        </div>
-                                        <div class="h-0 basis-full"></div>
-                                        <div class="basis-full">
-                                            <input
-                                                type="text"
-                                                id="Phone"
-                                                class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                name="Phone"
-                                                value={
-                                                    client()?.client_phone || ""
-                                                }
-                                            />
-                                        </div>
-                                    </Show>
-                                </div>
+                                <Show when={ tabSelected() === "settings"}>
+                                    <p class="italic">{t("messages.comingSoon")}</p>
+                                </Show>
                             </div>
                         </Show>
 
@@ -637,11 +601,7 @@ export const ClientProfileView: Component = () => {
                         </Suspense>
                     </form>
                 </div>
-                <div>
-                    {/* TODO: Clean up internationalize, probably make new cards  */}
-                    Purchases:
-                    <ClientViewCard posts={purchasedItems()} />
-                </div>
+
             </div>
         </div>
     );

@@ -9,7 +9,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/common/cart/DownloadBtn";
+import { DownloadBtn } from "@components/users/client/DownloadBtn";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -360,20 +360,6 @@ export const ViewCard: Component<Props> = (props) => {
                                             <AddToCart
                                                 item={{ ...post, quantity: 1 }}
                                                 buttonClick={resetQuantity}
-                                            />
-                                        </Show>
-                                        {/* <Quantity quantity={1} updateQuantity={updateQuantity}/> */}
-
-                                        {/* <Show
-                                            when={
-                                                (session() === null ||
-                                                    session()?.user.id !==
-                                                        post.user_id) &&
-                                                post.price === undefined
-                                            }
-                                        >
-                                            <DownloadBtn
-                                                item={{ ...post, quantity: 1 }}
                                             />
                                         </Show>
 

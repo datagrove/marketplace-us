@@ -66,6 +66,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
     };
 
     onMount(async () => {
+        console.log("Item")
+        console.log(props.item)
         setSession(User?.session);
         await fetchClient(User?.session?.user.id!);
         await getPurchasedItems();
@@ -79,12 +81,15 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             .select("*")
             .eq("customer_id", session()?.user.id)
             // TODO: this is going to get change to check with a boolean  and not a string
-            .eq("order_status", "true");
+            .eq("order_status", true);
         if (error) {
             console.log("Orders Error: " + error.code + " " + error.message);
             return;
         }
         const orderedItemsIds = orders?.map((order) => order.order_number);
+
+        console.log("orders")
+        console.log(orders)
 
         const { data: orderDetails, error: orderDetailsError } = await supabase
             .from("order_details")

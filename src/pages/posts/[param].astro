@@ -26,7 +26,7 @@ const { param } = Astro.params;
         </div>
 
         <div class="md:hidden">
-            <MobileViewFullPost id={param} client:only="solid-js" />
+            <MobileViewFullPost postId={param} client:only="solid-js" />
         </div>
     </div>
 </Layout>

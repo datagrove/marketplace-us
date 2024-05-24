@@ -107,6 +107,7 @@ export const Spanish = {
         top: "Volver Arriba",
         downloadResources: "Descargar",
         addedToCart: "¡Añadido al carrito!",
+        resetPassword: "Restablecer la Contraseña",
         finishStripeSetup: "Ir al panel de Stripe",
         requestStripePayout: "Solicitud de Pago",
     },
@@ -168,6 +169,7 @@ export const Spanish = {
         report: "Reportar este recurso a LearnGrove",
         free: "GRATIS",
         freeResourceCreated: "¡Recurso gratuito creado!",
+        noPurchasedItems: "Parece que aún no has comprado nada. ¡Ies hora de empezar a comprar!",
         insufficientStripeBalance:
             "Saldo de Stripe insuficiente. Consulta tu panel de Stripe para obtener más información.",
         payoutRequested: "¡Éxito! Has solicitado tu pago Stripe de",
@@ -175,6 +177,7 @@ export const Spanish = {
         requestPayout: "Haga clic en el botón Solicitar pago para solicitar su pago de Stripe. Se le cobrarán $2,25 al saldo de su cuenta y el resto se enviará a su cuenta bancaria o tarjeta de débito según su configuración de Stripe. Para conocer el saldo de Stripe más actualizado, visita tu panel de Stripe.",
         currentBalance: "Su saldo actual es aproximadamente:",
     },
+
 
     formLabels: {
         title: "Título",
@@ -243,27 +246,31 @@ export const Spanish = {
         orderSummary: "Resumen del pedido",
         items: "elementos",
     },
-
-    homePageText: {
-        headline: "Todo lo que necesitas para hacer el trabajo.",
-        subHeadline:
-            "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
-        ariaLabel: "Imagen para el marcador de posición de información",
-    },
-    menus: {
-        resources: "Buscar Recursos",
-        contactUs: "Contáctenos",
-        profile: "Perfil",
-        ratingsReviews: "Puntajes y Reseñas",
-        questions: "Preguntas",
-        freeDownload: "Descarga Gratis",
-        providerResources: "Recursos",
-        payouts: "Mis Pagos",
-        reviews: "Opiniones",
-        details: "Detalles",
-        description: "Descripción",
-        qA: "Sección de Preguntas",
-    },
+  homePageText: {
+    headline: "Todo lo que necesitas para hacer el trabajo.",
+    subHeadline:
+      "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
+    ariaLabel: "Imagen para el marcador de posición de información",
+  },
+  menus: {
+    resources: "Buscar Recursos",
+    contactUs: "Contáctenos",
+    profile: "Perfil",
+    ratingsReviews: "Puntajes y Reseñas",
+    questions: "Preguntas",
+    freeDownload: "Descarga Gratis",
+    providerResources: "Recursos",
+    payouts: "Mis Pagos",
+    reviews: "Opiniones",
+    details: "Detalles",
+    description: "Descripción",
+    qA: "Sección de Preguntas",
+    purchases: "Compras",
+    favorites: "Favoritas",
+    following: "Siguiente",
+    purchased: "Comprado el ",
+    updated: "Actualizado el ",
+  },
 
     toolTips: {
         firstName:
