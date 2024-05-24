@@ -1,5 +1,4 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
 import type { Client } from "@lib/types";
 import stripe from "@lib/stripe";
 import { createSignal, createEffect, Show, onMount } from "solid-js";
@@ -9,7 +8,6 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
-import { DownloadBtn } from "../services/DownloadBtn.tsx";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -42,7 +40,8 @@ export const ViewClientPurchases: Component = () => {
         const { data: orders, error } = await supabase
             .from("orders")
             .select("*")
-            .eq("customer_id", session()?.user.id);
+            .eq("customer_id", session()?.user.id)
+            .eq("order_status", true);
         if (error) {
             console.log("Orders Error: " + error.code + " " + error.message);
             return;

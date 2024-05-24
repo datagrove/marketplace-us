@@ -4,7 +4,7 @@ import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "./DownloadBtn.tsx";
+import { DownloadBtn } from "@components/users/client/DownloadBtn.tsx";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -17,39 +17,14 @@ interface Props {
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewPurchaseCard: Component<Props> = (props) => {
-    const [session, setSession] = createSignal<AuthSession | null>(null);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
     const [review, setReview] = createSignal<string>("");
-    // const [updatedDate, setUpdatedDate] = createSignal<Date>(new Date(Date.now()));
-    // const [updatedDate, setUpdatedDate] = createSignal<Date>(
-    //     new Date("2000-03-05 21:54:44.695358+00")
-    // );
-    const [orderDate, setOrderDate] = createSignal<string>("");
-    const [productID, setProductID] = createSignal<Number>();
-
-    // if (UserError) {
-    //     console.log("User Error: " + UserError.message);
-    // } else {
-    //     if (User.session === null) {
-    //         console.log("User Session: " + User.session);
-    //         setSession(null);
-    //     } else {
-    //         setSession(User.session);
-    //     }
-    // }
 
     console.log("Card Purchases");
     console.log(props.posts);
 
-    // onMount(async() => {
-    //     console.log("order date now: ", orderDate());
-    //     await getItemDates();
-    //     console.log(orderDate());
-    // })
-
     createEffect(async () => {
-        // console.log("View Card Posts")
-        // console.log(props.posts)
+  
         if (props.posts) {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
@@ -58,15 +33,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                               post.image_urls.split(",")[0]
                           ))
                         : (post.image_url = undefined);
-
-                    // Set the default quantity to 1
-                    //Don't think we need this
-                    // post.quantity = 1;
-                    // setProductID(post.id);
-                    // console.log("productID: ", productID());
-                    // getItemDates();
-                    // console.log("orderDate: ", orderDate());
-                    // getUpdatedDate(post);
                     return post;
                 })
             );
@@ -278,7 +244,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                         </div>
 
                         <div class="mr-0.5 flex items-center justify-end">
-                            <DownloadBtn />
+                            <DownloadBtn item={post} />
                         </div>
                     </div>
                 </div>

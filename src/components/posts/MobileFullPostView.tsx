@@ -8,8 +8,6 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-import { DownloadBtn } from "@components/common/cart/DownloadBtn";
-import { FreeDownloadButton } from "@components/common/cart/FreeDownloadButton";
 import stripe from "@lib/stripe"
 
 
@@ -283,44 +281,6 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             changeQA();
             window.location.href = "#qa";
         }
-
-        // if(currLinkID === "detailsLink") {
-        //     if(detailsDiv.classList.contains("hidden")) {
-        //         detailsDiv.classList.remove("hidden");
-        //         detailsDiv.classList.add("inline");
-
-        //         detailsArrow.classList.add("rotate");
-
-        //         window.location.href="#details";
-        //     }
-        // } else if(currLinkID === "descriptionLink") {
-        //     if(descriptionDiv.classList.contains("hidden")) {
-        //         descriptionDiv.classList.remove("hidden");
-        //         descriptionDiv.classList.add("inline");
-
-        //         descriptionArrow.classList.add("rotate");
-
-        //         window.location.href="#description";
-        //     }
-        // } else if(currLinkID === "reviewsLink") {
-        //     if(reviewsDiv.classList.contains("hidden")) {
-        //         reviewsDiv.classList.remove("hidden");
-        //         reviewsDiv.classList.add("inline");
-
-        //         reviewsArrow.classList.add("rotate");
-
-        //         window.location.href="#reviews";
-        //     }
-        // } else if(currLinkID === "qaLink") {
-        //     if(qaDiv.classList.contains("hidden")) {
-        //         qaDiv.classList.remove("hidden");
-        //         qaDiv.classList.add("inline");
-
-        //         qaArrow.classList.add("rotate");
-
-        //         window.location.href="#qa";
-        //     }
-        // }
 
         let sectionID = currLinkID.slice(0, -4);
         let jumpToSection = `#${sectionID}`;
@@ -608,13 +568,11 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 <div class="my-2 flex justify-between">
                     <Quantity quantity={1} updateQuantity={updateQuantity} />
                     <div class="ml-4 w-full">
-                        {/* TODO: Add FreeDownloadButton component if resource is free */}
 
                         <AddToCart
                             item={{ ...post()!, quantity: 1 }}
                             buttonClick={resetQuantity}
                         />
-                        <DownloadBtn item={{ ...post(), quantity: 1 }} />
                     </div>
                 </div>
             </div>

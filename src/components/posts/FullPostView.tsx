@@ -10,7 +10,6 @@ import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/common/cart/DownloadBtn";
 
 import stripe from "@lib/stripe";
 
@@ -744,10 +743,6 @@ export const ViewFullPost: Component<Props> = (props) => {
 
                             <AddToCart
                                 item={{ ...post()!, quantity: 1 }}
-                                buttonClick={resetQuantity}
-                            />
-                            <DownloadBtn
-                                item={{ ...post() }}
                                 buttonClick={resetQuantity}
                             />
                         </div>

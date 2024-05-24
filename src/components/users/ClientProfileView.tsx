@@ -22,7 +22,6 @@ import stripe from "@lib/stripe";
 import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import { ClientViewCard } from "@components/services/ClientViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
