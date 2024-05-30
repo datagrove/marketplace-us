@@ -162,6 +162,12 @@ export const CreateNewPost: Component = () => {
         Array<{ id: number; grade: string }>
     >([]);
     const [gradePick, setGradePick] = createSignal<Array<string>>([]);
+    const [resourceTypesPick, setResourceTypesPick] = createSignal<
+        Array<string>
+    >([]);
+    const [resourceTypes, setResourceTypes] = createSignal<
+        Array<{ id: number; type: string }>
+    >([]);
     const [uploadFinished, setUploadFinished] = createSignal(false);
     const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
@@ -241,6 +247,31 @@ export const CreateNewPost: Component = () => {
 
             //Grade Level
             try {
+                const { data: resourceType, error } = await supabase
+                    .from("resource_types")
+                    .select("*");
+                console.log(resourceType);
+                if (error) {
+                    console.log("supabase error: " + error.message);
+                } else {
+                    resourceType.forEach((type) => {
+                        setResourceTypes([
+                            ...resourceTypes(),
+                            { id: type.id, type: type.type },
+                        ]);
+                    });
+                }
+            } catch (error) {
+                console.log("Other error: " + error);
+            }
+
+            productCategoryData.subjects.map((subject) =>
+                setSubjects([
+                    ...subjects(),
+                    { id: Number(subject.id), subject: subject.name },
+                ])
+            );
+            try {
                 const { data: gradeData, error } = await supabase
                     .from("grade_level")
                     .select("*");
@@ -257,13 +288,6 @@ export const CreateNewPost: Component = () => {
             } catch (error) {
                 console.log("Other error: " + error);
             }
-
-            productCategoryData.subjects.map((subject) =>
-                setSubjects([
-                    ...subjects(),
-                    { id: Number(subject.id), subject: subject.name },
-                ])
-            );
         } else {
             alert(t("messages.signInAsProvider"));
             location.href = `/${lang}/login`;
@@ -278,7 +302,7 @@ export const CreateNewPost: Component = () => {
         formData.append("refresh_token", session()?.refresh_token!);
         formData.append("lang", lang);
         if (isFree()) {
-            setPrice("0");  
+            setPrice("0");
             formData.set("Price", price());
         } else {
             formData.set("Price", price());
@@ -296,6 +320,13 @@ export const CreateNewPost: Component = () => {
 
         if (gradePick() !== undefined) {
             formData.append("grade", JSON.stringify(gradePick()));
+        }
+
+        if (resourceTypesPick() !== undefined) {
+            formData.append(
+                "resource_types",
+                JSON.stringify(resourceTypesPick())
+            );
         }
 
         if (imageUrl() !== null) {
@@ -324,6 +355,18 @@ export const CreateNewPost: Component = () => {
 
     function gradeCheckboxes() {
         let checkboxes = document.getElementById("gradeCheckboxes");
+        if (!expanded) {
+            checkboxes?.classList.remove("hidden");
+            checkboxes?.classList.add("md:grid");
+            expanded = true;
+        } else {
+            checkboxes?.classList.remove("block");
+            checkboxes?.classList.add("hidden");
+            expanded = false;
+        }
+    }
+    function resourceTypesCheckboxes() {
+        let checkboxes = document.getElementById("resourceTypesCheckboxes");
         if (!expanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
@@ -400,9 +443,47 @@ export const CreateNewPost: Component = () => {
         console.log(gradePick());
     }
 
+    function setResourceTypesArray(e: Event) {
+        if ((e.target as HTMLInputElement).checked) {
+            setResourceTypesPick([
+                ...resourceTypesPick(),
+                (e.target as HTMLInputElement).value,
+            ]);
+        } else if ((e.target as HTMLInputElement).checked === false) {
+            if (
+                resourceTypesPick().includes(
+                    (e.target as HTMLInputElement).value
+                )
+            ) {
+                setResourceTypesPick(
+                    resourceTypesPick().filter(
+                        (value) =>
+                            value !== (e.target as HTMLInputElement).value
+                    )
+                );
+            }
+        }
+        if (resourceTypesPick().length > 0) {
+            document
+                .getElementById("isResourceTypeValid")
+                ?.classList.remove("hidden");
+            document
+                .getElementById("resourceTypesToolTip")
+                ?.classList.add("hidden");
+        } else if (gradePick().length === 0) {
+            document
+                .getElementById("isResourceTypeValid")
+                ?.classList.add("hidden");
+            document
+                .getElementById("resourceTypesToolTip")
+                ?.classList.remove("hidden");
+        }
+        console.log(resourceTypesPick());
+    }
+
     function mountTiny() {
         TinyComp({ id: "#Content", mode: mode.theme });
-    };
+    }
 
     return (
         <div>
@@ -615,6 +696,97 @@ export const CreateNewPost: Component = () => {
                         <div
                             class="relative ml-2 mt-1 flex items-start"
                             id="gradeToolTip"
+                        >
+                            <svg
+                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                version="1.1"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 512 512"
+                            >
+                                <g>
+                                    <path
+                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                    />
+                                </g>
+                            </svg>
+
+                            <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
+                                {t("toolTips.grades")}
+                            </span>
+                        </div>
+                        <svg
+                            id="isGradeValid"
+                            class="ml-1 mt-0.5 hidden h-4 w-4 fill-btn1 dark:fill-btn1-DM"
+                            viewBox="0 0 12 12"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
+                        </svg>
+                    </div>
+                </div>
+
+                {/* resourceTypes Picker */}
+                <div class="mt-2 flex flex-wrap justify-start">
+                    <label
+                        for="resourceTypes"
+                        class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
+                    >
+                        <span class="text-alert1 dark:text-alert1-DM">* </span>
+                        {/* {t("formLabels.grades")}: */}
+                        resourceTypes
+                    </label>
+
+                    {/* Creates a list of checkboxes that drop down to multiple select */}
+                    <div class="flex-grow">
+                        <div
+                            class="relative"
+                            onClick={() => resourceTypesCheckboxes()}
+                        >
+                            <p
+                                id="chooseResourceType"
+                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
+                after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                            >
+                                {/* {t("formLabels.chooseGrade")} */}
+                                choose Resource Type
+                            </p>
+
+                            <div class="absolute"></div>
+                        </div>
+                        <div
+                            id="resourceTypesCheckboxes"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                        >
+                            <For each={resourceTypes()}>
+                                {(type) => (
+                                    <label class="ml-2 block">
+                                        <input
+                                            type="checkbox"
+                                            id={type.id.toString()}
+                                            value={type.id.toString()}
+                                            onchange={(e) =>
+                                                setResourceTypesArray(e)
+                                            }
+                                        />
+                                        <span class="ml-2">{type.type}</span>
+                                    </label>
+                                )}
+                            </For>
+                        </div>
+                    </div>
+
+                    <div class="w-fit">
+                        <div
+                            class="relative ml-2 mt-1 flex items-start"
+                            id="resourceTypeToolTip"
                         >
                             <svg
                                 class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"

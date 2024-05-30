@@ -31,6 +31,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         ? formData.get("image_url")
         : null;
     const resourceUrl = formData.get("resource_url");
+    const resourceType = formData.get("resource_types");
     console.log("imageURL: " + imageUrl);
     console.log(formData);
 
@@ -96,6 +97,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         image_urls: imageUrl,
         user_id: user.id,
         resource_urls: resourceUrl,
+        resource_types: JSON.parse(resourceType as string),
     };
     const { error, data } = await supabase
         .from("seller_post")
