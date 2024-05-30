@@ -740,8 +740,7 @@ export const CreateNewPost: Component = () => {
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
                     >
                         <span class="text-alert1 dark:text-alert1-DM">* </span>
-                        {/* {t("formLabels.grades")}: */}
-                        resourceTypes
+                        {t("formLabels.resourceTypes")}
                     </label>
 
                     {/* Creates a list of checkboxes that drop down to multiple select */}
@@ -755,8 +754,7 @@ export const CreateNewPost: Component = () => {
                                 class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
                 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                             >
-                                {/* {t("formLabels.chooseGrade")} */}
-                                choose Resource Type
+                                {t("formLabels.chooseResourceTypes")}
                             </p>
 
                             <div class="absolute"></div>
@@ -810,11 +808,11 @@ export const CreateNewPost: Component = () => {
                             </svg>
 
                             <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
-                                {t("toolTips.grades")}
+                                {t("toolTips.resourceTypes")}
                             </span>
                         </div>
                         <svg
-                            id="isGradeValid"
+                            id="isResourceTypeValid"
                             class="ml-1 mt-0.5 hidden h-4 w-4 fill-btn1 dark:fill-btn1-DM"
                             viewBox="0 0 12 12"
                             xmlns="http://www.w3.org/2000/svg"
