@@ -35,6 +35,9 @@ const { links = [] } = Astro.props;
     <!-- <a id="logo">{pageTitle}</a>               -->
 
     <div id="container" class="flex align-middle justify-between">
+        <div class="md:hidden">
+            <ProfileBtn client:only="solid-js" />
+        </div>
         <div class="navLines flex items-center" id="navLines">
             <div class="all-logo">
                 <a id="logo" href=`/${lang}`>
@@ -87,20 +90,8 @@ const { links = [] } = Astro.props;
         </div>
 
         <div
-            class="flex items-center md:justify-around md:w-[50%] lg:w-[40%] xl:w-[35%]"
+            class="flex items-center md:justify-end md:w-[50%] lg:w-[40%] xl:w-[35%]"
         >
-            <div class="hidden md:block mr-2 w-fit">
-                <a href={`/${lang}/resources`}>
-                    <button class="btn-primary w-fit whitespace-nowrap">
-                        {t("menus.resources")}
-                    </button>
-                </a>
-            </div>
-            <div
-                class="hidden md:flex rounded-lg border border-border1 dark:border-border1-DM bg-background1 dark:bg-background1-DM"
-            >
-                <LanguagePicker client:only="solid-js" />
-            </div>
 
             <div class="">
                 <ThemeIcon />
@@ -110,7 +101,7 @@ const { links = [] } = Astro.props;
                 <Cart client:only="solid-js" />
             </div>
 
-            <div class="">
+            <div class="hidden md:block">
                 <ProfileBtn client:only="solid-js" />
             </div>
         </div>

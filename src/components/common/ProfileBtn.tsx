@@ -10,6 +10,7 @@ import { CreatorRegistrationRouting } from "../members/CreatorRegistrationRoutin
 import { LanguagePicker } from "./LanguagePicker";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
+
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
@@ -70,18 +71,18 @@ export const ProfileBtn = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="mr-4 flex rounded-lg border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
+                class="mr-4 flex rounded-lg md:border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
                 aria-label={t("ariaLabels.navigation")}
             >
                 <svg
-                    class="mr-2 h-4 w-4 fill-icon1 dark:fill-icon1-DM"
+                    class="mr-2 h-4 w-4 fill-icon1 dark:fill-icon1-DM hidden md:block"
                     viewBox="0 0 32 32"
                     xmlns="http://www.w3.org/2000/svg"
                 >
                     <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
                 </svg>
                 <svg
-                    class="h-4 w-4"
+                    class="h-8 w-8 md:h-4 md:w-4"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +119,7 @@ export const ProfileBtn = () => {
                     </div>
                     <AuthMode />
                 </div>
-                <div class="mt-2 md:hidden">
+                <div class="mt-2">
                     <LanguagePicker />
                 </div>
             </ul>
