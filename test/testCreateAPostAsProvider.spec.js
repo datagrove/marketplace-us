@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test create post and delete it as a provider  ', async ({ page }) => {
+test('test create post and delete it as a creator  ', async ({ page }) => {
   await page.goto('https://learngrove.co/');
   await page.getByRole('button', { name: 'Iniciar Sesión' }).click();
   await page.goto('https://learngrove.co/login')

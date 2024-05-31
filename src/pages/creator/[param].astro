@@ -1,8 +1,8 @@
 ---
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import { ClientProviderView } from "@components/users/ClientProviderView";
-import { ClientViewProviderPosts } from "@components/posts/ClientViewProviderPosts";
+import { UserCreatorView } from "@components/members/UserCreatorView";
+import { UserViewCreatorPosts } from "@components/posts/UserViewCreatorPosts";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,14 +11,14 @@ const { param } = Astro.params;
 ---
 
 <Layout
-    pageTitle={t("pageTitles.clientViewProviderAccount") + " " + param}
-    pageDescription={t("pageTitles.clientViewProviderAccount") +
+    pageTitle={t("pageTitles.userViewCreatorAccount") + " " + param}
+    pageDescription={t("pageTitles.userViewCreatorAccount") +
         " " +
         param +
         " " +
-        t("pageDescriptions.clientViewProviderAccount")}
+        t("pageDescriptions.userViewCreatorAccount")}
 >
     <div class="w-full">
-        <ClientProviderView id={param} client:only="solid-js" />
+        <UserCreatorView id={param} client:only="solid-js" />
     </div>
 </Layout>

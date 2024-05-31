@@ -22,7 +22,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   const firstName = formData.get("FirstName");
   const lastName = formData.get("LastName");
-  const providerName = formData.get("ProviderName");
+  const creatorName = formData.get("CreatorName");
   const email = formData.get("email");
   const sellerAbout = formData.get("AboutContent");
   const contribution = formData.get("contribution");
@@ -133,17 +133,17 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(profileData);
   }
 
-  //Build our submission to the providers table including the location id from the select from the location table on line 158
+  //Build our submission to the creators table including the location id from the select from the location table on line 158
   let submission;
 
   submission = {
-    seller_name: providerName,
+    seller_name: creatorName,
     image_url: imageUrl,
     seller_about: sellerAbout,
     contribution: contribution,
   };
 
-  //submit to the providers table and select it back
+  //submit to the creators table and select it back
   const { error, data } = await supabase
     .from("sellers")
     .update([submission])
@@ -154,7 +154,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(error);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.providerEditProfileError")),
+        message: (t("apiErrors.creatorEditProfileError")),
       }),
       { status: 500 }
     );

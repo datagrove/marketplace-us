@@ -10,17 +10,17 @@ import {
     For,
 } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { ViewProviderPosts } from "../../components/posts/ViewProviderPosts";
+import { ViewCreatorPosts } from "../posts/ViewCreatorPosts";
 import type { AuthSession } from "@supabase/supabase-js";
 import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { createStore } from "solid-js/store";
-import { StripeButton } from "@components/users/provider/StripeButton";
-import { PayoutButton } from "@components/users/provider/PayoutButton";
+import { StripeButton } from "@components/members/creator/StripeButton";
+import { PayoutButton } from "@components/members/creator/PayoutButton";
 import { MobileViewCard } from "@components/services/MobileViewCard";
-import type { Provider } from "@lib/types";
+import type { Creator } from "@lib/types";
 import { TinyComp } from "@components/posts/TinyComp";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -31,7 +31,7 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 async function postFormData(formData: FormData) {
-    const response = await fetch("/api/providerProfileEdit", {
+    const response = await fetch("/api/creatorProfileEdit", {
         method: "POST",
         body: formData,
     });
@@ -46,10 +46,10 @@ async function postFormData(formData: FormData) {
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
-export const ProviderProfileView: Component = () => {
-    const [provider, setProvider] = createSignal<Provider>();
+export const CreatorProfileView: Component = () => {
+    const [creator, setCreator] = createSignal<Creator>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [providerImage, setProviderImage] = createSignal<string>("");
+    const [creatorImage, setCreatorImage] = createSignal<string>("");
     const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
     const [screenSize, setScreenSize] = createSignal<
@@ -71,11 +71,11 @@ export const ProviderProfileView: Component = () => {
     createEffect(() => {
         setSession(User.session);
         if (typeof session() !== "undefined") {
-            fetchProvider(session()?.user.id!);
+            fetchCreator(session()?.user.id!);
         }
     });
 
-    const fetchProvider = async (user_id: string) => {
+    const fetchCreator = async (user_id: string) => {
         if (session()) {
             try {
                 const { data, error } = await supabase
@@ -87,10 +87,10 @@ export const ProviderProfileView: Component = () => {
                 if (error) {
                     console.log(error);
                 } else if (data[0] === undefined) {
-                    alert(t("messages.noProvider"));
+                    alert(t("messages.noCreator"));
                     location.href = `/${lang}/creator/createaccount`;
                 } else {
-                    setProvider(data[0]);
+                    setCreator(data[0]);
                 }
             } catch (error) {
                 console.log(error);
@@ -101,22 +101,22 @@ export const ProviderProfileView: Component = () => {
         }
     };
 
-    function providerViewTabClick(e: Event) {
+    function creatorViewTabClick(e: Event) {
         e.preventDefault();
 
         let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
         // let currLinkId = e.currentTarget?.id;
         let currEl = document.getElementById(currLinkId);
         let allLgLinks = document.getElementsByClassName(
-            "providerViewtabLinkLg"
+            "creatorViewtabLinkLg"
         );
 
-        let profile = document.getElementById("providerViewProfile");
-        let resources = document.getElementById("providerViewResources");
-        let ratings = document.getElementById("providerViewRatings");
-        let questions = document.getElementById("providerViewQuestions");
-        let downloads = document.getElementById("providerViewDownload");
-        let payouts = document.getElementById("providerViewPayouts");
+        let profile = document.getElementById("creatorViewProfile");
+        let resources = document.getElementById("creatorViewResources");
+        let ratings = document.getElementById("creatorViewRatings");
+        let questions = document.getElementById("creatorViewQuestions");
+        let downloads = document.getElementById("creatorViewDownload");
+        let payouts = document.getElementById("creatorViewPayouts");
 
         if (!currEl?.classList.contains("border-b-2")) {
             Array.from(allLgLinks).forEach(function (link) {
@@ -186,7 +186,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closeProfile() {
-        let profile = document.getElementById("providerViewProfile");
+        let profile = document.getElementById("creatorViewProfile");
 
         if (profile?.classList.contains("inline")) {
             profile?.classList.remove("inline");
@@ -195,7 +195,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closeResources() {
-        let resources = document.getElementById("providerViewResources");
+        let resources = document.getElementById("creatorViewResources");
 
         if (resources?.classList.contains("inline")) {
             resources.classList.remove("inline");
@@ -204,7 +204,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closeRatings() {
-        let ratings = document.getElementById("providerViewRatings");
+        let ratings = document.getElementById("creatorViewRatings");
 
         if (ratings?.classList.contains("inline")) {
             ratings.classList.remove("inline");
@@ -213,7 +213,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closeQuestions() {
-        let questions = document.getElementById("providerViewQuestions");
+        let questions = document.getElementById("creatorViewQuestions");
 
         if (questions?.classList.contains("inline")) {
             questions.classList.remove("inline");
@@ -222,7 +222,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closeDownloads() {
-        let downloads = document.getElementById("providerViewDownload");
+        let downloads = document.getElementById("creatorViewDownload");
 
         if (downloads?.classList.contains("inline")) {
             downloads.classList.remove("inline");
@@ -231,7 +231,7 @@ export const ProviderProfileView: Component = () => {
     }
 
     function closePayouts() {
-        let payouts = document.getElementById("providerViewPayouts");
+        let payouts = document.getElementById("creatorViewPayouts");
 
         if (payouts?.classList.contains("inline")) {
             payouts.classList.remove("inline");
@@ -240,14 +240,14 @@ export const ProviderProfileView: Component = () => {
     }
 
     createEffect(async () => {
-        if (provider() !== undefined) {
+        if (creator() !== undefined) {
             if (
-                provider()?.image_url === undefined ||
-                provider()?.image_url === null
+                creator()?.image_url === undefined ||
+                creator()?.image_url === null
             ) {
             } else {
-                await downloadImage(provider()?.image_url!);
-                setImageUrl(provider()?.image_url!);
+                await downloadImage(creator()?.image_url!);
+                setImageUrl(creator()?.image_url!);
                 console.log(imageUrl());
             }
         }
@@ -262,7 +262,7 @@ export const ProviderProfileView: Component = () => {
                 throw error;
             }
             const url = URL.createObjectURL(data);
-            setProviderImage(url);
+            setCreatorImage(url);
         } catch (error) {
             console.log(error);
         }
@@ -306,21 +306,21 @@ export const ProviderProfileView: Component = () => {
         <div>
             <form onSubmit={submit} id="creatorEditProfile" class="mx-1">
                 <div
-                    id="provider-view-header"
+                    id="creator-view-header"
                     class="relative h-36 w-full bg-background2 dark:bg-background2-DM"
                 >
                     <Show when={editMode() === false}>
-                        <Show when={providerImage()}>
+                        <Show when={creatorImage()}>
                             <div class="absolute left-4 top-6 flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM md:left-12">
                                 <img
-                                    src={providerImage()}
+                                    src={creatorImage()}
                                     class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
-                                    alt={`${t("postLabels.providerProfileImage")} 1`}
+                                    alt={`${t("postLabels.creatorProfileImage")} 1`}
                                 />
                             </div>
                         </Show>
 
-                        <Show when={!providerImage()}>
+                        <Show when={!creatorImage()}>
                             <div class="absolute left-4 top-6 flex h-36 w-36 items-center justify-center rounded-full border-2 border-gray-400 bg-background2 dark:bg-background2-DM md:left-12">
                                 <svg
                                     width="120px"
@@ -402,7 +402,7 @@ export const ProviderProfileView: Component = () => {
                 </div>
 
                 <div
-                    id="provider-view-username-reviews-edit"
+                    id="creator-view-username-reviews-edit"
                     class="mt-4 w-full md:mt-10"
                 >
                     <Show when={!editMode()}>
@@ -433,15 +433,15 @@ export const ProviderProfileView: Component = () => {
                     </Show>
 
                     <div class="flex items-center md:grid md:grid-cols-[525px_50px_150px] lg:grid-cols-[750px_50px_150px] xl:grid-cols-[900px_50px_200px]">
-                        <div class="provider-name-edit-button-div">
+                        <div class="creator-name-edit-button-div">
                             <Show when={editMode() === false}>
                                 <div class="mr-2 md:mr-0">
                                     <h2 class="line-clamp-2 text-lg font-bold lg:text-2xl">
-                                        {provider()?.seller_name == ""
-                                            ? provider()?.first_name +
+                                        {creator()?.seller_name == ""
+                                            ? creator()?.first_name +
                                               " " +
-                                              provider()?.last_name
-                                            : provider()?.seller_name}
+                                              creator()?.last_name
+                                            : creator()?.seller_name}
                                     </h2>
                                 </div>
                             </Show>
@@ -452,21 +452,21 @@ export const ProviderProfileView: Component = () => {
                                         for="SellerName"
                                         class="font-bold text-ptext1 dark:text-ptext1-DM"
                                     >
-                                        {t("formLabels.providerName")}: &nbsp;
+                                        {t("formLabels.creatorName")}: &nbsp;
                                     </label>
                                     <input
                                         type="text"
-                                        id="ProviderName"
-                                        name="ProviderName"
+                                        id="CreatorName"
+                                        name="CreatorName"
                                         class="my-4 rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        value={provider()?.seller_name}
+                                        value={creator()?.seller_name}
                                     />
                                 </div>
                             </Show>
                         </div>
 
                         <div
-                            id="provider-edit-btn-div"
+                            id="creator-edit-btn-div"
                             class="flex items-center justify-center"
                         >
                             <Show when={!editMode()}>
@@ -530,11 +530,11 @@ export const ProviderProfileView: Component = () => {
                     </div>
 
                     <div
-                        id="provider-view-reviews-div"
+                        id="creator-view-reviews-div"
                         class="flex items-center"
                     >
                         <div
-                            id="provider-view-ratings-stars-div"
+                            id="creator-view-ratings-stars-div"
                             class="mr-2 flex w-fit"
                         >
                             <svg
@@ -588,20 +588,20 @@ export const ProviderProfileView: Component = () => {
                             </svg>
                         </div>
 
-                        <div id="provider-view-ratings-text-div" class="flex">
+                        <div id="creator-view-ratings-text-div" class="flex">
                             <p class="font-bold">4.9</p>
                             <p class="font-light">&nbsp (21.K)</p>
                         </div>
                     </div>
                 </div>
 
-                <div id="provider-view-tabs-content-div" class="mt-8 md:mt-2">
-                    <div id="provider-view-tabs" class="mb-4 flex">
+                <div id="creator-view-tabs-content-div" class="mt-8 md:mt-2">
+                    <div id="creator-view-tabs" class="mb-4 flex">
                         <a
                             href="#profileCreatorView"
                             id="creatorViewProfileLink"
-                            class="providerViewtabLinkLg mr-2 inline border-b-2 border-green-500 md:mr-6 lg:mr-10"
-                            onClick={providerViewTabClick}
+                            class="creatorViewtabLinkLg mr-2 inline border-b-2 border-green-500 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
                                 {t("menus.profile")}
@@ -610,18 +610,18 @@ export const ProviderProfileView: Component = () => {
                         <a
                             href="#resourcesCreatorView"
                             id="creatorViewResourcesLink"
-                            class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
-                            onClick={providerViewTabClick}
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
-                                {t("menus.providerResources")}
+                                {t("menus.creatorResources")}
                             </p>
                         </a>
                         <a
                             href="#ratingsCreatorView"
                             id="creatorViewRatingsLink"
-                            class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
-                            onClick={providerViewTabClick}
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
                                 {t("menus.reviews")}
@@ -630,19 +630,19 @@ export const ProviderProfileView: Component = () => {
                         <a
                             href="#questionsCreatorView"
                             id="creatorViewQuestionsLink"
-                            class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
-                            onClick={providerViewTabClick}
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
                                 {t("menus.questions")}
                             </p>
                         </a>
-                        {/* <a href="#downloadCreatorView" id="creatorViewDownloadLink" class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ providerViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a> */}
+                        {/* <a href="#downloadCreatorView" id="creatorViewDownloadLink" class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10" onClick={ creatorViewTabClick }><p class="text-sm md:text-base lg:text-xl font-bold">{t("menus.freeDownload")}</p></a> */}
                         <a
                             href="#payoutsCreatorView"
                             id="creatorViewPayoutsLink"
-                            class="providerViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
-                            onClick={providerViewTabClick}
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
                                 {t("menus.payouts")}
@@ -650,7 +650,7 @@ export const ProviderProfileView: Component = () => {
                         </a>
                     </div>
 
-                    <div id="providerViewProfile" class="inline">
+                    <div id="creatorViewProfile" class="inline">
                         <div class="first-name my-2 flex">
                             <label
                                 for="FirstName"
@@ -661,7 +661,7 @@ export const ProviderProfileView: Component = () => {
 
                             <Show when={editMode() === false}>
                                 <p id="FirstName" class="px-1">
-                                    {provider()?.first_name}
+                                    {creator()?.first_name}
                                 </p>
                             </Show>
 
@@ -672,7 +672,7 @@ export const ProviderProfileView: Component = () => {
                                         id="FirstName"
                                         name="FirstName"
                                         class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        value={provider()?.first_name}
+                                        value={creator()?.first_name}
                                         required
                                     />
                                 </div>
@@ -689,7 +689,7 @@ export const ProviderProfileView: Component = () => {
 
                             <Show when={editMode() === false}>
                                 <p id="LastName" class="px-1">
-                                    {provider()?.last_name}
+                                    {creator()?.last_name}
                                 </p>
                             </Show>
 
@@ -700,7 +700,7 @@ export const ProviderProfileView: Component = () => {
                                         id="LastName"
                                         name="LastName"
                                         class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        value={provider()?.last_name}
+                                        value={creator()?.last_name}
                                     />
                                 </div>
                             </Show>
@@ -717,8 +717,8 @@ export const ProviderProfileView: Component = () => {
                             <Show when={editMode() === false}>
                                 <div class="flex">
                                     {/* <p class="font-bold">{t("formLabels.email")}:&nbsp;</p> */}
-                                    <a href={`mailto:${provider()?.email}`}>
-                                        <p>{provider()?.email}</p>
+                                    <a href={`mailto:${creator()?.email}`}>
+                                        <p>{creator()?.email}</p>
                                     </a>
                                 </div>
                             </Show>
@@ -731,7 +731,7 @@ export const ProviderProfileView: Component = () => {
                                         class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                                         type="email"
                                         placeholder={t("formLabels.email")}
-                                        value={provider()?.email}
+                                        value={creator()?.email}
                                     />
                                 </div>
                             </Show>
@@ -747,7 +747,7 @@ export const ProviderProfileView: Component = () => {
                             <Show when={editMode() === false}>
                                 <p
                                     class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
-                                    innerHTML={provider()?.seller_about}
+                                    innerHTML={creator()?.seller_about}
                                 ></p>
                             </Show>
 
@@ -759,30 +759,30 @@ export const ProviderProfileView: Component = () => {
                                         class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                                         rows="10"
                                         ref={mountTiny}
-                                        value={provider()?.seller_about}
+                                        value={creator()?.seller_about}
                                     ></textarea>
                                 </div>
                             </Show>
                         </div>
                     </div>
 
-                    <div id="providerViewResources" class="hidden">
-                        <ViewProviderPosts />
+                    <div id="creatorViewResources" class="hidden">
+                        <ViewCreatorPosts />
                     </div>
 
-                    <div id="providerViewRatings" class="hidden">
+                    <div id="creatorViewRatings" class="hidden">
                         <p class="italic">{t("messages.comingSoon")}</p>
                     </div>
 
-                    <div id="providerViewQuestions" class="hidden">
+                    <div id="creatorViewQuestions" class="hidden">
                         <p class="italic">{t("messages.comingSoon")}</p>
                     </div>
 
-                    <div id="providerViewDownload" class="hidden">
+                    <div id="creatorViewDownload" class="hidden">
                         <p class="italic">{t("messages.comingSoon")}</p>
                     </div>
 
-                    <div id="providerViewPayouts" class="hidden">
+                    <div id="creatorViewPayouts" class="hidden">
                         <div class="contribution my-2 flex">
                             <label
                                 for="contribution"
@@ -793,7 +793,7 @@ export const ProviderProfileView: Component = () => {
 
                             <Show when={editMode() === false}>
                                 <p id="contribution" class="px-1">
-                                    {provider()?.contribution}%
+                                    {creator()?.contribution}%
                                 </p>
                             </Show>
 
@@ -807,7 +807,7 @@ export const ProviderProfileView: Component = () => {
                                         id="contribution"
                                         name="contribution"
                                         class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        value={provider()?.contribution}
+                                        value={creator()?.contribution}
                                     />%
                                 </div>
                             </Show>

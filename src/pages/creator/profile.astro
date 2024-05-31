@@ -1,22 +1,22 @@
 ---
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import { ProviderProfileView } from "@components/users/ProviderProfileView";
+import { CreatorProfileView } from "@components/members/CreatorProfileView";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <Layout
-    pageTitle={t("pageTitles.viewProviderAccount")}
+    pageTitle={t("pageTitles.viewCreatorAccount")}
     stylesheets={`<link rel="stylesheet" href="/tinymce/skins/ui/oxide/skin.min.css">
   <link rel="stylesheet" href="/tinymce/skins/ui/oxide-dark/skin.min.css">
   <link rel="stylesheet" href="/tinymce/skins/content/default/content.min.css">
   <link rel="stylesheet" href="/tinymce/skins/ui/oxide/content.min.css">
   <link rel="stylesheet" href="/tinymce/skins/ui/oxide-dark/content.min.css">`}
-    pageDescription={t("pageDescriptions.viewProviderAccount")}
+    pageDescription={t("pageDescriptions.viewCreatorAccount")}
 >
     <div>
-        <ProviderProfileView client:only="solid-js" />
+        <CreatorProfileView client:only="solid-js" />
     </div>
 </Layout>

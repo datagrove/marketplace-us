@@ -37,7 +37,7 @@ export const DeletePostButton: Component<Props> = (props) => {
     const deletePost = async (e: SubmitEvent) => {
         e.preventDefault();
 
-        // check if user is provider and if they are the owner of the post
+        // check if user is creator and if they are the owner of the post
         // if they are, delete the post
         if (props.userId === session()!.user.id) {
             try {

@@ -5,7 +5,7 @@ import type { Post } from "@lib/types";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import supabase from "@lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
-import type { Client } from "@lib/types";
+import type { User } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -45,7 +45,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         []
     );
 
-    const fetchClient = async (user_id: string) => {
+    const fetchUser = async (user_id: string) => {
         try {
             const { data, error } = await supabase
                 .from("clientview")
@@ -55,7 +55,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             if (error) {
                 console.log(error);
             } else if (data[0] === undefined) {
-                alert(t("messages.noClient")); //TODO: Change alert message
+                alert(t("messages.noUser")); //TODO: Change alert message
                 location.href = `/${lang}`;
             } else {
                 console.log(data);
@@ -69,7 +69,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         console.log("Item")
         console.log(props.item)
         setSession(User?.session);
-        await fetchClient(User?.session?.user.id!);
+        await fetchUser(User?.session?.user.id!);
         await getPurchasedItems();
     });
 

@@ -4,7 +4,7 @@ import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/users/client/DownloadBtn.tsx";
+import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);

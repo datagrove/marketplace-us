@@ -106,7 +106,7 @@ let uploadFilesRef: any;
 
 async function postFormData(formData: FormData) {
     const info = formData;
-    const response = await fetch("/api/providerCreatePost", {
+    const response = await fetch("/api/creatorCreatePost", {
         method: "POST",
         body: formData,
     });
@@ -181,21 +181,21 @@ export const CreateNewPost: Component = () => {
         setSession(data.session);
 
         if (session()) {
-            //Check if they are a provider
+            //Check if they are a creator
             try {
-                const { data: providers, error: errorProviders } =
+                const { data: creators, error: errorCreators } =
                     await supabase
                         .from("sellers")
                         .select("*")
                         .eq("user_id", session()!.user.id);
-                if (errorProviders) {
-                    console.log("supabase error: " + errorProviders.message);
+                if (errorCreators) {
+                    console.log("supabase error: " + errorCreators.message);
                 } else {
-                    if (providers.length === 0) {
-                        alert(t("messages.onlyProvider"));
+                    if (creators.length === 0) {
+                        alert(t("messages.onlyCreator"));
                         window.location.href = `/${lang}/creator/createaccount`;
                     } else if (
-                        providers[0].stripe_connected_account_id === null
+                        creators[0].stripe_connected_account_id === null
                     ) {
                         alert(t("messages.noStripeAccount"));
                         window.location.href = `/${lang}/creator/profile`;
@@ -265,7 +265,7 @@ export const CreateNewPost: Component = () => {
                 ])
             );
         } else {
-            alert(t("messages.signInAsProvider"));
+            alert(t("messages.signInAsCreator"));
             location.href = `/${lang}/login`;
         }
     });

@@ -180,20 +180,20 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (location === null) {
         submission = {
             display_name: displayName,
-            client_phone: phone,
+            user_phone: phone,
             image_url: imageUrl,
         };
     } else {
         //Update the location with the new location
         submission = {
             display_name: displayName,
-            client_phone: phone,
+            user_phone: phone,
             location: location.id,
             image_url: imageUrl,
         };
     }
 
-    //submit to the clients table and select it back
+    //submit to the users table and select it back
     const { error, data } = await supabase
         .from("clients")
         .update([submission])
@@ -204,7 +204,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log(error);
         return new Response(
             JSON.stringify({
-                message: t("apiErrors.clientEditProfileError"),
+                message: t("apiErrors.userEditProfileError"),
             }),
             { status: 500 }
         );
@@ -223,7 +223,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(
         JSON.stringify({
             message: t("apiErrors.success"),
-            redirect: "/client/profile",
+            redirect: "/user/profile",
         }),
         { status: 200 }
     );

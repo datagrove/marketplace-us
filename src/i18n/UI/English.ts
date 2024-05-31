@@ -8,14 +8,14 @@ export const English = {
         login: "Login",
         home: "Home",
         signIn: "Sign In",
-        createClientAccount: "Create Client Profile",
-        editClientAccount: "Edit Client Profile",
-        viewClientAccount: "My Client Profile",
+        createUserAccount: "Create User Profile",
+        editUserAccount: "Edit User Profile",
+        viewUserAccount: "My User Profile",
         createPost: "Create Post",
-        createProviderAccount: "Create Provider Profile",
-        editProviderAccount: "Edit Provider Profile",
-        viewProviderAccount: "My Provider Profile",
-        clientViewProviderAccount: "Provider Profile",
+        createCreatorAccount: "Create Creator Profile",
+        editCreatorAccount: "Edit Creator Profile",
+        viewCreatorAccount: "My Creator Profile",
+        userViewCreatorAccount: "Creator Profile",
         page404: "404 - Page Not Found",
         requestPasswordReset: "Request Password Reset",
         resetPassword: "Set New Password",
@@ -41,18 +41,18 @@ export const English = {
         login: "Enter your email and password to login to LearnGrove.",
         home: "LearnGrove, your source for quality learning!",
         // signIn: string,
-        createClientAccount:
+        createUserAccount:
             "Join LearnGrove unlock a world of learning resources. Sign up today to find the resources you need for your learning journey.",
-        viewClientAccount:
-            "Access and manage your client profile information effortlessly on LearnGrove.",
+        viewUserAccount:
+            "Access and manage your user profile information effortlessly on LearnGrove.",
         createPost:
             "List a resource including title, category, description, and images to offer your resource on LearnGrove.",
-        createProviderAccount:
-            "Create a Provider Profile to start posting your resources on LearnGrove.",
-        viewProviderAccount:
-            "Manage your provider profile details and review your posts on LearnGrove.",
-        clientViewProviderAccount:
-            "Discover more about this provider. Explore their profile and available resources.",
+        createCreatorAccount:
+            "Create a Creator Profile to start posting your resources on LearnGrove.",
+        viewCreatorAccount:
+            "Manage your creator profile details and review your posts on LearnGrove.",
+        userViewCreatorAccount:
+            "Discover more about this creator. Explore their profile and available resources.",
         page404: "404 - page not found",
         requestPasswordReset:
             "Forgot your password? Request a secure password reset for your LearnGrove account. Enter your email and follow the instructions to regain access.",
@@ -72,7 +72,7 @@ export const English = {
     },
 
     buttons: {
-        providerProfile: "My Provider Profile",
+        creatorProfile: "My Creator Profile",
         editProfile: "Edit Profile",
         register: "Start Stripe Registration",
         uploadImage: "Upload Image",
@@ -127,21 +127,21 @@ export const English = {
         forgotPassword: "Forgot your password? Click here to",
         alreadyAccount: "Already have an account? Click here to",
         error404: "Something went wrong",
-        onlyProvider: "Only providers can create posts.",
-        signInAsProvider: "Please create a provider profile before posting.",
+        onlyCreator: "Only creators can create posts.",
+        signInAsCreator: "Please create a creator profile before posting.",
         checkEmail:
             "Check your email for the reset link! If you did not receive the email, please check your spam folder. Links are valid for 24 hours.",
         checkConfirmEmail:
             "If this email is not already registered, you will receive an email confirmation link. Please check your spam folder if you did not receive the email. Links are valid for 24 hours.",
         signIn: "Please sign in to access this page.",
-        createProviderAccount: "Please sign in to create a provider profile.",
-        createClientAccount: "Please sign in to create a client profile.",
-        viewProviderAccount:
-            "You do not have a provider profile. Please create one to view your provider profile.",
+        createCreatorAccount: "Please sign in to create a creator profile.",
+        createUserAccount: "Please sign in to create a user profile.",
+        viewCreatorAccount:
+            "You do not have a creator profile. Please create one to view your creator profile.",
         noPosts: "No posts available.",
         noPost: "Post Not Found",
         selectAnImage: "You must select an image to upload.",
-        noProvider: "No Provider found.",
+        noCreator: "No Creator found.",
         translation: `Translations`,
         translations:
             " are provided for convenience only. The official binding language is Spanish.",
@@ -153,7 +153,7 @@ export const English = {
         mustSignIn: "You must be signed in to view available resources.",
         profileEdits:
             "Profile edits will only be saved after clicking the Save Profile button!",
-        noClient: "No Client found.",
+        noUser: "No User found.",
         noPostsSearch:
             "No posts match this specific search - please try a different filter or key word",
         noStripeAccount:
@@ -184,7 +184,7 @@ export const English = {
         search: "Search",
         firstName: "First Name",
         lastName: "Last Name",
-        providerName: "Provider Name",
+        creatorName: "Creator Name",
         phone: "Phone Number",
         email: "Email",
         password: "Password",
@@ -192,8 +192,8 @@ export const English = {
         displayName: "Display Name",
         enterPostContent: "Enter Post Content Here",
         noValue: "Not Provided",
-        providerInfo: "Provider Information",
-        posts: "Provider Posts",
+        creatorInfo: "Creator Information",
+        posts: "Creator Posts",
         profileInfo: "Profile Information",
         yourPosts: "Your Posts",
         optional: "(optional)",
@@ -218,13 +218,13 @@ export const English = {
     },
 
     postLabels: {
-        provider: "Provider: ",
+        creator: "Creator: ",
         location: "Location: ",
         category: "Category: ",
         image: "Post Image",
         slide: "Slide",
-        providerProfileImage: "Provider Profile Image",
-        clientProfileImage: "Client Profile Image",
+        creatorProfileImage: "Creator Profile Image",
+        userProfileImage: "User Profile Image",
     },
 
     cartLabels: {
@@ -243,7 +243,7 @@ export const English = {
     homePageText: {
         headline: "Everything you need to get the job done.",
         subHeadline:
-            "Providers post services. Customers search posts. Work gets done.",
+            "Creators post services. Customers search posts. Work gets done.",
         ariaLabel: "Placeholder info image",
     },
 
@@ -254,7 +254,7 @@ export const English = {
     ratingsReviews: "Ratings and Reviews",
     questions: "Questions",
     freeDownload: "Free Download",
-    providerResources: "Resources",
+    creatorResources: "Resources",
     payouts: "My Payouts",
     reviews: "Reviews",
     details: "Details",
@@ -283,23 +283,23 @@ export const English = {
         postImages:
             'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
         firstNameEdit:
-            "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider profile. Since this is your legal name, the same first and last name must be used on your client and provider profiles.",
+            "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a user or creator profile. Since this is your legal name, the same first and last name must be used on your user and creator profiles.",
         lastNameEdit:
-            "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a client or provider profile. Since this is your legal name, the same first and last name must be used on your client and provider profiles.",
+            "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a user or creator profile. Since this is your legal name, the same first and last name must be used on your user and creator profiles.",
         languages:
-            "Please select the languages in which you are able to conduct business. These will be displayed on your profile for clients.",
+            "Please select the languages in which you are able to conduct business. These will be displayed on your profile for users.",
         subjects:
             "Please select all the subjects covered by your resource. These will be used for filtering of resources for shoppers.",
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
         contribution:
-            "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your provider profile. If you set platform support to 0% you will still be charged for processing fees.",
+            "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your creator profile. If you set platform support to 0% you will still be charged for processing fees.",
     },
 
     apiErrors: {
         missingFields: "Missing required fields",
         noSession: "Session not found",
         noUser: "User not found",
-        providerExists: "Provider Profile already exists",
+        creatorExists: "Creator Profile already exists",
         profileCreateError: "Error creating profile",
         profileEditError: "Error updating profile",
         noDistrict: "District not found",
@@ -307,17 +307,17 @@ export const English = {
         noMajorMunicipality: "State not found",
         noCountry: "Country not found",
         locationError: "Location not submitted",
-        providerCreateProfileError: "Error creating provider profile",
-        providerEditProfileError: "Error updating provider profile",
+        creatorCreateProfileError: "Error creating creator profile",
+        creatorEditProfileError: "Error updating creator profile",
         noProfileData: "No profile Data returned",
         success: "Success!",
         emailError: "Error updating email",
         noCategory: "Category not found",
         postError: "Error creating post",
         noPost: "No post returned",
-        clientExists: "Client already exists",
-        clientCreateProfileError: "Error creating client profile",
-        clientEditProfileError: "Error updating client profile",
+        userExists: "User already exists",
+        userCreateProfileError: "Error creating user profile",
+        userEditProfileError: "Error updating user profile",
         createUserError:
             "Error creating user, please try again or contact us for assistance.",
         emailNotConfirmed:

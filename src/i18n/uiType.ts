@@ -8,14 +8,14 @@ export interface uiObject {
         login: string;
         home: string;
         signIn: string;
-        createClientAccount: string;
-        editClientAccount: string;
-        viewClientAccount: string;
+        createUserAccount: string;
+        editUserAccount: string;
+        viewUserAccount: string;
         createPost: string;
-        createProviderAccount: string;
-        editProviderAccount: string;
-        viewProviderAccount: string;
-        clientViewProviderAccount: string;
+        createCreatorAccount: string;
+        editCreatorAccount: string;
+        viewCreatorAccount: string;
+        userViewCreatorAccount: string;
         page404: string;
         requestPasswordReset: string;
         resetPassword: string;
@@ -40,12 +40,12 @@ export interface uiObject {
         login: string;
         home: string;
         signIn: string;
-        createClientAccount: string;
-        viewClientAccount: string;
+        createUserAccount: string;
+        viewUserAccount: string;
         createPost: string;
-        createProviderAccount: string;
-        viewProviderAccount: string;
-        clientViewProviderAccount: string;
+        createCreatorAccount: string;
+        viewCreatorAccount: string;
+        userViewCreatorAccount: string;
         page404: string;
         requestPasswordReset: string;
         resetPassword: string;
@@ -60,7 +60,7 @@ export interface uiObject {
     };
 
     buttons: {
-        providerProfile: string;
+        creatorProfile: string;
         editProfile: string;
         register: string;
         uploadImage: string;
@@ -115,18 +115,18 @@ export interface uiObject {
     forgotPassword: string,
     alreadyAccount: string,
     error404: string,
-    onlyProvider: string,
-    signInAsProvider: string,
+    onlyCreator: string,
+    signInAsCreator: string,
     checkEmail: string,
     checkConfirmEmail: string,
     signIn: string,
-    createProviderAccount: string,
-    createClientAccount: string,
-    viewProviderAccount: string,
+    createCreatorAccount: string,
+    createUserAccount: string,
+    viewCreatorAccount: string,
     noPosts: string,
     noPost: string,
     selectAnImage: string,
-    noProvider: string,
+    noCreator: string,
     translation: string,
     translations: string,
     clickWrap1: string,
@@ -135,7 +135,7 @@ export interface uiObject {
     todoFetch: string,
     mustSignIn: string,
     profileEdits: string,
-    noClient: string,
+    noUser: string,
     noPostsSearch: string,
     noStripeAccount: string,
     selectSubject: string,
@@ -163,7 +163,7 @@ export interface uiObject {
         search: string;
         firstName: string;
         lastName: string;
-        providerName: string;
+        creatorName: string;
         phone: string;
         email: string;
         password: string;
@@ -171,8 +171,8 @@ export interface uiObject {
         displayName: string;
         enterPostContent: string;
         noValue: string;
-        providerInfo: string;
-        providerPosts: string;
+        creatorInfo: string;
+        creatorPosts: string;
         posts: string;
         profileInfo: string;
         yourPosts: string;
@@ -198,13 +198,13 @@ export interface uiObject {
     };
 
     postLabels: {
-        provider: string;
+        creator: string;
         location: string;
         category: string;
         image: string;
         slide: string;
-        providerProfileImage: string;
-        clientProfileImage: string;
+        creatorProfileImage: string;
+        userProfileImage: string;
     };
 
     cartLabels: {
@@ -233,7 +233,7 @@ export interface uiObject {
     ratingsReviews: string;
     questions: string;
     freeDownload: string;
-    providerResources: string;
+    creatorResources: string;
     payouts: string;
     reviews: string;
     details: string;
@@ -266,7 +266,7 @@ export interface uiObject {
         missingFields: string;
         noSession: string;
         noUser: string;
-        providerExists: string;
+        creatorExists: string;
         profileCreateError: string;
         profileEditError: string;
         noDistrict: string;
@@ -274,17 +274,17 @@ export interface uiObject {
         noMajorMunicipality: string;
         noCountry: string;
         locationError: string;
-        providerCreateProfileError: string;
-        providerEditProfileError: string;
+        creatorCreateProfileError: string;
+        creatorEditProfileError: string;
         noProfileData: string;
         success: string;
         emailError: string;
         noCategory: string;
         postError: string;
         noPost: string;
-        clientExists: string;
-        clientCreateProfileError: string;
-        clientEditProfileError: string;
+        userExists: string;
+        userCreateProfileError: string;
+        userEditProfileError: string;
         createUserError: string;
         emailNotConfirmed: string;
     };

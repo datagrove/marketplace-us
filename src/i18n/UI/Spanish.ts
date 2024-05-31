@@ -8,14 +8,14 @@ export const Spanish = {
         login: "Iniciar Sesión",
         home: "Inicio",
         signIn: "Iniciar Sesión",
-        createClientAccount: "Crear Perfil de Cliente",
-        editClientAccount: "Editar Perfil de Cliente",
-        viewClientAccount: "Ver Perfil de Cliente",
+        createUserAccount: "Crear Perfil de Usere",
+        editUserAccount: "Editar Perfil de Usere",
+        viewUserAccount: "Ver Perfil de Usere",
         createPost: "Crear Publicación",
-        createProviderAccount: "Crear Perfil de Proveedor",
-        editProviderAccount: "Editar Perfil de Proveedor",
-        viewProviderAccount: "Mi Perfil de proveedor",
-        clientViewProviderAccount: "Perfil del proveedor",
+        createCreatorAccount: "Crear Perfil de Proveedor",
+        editCreatorAccount: "Editar Perfil de Proveedor",
+        viewCreatorAccount: "Mi Perfil de proveedor",
+        userViewCreatorAccount: "Perfil del proveedor",
         page404: "404 - Página no Encontrada",
         requestPasswordReset: "Solicitud para Recuperar la Contraseña",
         resetPassword: "Resetear la Contraseña",
@@ -41,17 +41,17 @@ export const Spanish = {
         login: "Ingrese su correo electrónico y contraseña para iniciar sesión en LearnGrove.",
         home: "LearnGrove, ¡su fuente de aprendizaje de calidad!",
         // signIn: string,
-        createClientAccount:
+        createUserAccount:
             "Únase a LearnGrove y desbloquee un mundo de recursos de aprendizaje. Regístrese hoy para encontrar los recursos que necesita para su viaje de aprendizaje.",
-        viewClientAccount:
-            "Acceda y administre la información de su perfil de cliente sin esfuerzo en LearnGrove.",
+        viewUserAccount:
+            "Acceda y administre la información de su perfil de usere sin esfuerzo en LearnGrove.",
         createPost:
             "Enumere un recurso que incluya título, categoría, descripción e imágenes para ofrecer su recurso en LearnGrove.",
-        createProviderAccount:
+        createCreatorAccount:
             "Cree un perfil de proveedor para comenzar a publicar sus recursos en LearnGrove.",
-        viewProviderAccount:
+        viewCreatorAccount:
             "Administre los detalles de su perfil de proveedor y revise sus publicaciones en LearnGrove.",
-        clientViewProviderAccount:
+        userViewCreatorAccount:
             "Descubra más sobre este proveedor. Explore su perfil y los recursos disponibles.",
         page404: "404 Pagina no encontrada",
         requestPasswordReset:
@@ -72,7 +72,7 @@ export const Spanish = {
     },
 
     buttons: {
-        providerProfile: "Mi Perfil de Proveedor",
+        creatorProfile: "Mi Perfil de Proveedor",
         editProfile: "Editar Perfil",
         register: "Iniciar registro de Stripe",
         uploadImage: "Cargar Imagen",
@@ -129,23 +129,23 @@ export const Spanish = {
         forgotPassword: "¿Olvidaste tu contraseña? Haz click aquí para",
         alreadyAccount: "¿Ya tienes una cuenta? Haz click aquí para",
         error404: "Algo salió mal",
-        onlyProvider: "Solo los proveedores pueden crear publicaciones.",
-        signInAsProvider:
+        onlyCreator: "Solo los proveedores pueden crear publicaciones.",
+        signInAsCreator:
             "Inicie sesión en un perfil de proveedor para poder publicar.",
         checkEmail:
             "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
         checkConfirmEmail:
             "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
         signIn: "Inicie sesión para acceder a esta página",
-        createProviderAccount:
+        createCreatorAccount:
             "Inicie sesión para crear un perfil de proveedor",
-        createClientAccount: "Inicie sesión para crear un perfil de cliente",
-        viewProviderAccount:
+        createUserAccount: "Inicie sesión para crear un perfil de usere",
+        viewCreatorAccount:
             "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
         noPosts: "No hay publicaciones disponibles",
         noPost: "Publicación no encontrada",
         selectAnImage: "Debe seleccionar una imagen para cargar.",
-        noProvider: "No se encontró ningún proveedor.",
+        noCreator: "No se encontró ningún proveedor.",
         noValue: "Sin valor",
         translation: "Las traducciones",
         translations:
@@ -158,7 +158,7 @@ export const Spanish = {
         mustSignIn: "Debes iniciar sesión para ver los recursos disponibles.",
         profileEdits:
             "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
-        noClient: "No se encontró ningún cliente.",
+        noUser: "No se encontró ningún usere.",
         noPostsSearch:
             "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
         noStripeAccount:
@@ -190,7 +190,7 @@ export const Spanish = {
         search: "Buscar",
         firstName: "Primer Nombre",
         lastName: "Apellido",
-        providerName: "Nombre del Proveedor",
+        creatorName: "Nombre del Proveedor",
         phone: "Número de Celular",
         email: "Correo Electrónico",
         password: "Contraseña",
@@ -198,7 +198,7 @@ export const Spanish = {
         displayName: "Nombre para Mostrar",
         enterPostContent: "Ingrese el Contenido de la Publicación Aquí",
         noValue: "No proporcionada",
-        providerInfo: "Información del Proveedor",
+        creatorInfo: "Información del Proveedor",
         posts: "Publicaciones del Proveedores",
         profileInfo: "Información del Perfil",
         yourPosts: "Tus Publicaciones",
@@ -225,13 +225,13 @@ export const Spanish = {
     },
 
     postLabels: {
-        provider: "Ofrecido por: ",
+        creator: "Ofrecido por: ",
         location: "Ubicación: ",
         category: "Categoría: ",
         image: "Publicar imagen",
         slide: "Diapositiva",
-        providerProfileImage: "Imagen de Perfil del Proveedor",
-        clientProfileImage: "Imagen de Perfil del Cliente",
+        creatorProfileImage: "Imagen de Perfil del Proveedor",
+        userProfileImage: "Imagen de Perfil del Usere",
     },
 
     cartLabels: {
@@ -249,7 +249,7 @@ export const Spanish = {
   homePageText: {
     headline: "Todo lo que necesitas para hacer el trabajo.",
     subHeadline:
-      "Los proveedores publican servicios. Los clientes pueden selecionar los servicios. El trabajo se hace.",
+      "Los proveedores publican servicios. Los useres pueden selecionar los servicios. El trabajo se hace.",
     ariaLabel: "Imagen para el marcador de posición de información",
   },
   menus: {
@@ -259,7 +259,7 @@ export const Spanish = {
     ratingsReviews: "Puntajes y Reseñas",
     questions: "Preguntas",
     freeDownload: "Descarga Gratis",
-    providerResources: "Recursos",
+    creatorResources: "Recursos",
     payouts: "Mis Pagos",
     reviews: "Opiniones",
     details: "Detalles",
@@ -288,11 +288,11 @@ export const Spanish = {
         postImages:
             "La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.",
         firstNameEdit:
-            "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de cliente y proveedor.",
+            "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de usere o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de usere y proveedor.",
         lastNameEdit:
-            "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de cliente o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de cliente y proveedor.",
+            "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de usere o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de usere y proveedor.",
         languages:
-            "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los clientes.",
+            "Seleccione los idiomas en los que puede realizar negocios. Estos se mostrarán en su perfil para los useres.",
         subjects:
             "Seleccione todos los temas cubiertos por su recurso. Estos se utilizarán para filtrar recursos para los compradores.",
         grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
@@ -304,7 +304,7 @@ export const Spanish = {
         missingFields: "Faltan campos obligatorios",
         noSession: "Sesión no encontrada",
         noUser: "Usuario no encontrado",
-        providerExists: "El perfil del proveedor ya existe",
+        creatorExists: "El perfil del proveedor ya existe",
         profileCreateError: "Error al crear perfil",
         profileEditError: "Error al actualizar el perfil",
         noDistrict: "Distrito no encontrado",
@@ -312,17 +312,17 @@ export const Spanish = {
         noMajorMunicipality: "Provincia no encontrado",
         noCountry: "País no encontrado",
         locationError: "Ubicación no enviada",
-        providerCreateProfileError: "Error al crear el perfil del proveedor",
-        providerEditProfileError: "Error al actualizar el perfil del proveedor",
+        creatorCreateProfileError: "Error al crear el perfil del proveedor",
+        creatorEditProfileError: "Error al actualizar el perfil del proveedor",
         noProfileData: "No se devolvieron datos de perfil",
         success: "¡Completado!",
         emailError: "Error al actualizar el correo electrónico",
         noCategory: "Categoría no encontrada",
         postError: "Error al crear la publicación",
         noPost: "No se devolvió ninguna publicación",
-        clientExists: "El cliente ya existe",
-        clientCreateProfileError: "Error al crear el perfil del cliente",
-        clientEditProfileError: "Error al actualizar el perfil del cliente",
+        userExists: "El usere ya existe",
+        userCreateProfileError: "Error al crear el perfil del usere",
+        userEditProfileError: "Error al actualizar el perfil del usere",
         createUserError:
             "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
         emailNotConfirmed:

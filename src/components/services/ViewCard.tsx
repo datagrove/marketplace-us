@@ -9,7 +9,7 @@ import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/users/client/DownloadBtn";
+import { DownloadBtn } from "@components/members/user/DownloadBtn";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);

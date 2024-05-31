@@ -82,21 +82,21 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  //Check if client profile exists and if it does sets a redirect in the json response to send the user to their client profile
+  //Check if user profile exists and if it does sets a redirect in the json response to send the user to their user profile
 
-  const { data: clientExists, error: clientExistsError } = await supabase
+  const { data: userExists, error: userExistsError } = await supabase
     .from("clients")
     .select("user_id")
     .eq("user_id", user.id);
 
-  if (clientExistsError) {
-    console.log("supabase error: " + clientExistsError.message);
-  } else if (clientExists[0] !== undefined) {
-    // fix this to redirect to client profile
+  if (userExistsError) {
+    console.log("supabase error: " + userExistsError.message);
+  } else if (userExists[0] !== undefined) {
+    // fix this to redirect to user profile
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.clientExists")),
-        redirect: "/client/profile",
+        message: (t("apiErrors.userExists")),
+        redirect: "/user/profile",
       }),
 
       { status: 302 }
@@ -225,16 +225,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
-  //Build our submission to the providers table including the location id from the select from the location table on line 158
+  //Build our submission to the creators table including the location id from the select from the location table on line 158
   let submission = {
     display_name: displayName,
-    client_phone: phone,
+    user_phone: phone,
     location: location[0].id,
     user_id: user.id,
     image_url: imageUrl,
   };
 
-  //submit to the client table and select it back
+  //submit to the user table and select it back
   const { error, data } = await supabase
     .from("clients")
     .insert([submission])
@@ -244,7 +244,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log(error);
     return new Response(
       JSON.stringify({
-        message: (t("apiErrors.clientCreateProfileError")),
+        message: (t("apiErrors.userCreateProfileError")),
       }),
       { status: 500 }
     );
@@ -263,7 +263,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: (t("apiErrors.success")),
-      redirect: "/client/profile",
+      redirect: "/user/profile",
     }),
     { status: 200 }
   );
