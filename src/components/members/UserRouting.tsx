@@ -29,7 +29,7 @@ export const UserRouting = () => {
         console.log("User Error: " + UserError.message);
     }
 
-    const isUser = async () => {
+    const isUserMember = async () => {
         try {
             const { data, error } = await supabase
                 .from("users")
@@ -48,7 +48,7 @@ export const UserRouting = () => {
         }
     };
 
-    isUser();
+    isUserMember();
 
     return (
         <Show when={isUser}>
