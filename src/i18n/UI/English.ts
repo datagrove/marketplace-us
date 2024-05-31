@@ -164,12 +164,15 @@ export const English = {
         report: "Report this resource to LearnGrove",
         free: "FREE",
         freeResourceCreated: "Free Resource Created!",
-        noPurchasedItems: "Looks like you haven't purchased anything yet - time to get shopping!",
+        noPurchasedItems:
+            "Looks like you haven't purchased anything yet - time to get shopping!",
         insufficientStripeBalance:
             "Insufficient Stripe balance, check your stripe dashboard for more information.",
         payoutRequested: "Success! You have requested your Stripe payout of",
-        payoutSetup: "Please complete your Stripe account setup to proceed. Your account must have payouts enabled before you can request a payout. Click Go To Stripe Dashboard to complete this step.",
-        requestPayout: "Click the Request Payout button to request your Stripe payout. You will be charged $2.25 to your account balance and the remainder will be sent to your bank account or debit card based on your Stripe settings. For your most up to date Stripe Balance, please visit your stripe dashboard.",
+        payoutSetup:
+            "Please complete your Stripe account setup to proceed. Your account must have payouts enabled before you can request a payout. Click Go To Stripe Dashboard to complete this step.",
+        requestPayout:
+            "Click the Request Payout button to request your Stripe payout. You will be charged $2.25 to your account balance and the remainder will be sent to your bank account or debit card based on your Stripe settings. For your most up to date Stripe Balance, please visit your stripe dashboard.",
         currentBalance: "Your current balance is approximately:",
     },
 
@@ -210,6 +213,7 @@ export const English = {
         fileTypes: "File Types",
         chooseSubject: "Subject(s)",
         chooseGrade: "Grade Level(s)",
+        chooseResourceTypes: "Resource Type(s)",
         pages: "Pages",
         pricePost: "Price",
         isResourceFree: "Free Resource",
@@ -247,28 +251,28 @@ export const English = {
         ariaLabel: "Placeholder info image",
     },
 
-  menus: {
-    resources: "Find Resources",
-    contactUs: "Contact Us",
-    profile: "Profile",
-    ratingsReviews: "Ratings and Reviews",
-    questions: "Questions",
-    freeDownload: "Free Download",
-    providerResources: "Resources",
-    payouts: "My Payouts",
-    reviews: "Reviews",
-    details: "Details",
-    description: "Description",
-    qA: "Q&A",
-    purchases: "Purchases",
-    favorites: "Favorites",
-    following: "Following",
-    purchased: "Purchased on ",
-    updated: "Last Updated ",
-  },
+    menus: {
+        resources: "Find Resources",
+        contactUs: "Contact Us",
+        profile: "Profile",
+        ratingsReviews: "Ratings and Reviews",
+        questions: "Questions",
+        freeDownload: "Free Download",
+        providerResources: "Resources",
+        payouts: "My Payouts",
+        reviews: "Reviews",
+        details: "Details",
+        description: "Description",
+        qA: "Q&A",
+        purchases: "Purchases",
+        favorites: "Favorites",
+        following: "Following",
+        purchased: "Purchased on ",
+        updated: "Last Updated ",
+    },
 
     toolTips: {
-       firstName:
+        firstName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
         lastName:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead.",
