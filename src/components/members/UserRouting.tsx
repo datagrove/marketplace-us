@@ -9,18 +9,18 @@ const t = useTranslations(lang);
 //
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
-export const ClientRouting = () => {
+export const UserRouting = () => {
     const [isUser, setIsUser] = createSignal<boolean>(false);
-    const [isUserClient, setIsUserClient] = createSignal<boolean>(false);
+    const [isUserUser, setIsUserUser] = createSignal<boolean>(false);
     const [createText, setCreateText] = createSignal<string>(
-        t("pageTitles.createClientAccount")
+        t("pageTitles.createUserAccount")
     );
     const [routing, setRouting] = createSignal<string>(
-        `/${lang}/client/createaccount`
+        `/${lang}/user/createaccount`
     );
 
-    const CreateEditClientProfilelink = document.getElementById(
-        "createEditClientProfileLink"
+    const CreateEditUserProfilelink = document.getElementById(
+        "createEditUserProfileLink"
     );
 
     setIsUser(User.session!.user.role === "authenticated");
@@ -29,26 +29,26 @@ export const ClientRouting = () => {
         console.log("User Error: " + UserError.message);
     }
 
-    const isClient = async () => {
+    const isUserMember = async () => {
         try {
             const { data, error } = await supabase
-                .from("clients")
+                .from("users")
                 .select("*")
                 .eq("user_id", User.session!.user.id);
 
             if (data![0] === undefined) {
-                // console.log("user is not a client");
+                // console.log("user is not a user");
             } else {
-                setCreateText(t("pageTitles.viewClientAccount"));
-                setRouting(`/${lang}/client/profile`);
-                setIsUserClient(true);
+                setCreateText(t("pageTitles.viewUserAccount"));
+                setRouting(`/${lang}/user/profile`);
+                setIsUserUser(true);
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    isClient();
+    isUserMember();
 
     return (
         <Show when={isUser}>
@@ -57,7 +57,7 @@ export const ClientRouting = () => {
                     {t("menus.resources")}
                 </a>
             </div>
-            <a class=" " id="createEditClientProfileLink" href={routing()}>
+            <a class=" " id="createEditUserProfileLink" href={routing()}>
                 {createText()}
             </a>
         </Show>

@@ -22,9 +22,8 @@ export interface Post {
     quantity: number; //Quantity to add to cart from post
 }
 
-export interface Client {
+export interface User {
     display_name: string;
-    client_phone: string | null;
     user_id: string;
     image_url: string | null;
     email: string;
@@ -33,7 +32,7 @@ export interface Client {
     last_name: string;
 }
 
-export interface Provider {
+export interface Creator {
     seller_name: string;
     seller_id: number;
     user_id: string;

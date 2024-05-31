@@ -14,12 +14,12 @@ import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import type { Client } from "@lib/types";
+import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
-import { ViewClientPurchases } from "@components/posts/ViewClientPurchases";
+import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
 import stripe from "@lib/stripe";
-import { ClientProfileViewMobile } from "@components/users/ClientProfileViewMobile";
+import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 
@@ -31,7 +31,7 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 async function postFormData(formData: FormData) {
-    const response = await fetch("/api/clientProfileEdit", {
+    const response = await fetch("/api/userProfileEdit", {
         method: "POST",
         body: formData,
     });
@@ -50,10 +50,10 @@ if (UserError) {
     console.log("UserError: ", UserError.code + " " + UserError.message);
 }
 
-export const ClientProfileView: Component = () => {
-    const [client, setClient] = createSignal<Client>();
+export const UserProfileView: Component = () => {
+    const [user, setUser] = createSignal<User>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [clientImage, setClientImage] = createSignal<string>();
+    const [userImage, setUserImage] = createSignal<string>();
     const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
     const screenSize = useStore(windowSize);
@@ -65,7 +65,7 @@ export const ClientProfileView: Component = () => {
 
     onMount(async () => {
         setSession(User?.session);
-        await fetchClient(User?.session?.user.id!);
+        await fetchUser(User?.session?.user.id!);
         // await getPurchasedItems();
     });
 
@@ -73,7 +73,7 @@ export const ClientProfileView: Component = () => {
     //   setSession(User.session);
     //   console.log(session());
     //   if (typeof session() !== "undefined") {
-    //     await fetchClient(session()?.user.id!);
+    //     await fetchUser(session()?.user.id!);
     //   }
     // });
 
@@ -174,22 +174,22 @@ export const ClientProfileView: Component = () => {
         }
     };
 
-    const fetchClient = async (user_id: string) => {
+    const fetchUser = async (user_id: string) => {
         try {
             const { data, error } = await supabase
-                .from("clientview")
+                .from("user_view")
                 .select("*")
                 .eq("user_id", user_id);
 
             if (error) {
                 console.log(error);
             } else if (data[0] === undefined) {
-                alert(t("messages.noClient")); //TODO: Change alert message
+                alert(t("messages.noUser")); //TODO: Change alert message
                 location.href = `/${lang}`;
             } else {
                 console.log(data);
-                setClient(data[0]);
-                console.log(client());
+                setUser(data[0]);
+                console.log(user());
             }
         } catch (error) {
             console.log(error);
@@ -198,16 +198,16 @@ export const ClientProfileView: Component = () => {
 
     createEffect(async () => {
         console.log("downloading images");
-        if (client() !== undefined) {
+        if (user() !== undefined) {
             if (
-                client()?.image_url === undefined ||
-                client()?.image_url === null
+                user()?.image_url === undefined ||
+                user()?.image_url === null
             ) {
                 // console.log("No Image");
-                // console.log(clientImage());
+                // console.log(userImage());
             } else {
-                await downloadImage(client()?.image_url!);
-                setImageUrl(client()?.image_url!);
+                await downloadImage(user()?.image_url!);
+                setImageUrl(user()?.image_url!);
                 console.log(imageUrl());
             }
         }
@@ -222,7 +222,7 @@ export const ClientProfileView: Component = () => {
                 throw error;
             }
             const url = URL.createObjectURL(data);
-            setClientImage(url);
+            setUserImage(url);
         } catch (error) {
             console.log(error);
         }
@@ -296,7 +296,7 @@ export const ClientProfileView: Component = () => {
         }
     }
 
-    //TODO: Edit profile button is hidden until we enable clients editing their profile
+    //TODO: Edit profile button is hidden until we enable users editing their profile
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
     return (
@@ -314,11 +314,11 @@ export const ClientProfileView: Component = () => {
                     <form onSubmit={submit} id="editProfile">
                         {/* Container for Mobile View */}
                         <Show when={screenSize() === "sm"}>
-                            <ClientProfileViewMobile
-                                client={client() ? client()! : null}
+                            <UserProfileViewMobile
+                                user={user() ? user()! : null}
                                 editMode={editMode()}
                                 enableEditMode={enableEditMode}
-                                clientImage={clientImage()}
+                                userImage={userImage()}
                             />
                         </Show>
 
@@ -327,18 +327,18 @@ export const ClientProfileView: Component = () => {
                             <div class="">
                                 <div class="h-36 bg-background2 dark:bg-background2-DM relative">
                                     <div class="flex items-center justify-center rounded-full h-40 w-40 border border-border2 dark:border-border2-DM absolute left-12 top-4 bg-background2 dark:bg-background2">
-                                        <p class="text-ptext2 dark:ptext2-DM md:text-6xl lg:text-7xl xl:text-8xl">{ client()?.first_name.slice(0, 1) }{ client()?.last_name.slice(0, 1) }</p>
+                                        <p class="text-ptext2 dark:ptext2-DM md:text-6xl lg:text-7xl xl:text-8xl">{ user()?.first_name.slice(0, 1) }{ user()?.last_name.slice(0, 1) }</p>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center mt-12 mb-6">
                                     <div class="flex items-center justify-center">
-                                        <Show when={ client()?.display_name }>
-                                            <h1 class="text-3xl">{ client()?.display_name }</h1>
+                                        <Show when={ user()?.display_name }>
+                                            <h1 class="text-3xl">{ user()?.display_name }</h1>
                                         </Show>
 
-                                        <Show when={ !client()?.display_name }>
-                                            <h1 class="text-3xl">{ client()?.first_name } { client()?.last_name }</h1>
+                                        <Show when={ !user()?.display_name }>
+                                            <h1 class="text-3xl">{ user()?.first_name } { user()?.last_name }</h1>
                                         </Show>
                                     </div>
 
@@ -398,7 +398,7 @@ export const ClientProfileView: Component = () => {
                                                 id="FirstName"
                                                 class="mb-4 px-1"
                                             >
-                                                {client()?.first_name}
+                                                {user()?.first_name}
                                             </p>
                                         </Show>
 
@@ -409,7 +409,7 @@ export const ClientProfileView: Component = () => {
                                                     id="FirstName"
                                                     name="FirstName"
                                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                    value={client()?.first_name}
+                                                    value={user()?.first_name}
                                                     required
                                                 />
                                             </div>
@@ -428,7 +428,7 @@ export const ClientProfileView: Component = () => {
                                                 id="LastName"
                                                 class="mb-4 "
                                             >
-                                                {client()?.last_name}
+                                                {user()?.last_name}
                                             </p>
                                         </Show>
                                         <Show when={editMode() === true}>
@@ -438,7 +438,7 @@ export const ClientProfileView: Component = () => {
                                                     id="LastName"
                                                     name="LastName"
                                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                    value={client()?.last_name}
+                                                    value={user()?.last_name}
                                                 />
                                             </div>
                                         </Show>
@@ -456,8 +456,8 @@ export const ClientProfileView: Component = () => {
                                                 id="DisplayName"
                                                 class="mb-4 "
                                             >
-                                                {client()?.display_name
-                                                    ? client()?.display_name
+                                                {user()?.display_name
+                                                    ? user()?.display_name
                                                     : t("formLabels.noValue")}
                                             </p>
                                         </Show>
@@ -468,7 +468,7 @@ export const ClientProfileView: Component = () => {
                                                     id="DisplayName"
                                                     name="DisplayName"
                                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                    value={client()?.display_name}
+                                                    value={user()?.display_name}
                                                 />
                                             </div>
                                         </Show>
@@ -487,7 +487,7 @@ export const ClientProfileView: Component = () => {
                                                     id="email"
                                                     class="mb-4 "
                                                 >
-                                                    {client()?.email}
+                                                    {user()?.email}
                                                 </p>
                                             </div>
                                         </Show>
@@ -501,43 +501,13 @@ export const ClientProfileView: Component = () => {
                                                     placeholder={t(
                                                         "formLabels.email"
                                                     )}
-                                                    value={client()?.email}
+                                                    value={user()?.email}
                                                 />
                                             </div>
                                         </Show>
                                     </div>
 
-                                    <div class="phone-number flex flex-wrap">
-                                        <label
-                                            for="Phone"
-                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
-                                        >
-                                            {t("formLabels.phone")}: &nbsp
-                                        </label>
-                                        <Show when={editMode() === false}>
-                                            <p
-                                                id="Phone"
-                                                class="mb-4"
-                                            >
-                                                {client()?.client_phone
-                                                    ? client()?.client_phone
-                                                    : t("formLabels.noValue")}
-                                            </p>
-                                        </Show>
-                                        <Show when={editMode() === true}>
-                                            <div class="basis-full">
-                                                <input
-                                                    type="text"
-                                                    id="Phone"
-                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                    name="Phone"
-                                                    value={
-                                                        client()?.client_phone || ""
-                                                    }
-                                                />
-                                            </div>
-                                        </Show>
-                                    </div>
+                                   
 
                                     <div>
                                         <Show when={ editMode() === true }>
@@ -549,11 +519,11 @@ export const ClientProfileView: Component = () => {
                                 </Show>
 
                                 <Show when={ tabSelected() === "purchases"}>
-                                    {/* Change to just call ViewClientPurchases make decision about which to show in there */}
+                                    {/* Change to just call ViewUserPurchases make decision about which to show in there */}
                                     {/* <Show when={ purchasedItems() }> */}
                                         <div>
                                             {/* <ViewCard posts={purchasedItems()} /> */}
-                                            <ViewClientPurchases />
+                                            <ViewUserPurchases />
                                         </div>
                                     {/* </Show>
 

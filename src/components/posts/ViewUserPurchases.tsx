@@ -1,11 +1,11 @@
 import type { Component } from "solid-js";
-import type { Client } from "@lib/types";
+import type { User } from "@lib/types";
 import stripe from "@lib/stripe";
 import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient.tsx";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils.ts";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
+import { ui } from "../../i18n/ui.ts";
+import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
 
@@ -17,9 +17,9 @@ const productCategories = values.subjectCategoryInfo.subjects;
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
-export const ViewClientPurchases: Component = () => {
+export const ViewUserPurchases: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [client, setClient] = createSignal<Client>();
+    const [user, setUser] = createSignal<User>();
     const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
 
     if (UserError) {
@@ -30,7 +30,7 @@ export const ViewClientPurchases: Component = () => {
 
     onMount(async () => {
         setSession(User?.session);
-        await fetchClient(User?.session?.user.id!);
+        await fetchUser(User?.session?.user.id!);
         await getPurchasedItems();
     });
 
@@ -175,22 +175,22 @@ export const ViewClientPurchases: Component = () => {
         }
     };
 
-    const fetchClient = async (user_id: string) => {
+    const fetchUser = async (user_id: string) => {
         try {
             const { data, error } = await supabase
-                .from("clientview")
+                .from("user_view")
                 .select("*")
                 .eq("user_id", user_id);
 
             if (error) {
                 console.log(error);
             } else if (data[0] === undefined) {
-                alert(t("messages.noClient")); //TODO: Change alert message
+                alert(t("messages.noUser")); //TODO: Change alert message
                 location.href = `/${lang}`;
             } else {
                 console.log(data);
-                setClient(data[0]);
-                console.log(client());
+                setUser(data[0]);
+                console.log(user());
             }
         } catch (error) {
             console.log(error);

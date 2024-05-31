@@ -1,6 +1,6 @@
 import { AuthMode } from "@components/common/AuthMode";
 import { CreatePostsRouting } from "@components/posts/CreatePostsRouting";
-import { ClientRouting } from "@components/users/ClientRouting";
+import { UserRouting } from "@components/members/UserRouting";
 import supabase from "@lib/supabaseClient";
 import { Show, createSignal } from "solid-js";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
@@ -33,8 +33,8 @@ if (!stripeData) {
 
 // Improvement: This probably shouldn't be needed in the button like this the page should check that before loading the button at all. But this works for now.
 if (stripeData === null || stripeData.length === 0) {
-    alert(t("messages.noProvider"));
-    location.href = `/${lang}/provider/createaccount`;
+    alert(t("messages.noCreator"));
+    location.href = `/${lang}/creator/createaccount`;
 }
 const stripeId = stripeData![0].stripe_connected_account_id;
 
@@ -61,8 +61,8 @@ export const StripeButton = () => {
 
         const accountLink = await stripe.accountLinks.create({
             account: stripeId,
-            refresh_url: SITE.url + "/provider/profile",
-            return_url: SITE.url + "/provider/profile",
+            refresh_url: SITE.url + "/creator/profile",
+            return_url: SITE.url + "/creator/profile",
             type: "account_onboarding",
         });
         window.open(accountLink.url, "_blank");

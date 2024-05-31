@@ -37,7 +37,7 @@ async function createStripeAccount(formData: FormData) {
 
 //Send the data to the APIRoute and wait for a JSON response see src/pages/api for APIRoute
 async function postFormData(formData: FormData) {
-    const response = await fetch("/api/providerProfileSubmit", {
+    const response = await fetch("/api/creatorProfileSubmit", {
         method: "POST",
         body: formData,
     });
@@ -64,7 +64,7 @@ async function postStripeAccount(stripeData: FormData) {
 }
 
 //Component that creates the form and collects the data
-export const ProviderRegistration: Component = () => {
+export const CreatorRegistration: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
@@ -72,7 +72,7 @@ export const ProviderRegistration: Component = () => {
     const [firstName, setFirstName] = createSignal<string>("");
     const [lastName, setLastName] = createSignal<string>("");
     const [email, setEmail] = createSignal<string>("");
-    const [providerName, setProviderName] = createSignal<string>("");
+    const [creatorName, setCreatorName] = createSignal<string>("");
     const [loading, setLoading] = createSignal(false);
     const [contributeOther, setContributeOther] = createSignal(false);
     const [contribution, setContribution] = createSignal<number>(15);
@@ -93,7 +93,7 @@ export const ProviderRegistration: Component = () => {
                 } else {
                     setFirstName(profile[0].first_name);
                     setLastName(profile[0].last_name);
-                    setProviderName(firstName() + " " + lastName());
+                    setCreatorName(firstName() + " " + lastName());
                     setEmail(profile[0].email);
                 }
             } catch (error) {
@@ -101,7 +101,7 @@ export const ProviderRegistration: Component = () => {
             }
             //If the user is not signed in then tell them to sign in and send them to the login page
         } else {
-            alert(t("messages.createProviderAccount"));
+            alert(t("messages.createCreatorAccount"));
             location.href = `/${lang}/login`;
         }
     });
@@ -119,8 +119,8 @@ export const ProviderRegistration: Component = () => {
 
         const formData = new FormData(e.target as HTMLFormElement);
 
-        if (formData.get("ProviderName") === "") {
-            formData.set("ProviderName", firstName() + " " + lastName());
+        if (formData.get("CreatorName") === "") {
+            formData.set("CreatorName", firstName() + " " + lastName());
         }
 
         formData.set("contribution", contribution().toString());
@@ -247,10 +247,10 @@ export const ProviderRegistration: Component = () => {
                 <div class="">
                     <div class="flex flex-row justify-between">
                         <label
-                            for="ProviderName"
+                            for="CreatorName"
                             class="text-ptext1 dark:text-ptext1-DM"
                         >
-                            {t("formLabels.providerName")}:
+                            {t("formLabels.creatorName")}:
                         </label>
                         <div class="group relative mr-2 flex items-center">
                             <svg
@@ -284,8 +284,8 @@ export const ProviderRegistration: Component = () => {
                     </div>
                     <input
                         type="text"
-                        id="ProviderName"
-                        name="ProviderName"
+                        id="CreatorName"
+                        name="CreatorName"
                         placeholder={
                             firstName() +
                             " " +
@@ -294,7 +294,7 @@ export const ProviderRegistration: Component = () => {
                             t("formLabels.optional")
                         }
                         class="bg-background mb-4 w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                        oninput={(e) => setProviderName(e.target.value)}
+                        oninput={(e) => setCreatorName(e.target.value)}
                     />
                 </div>
 

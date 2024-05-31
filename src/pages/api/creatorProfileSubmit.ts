@@ -22,7 +22,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     // const firstName = formData.get("FirstName");
     // const lastName = formData.get("LastName");
-    const providerName = formData.get("ProviderName");
+    const creatorName = formData.get("CreatorName");
 
     const imageUrl = formData.get("image_url")
         ? formData.get("image_url")
@@ -72,34 +72,34 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    //Check if provider profile exists and if it does sets a redirect in the json response to send the user to their provider profile
+    //Check if creator profile exists and if it does sets a redirect in the json response to send the user to their creator profile
 
-    const { data: providerExists, error: providerExistsError } = await supabase
+    const { data: creatorExists, error: creatorExistsError } = await supabase
         .from("sellers")
         .select("user_id")
         .eq("user_id", user.id);
-    if (providerExistsError) {
-        console.log("supabase error: " + providerExistsError.message);
-    } else if (providerExists[0] !== undefined) {
+    if (creatorExistsError) {
+        console.log("supabase error: " + creatorExistsError.message);
+    } else if (creatorExists[0] !== undefined) {
         return new Response(
             JSON.stringify({
-                message: t("apiErrors.providerExists"),
-                redirect: "/provider/profile",
+                message: t("apiErrors.creatorExists"),
+                redirect: "/creator/profile",
             }),
             { status: 302 }
         );
     }
 
 
-    //Build our submission to the providers table including the location id from the select from the location table on line 158
+    //Build our submission to the creators table including the location id from the select from the location table on line 158
     let submission = {
-        seller_name: providerName,
+        seller_name: creatorName,
         user_id: user.id,
         image_url: imageUrl,
         contribution: contribution,
     };
 
-    //submit to the providers table and select it back
+    //submit to the creators table and select it back
     const { error, data } = await supabase
         .from("sellers")
         .insert([submission])
@@ -109,7 +109,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log(error);
         return new Response(
             JSON.stringify({
-                message: t("apiErrors.providerCreateProfileError"),
+                message: t("apiErrors.creatorCreateProfileError"),
             }),
             { status: 500 }
         );

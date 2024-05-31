@@ -1,0 +1,24 @@
+---
+import Layout from "@layouts/PageLayout.astro";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+import { UserCreatorView } from "@components/members/UserCreatorView";
+import { UserViewCreatorPosts } from "@components/posts/UserViewCreatorPosts";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const { param } = Astro.params;
+---
+
+<Layout
+    pageTitle={t("pageTitles.userViewCreatorAccount") + " " + param}
+    pageDescription={t("pageTitles.userViewCreatorAccount") +
+        " " +
+        param +
+        " " +
+        t("pageDescriptions.userViewCreatorAccount")}
+>
+    <div class="w-full">
+        <UserCreatorView id={param} client:only="solid-js" />
+    </div>
+</Layout>

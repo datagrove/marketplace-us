@@ -234,7 +234,7 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                     <div class="title-creator mb-1 ml-1">
                         <div class="line-clamp-2 flex py-0.5">{post.title}</div>
-                        <a href={`/${lang}/provider/${post?.seller_id}`}>
+                        <a href={`/${lang}/creator/${post?.seller_id}`}>
                             <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
                                     <img

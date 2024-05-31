@@ -1,17 +1,17 @@
 ---
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import { ClientProfileView } from "@components/users/ClientProfileView";
+import { UserProfileView } from "@components/members/UserProfileView";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
 <Layout
-    pageTitle={t("pageTitles.viewClientAccount")}
-    pageDescription={t("pageDescriptions.viewClientAccount")}
+    pageTitle={t("pageTitles.viewUserAccount")}
+    pageDescription={t("pageDescriptions.viewUserAccount")}
 >
     <div class="w-full">
-        <ClientProfileView client:only="solid-js" />
+        <UserProfileView client:only="solid-js" />
     </div>
 </Layout>

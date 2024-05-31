@@ -93,20 +93,19 @@ export const Auth: Component = (props) => {
                         return;
                     }
 
-                    let clientSubmission = {
+                    let userSubmission = {
                         display_name: null,
-                        client_phone: null,
                         user_id: data.user?.id,
                         image_url: null,
                     };
 
-                    const { data: clientData, error: clientError } =
+                    const { data: userData, error: userError } =
                         await supabase
-                            .from("clients")
-                            .insert([clientSubmission]);
-                    if (clientError) {
-                        console.log(clientError.message);
-                        alert(t("apiErrors.clientCreateProfileError"));
+                            .from("users")
+                            .insert([userSubmission]);
+                    if (userError) {
+                        console.log(userError.message);
+                        alert(t("apiErrors.userCreateProfileError"));
                         return;
                     }
 

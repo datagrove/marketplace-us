@@ -10,14 +10,13 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-export const ProviderProfileButton: Component = () => {
-    const [providerProfile, setProviderProfile] = createSignal(null);
+export const CreatorProfileButton: Component = () => {
     const [user, setUser] = createSignal<AuthSession | null>(null);
     const [hidden, setHidden] = createSignal("");
 
-    const ProviderProfileLink = document.getElementById("providerProfileLink");
+    const CreatorProfileLink = document.getElementById("creatorProfileLink");
 
-    const providerRedirect = async (e: SubmitEvent) => {
+    const creatorRedirect = async (e: SubmitEvent) => {
         e.preventDefault();
 
         try {
@@ -27,34 +26,34 @@ export const ProviderProfileButton: Component = () => {
                 alert(t("messages.signIn"));
                 location.href = `/${lang}/login`;
             } else {
-                const { data: provider, error: providerError } = await supabase
+                const { data: creator, error: creatorError } = await supabase
                     .from("sellers")
                     .select("*")
                     .eq("user_id", user()!.user.id);
                 setHidden("hidden");
 
-                if (!provider) {
-                    ProviderProfileLink?.classList.add("hidden");
+                if (!creator) {
+                    CreatorProfileLink?.classList.add("hidden");
                 }
-                if (providerError) {
-                    console.log("Error: " + providerError.message);
-                } else if (!provider.length) {
-                    alert(t("messages.viewProviderAccount"));
-                    location.href = `/${lang}/provider/createaccount`;
+                if (creatorError) {
+                    console.log("Error: " + creatorError.message);
+                } else if (!creator.length) {
+                    alert(t("messages.viewCreatorAccount"));
+                    location.href = `/${lang}/creator/createaccount`;
                 } else {
-                    location.href = `/${lang}/provider/profile`;
+                    location.href = `/${lang}/creator/profile`;
                 }
             }
         } catch (error) {
             console.log(error);
         }
     };
-    // console.log(ProviderProfileLink);
+    // console.log(CreatorProfileLink);
     return (
         <div>
-            <form onSubmit={providerRedirect}>
-                <button class={hidden()} type="submit" id="providerProfileLink">
-                    {t("buttons.providerProfile")}
+            <form onSubmit={creatorRedirect}>
+                <button class={hidden()} type="submit" id="creatorProfileLink">
+                    {t("buttons.creatorProfile")}
                 </button>
             </form>
         </div>

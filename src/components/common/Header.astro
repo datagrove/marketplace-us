@@ -2,14 +2,14 @@
 import { SITE } from "../../config";
 import { AuthMode } from "./AuthMode";
 import { LanguagePicker } from "./LanguagePicker";
-import { ProviderProfileButton } from "./ProviderProfileButton";
+import { CreatorProfileButton } from "./CreatorProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ThemeIcon from "./ThemeIcon.astro";
 
 import { ProfileBtn } from "./ProfileBtn";
 import { Cart } from "@components/common/cart/Cart";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
-import { ClientRouting } from "../users/ClientRouting";
+import { UserRouting } from "../members/UserRouting";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);

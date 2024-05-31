@@ -42,8 +42,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         } else {
             const accountLink = await stripe.accountLinks.create({
                 account: stripeAccountId?.toString()!,
-                refresh_url: SITE.url + "/provider/profile",
-                return_url: SITE.url + "/provider/profile",
+                refresh_url: SITE.url + "/creator/profile",
+                return_url: SITE.url + "/creator/profile",
                 type: "account_onboarding",
             });
 
@@ -51,7 +51,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 return new Response(
                     JSON.stringify({
                         //TODO: Change this error to be more specific like "error creating account link"
-                        message: t("apiErrors.providerCreateProfileError"),
+                        message: t("apiErrors.creatorCreateProfileError"),
                     }),
                     { status: 500 }
                 );
@@ -107,7 +107,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log(error);
         return new Response(
             JSON.stringify({
-                message: t("apiErrors.providerCreateProfileError"),
+                message: t("apiErrors.creatorCreateProfileError"),
             }),
             { status: 500 }
         );

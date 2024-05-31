@@ -136,7 +136,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     </a>
                                 </div>
 
-                                <a href={`/${lang}/provider/${post.user_id}`}>
+                                <a href={`/${lang}/creator/${post.user_id}`}>
                                     <div class="my-1 flex items-center">
                                         <div>
                                             {post.seller_img ? (

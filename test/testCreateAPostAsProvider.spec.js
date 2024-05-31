@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test create post and delete it as a provider  ', async ({ page }) => {
+test('test create post and delete it as a creator  ', async ({ page }) => {
   await page.goto('https://learngrove.co/');
   await page.getByRole('button', { name: 'Iniciar Sesión' }).click();
   await page.goto('https://learngrove.co/login')
@@ -19,8 +19,8 @@ test('test create post and delete it as a provider  ', async ({ page }) => {
   await page.getByLabel('Cantón:18')
   await page.getByLabel('Distrito:343')
   await page.getByRole('button', { name: 'Publicar' }).click
-  await page.goto('https://learngrove.co/provider/profile')
+  await page.goto('https://learngrove.co/creator/profile')
   await page.getByRole('link', { name: 'Guanacaste/Liberia/Mayorga' }) 
   await page.getByLabel('Borrar').click
-  await page.goto('https://learngrove.co/provider/profile')
+  await page.goto('https://learngrove.co/creator/profile')
 });

@@ -7,17 +7,6 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-// interface Post {
-//   id: number;
-//   title: string;
-//   image_urls: string | null;
-// }
-
-// type ModalProps = {
-//   children: JSX.Element;
-//   // id: string;
-//   posts: Array<Post>;
-// };
 
 interface Props {
     post: Post;

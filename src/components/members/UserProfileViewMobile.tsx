@@ -14,7 +14,7 @@ import UserImage from "./UserImage";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import type { Client } from "@lib/types";
+import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
 import stripe from "@lib/stripe";
@@ -27,7 +27,7 @@ const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
 async function postFormData(formData: FormData) {
-    const response = await fetch("/api/clientProfileEdit", {
+    const response = await fetch("/api/userProfileEdit", {
         method: "POST",
         body: formData,
     });
@@ -47,216 +47,21 @@ if (UserError) {
 }
 
 interface Props {
-    client: Client | null;
-    clientImage: string | undefined;
+    user: User | null;
+    userImage: string | undefined;
     editMode: boolean;
     enableEditMode: () => void;
 }
 
-export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
-    // const [client, setClient] = createSignal<Client>();
+export const UserProfileViewMobile: Component<Props> = (props: Props) => {
+    // const [user, setUser] = createSignal<User>();
     // const [session, setSession] = createSignal<AuthSession | null>(null);
-    // const [clientImage, setClientImage] = createSignal<string>();
+    // const [userImage, setUserImage] = createSignal<string>();
     // const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
-    // const [screenSize, setScreenSize] = createSignal<
-    //   "sm" | "md" | "lg" | "xl" | "2xl"
-    // >();
-    // const [formData, setFormData] = createSignal<FormData>();
-    // const [response] = createResource(formData, postFormData);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
     const [tabSelected, setTabSelected] = createSignal<string>("profile");
 
-    // const setSize = (e: Event) => {
-    //   if (window.innerWidth <= 767) {
-    //     setScreenSize("sm");
-    //   } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
-    //     setScreenSize("md");
-    //   } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
-    //     setScreenSize("lg");
-    //   } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
-    //     setScreenSize("xl");
-    //   } else {
-    //     setScreenSize("2xl");
-    //   }
-    // };
-
-    // onMount(async () => {
-    //   window.addEventListener("resize", setSize);
-    //   if (window.innerWidth <= 767) {
-    //     setScreenSize("sm");
-    //   } else if (window.innerWidth > 767 && window.innerWidth < 1024) {
-    //     setScreenSize("md");
-    //   } else if (window.innerWidth >= 1024 && window.innerWidth < 1280) {
-    //     setScreenSize("lg");
-    //   } else if (window.innerWidth >= 1280 && window.innerWidth < 1536) {
-    //     setScreenSize("xl");
-    //   } else {
-    //     setScreenSize("2xl");
-    //   }
-    //   setSession(User?.session);
-    //   await fetchClient(User?.session?.user.id!);
-    //   await getPurchasedItems();
-    // });
-
-    // onCleanup(() => {
-    //   window.removeEventListener("resize", setSize);
-    // });
-
-    // const getPurchasedItems = async () => {
-    //   console.log("Session Info: ");
-    //   console.log(session());
-    //   const { data: orders, error } = await supabase
-    //     .from("orders")
-    //     .select("*")
-    //     .eq("customer_id", session()?.user.id);
-    //   if (error) {
-    //     console.log("Orders Error: " + error.code + " " + error.message);
-    //     return;
-    //   }
-    //   const orderedItemsIds = orders?.map((order) => order.order_number);
-
-    //   const { data: orderDetails, error: orderDetailsError } = await supabase
-    //     .from("order_details")
-    //     .select("product_id")
-    //     .in("order_number", orderedItemsIds);
-    //   if (orderDetailsError) {
-    //     console.log(
-    //       "Order Details Error: " +
-    //         orderDetailsError.code +
-    //         " " +
-    //         orderDetailsError.message
-    //     );
-    //   }
-    //   const products = orderDetails?.map((item) => item.product_id);
-    //   console.log(products);
-    //   if (products !== undefined) {
-    //     const { data: productsInfo, error: productsInfoError } = await supabase
-    //       .from("sellerposts")
-    //       .select("*")
-    //       .in("id", products);
-    //     if (productsInfoError) {
-    //       console.log(
-    //         "Products Info Error: " +
-    //           productsInfoError.code +
-    //           " " +
-    //           productsInfoError.message
-    //       );
-    //       return;
-    //     } else {
-    //       const newItems = await Promise.all(
-    //         productsInfo?.map(async (item) => {
-    //           item.subject = [];
-    //           productCategories.forEach((productCategories) => {
-    //             item.product_subject.map((productSubject: string) => {
-    //               if (productSubject === productCategories.id) {
-    //                 item.subject.push(productCategories.name);
-    //                 console.log(productCategories.name);
-    //               }
-    //             });
-    //           });
-    //           delete item.product_subject;
-
-    //           const { data: gradeData, error: gradeError } = await supabase
-    //             .from("grade_level")
-    //             .select("*");
-
-    //           if (gradeError) {
-    //             console.log("supabase error: " + gradeError.message);
-    //           } else {
-    //             item.grade = [];
-    //             gradeData.forEach((databaseGrade) => {
-    //               item.post_grade.map((itemGrade: string) => {
-    //                 if (itemGrade === databaseGrade.id.toString()) {
-    //                   item.grade.push(databaseGrade.grade);
-    //                 }
-    //               });
-    //             });
-    //           }
-
-    //           if (item.price_id !== null) {
-    //             const priceData = await stripe.prices.retrieve(item.price_id);
-    //             item.price = priceData.unit_amount! / 100;
-    //           }
-    //           return item;
-    //         })
-    //       );
-    //       setPurchasedItems(newItems);
-    //       console.log(purchasedItems());
-    //     }
-    //   }
-    // };
-
-    // const fetchClient = async (user_id: string) => {
-    //   try {
-    //     const { data, error } = await supabase
-    //       .from("clientview")
-    //       .select("*")
-    //       .eq("user_id", user_id);
-
-    //     if (error) {
-    //       console.log(error);
-    //     } else if (data[0] === undefined) {
-    //       alert(t("messages.noClient")); //TODO: Change alert message
-    //       location.href = `/${lang}`;
-    //     } else {
-    //       console.log(data);
-    //       setClient(data[0]);
-    //       console.log(client());
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    // createEffect(async () => {
-    //   console.log("downloading images");
-    //   if (client() !== undefined) {
-    //     if (client()?.image_url === undefined || client()?.image_url === null) {
-    //       // console.log("No Image");
-    //       // console.log(clientImage());
-    //     } else {
-    //       await downloadImage(client()?.image_url!);
-    //       setImageUrl(client()?.image_url!);
-    //       console.log(imageUrl());
-    //     }
-    //   }
-    // });
-
-    // const downloadImage = async (image_Url: string) => {
-    //   try {
-    //     const { data, error } = await supabase.storage
-    //       .from("user.image")
-    //       .download(image_Url);
-    //     if (error) {
-    //       throw error;
-    //     }
-    //     const url = URL.createObjectURL(data);
-    //     setClientImage(url);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // };
-
-    // const enableEditMode = () => {
-    //   setEditMode(true);
-    // };
-
-    // function submit(e: SubmitEvent) {
-    //   e.preventDefault();
-    //   console.log("Submitted!");
-    //   const formData = new FormData(e.target as HTMLFormElement);
-    //   for (let pair of formData.entries()) {
-    //     console.log(pair[0] + ", " + pair[1]);
-    //   }
-    //   formData.append("access_token", session()?.access_token!);
-    //   formData.append("refresh_token", session()?.refresh_token!);
-    //   formData.append("lang", lang);
-    //   if (imageUrl() !== null) {
-    //     formData.append("image_url", imageUrl()!);
-    //   }
-    //   setFormData(formData);
-    // }
 
     const resetPassword = () => {
         window.location.href = `/${lang}/password/reset`;
@@ -306,26 +111,26 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
         }
     }
 
-    //TODO: Edit profile button is hidden until we enable clients editing their profile
+    //TODO: Edit profile button is hidden until we enable users editing their profile
     //TODO: Style improvement - when boxes are collapsed in mobile view they are narrower than when they are expanded might be nice to keep it the same size
 
     return (
         <div class="container">
             <div class="h-24 bg-background2-DM dark:bg-background2-DM mb-6 relative">
                 <div class="h-28 w-28 rounded-full border border-border2 dark:border-border2 bg-background2 dark:bg-background2-DM absolute top-3 left-3 text-center flex justify-center items-center">
-                    <p class="text-ptext2 dark:ptext2-DM text-5xl">{ props.client?.first_name.slice(0, 1) }{ props.client?.last_name.slice(0, 1) }</p>
+                    <p class="text-ptext2 dark:ptext2-DM text-5xl">{ props.user?.first_name.slice(0, 1) }{ props.user?.last_name.slice(0, 1) }</p>
                 </div>
 
             </div>
             {/* Profile Information for Mobile View */}
             <div class="p-4">
                 <div class="flex">
-                    <Show when={ props.client?.display_name }>
-                        <h1 class="font-bold text-2xl">{ props.client?.display_name }</h1>
+                    <Show when={ props.user?.display_name }>
+                        <h1 class="font-bold text-2xl">{ props.user?.display_name }</h1>
                     </Show>
 
-                    <Show when={ !props.client?.display_name }>
-                        <h1 class="font-bold text-2xl">{ props.client?.first_name } { props.client?.last_name }</h1>
+                    <Show when={ !props.user?.display_name }>
+                        <h1 class="font-bold text-2xl">{ props.user?.first_name } { props.user?.last_name }</h1>
                     </Show>
 
                     <Show when={props.editMode === false}>
@@ -369,11 +174,11 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                 </div>
 
                 {/* <h2 class="text-xl font-bold text-htext1 dark:text-htext1-DM">
-                    {props.client?.display_name === null
-                        ? props.client?.first_name +
+                    {props.user?.display_name === null
+                        ? props.user?.first_name +
                             " " +
-                            props.client?.last_name
-                        : props.client?.display_name}
+                            props.user?.last_name
+                        : props.user?.display_name}
                 </h2> */}
 
                 <Show when={ tabSelected() === "profile"}>
@@ -391,7 +196,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     id="FirstName"
                                     class="mb-4 w-full"
                                 >
-                                    {props.client?.first_name}
+                                    {props.user?.first_name}
                                 </p>
                             </div>
                         </Show>
@@ -403,7 +208,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     id="FirstName"
                                     name="FirstName"
                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                    value={props.client?.first_name}
+                                    value={props.user?.first_name}
                                     required
                                 />
                             </div>
@@ -423,7 +228,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                 id="LastName"
                                 class="mb-4 "
                             >
-                                {props.client?.last_name}
+                                {props.user?.last_name}
                             </p>
                         </Show>
 
@@ -434,13 +239,13 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     id="LastName"
                                     name="LastName"
                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                    value={props.client?.last_name}
+                                    value={props.user?.last_name}
                                 />
                             </div>
                         </Show>
                     </div>
 
-                    <div class="client-displayName flex flex-wrap">
+                    <div class="user-displayName flex flex-wrap">
                         <label
                             for="DisplayName"
                             class="text-ptext1 dark:text-ptext1-DM font-bold"
@@ -453,11 +258,11 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                 id="DisplayName"
                                 class="mb-4 "
                             >
-                                {props.client?.display_name
-                                    ? props.client?.display_name
-                                    : props.client?.first_name +
+                                {props.user?.display_name
+                                    ? props.user?.display_name
+                                    : props.user?.first_name +
                                         " " +
-                                        props.client?.last_name}
+                                        props.user?.last_name}
                             </p>
                         </Show>
 
@@ -468,7 +273,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     id="DisplayName"
                                     name="DisplayName"
                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                    value={props.client?.display_name}
+                                    value={props.user?.display_name}
                                 />
                             </div>
                         </Show>
@@ -488,7 +293,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     id="email"
                                     class="mb-4 overflow-auto"
                                 >
-                                    {props.client?.email}
+                                    {props.user?.email}
                                 </p>
                             </div>
                         </Show>
@@ -501,37 +306,7 @@ export const ClientProfileViewMobile: Component<Props> = (props: Props) => {
                                     class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                                     type="email"
                                     placeholder={t("formLabels.email")}
-                                    value={props.client?.email}
-                                />
-                            </div>
-                        </Show>
-                    </div>
-
-                    <div class="phone-number flex flex-wrap">
-                        <label
-                            for="Phone"
-                            class="text-ptext1 dark:text-ptext1-DM font-bold"
-                        >
-                            {t("formLabels.phone")}: &nbsp
-                        </label>
-
-                        <Show when={props.editMode === false}>
-                            <p
-                                id="Phone"
-                                class="mb-4"
-                            >
-                                {props.client?.client_phone}
-                            </p>
-                        </Show>
-
-                        <Show when={props.editMode === true}>
-                            <div class="">
-                                <input
-                                    type="text"
-                                    id="Phone"
-                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                    name="Phone"
-                                    value={props.client?.client_phone || ""}
+                                    value={props.user?.email}
                                 />
                             </div>
                         </Show>

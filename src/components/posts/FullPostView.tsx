@@ -566,7 +566,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             id="creator-img-div"
                             class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
                         >
-                            <a href={`/${lang}/provider/${post()?.seller_id}`}>
+                            <a href={`/${lang}/creator/${post()?.seller_id}`}>
                                 <svg
                                     fill="none"
                                     width="40px"
@@ -582,7 +582,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         <div id="creator-text-div" class="ml-2">
                             <div>
                                 <a
-                                    href={`/${lang}/provider/${post()?.seller_id}`}
+                                    href={`/${lang}/creator/${post()?.seller_id}`}
                                 >
                                     <p class="font-bold">
                                         {post()?.seller_name}

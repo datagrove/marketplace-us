@@ -201,7 +201,7 @@ export const CartCard: Component<Props> = (props) => {
                                         </div>
                                         <p class="row-span-1 mb-1 inline-block overflow-hidden text-base text-ptext1 dark:text-ptext1-DM">
                                             <a
-                                                href={`/${lang}/provider/${item.seller_id}`}
+                                                href={`/${lang}/creator/${item.seller_id}`}
                                             >
                                                 {item.seller_name}
                                             </a>

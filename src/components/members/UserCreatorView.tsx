@@ -1,12 +1,12 @@
 import type { Component } from "solid-js";
 import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { ClientViewProviderPosts } from "../posts/ClientViewProviderPosts";
+import { UserViewCreatorPosts } from "../posts/UserViewCreatorPosts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { ViewProviderPosts } from "@components/posts/ViewProviderPosts";
+import type { Creator } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -15,38 +15,21 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-interface Provider {
-    seller_name: string;
-    seller_id: number;
-    seller_phone: string;
-    major_municipality: string;
-    // minor_municipality: string;
-    // governing_district: string;
-    user_id: string;
-    image_url: string | null;
-    email: string;
-    created_at: string;
-    first_name: string;
-    last_name: string;
-    language_spoken: string[];
-    languages: string;
-}
-
 interface Props {
     id: string | undefined;
 }
 
-export const ClientProviderView: Component<Props> = (props) => {
-    const [provider, setProvider] = createSignal<Provider>();
-    const [providerImage, setProviderImage] = createSignal<string>();
+export const UserCreatorView: Component<Props> = (props) => {
+    const [creator, setCreator] = createSignal<Creator>();
+    const [creatorImage, setCreatorImage] = createSignal<string>();
     const [languageSpoken, setLanguageSpoken] = createSignal<string[]>([]);
     const [largeScreen, setLargeScreen] = createSignal<boolean>(false);
 
     onMount(() => {
         if (props.id !== null && props.id !== undefined) {
-            fetchProvider(+props.id);
+            fetchCreator(+props.id);
 
-            console.log("test on Mount" + provider()?.email);
+            console.log("test on Mount" + creator()?.email);
         }
     });
 
@@ -54,7 +37,7 @@ export const ClientProviderView: Component<Props> = (props) => {
         if (props.id === undefined) {
             location.href = `/${lang}/404`;
         } else if (props?.id) {
-            fetchProvider(+props?.id);
+            fetchCreator(+props?.id);
         }
     });
 
@@ -74,7 +57,7 @@ export const ClientProviderView: Component<Props> = (props) => {
         }
     };
 
-    const fetchProvider = async (id: number) => {
+    const fetchCreator = async (id: number) => {
         try {
           const { data, error } = await supabase
             .from("sellerview")
@@ -84,7 +67,7 @@ export const ClientProviderView: Component<Props> = (props) => {
           if (error) {
             console.log(error);
           } else if (data[0] === undefined) {
-            alert(t("messages.noProvider"));
+            alert(t("messages.noCreator"));
             location.href = `/${lang}/resources`;
           } else {
             let languageArray = data[0].language_spoken;
@@ -115,10 +98,10 @@ export const ClientProviderView: Component<Props> = (props) => {
               }
             });
   
-            //set display list of languages for provider
+            //set display list of languages for creator
             data[0].languages = languageSpoken().join(", ");
 
-            setProvider(data[0]);
+            setCreator(data[0]);
             console.log("test")
           }
         } catch (error) {
@@ -128,15 +111,15 @@ export const ClientProviderView: Component<Props> = (props) => {
 
     createEffect(async () => {
         console.log("downloading images");
-        if (provider() !== undefined) {
+        if (creator() !== undefined) {
             if (
-                provider()?.image_url === undefined ||
-                provider()?.image_url === null
+                creator()?.image_url === undefined ||
+                creator()?.image_url === null
             ) {
                 console.log("No Image");
-                console.log(providerImage());
+                console.log(creatorImage());
             } else {
-                await downloadImage(provider()?.image_url!);
+                await downloadImage(creator()?.image_url!);
             }
         }
     });
@@ -150,39 +133,39 @@ export const ClientProviderView: Component<Props> = (props) => {
                 throw error;
             }
             const url = URL.createObjectURL(data);
-            setProviderImage(url);
+            setCreatorImage(url);
         } catch (error) {
             console.log(error);
         }
     };
 
-    function providerViewTabClick(e: Event) {
+    function creatorViewTabClick(e: Event) {
         e.preventDefault();
 
         let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
         let currEl = document.getElementById(currLinkId);
-        let allClientViewLinks = document.getElementsByClassName(
-            "clientViewtabLinkLg"
+        let allUserViewLinks = document.getElementsByClassName(
+            "userViewtabLinkLg"
         );
 
-        let clientViewProfile = document.getElementById(
-            "clientProviderViewProfile"
+        let userViewProfile = document.getElementById(
+            "userCreatorViewProfile"
         );
-        let clientViewResources = document.getElementById(
-            "clientProviderViewResources"
+        let userViewResources = document.getElementById(
+            "userCreatorViewResources"
         );
-        let clientViewRatings = document.getElementById(
-            "clientProviderViewRatings"
+        let userViewRatings = document.getElementById(
+            "userCreatorViewRatings"
         );
-        let clientViewQuestions = document.getElementById(
-            "clientProviderViewQuestions"
+        let userViewQuestions = document.getElementById(
+            "userCreatorViewQuestions"
         );
-        let clientViewDownload = document.getElementById(
-            "clientProviderViewDownload"
+        let userViewDownload = document.getElementById(
+            "userCreatorViewDownload"
         );
 
         if (!currEl?.classList.contains("border-b-2")) {
-            Array.from(allClientViewLinks).forEach(function (link) {
+            Array.from(allUserViewLinks).forEach(function (link) {
                 link.classList.remove("border-b-2");
                 link.classList.remove("border-green-500");
             });
@@ -191,41 +174,41 @@ export const ClientProviderView: Component<Props> = (props) => {
             currEl?.classList.add("border-green-500");
         }
 
-        if (currLinkId === "clientProviderViewProfileLink") {
-            clientViewProfile?.classList.remove("hidden");
-            clientViewProfile?.classList.add("inline");
+        if (currLinkId === "userCreatorViewProfileLink") {
+            userViewProfile?.classList.remove("hidden");
+            userViewProfile?.classList.add("inline");
 
             closeResources();
             closeRatings();
             closeQuestions();
             closeDownloads();
-        } else if (currLinkId === "clientProviderViewResourcesLink") {
-            clientViewResources?.classList.remove("hidden");
-            clientViewResources?.classList.add("inline");
+        } else if (currLinkId === "userCreatorViewResourcesLink") {
+            userViewResources?.classList.remove("hidden");
+            userViewResources?.classList.add("inline");
 
             closeProfile();
             closeRatings();
             closeQuestions();
             closeDownloads();
-        } else if (currLinkId === "clientProviderViewRatingsLink") {
-            clientViewRatings?.classList.remove("hidden");
-            clientViewRatings?.classList.add("inline");
+        } else if (currLinkId === "userCreatorViewRatingsLink") {
+            userViewRatings?.classList.remove("hidden");
+            userViewRatings?.classList.add("inline");
 
             closeProfile();
             closeResources();
             closeQuestions();
             closeDownloads();
-        } else if (currLinkId === "clientProviderViewQuestionsLink") {
-            clientViewQuestions?.classList.remove("hidden");
-            clientViewQuestions?.classList.add("inline");
+        } else if (currLinkId === "userCreatorViewQuestionsLink") {
+            userViewQuestions?.classList.remove("hidden");
+            userViewQuestions?.classList.add("inline");
 
             closeProfile();
             closeResources();
             closeRatings();
             closeDownloads();
-        } else if (currLinkId === "clientProviderViewDownloadLink") {
-            clientViewDownload?.classList.remove("hidden");
-            clientViewDownload?.classList.add("inline");
+        } else if (currLinkId === "userCreatorViewDownloadLink") {
+            userViewDownload?.classList.remove("hidden");
+            userViewDownload?.classList.add("inline");
 
             closeProfile();
             closeResources();
@@ -235,7 +218,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     function closeProfile() {
-        let profile = document.getElementById("clientProviderViewProfile");
+        let profile = document.getElementById("userCreatorViewProfile");
 
         if (profile?.classList.contains("inline")) {
             profile.classList.remove("inline");
@@ -244,7 +227,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     function closeResources() {
-        let resources = document.getElementById("clientProviderViewResources");
+        let resources = document.getElementById("userCreatorViewResources");
 
         if (resources?.classList.contains("inline")) {
             resources.classList.remove("inline");
@@ -253,7 +236,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     function closeRatings() {
-        let ratings = document.getElementById("clientProviderViewRatings");
+        let ratings = document.getElementById("userCreatorViewRatings");
 
         if (ratings?.classList.contains("inline")) {
             ratings.classList.remove("inline");
@@ -262,7 +245,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     function closeQuestions() {
-        let questions = document.getElementById("clientProviderViewQuestions");
+        let questions = document.getElementById("userCreatorViewQuestions");
 
         if (questions?.classList.contains("inline")) {
             questions.classList.remove("inline");
@@ -271,7 +254,7 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     function closeDownloads() {
-        let downloads = document.getElementById("clientProviderViewDownload");
+        let downloads = document.getElementById("userCreatorViewDownload");
 
         if (downloads?.classList.contains("inline")) {
             downloads.classList.remove("inline");
@@ -280,22 +263,22 @@ export const ClientProviderView: Component<Props> = (props) => {
     }
 
     return (
-        <div id="client-provider-view-lg" class="">
+        <div id="user-creator-view-lg" class="">
             <div
-                id="client-provider-view-header"
+                id="user-creator-view-header"
                 class="relative h-36 w-full bg-background2 dark:bg-background2-DM"
             >
-                <Show when={providerImage()}>
+                <Show when={creatorImage()}>
                     <div class="relative">
                         <img
-                            src={providerImage()}
-                            alt={`${t("postLabels.ProviderProfileImage")} 1`}
+                            src={creatorImage()}
+                            alt={`${t("postLabels.CreatorProfileImage")} 1`}
                             class="absolute top-12 h-40 w-40 rounded-full border-2 border-gray-400"
                         />
                     </div>
                 </Show>
 
-                <Show when={!providerImage()}>
+                <Show when={!creatorImage()}>
                     <div class="absolute left-12 top-6 flex h-36 w-36 items-center justify-center rounded-full border-2 border-gray-400 bg-background2 dark:bg-background2-DM">
                         <svg
                             width="120px"
@@ -329,21 +312,21 @@ export const ClientProviderView: Component<Props> = (props) => {
             </div>
 
             <div
-                id="client-provider-view-username-reviews-follow"
+                id="user-creator-view-username-reviews-follow"
                 class="mx-4 mt-10"
             >
                 <h2 class="text-2xl font-bold">
-                    {provider()?.seller_name == ""
-                        ? provider()?.first_name + " " + provider()?.last_name
-                        : provider()?.seller_name}
+                    {creator()?.seller_name == ""
+                        ? creator()?.first_name + " " + creator()?.last_name
+                        : creator()?.seller_name}
                 </h2>
 
                 <div
-                    id="client-provider-view-reviews-div"
+                    id="user-creator-view-reviews-div"
                     class="flex items-center"
                 >
                     <div
-                        id="client-provider-view-ratings-stars-div"
+                        id="user-creator-view-ratings-stars-div"
                         class="mr-2 flex w-fit"
                     >
                         <svg
@@ -398,7 +381,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     </div>
 
                     <div
-                        id="client-provider-view-ratings-text-div"
+                        id="user-creator-view-ratings-text-div"
                         class="flex"
                     >
                         <p class="font-bold">4.9</p>
@@ -406,7 +389,7 @@ export const ClientProviderView: Component<Props> = (props) => {
                     </div>
 
                     <div
-                        id="client-provider-view-follow-div"
+                        id="user-creator-view-follow-div"
                         class="mx-4 flex items-center"
                     >
                         <button
@@ -492,54 +475,54 @@ export const ClientProviderView: Component<Props> = (props) => {
                 </div>
             </div>
 
-            <div id="client-provider-view-tabs-content-div" class="mx-4 mt-2">
+            <div id="user-creator-view-tabs-content-div" class="mx-4 mt-2">
                 <div
-                    id="client-provider-view-tabs"
+                    id="user-creator-view-tabs"
                     class="mb-4 mt-8 flex md:mt-0"
                 >
                     <a
-                        href="#profileClientView"
-                        id="clientProviderViewProfileLink"
-                        class="clientViewtabLinkLg mr-4 inline border-b-2 border-green-500 md:mr-6 lg:mr-10"
-                        onClick={providerViewTabClick}
+                        href="#profileUserView"
+                        id="userCreatorViewProfileLink"
+                        class="userViewtabLinkLg mr-4 inline border-b-2 border-green-500 md:mr-6 lg:mr-10"
+                        onClick={creatorViewTabClick}
                     >
                         <p class=" font-bold lg:text-xl">
                             {t("menus.profile")}
                         </p>
                     </a>
                     <a
-                        href="#resourcesClientView"
-                        id="clientProviderViewResourcesLink"
-                        class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
-                        onClick={providerViewTabClick}
+                        href="#resourcesUserView"
+                        id="userCreatorViewResourcesLink"
+                        class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
+                        onClick={creatorViewTabClick}
                     >
                         <p class="font-bold lg:text-xl">
-                            {t("menus.providerResources")}
+                            {t("menus.creatorResources")}
                         </p>
                     </a>
                     <a
-                        href="#ratingsClientView"
-                        id="clientProviderViewRatingsLink"
-                        class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
-                        onClick={providerViewTabClick}
+                        href="#ratingsUserView"
+                        id="userCreatorViewRatingsLink"
+                        class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
+                        onClick={creatorViewTabClick}
                     >
                         <p class="font-bold lg:text-xl">{t("menus.reviews")}</p>
                     </a>
                     <a
-                        href="#questionsClientView"
-                        id="clientProviderViewQuestionsLink"
-                        class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
-                        onClick={providerViewTabClick}
+                        href="#questionsUserView"
+                        id="userCreatorViewQuestionsLink"
+                        class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
+                        onClick={creatorViewTabClick}
                     >
                         <p class="font-bold lg:text-xl">
                             {t("menus.questions")}
                         </p>
                     </a>
                     <a
-                        href="#downloadClientView"
-                        id="clientProviderViewDownloadLink"
-                        class="clientViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
-                        onClick={providerViewTabClick}
+                        href="#downloadUserView"
+                        id="userCreatorViewDownloadLink"
+                        class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
+                        onClick={creatorViewTabClick}
                     >
                         <p class="hidden text-sm font-bold md:inline md:text-base lg:text-xl">
                             {t("menus.freeDownload")}
@@ -547,19 +530,19 @@ export const ClientProviderView: Component<Props> = (props) => {
                     </a>
                 </div>
 
-                <div id="clientProviderViewProfile" class="inline">
-                    <Show when={provider()?.email}>
+                <div id="userCreatorViewProfile" class="inline">
+                    <Show when={creator()?.email}>
                         <div class="flex">
                             <p class="font-bold">
                                 {t("formLabels.email")}:&nbsp;
                             </p>
-                            <a href={`mailto:${provider()?.email}`}>
-                                <p>{provider()?.email}</p>
+                            <a href={`mailto:${creator()?.email}`}>
+                                <p>{creator()?.email}</p>
                             </a>
                         </div>
                     </Show>
 
-                    <Show when={provider()?.email == undefined}>
+                    <Show when={creator()?.email == undefined}>
                         <div class="flex">
                             <p class="font-bold">
                                 {t("formLabels.email")}:&nbsp;
@@ -571,19 +554,19 @@ export const ClientProviderView: Component<Props> = (props) => {
                     </Show>
                 </div>
 
-                <div id="clientProviderViewResources" class="hidden">
-                    <ClientViewProviderPosts id={props.id} />
+                <div id="userCreatorViewResources" class="hidden">
+                    <UserViewCreatorPosts id={props.id} />
                 </div>
 
-                <div id="clientProviderViewRatings" class="hidden">
+                <div id="userCreatorViewRatings" class="hidden">
                     <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
-                <div id="clientProviderViewQuestions" class="hidden">
+                <div id="userCreatorViewQuestions" class="hidden">
                     <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
 
-                <div id="clientProviderViewDownload" class="hidden">
+                <div id="userCreatorViewDownload" class="hidden">
                     <p class="italic">{t("messages.comingSoon")}</p>
                 </div>
             </div>

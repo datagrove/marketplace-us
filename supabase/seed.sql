@@ -93,10 +93,10 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 
 
 --
--- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."clients" ("user_id", "created_at", "display_name", "image_url") VALUES
+INSERT INTO "public"."users" ("user_id", "created_at", "display_name", "image_url") VALUES
 	('a23376db-215d-49c4-9d9d-791c26579543', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
 	('df188225-8970-42a4-a54f-97b303c2b2ed', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
 	('bae9af94-3ee7-47dd-9389-181cd5906814', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
@@ -137,7 +137,7 @@ INSERT INTO "public"."seller_post" ("id", "created_at", "title", "content", "use
 	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK', '{5}', '{1}', NULL, NULL),
 	(11, '2024-03-27 15:50:36.102267+00', 'New Test', '<p>Test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR', '{6}', '{1}', NULL, NULL),
 	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89', '{4}', '{1}', NULL, NULL),
-	(13, '2024-05-17 16:10:12.692569+00', 'Free Post Test', '<p>Test free post</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, NULL, NULL, '{3}', '{3}', NULL, NULL);
+	(13, '2024-05-17 16:10:12.692569+00', 'Free Post Test', '<p>Test free post</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PMZvBBRZLMDvS4RcPyxuTRL', 'prod_QCzvzVmGr9GP84', '{3}', '{3}', NULL, NULL);
 
 
 --

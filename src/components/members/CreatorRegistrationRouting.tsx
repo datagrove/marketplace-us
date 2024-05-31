@@ -9,39 +9,39 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-export const ProviderRegistrationRouting = () => {
-    const [isUserProvider, setIsUserProvider] = createSignal<boolean>(false);
-    const [providerRouting, setProviderRouting] = createSignal<string>(
-        `/${lang}/provider/createaccount`
+export const CreatorRegistrationRouting = () => {
+    const [isUserCreator, setIsUserCreator] = createSignal<boolean>(false);
+    const [creatorRouting, setCreatorRouting] = createSignal<string>(
+        `/${lang}/creator/createaccount`
     );
     const [createText, setCreateText] = createSignal<string>(
-        t("pageTitles.createProviderAccount")
+        t("pageTitles.createCreatorAccount")
     );
 
-    const createProviderProfileLink = document.getElementById(
-        "createProviderAccount"
+    const createCreatorProfileLink = document.getElementById(
+        "createCreatorAccount"
     );
-    const isProvider = async () => {
+    const isCreator = async () => {
         try {
             const { data, error } = await supabase
                 .from("sellers")
                 .select("*")
                 .eq("user_id", User.session!.user.id);
 
-            setIsUserProvider(true);
+            setIsUserCreator(true);
             if (data![0]) {
-                setCreateText(t("pageTitles.viewProviderAccount"));
-                setProviderRouting(`/${lang}/provider/profile`);
+                setCreateText(t("pageTitles.viewCreatorAccount"));
+                setCreatorRouting(`/${lang}/creator/profile`);
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    isProvider();
+    isCreator();
 
     return (
-        <a href={providerRouting()} class="" id="createEditProviderProfile">
+        <a href={creatorRouting()} class="" id="createEditCreatorProfile">
             {createText()}
         </a>
     );

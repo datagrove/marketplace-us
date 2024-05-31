@@ -201,7 +201,7 @@ export const CartCardMobile: Component<Props> = (props) => {
                                         </div>
                                         <p class="inline-block overflow-hidden text-sm text-ptext1 dark:text-ptext1-DM">
                                             <a
-                                                href={`/${lang}/provider/${item.seller_id}`}
+                                                href={`/${lang}/creator/${item.seller_id}`}
                                             >
                                                 {item.seller_name}
                                             </a>

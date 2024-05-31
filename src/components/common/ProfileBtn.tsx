@@ -1,12 +1,12 @@
 import { AuthMode } from "./AuthMode";
-import { ProviderProfileButton } from "./ProviderProfileButton";
+import { CreatorProfileButton } from "./CreatorProfileButton";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
-import { ClientRouting } from "../users/ClientRouting";
+import { UserRouting } from "../members/UserRouting";
 import supabase from "../../lib/supabaseClient";
 import { Auth } from "../../lib/Auth";
 import { Show, createSignal } from "solid-js";
-import { ProviderRegistration } from "../users/ProviderRegistration";
-import { ProviderRegistrationRouting } from "../users/ProviderRegistrationRouting";
+import { CreatorRegistration } from "../members/CreatorRegistration";
+import { CreatorRegistrationRouting } from "../members/CreatorRegistrationRouting";
 import { LanguagePicker } from "./LanguagePicker";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
@@ -51,11 +51,11 @@ export const ProfileBtn = () => {
             return (
                 <div class="">
                     <div class="border-b-2 border-border1 pb-2 dark:border-border1-DM">
-                        <ClientRouting />
+                        <UserRouting />
                     </div>
                     <div class="mt-2 border-b-2 border-border1 pb-2 dark:border-border1-DM">
                         <div>
-                            <ProviderRegistrationRouting />
+                            <CreatorRegistrationRouting />
                         </div>
                         <CreatePostsRouting />
                     </div>

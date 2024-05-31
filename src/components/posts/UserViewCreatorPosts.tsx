@@ -2,9 +2,7 @@ import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import { createEffect, createSignal } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
-import { MobileViewCard } from "@components/services/MobileViewCard";
 import supabase from "../../lib/supabaseClient";
-import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -16,27 +14,18 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-// Get the user session
-const { data: User, error: UserError } = await supabase.auth.getSession();
+interface Props {
+    id: string | undefined;
+}
 
-export const ViewProviderPosts: Component = () => {
-    // initialize posts and session
+export const UserViewCreatorPosts: Component<Props> = (props) => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
-    const [session, setSession] = createSignal<AuthSession | null>(null);
 
-    if (UserError) {
-        console.log("User Error: " + UserError.message);
-    } else {
-        setSession(User.session);
-    }
-
-    // get posts from supabase that match with the user id and set them to posts. After that render them through ViewCard.
-    // if there is a modification to the posts table, the page will refresh and the posts will be updated.
     createEffect(async () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
-            .eq("user_id", session()!.user.id);
+            .eq("seller_id", props.id);
         if (!data) {
             alert("No posts available.");
         }
@@ -81,19 +70,14 @@ export const ViewProviderPosts: Component = () => {
                     return item;
                 })
             );
-            console.log(newItems.map((item) => item.price));
-            setPosts(newItems);
+            setPosts(data);
+            console.log("Posts");
+            console.log(posts());
         }
     });
     return (
         <div class="">
-            <div class="hidden md:inline">
-                <ViewCard posts={posts()} />
-            </div>
-
-            <div class="inline md:hidden">
-                <MobileViewCard posts={posts()} />
-            </div>
+            <ViewCard posts={posts()} />
         </div>
     );
 };
