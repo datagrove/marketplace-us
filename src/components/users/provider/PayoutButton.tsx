@@ -66,8 +66,8 @@ export const PayoutButton = () => {
 
         const accountLink = await stripe.accountLinks.create({
             account: stripeId,
-            refresh_url: SITE.url + "/provider/profile",
-            return_url: SITE.url + "/provider/profile",
+            refresh_url: SITE.url + "/creator/profile",
+            return_url: SITE.url + "/creator/profile",
             type: "account_onboarding",
         });
         window.open(accountLink.url, "_blank");

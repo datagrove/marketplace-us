@@ -391,7 +391,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     id="creator-img-div"
                     class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
                 >
-                    <a href={`/${lang}/provider/${post()?.seller_id}`}>
+                    <a href={`/${lang}/creator/${post()?.seller_id}`}>
                         <svg
                             fill="none"
                             width="40px"
@@ -406,7 +406,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                 <div id="creator-follower-text-div" class="ml-1 w-5/6">
                     <div>
-                        <a href={`/${lang}/provider/${post()?.seller_id}`}>
+                        <a href={`/${lang}/creator/${post()?.seller_id}`}>
                             <p class="font-bold">{post()?.seller_name}</p>
                         </a>
                     </div>

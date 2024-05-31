@@ -11,7 +11,6 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const ProviderProfileButton: Component = () => {
-    const [providerProfile, setProviderProfile] = createSignal(null);
     const [user, setUser] = createSignal<AuthSession | null>(null);
     const [hidden, setHidden] = createSignal("");
 
@@ -40,9 +39,9 @@ export const ProviderProfileButton: Component = () => {
                     console.log("Error: " + providerError.message);
                 } else if (!provider.length) {
                     alert(t("messages.viewProviderAccount"));
-                    location.href = `/${lang}/provider/createaccount`;
+                    location.href = `/${lang}/creator/createaccount`;
                 } else {
-                    location.href = `/${lang}/provider/profile`;
+                    location.href = `/${lang}/creator/profile`;
                 }
             }
         } catch (error) {

@@ -151,7 +151,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             <h1 class="line-clamp-2 font-bold">{post.title}</h1>
                         </a>
                         <div class="my-1 flex w-full justify-between">
-                            <a href={`/${lang}/provider/${post.seller_id}`}>
+                            <a href={`/${lang}/creator/${post.seller_id}`}>
                                 <p class="truncate text-xs font-light">
                                     {post.seller_name}
                                 </p>

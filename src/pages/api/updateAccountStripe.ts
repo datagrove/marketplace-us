@@ -42,8 +42,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         } else {
             const accountLink = await stripe.accountLinks.create({
                 account: stripeAccountId?.toString()!,
-                refresh_url: SITE.url + "/provider/profile",
-                return_url: SITE.url + "/provider/profile",
+                refresh_url: SITE.url + "/creator/profile",
+                return_url: SITE.url + "/creator/profile",
                 type: "account_onboarding",
             });
 

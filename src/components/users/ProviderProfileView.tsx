@@ -88,7 +88,7 @@ export const ProviderProfileView: Component = () => {
                     console.log(error);
                 } else if (data[0] === undefined) {
                     alert(t("messages.noProvider"));
-                    location.href = `/${lang}/provider/createaccount`;
+                    location.href = `/${lang}/creator/createaccount`;
                 } else {
                     setProvider(data[0]);
                 }

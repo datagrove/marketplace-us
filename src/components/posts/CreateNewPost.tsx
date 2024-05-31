@@ -129,7 +129,7 @@ async function postFormData(formData: FormData) {
             });
         } else if ((formData.get("Price") as string) == null) {
             alert(data.message + " " + t("messages.freeResourceCreated"));
-            window.location.href = `/${lang}/provider/profile`;
+            window.location.href = `/${lang}/creator/profile`;
         }
         // if (uploadFilesRef) {
         //     uploadFilesRef.upload();
@@ -193,12 +193,12 @@ export const CreateNewPost: Component = () => {
                 } else {
                     if (providers.length === 0) {
                         alert(t("messages.onlyProvider"));
-                        window.location.href = `/${lang}/provider/createaccount`;
+                        window.location.href = `/${lang}/creator/createaccount`;
                     } else if (
                         providers[0].stripe_connected_account_id === null
                     ) {
                         alert(t("messages.noStripeAccount"));
-                        window.location.href = `/${lang}/provider/profile`;
+                        window.location.href = `/${lang}/creator/profile`;
                     }
                 }
             } catch (error) {

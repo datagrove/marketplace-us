@@ -173,7 +173,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   return new Response(
     JSON.stringify({
       message: (t("apiErrors.success")),
-      redirect: "/provider/profile",
+      redirect: "/creator/profile",
     }),
     { status: 200 }
   );
