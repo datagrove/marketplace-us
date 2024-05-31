@@ -152,13 +152,6 @@ INSERT INTO "public"."sellers" ("created_at", "seller_name", "user_id", "image_u
 	('2024-03-27 14:23:47.653382+00', 'Test test', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', NULL, 7, NULL, 'acct_1OyxOKB0i6JTeUGm'),
 	('2024-03-27 15:18:06.611913+00', 'TEST test', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 8, NULL, 'acct_1OyyEsBI0fpQ1wEW');
 
-INSERT INTO "public"."resource_types" ("id", "type") VALUES
-	(1, 'PDF'),
-	(2, 'Word'),
-	(3, 'ZIP File'),
-	(4, 'Whiteboard'),
-	(5, 'Image'),
-	(6, 'Google Apps');
 
 
 -- 1	PDF
@@ -247,6 +240,13 @@ SELECT pg_catalog.setval('"public"."seller_post_id_seq"', 13, true);
 --
 
 SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
+
+
+--
+-- Name: resource_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"public"."resource_types_id_seq"', 6, false);
 
 
 --

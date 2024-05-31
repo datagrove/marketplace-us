@@ -64,4 +64,11 @@ to authenticated
 using (true);
 
 
+INSERT INTO "public"."resource_types" ("id", "type") VALUES
+	(1, 'PDF'),
+	(2, 'Word'),
+	(3, 'ZIP File'),
+	(4, 'Whiteboard'),
+	(5, 'Image'),
+	(6, 'Google Apps');
 
