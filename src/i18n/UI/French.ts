@@ -170,12 +170,15 @@ export const French = {
         report: "Signaler cette ressource à LearnGrove",
         free: "Gratuit",
         freeResourceCreated: "Ressource gratuite créée !",
-        noPurchasedItems: "On dirait que vous n’avez encore rien acheté. Il est temps de faire du shopping!",
+        noPurchasedItems:
+            "On dirait que vous n’avez encore rien acheté. Il est temps de faire du shopping!",
         insufficientStripeBalance:
             "Solde Stripe insuffisant, consultez votre tableau de bord Stripe pour plus d'informations.",
         payoutRequested: "Succès! Vous avez demandé votre paiement Stripe de",
-        payoutSetup: "Veuillez terminer la configuration de votre compte Stripe pour continuer. Les paiements doivent être activés sur votre compte avant de pouvoir demander un paiement. Cliquez sur Aller au tableau de bord Stripe pour terminer cette étape.",
-        requestPayout: "Cliquez sur le bouton Demander un paiement pour demander votre paiement Stripe. Vous serez facturé 2,25 $ sur le solde de votre compte et le reste sera envoyé sur votre compte bancaire ou votre carte de débit en fonction de vos paramètres Stripe. Pour obtenir votre solde Stripe le plus à jour, veuillez visiter votre tableau de bord Stripe.",
+        payoutSetup:
+            "Veuillez terminer la configuration de votre compte Stripe pour continuer. Les paiements doivent être activés sur votre compte avant de pouvoir demander un paiement. Cliquez sur Aller au tableau de bord Stripe pour terminer cette étape.",
+        requestPayout:
+            "Cliquez sur le bouton Demander un paiement pour demander votre paiement Stripe. Vous serez facturé 2,25 $ sur le solde de votre compte et le reste sera envoyé sur votre compte bancaire ou votre carte de débit en fonction de vos paramètres Stripe. Pour obtenir votre solde Stripe le plus à jour, veuillez visiter votre tableau de bord Stripe.",
         currentBalance: "Votre solde actuel est d'environ :",
     },
 
@@ -216,6 +219,7 @@ export const French = {
         fileTypes: "Types de Fichier",
         chooseSubject: "Sujet(s)",
         chooseGrade: "Niveau(x) scolaire(s)",
+        chooseResourceTypes: "Type(x) de ressource(s)",
         pages: "Pages",
         pricePost: "Le Prix",
         isResourceFree: "ressource gratuite",
