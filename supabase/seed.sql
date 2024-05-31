@@ -93,10 +93,10 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 
 
 --
--- Data for Name: clients; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."clients" ("user_id", "created_at", "display_name", "image_url") VALUES
+INSERT INTO "public"."users" ("user_id", "created_at", "display_name", "image_url") VALUES
 	('a23376db-215d-49c4-9d9d-791c26579543', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
 	('df188225-8970-42a4-a54f-97b303c2b2ed', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
 	('bae9af94-3ee7-47dd-9389-181cd5906814', '2024-03-05 15:37:01.129356+00',  NULL, NULL),

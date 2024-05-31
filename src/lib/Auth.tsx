@@ -95,14 +95,13 @@ export const Auth: Component = (props) => {
 
                     let userSubmission = {
                         display_name: null,
-                        user_phone: null,
                         user_id: data.user?.id,
                         image_url: null,
                     };
 
                     const { data: userData, error: userError } =
                         await supabase
-                            .from("clients")
+                            .from("users")
                             .insert([userSubmission]);
                     if (userError) {
                         console.log(userError.message);

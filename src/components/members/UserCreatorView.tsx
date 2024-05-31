@@ -6,7 +6,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { ViewCreatorPosts } from "@components/posts/ViewCreatorPosts";
+import type { Creator } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -14,23 +14,6 @@ const t = useTranslations(lang);
 //get the categories from the language files so they translate with changes in the language picker
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
-
-interface Creator {
-    seller_name: string;
-    seller_id: number;
-    seller_phone: string;
-    major_municipality: string;
-    // minor_municipality: string;
-    // governing_district: string;
-    user_id: string;
-    image_url: string | null;
-    email: string;
-    created_at: string;
-    first_name: string;
-    last_name: string;
-    language_spoken: string[];
-    languages: string;
-}
 
 interface Props {
     id: string | undefined;

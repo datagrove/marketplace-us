@@ -177,7 +177,7 @@ export const UserProfileView: Component = () => {
     const fetchUser = async (user_id: string) => {
         try {
             const { data, error } = await supabase
-                .from("clientview")
+                .from("user_view")
                 .select("*")
                 .eq("user_id", user_id);
 
@@ -507,37 +507,7 @@ export const UserProfileView: Component = () => {
                                         </Show>
                                     </div>
 
-                                    <div class="phone-number flex flex-wrap">
-                                        <label
-                                            for="Phone"
-                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
-                                        >
-                                            {t("formLabels.phone")}: &nbsp
-                                        </label>
-                                        <Show when={editMode() === false}>
-                                            <p
-                                                id="Phone"
-                                                class="mb-4"
-                                            >
-                                                {user()?.user_phone
-                                                    ? user()?.user_phone
-                                                    : t("formLabels.noValue")}
-                                            </p>
-                                        </Show>
-                                        <Show when={editMode() === true}>
-                                            <div class="basis-full">
-                                                <input
-                                                    type="text"
-                                                    id="Phone"
-                                                    class="mb-4 w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                                    name="Phone"
-                                                    value={
-                                                        user()?.user_phone || ""
-                                                    }
-                                                />
-                                            </div>
-                                        </Show>
-                                    </div>
+                                   
 
                                     <div>
                                         <Show when={ editMode() === true }>

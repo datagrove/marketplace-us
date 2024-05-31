@@ -178,7 +178,7 @@ export const ViewUserPurchases: Component = () => {
     const fetchUser = async (user_id: string) => {
         try {
             const { data, error } = await supabase
-                .from("clientview")
+                .from("user_view")
                 .select("*")
                 .eq("user_id", user_id);
 

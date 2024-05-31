@@ -24,7 +24,6 @@ export interface Post {
 
 export interface User {
     display_name: string;
-    client_phone: string | null;
     user_id: string;
     image_url: string | null;
     email: string;

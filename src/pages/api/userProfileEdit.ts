@@ -23,7 +23,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const firstName = formData.get("FirstName");
     const lastName = formData.get("LastName");
     const displayName = formData.get("DisplayName");
-    const phone = formData.get("Phone");
     const email = formData.get("email");
     // const country = formData.get("country");
     // const majorMunicipality = formData.get("MajorMunicipality");
@@ -36,7 +35,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log("imageURL: " + imageUrl);
 
     // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
-    if (!firstName || !lastName || !phone) {
+    if (!firstName || !lastName) {
         return new Response(
             JSON.stringify({
                 message: t("apiErrors.missingFields"),
@@ -173,29 +172,26 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         }
         location = locationData[0];
     }
-    //Build our submission to the clients table including the location id from the select from the location table on line 158
+    //Build our submission to the user table including the location id from the select from the location table on line 158
     let submission;
 
     //If the location is null then leave the current value for location
     if (location === null) {
         submission = {
             display_name: displayName,
-            user_phone: phone,
             image_url: imageUrl,
         };
     } else {
         //Update the location with the new location
         submission = {
             display_name: displayName,
-            user_phone: phone,
-            location: location.id,
             image_url: imageUrl,
         };
     }
 
     //submit to the users table and select it back
     const { error, data } = await supabase
-        .from("clients")
+        .from("users")
         .update([submission])
         .eq("user_id", user.id)
         .select();
