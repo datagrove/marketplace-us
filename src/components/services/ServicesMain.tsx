@@ -6,6 +6,7 @@ import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { GradeFilter } from "./GradeFilter";
+import { SubjectFilter } from "./SubjectFilter";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -320,7 +321,7 @@ export const ServicesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <div class="clear-filters-btns flex flex-wrap items-center justify-center">
+            <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
                 <button
                     class="clearBtnRectangle"
                     onclick={clearAllFilters}
@@ -352,13 +353,19 @@ export const ServicesView: Component = () => {
                 </button>
             </div>
 
-            <div class="h-fit">
+            {/* <div class="h-fit">
                 <CategoryCarousel filterPosts={setCategoryFilter} />
-            </div>
+            </div> */}
 
             <div class="flex min-w-[270px] flex-col items-center md:h-full md:flex-row md:items-start">
-                <div class="w-11/12 md:mr-4 md:w-56">
-                    <GradeFilter filterPostsByGrade={filterPostsByGrade} />
+                <div class="sticky top-0">
+                    <div class="w-11/12 md:mr-4 md:w-56">
+                        <GradeFilter filterPostsByGrade={filterPostsByGrade} />
+                    </div>
+
+                    <div>
+                        <SubjectFilter filterPosts={ setCategoryFilter }/>
+                    </div>
                 </div>
 
                 <div class="w-11/12 items-center md:flex-1">
