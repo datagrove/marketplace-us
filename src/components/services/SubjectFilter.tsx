@@ -1,4 +1,5 @@
 import type { Component } from "solid-js";
+import { createEffect, createSignal, For, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -41,6 +42,27 @@ interface Props {
 }
 
 export const SubjectFilter: Component<Props> = (props) => {
+    const [selectedSubjects, setSelectedSubjects] = createSignal<string[]>([]);
+
+    onMount(() => {
+        if (localStorage.getItem("selectedSubjects")) {
+            setSelectedSubjects([...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+            checkSubjectBoxes();
+        }
+    });
+
+    function checkSubjectBoxes() {
+        console.log(selectedSubjects());
+        selectedSubjects().map((subject) => {
+            let subjectCheckElements = document.getElementsByClassName("subject " + subject) as HTMLCollectionOf<HTMLInputElement>;
+            if (subjectCheckElements) {
+                for (let i = 0; i < subjectCheckElements.length; i++) {
+                    subjectCheckElements[i].checked = true;
+                }
+            }
+        })
+    }
+
     return (
         <div class="hidden w-56 bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM md:mt-2">
             <div class="md:flex-column flex-wrap md:h-56 md:rounded md:border-b-2 md:border-border2 md:text-left dark:md:border-border2-DM">
@@ -54,7 +76,7 @@ export const SubjectFilter: Component<Props> = (props) => {
                             <div>
                                 <input
                                     type="checkbox"
-                                    class="grade mr-2 leading-tight"
+                                    class={`subject ${item.id.toString()} mr-2 leading-tight`}
                                     onClick={ () => {
                                         console.log("Subject selected: " + item.name);
                                         props.filterPosts(item.id.toString());

@@ -30,7 +30,7 @@ export const Home: Component = () => {
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [popularPosts, setPopularPosts] = createSignal<Array<Post>>([]);
     const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
-    const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
+    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
     const [resourceTypeFilters, setResourceTypeFilters] = createSignal<
         Array<string>
@@ -60,7 +60,6 @@ export const Home: Component = () => {
                         item.product_subject.map((productSubject: string) => {
                             if (productSubject === productCategories.id) {
                                 item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
                             }
                         });
                     });
@@ -100,7 +99,6 @@ export const Home: Component = () => {
                         item.product_subject.map((productSubject: string) => {
                             if (productSubject === productCategories.id) {
                                 item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
                             }
                         });
                     });

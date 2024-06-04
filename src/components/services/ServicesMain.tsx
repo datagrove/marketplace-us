@@ -21,85 +21,44 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
+// interface Props {
+//     subject: string | null;
+//     grade: string | null;
+//     searchString: string | null;
+//     resourceTypes: string | null;
+// }
+
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
-    const [filters, setFilters] = createSignal<Array<string>>([]);
+    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>([]);
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
 
     onMount(async () => {
-        await fetchPosts();
+        if (localStorage.getItem("selectedSubjects") !== null && localStorage.getItem("selectedSubjects")) {
+            setSubjectFilters([...subjectFilters(), ...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+        }
+        if (localStorage.getItem("selectedGrades") !== null && localStorage.getItem("selectedGrades")) {
+            setGradeFilters([...gradeFilters(), ...JSON.parse(localStorage.getItem("selectedGrades")!)]);
+        }
+        if (localStorage.getItem("searchString") !== null && localStorage.getItem("searchString") !== undefined) {
+            setSearchString(JSON.parse(localStorage.getItem("searchString")!));
+        } 
+        if (localStorage.getItem("selectedResourceTypes") !== null && localStorage.getItem("selectedResourceTypes")) {
+            setResourceFilters([...resourceFilters(), ...JSON.parse(localStorage.getItem("selectedResourceTypes")!)]);
+        }
+        await filterPosts();
     });
 
-    let data;
+    window.addEventListener("beforeunload", () => {
+            localStorage.removeItem("selectedGrades");
+            localStorage.removeItem("selectedSubjects");
+    });
 
-    async function fetchPosts() {
-        const { data, error } = await supabase.from("sellerposts").select("*");
-
-        if (!data) {
-            alert("No posts available.");
-        }
-        if (error) {
-            console.log("supabase error: " + error.message);
-        } else {
-            console.log(data);
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            console.log(newItems.map((item) => item));
-            setPosts(newItems);
-            setCurrentPosts(newItems);
-        }
-    }
-
-    // start the page as displaying all posts
-    if (!data) {
-        let noPostsMessage = document.getElementById("no-posts-message");
-        noPostsMessage?.classList.remove("hidden");
-
-        setPosts([]);
-        setCurrentPosts([]);
-    } else {
-        setPosts(data);
-        setCurrentPosts(data);
-    }
 
     const searchPosts = async (searchText: string) => {
         setSearchString(searchText);
@@ -108,13 +67,13 @@ export const ServicesView: Component = () => {
     };
 
     const setCategoryFilter = (currentCategory: string) => {
-        if (filters().includes(currentCategory)) {
-            let currentFilters = filters().filter(
+        if (subjectFilters().includes(currentCategory)) {
+            let currentFilters = subjectFilters().filter(
                 (el) => el !== currentCategory
             );
-            setFilters(currentFilters);
+            setSubjectFilters(currentFilters);
         } else {
-            setFilters([...filters(), currentCategory]);
+            setSubjectFilters([...subjectFilters(), currentCategory]);
         }
 
         filterPosts();
@@ -126,9 +85,10 @@ export const ServicesView: Component = () => {
         const noPostsMessage = document.getElementById("no-posts-message");
 
         const res = await allFilters.fetchFilteredPosts(
-            filters(),
+            subjectFilters(),
             gradeFilters(),
-            searchString()
+            searchString(),
+            resourceFilters(),
         );
 
         if (res === null || res === undefined) {
@@ -256,7 +216,7 @@ export const ServicesView: Component = () => {
         } else {
             setGradeFilters([...gradeFilters(), grade]);
         }
-
+        console.log(gradeFilters());
         filterPosts();
     };
 
@@ -285,7 +245,7 @@ export const ServicesView: Component = () => {
 
         setSearchPost([]);
         setSearchString("");
-        setFilters([]);
+        setSubjectFilters([]);
         setGradeFilters([]);
         filterPosts();
     };
@@ -297,7 +257,7 @@ export const ServicesView: Component = () => {
             subject.classList.remove("selected");
         });
 
-        setFilters([]);
+        setSubjectFilters([]);
         filterPosts();
     };
 

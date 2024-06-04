@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createEffect, createSignal, For } from "solid-js";
+import { createEffect, createSignal, For, onMount } from "solid-js";
 
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
@@ -39,6 +39,7 @@ export const GradeFilter: Component<Props> = (props) => {
     const [gradeFilters, setGradeFilters] = createSignal<
         Array<{ grade: string; id: number }>
     >([]);
+    const [selectedGrades, setSelectedGrades] = createSignal<string[]>([]);
 
     const setGradesFilter = (item: { grade: string; id: number }) => {
         if (gradeFilters().includes(item)) {
@@ -51,6 +52,25 @@ export const GradeFilter: Component<Props> = (props) => {
         }
         props.filterPostsByGrade(item.id.toString());
     };
+
+    onMount(() => {
+        if (localStorage.getItem("selectedGrades")) {
+            setSelectedGrades([...JSON.parse(localStorage.getItem("selectedGrades")!)]);
+            checkGradeBoxes();
+        }
+    });
+
+    function checkGradeBoxes() {
+        console.log(selectedGrades());
+        selectedGrades().map((grade) => {
+            let gradeCheckElements = document.getElementsByClassName("grade " + grade) as HTMLCollectionOf<HTMLInputElement>;
+            if (gradeCheckElements) {
+                for (let i = 0; i < gradeCheckElements.length; i++) {
+                    gradeCheckElements[i].checked = true;
+                }
+            }
+        })
+    }
 
     return (
         <div>
@@ -93,10 +113,10 @@ export const GradeFilter: Component<Props> = (props) => {
                                                             aria-label={
                                                                 t(
                                                                     "ariaLabels.checkboxGrade"
-                                                                ) + item.grade
+                                                                ) + " " + item.grade
                                                             }
                                                             type="checkbox"
-                                                            class="grade mr-4 leading-tight"
+                                                            class={`grade ${item.id.toString()} mr-4 leading-tight`}
                                                             onClick={() => {
                                                                 setGradesFilter(
                                                                     item
@@ -133,14 +153,16 @@ export const GradeFilter: Component<Props> = (props) => {
                                 <div class="w-1/2">
                                     <input
                                         aria-label={
-                                            t("ariaLabels.checkboxGrade") +
+                                            t("ariaLabels.checkboxGrade") + " " +
                                             item.grade
                                         }
                                         type="checkbox"
-                                        class="grade mr-2 leading-tight"
+                                        class={`grade ${item.id.toString()} mr-4 leading-tight`}
                                         onClick={() => {
                                             setGradesFilter(item);
                                         }}
+                                        id = {"grade " + item.id.toString()}
+
                                     />
                                     <span class="text-ptext1 dark:text-ptext1-DM">
                                         {item.grade}
