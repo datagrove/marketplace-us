@@ -547,6 +547,7 @@ export const French = {
                 text: "Effacer le Filtre de District de Gouvernement",
                 ariaLabel: "Effacer le Filtre de District de Gouvernement",
             },
+            { text: "Voir les Résultats", ariaLabel: "Voir les Résultats"},
         ],
     },
 } as const;

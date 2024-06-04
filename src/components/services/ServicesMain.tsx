@@ -1,18 +1,21 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, onMount } from "solid-js";
+import { createSignal, createEffect, onMount, Show } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { GradeFilter } from "./GradeFilter";
 import { SubjectFilter } from "./SubjectFilter";
+import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import * as allFilters from "../posts/fetchPosts";
 import stripe from "../../lib/stripe";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -37,6 +40,8 @@ export const ServicesView: Component = () => {
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>([]);
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
+    
+    const screenSize = useStore(windowSize);
 
     onMount(async () => {
         if (localStorage.getItem("selectedSubjects") !== null && localStorage.getItem("selectedSubjects")) {
@@ -313,18 +318,18 @@ export const ServicesView: Component = () => {
                 </button>
             </div>
 
-            {/* <div class="h-fit">
-                <CategoryCarousel filterPosts={setCategoryFilter} />
-            </div> */}
+            <Show when={ screenSize() === "sm"}>
+                <FiltersMobile filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
+            </Show>
 
-            <div class="flex min-w-[270px] flex-col items-center md:h-full md:flex-row md:items-start">
-                <div class="sticky top-0">
+            <div class="flex w-full min-w-[270px] flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
+                <div class="sticky top-0 w-full md:w-auto">
                     <div class="w-11/12 md:mr-4 md:w-56">
                         <GradeFilter filterPostsByGrade={filterPostsByGrade} />
                     </div>
 
-                    <div>
-                        <SubjectFilter filterPosts={ setCategoryFilter }/>
+                    <div class="w-11/12 md:mr-4 md:w-56">
+                        <SubjectFilter filterPosts={setCategoryFilter} />
                     </div>
                 </div>
 
@@ -341,7 +346,7 @@ export const ServicesView: Component = () => {
                         <ViewCard posts={currentPosts()} />
                     </div>
 
-                    <div class="md:hidden flex justify-center">
+                    <div class="flex justify-center md:hidden">
                         <MobileViewCard posts={currentPosts()} />
                     </div>
                 </div>

@@ -64,14 +64,14 @@ export const SubjectFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div class="hidden w-56 bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM md:mt-2">
+        <div class="hidden bg-background1 dark:bg-background1-DM md:mt-2 md:block md:w-56 md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
             <div class="md:flex-column flex-wrap md:h-56 md:rounded md:border-b-2 md:border-border2 md:text-left dark:md:border-border2-DM">
                 <div class="flex flex-wrap justify-between">
                     <div class="w-4/5 pl-4">{t("formLabels.subjects")}</div>
                 </div>
 
                 <div>
-                    { allSubjectInfo?.map((item) => (
+                    {allSubjectInfo?.map((item) => (
                         <div class="flex flex-row pl-2">
                             <div>
                                 <input
@@ -86,14 +86,13 @@ export const SubjectFilter: Component<Props> = (props) => {
 
                             <div>
                                 <span class="text-ptext1 dark:text-ptext1-DM">
-                                    { item.name }
+                                    {item.name}
                                 </span>
-
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

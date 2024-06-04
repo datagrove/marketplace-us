@@ -529,6 +529,7 @@ export const English = {
                 text: "Clear Governing District",
                 ariaLabel: "Clear Governing District",
             },
+            { text: "View Results", ariaLabel: "View Results"},
         ],
     },
 } as const;

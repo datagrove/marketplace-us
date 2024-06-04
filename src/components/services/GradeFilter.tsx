@@ -147,7 +147,7 @@ export const GradeFilter: Component<Props> = (props) => {
                         <div class="w-4/5 pl-4">{t("formLabels.grades")}</div>
                     </div>
 
-                    <div class="md:ml-2 md:mr-2 md:flex md:flex-wrap md:h-fit md:overflow-auto md:text-left">
+                    <div class="md:ml-2 md:mr-2 md:flex md:h-fit md:flex-wrap md:overflow-auto md:text-left">
                         <For each={grade()}>
                             {(item) => (
                                 <div class="w-1/2">
