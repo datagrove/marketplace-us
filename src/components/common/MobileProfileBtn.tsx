@@ -9,13 +9,13 @@ import { CreatorRegistration } from "../members/CreatorRegistration";
 import { CreatorRegistrationRouting } from "../members/CreatorRegistrationRouting";
 import { LanguagePicker } from "./LanguagePicker";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-
+import { ThemeBtn } from "./ThemeIcon";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
-export const ProfileBtn = () => {
+export const MobileProfileBtn = () => {
     const [isUser, setIsUser] = createSignal<boolean | null>(false);
 
     if (User.session === null) {
@@ -25,15 +25,12 @@ export const ProfileBtn = () => {
     }
 
     function clickHandler() {
-        console.log("profile button clicked");
-        const listShow = document.getElementById("profileItems");
-        console.log(listShow);
+        const listShow = document.getElementById("mobileProfileItems");
         if (listShow?.classList.contains("hidden")) {
             listShow?.classList.remove("hidden");
-            console.log("removing hidden from listshow");
-            console.log(document.getElementById("profileBtnBackdrop"));
+            console.log(document.getElementById("mobileProfileBtnBackdrop"));
             document
-                .getElementById("profileBtnBackdrop")
+                .getElementById("mobileProfileBtnBackdrop")
                 ?.classList.remove("hidden");
         } else {
             listShow?.classList.add("hidden");
@@ -46,8 +43,10 @@ export const ProfileBtn = () => {
 
     function hideMenu() {
         console.log("hiding menu");
-        document.getElementById("profileItems")?.classList.add("hidden");
-        document.getElementById("profileBtnBackdrop")?.classList.add("hidden");
+        document.getElementById("mobileProfileItems")?.classList.add("hidden");
+        document
+            .getElementById("mobileProfileBtnBackdrop")
+            ?.classList.add("hidden");
     }
 
     function renderWhenUser() {
@@ -74,11 +73,11 @@ export const ProfileBtn = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="mr-4 flex rounded-lg md:border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
+                class="mr-4 flex rounded-lg border-border1 px-3 py-2 dark:border-border1-DM md:mr-0 md:border"
                 aria-label={t("ariaLabels.navigation")}
             >
                 <svg
-                    class="mr-2 h-4 w-4 fill-icon1 dark:fill-icon1-DM hidden md:block"
+                    class="mr-2 hidden h-4 w-4 fill-icon1 dark:fill-icon1-DM md:block"
                     viewBox="0 0 32 32"
                     xmlns="http://www.w3.org/2000/svg"
                 >
@@ -99,15 +98,15 @@ export const ProfileBtn = () => {
                 </svg>
             </button>
             <div
-                id="profileBtnBackdrop"
+                id="mobileProfileBtnBackdrop"
                 class="absolute left-0 top-0 hidden h-full w-screen"
                 onClick={() => hideMenu()}
             >
                 {/* This allows that if someone clicks anywhere outside the modal the modal will hide */}
             </div>
             <ul
-                id="profileItems"
-                class="fixed right-2 z-50 m-2 hidden justify-start rounded-lg bg-background1 p-2 shadow-md shadow-shadow-LM dark:bg-background1-DM dark:shadow-shadow-DM"
+                id="mobileProfileItems"
+                class="fixed left-2 z-50 m-2 hidden justify-start rounded-lg bg-background1 p-2 shadow-md shadow-shadow-LM dark:bg-background1-DM dark:shadow-shadow-DM"
             >
                 {renderWhenUser()}
                 <div class="mt-2 border-b-2 border-border1 pb-2 dark:border-border1-DM">
@@ -122,8 +121,13 @@ export const ProfileBtn = () => {
                     </div>
                     <AuthMode />
                 </div>
-                <div class="mt-2">
-                    <LanguagePicker />
+                <div class="mt-2 inline-block">
+                    <div class="inline-block">
+                        <LanguagePicker />
+                    </div>
+                    <div class="inline-block">
+                        <ThemeBtn />
+                    </div>
                 </div>
             </ul>
         </div>

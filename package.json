@@ -21,6 +21,7 @@
     "@playwright/test": "^1.41.2",
     "@stripe/stripe-js": "^3.0.6",
     "@supabase/supabase-js": "^2.39.6",
+    "@tabler/icons-solidjs": "^2.47.0",
     "@types/stripe-v3": "^3.1.33",
     "astro": "^4.4.0",
     "astro-compress": "^2.2.11",

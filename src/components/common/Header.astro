@@ -5,8 +5,10 @@ import { LanguagePicker } from "./LanguagePicker";
 import { CreatorProfileButton } from "./CreatorProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import ThemeIcon from "./ThemeIcon.astro";
+import { ThemeBtn } from "./ThemeIcon";
 
 import { ProfileBtn } from "./ProfileBtn";
+import { MobileProfileBtn } from "./MobileProfileBtn";
 import { Cart } from "@components/common/cart/Cart";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
 import { UserRouting } from "../members/UserRouting";
@@ -36,7 +38,7 @@ const { links = [] } = Astro.props;
 
     <div id="container" class="flex align-middle justify-between">
         <div class="md:hidden">
-            <ProfileBtn client:only="solid-js" />
+            <MobileProfileBtn client:only="solid-js" />
         </div>
         <div class="navLines flex items-center" id="navLines">
             <div class="all-logo">
@@ -93,8 +95,9 @@ const { links = [] } = Astro.props;
             class="flex items-center md:justify-end md:w-[50%] lg:w-[40%] xl:w-[35%]"
         >
 
-            <div class="">
-                <ThemeIcon />
+            <div class="hidden md:block">
+                <!-- <ThemeIcon /> -->
+                <ThemeBtn client:only="solid-js" />
             </div>
 
             <div class="">
