@@ -319,7 +319,7 @@ export const ServicesView: Component = () => {
             </div>
 
             <Show when={ screenSize() === "sm"}>
-                <FiltersMobile filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
+                <FiltersMobile clearSubjects={ clearSubjects } clearGrade={ clearGrade } clearAllFilters={ clearAllFilters } filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
             </Show>
 
             <div class="flex w-full min-w-[270px] flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">

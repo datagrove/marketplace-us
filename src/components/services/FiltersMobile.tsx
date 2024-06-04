@@ -57,6 +57,9 @@ for (let i = 0; i < subjectData.length; i++) {
 interface Props {
     filterPostsByGrade: (grade: string) => void;
     filterPostsBySubject: (currentSubject: string) => void;
+    clearSubjects: () => void;
+    clearGrade: () => void;
+    clearAllFilters: () => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
@@ -68,16 +71,19 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [gradeFilters, setGradeFilters] = createSignal<
         Array<{ grade: string; id: number }>
     >([]);
+    const [selectedGrades, setSelectedGrades] = createSignal<Array<string>>([]);
     const [subjects, setSubjects] = createSignal<Array<string>>([]);
-    const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(1);
-    const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(1);
+    const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
+    const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
 
     createEffect(() => {
-        if(gradeFilterCount() > 0 || subjectFilterCount() > 0) {
+        if(gradeFilterCount() === 0 && subjectFilterCount() === 0) {
+            setShowFilterNumber(false);
+        } else {
             setShowFilterNumber(true);
         }
-    })
+    });
 
     const setGradesFilter = (item: { grade: string; id: number }) => {
         if (gradeFilters().includes(item)) {
@@ -91,38 +97,24 @@ export const FiltersMobile: Component<Props> = (props) => {
         props.filterPostsByGrade(item.id.toString());
     };
 
-    const clearMobileFilters = () => {
-        console.log("in clearMobileFilters")
-        console.log(gradeFilters())
-        
-        setGradeFilters([]);
-        console.log(gradeFilters());
-        setSubjects([]);
+    const clearAllFiltersMobile = () => {
+        props.clearAllFilters;
+        setGradeFilterCount(0);
+        setSubjectFilterCount(0);
+        setShowFilterNumber(false);
     }
 
-    const clearSubjects = () => {
-        let selectedSubjects = document.querySelectorAll(".selected");
+    const clearSubjectFiltersMobile = () => {
+        props.clearSubjects;
+        setSubjectFilterCount(0);
+    }
 
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
-        });
+    const clearGradeFiltersMobile = () => {
+        props.clearGrade;
+        setGradeFilterCount(0);
+    }
 
-        setSubjects([]);
-        // filterPosts();
-    };
 
-    const clearGrades = () => {
-        const gradeCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].grade"
-        ) as NodeListOf<HTMLInputElement>;
-
-        gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) checkbox.click();
-        });
-
-        setGradeFilters([]);
-        // filterPosts();
-    };
 
     return (
         <div class="sticky top-0 z-50 mx-4 h-full w-3/4 max-w-[300px] bg-background1 dark:bg-background1-DM">
@@ -257,7 +249,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
                             <button 
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
-                                onClick={ clearMobileFilters }
+                                onClick={ clearAllFiltersMobile }
                             >
                                 {t("clearFilters.filterButtons.0.text")}
                             </button>
@@ -314,6 +306,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 {(item) => (
                                     <div class="flex w-1/2 flex-row flex-wrap py-1">
                                         <div class="flex items-center">
+                                            {/* TODO - capture selected checkboxes in a signal, if included pre-check them */}
                                             <input
                                                 aria-label={
                                                     t(
@@ -341,7 +334,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <div class="my-2">
                             <button 
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
-                                onClick={ clearMobileFilters }
+                                onClick={ clearGradeFiltersMobile }
                             >
                                 {t("clearFilters.filterButtons.2.text")}
                             </button>
@@ -418,7 +411,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <div class="my-2">
                             <button 
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
-                                onClick={ clearMobileFilters }
+                                onClick={ clearSubjectFiltersMobile }
                             >
                                 {t("clearFilters.filterButtons.1.text")}
                             </button>

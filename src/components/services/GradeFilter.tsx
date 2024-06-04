@@ -61,9 +61,10 @@ export const GradeFilter: Component<Props> = (props) => {
     });
 
     function checkGradeBoxes() {
-        console.log(selectedGrades());
+        console.log("selectedGrades: ", selectedGrades());
         selectedGrades().map((grade) => {
             let gradeCheckElements = document.getElementsByClassName("grade " + grade) as HTMLCollectionOf<HTMLInputElement>;
+            
             if (gradeCheckElements) {
                 for (let i = 0; i < gradeCheckElements.length; i++) {
                     gradeCheckElements[i].checked = true;
@@ -73,72 +74,7 @@ export const GradeFilter: Component<Props> = (props) => {
     }
 
     return (
-        <div>
-            {/* Container for Mobile View */}
-            <div class="container">
-                {/*Mobile Filters Main Group*/}
-                <details class="group mx-1 mb-4 rounded border border-border1 bg-background1 shadow dark:border-border1-DM dark:bg-background1-DM md:hidden">
-                    <summary class="relative flex cursor-pointer list-none flex-wrap items-center rounded group-open:z-[1] group-open:rounded-b-none">
-                        <h2 class="flex flex-1 p-2 font-bold">
-                            {t("buttons.filters")}
-                        </h2>
-                        {/*Creates the Dropdown Arrow*/}
-                        <div class="flex w-10 items-center justify-center">
-                            <div class="ml-2 border-8 border-transparent border-l-border1 transition-transform group-open:rotate-90 dark:border-l-border1-DM"></div>
-                        </div>
-                    </summary>
-                    {/*Grade*/}
-                    <div class="px-4">
-                        <details class="group/Grade rounded bg-background1 shadow dark:bg-background1-DM md:hidden">
-                            <summary class="relative flex cursor-pointer list-none flex-wrap items-center justify-between rounded group-open/Grade:z-[1] group-open/Grade:rounded-b-none">
-                                <div class="flex items-center pb-1">
-                                    <h2 class="flex flex-1 font-bold text-ptext1 dark:text-ptext1-DM">
-                                        {t("formLabels.grades")}
-                                    </h2>
-                                </div>
-
-                                {/*Creates the Dropdown Arrow*/}
-                                <div class="flex w-10 items-center justify-center">
-                                    <div class="ml-2 border-8 border-transparent border-l-border1 transition-transform group-open/Grade:rotate-90 dark:border-l-border1-DM"></div>
-                                </div>
-                            </summary>
-                            <div class="px-4">
-                                <div class="h-42 flex-column rounded text-left">
-                                    <div class="h-42 ml-8 mr-4 grid overflow-auto text-left">
-                                        <For each={grade()}>
-                                            {(item) => (
-                                                <div class="flex w-11/12 flex-row">
-                                                    <div class="inline">
-                                                        <input
-                                                            aria-label={
-                                                                t(
-                                                                    "ariaLabels.checkboxGrade"
-                                                                ) + " " + item.grade
-                                                            }
-                                                            type="checkbox"
-                                                            class={`grade ${item.id.toString()} mr-4 leading-tight`}
-                                                            onClick={() => {
-                                                                setGradesFilter(
-                                                                    item
-                                                                );
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div class="inline">
-                                                        <span class="text-ptext1 dark:text-ptext1-DM">
-                                                            {item.grade}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </For>
-                                    </div>
-                                </div>
-                            </div>
-                        </details>
-                    </div>
-                </details>
-            </div>
+        <div>            
             {/* Filter Menus for md+ view */}
             <div class="hidden w-56 bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
                 {/*Grade*/}
