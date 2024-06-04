@@ -69,6 +69,15 @@ export const FiltersMobile: Component<Props> = (props) => {
         Array<{ grade: string; id: number }>
     >([]);
     const [subjects, setSubjects] = createSignal<Array<string>>([]);
+    const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(1);
+    const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(1);
+    const [showFilterNumber, setShowFilterNumber] = createSignal(false);
+
+    createEffect(() => {
+        if(gradeFilterCount() > 0 || subjectFilterCount() > 0) {
+            setShowFilterNumber(true);
+        }
+    })
 
     const setGradesFilter = (item: { grade: string; id: number }) => {
         if (gradeFilters().includes(item)) {
@@ -131,7 +140,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                     }
                 }}
             >
-                <div class="h-full">
+                <div class="h-full flex items-center relative">
                     <svg
                         fill="none"
                         width="20px"
@@ -141,7 +150,14 @@ export const FiltersMobile: Component<Props> = (props) => {
                     >
                         <path d="M31.078 1.366c-0.221-0.371-0.621-0.616-1.078-0.616-0 0-0 0-0 0h-28c-0.69 0-1.25 0.56-1.25 1.25 0 0.223 0.058 0.432 0.16 0.613l-0.003-0.006 9.843 17.717v5.676c0 0.486 0.278 0.908 0.684 1.114l0.007 0.003 8 4c0.163 0.084 0.355 0.133 0.559 0.133 0.243 0 0.47-0.070 0.661-0.191l-0.005 0.003c0.359-0.223 0.594-0.615 0.594-1.062 0-0 0-0.001 0-0.001v0-9.676l9.842-17.717c0.1-0.175 0.159-0.385 0.159-0.609 0-0.233-0.064-0.452-0.176-0.638l0.003 0.006zM18.908 19.393c-0.099 0.175-0.158 0.384-0.158 0.607v7.977l-5.5-2.75v-5.227c0-0 0-0.001 0-0.002 0-0.222-0.058-0.431-0.16-0.612l0.003 0.006-8.969-16.143h23.751z"></path>
                     </svg>
-                    <h1></h1>
+                    
+                    <Show when={ showFilterNumber() === true}>
+                        <div class="self-start -ml-1 flex justify-center items-center bg-btn1 dark:bg-btn1-DM rounded-full h-5 w-5">
+                            <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">{ gradeFilterCount() + subjectFilterCount() }</p>
+                        </div>
+                    </Show>
+                    
+                    <h1 class="ml-2 text-xl py-2">{t("buttons.filters")}</h1>
                 </div>
             </button>
 
@@ -163,6 +179,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
                                     {t("formLabels.grades")}
                                 </h2>
+
+                                <Show when={ gradeFilterCount() > 0}>
+                                    <div class="flex justify-center items-center bg-btn1 dark:bg-btn1-DM rounded-full h-5 w-5">
+                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">{ gradeFilterCount() }</p>
+                                    </div>
+                                </Show>
+
                                 <svg
                                     width="30px"
                                     height="30px"
@@ -201,6 +224,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
                                     {t("formLabels.subjects")}
                                 </h2>
+
+                                <Show when={ subjectFilterCount() > 0}>
+                                    <div class="flex justify-center items-center bg-btn1 dark:bg-btn1-DM rounded-full h-5 w-5">
+                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">{ subjectFilterCount() }</p>
+                                    </div>
+                                </Show>
+
                                 <svg
                                     width="30px"
                                     height="30px"
@@ -272,7 +302,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     <path d="M9 6l-6 6 6 6" />
                                     <path stroke-linecap="round" d="M3 12h1" />
                                 </svg>
-                                <h2 class="flex flex-1 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+
+                                <h2 class="flex flex-1 text-xl font-bold text-ptext1 dark:text-ptext1-DM py-2">
                                     {t("formLabels.grades")}
                                 </h2>
                             </div>
@@ -293,6 +324,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 class="grade mr-4 scale-125 leading-tight grade"
                                                 onClick={() => {
                                                     setGradesFilter(item);
+                                                    setGradeFilterCount(gradeFilterCount() + 1);
                                                 }}
                                             />
                                         </div>
@@ -304,6 +336,15 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     </div>
                                 )}
                             </For>
+                        </div>
+
+                        <div class="my-2">
+                            <button 
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={ clearMobileFilters }
+                            >
+                                {t("clearFilters.filterButtons.2.text")}
+                            </button>
                         </div>
                     </div>
                 </Show>
@@ -337,7 +378,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     <path d="M9 6l-6 6 6 6" />
                                     <path stroke-linecap="round" d="M3 12h1" />
                                 </svg>
-                                <h2 class="flex flex-1 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                                <h2 class="flex flex-1 text-xl font-bold text-ptext1 dark:text-ptext1-DM py-2">
                                     {t("formLabels.subjects")}
                                 </h2>
                             </div>
@@ -355,6 +396,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                     "Subject selected: " +
                                                         item.name
                                                 );
+                                                setSubjectFilterCount(subjectFilterCount() + 1);
                                                 props.filterPostsBySubject(
                                                     item.id.toString()
                                                 );
@@ -371,6 +413,15 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     </div>
                                 </div>
                             ))}
+                        </div>
+
+                        <div class="my-2">
+                            <button 
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={ clearMobileFilters }
+                            >
+                                {t("clearFilters.filterButtons.1.text")}
+                            </button>
                         </div>
                     </div>
                 </Show>
