@@ -1,17 +1,13 @@
 ---
 import { SITE } from "../../config";
-import { AuthMode } from "./AuthMode";
-import { LanguagePicker } from "./LanguagePicker";
-import { CreatorProfileButton } from "./CreatorProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import ThemeIcon from "./ThemeIcon.astro";
 import { ThemeBtn } from "./ThemeIcon";
 
 import { ProfileBtn } from "./ProfileBtn";
 import { MobileProfileBtn } from "./MobileProfileBtn";
 import { Cart } from "@components/common/cart/Cart";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
-import { UserRouting } from "../members/UserRouting";
+import { SearchBar } from "@components/common/HeaderSearchBar";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -31,6 +27,8 @@ export interface Props {
 }
 
 const { links = [] } = Astro.props;
+
+
 ---
 
 <header id="container" class="py-4">
@@ -90,6 +88,8 @@ const { links = [] } = Astro.props;
                 </h1>
             </div>
         </div>
+
+        <SearchBar client:only="solid-js" />
 
         <div
             class="flex items-center md:justify-end md:w-[50%] lg:w-[40%] xl:w-[35%]"

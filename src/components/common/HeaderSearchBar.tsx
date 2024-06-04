@@ -3,16 +3,14 @@ import { createSignal, createEffect, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { IconSearch } from "@tabler/icons-solidjs";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-interface Props {
-    // Define the type for the filterPosts prop
-    search: (searchString: string) => void;
-}
 
-export const SearchBar: Component<Props> = (props) => {
+
+export const SearchBar: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
 
     onMount(() => {
@@ -22,9 +20,8 @@ export const SearchBar: Component<Props> = (props) => {
     });
 
     const clickSearch = (e: Event) => {
-        props.search(searchString());
-
-        // setSearchString("");
+        localStorage.setItem("searchString", searchString());
+        window.location.href = `/${lang}/resources`;
     };
 
     createEffect(() => {
@@ -39,15 +36,14 @@ export const SearchBar: Component<Props> = (props) => {
                     // // Cancel the default action, if needed
                     // e.preventDefault();
                     // Trigger the button element with a click
-                    console.log("button click");
-                    document.getElementById("searchButton")?.click();
+                    clickSearch(e);
                 }
             });
     });
 
     return (
-        <div class="search-form">
-            <div class="form">
+        <div class="search-form w-full mx-4 flex justify-center items-center">
+            <div class="w-full h-3/4 flex justify-between items-center form rounded-full border border-border1 px-1 text-ptext1  focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM">
                 <label class="sr-only" for="search">
                     {t("formLabels.search")}
                 </label>
@@ -55,19 +51,11 @@ export const SearchBar: Component<Props> = (props) => {
                     type="text"
                     name="query"
                     id="search"
+                    class="h-full rounded-full w-full"
                     value={searchString()}
-                    class="rounded border border-border1 px-1 text-ptext1 placeholder:italic placeholder:text-ptext1 placeholder:opacity-[65%] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM"
-                    placeholder={t("formLabels.search")}
                     oninput={(e) => setSearchString(e.target.value)}
                 />
-                {/* <button id="searchButton" class="btn-primary mx-6" onclick={(e) => props.search(searchString())}>{t('formLabels.search')}</button> */}
-                <button
-                    id="searchButton"
-                    class="btn-primary mx-6"
-                    onclick={(e) => clickSearch(e)}
-                >
-                    {t("formLabels.search")}
-                </button>
+                <IconSearch class="search-icon mr-2" />
             </div>
         </div>
     );
