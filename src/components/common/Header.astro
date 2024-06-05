@@ -27,14 +27,12 @@ export interface Props {
 }
 
 const { links = [] } = Astro.props;
-
-
 ---
 
 <header id="container" class="py-4">
     <!-- <a id="logo">{pageTitle}</a>               -->
 
-    <div id="container" class="flex align-middle justify-between">
+    <div class="flex justify-between items-center h-full">
         <div class="md:hidden">
             <MobileProfileBtn client:only="solid-js" />
         </div>
@@ -89,12 +87,15 @@ const { links = [] } = Astro.props;
             </div>
         </div>
 
-        <SearchBar client:only="solid-js" />
+        <div
+            class="hidden md:inline md:h-full md:w-full items-center"
+        >
+            <SearchBar client:only="solid-js" />
+        </div>
 
         <div
             class="flex items-center md:justify-end md:w-[50%] lg:w-[40%] xl:w-[35%]"
         >
-
             <div class="hidden md:block">
                 <!-- <ThemeIcon /> -->
                 <ThemeBtn client:only="solid-js" />
@@ -108,5 +109,8 @@ const { links = [] } = Astro.props;
                 <ProfileBtn client:only="solid-js" />
             </div>
         </div>
+    </div>
+    <div class="md:hidden">
+        <SearchBar client:only="solid-js" />
     </div>
 </header>
