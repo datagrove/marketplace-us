@@ -423,6 +423,7 @@ export interface uiObject {
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
+            { text: string; ariaLabel: string },
         ];
     };
 }

@@ -1,17 +1,21 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, onMount } from "solid-js";
+import { createSignal, createEffect, onMount, Show } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { GradeFilter } from "./GradeFilter";
+import { SubjectFilter } from "./SubjectFilter";
+import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import * as allFilters from "../posts/fetchPosts";
 import stripe from "../../lib/stripe";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -20,85 +24,46 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
+// interface Props {
+//     subject: string | null;
+//     grade: string | null;
+//     searchString: string | null;
+//     resourceTypes: string | null;
+// }
+
 export const ServicesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
-    const [filters, setFilters] = createSignal<Array<string>>([]);
+    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>([]);
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
+    
+    const screenSize = useStore(windowSize);
 
     onMount(async () => {
-        await fetchPosts();
+        if (localStorage.getItem("selectedSubjects") !== null && localStorage.getItem("selectedSubjects")) {
+            setSubjectFilters([...subjectFilters(), ...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+        }
+        if (localStorage.getItem("selectedGrades") !== null && localStorage.getItem("selectedGrades")) {
+            setGradeFilters([...gradeFilters(), ...JSON.parse(localStorage.getItem("selectedGrades")!)]);
+        }
+        if (localStorage.getItem("searchString") !== null && localStorage.getItem("searchString") !== undefined) {
+            setSearchString(JSON.parse(localStorage.getItem("searchString")!));
+        } 
+        if (localStorage.getItem("selectedResourceTypes") !== null && localStorage.getItem("selectedResourceTypes")) {
+            setResourceFilters([...resourceFilters(), ...JSON.parse(localStorage.getItem("selectedResourceTypes")!)]);
+        }
+        await filterPosts();
     });
 
-    let data;
+    window.addEventListener("beforeunload", () => {
+            localStorage.removeItem("selectedGrades");
+            localStorage.removeItem("selectedSubjects");
+    });
 
-    async function fetchPosts() {
-        const { data, error } = await supabase.from("sellerposts").select("*");
-
-        if (!data) {
-            alert("No posts available.");
-        }
-        if (error) {
-            console.log("supabase error: " + error.message);
-        } else {
-            console.log(data);
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            console.log(newItems.map((item) => item));
-            setPosts(newItems);
-            setCurrentPosts(newItems);
-        }
-    }
-
-    // start the page as displaying all posts
-    if (!data) {
-        let noPostsMessage = document.getElementById("no-posts-message");
-        noPostsMessage?.classList.remove("hidden");
-
-        setPosts([]);
-        setCurrentPosts([]);
-    } else {
-        setPosts(data);
-        setCurrentPosts(data);
-    }
 
     const searchPosts = async (searchText: string) => {
         setSearchString(searchText);
@@ -107,13 +72,13 @@ export const ServicesView: Component = () => {
     };
 
     const setCategoryFilter = (currentCategory: string) => {
-        if (filters().includes(currentCategory)) {
-            let currentFilters = filters().filter(
+        if (subjectFilters().includes(currentCategory)) {
+            let currentFilters = subjectFilters().filter(
                 (el) => el !== currentCategory
             );
-            setFilters(currentFilters);
+            setSubjectFilters(currentFilters);
         } else {
-            setFilters([...filters(), currentCategory]);
+            setSubjectFilters([...subjectFilters(), currentCategory]);
         }
 
         filterPosts();
@@ -125,9 +90,10 @@ export const ServicesView: Component = () => {
         const noPostsMessage = document.getElementById("no-posts-message");
 
         const res = await allFilters.fetchFilteredPosts(
-            filters(),
+            subjectFilters(),
             gradeFilters(),
-            searchString()
+            searchString(),
+            resourceFilters(),
         );
 
         if (res === null || res === undefined) {
@@ -255,13 +221,16 @@ export const ServicesView: Component = () => {
         } else {
             setGradeFilters([...gradeFilters(), grade]);
         }
-
+        console.log(gradeFilters());
         filterPosts();
     };
 
     const clearAllFilters = () => {
+        console.log("clearing all filters");
         let searchInput = document.getElementById("search") as HTMLInputElement;
-        let selectedSubjects = document.querySelectorAll(".selected");
+        const subjectCheckboxes = document.querySelectorAll(
+            "input[type='checkbox'].subject"
+        ) as NodeListOf<HTMLInputElement>;
         const gradeCheckboxes = document.querySelectorAll(
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
@@ -270,33 +239,31 @@ export const ServicesView: Component = () => {
             searchInput.value = "";
         }
 
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
-        });
-
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
-        });
-
         gradeCheckboxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) checkbox.click();
+        });
+
+        subjectCheckboxes.forEach((checkbox) => {
             if (checkbox && checkbox.checked) checkbox.click();
         });
 
         setSearchPost([]);
         setSearchString("");
-        setFilters([]);
+        setSubjectFilters([]);
         setGradeFilters([]);
         filterPosts();
     };
 
     const clearSubjects = () => {
-        let selectedSubjects = document.querySelectorAll(".selected");
+        const subjectCheckboxes = document.querySelectorAll(
+            "input[type='checkbox'].subject"
+        ) as NodeListOf<HTMLInputElement>;
 
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
+        subjectCheckboxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) checkbox.click();
         });
 
-        setFilters([]);
+        setSubjectFilters([]);
         filterPosts();
     };
 
@@ -320,7 +287,7 @@ export const ServicesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <div class="clear-filters-btns flex flex-wrap items-center justify-center">
+            <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
                 <button
                     class="clearBtnRectangle"
                     onclick={clearAllFilters}
@@ -352,13 +319,19 @@ export const ServicesView: Component = () => {
                 </button>
             </div>
 
-            <div class="h-fit">
-                <CategoryCarousel filterPosts={setCategoryFilter} />
-            </div>
+            <Show when={ screenSize() === "sm"}>
+                <FiltersMobile clearSubjects={ clearSubjects } clearGrade={ clearGrade } clearAllFilters={ clearAllFilters } filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
+            </Show>
 
-            <div class="flex min-w-[270px] flex-col items-center md:h-full md:flex-row md:items-start">
-                <div class="w-11/12 md:mr-4 md:w-56">
-                    <GradeFilter filterPostsByGrade={filterPostsByGrade} />
+            <div class="flex w-full min-w-[270px] flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
+                <div class="sticky top-0 w-full md:w-auto">
+                    <div class="w-11/12 md:mr-4 md:w-56">
+                        <GradeFilter filterPostsByGrade={filterPostsByGrade} />
+                    </div>
+
+                    <div class="w-11/12 md:mr-4 md:w-56">
+                        <SubjectFilter filterPosts={setCategoryFilter} />
+                    </div>
                 </div>
 
                 <div class="w-11/12 items-center md:flex-1">
@@ -374,7 +347,7 @@ export const ServicesView: Component = () => {
                         <ViewCard posts={currentPosts()} />
                     </div>
 
-                    <div class="md:hidden flex justify-center">
+                    <div class="flex justify-center md:hidden">
                         <MobileViewCard posts={currentPosts()} />
                     </div>
                 </div>

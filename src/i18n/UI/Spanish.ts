@@ -526,6 +526,7 @@ export const Spanish = {
             { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
             { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
             { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
+            { text: "Ver Resultados", ariaLabel: "Ver Resultados"},
         ],
     },
 } as const;
