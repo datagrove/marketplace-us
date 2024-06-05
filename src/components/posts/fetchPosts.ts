@@ -12,7 +12,8 @@ export async function fetchFilteredPosts(
     subjectFilters: Array<string>,
     // subjectFilters: Array<string>,
     gradeFilters: Array<string>,
-    searchString: string
+    searchString: string,
+    resourceFilters: Array<string>
 ) {
     try {
         let query = supabase.from("sellerposts").select("*");

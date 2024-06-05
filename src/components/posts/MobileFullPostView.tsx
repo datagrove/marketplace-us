@@ -8,8 +8,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-import stripe from "@lib/stripe"
-
+import stripe from "@lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -106,6 +105,32 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                     }
                                 });
                             });
+                        }
+
+                        const { data: resourceTypeData, error } = await supabase
+                            .from("resource_types")
+                            .select("*");
+
+                        if (error) {
+                            console.log("supabase error: " + error.message);
+                        } else {
+                            item.resourceTypes = [];
+                            resourceTypeData.forEach(
+                                (databaseResourceTypes) => {
+                                    item.resource_types.map(
+                                        (itemResourceType: string) => {
+                                            if (
+                                                itemResourceType ===
+                                                databaseResourceTypes.id.toString()
+                                            ) {
+                                                item.resourceTypes!.push(
+                                                    databaseResourceTypes.type
+                                                );
+                                            }
+                                        }
+                                    );
+                                }
+                            );
                         }
 
                         if (item.price_id !== null) {
@@ -236,7 +261,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     function tabLinkClick(e: Event) {
         e.preventDefault();
 
-        let currLinkEl = e.currentTarget as HTMLAnchorElement
+        let currLinkEl = e.currentTarget as HTMLAnchorElement;
         let currLinkID = currLinkEl.id; // <a> element id
         let currEl = document.getElementById(currLinkID); // <a> element clicked
         let allLinks = document.getElementsByClassName("tabLink"); // all links
@@ -290,7 +315,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     function imageClick(e: Event) {
         e.preventDefault();
 
-        let mobileCurrImageEle = e.currentTarget as HTMLDivElement
+        let mobileCurrImageEle = e.currentTarget as HTMLDivElement;
         let mobileCurrImageID = mobileCurrImageEle.id;
         let mobileCurrImage = document.getElementById(mobileCurrImageID);
         let allMobileImages =
@@ -568,7 +593,6 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 <div class="my-2 flex justify-between">
                     <Quantity quantity={1} updateQuantity={updateQuantity} />
                     <div class="ml-4 w-full">
-
                         <AddToCart
                             item={{ ...post()!, quantity: 1 }}
                             buttonClick={resetQuantity}
@@ -664,11 +688,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <p class="mt-4 font-light uppercase">
                             {t("formLabels.resourceTypes")}
                         </p>
-                        <div>
-                            <p class="italic">{t("messages.comingSoon")}</p>
-                            {/* TODO: add resource type to database and then populate */}
-                            {/* { post()?.resource_type.join(", ")} */}
-                        </div>
+                        <div>{post()?.resourceTypes!.join(", ")}</div>
                     </div>
 
                     <div>

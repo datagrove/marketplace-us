@@ -15,7 +15,6 @@ export const Cart = () => {
     const storedItems = localStorage.getItem("cartItems");
 
     onMount(() => {
-        console.log("got stored items: " + storedItems);
         if (storedItems) {
             setItems(JSON.parse(storedItems));
             let count = 0;
