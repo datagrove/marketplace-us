@@ -13,7 +13,6 @@ import type { AuthSession } from "@supabase/supabase-js";
 
 import stripe from "@lib/stripe";
 
-
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
@@ -113,6 +112,32 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     }
                                 });
                             });
+                        }
+
+                        const { data: resourceTypeData, error } = await supabase
+                            .from("resource_types")
+                            .select("*");
+
+                        if (error) {
+                            console.log("supabase error: " + error.message);
+                        } else {
+                            item.resourceTypes = [];
+                            resourceTypeData.forEach(
+                                (databaseResourceTypes) => {
+                                    item.resource_types.map(
+                                        (itemResourceType: string) => {
+                                            if (
+                                                itemResourceType ===
+                                                databaseResourceTypes.id.toString()
+                                            ) {
+                                                item.resourceTypes!.push(
+                                                    databaseResourceTypes.type
+                                                );
+                                            }
+                                        }
+                                    );
+                                }
+                            );
                         }
 
                         if (item.price_id !== null) {
@@ -829,9 +854,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {t("formLabels.resourceTypes")}
                             </p>
                             <div>
-                                <p class="italic">{t("messages.comingSoon")}</p>
                                 {/* TODO: add resource type to database and then populate */}
-                                {/* { post()?.resource_type.join(", ")} */}
+                                {post()?.resourceTypes!.join(", ")}
                             </div>
                         </div>
 
