@@ -11,7 +11,7 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategoryData = values.subjectCategoryInfo;
 
-let grades: Array<{ grade: string; id: number }> = [];
+let grades: Array<{ grade: string; id: number, checked: boolean }> = [];
 let subjects: Array<any> = [];
 
 const { data: gradeData, error: gradeError } = await supabase
@@ -25,6 +25,7 @@ if (gradeError) {
         grades.push({
             grade: grade.grade,
             id: grade.id,
+            checked: false,
         });
     });
     grades.sort((a, b) => (a.id > b.id ? 0 : -1));
@@ -43,7 +44,13 @@ if (error) {
 
 const subjectData = productCategoryData.subjects;
 
-let allSubjectInfo: any[] = [];
+let allSubjectInfo: Array <{
+    name: string;
+    description: string;
+    ariaLabel: string;
+    id: string;
+    checked: boolean
+}> = [];
 
 for (let i = 0; i < subjectData.length; i++) {
     allSubjectInfo.push({
@@ -51,6 +58,7 @@ for (let i = 0; i < subjectData.length; i++) {
         ...subjects.find(
             (itmInner) => itmInner.id.toString() === subjectData[i].id
         ),
+        checked: false,
     });
 }
 
@@ -67,11 +75,11 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [showSubjects, setShowSubjects] = createSignal(false);
     const [showFilters, setShowFilters] = createSignal(false);
     const [grade, setGrade] =
-        createSignal<Array<{ grade: string; id: number }>>(grades);
+        createSignal<Array<{ grade: string; id: number, checked: boolean }>>(grades);
     const [gradeFilters, setGradeFilters] = createSignal<
-        Array<{ grade: string; id: number }>
+        Array<string>
     >([]);
-    const [selectedGrades, setSelectedGrades] = createSignal<Array<string>>([]);
+    const [subject, setSubject] = createSignal<Array<any>>(allSubjectInfo);
     const [selectedSubjects, setSelectedSubjects] = createSignal<Array<string>>([]);
     const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
@@ -86,154 +94,100 @@ export const FiltersMobile: Component<Props> = (props) => {
     });
 
 
-    const setGradesFilter = (item: { grade: string; id: number }) => {
-        if (gradeFilters().includes(item)) {
+    const setGradesFilter = ( id: string ) => {
+        if (gradeFilters().includes(id)) {
             let currentGradeFilters = gradeFilters().filter(
-                (el) => el !== item
+                (el) => el !== id
             );
             setGradeFilters(currentGradeFilters);
+            setGradeFilterCount(gradeFilters().length);
         } else {
-            setGradeFilters([...gradeFilters(), item]);
+            setGradeFilters([...gradeFilters(), id]);
+            setGradeFilterCount(gradeFilters().length);
         }
-        props.filterPostsByGrade(item.id.toString());
+        props.filterPostsByGrade(id);
+
+        grade().forEach((grade) => {
+            if (grade.id.toString() === id) {
+                if (grade.checked) {
+                    grade.checked = false;
+                } else {
+                    grade.checked = true;
+                }
+            }
+        });
     };
 
+
     const clearAllFiltersMobile = () => {
-        props.clearAllFilters;
+        props.clearAllFilters();
+        grade().forEach((grade) => {
+            grade.checked = false;
+        })
+        subject().forEach((subject) => {
+            subject.checked = false;
+        })
+        setGradeFilters([]);
+        setSelectedSubjects([]);
         setGradeFilterCount(0);
         setSubjectFilterCount(0);
         setShowFilterNumber(false);
     };
 
     const clearSubjectFiltersMobile = () => {
-        props.clearSubjects;
+        props.clearSubjects();
+        subject().forEach((subject) => {
+            subject.checked = false;
+        })
+        setSelectedSubjects([]);
         setSubjectFilterCount(0);
     };
 
     const clearGradeFiltersMobile = () => {
-        props.clearGrade;
+        props.clearGrade();
+        grade().forEach((grade) => {
+            grade.checked = false;
+        })
         setGradeFilterCount(0);
+        setGradeFilters([]);
     };
 
     const gradeCheckboxClick = (e:Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
-        let currID = 0;
 
-        switch(currCheckboxID) {
-            case "PreK":
-                currID = 1;
-                break;
-            case "K":
-                currID = 2;
-                break;
-            case "1st":
-                currID = 3;
-                break;
-            case "2nd":
-                currID = 4;
-                break;
-            case "3rd":
-                currID = 5;
-                break;
-            case "4th":
-                currID = 6;
-                break;
-            case "5th":
-                currID = 7;
-                break;
-            case "6th":
-                currID = 8;
-                break;
-            case "7th":
-                currID = 9;
-                break;
-            case "8th":
-                currID = 10;
-                break;
-            case "9th":
-                currID = 11;
-                break;
-            case "10th":
-                currID = 12;
-                break;
-            case "11th":
-                currID = 13;
-                break;
-            case "12th":
-                currID = 14;
-                break;
-            case "College":
-                currID = 15;
-                break;
-            case "Adult":
-                currID = 16;
-                break;
-        }
-        
-        let gradeInfo = { grade: currCheckbox.id, id: currID }
-
-        if(selectedGrades().includes(currCheckboxID)) {
-            const index = selectedGrades().indexOf(currCheckboxID);
-
-            if(index > -1) {
-                setSelectedGrades(selectedGrades().splice(index, 1));
-            }
-
-            setGradeFilterCount(gradeFilterCount() - 1);
-
-        } else {
-            selectedGrades().push(currCheckboxID);
-            setGradesFilter(gradeInfo);
-            setGradeFilterCount(gradeFilterCount() + 1);
-        }
+        setGradesFilter(currCheckboxID);
     }
 
     const subjectCheckboxClick = (e:Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
-        let currID = 0;
 
-        switch(currCheckboxID) {
-            case "Geography":
-                currID = 1;
-                break;
-            case "History":
-                currID = 2;
-                break;
-            case "Art & Music":
-                currID = 3;
-                break;
-            case "Holiday":
-                currID = 4;
-                break;
-            case "Math":
-                currID = 5;
-                break;
-            case "Science":
-                currID = 6;
-                break;
-            case "Social Studies":
-                currID = 7;
-                break;
-            case "Specialty":
-                currID = 8;
-                break;
-        }
+        setSubjectFilter(currCheckboxID);
+    }
 
-        if(selectedSubjects().includes(currCheckboxID)) {
-            const index = selectedSubjects().indexOf(currCheckboxID);
-
-            if(index > -1) {
-                selectedSubjects().splice(index, 1);
-            }
-
-            setSubjectFilterCount(subjectFilterCount() - 1);
+    function setSubjectFilter( id: string ) {
+        if (selectedSubjects().includes(id)) {
+            let currentSubjectFilters = selectedSubjects().filter(
+                (el) => el !== id
+            );
+            setSelectedSubjects(currentSubjectFilters);
+            setSubjectFilterCount(selectedSubjects().length);
         } else {
-            selectedSubjects().push(currCheckboxID);
-            props.filterPostsBySubject(currID.toString());
-            setSubjectFilterCount(subjectFilterCount() + 1);
+            setSelectedSubjects([...selectedSubjects(), id]);
+            setSubjectFilterCount(selectedSubjects().length);
         }
+        props.filterPostsBySubject(id);
+
+        subject().forEach((subject) => {
+            if (subject.id.toString() === id) {
+                if (subject.checked) {
+                    subject.checked = false;
+                } else {
+                    subject.checked = true;
+                }
+            }
+        });
     }
 
     return (
@@ -287,6 +241,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     setShowSubjects(false);
                                 }
                                 setShowGrades(!showGrades());
+
                             }}
                         >
                             <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
@@ -440,8 +395,9 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                     ) + item.grade
                                                 }
                                                 type="checkbox"
-                                                id={ item.grade }
-                                                class="grade grade mr-4 scale-125 leading-tight"
+                                                id={item.id.toString()}
+                                                checked={item.checked}
+                                                class="grade mr-4 scale-125 leading-tight"
                                                 // onClick={() => {
                                                 //     setGradesFilter(item);
                                                 //     setGradeFilterCount(
@@ -513,21 +469,10 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     <div class="flex items-center">
                                         <input
                                             type="checkbox"
-                                            id={ item.name }
+                                            id={ item.id }
+                                            checked= { item.checked }
                                             class="subject mr-2 scale-125 leading-tight"
-                                            // onClick={() => {
-                                            //     console.log(
-                                            //         "Subject selected: " +
-                                            //             item.name
-                                            //     );
-                                            //     setSubjectFilterCount(
-                                            //         subjectFilterCount() + 1
-                                            //     );
-                                            //     props.filterPostsBySubject(
-                                            //         item.id.toString()
-                                            //     );
-                                            // }}
-                                            onClick = { subjectCheckboxClick }
+                                            onClick = {(e) => subjectCheckboxClick(e) }
                                         />
                                     </div>
 

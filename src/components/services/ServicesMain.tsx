@@ -226,8 +226,11 @@ export const ServicesView: Component = () => {
     };
 
     const clearAllFilters = () => {
+        console.log("clearing all filters");
         let searchInput = document.getElementById("search") as HTMLInputElement;
-        let selectedSubjects = document.querySelectorAll(".selected");
+        const subjectCheckboxes = document.querySelectorAll(
+            "input[type='checkbox'].subject"
+        ) as NodeListOf<HTMLInputElement>;
         const gradeCheckboxes = document.querySelectorAll(
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
@@ -236,15 +239,11 @@ export const ServicesView: Component = () => {
             searchInput.value = "";
         }
 
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
-        });
-
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
-        });
-
         gradeCheckboxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) checkbox.click();
+        });
+
+        subjectCheckboxes.forEach((checkbox) => {
             if (checkbox && checkbox.checked) checkbox.click();
         });
 
@@ -256,10 +255,12 @@ export const ServicesView: Component = () => {
     };
 
     const clearSubjects = () => {
-        let selectedSubjects = document.querySelectorAll(".selected");
+        const subjectCheckboxes = document.querySelectorAll(
+            "input[type='checkbox'].subject"
+        ) as NodeListOf<HTMLInputElement>;
 
-        selectedSubjects.forEach((subject) => {
-            subject.classList.remove("selected");
+        subjectCheckboxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) checkbox.click();
         });
 
         setSubjectFilters([]);
