@@ -56,6 +56,31 @@ export const ViewCard: Component<Props> = (props) => {
                         : null;
                     // Set the default quantity to 1
                     post.quantity = 1;
+                    console.log(post);
+
+                    const { data: resourceTypeData, error } = await supabase
+                        .from("resource_types")
+                        .select("*");
+
+                    if (error) {
+                        console.log("supabase error: " + error.message);
+                    } else {
+                        post.resourceTypes = [];
+                        resourceTypeData.forEach((databaseResourceTypes) => {
+                            post.resource_types.map(
+                                (itemResourceType: string) => {
+                                    if (
+                                        itemResourceType ===
+                                        databaseResourceTypes.id.toString()
+                                    ) {
+                                        post.resourceTypes!.push(
+                                            databaseResourceTypes.type
+                                        );
+                                    }
+                                }
+                            );
+                        });
+                    }
                     return post;
                 })
             );
@@ -206,8 +231,9 @@ export const ViewCard: Component<Props> = (props) => {
                                                     {post.grade!.join(", ")}
                                                 </p>
                                                 <p class="truncate">
-                                                    Worksheets, Activities,
-                                                    Printables
+                                                    {post.resourceTypes!.join(
+                                                        ", "
+                                                    )}
                                                 </p>
                                                 <p class="truncate">
                                                     1NBT.C.4, K.OA.A.2
@@ -352,9 +378,9 @@ export const ViewCard: Component<Props> = (props) => {
                                     <div class="mb-1 flex w-full flex-col items-end justify-center">
                                         <Show
                                             when={
-                                                (session() === null ||
-                                                    session()?.user.id !==
-                                                        post.user_id) 
+                                                session() === null ||
+                                                session()?.user.id !==
+                                                    post.user_id
                                             }
                                         >
                                             <AddToCart

@@ -189,11 +189,10 @@ export const CreateNewPost: Component = () => {
         if (session()) {
             //Check if they are a creator
             try {
-                const { data: creators, error: errorCreators } =
-                    await supabase
-                        .from("sellers")
-                        .select("*")
-                        .eq("user_id", session()!.user.id);
+                const { data: creators, error: errorCreators } = await supabase
+                    .from("sellers")
+                    .select("*")
+                    .eq("user_id", session()!.user.id);
                 if (errorCreators) {
                     console.log("supabase error: " + errorCreators.message);
                 } else {
@@ -245,7 +244,7 @@ export const CreateNewPost: Component = () => {
                 console.log("Other error: " + error);
             }
 
-            //Grade Level
+            //Resource Type Level
             try {
                 const { data: resourceType, error } = await supabase
                     .from("resource_types")
