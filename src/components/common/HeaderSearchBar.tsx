@@ -27,6 +27,7 @@ export const SearchBar: Component = () => {
         if (window.location.pathname !== `/resources` && window.location.pathname !== `/${lang}/resources`) {
             window.location.href = `/${lang}/resources`;
         } else {
+            //This relies on the search button on the resources page from the SearchBar component - if that button gets removed then this will need to be changed
             document.getElementById("searchButton")?.click();
         }
     };
