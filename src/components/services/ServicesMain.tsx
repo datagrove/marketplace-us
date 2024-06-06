@@ -16,6 +16,7 @@ import * as allFilters from "../posts/fetchPosts";
 import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
+import useLocalStorage from "@lib/LocalStorageHook";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -38,7 +39,7 @@ export const ServicesView: Component = () => {
     const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>([]);
-    const [searchString, setSearchString] = createSignal<string>("");
+    const [searchString, setSearchString] = useLocalStorage("searchString", "");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     
     const screenSize = useStore(windowSize);
@@ -51,7 +52,7 @@ export const ServicesView: Component = () => {
             setGradeFilters([...gradeFilters(), ...JSON.parse(localStorage.getItem("selectedGrades")!)]);
         }
         if (localStorage.getItem("searchString") !== null && localStorage.getItem("searchString") !== undefined) {
-            setSearchString(JSON.parse(localStorage.getItem("searchString")!));
+            setSearchString(localStorage.getItem("searchString")!);
         } 
         if (localStorage.getItem("selectedResourceTypes") !== null && localStorage.getItem("selectedResourceTypes")) {
             setResourceFilters([...resourceFilters(), ...JSON.parse(localStorage.getItem("selectedResourceTypes")!)]);
@@ -62,11 +63,18 @@ export const ServicesView: Component = () => {
     window.addEventListener("beforeunload", () => {
             localStorage.removeItem("selectedGrades");
             localStorage.removeItem("selectedSubjects");
+            localStorage.removeItem("searchString");
+            localStorage.removeItem("selectedResourceTypes");
     });
 
+    
 
-    const searchPosts = async (searchText: string) => {
-        setSearchString(searchText);
+
+    const searchPosts = async () => {
+        console.log("search posts");
+        if (localStorage.getItem("searchString")) {
+            setSearchString(localStorage.getItem("searchString"));
+        }
 
         filterPosts();
     };
@@ -249,6 +257,7 @@ export const ServicesView: Component = () => {
 
         setSearchPost([]);
         setSearchString("");
+        localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
         filterPosts();
@@ -323,7 +332,7 @@ export const ServicesView: Component = () => {
                 <FiltersMobile clearSubjects={ clearSubjects } clearGrade={ clearGrade } clearAllFilters={ clearAllFilters } filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
             </Show>
 
-            <div class="flex w-full min-w-[270px] flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
+            <div class="flex w-full  flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <div class="sticky top-0 w-full md:w-auto">
                     <div class="w-11/12 md:mr-4 md:w-56">
                         <GradeFilter filterPostsByGrade={filterPostsByGrade} />

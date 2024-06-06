@@ -40,9 +40,9 @@ export const LanguagePicker: Component = () => {
     };
 
     return (
-        <div class="mr-4 flex rounded-lg text-ptext1 focus:border-border1 focus:outline-none dark:text-ptext1-DM dark:focus:border-border1-DM">
+        <div class="mr-4 flex rounded-lg text-ptext1 focus:border-border1 focus:outline-none dark:text-ptext1-DM dark:focus:border-border1-DM border border-border1 dark:border-border1-DM">
             <svg
-                class="ml-2 h-full w-4 rounded-l-lg bg-background1 stroke-icon1 dark:bg-background1-DM dark:stroke-icon1-DM"
+                class="ml-2 h-full w-4 rounded-l-lg bg-background1 stroke-icon1 dark:bg-background1-DM dark:stroke-icon1-DM pt-0.5"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
             >

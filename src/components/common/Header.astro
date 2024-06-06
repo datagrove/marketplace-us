@@ -1,40 +1,41 @@
 ---
 import { SITE } from "../../config";
-import { AuthMode } from "./AuthMode";
-import { LanguagePicker } from "./LanguagePicker";
-import { CreatorProfileButton } from "./CreatorProfileButton";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import ThemeIcon from "./ThemeIcon.astro";
+import { ThemeBtn } from "./ThemeIcon";
 
 import { ProfileBtn } from "./ProfileBtn";
+import { MobileProfileBtn } from "./MobileProfileBtn";
 import { Cart } from "@components/common/cart/Cart";
 import { CreatePostsRouting } from "../posts/CreatePostsRouting";
-import { UserRouting } from "../members/UserRouting";
+import { SearchBar } from "@components/common/HeaderSearchBar";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 //Define types for items from config
-interface Link {
-    text?: string;
-    href?: string;
-    ariaLabel?: string;
-    icon?: string;
-}
-interface MenuLink extends Link {
-    links?: Array<Link>;
-}
-export interface Props {
-    links?: Array<MenuLink>;
-}
+// interface Link {
+//     text?: string;
+//     href?: string;
+//     ariaLabel?: string;
+//     icon?: string;
+// }
+// interface MenuLink extends Link {
+//     links?: Array<Link>;
+// }
+// export interface Props {
+//     links?: Array<MenuLink>;
+// }
 
-const { links = [] } = Astro.props;
+// const { links = [] } = Astro.props;
 ---
 
 <header id="container" class="py-4">
     <!-- <a id="logo">{pageTitle}</a>               -->
 
-    <div id="container" class="flex align-middle justify-between">
+    <div class="flex justify-between items-center h-full">
+        <div class="md:hidden">
+            <MobileProfileBtn client:only="solid-js" />
+        </div>
         <div class="navLines flex items-center" id="navLines">
             <div class="all-logo">
                 <a id="logo" href=`/${lang}`>
@@ -87,32 +88,29 @@ const { links = [] } = Astro.props;
         </div>
 
         <div
-            class="flex items-center md:justify-around md:w-[50%] lg:w-[40%] xl:w-[35%]"
+            class="hidden md:inline md:h-full md:w-full items-center"
         >
-            <div class="hidden md:block mr-2 w-fit">
-                <a href={`/${lang}/resources`}>
-                    <button class="btn-primary w-fit whitespace-nowrap">
-                        {t("menus.resources")}
-                    </button>
-                </a>
-            </div>
-            <div
-                class="hidden md:flex rounded-lg border border-border1 dark:border-border1-DM bg-background1 dark:bg-background1-DM"
-            >
-                <LanguagePicker client:only="solid-js" />
-            </div>
+            <SearchBar client:only="solid-js" />
+        </div>
 
-            <div class="">
-                <ThemeIcon />
+        <div
+            class="flex items-center md:justify-end md:w-[50%] lg:w-[40%] xl:w-[35%]"
+        >
+            <div class="hidden md:block">
+                <!-- <ThemeIcon /> -->
+                <ThemeBtn client:only="solid-js" />
             </div>
 
             <div class="">
                 <Cart client:only="solid-js" />
             </div>
 
-            <div class="">
+            <div class="hidden md:block">
                 <ProfileBtn client:only="solid-js" />
             </div>
         </div>
+    </div>
+    <div class="md:hidden">
+        <SearchBar client:only="solid-js" />
     </div>
 </header>

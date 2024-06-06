@@ -2,10 +2,9 @@
 
 drop policy "Enable read access for all users" on "public"."resource_types";
 
-
 alter table "public"."seller_post" alter column "resource_types" set data type text[] using "resource_types"::text[];
 
-create or replace view "public"."sellerposts" as  SELECT seller_post.id,
+create or replace view "public"."sellerposts" WITH ("security_invoker"='on') as  SELECT seller_post.id,
     seller_post.title,
     seller_post.content,
     seller_post.user_id,
@@ -27,8 +26,6 @@ CREATE OR REPLACE FUNCTION "public"."title_content"("public"."sellerposts") RETU
     AS $_$
   select $1.title || ' ' || $1.content;
 $_$;
-
-
 
 create policy "Enable read access for all users"
 on "public"."resource_types"
