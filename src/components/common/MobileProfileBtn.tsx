@@ -73,7 +73,7 @@ export const MobileProfileBtn = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="mr-4 flex rounded-lg border-border1 px-3 py-2 dark:border-border1-DM md:mr-0 md:border"
+                class=" flex rounded-lg border-border1 dark:border-border1-DM md:mr-0 md:border"
                 aria-label={t("ariaLabels.navigation")}
             >
                 <svg

@@ -141,7 +141,7 @@ export const Cart = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="relative mr-0 flex w-14 rounded-lg p-1"
+                class="relative flex w-fit md:w-14 rounded-lg p-1"
                 aria-label={t("ariaLabels.cart")}
             >
                 <svg

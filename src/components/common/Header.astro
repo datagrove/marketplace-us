@@ -13,20 +13,20 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 //Define types for items from config
-interface Link {
-    text?: string;
-    href?: string;
-    ariaLabel?: string;
-    icon?: string;
-}
-interface MenuLink extends Link {
-    links?: Array<Link>;
-}
-export interface Props {
-    links?: Array<MenuLink>;
-}
+// interface Link {
+//     text?: string;
+//     href?: string;
+//     ariaLabel?: string;
+//     icon?: string;
+// }
+// interface MenuLink extends Link {
+//     links?: Array<Link>;
+// }
+// export interface Props {
+//     links?: Array<MenuLink>;
+// }
 
-const { links = [] } = Astro.props;
+// const { links = [] } = Astro.props;
 ---
 
 <header id="container" class="py-4">

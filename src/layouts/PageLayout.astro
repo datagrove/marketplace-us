@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/BaseLayout.astro";
 import Footer from "../components/common/Footer.astro";
-import Header from "../components/common/Header.astro";
+import { Header } from "../components/common/Header";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { ui } from "../i18n/ui";
 import type { uiObject } from "../i18n/uiType";
@@ -19,8 +19,8 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 
 <Layout {pageTitle} {pageDescription}>
     <div class="flex flex-col min-h-screen">
-        <div class="header">
-            <Header {...headerData} />
+        <div class="header pt-4">
+            <Header client:only="solid-js"/>
         </div>
         <main class="flex-grow">
             <div class="flex justify-center">

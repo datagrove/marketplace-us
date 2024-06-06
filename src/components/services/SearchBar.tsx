@@ -1,8 +1,9 @@
 import type { Component } from "solid-js";
-import { createSignal, createEffect, onMount } from "solid-js";
+import { createSignal, createEffect, onMount, onCleanup } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import useLocalStorage from "@lib/LocalStorageHook";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -13,19 +14,35 @@ interface Props {
 }
 
 export const SearchBar: Component<Props> = (props) => {
-    const [searchString, setSearchString] = createSignal<string>("");
+    const [searchString, setSearchString] = useLocalStorage("searchString", "");
 
     onMount(() => {
         if (localStorage.getItem("searchString")) {
             setSearchString(localStorage.getItem("searchString")!);
         }
+        // window.addEventListener("storage", onStorageChange);
+        // window.addEventListener("storage", logEvent);
     });
 
-    const clickSearch = (e: Event) => {
+    const clickSearch = () => {
+        localStorage.setItem("searchString", searchString());
         props.search(searchString());
-
-        // setSearchString("");
     };
+
+    // function onStorageChange(event: StorageEvent) {
+    //     if (event.key === "searchString") {
+    //         setSearchString(event.newValue ? event.newValue : "");
+    //     }
+    // }
+
+    // function logEvent (event: StorageEvent) {
+    //     console.log("Storage Event")
+    //     console.log(event)
+    // }
+
+    // onCleanup(() => {
+    //     window.removeEventListener("storage", onStorageChange);
+    // });
 
     createEffect(() => {
         // Execute a function when the user presses a key on the keyboard
@@ -40,7 +57,7 @@ export const SearchBar: Component<Props> = (props) => {
                     // e.preventDefault();
                     // Trigger the button element with a click
                     console.log("button click");
-                    document.getElementById("searchButton")?.click();
+                    clickSearch();
                 }
             });
     });
@@ -64,7 +81,7 @@ export const SearchBar: Component<Props> = (props) => {
                 <button
                     id="searchButton"
                     class="btn-primary mx-6"
-                    onclick={(e) => clickSearch(e)}
+                    onclick={clickSearch}
                 >
                     {t("formLabels.search")}
                 </button>
