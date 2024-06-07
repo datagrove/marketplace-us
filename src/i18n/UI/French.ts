@@ -1,6 +1,6 @@
 export const French = {
     textDirection: "ltr",
-    siteDescription: "Tout ce dont vous avez besoin pour faire le travail.",
+    siteDescription: "Votre communauté pour des ressources d'apprentissage de qualité.",
 
     pageTitles: {
         services: "Ressources",
@@ -32,6 +32,10 @@ export const French = {
         shopBySubject: "Magasiner par Sujet",
         newResources: "de Nouvelles Ressources",
         shopByGrade: "Magasiner par Catégorie",
+        community: "Règles de la communauté",
+        sellerFeePayout: "Frais du vendeur et taux de paiement",
+        copyright: "Politique de droits d'auteur et de marques",
+        marketplacetax: "Collecte des taxes de vente sur le marché",
     },
 
     pageDescriptions: {
@@ -70,6 +74,10 @@ export const French = {
         faq: "Explorez notre page FAQ complète pour obtenir des réponses aux questions courantes sur nos services, nos politiques et bien plus encore.",
         viewCart:
             "Consultez votre panier et passez à la caisse en toute simplicité.",
+        community: "Lisez nos directives communautaires pour comprendre les principes qui favorisent le respect, la collaboration et un environnement favorable pour tous les membres." ,
+        sellerFeePayout: "Découvrez nos frais de vente et nos processus de paiement, y compris des informations détaillées sur les frais de transaction, les frais de paiement et les calendriers.",
+        copyright: "Comprenez notre politique en matière de droits d'auteur et de marques déposées pour protéger vos droits de propriété intellectuelle et garantir le respect de nos directives pour l'utilisation de documents protégés par des droits d'auteur et des marques déposées.",
+        marketplacetax: "Découvrez notre collection de taxes de vente sur le marché et les implications fiscales.",
     },
 
     buttons: {
@@ -150,7 +158,7 @@ export const French = {
         noCreator: "Aucun fournisseur trouvé.",
         translation: "Traductions",
         translations:
-            " ne sont fournis qu'à des fins de commodité. La langue officielle de liaison est l'espagnol.",
+            "Les traductions sont fournies uniquement pour des raisons de commodité. La langue officielle de liaison est l’anglais.",
         clickWrap1: "En cliquant sur",
         clickWrap2: "vous indiquez que vous avez lu et accepté les",
         fetch: "Récupérer des services",

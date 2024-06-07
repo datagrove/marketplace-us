@@ -1,6 +1,6 @@
 export const Spanish = {
     textDirection: "ltr",
-    siteDescription: "Todo lo que necesitas para hacer el trabajo.",
+    siteDescription: "Su comunidad para recursos de aprendizaje de calidad.",
 
     pageTitles: {
         services: "Recursos",
@@ -32,6 +32,10 @@ export const Spanish = {
         shopBySubject: "Comprar por Tema",
         newResources: "Nuevos Recursos",
         shopByGrade: "Comprar por Grado",
+        community: "Principios de la Comunidad",
+        sellerFeePayout: "Tarifas del vendedor y tasas de pago",
+        copyright: "Política de derechos de autor y marcas comerciales",
+        marketplacetax: "Recaudación de impuestos sobre las ventas del mercado",
     },
 
     pageDescriptions: {
@@ -69,6 +73,10 @@ export const Spanish = {
             "Lea más sobre este recurso. Explore imágenes adicionales y la descripción completa del recurso.",
         faq: "Explore nuestra completa página de preguntas frecuentes para obtener respuestas a preguntas comunes sobre nuestros servicios, políticas y más.",
         viewCart: "Vea su carrito y realice el pago con facilidad.",
+        community: "Lea nuestras Pautas comunitarias para comprender los principios que fomentan el respeto, la colaboración y un entorno de apoyo para todos los miembros.",
+        sellerFeePayout: "Conozca nuestras tarifas de vendedor y procesos de pago, incluida información detallada sobre tarifas de transacción, tarifas de pago y cronogramas.",
+        copyright: "Comprenda nuestra Política de derechos de autor y marcas comerciales para proteger sus derechos de propiedad intelectual y garantizar el cumplimiento de nuestras pautas para el uso de materiales con derechos de autor y marcas registradas.",
+        marketplacetax: "Conozca la recaudación de impuestos sobre las ventas de nuestro mercado y sus implicaciones fiscales.",
     },
 
     buttons: {
@@ -149,7 +157,7 @@ export const Spanish = {
         noValue: "Sin valor",
         translation: "Las traducciones",
         translations:
-            " se proporcionan únicamente por conveniencia. El idioma oficial de enlace es el español.",
+            "Las traducciones se proporcionan únicamente por conveniencia. El idioma oficial de vinculación es el inglés.",
         clickWrap1: "Al hacer clic en",
         clickWrap2: "estás indicando que has leído y estás de acuerdo con los",
         fetch: "Obtener Servicios",

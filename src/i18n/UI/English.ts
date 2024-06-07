@@ -1,6 +1,6 @@
 export const English = {
     textDirection: "ltr",
-    siteDescription: "Everything you need to get the job done.",
+    siteDescription: "Your community for quality learning resources.",
 
     pageTitles: {
         services: "Resources",
@@ -32,6 +32,10 @@ export const English = {
         shopBySubject: "Shop by Subject",
         newResources: "New Resources",
         shopByGrade: "Shop by Grade",
+        community: "Community Guidelines",
+        sellerFeePayout: "Seller Fees and Payout Rates",
+        copyright: "Copyright and Trademark Policy",
+        marketplacetax: "Marketplace Sales Tax Collection",
     },
 
     pageDescriptions: {
@@ -69,6 +73,10 @@ export const English = {
             "Read more about this resource. Explore additional images and the full description of the resource.",
         faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
         viewCart: "View your cart and checkout with ease.",
+        community: "Read our Community Guidelines to understand the principles that foster respect, collaboration, and a supportive environment for all members.",
+        sellerFeePayout: "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
+        copyright: "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
+        marketplacetax: "Learn about our marketplace sales tax collection and tax implications.",
     },
 
     buttons: {
@@ -144,7 +152,7 @@ export const English = {
         noCreator: "No Creator found.",
         translation: `Translations`,
         translations:
-            " are provided for convenience only. The official binding language is Spanish.",
+            "Translations are provided for convenience only. The official binding language is English.",
         clickWrap1: "By clicking",
         clickWrap2: "you are indicating that you have read and agree to the",
         fetch: "Fetch Services",

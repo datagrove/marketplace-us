@@ -32,6 +32,11 @@ export interface uiObject {
         shopBySubject: string;
         newResources: string;
         shopByGrade: string;
+        community: string;
+        sellerFeePayout: string;
+        copyright: string;
+        marketplacetax: string;
+
     };
 
     pageDescriptions: {
@@ -57,6 +62,10 @@ export interface uiObject {
         fullPost: string;
         faq: string;
         viewCart: string;
+        community: string;
+        sellerFeePayout: string;
+        copyright: string;
+        marketplacetax: string;
     };
 
     buttons: {
