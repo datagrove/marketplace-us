@@ -11,7 +11,9 @@ const policiesCollection = defineCollection({
 
 const aboutCollection = defineCollection({
     type: "content",
-    schema: z.object({}),
+    schema: z.object({
+        lang: z.string(),
+    }),
 });
 
 const faqCollection = defineCollection({
