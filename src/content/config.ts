@@ -3,7 +3,10 @@ import { z, defineCollection } from "astro:content";
 // 2. Define your collection(s)
 const policiesCollection = defineCollection({
     type: "content",
-    schema: z.object({}),
+    schema: z.object({
+        policyType: z.string(),
+        lang: z.string(),
+    }),
 });
 
 const aboutCollection = defineCollection({

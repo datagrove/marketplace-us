@@ -6,18 +6,18 @@ import { getCollection } from "astro:content";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("policies", ({ data }) => data.lang === lang && data.policyType === "privacy");
+const policyPage = await getCollection("policies", ({ data }) => data.lang === lang && data.policyType === "copyright");
 const { Content } = await policyPage[0].render();
 ---
 
 <Layout
-    pageTitle={t("pageTitles.privacy")}
-    pageDescription={t("pageDescriptions.privacy")}
+    pageTitle={t("pageTitles.copyright")}
+    pageDescription={t("pageDescriptions.copyright")}
 >
     <div class="mx-6">
         <div class="mb-8">
             <h1 class="font-bold text-3xl mb-2 text-ptext1 dark:text-ptext1-DM">
-                {t("pageTitles.privacy")}
+                {t("pageTitles.copyright")}
             </h1>
             <p>
                 {t("messages.translations")}
