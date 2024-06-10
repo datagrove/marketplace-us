@@ -52,7 +52,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             setSession(User.session);
         }
     }
-    setTestImages(test2);
+    // setTestImages(test2);
 
     createEffect(() => {
         if (props.postId === undefined) {
@@ -150,7 +150,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                     })
                 );
                 setPost(newItem[0]);
-                // console.log(newItem[0]);
             }
         } catch (error) {
             console.log(error);
@@ -351,7 +350,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             currImage?.classList.add("border-green-500");
         }
 
-        mainImage?.setAttribute("src", testImages()[arrayIndex]);
+        mainImage?.setAttribute("src", postImages()[arrayIndex]);
     }
 
     function lgTabLinkClick(e: Event) {
@@ -445,6 +444,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             qa.classList.add("hidden");
         }
     }
+    console.log(postImages());
 
     return (
         <div id="large-full-card-div" class="h-full">
@@ -453,11 +453,11 @@ export const ViewFullPost: Component<Props> = (props) => {
                     id="images-div"
                     class="mr-1 flex w-[300px] flex-col items-center justify-center lg:h-[400px] lg:w-[400px]"
                 >
-                    <Show when={testImages().length > 0}>
-                        <Show when={testImages().length === 1}>
+                    <Show when={postImages().length > 0}>
+                        <Show when={postImages().length === 1}>
                             <div class="flex h-[300px] w-[300px] items-center justify-center rounded border border-gray-400">
                                 <img
-                                    src={testImages()[0]}
+                                    src={postImages()[0]}
                                     id="one-image"
                                     class="flex items-center justify-center rounded dark:bg-background1"
                                     alt={`${t("postLabels.image")}`}
@@ -465,19 +465,19 @@ export const ViewFullPost: Component<Props> = (props) => {
                             </div>
                         </Show>
 
-                        <Show when={testImages().length > 1}>
+                        <Show when={postImages().length > 1}>
                             <div class="flex h-full w-full flex-col items-center justify-center">
-                                <div class="flex h-[290px] w-[290px] items-center justify-center rounded border border-gray-400 lg:h-[330px] lg:w-[330px]">
+                                <div class="flex h-[290px] w-[290px] items-center justify-center lg:h-[330px] lg:w-[330px]">
                                     <img
-                                        src={testImages()[0]}
+                                        src={postImages()[0]}
                                         id="main-image"
                                         class="rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
                                 </div>
 
-                                <div class="flex w-full justify-between px-1">
-                                    {testImages().map(
+                                <div class="flex w-full justify-around px-1">
+                                    {postImages().map(
                                         (image: string, index: number) => (
                                             <div class="flex h-16 w-1/6 items-center justify-center md:mt-2">
                                                 {index === 0 ? (
