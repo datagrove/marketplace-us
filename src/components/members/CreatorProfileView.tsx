@@ -505,7 +505,7 @@ export const CreatorProfileView: Component = () => {
 
                         <div class="create-post-div hidden w-full items-center justify-end md:flex">
                             <button
-                                class="btn-primary flex w-full items-center justify-center"
+                                class="btn-primary flex w-full items-center justify-center "
                                 onClick={() =>
                                     (window.location.href = `/${lang}/posts/createpost`)
                                 }
@@ -515,14 +515,14 @@ export const CreatorProfileView: Component = () => {
                                     width="20px"
                                     height="20px"
                                     viewBox="0 0 1920 1920"
-                                    class="fill-icon2 pr-1 dark:fill-icon2-DM"
+                                    class="fill-icon2 pr-1 dark:fill-black "
                                 >
                                     <path
                                         d="M915.744 213v702.744H213v87.842h702.744v702.744h87.842v-702.744h702.744v-87.842h-702.744V213z"
                                         fill-rule="evenodd"
                                     />
                                 </svg>
-                                <p class="pl-1 text-lg font-light">
+                                <p class="pl-1 text-lg font-light ">
                                     {t("pageTitles.createPost")}
                                 </p>
                             </button>
@@ -808,7 +808,8 @@ export const CreatorProfileView: Component = () => {
                                         name="contribution"
                                         class="rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                                         value={creator()?.contribution}
-                                    />%
+                                    />
+                                    %
                                 </div>
                             </Show>
                         </div>
