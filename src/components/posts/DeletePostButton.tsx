@@ -43,29 +43,29 @@ export const DeletePostButton: Component<Props> = (props) => {
             try {
                 const { error } = await supabase
                     .from("seller_post")
-                    .delete()
+                    .update({ listing_status: false })
                     .eq("id", props.id);
 
                 //if there are post images delete them from storage
-                if (props.postImage) {
-                    console.log(props.postImage?.split(","));
-                    const { error } = await supabase.storage
-                        .from("post.image")
-                        .remove(props.postImage?.split(","));
-                    if (error) {
-                        console.log("supabase errror: " + error.message);
-                    } else {
-                        console.log(
-                            "deleted images",
-                            props.postImage?.split(",")
-                        );
-                    }
-                }
+                // if (props.postImage) {
+                //     console.log(props.postImage?.split(","));
+                //     const { error } = await supabase.storage
+                //         .from("post.image")
+                //         .remove(props.postImage?.split(","));
+                //     if (error) {
+                //         console.log("supabase errror: " + error.message);
+                //     } else {
+                //         console.log(
+                //             "deleted images",
+                //             props.postImage?.split(",")
+                //         );
+                //     }
+                // }
 
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log("deleted post", props.id);
+                    console.log("unlisted post", props.id);
                 }
 
                 // console.log("deleted post", props.Id);

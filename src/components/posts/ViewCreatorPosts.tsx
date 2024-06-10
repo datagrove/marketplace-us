@@ -36,7 +36,8 @@ export const ViewCreatorPosts: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
-            .eq("user_id", session()!.user.id);
+            .eq("user_id", session()!.user.id)
+            .eq("listing_status", true);
         if (!data) {
             alert("No posts available.");
         }

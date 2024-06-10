@@ -60,8 +60,8 @@ export const Cart = () => {
         if (items.length > 0) {
             let total = 0;
             items.forEach((item: Post) => {
-                if (item.price){
-                total += item.price * item.quantity;
+                if (item.price) {
+                    total += item.price * item.quantity;
                 }
             });
             return (
@@ -92,10 +92,10 @@ export const Cart = () => {
                                 </div>
                                 <div class="inline-block text-start">
                                     <Show when={item.price}>
-                                    ${item.price.toFixed(2)}
+                                        ${item.price.toFixed(2)}
                                     </Show>
                                     <Show when={!item.price}>
-                                    {t("messages.free")}
+                                        {t("messages.free")}
                                     </Show>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@ export const Cart = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="relative flex w-fit md:w-14 rounded-lg p-1"
+                class="relative flex w-fit rounded-lg p-1 md:w-14"
                 aria-label={t("ariaLabels.cart")}
             >
                 <svg

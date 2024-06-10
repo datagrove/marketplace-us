@@ -67,7 +67,8 @@ export const ViewFullPost: Component<Props> = (props) => {
             const { data, error } = await supabase
                 .from("sellerposts")
                 .select("*")
-                .eq("id", id);
+                .eq("id", id)
+                .eq("listing_status", true);
 
             if (error) {
                 console.log(error);
