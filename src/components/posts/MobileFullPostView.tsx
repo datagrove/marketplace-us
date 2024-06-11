@@ -735,9 +735,12 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     </button>
                 </div>
                 {/* <p>{ post()?.grade.join(", ") }</p> */}
-                <p id="post-description-div" class="hidden">
-                    {post()?.content} {post()?.grade?.join(", ")}
-                </p>
+
+                <div
+                    id="post-description-div"
+                    class="prose hidden dark:prose-invert"
+                    innerHTML={post()?.content}
+                ></div>
             </div>
 
             <div

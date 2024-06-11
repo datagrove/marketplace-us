@@ -889,9 +889,11 @@ export const ViewFullPost: Component<Props> = (props) => {
                   </svg>
               </button> */}
                     </div>
-
                     {/* <p>{ post()?.grade.join(", ") }</p> */}
-                    <p>{post()?.content}</p>
+                    <div
+                        class="prose dark:prose-invert"
+                        innerHTML={post()?.content}
+                    ></div>
                 </div>
 
                 <div id="lg-reviews-div" class="hidden">
