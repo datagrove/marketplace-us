@@ -354,13 +354,15 @@ export const CreatorProfileView: Component = () => {
                     </Show>
 
                     <Show when={editMode() === true}>
-                        <UserImage
-                            url={imageUrl()}
-                            size={150}
-                            onUpload={(e: Event, url: string) => {
-                                setImageUrl(url);
-                            }}
-                        />
+                        <div class="absolute top-6 left-4 md:left-12">
+                            <UserImage
+                                url={imageUrl()}
+                                size={150}
+                                onUpload={(e: Event, url: string) => {
+                                    setImageUrl(url);
+                                }}
+                            />
+                        </div>
                     </Show>
                 </div>
 
