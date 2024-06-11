@@ -21,7 +21,7 @@ export const Header: Component = () => {
 
     return (
         <header>
-            <div class="flex h-full items-center justify-between px-4 pb-4">
+            <div class="flex h-full items-center justify-between px-4 md:pb-4">
                 <div class="md:hidden">
                     <MobileProfileBtn />
                 </div>

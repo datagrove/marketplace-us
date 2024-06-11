@@ -36,7 +36,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     const [testImages, setTestImages] = createSignal<string[]>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
 
-    setTestImages(test2);
+    // setTestImages(test2);
 
     onMount(async () => {
         if (props.postId === undefined) {
@@ -340,7 +340,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             mobileCurrImage?.classList.add("border-green-500");
         }
 
-        mainImage?.setAttribute("src", testImages()[arrayIndex]);
+        mainImage?.setAttribute("src", postImages()[arrayIndex]);
     }
 
     return (
@@ -521,11 +521,11 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             </div>
 
             <div id="images" class="flex flex-col items-center justify-center">
-                <Show when={testImages().length > 0}>
-                    <Show when={testImages().length === 1}>
+                <Show when={postImages().length > 0}>
+                    <Show when={postImages().length === 1}>
                         <div class="my-2 flex h-[375px] w-[375px] items-center justify-center rounded border border-gray-400">
                             <img
-                                src={testImages()[0]}
+                                src={postImages()[0]}
                                 id="one-image"
                                 class="flex items-center justify-center rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
@@ -533,18 +533,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         </div>
                     </Show>
 
-                    <Show when={testImages().length > 1}>
+                    <Show when={postImages().length > 1}>
                         <div class="my-2 flex h-[375px] w-[375px] items-center justify-center rounded border border-gray-400 p-1">
                             <img
-                                src={testImages()[0]}
+                                src={postImages()[0]}
                                 id="mobile-main-image"
                                 class="rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
                         </div>
 
-                        <div class="my-4 flex justify-between">
-                            {testImages().map(
+                        <div class="my-4 flex justify-start">
+                            {postImages().map(
                                 (image: string, index: number) => (
                                     <div class="flex h-16 w-1/6 items-center justify-center">
                                         {index === 0 ? (
@@ -587,8 +587,12 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 class="sticky top-0 my-4 flex flex-col bg-background1 dark:bg-background1-DM"
             >
                 <div class="mx-1 flex justify-end">
-                    {/* TODO: fix hardcoding of price */}
-                    <p class="text-2xl font-bold">$3.99</p>
+                    <Show when={post()?.price! === 0}>
+                    <p class="text-2xl font-bold">{t("messages.free")}</p>
+                    </Show>
+                    <Show when={post()?.price! > 0}>
+                    <p class="text-2xl font-bold">{post()?.price}</p>
+                    </Show>
                 </div>
 
                 <div class="my-2 flex justify-between">

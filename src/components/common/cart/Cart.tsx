@@ -179,7 +179,7 @@ export const Cart = () => {
                     />
                 </svg>
                 <Show when={items.length > 0}>
-                    <div class="absolute -bottom-0.5 right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-background2 text-xs text-ptext2 opacity-[85%] dark:bg-background2-DM dark:text-ptext2-DM dark:opacity-100">
+                    <div class="absolute md:-bottom-0.5 md:right-1.5 bottom-0 right-8 flex h-5 w-5 items-center justify-center rounded-full bg-background2 text-xs text-ptext2 opacity-[85%] dark:bg-background2-DM dark:text-ptext2-DM dark:opacity-100">
                         {totalItems()}
                     </div>
                 </Show>

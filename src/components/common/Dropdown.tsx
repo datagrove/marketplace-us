@@ -54,8 +54,7 @@ const Dropdown: Component<Props> = (Props: Props) => {
                 <div
                     class="mb-4 max-h-96 
         max-w-fit overflow-auto 
-        whitespace-normal rounded border 
-        border-red-500 bg-background1 
+        whitespace-normal rounded bg-background1 
         text-ptext1 focus:border-2 
         focus:border-highlight1 focus:outline-none
         dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"

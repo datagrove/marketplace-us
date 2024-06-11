@@ -193,7 +193,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     return (
         <div class="sticky top-0 z-40 mx-4 h-full w-3/4 max-w-[300px] bg-background1 dark:bg-background1-DM">
             <button
-                class="mt-2 w-full"
+                class="w-full"
                 onClick={() => {
                     if (showGrades() === true || showSubjects() === true) {
                         setShowGrades(false);

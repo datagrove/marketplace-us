@@ -32,43 +32,63 @@ const productCategories = values.subjectCategoryInfo.subjects;
 //     resourceTypes: string | null;
 // }
 
-export const ServicesView: Component = () => {
+export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>([]);
+    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
+        []
+    );
     const [searchString, setSearchString] = useLocalStorage("searchString", "");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
-    
+
     const screenSize = useStore(windowSize);
 
     onMount(async () => {
-        if (localStorage.getItem("selectedSubjects") !== null && localStorage.getItem("selectedSubjects")) {
-            setSubjectFilters([...subjectFilters(), ...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+        if (
+            localStorage.getItem("selectedSubjects") !== null &&
+            localStorage.getItem("selectedSubjects")
+        ) {
+            setSubjectFilters([
+                ...subjectFilters(),
+                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
+            ]);
         }
-        if (localStorage.getItem("selectedGrades") !== null && localStorage.getItem("selectedGrades")) {
-            setGradeFilters([...gradeFilters(), ...JSON.parse(localStorage.getItem("selectedGrades")!)]);
+        if (
+            localStorage.getItem("selectedGrades") !== null &&
+            localStorage.getItem("selectedGrades")
+        ) {
+            setGradeFilters([
+                ...gradeFilters(),
+                ...JSON.parse(localStorage.getItem("selectedGrades")!),
+            ]);
         }
-        if (localStorage.getItem("searchString") !== null && localStorage.getItem("searchString") !== undefined) {
+        if (
+            localStorage.getItem("searchString") !== null &&
+            localStorage.getItem("searchString") !== undefined
+        ) {
             setSearchString(localStorage.getItem("searchString")!);
-        } 
-        if (localStorage.getItem("selectedResourceTypes") !== null && localStorage.getItem("selectedResourceTypes")) {
-            setResourceFilters([...resourceFilters(), ...JSON.parse(localStorage.getItem("selectedResourceTypes")!)]);
+        }
+        if (
+            localStorage.getItem("selectedResourceTypes") !== null &&
+            localStorage.getItem("selectedResourceTypes")
+        ) {
+            setResourceFilters([
+                ...resourceFilters(),
+                ...JSON.parse(localStorage.getItem("selectedResourceTypes")!),
+            ]);
         }
         await filterPosts();
     });
 
     window.addEventListener("beforeunload", () => {
-            localStorage.removeItem("selectedGrades");
-            localStorage.removeItem("selectedSubjects");
-            localStorage.removeItem("searchString");
-            localStorage.removeItem("selectedResourceTypes");
+        localStorage.removeItem("selectedGrades");
+        localStorage.removeItem("selectedSubjects");
+        localStorage.removeItem("searchString");
+        localStorage.removeItem("selectedResourceTypes");
     });
-
-    
-
 
     const searchPosts = async () => {
         console.log("search posts");
@@ -101,7 +121,7 @@ export const ServicesView: Component = () => {
             subjectFilters(),
             gradeFilters(),
             searchString(),
-            resourceFilters(),
+            resourceFilters()
         );
 
         if (res === null || res === undefined) {
@@ -296,52 +316,64 @@ export const ServicesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
-                <button
-                    class="clearBtnRectangle"
-                    onclick={clearAllFilters}
-                    aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
-                >
-                    <p class="text-xs">
-                        {t("clearFilters.filterButtons.0.text")}
-                    </p>
-                </button>
+            <Show when={screenSize() !== "sm"}>
+                <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
+                    <button
+                        class="clearBtnRectangle"
+                        onclick={clearAllFilters}
+                        aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
+                    >
+                        <p class="text-xs">
+                            {t("clearFilters.filterButtons.0.text")}
+                        </p>
+                    </button>
 
-                <button
-                    class="clearBtnRectangle"
-                    onclick={clearSubjects}
-                    aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
-                >
-                    <p class="text-xs">
-                        {t("clearFilters.filterButtons.1.text")}
-                    </p>
-                </button>
+                    <button
+                        class="clearBtnRectangle"
+                        onclick={clearSubjects}
+                        aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
+                    >
+                        <p class="text-xs">
+                            {t("clearFilters.filterButtons.1.text")}
+                        </p>
+                    </button>
 
-                <button
-                    class="clearBtnRectangle"
-                    onclick={clearGrade}
-                    aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
-                >
-                    <p class="text-xs">
-                        {t("clearFilters.filterButtons.2.text")}
-                    </p>
-                </button>
-            </div>
+                    <button
+                        class="clearBtnRectangle"
+                        onclick={clearGrade}
+                        aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
+                    >
+                        <p class="text-xs">
+                            {t("clearFilters.filterButtons.2.text")}
+                        </p>
+                    </button>
+                </div>
+            </Show>
 
-            <Show when={ screenSize() === "sm"}>
-                <FiltersMobile clearSubjects={ clearSubjects } clearGrade={ clearGrade } clearAllFilters={ clearAllFilters } filterPostsByGrade={ filterPostsByGrade } filterPostsBySubject={ setCategoryFilter }/>
+            <Show when={screenSize() === "sm"}>
+                <FiltersMobile
+                    clearSubjects={clearSubjects}
+                    clearGrade={clearGrade}
+                    clearAllFilters={clearAllFilters}
+                    filterPostsByGrade={filterPostsByGrade}
+                    filterPostsBySubject={setCategoryFilter}
+                />
             </Show>
 
             <div class="flex w-full  flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
-                <div class="sticky top-0 w-full md:w-auto">
-                    <div class="w-11/12 md:mr-4 md:w-56">
-                        <GradeFilter filterPostsByGrade={filterPostsByGrade} />
-                    </div>
+                <Show when={screenSize() !== "sm"}>
+                    <div class="sticky top-0 w-full md:w-auto">
+                        <div class="w-11/12 md:mr-4 md:w-56">
+                            <GradeFilter
+                                filterPostsByGrade={filterPostsByGrade}
+                            />
+                        </div>
 
-                    <div class="w-11/12 md:mr-4 md:w-56">
-                        <SubjectFilter filterPosts={setCategoryFilter} />
+                        <div class="w-11/12 md:mr-4 md:w-56">
+                            <SubjectFilter filterPosts={setCategoryFilter} />
+                        </div>
                     </div>
-                </div>
+                </Show>
 
                 <div class="w-11/12 items-center md:flex-1">
                     <div
@@ -355,10 +387,11 @@ export const ServicesView: Component = () => {
                     <div class="hidden md:inline">
                         <ViewCard posts={currentPosts()} />
                     </div>
-
-                    <div class="flex justify-center md:hidden">
+                    <Show when={screenSize() === "sm"}>
+                    <div class="flex justify-center">
                         <MobileViewCard posts={currentPosts()} />
                     </div>
+                    </Show>
                 </div>
             </div>
         </div>

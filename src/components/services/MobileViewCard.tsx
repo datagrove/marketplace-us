@@ -143,7 +143,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     return (
         <div class="w-[300px] md:min-w-[270px]">
             {newPosts().map((post: Post) => (
-                <div class="my-4 rounded border border-border1 dark:border-border1-DM">
+                <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
                         <div class="photo-price flex h-48 w-full justify-between rounded-lg bg-background1 dark:bg-background1-DM">
                             <div class="flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">

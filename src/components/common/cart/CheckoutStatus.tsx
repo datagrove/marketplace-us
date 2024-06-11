@@ -139,7 +139,7 @@ export const CheckoutStatus: Component = () => {
                 {/* <p>{t("checkout.thanks")}</p> TODO: Internationalize*/}
                 <p class="italic">Thank you for your order</p>
             </div>
-            <div class="border border-red-500">
+            <div class="">
                 {/* TODO: Internationalize */}
                 <div>Order ID: {session()?.metadata?.orderId}</div>
                 {/* TODO: Internationalize */}
