@@ -152,7 +152,7 @@ export const CreatorRegistration: Component = () => {
                     <span class="text-alert1">* </span>
                     <span class="italic">{t("formLabels.required")}</span>
                 </div>
-                <div class="">
+                <div class="">                    
                     <div class="flex flex-row justify-between">
                         <label
                             for="FirstName"
@@ -298,6 +298,16 @@ export const CreatorRegistration: Component = () => {
                     />
                 </div>
 
+                <div class="flex justify-center mb-4">
+                    <UserImage
+                        url={imageUrl()}
+                        size={150}
+                        onUpload={(e: Event, url: string) => {
+                            setImageUrl(url);
+                        }}
+                    />
+                </div>
+
                 <div class="mb-2">
                     <div class="flex flex-row justify-between">
                         <label
@@ -418,15 +428,6 @@ export const CreatorRegistration: Component = () => {
                                     {t("toolTips.profileImage")}
                                 </span>
                             </div>
-                        </div>
-                        <div>
-                            <UserImage
-                                url={imageUrl()}
-                                size={150}
-                                onUpload={(e: Event, url: string) => {
-                                    setImageUrl(url);
-                                }}
-                            />
                         </div>
                     </div>
                 </div>
