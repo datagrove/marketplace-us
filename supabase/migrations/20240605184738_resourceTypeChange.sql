@@ -34,5 +34,18 @@ for select
 to public
 using (true);
 
+DELETE FROM resource_types;
 
+INSERT INTO "public"."resource_types" ("id", "type") VALUES
+	(1, 'Activities'),
+	(2, 'Worksheets'),
+	(3, 'Assessment'),
+	(4, 'Bulletin Board'),
+	(5, 'Flash Cards'),
+	(6, 'Lesson Plan'),
+  (7, 'Study Guide'),
+  (8, 'Unit Plan'),
+  (9, 'Workbook'),
+  (10, 'Projects'),
+  (11, 'Other');
 
