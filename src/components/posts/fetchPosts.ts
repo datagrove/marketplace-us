@@ -16,7 +16,7 @@ export async function fetchFilteredPosts(
     resourceFilters: Array<string>
 ) {
     try {
-        let query = supabase.from("sellerposts").select("*");
+        let query = supabase.from("sellerposts").select("*").eq("listing_status", true);
         if (subjectFilters.length !== 0) {
             query = query.overlaps("product_subject", subjectFilters);
         }
@@ -59,7 +59,8 @@ export async function fetchAllPosts() {
     try {
         const { data: allPosts, error } = await supabase
             .from("sellerposts")
-            .select("*");
+            .select("*")
+            .eq("listing_status", true);
 
         if (error) {
             console.log("supabase error: " + error.message);

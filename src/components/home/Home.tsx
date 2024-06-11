@@ -46,6 +46,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .eq("listing_status", true)
             .limit(8);
         if (!data) {
             alert("No posts available.");
@@ -82,6 +83,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .eq("listing_status", true)
             .order("id", { ascending: false })
             .limit(8);
 
