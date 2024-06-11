@@ -12,7 +12,13 @@ export const ThemeBtn: Component = () => {
 
     onMount(() => {
         findTheme();
+        if (theme() === "light") {
+            document.documentElement.classList.remove("dark");
+        } else {
+            document.documentElement.classList.add("dark");
+        }
         updateLocalStorage("theme", theme());
+        
     });
 
     function findTheme() {
@@ -20,12 +26,13 @@ export const ThemeBtn: Component = () => {
             typeof localStorage !== "undefined" &&
             localStorage.getItem("theme")
         ) {
-            setTheme(localStorage.getItem("theme")!);
+            return setTheme(localStorage.getItem("theme")!);
         }
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            setTheme("dark");
-        }
-        setTheme("light");
+            return setTheme("dark");
+        } else {
+            return setTheme("light");
+        }       
     }
 
     function updateLocalStorage(key: string, newValue: string) {
