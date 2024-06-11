@@ -60,7 +60,7 @@ export const SearchBar: Component = () => {
                     type="text"
                     name="query"
                     id="headerSearch"
-                    class="h-full rounded-full w-full ml-2 py-3"
+                    class="h-full rounded-full w-full ml-2 py-3 dark:bg-background1-DM bg-background1"
                     value={searchString()}
                     oninput={(e) => setSearchString(e.target.value)}
                 />
