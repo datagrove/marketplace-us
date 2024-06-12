@@ -85,7 +85,7 @@ export const CartView = () => {
             setCartTotal(total);
             return (
                 <div class="">
-                    <div class="text-start text-3xl font-bold">
+                    <div class="flex justify-between text-start text-3xl font-bold">
                         {t("cartLabels.myCart")}
                     </div>
                     <div id="cartCards" class="overflow-auto">
@@ -113,7 +113,10 @@ export const CartView = () => {
                     <div class="pb-4 text-2xl font-bold md:mr-14 md:border-b">
                         {t("cartLabels.emptyCart")}
                         <div class="p-2">
-                            <button class="btn-primary whitespace-nowrap sm:w-full md:w-1/3" onClick={goToResources}>
+                            <button
+                                class="btn-primary whitespace-nowrap sm:w-full md:w-1/3"
+                                onClick={goToResources}
+                            >
                                 {t("menus.resources")}
                             </button>
                         </div>
@@ -140,9 +143,17 @@ export const CartView = () => {
                     <Show when={screenSize() !== "sm"}>
                         <CartCardDonate onSetDonation={updateDonation} />
                     </Show>
+                    <a href={`/${lang}/resources`}>
+                    <button
+                        class="btn-primary mb-2 mt-4"
+                        aria-label={t("buttons.continueShopping")}
+                    >
+                        {t("buttons.continueShopping")}
+                    </button>
+                    </a>
                 </div>
             </div>
-            <div class="sticky bottom-[110px] z-40 justify-center bg-background1 px-2 pb-3 dark:bg-background1-DM md:col-span-1 md:inline-block md:px-0">
+            <div class="sticky bottom-[70px] z-40 justify-center bg-background1 px-2 pb-3 dark:bg-background1-DM md:col-span-1 md:inline-block md:px-0">
                 <div class="mb-2 text-start text-xl">
                     {t("cartLabels.orderSummary")}
                 </div>

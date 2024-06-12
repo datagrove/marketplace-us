@@ -118,6 +118,7 @@ export const Spanish = {
         resetPassword: "Restablecer la Contraseña",
         finishStripeSetup: "Ir al panel de Stripe",
         requestStripePayout: "Solicitud de Pago",
+        continueShopping: "Seguir comprando",
     },
 
     messages: {

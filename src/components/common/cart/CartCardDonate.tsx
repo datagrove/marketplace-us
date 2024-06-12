@@ -29,9 +29,9 @@ export const CartCardDonate: Component<Props> = (props) => {
                     <div class="mb-2 box-content flex w-full flex-col items-center justify-center md:h-full md:flex-row  md:items-start md:justify-start">
                         <div class="flex h-full w-full items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM md:mr-2 md:h-full md:w-48">
                             <img
-                                src={"src/assets/SupportLearnGrove.png"}
+                                src={"src/assets/LearnGroveCommunity.png"}
                                 // TODO Internationalize
-                                alt="Support LearnGrove"
+                                alt="Build Your LearnGrove"
                                 class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                             />
                         </div>
@@ -77,11 +77,7 @@ export const CartCardDonate: Component<Props> = (props) => {
                                 <div class="col-span-4 col-start-1 row-span-2 row-start-3 flex items-center">
                                     <p class=" prose mb-2 line-clamp-3 max-h-[60px] overflow-hidden text-sm text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                         {/* TODO Internationalize */}
-                                        Help support LearnGrove, the future of
-                                        LearnGrove relies entirely on voluntary
-                                        contributions. Help support our mission
-                                        to support homeschoolers and make
-                                        education accessible to all.
+                                        Partner with us in building YOUR learning community! 
                                     </p>
                                 </div>
                                 <div class="col-span-2 col-start-6 row-start-1 flex justify-end mx-3">

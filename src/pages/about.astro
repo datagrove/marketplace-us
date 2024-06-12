@@ -3,6 +3,7 @@
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { getCollection } from "astro:content";
+import TeamAbout from "@src/components/common/TeamAbout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -24,5 +25,9 @@ const { Content } = await policyPage[0].render();
         <div class="prose dark:prose-invert">
             <Content />
         </div>
+        <br/>
+        <!-- <div>
+            <TeamAbout />
+        </div> -->
     </div>
 </Layout>
