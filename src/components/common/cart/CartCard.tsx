@@ -213,7 +213,7 @@ export const CartCard: Component<Props> = (props) => {
                                             innerHTML={item.content}
                                         ></p>
                                     </div>
-                                    <div class="col-span-2 col-start-5 row-start-1 flex justify-end">
+                                    <div class="col-span-2 lg:col-start-5 md:col-start-6 lg:row-start-1 md:row-start-2 flex justify-end">
                                         {/* Quantity */}
                                         <Quantity
                                             quantity={item.quantity}
@@ -221,7 +221,7 @@ export const CartCard: Component<Props> = (props) => {
                                             product_id={item.product_id}
                                         />
                                     </div>
-                                    <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2">
+                                    <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2 text-base">
                                         {/* Price */}
                                         <Show when={item.price}>
                                             ${(
