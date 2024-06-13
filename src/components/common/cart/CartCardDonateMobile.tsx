@@ -29,9 +29,9 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                         <div class=" box-content flex h-full w-full flex-row  items-start justify-start">
                             <div class="mr-2 flex h-full w-24 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                 <img
-                                    src={"src/assets/SupportLearnGrove.png"}
+                                    src={"src/assets/LearnGroveCommunity.png"}
                                     // TODO Internationalize
-                                    alt="Support LearnGrove"
+                                    alt="Build Your LearnGrove"
                                     class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                 />
                             </div>

@@ -108,6 +108,7 @@ export interface uiObject {
         resetPassword: string;
         finishStripeSetup: string;
         requestStripePayout: string;
+        continueShopping: string;
     };
 
   messages: {

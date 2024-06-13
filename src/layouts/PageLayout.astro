@@ -23,7 +23,7 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
             <Header client:only="solid-js"/>
         </div>
         <main class="flex-grow">
-            <div class="flex justify-center">
+            <div class="flex justify-center mx-2">
             <WindowSize client:only="solid-js"/>
                     <slot />
             </div>

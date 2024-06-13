@@ -141,7 +141,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class="w-[300px] md:min-w-[270px]">
+        <div class=" md:min-w-[270px]">
             {newPosts().map((post: Post) => (
                 <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>

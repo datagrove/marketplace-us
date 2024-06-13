@@ -119,6 +119,7 @@ export const English = {
         resetPassword: "Reset Password",
         finishStripeSetup: "Go to Stripe Dashboard",
         requestStripePayout: "Request Payout",
+        continueShopping: "Continue Shopping",
     },
 
     messages: {

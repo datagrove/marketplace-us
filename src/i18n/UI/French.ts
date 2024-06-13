@@ -120,6 +120,7 @@ export const French = {
         resetPassword: "Réinitialiser le Mot de Passe",
         finishStripeSetup: "Accédez au tableau de bord Stripe",
         requestStripePayout: "Demande Paiement",
+        continueShopping: "Continuer vos achats",
     },
 
     messages: {

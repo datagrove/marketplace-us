@@ -94,7 +94,7 @@ export const Header: Component = () => {
                 </div>
             </div>
             <Show when={screenSize() === "sm"}>
-                <div class="flex w-full px-4 pb-4">
+                <div class="flex w-full px-4 pb-1">
                 <SearchBar />
                 </div>
             </Show>
