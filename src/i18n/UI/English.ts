@@ -73,10 +73,14 @@ export const English = {
             "Read more about this resource. Explore additional images and the full description of the resource.",
         faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
         viewCart: "View your cart and checkout with ease.",
-        community: "Read our Community Guidelines to understand the principles that foster respect, collaboration, and a supportive environment for all members.",
-        sellerFeePayout: "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
-        copyright: "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
-        marketplacetax: "Learn about our marketplace sales tax collection and tax implications.",
+        community:
+            "Read our Community Guidelines to understand the principles that foster respect, collaboration, and a supportive environment for all members.",
+        sellerFeePayout:
+            "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
+        copyright:
+            "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
+        marketplacetax:
+            "Learn about our marketplace sales tax collection and tax implications.",
     },
 
     buttons: {
@@ -91,7 +95,7 @@ export const English = {
         signIn: "sign in",
         signOut: "Sign Out",
         returnHome: "Click to Return Home",
-        reset: "Reset",
+        reset: "reset",
         post: "Post",
         next: "Next",
         previous: "Previous",
@@ -133,8 +137,8 @@ export const English = {
         phoneValid: "Valid phone number",
         passwordMatch: "Passwords do not match",
         passwordReset: "Password Reset",
-        forgotPassword: "Forgot your password? Click here to",
-        alreadyAccount: "Already have an account? Click here to",
+        forgotPassword: "Forgot your password? Click here to ",
+        alreadyAccount: "Already have an account? Click here to ",
         error404: "Something went wrong",
         onlyCreator: "Only creators can create posts.",
         signInAsCreator: "Please create a creator profile before posting.",
@@ -260,25 +264,25 @@ export const English = {
         ariaLabel: "Placeholder info image",
     },
 
-  menus: {
-    resources: "Find Resources",
-    contactUs: "Contact Us",
-    profile: "Profile",
-    ratingsReviews: "Ratings and Reviews",
-    questions: "Questions",
-    freeDownload: "Free Download",
-    creatorResources: "My Resources",
-    payouts: "Payouts",
-    reviews: "Reviews",
-    details: "Details",
-    description: "Description",
-    qA: "Q&A",
-    purchases: "Purchases",
-    favorites: "Favorites",
-    following: "Following",
-    purchased: "Purchased on ",
-    updated: "Last Updated ",
-  },
+    menus: {
+        resources: "Find Resources",
+        contactUs: "Contact Us",
+        profile: "Profile",
+        ratingsReviews: "Ratings and Reviews",
+        questions: "Questions",
+        freeDownload: "Free Download",
+        creatorResources: "My Resources",
+        payouts: "Payouts",
+        reviews: "Reviews",
+        details: "Details",
+        description: "Description",
+        qA: "Q&A",
+        purchases: "Purchases",
+        favorites: "Favorites",
+        following: "Following",
+        purchased: "Purchased on ",
+        updated: "Last Updated ",
+    },
 
     toolTips: {
         firstName:
@@ -538,7 +542,7 @@ export const English = {
                 text: "Clear Governing District",
                 ariaLabel: "Clear Governing District",
             },
-            { text: "View Results", ariaLabel: "View Results"},
+            { text: "View Results", ariaLabel: "View Results" },
         ],
     },
 } as const;
