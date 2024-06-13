@@ -40,7 +40,7 @@ const Dropdown: Component<Props> = (Props: Props) => {
                 <div class="inline-block">
                     <svg
                         class={`inline-block h-5 w-5 transform transition-transform dark:fill-white 
-          ${isOpen() ? "rotate-180" : ""}`}
+                        ${isOpen() ? "rotate-180" : ""}`}
                     >
                         <path
                             fill-rule="evenodd"
@@ -52,12 +52,7 @@ const Dropdown: Component<Props> = (Props: Props) => {
             </button>
             {isOpen() && (
                 <div
-                    class="mb-4 max-h-96 
-        max-w-fit overflow-auto 
-        whitespace-normal rounded bg-background1 
-        text-ptext1 focus:border-2 
-        focus:border-highlight1 focus:outline-none
-        dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                    class="mb-4 max-h-96 max-w-fit overflow-auto whitespace-normal rounded bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                 >
                     {Props.options.map((option) => (
                         <div

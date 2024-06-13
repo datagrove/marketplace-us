@@ -43,7 +43,7 @@ const PostImage: Component<Props> = (props) => {
         event
     ) => {
         try {
-            setUploading(true);            
+            setUploading(true);
 
             const target = event.currentTarget;
             if (!target?.files || target.files.length === 0) {
@@ -79,14 +79,14 @@ const PostImage: Component<Props> = (props) => {
             aria-live="polite"
         >
             <div class="h-fit w-fit">
-                <Show when={ imageUrl().length < 5 }>
+                <Show when={imageUrl().length < 5}>
                     <div class="mb-4 mr-2">
                         <label for="single">
                             {uploading() ? (
                                 t("buttons.uploading")
                             ) : (
                                 <div class="flex h-24 w-24 flex-col items-center justify-center rounded bg-background2 dark:bg-background2-DM">
-                                    <div class="flex flex-col justify-center items-center">
+                                    <div class="flex flex-col items-center justify-center">
                                         <svg
                                             width="50px"
                                             height="50px"
@@ -98,16 +98,16 @@ const PostImage: Component<Props> = (props) => {
                                             <path d="M24 17C27.5278 17 30.5222 19.2834 31.586 22.4529C30.7711 22.6741 29.988 22.9726 29.2451 23.34C28.5411 21.1138 26.459 19.5 24 19.5C20.9624 19.5 18.5 21.9624 18.5 25C18.5 27.6415 20.3622 29.8481 22.8454 30.3786C22.5516 31.151 22.3292 31.9587 22.1865 32.7936C18.6418 31.972 16 28.7945 16 25C16 20.5817 19.5817 17 24 17Z" />
                                             <path d="M46 35C46 41.0751 41.0751 46 35 46C28.9249 46 24 41.0751 24 35C24 28.9249 28.9249 24 35 24C41.0751 24 46 28.9249 46 35ZM36 29C36 28.4477 35.5523 28 35 28C34.4477 28 34 28.4477 34 29V34H29C28.4477 34 28 34.4477 28 35C28 35.5523 28.4477 36 29 36H34V41C34 41.5523 34.4477 42 35 42C35.5523 42 36 41.5523 36 41V36H41C41.5523 36 42 35.5523 42 35C42 34.4477 41.5523 34 41 34H36V29Z" />
                                         </svg>
-                                        <p class="text-xs pt-1 text-ptext2 dark:text-ptext2-DM">
+                                        <p class="pt-1 text-xs text-ptext2 dark:text-ptext2-DM">
                                             {t("buttons.uploadImage")}
                                         </p>
-                                    </div>                                
+                                    </div>
                                 </div>
                             )}
                         </label>
                     </div>
                 </Show>
-                
+
                 <span style="display:none">
                     <input
                         type="file"
@@ -133,9 +133,7 @@ const PostImage: Component<Props> = (props) => {
                     />
                 ))
             ) : (
-                <div class="flex justify-center">
-                    
-                </div>
+                <div class="flex justify-center"></div>
             )}
         </div>
     );
