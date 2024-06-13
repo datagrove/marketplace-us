@@ -264,6 +264,8 @@ export const English = {
         subHeadline:
             "Creators post services. Customers search posts. Work gets done.",
         ariaLabel: "Placeholder info image",
+        becomeCreator: "Want to become a Learning Resource Creator?",
+        clickToBecomeCreator: "Click here to get started!",
     },
 
     menus: {

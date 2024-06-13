@@ -241,6 +241,8 @@ export interface uiObject {
         headline: string;
         subHeadline: string;
         ariaLabel: string;
+        becomeCreator: string;
+        clickToBecomeCreator: string;
     };
 
   menus: {

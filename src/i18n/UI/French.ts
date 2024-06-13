@@ -270,6 +270,7 @@ export const French = {
         subHeadline:
             "Les fournisseurs publient des services. Les users recherchent des messages. Le travail est fait.",
         ariaLabel: "Image d'information d'espace réservé",
+        becomeCreator: "Prêt à devenir un créateur de ressources d'apprentissage?",
     },
 
   menus: {
