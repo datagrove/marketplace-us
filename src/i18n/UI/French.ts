@@ -78,6 +78,7 @@ export const French = {
         sellerFeePayout: "Découvrez nos frais de vente et nos processus de paiement, y compris des informations détaillées sur les frais de transaction, les frais de paiement et les calendriers.",
         copyright: "Comprenez notre politique en matière de droits d'auteur et de marques déposées pour protéger vos droits de propriété intellectuelle et garantir le respect de nos directives pour l'utilisation de documents protégés par des droits d'auteur et des marques déposées.",
         marketplacetax: "Découvrez notre collection de taxes de vente sur le marché et les implications fiscales.",
+        taxCodeLearnMore: "En savoir plus sur les codes fiscaux pour les ressources LearnGrove",
     },
 
     buttons: {
@@ -120,6 +121,7 @@ export const French = {
         resetPassword: "Réinitialiser le Mot de Passe",
         finishStripeSetup: "Accédez au tableau de bord Stripe",
         requestStripePayout: "Demande Paiement",
+        listResource: "Publier la Ressource",
     },
 
     messages: {
@@ -234,7 +236,9 @@ export const French = {
         isResourceFree: "ressource gratuite",
         about: "À propos",
         platformSupport: "Prise en charge de la plateforme",
-        images: "Images",
+        images: "Aperçu des Images",
+        yes: "Ouais",
+        no: "Non",
     },
 
     postLabels: {
@@ -301,7 +305,7 @@ export const French = {
         locationUpdate:
             "Si vous mettez à jour votre emplacement, tous les champs doivent être remplis.",
         postImages:
-            "La première image téléchargée sera affichée dans les aperçus des publications. Pour télécharger des images supplémentaires, cliquez simplement à nouveau sur Télécharger l'image.",
+            "Vous pouvez télécharger jusqu'à cinq images comme aperçu ou démonstration de votre ressource. La première image téléchargée sera affichée sur les aperçus des ressources. Les images d'aperçu sont uniquement destinées à des fins d'aperçu - vous téléchargerez votre ressource complète ci-dessous.",
         firstNameEdit:
             "Cela devrait être votre nom légal tel qu'il apparaît sur votre pièce d'identité gouvernementale. Si vous ne fournissez pas de nom d’affichage, votre nom et prénom seront affichés à la place. Ces valeurs peuvent être mises à jour après la création d'un profil user ou fournisseur. Puisqu'il s'agit de votre nom légal, les mêmes nom et prénom doivent être utilisés sur vos profils user et fournisseur.",
         lastNameEdit:
@@ -313,6 +317,9 @@ export const French = {
         grades: "Veuillez sélectionner tous les niveaux scolaires auxquels cette ressource convient. Ceux-ci seront utilisés pour filtrer les ressources pour les acheteurs.",
         contribution:
             "Choisissez quel pourcentage de votre prix vous pouvez contribuer à la maintenance et au développement de la plateforme. Les plateformes similaires représentent entre 11 % et 45 % de vos ventes. Nous voulons vous donner le pouvoir de prendre en charge la plateforme en fonction de la valeur qu'elle apporte. Vous ne savez pas quel est le bon montant ? Nous vous recommandons de commencer à 15 %, vous pourrez le mettre à jour ultérieurement dans votre profil de fournisseur.",
+        taxCode: "La catégorie de taxe détermine la manière dont la taxe de vente sera calculée dans les États où LearnGrove collecte et verse la taxe en votre nom. Comme indiqué dans les Conditions, vous êtes responsable du choix de la catégorie fiscale appropriée pour chaque ressource que vous répertoriez. Cliquez sur le lien ci-dessous pour en savoir plus.",
+        resourceTypes: "Veuillez sélectionner tous les types de ressources applicables.",
+        price: "Le prix saisi est le prix facturé au client. Le créateur recevra le montant restant après frais. Consultez les conditions pour plus d'informations sur la structure tarifaire LearnGrove."
     },
 
     apiErrors: {

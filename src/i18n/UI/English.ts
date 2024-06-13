@@ -77,6 +77,7 @@ export const English = {
         sellerFeePayout: "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
         copyright: "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
         marketplacetax: "Learn about our marketplace sales tax collection and tax implications.",
+        taxCodeLearnMore: "Learn more about tax codes for LearnGrove resources",
     },
 
     buttons: {
@@ -119,6 +120,7 @@ export const English = {
         resetPassword: "Reset Password",
         finishStripeSetup: "Go to Stripe Dashboard",
         requestStripePayout: "Request Payout",
+        listResource: "List Resource",
     },
 
     messages: {
@@ -228,7 +230,9 @@ export const English = {
         isResourceFree: "Free Resource",
         about: "About",
         platformSupport: "Platform Support",
-        images: "Images",
+        images: "Preview Images",
+        yes: "Yes",
+        no: "No",
     },
 
     postLabels: {
@@ -295,7 +299,7 @@ export const English = {
         locationUpdate:
             "If you update your location all fields must be completed.",
         postImages:
-            'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
+            'You may upload up to five images as a preview or demonstration of your resource. The first image uploaded will be displayed on resource previews. Preview images are only for preview purposes - you will upload your full resource below.',
         firstNameEdit:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a user or creator profile. Since this is your legal name, the same first and last name must be used on your user and creator profiles.",
         lastNameEdit:
@@ -307,6 +311,9 @@ export const English = {
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
         contribution:
             "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your creator profile. If you set platform support to 0% you will still be charged for processing fees.",
+        taxCode: "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
+        resourceTypes: "Please select all applicable resource types.",
+        price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure."
     },
 
     apiErrors: {

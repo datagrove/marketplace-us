@@ -24,10 +24,10 @@ const Dropdown: Component<Props> = (Props: Props) => {
     }
 
     return (
-        <div class="relative inline-block w-full border-2 border-purple-400">
+        <div class="relative inline-block w-full">
             {/* Dropdown button */}
             <button
-                class="flex rounded justify-between border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM w-11/12"
+                class="w-full flex rounded justify-between border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen());

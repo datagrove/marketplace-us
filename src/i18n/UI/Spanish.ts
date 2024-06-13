@@ -77,6 +77,7 @@ export const Spanish = {
         sellerFeePayout: "Conozca nuestras tarifas de vendedor y procesos de pago, incluida información detallada sobre tarifas de transacción, tarifas de pago y cronogramas.",
         copyright: "Comprenda nuestra Política de derechos de autor y marcas comerciales para proteger sus derechos de propiedad intelectual y garantizar el cumplimiento de nuestras pautas para el uso de materiales con derechos de autor y marcas registradas.",
         marketplacetax: "Conozca la recaudación de impuestos sobre las ventas de nuestro mercado y sus implicaciones fiscales.",
+        taxCodeLearnMore: "Obtenga más información sobre los códigos impositivos para los recursos de LearnGrove",
     },
 
     buttons: {
@@ -118,6 +119,7 @@ export const Spanish = {
         resetPassword: "Restablecer la Contraseña",
         finishStripeSetup: "Ir al panel de Stripe",
         requestStripePayout: "Solicitud de Pago",
+        listResource: "Publicar Recurso",
     },
 
     messages: {
@@ -231,7 +233,9 @@ export const Spanish = {
         isResourceFree: "Recurso Gratuito",
         about: "Acerca",
         platformSupport: "Soporte de plataforma",
-        images: "Imágenes",
+        images: "Vista Previa de Imágenes",
+        yes: "Sí",
+        no: "No",
     },
 
     postLabels: {
@@ -296,7 +300,7 @@ export const Spanish = {
         locationUpdate:
             "Si actualiza su ubicación, se deben completar todos los campos.",
         postImages:
-            "La primera imagen cargada se mostrará en las vistas previas de las publicaciones. Para cargar imágenes adicionales, simplemente haga clic en Cargar imagen nuevamente.",
+            "Puede cargar hasta cinco imágenes como vista previa o demostración de su recurso. La primera imagen cargada se mostrará en las vistas previas de recursos. Las imágenes de vista previa son solo para fines de vista previa; cargará su recurso completo a continuación.",
         firstNameEdit:
             "Este debería ser su nombre legal tal como aparece en su identificación gubernamental. Si no proporciona un nombre para mostrar, se mostrarán su nombre y apellido. Estos valores se pueden actualizar después de crear un perfil de usere o proveedor. Dado que este es su nombre legal, se debe utilizar el mismo nombre y apellido en sus perfiles de usere y proveedor.",
         lastNameEdit:
@@ -308,6 +312,9 @@ export const Spanish = {
         grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
         contribution:
             "Elige qué porcentaje de tu precio puedes contribuir al mantenimiento y desarrollo de la plataforma. Plataformas similares se llevan entre el 11% y el 45% de tus ventas. Queremos darle el poder de respaldar la plataforma en función del valor que proporciona. ¿No estás seguro de la cantidad correcta? Recomendamos comenzar con el 15%, puedes actualizarlo más adelante en tu perfil de proveedor.",
+        taxCode: "La categoría de impuestos determina cómo se calcularán los impuestos sobre las ventas en los estados donde LearnGrove recauda y remite impuestos en su nombre. Como se indica en los Términos, usted es responsable de elegir la categoría fiscal adecuada para cada recurso que incluya. Haga clic en el enlace a continuación para obtener más información.",
+        resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
+        price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
     },
 
     apiErrors: {
