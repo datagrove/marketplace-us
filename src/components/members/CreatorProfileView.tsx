@@ -105,6 +105,7 @@ export const CreatorProfileView: Component = () => {
         e.preventDefault();
 
         let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
+        console.log(currLinkId)
         // let currLinkId = e.currentTarget?.id;
         let currEl = document.getElementById(currLinkId);
         let allLgLinks = document.getElementsByClassName(
@@ -303,7 +304,7 @@ export const CreatorProfileView: Component = () => {
     }
 
     return (
-        <div>
+        <div class="w-full">
             <form onSubmit={submit} id="creatorEditProfile" class="mx-1">
                 <div
                     id="creator-view-header"
@@ -600,19 +601,9 @@ export const CreatorProfileView: Component = () => {
                 <div id="creator-view-tabs-content-div" class="mt-8 md:mt-2">
                     <div id="creator-view-tabs" class="mb-4 flex">
                         <a
-                            href="#profileCreatorView"
-                            id="creatorViewProfileLink"
-                            class="creatorViewtabLinkLg mr-2 inline border-b-2 border-green-500 md:mr-6 lg:mr-10"
-                            onClick={creatorViewTabClick}
-                        >
-                            <p class="text-sm font-bold md:text-base lg:text-xl">
-                                {t("menus.profile")}
-                            </p>
-                        </a>
-                        <a
                             href="#resourcesCreatorView"
                             id="creatorViewResourcesLink"
-                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            class="creatorViewtabLinkLg mr-2 inline border-b-2 border-green-500  md:mr-6 lg:mr-10"
                             onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
@@ -620,9 +611,19 @@ export const CreatorProfileView: Component = () => {
                             </p>
                         </a>
                         <a
+                            href="#profileCreatorView"
+                            id="creatorViewProfileLink"
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            onClick={creatorViewTabClick}
+                        >
+                            <p class="text-sm font-bold md:text-base lg:text-xl">
+                                {t("menus.profile")}
+                            </p>
+                        </a>
+                        <a
                             href="#ratingsCreatorView"
                             id="creatorViewRatingsLink"
-                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10 hidden"
                             onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
@@ -632,7 +633,7 @@ export const CreatorProfileView: Component = () => {
                         <a
                             href="#questionsCreatorView"
                             id="creatorViewQuestionsLink"
-                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10"
+                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10 hidden"
                             onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
@@ -652,7 +653,11 @@ export const CreatorProfileView: Component = () => {
                         </a>
                     </div>
 
-                    <div id="creatorViewProfile" class="inline">
+                    <div id="creatorViewResources" class="inline">
+                        <ViewCreatorPosts />
+                    </div>
+
+                    <div id="creatorViewProfile" class="hidden">
                         <div class="first-name my-2 flex">
                             <label
                                 for="FirstName"
@@ -766,10 +771,6 @@ export const CreatorProfileView: Component = () => {
                                 </div>
                             </Show>
                         </div>
-                    </div>
-
-                    <div id="creatorViewResources" class="hidden">
-                        <ViewCreatorPosts />
                     </div>
 
                     <div id="creatorViewRatings" class="hidden">
