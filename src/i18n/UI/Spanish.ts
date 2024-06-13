@@ -120,6 +120,7 @@ export const Spanish = {
         finishStripeSetup: "Ir al panel de Stripe",
         requestStripePayout: "Solicitud de Pago",
         listResource: "Publicar Recurso",
+        continueShopping: "Seguir comprando",
     },
 
     messages: {

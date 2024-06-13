@@ -110,6 +110,7 @@ export interface uiObject {
         finishStripeSetup: string;
         requestStripePayout: string;
         listResource: string;
+        continueShopping: string;
     };
 
   messages: {

@@ -122,6 +122,7 @@ export const French = {
         finishStripeSetup: "Accédez au tableau de bord Stripe",
         requestStripePayout: "Demande Paiement",
         listResource: "Publier la Ressource",
+        continueShopping: "Continuer vos achats",
     },
 
     messages: {
