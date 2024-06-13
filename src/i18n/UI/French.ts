@@ -207,7 +207,7 @@ export const French = {
         password: "Mot de passe",
         confirmPassword: "Confirmez le mot de passe",
         displayName: "Afficher un nom",
-        enterPostContent: "Entrez le contenu du message ici",
+        enterPostContent: "Ajouter une description de la ressource ici",
         noValue: "Non fourni",
         creatorInfo: "Informations sur le fournisseur",
         posts: "Messages du fournisseur",
@@ -228,11 +228,13 @@ export const French = {
         chooseSubject: "Sujet(s)",
         chooseGrade: "Niveau(x) scolaire(s)",
         chooseResourceTypes: "Type(x) de ressource(s)",
+        chooseTaxCode: "Code Fiscal",
         pages: "Pages",
         pricePost: "Le Prix",
         isResourceFree: "ressource gratuite",
         about: "À propos",
         platformSupport: "Prise en charge de la plateforme",
+        images: "Images",
     },
 
     postLabels: {

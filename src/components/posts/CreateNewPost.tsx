@@ -488,7 +488,7 @@ export const CreateNewPost: Component = () => {
         <div>
             <form onSubmit={submit}>
                 <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.title")}:
+                    {t("formLabels.title")}
                     <input
                         type="text"
                         id="Title"
@@ -501,11 +501,11 @@ export const CreateNewPost: Component = () => {
                 <br />
 
                 <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.postContent")}:
+                    {t("menus.description")}
                     <textarea
                         id="Content"
                         name="Content"
-                        class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                        class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 placeholder-shown:italic focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                         placeholder={t("formLabels.enterPostContent")}
                         rows="10"
                         required
@@ -513,21 +513,27 @@ export const CreateNewPost: Component = () => {
                     ></textarea>
                 </label>
 
-                <div class="my-4 flex justify-center">
-                    <div class="flex items-end justify-end">
+                <div class="my-4 flex flex-col justify-center w-full">
+                    {/* <div class="flex items-end justify-end border-2 border-green-600">
                         <div class="group relative mr-2 flex w-4 items-center"></div>
-                    </div>
+                    </div> */}
                     <div class="">
+                        <p>{t("formLabels.images")} { imageUrl().length }/5</p>
+                    </div>
+                    <div class="w-full">
                         <PostImage
                             url={imageUrl()[imageUrl().length - 1]}
-                            size={150}
-                            onUpload={(e: Event, url: string) => {
+                            size={96}
+                            onUpload={(e: Event, url: string) => {                                
                                 setImageUrl([...imageUrl(), url]);
                             }}
                         />
                     </div>
-                    <div class="flex items-end justify-end">
-                        <div class="group relative ml-2 flex items-center">
+                    
+                    
+                    {/* PostImages Tooltip */}
+                    {/* <div class="flex items-end justify-end">
+                        <div class="group relative flex items-center">
                             <svg
                                 class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                 version="1.1"
@@ -556,11 +562,14 @@ export const CreateNewPost: Component = () => {
                                 {t("toolTips.postImages")}
                             </span>
                         </div>
-                    </div>
+                    </div> */}
+
+
+                
                 </div>
 
                 {/* Subject Picker */}
-                <div class="mt-2 flex flex-wrap justify-start">
+                <div class="mt-2 flex flex-wrap justify-start border-2 border-red-400">
                     <label
                         for="subject"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -822,12 +831,35 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 <Show when={isFree() === false}>
+                    <label
+                        for="taxCode"
+                        class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
+                    >
+                        <span class="text-alert1 dark:text-alert1-DM">* </span>
+                        {t("formLabels.taxcode")}:
+                    </label>
+                    
+                    <p
+                        id="chooseGrade"
+                        class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
+        after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                    >
+                        {t("formLabels.chooseTaxCode")}
+                    </p>
+
+                    <Dropdown
+                        options={taxCodeOptions}
+                        selectedOption={selectedTaxCode()!}
+                        setSelectedOption={setSelectedTaxCode}
+                    />
+
+
                     <div class="mb-6 mt-6">
                         <label
                             for="taxCode"
                             class="text-ptext1 dark:text-ptext1-DM"
                         >
-                            {t("formLabels.taxCode")}:
+                            {t("formLabels.taxCode")}
                             <Dropdown
                                 options={taxCodeOptions}
                                 selectedOption={selectedTaxCode()!}

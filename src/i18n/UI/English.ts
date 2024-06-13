@@ -201,7 +201,7 @@ export const English = {
         password: "Password",
         confirmPassword: "Confirm Password",
         displayName: "Display Name",
-        enterPostContent: "Enter Post Content Here",
+        enterPostContent: "Add resource description here",
         noValue: "Not Provided",
         creatorInfo: "Creator Information",
         posts: "Creator Posts",
@@ -222,11 +222,13 @@ export const English = {
         chooseSubject: "Subject(s)",
         chooseGrade: "Grade Level(s)",
         chooseResourceTypes: "Resource Type(s)",
+        chooseTaxCode: "Tax Code",
         pages: "Pages",
         pricePost: "Price",
         isResourceFree: "Free Resource",
         about: "About",
         platformSupport: "Platform Support",
+        images: "Images",
     },
 
     postLabels: {

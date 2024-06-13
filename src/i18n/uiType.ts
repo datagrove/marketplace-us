@@ -200,11 +200,13 @@ export interface uiObject {
         chooseSubject: string;
         chooseGrade: string;
         chooseResourceTypes: string;
+        chooseTaxCode: string;
         pages: string;
         pricePost: string;
         isResourceFree: string;
         about: string;
         platformSupport: string;
+        images: string;
     };
 
     postLabels: {

@@ -204,7 +204,7 @@ export const Spanish = {
         password: "Contraseña",
         confirmPassword: "Confirmar Contraseña",
         displayName: "Nombre para Mostrar",
-        enterPostContent: "Ingrese el Contenido de la Publicación Aquí",
+        enterPostContent: "Agregue la descripción del recurso aquí",
         noValue: "No proporcionada",
         creatorInfo: "Información del Proveedor",
         posts: "Publicaciones del Proveedores",
@@ -225,11 +225,13 @@ export const Spanish = {
         findResources: "Encontrar Recursos",
         chooseSubject: "Asunto(s)",
         chooseGrade: "Nivel(es) de grado",
+        chooseTaxCode: "Código de Impuestos",
         pages: "Paginas",
         pricePost: "Precio",
         isResourceFree: "Recurso Gratuito",
         about: "Acerca",
         platformSupport: "Soporte de plataforma",
+        images: "Imágenes",
     },
 
     postLabels: {

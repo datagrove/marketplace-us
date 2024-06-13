@@ -24,17 +24,17 @@ const Dropdown: Component<Props> = (Props: Props) => {
     }
 
     return (
-        <div class="relative ml-2 inline-block">
+        <div class="relative inline-block w-full border-2 border-purple-400">
             {/* Dropdown button */}
             <button
-                class="mb-4 flex rounded border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                class="flex rounded justify-between border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM w-11/12"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen());
                 }}
             >
-                <div class="ml-2 inline-block">
-                    {Props.selectedOption || t("formLabels.dropdownDefault")}
+                <div class="ml-1 inline-block">
+                    {Props.selectedOption || t("formLabels.chooseTaxCode") || t("formLabels.dropdownDefault")}
                 </div>
                 {/* Dropdown icon */}
                 <div class="inline-block">
