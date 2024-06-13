@@ -66,6 +66,7 @@ export interface uiObject {
         sellerFeePayout: string;
         copyright: string;
         marketplacetax: string;
+        taxCodeLearnMore: string;
     };
 
     buttons: {
@@ -108,6 +109,7 @@ export interface uiObject {
         resetPassword: string;
         finishStripeSetup: string;
         requestStripePayout: string;
+        listResource: string;
         continueShopping: string;
     };
 
@@ -201,11 +203,15 @@ export interface uiObject {
         chooseSubject: string;
         chooseGrade: string;
         chooseResourceTypes: string;
+        chooseTaxCode: string;
         pages: string;
         pricePost: string;
         isResourceFree: string;
         about: string;
         platformSupport: string;
+        images: string;
+        yes: string;
+        no: string;
     };
 
     postLabels: {
@@ -271,6 +277,9 @@ export interface uiObject {
         subjects: string;
         grades: string;
         contribution: string;
+        taxCode: string;
+        resourceTypes: string;
+        price: string;
     };
 
     apiErrors: {
