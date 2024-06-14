@@ -271,6 +271,11 @@ export const French = {
             "Les fournisseurs publient des services. Les users recherchent des messages. Le travail est fait.",
         ariaLabel: "Image d'information d'espace réservé",
         becomeCreator: "Prêt à devenir un créateur de ressources d'apprentissage?",
+        clickToBecomeCreator: "Cliquez ici pour commencer!",
+        welcome: "Bienvenue sur LearnGrove!",
+        clickToLearnMore: "Découvrez-en davantage sur notre communauté et notre engagement",
+        contribute: "Contribuer à la communauté LearnGrove",
+        clickToContribute: "Nous voulons de vos nouvelles!",
     },
 
   menus: {

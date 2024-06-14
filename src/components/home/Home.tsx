@@ -13,6 +13,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
 import * as allFilters from "../posts/fetchPosts";
+import { IconH1 } from "@tabler/icons-solidjs";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -173,14 +174,19 @@ export const Home: Component = () => {
                     <HomeSubjectCarousel />
                 </div>
 
-                <div
-                    id="home-image-1"
-                    class="my-8 flex h-36 items-center justify-center rounded bg-background2 dark:bg-background2-DM"
-                >
-                    <p class="text-ptext2 dark:text-ptext2-DM">
-                        Clickable image and text
-                    </p>
-                </div>
+                <a href={ `/${ lang}/about`}>
+                    <div
+                        id="home-image-1"
+                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
+                    >
+                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                            {t("homePageText.welcome")}
+                        </h1>
+                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                            {t("homePageText.clickToLearnMore")}
+                        </p>
+                    </div>
+                </a>
 
                 <div id="new-resources" class="md:mb-8">
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
@@ -198,14 +204,19 @@ export const Home: Component = () => {
                     <HomeGradeCarousel />
                 </div>
 
-                <div
-                    id="home-image-2"
-                    class="my-8 flex h-36 items-center justify-center rounded bg-background2 dark:bg-background2-DM"
-                >
-                    <p class="text-ptext2 dark:text-ptext2-DM">
-                        Clickable image and text
-                    </p>
-                </div>
+                <a href="https://forms.gle/e1snHR7pnAFRTa1MA" target="_blank">
+                    <div
+                        id="home-image-1"
+                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
+                    >
+                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                            {t("homePageText.contribute")}
+                        </h1>
+                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                            {t("homePageText.clickToContribute")}
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
     );

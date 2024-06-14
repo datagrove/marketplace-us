@@ -243,6 +243,10 @@ export interface uiObject {
         ariaLabel: string;
         becomeCreator: string;
         clickToBecomeCreator: string;
+        welcome: string;
+        clickToLearnMore: string;
+        contribute: string;
+        clickToContribute: string;
     };
 
   menus: {
