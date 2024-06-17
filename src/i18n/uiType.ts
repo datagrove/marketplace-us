@@ -111,6 +111,7 @@ export interface uiObject {
         requestStripePayout: string;
         listResource: string;
         continueShopping: string;
+        viewOrders: string;
     };
 
   messages: {
@@ -445,4 +446,12 @@ export interface uiObject {
             { text: string; ariaLabel: string },
         ];
     };
+
+    checkout: {
+        success: string;
+        thankYou: string;
+        orderID: string;
+        total: string;
+        purchases: string;
+    }
 }

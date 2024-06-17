@@ -69,6 +69,8 @@ module.exports = {
 
 				'shadow-LM': '#9E9E9E',
 				'shadow-DM': '#616161',
+
+				'downloadBtn': '#030089',
 			},
 			typography: {
 				DEFAULT: {

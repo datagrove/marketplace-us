@@ -121,6 +121,7 @@ export const Spanish = {
         requestStripePayout: "Solicitud de Pago",
         listResource: "Publicar Recurso",
         continueShopping: "Seguir comprando",
+        viewOrders: "Ver Compras",
     },
 
     messages: {
@@ -546,5 +547,13 @@ export const Spanish = {
             { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
             { text: "Ver Resultados", ariaLabel: "Ver Resultados"},
         ],
+    },
+
+    checkout: {
+        success: "Succés!",
+        thankYou: "¡Éxito!",
+        orderID: "ID de Compra",
+        total: "Total",
+        purchases: "Compras",
     },
 } as const;
