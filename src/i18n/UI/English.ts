@@ -122,6 +122,7 @@ export const English = {
         requestStripePayout: "Request Payout",
         listResource: "List Resource",
         continueShopping: "Continue Shopping",
+        viewOrders: "View Orders",
     },
 
     messages: {
@@ -555,5 +556,13 @@ export const English = {
             },
             { text: "View Results", ariaLabel: "View Results" },
         ],
+    },
+
+    checkout: {
+        success: "Success!",
+        thankYou: "Thank you for your order",
+        orderID: "Order ID",
+        total: "Total",
+        purchases: "Purchases",
     },
 } as const;

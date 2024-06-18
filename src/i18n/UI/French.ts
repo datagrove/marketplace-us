@@ -123,6 +123,7 @@ export const French = {
         requestStripePayout: "Demande Paiement",
         listResource: "Publier la Ressource",
         continueShopping: "Continuer vos achats",
+        viewOrders: "Voir les Achats",
     },
 
     messages: {
@@ -573,5 +574,13 @@ export const French = {
             },
             { text: "Voir les Résultats", ariaLabel: "Voir les Résultats"},
         ],
+    },
+
+    checkout: {
+        success: "Succés!",
+        thankYou: "Nous vous remercions de votre commande",
+        orderID: "Identifiant d'achat",
+        total: "Total",
+        purchases: "Achats",
     },
 } as const;
