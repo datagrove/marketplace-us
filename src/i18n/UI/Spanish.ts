@@ -3,7 +3,7 @@ export const Spanish = {
     siteDescription: "Su comunidad para recursos de aprendizaje de calidad.",
 
     pageTitles: {
-        services: "Recursos",
+        services: "Catálago de Recursos",
         signUp: "Registrarse",
         login: "Iniciar Sesión",
         home: "Inicio",
@@ -541,7 +541,7 @@ export const Spanish = {
                 ariaLabel: "Borrar Todos los Filtros",
             },
             { text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
-            { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
+            { text: "Borrar Grados", ariaLabel: "Borrar Grados" },
             { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
             { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
             { text: "Ver Resultados", ariaLabel: "Ver Resultados"},

@@ -32,7 +32,7 @@
     }
 
     .clearBtnRectangle {
-        @apply mx-1 mt-2 flex rounded border border-gray-600 px-2 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300;
+        @apply flex rounded border border-gray-600 px-1 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300;
     }
 
     .socialBtn {

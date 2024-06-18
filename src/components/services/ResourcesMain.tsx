@@ -17,6 +17,7 @@ import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import useLocalStorage from "@lib/LocalStorageHook";
+import { IconX } from '@tabler/icons-solidjs';
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -316,40 +317,6 @@ export const ResourcesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <Show when={screenSize() !== "sm"}>
-                <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearAllFilters}
-                        aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.0.text")}
-                        </p>
-                    </button>
-
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearSubjects}
-                        aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.1.text")}
-                        </p>
-                    </button>
-
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearGrade}
-                        aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.2.text")}
-                        </p>
-                    </button>
-                </div>
-            </Show>
-
             <Show when={screenSize() === "sm"}>
                 <FiltersMobile
                     clearSubjects={clearSubjects}
@@ -363,6 +330,51 @@ export const ResourcesView: Component = () => {
             <div class="flex w-full  flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <Show when={screenSize() !== "sm"}>
                     <div class="sticky top-0 w-full md:w-auto">
+                        <div>
+                            <Show when={screenSize() !== "sm"}>
+                                <div class="w-56 border border-input1 rounded px-1 clear-filters-btns flex flex-wrap items-center justify-center md:mb-2 md:py-2">
+                                    <button
+                                        class="clearBtnRectangle mr-1"
+                                        onclick={clearGrade}
+                                        aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
+                                    >
+                                        <div class="flex items-center">
+                                            <IconX stroke={"2"} class="w-3 h-3" />
+                                            <p class="text-xs">
+                                                {t("clearFilters.filterButtons.2.text")}
+                                            </p>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        class="clearBtnRectangle ml-1"
+                                        onclick={clearSubjects}
+                                        aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
+                                    >
+                                        <div class="flex items-center">
+                                            <IconX stroke={"2"} class="w-3 h-3" />
+                                            <p class="text-xs">
+                                                {t("clearFilters.filterButtons.1.text")}
+                                            </p>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        class="mt-2 mx-1 flex rounded border border-gray-600 px-2 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300 w-full justify-center"
+                                        onclick={clearAllFilters}
+                                        aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
+                                    >
+                                        <div class="flex items-center">
+                                            <IconX stroke={"2"} class="w-3 h-3" />
+                                            <p class="text-xs text-center">
+                                                {t("clearFilters.filterButtons.0.text")}
+                                            </p>
+                                        </div>
+                                    </button>
+                                </div>
+                            </Show>
+                        </div>
+                        
                         <div class="w-11/12 md:mr-4 md:w-56">
                             <GradeFilter
                                 filterPostsByGrade={filterPostsByGrade}
@@ -383,6 +395,9 @@ export const ResourcesView: Component = () => {
                         <h1 class="text-btn1Text dark:text-btn1Text-DM">
                             {t("messages.noPostsSearch")}
                         </h1>
+                    </div>
+                    <div class="bg-gradient-to-r from-btn1 to-transparent dark:from-btn1-DM py-1 md:py-6 mb-2">
+                        <h1 class="text-3xl text-ptext1 dark:text-ptext1-DM">{t("pageTitles.services")}</h1>
                     </div>
                     <div class="hidden md:inline">
                         <ViewCard posts={currentPosts()} />

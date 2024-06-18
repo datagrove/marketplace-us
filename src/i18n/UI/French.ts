@@ -3,7 +3,7 @@ export const French = {
     siteDescription: "Votre communauté pour des ressources d'apprentissage de qualité.",
 
     pageTitles: {
-        services: "Ressources",
+        services: "Catalogue de Ressources",
         signUp: "S'inscrire",
         login: "Connexion",
         home: "Maison",
@@ -550,12 +550,12 @@ export const French = {
                 ariaLabel: "Effacer Tous Les Filtres",
             },
             {
-                text: "Effacer le Filtre de Catégorie",
-                ariaLabel: "Effacer le Filtre de Catégorie",
+                text: "Effacer les Catégories",
+                ariaLabel: "Effacer les Catégories",
             },
             {
-                text: "Effacer le Filtre des Grandes Municipalités",
-                ariaLabel: "Effacer le Filtre des Grandes Municipalités",
+                text: "Effacer les Notes",
+                ariaLabel: "Effacer les Notes",
             },
             {
                 text: "Effacer le Filtre des Municipalités Mineures",

@@ -3,7 +3,7 @@ export const English = {
     siteDescription: "Your community for quality learning resources.",
 
     pageTitles: {
-        services: "Resources",
+        services: "Resource Catalog",
         signUp: "Sign Up",
         login: "Login",
         home: "Home",
@@ -536,8 +536,8 @@ export const English = {
             { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
             { text: "Clear Subjects", ariaLabel: "Clear Subjects" },
             {
-                text: "Clear Grade",
-                ariaLabel: "Clear Grade",
+                text: "Clear Grades",
+                ariaLabel: "Clear Grades",
             },
             {
                 text: "Clear Minor Municipality",
