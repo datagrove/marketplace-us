@@ -100,8 +100,7 @@ export const CheckoutStatus: Component = () => {
         const { data: orderedItems, error } = await supabase
             .from("order_details")
             .select("*")
-            // .eq("order_number", session()?.metadata?.orderId); //TODO: comment back in before committing
-            .eq("order_number", "84dfd0fd-de56-4d7e-b402-d9aa0fe1d771"); //TODO: remove before committing
+            .eq("order_number", session()?.metadata?.orderId);
         if (error) {
             console.log(
                 "Order Details Error: " + error.code + " " + error.message
@@ -184,9 +183,7 @@ export const CheckoutStatus: Component = () => {
                             <div class="my-2 flex justify-between md:my-4">
                                 <a href={`/${lang}/posts/${item.id}`}>
                                     <p class="line-clamp-2 w-2/3">
-                                        This is a really long resource name so
-                                        that I can test the truncate styling -
-                                        but no, make it even longer...LONGER!!!
+                                        {item.title}
                                     </p>
                                 </a>
 
