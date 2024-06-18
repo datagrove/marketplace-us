@@ -11,7 +11,7 @@ export const English = {
         createUserAccount: "Create User Profile",
         editUserAccount: "Edit User Profile",
         viewUserAccount: "My User Profile",
-        createPost: "Create Post",
+        createPost: "List Resource",
         createCreatorAccount: "Create Creator Profile",
         editCreatorAccount: "Edit Creator Profile",
         viewCreatorAccount: "My Creator Profile",
@@ -77,6 +77,7 @@ export const English = {
         sellerFeePayout: "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
         copyright: "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
         marketplacetax: "Learn about our marketplace sales tax collection and tax implications.",
+        taxCodeLearnMore: "Learn more about tax codes for LearnGrove resources",
     },
 
     buttons: {
@@ -91,7 +92,7 @@ export const English = {
         signIn: "sign in",
         signOut: "Sign Out",
         returnHome: "Click to Return Home",
-        reset: "Reset",
+        reset: "reset",
         post: "Post",
         next: "Next",
         previous: "Previous",
@@ -119,7 +120,9 @@ export const English = {
         resetPassword: "Reset Password",
         finishStripeSetup: "Go to Stripe Dashboard",
         requestStripePayout: "Request Payout",
+        listResource: "List Resource",
         continueShopping: "Continue Shopping",
+        viewOrders: "View Orders",
     },
 
     messages: {
@@ -133,8 +136,8 @@ export const English = {
         phoneValid: "Valid phone number",
         passwordMatch: "Passwords do not match",
         passwordReset: "Password Reset",
-        forgotPassword: "Forgot your password? Click here to",
-        alreadyAccount: "Already have an account? Click here to",
+        forgotPassword: "Forgot your password? Click here to ",
+        alreadyAccount: "Already have an account? Click here to ",
         error404: "Something went wrong",
         onlyCreator: "Only creators can create posts.",
         signInAsCreator: "Please create a creator profile before posting.",
@@ -202,7 +205,7 @@ export const English = {
         password: "Password",
         confirmPassword: "Confirm Password",
         displayName: "Display Name",
-        enterPostContent: "Enter Post Content Here",
+        enterPostContent: "Add resource description here",
         noValue: "Not Provided",
         creatorInfo: "Creator Information",
         posts: "Creator Posts",
@@ -223,11 +226,15 @@ export const English = {
         chooseSubject: "Subject(s)",
         chooseGrade: "Grade Level(s)",
         chooseResourceTypes: "Resource Type(s)",
+        chooseTaxCode: "Tax Code",
         pages: "Pages",
         pricePost: "Price",
         isResourceFree: "Free Resource",
         about: "About",
         platformSupport: "Platform Support",
+        images: "Preview Images",
+        yes: "Yes",
+        no: "No",
     },
 
     postLabels: {
@@ -258,27 +265,33 @@ export const English = {
         subHeadline:
             "Creators post services. Customers search posts. Work gets done.",
         ariaLabel: "Placeholder info image",
+        becomeCreator: "Want to become a Learning Resource Creator?",
+        clickToBecomeCreator: "Click here to get started!",
+        welcome: "Welcome to LearnGrove!",
+        clickToLearnMore: "Discover more about our community and commitment",
+        contribute: "Contribute to the LearnGrove Community",
+        clickToContribute: "We want to hear from you!",
     },
 
-  menus: {
-    resources: "Find Resources",
-    contactUs: "Contact Us",
-    profile: "Profile",
-    ratingsReviews: "Ratings and Reviews",
-    questions: "Questions",
-    freeDownload: "Free Download",
-    creatorResources: "My Resources",
-    payouts: "Payouts",
-    reviews: "Reviews",
-    details: "Details",
-    description: "Description",
-    qA: "Q&A",
-    purchases: "Purchases",
-    favorites: "Favorites",
-    following: "Following",
-    purchased: "Purchased on ",
-    updated: "Last Updated ",
-  },
+    menus: {
+        resources: "Find Resources",
+        contactUs: "Contact Us",
+        profile: "Profile",
+        ratingsReviews: "Ratings and Reviews",
+        questions: "Questions",
+        freeDownload: "Free Download",
+        creatorResources: "My Resources",
+        payouts: "Payouts",
+        reviews: "Reviews",
+        details: "Details",
+        description: "Description",
+        qA: "Q&A",
+        purchases: "Purchases",
+        favorites: "Favorites",
+        following: "Following",
+        purchased: "Purchased on ",
+        updated: "Last Updated ",
+    },
 
     toolTips: {
         firstName:
@@ -294,7 +307,7 @@ export const English = {
         locationUpdate:
             "If you update your location all fields must be completed.",
         postImages:
-            'The first image uploaded will be displayed on post previews. To upload additional images just click "Upload Image" again.',
+            'You may upload up to five images as a preview or demonstration of your resource. The first image uploaded will be displayed on resource previews. Preview images are only for preview purposes - you will upload your full resource below.',
         firstNameEdit:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a user or creator profile. Since this is your legal name, the same first and last name must be used on your user and creator profiles.",
         lastNameEdit:
@@ -306,6 +319,9 @@ export const English = {
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
         contribution:
             "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your creator profile. If you set platform support to 0% you will still be charged for processing fees.",
+        taxCode: "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
+        resourceTypes: "Please select all applicable resource types.",
+        price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure."
     },
 
     apiErrors: {
@@ -538,7 +554,15 @@ export const English = {
                 text: "Clear Governing District",
                 ariaLabel: "Clear Governing District",
             },
-            { text: "View Results", ariaLabel: "View Results"},
+            { text: "View Results", ariaLabel: "View Results" },
         ],
+    },
+
+    checkout: {
+        success: "Success!",
+        thankYou: "Thank you for your order",
+        orderID: "Order ID",
+        total: "Total",
+        purchases: "Purchases",
     },
 } as const;

@@ -100,6 +100,13 @@ const excludeTaxCodes = new Set([
     /^txcd_10804010.*/,
     //Gift card
     /^txcd_10502.*/,
+    //Software as a service
+    /^txcd_1010300.*/,
+    /^txcd_1010310.*/,
+    //Downloadable Software - Custom
+    /^txcd_1020300.*/,
+    //Business Use
+    /^txcd_10202003.*/,
 ]);
 
 let uploadFilesRef: any;
@@ -488,7 +495,7 @@ export const CreateNewPost: Component = () => {
         <div>
             <form onSubmit={submit}>
                 <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.title")}:
+                    {t("formLabels.title")}
                     <input
                         type="text"
                         id="Title"
@@ -501,11 +508,11 @@ export const CreateNewPost: Component = () => {
                 <br />
 
                 <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
-                    {t("formLabels.postContent")}:
+                    {t("menus.description")}
                     <textarea
                         id="Content"
                         name="Content"
-                        class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                        class="w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 placeholder-shown:italic focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                         placeholder={t("formLabels.enterPostContent")}
                         rows="10"
                         required
@@ -513,49 +520,49 @@ export const CreateNewPost: Component = () => {
                     ></textarea>
                 </label>
 
-                <div class="my-4 flex justify-center">
-                    <div class="flex items-end justify-end">
-                        <div class="group relative mr-2 flex w-4 items-center"></div>
+                <div class="my-4 flex w-full flex-col justify-center">
+                    <div class="flex items-center">
+                        <p>
+                            {t("formLabels.images")} ({imageUrl().length}/5)
+                        </p>
+
+                        <div class="ml-2 flex items-end justify-end">
+                            <div class="group relative flex items-center">
+                                <svg
+                                    class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                >
+                                    <g>
+                                        <path
+                                            d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                        />
+                                    </g>
+                                </svg>
+
+                                <span class="translate-x-1/8 invisible absolute m-4 mx-auto w-48 translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                    {t("toolTips.postImages")}
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="">
+                    <div class="w-full">
                         <PostImage
                             url={imageUrl()[imageUrl().length - 1]}
-                            size={150}
+                            size={96}
                             onUpload={(e: Event, url: string) => {
                                 setImageUrl([...imageUrl(), url]);
                             }}
                         />
-                    </div>
-                    <div class="flex items-end justify-end">
-                        <div class="group relative ml-2 flex items-center">
-                            <svg
-                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 512 512"
-                            >
-                                <g>
-                                    <path
-                                        d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                      C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                      c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                      s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                      c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                      c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                      C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                      c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                      C314.716,152.979,297.039,174.043,273.169,176.123z"
-                                    />
-                                </g>
-                            </svg>
-
-                            <span
-                                class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
-                p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
-                            >
-                                {t("toolTips.postImages")}
-                            </span>
-                        </div>
                     </div>
                 </div>
 
@@ -577,8 +584,7 @@ export const CreateNewPost: Component = () => {
                         >
                             <p
                                 id="chooseSubject"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
-                after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                             >
                                 {t("formLabels.chooseSubject")}
                             </p>
@@ -621,14 +627,14 @@ export const CreateNewPost: Component = () => {
                                 <g>
                                     <path
                                         d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
-                            C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
-                            c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
-                            s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
-                            c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
-                            c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
-                            C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
-                            c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
-                            C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                C314.716,152.979,297.039,174.043,273.169,176.123z"
                                     />
                                 </g>
                             </svg>
@@ -663,8 +669,7 @@ export const CreateNewPost: Component = () => {
                         <div class="relative" onClick={() => gradeCheckboxes()}>
                             <p
                                 id="chooseGrade"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
-                after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                             >
                                 {t("formLabels.chooseGrade")}
                             </p>
@@ -750,8 +755,7 @@ export const CreateNewPost: Component = () => {
                         >
                             <p
                                 id="chooseResourceType"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1
-                after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                             >
                                 {t("formLabels.chooseResourceTypes")}
                             </p>
@@ -821,53 +825,136 @@ export const CreateNewPost: Component = () => {
                     </div>
                 </div>
 
-                <Show when={isFree() === false}>
-                    <div class="mb-6 mt-6">
-                        <label
-                            for="taxCode"
-                            class="text-ptext1 dark:text-ptext1-DM"
-                        >
-                            {t("formLabels.taxCode")}:
-                            <Dropdown
-                                options={taxCodeOptions}
-                                selectedOption={selectedTaxCode()!}
-                                setSelectedOption={setSelectedTaxCode}
-                            />
-                        </label>
-                    </div>
-                </Show>
                 {/* Price Implementation */}
-                <div class="justfify-evenly mb-3 flex flex-col ">
-                    <div class="flex ">
-                        <p>{t("formLabels.isResourceFree")}</p>
-                        <input
-                            type="checkbox"
-                            id="isFreeCheckbox"
-                            class=" ml-2 w-4 border-2 "
-                            value={""}
-                            onChange={() => setIsFree(!isFree())}
-                        />
+                <div class="justfify-evenly mt-6 flex flex-col ">
+                    <div class="mt-2 flex justify-between">
+                        <p>{t("formLabels.isResourceFree")}?</p>
+                        <div>
+                            <label for="isFreeCheckbox" class="ml-4">
+                                {t("formLabels.yes")}
+                            </label>
+                            <input
+                                type="checkbox"
+                                id="isFreeCheckbox"
+                                class="ml-1"
+                                checked={isFree()}
+                                onChange={() => setIsFree(true)}
+                            />
+
+                            <label for="isNotFreeCheckbox" class="ml-4">
+                                {t("formLabels.no")}
+                            </label>
+                            <input
+                                type="checkbox"
+                                id="isNotFreeCheckbox"
+                                class="ml-1"
+                                checked={!isFree()}
+                                onChange={() => setIsFree(false)}
+                            />
+                        </div>
                     </div>
                     <Show when={!isFree()}>
-                        <div class="mt-2 flex">
-                            <p>{t("formLabels.pricePost")}</p>
-                            <input
-                                required
-                                type="number"
-                                min={1}
-                                step={0.01}
-                                class="ml-1 flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
-                                id="Price"
-                                name="Price"
-                                placeholder={"0.00"}
-                                onInput={(e) => formatPrice(e.target.value)}
-                            />
+                        <div class="flex items-center">
+                            <div class="mt-2 flex w-full flex-col">
+                                <p>{t("formLabels.pricePost")}</p>
+
+                                <div class="flex items-center">
+                                    <input
+                                        required
+                                        type="number"
+                                        min={1}
+                                        step={0.01}
+                                        class="flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                                        id="Price"
+                                        name="Price"
+                                        placeholder={"0.00"}
+                                        onInput={(e) =>
+                                            formatPrice(e.target.value)
+                                        }
+                                    />
+
+                                    <div class="group relative flex items-center">
+                                        <svg
+                                            class="peer ml-2 h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                            version="1.1"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512"
+                                        >
+                                            <g>
+                                                <path
+                                                    d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                                        C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                                        c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                                        s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                                        c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                                        c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                                        C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                                        c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                                        C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                                />
+                                            </g>
+                                        </svg>
+
+                                        <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                            {t("toolTips.price")}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-2 flex items-start justify-center">
+                            <div class="w-full">
+                                <Dropdown
+                                    options={taxCodeOptions}
+                                    selectedOption={selectedTaxCode()!}
+                                    setSelectedOption={setSelectedTaxCode}
+                                />
+                            </div>
+
+                            <div class="flex h-7 items-center justify-center">
+                                <div class="group relative flex items-center">
+                                    <svg
+                                        class="peer ml-2 h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <g>
+                                            <path
+                                                d="M255.992,0.008C114.626,0.008,0,114.626,0,256s114.626,255.992,255.992,255.992
+                                                    C397.391,511.992,512,397.375,512,256S397.391,0.008,255.992,0.008z M300.942,373.528c-10.355,11.492-16.29,18.322-27.467,29.007
+                                                    c-16.918,16.177-36.128,20.484-51.063,4.516c-21.467-22.959,1.048-92.804,1.597-95.449c4.032-18.564,12.08-55.667,12.08-55.667
+                                                    s-17.387,10.644-27.709,14.419c-7.613,2.782-16.225-0.871-18.354-8.234c-1.984-6.822-0.404-11.161,3.774-15.822
+                                                    c10.354-11.484,16.289-18.314,27.467-28.999c16.934-16.185,36.128-20.483,51.063-4.524c21.467,22.959,5.628,60.732,0.064,87.497
+                                                    c-0.548,2.653-13.742,63.627-13.742,63.627s17.387-10.645,27.709-14.427c7.628-2.774,16.241,0.887,18.37,8.242
+                                                    C306.716,364.537,305.12,368.875,300.942,373.528z M273.169,176.123c-23.886,2.096-44.934-15.564-47.031-39.467
+                                                    c-2.08-23.878,15.58-44.934,39.467-47.014c23.87-2.097,44.934,15.58,47.015,39.458
+                                                    C314.716,152.979,297.039,174.043,273.169,176.123z"
+                                            />
+                                        </g>
+                                    </svg>
+
+                                    <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                        {t("toolTips.taxCode")}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a href={`/${lang}/faq`}>
+                                <p class="mt-1 text-[10px] italic text-link1 dark:text-link1-DM md:text-xs">
+                                    {t("pageDescriptions.taxCodeLearnMore")}
+                                </p>
+                            </a>
                         </div>
                     </Show>
                 </div>
 
-                <div>
+                <div class="mt-6">
                     {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */}
+                    {/* TODO: Fix the text centering for Drop files here or browse files */}
                     <UploadFiles
                         target={"#uploadResource"}
                         bucket="resources"
@@ -896,7 +983,7 @@ export const CreateNewPost: Component = () => {
                             uploadFinished() ? "btn-primary" : "btn-disabled"
                         }`}
                     >
-                        {t("buttons.post")}
+                        {t("buttons.listResource")}
                     </button>
                 </div>
                 <Suspense>
