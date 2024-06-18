@@ -11,7 +11,7 @@ export const English = {
         createUserAccount: "Create User Profile",
         editUserAccount: "Edit User Profile",
         viewUserAccount: "My User Profile",
-        createPost: "Create Post",
+        createPost: "List Resource",
         createCreatorAccount: "Create Creator Profile",
         editCreatorAccount: "Edit Creator Profile",
         viewCreatorAccount: "My Creator Profile",

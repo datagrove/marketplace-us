@@ -11,7 +11,7 @@ export const Spanish = {
         createUserAccount: "Crear Perfil de Usere",
         editUserAccount: "Editar Perfil de Usere",
         viewUserAccount: "Ver Perfil de Usere",
-        createPost: "Crear Publicación",
+        createPost: "Lista de Recursos",
         createCreatorAccount: "Crear Perfil de Proveedor",
         editCreatorAccount: "Editar Perfil de Proveedor",
         viewCreatorAccount: "Mi Perfil de proveedor",
