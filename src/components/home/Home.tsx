@@ -1,6 +1,8 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
 import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
@@ -11,6 +13,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
 import * as allFilters from "../posts/fetchPosts";
+import { IconH1 } from "@tabler/icons-solidjs";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -119,17 +122,32 @@ export const Home: Component = () => {
         }
     });
 
+    const screenSize = useStore(windowSize);
+
     return (
         <div class="">
             <HomeStickyFilters />
 
             <div id="home-scrolling" class="scroll">
-                <div
-                    id="header-image"
-                    class="flex h-24 items-center justify-center bg-green-600"
-                >
-                    HEADER IMAGE
-                </div>
+                <a href={ `/${ lang}/creator/createaccount`}>
+                    <div
+                        id="header-image"
+                        class="flex h-24 justify-start items-center bg-gradient-to-r from-highlight1 dark:from-highlight1-DM from-35%"
+                    >
+                        <Show when={ screenSize() !== "sm"}>
+                            <div>
+                                <svg fill="none" width="80px" height="80px" viewBox="0 0 256 256" id="Flat" class="fill-icon1 dark:fill-icon1-DM h-24 md:w-24">
+                                    <path d="M224,52H160a36.02912,36.02912,0,0,0-32,19.53955A36.02912,36.02912,0,0,0,96,52H32A12.01343,12.01343,0,0,0,20,64V192a12.01343,12.01343,0,0,0,12,12H96a28.03146,28.03146,0,0,1,28,28,4,4,0,0,0,8,0,28.03146,28.03146,0,0,1,28-28h64a12.01343,12.01343,0,0,0,12-12V64A12.01343,12.01343,0,0,0,224,52ZM96,196H32a4.00427,4.00427,0,0,1-4-4V64a4.00427,4.00427,0,0,1,4-4H96a28.03146,28.03146,0,0,1,28,28V209.39648A35.949,35.949,0,0,0,96,196Zm132-4a4.00427,4.00427,0,0,1-4,4H160a35.94218,35.94218,0,0,0-28,13.40747V88a28.03146,28.03146,0,0,1,28-28h64a4.00427,4.00427,0,0,1,4,4Z"/>
+                                </svg>
+                            </div>
+                        </Show>
+                        
+                        <div class="ml-1">
+                            <h1 class="text-ptext1 dark:text-ptext1-DM md:text-2xl">{t("homePageText.becomeCreator")}</h1>
+                            <p class="text-ptext2 dark:text-ptext2-DM text-sm md:text-lg italic">{t("homePageText.clickToBecomeCreator")}</p>
+                        </div>
+                    </div>
+                </a>
 
                 <div class="flex justify-center md:hidden">
                     <button
@@ -156,14 +174,19 @@ export const Home: Component = () => {
                     <HomeSubjectCarousel />
                 </div>
 
-                <div
-                    id="home-image-1"
-                    class="my-8 flex h-36 items-center justify-center rounded bg-background2 dark:bg-background2-DM"
-                >
-                    <p class="text-ptext2 dark:text-ptext2-DM">
-                        Clickable image and text
-                    </p>
-                </div>
+                <a href={ `/${ lang}/about`}>
+                    <div
+                        id="home-image-1"
+                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
+                    >
+                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                            {t("homePageText.welcome")}
+                        </h1>
+                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                            {t("homePageText.clickToLearnMore")}
+                        </p>
+                    </div>
+                </a>
 
                 <div id="new-resources" class="md:mb-8">
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
@@ -181,14 +204,19 @@ export const Home: Component = () => {
                     <HomeGradeCarousel />
                 </div>
 
-                <div
-                    id="home-image-2"
-                    class="my-8 flex h-36 items-center justify-center rounded bg-background2 dark:bg-background2-DM"
-                >
-                    <p class="text-ptext2 dark:text-ptext2-DM">
-                        Clickable image and text
-                    </p>
-                </div>
+                <a href="https://forms.gle/e1snHR7pnAFRTa1MA" target="_blank">
+                    <div
+                        id="home-image-1"
+                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
+                    >
+                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                            {t("homePageText.contribute")}
+                        </h1>
+                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                            {t("homePageText.clickToContribute")}
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
     );

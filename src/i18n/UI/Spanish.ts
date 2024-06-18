@@ -266,6 +266,12 @@ export const Spanish = {
     subHeadline:
       "Los proveedores publican servicios. Los useres pueden selecionar los servicios. El trabajo se hace.",
     ariaLabel: "Imagen para el marcador de posición de información",
+    becomeCreator: "¿Listo para convertirte en un creador de recursos de aprendizaje?",
+    clickToBecomeCreator: "¡Haz clic para comenzar!",
+    welcome: "¡Bienvenido a LearnGrove!",
+    clickToLearnMore: "Descubra más sobre nuestra comunidad y compromiso",
+    contribute: "Contribuir a la comunidad Learngrove",
+    clickToContribute: "¡Nosotras queremos saber de usted!",
   },
   menus: {
     resources: "Buscar Recursos",

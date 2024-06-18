@@ -264,6 +264,12 @@ export const English = {
         subHeadline:
             "Creators post services. Customers search posts. Work gets done.",
         ariaLabel: "Placeholder info image",
+        becomeCreator: "Want to become a Learning Resource Creator?",
+        clickToBecomeCreator: "Click here to get started!",
+        welcome: "Welcome to LearnGrove!",
+        clickToLearnMore: "Discover more about our community and commitment",
+        contribute: "Contribute to the LearnGrove Community",
+        clickToContribute: "We want to hear from you!",
     },
 
     menus: {
