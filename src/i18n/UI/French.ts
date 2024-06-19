@@ -3,7 +3,7 @@ export const French = {
     siteDescription: "Votre communauté pour des ressources d'apprentissage de qualité.",
 
     pageTitles: {
-        services: "Ressources",
+        services: "Catalogue de Ressources",
         signUp: "S'inscrire",
         login: "Connexion",
         home: "Maison",

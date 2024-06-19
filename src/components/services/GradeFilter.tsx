@@ -76,7 +76,7 @@ export const GradeFilter: Component<Props> = (props) => {
     return (
         <div>            
             {/* Filter Menus for md+ view */}
-            <div class="hidden w-full bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
+            <div class="hidden mt-2 w-full bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
                 {/*Grade*/}
                 <div class="md:flex-column flex-wrap pb-2 md:rounded md:border-b-2 md:border-border2 md:text-left dark:md:border-border2-DM">
                     <div class="flex flex-wrap justify-between">
