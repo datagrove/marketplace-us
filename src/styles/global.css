@@ -4,7 +4,7 @@
 
 @layer components {
     .btn-primary {
-        @apply cursor-pointer max-h-14 rounded-full bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md active:animate-click dark:bg-btn1-DM dark:text-btn1Text-DM md:text-[1vw];
+        @apply max-h-14 cursor-pointer rounded-full bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md active:animate-click dark:bg-btn1-DM dark:text-btn1Text-DM md:text-[1vw];
     }
 
     .btn-secondary {
