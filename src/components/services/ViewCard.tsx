@@ -137,8 +137,8 @@ export const ViewCard: Component<Props> = (props) => {
                 {newPosts().map((post: Post) => (
                     <li class="w-[99%]">
                         <a href={`/${lang}/posts/${post.id}`}>
-                            <div class="mb-2 box-content flex w-full flex-col items-center justify-center rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM md:h-48 md:flex-row md:items-start md:justify-start">
-                                <div class="flex items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM md:mr-2 md:h-48 md:w-48 md:shrink-0">
+                            <div class="mb-2 box-content flex h-48 w-full flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
+                                <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
                                         <img
                                             src={post.image_url}
@@ -163,11 +163,11 @@ export const ViewCard: Component<Props> = (props) => {
 
                                 <div
                                     id="cardContent"
-                                    class="flex w-full justify-between px-1 pt-1 text-left md:h-full md:w-5/6"
+                                    class="flex h-48 w-5/6 flex-col justify-between border border-blue-500 px-1 pt-1 text-left"
                                 >
-                                    <div class="w-full">
-                                        <div class="h-1/3">
-                                            <p class="col-span-4 line-clamp-2 max-h-14 overflow-hidden pr-4 text-sm font-bold text-ptext1 dark:text-ptext1-DM md:truncate md:text-lg">
+                                    <div class="h-full">
+                                        <div class="flex-grow overflow-hidden border border-red-500">
+                                            <p class="prose mr-1 line-clamp-1 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                 {post.title}
                                             </p>
 
@@ -193,14 +193,59 @@ export const ViewCard: Component<Props> = (props) => {
                                             </div>
                                         </div>
 
-                                        <div class="hidden md:line-clamp-3 md:h-1/3">
+                                        <div class="line-clamp-3 h-1/3">
                                             <p
                                                 class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
                                                 innerHTML={post.content}
                                             ></p>
                                         </div>
 
-                                        <div class="details-div grid h-1/3 grid-cols-[85px_1fr] grid-rows-4">
+                                        <div class="details-div grid h-1/3 grid-flow-row auto-rows-min">
+                                            <div class="grid w-full grid-cols-4 text-[10px]">
+                                                <div class="col-span-1">
+                                                    <div class="">
+                                                        {t(
+                                                            "formLabels.subjects"
+                                                        )}
+                                                        :
+                                                    </div>
+                                                </div>
+                                                <div class="prose col-span-3 line-clamp-1 overflow-hidden text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    <div class="line-clamp-1">
+                                                        {Array.from(
+                                                            post.subject!
+                                                        ).join(", ")}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid w-full grid-cols-4 text-[10px]">
+                                                <div class="col-span-1">
+                                                    <div class="">
+                                                        {t("formLabels.grades")}
+                                                        :
+                                                    </div>
+                                                </div>
+                                                <div class="prose col-span-3 line-clamp-1 overflow-hidden text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    <div class="line-clamp-1">
+                                                        {post.grade!.join(", ")}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grid w-full grid-cols-4 text-[10px]">
+                                                <div class="col-span-1">
+                                                    <div class="">
+                                                        {t("formLabels.resourceTypes")}:
+                                                    </div>
+                                                </div>
+                                                <div class="prose col-span-3 line-clamp-1 text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM align-middle">
+                                                    <div class="line-clamp-1">
+                                                    {post.resourceTypes!.join(", ")}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* <div class="details-div grid h-1/3 grid-cols-[85px_1fr] grid-rows-4">
                                             <div class="text-[10px]">
                                                 <h6>
                                                     {t("formLabels.subjects")}:{" "}
@@ -237,7 +282,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                     1NBT.C.4, K.OA.A.2
                                                 </p>
                                             </div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
 
