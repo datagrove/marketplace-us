@@ -263,7 +263,7 @@ export const ResourcesView: Component = () => {
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
 
-        if (searchInput.value !== null) {
+        if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
         }
 
@@ -360,22 +360,22 @@ export const ResourcesView: Component = () => {
                 />
             </Show>
 
-            <div class="flex w-full  flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
+            <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <Show when={screenSize() !== "sm"}>
-                    <div class="sticky top-0 w-full md:w-auto">
-                        <div class="w-11/12 md:mr-4 md:w-56">
+                    <div class="sticky top-0 w-3/12">
+                        <div class="w-11/12 mr-4">
                             <GradeFilter
                                 filterPostsByGrade={filterPostsByGrade}
                             />
                         </div>
 
-                        <div class="w-11/12 md:mr-4 md:w-56">
+                        <div class="w-11/12 md:mr-4">
                             <SubjectFilter filterPosts={setCategoryFilter} />
                         </div>
                     </div>
                 </Show>
 
-                <div class="w-11/12 items-center md:flex-1">
+                <div class="w-8/12 items-center md:flex-1">
                     <div
                         id="no-posts-message"
                         class="my-1 hidden rounded bg-btn1 py-2 dark:bg-btn1-DM"

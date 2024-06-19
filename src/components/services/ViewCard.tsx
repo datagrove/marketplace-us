@@ -132,7 +132,7 @@ export const ViewCard: Component<Props> = (props) => {
     };
 
     return (
-        <div class="flex w-full min-w-[650px] justify-center">
+        <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
                 {newPosts().map((post: Post) => (
                     <li class="w-[99%]">
