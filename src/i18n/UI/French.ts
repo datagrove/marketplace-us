@@ -3,7 +3,7 @@ export const French = {
     siteDescription: "Votre communauté pour des ressources d'apprentissage de qualité.",
 
     pageTitles: {
-        services: "Ressources",
+        services: "Catalogue de Ressources",
         signUp: "S'inscrire",
         login: "Connexion",
         home: "Maison",
@@ -273,10 +273,10 @@ export const French = {
         ariaLabel: "Image d'information d'espace réservé",
         becomeCreator: "Prêt à devenir un créateur de ressources d'apprentissage?",
         clickToBecomeCreator: "Cliquez ici pour commencer!",
-        welcome: "Bienvenue sur LearnGrove!",
-        clickToLearnMore: "Découvrez-en davantage sur notre communauté et notre engagement",
+        welcome: "Qu’est-ce qu’ApprendreGrove?",
+        clickToLearnMore: "Cliquez ici pour en savoir plus sur notre communauté et notre engagement",
         contribute: "Contribuer à la communauté LearnGrove",
-        clickToContribute: "Nous voulons de vos nouvelles!",
+        clickToContribute: "Cliquez ici pour partager votre contribution",
     },
 
   menus: {

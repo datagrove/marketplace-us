@@ -3,7 +3,7 @@ export const English = {
     siteDescription: "Your community for quality learning resources.",
 
     pageTitles: {
-        services: "Resources",
+        services: "Resource Catalog",
         signUp: "Sign Up",
         login: "Login",
         home: "Home",
@@ -267,10 +267,10 @@ export const English = {
         ariaLabel: "Placeholder info image",
         becomeCreator: "Want to become a Learning Resource Creator?",
         clickToBecomeCreator: "Click here to get started!",
-        welcome: "Welcome to LearnGrove!",
-        clickToLearnMore: "Discover more about our community and commitment",
+        welcome: "What is LearnGrove?",
+        clickToLearnMore: "Click here to learn more about our community and commitment",
         contribute: "Contribute to the LearnGrove Community",
-        clickToContribute: "We want to hear from you!",
+        clickToContribute: "Click here to share your input",
     },
 
     menus: {

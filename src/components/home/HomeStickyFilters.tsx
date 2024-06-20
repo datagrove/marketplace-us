@@ -223,30 +223,32 @@ export const HomeStickyFilters: Component = () => {
                     <div
                         onmouseleave={hideGradeFilters}
                         id="gradeDiv"
-                        class="absolute top-8 z-40 hidden h-64 w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-8 z-40 hidden h-fit w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
-                        <For each={grades()}>
-                            {(grade) => (
-                                <div class="flex pl-1 pr-4">
-                                    <div>
-                                        <input
-                                            aria-label="replace"
-                                            type="checkbox"
-                                            onClick={() =>
-                                                selectGrades(
-                                                    grade.id.toString()
-                                                )
-                                            }
-                                            class="subjectCheckbox"
-                                        />
-                                    </div>
+                        <div class="flex flex-wrap h-5/6">
+                            <For each={grades()}>
+                                {(grade) => (
+                                    <div class="flex pl-1 pr-4 w-1/2">
+                                        <div>
+                                            <input
+                                                aria-label="replace"
+                                                type="checkbox"
+                                                onClick={() =>
+                                                    selectGrades(
+                                                        grade.id.toString()
+                                                    )
+                                                }
+                                                class="subjectCheckbox"
+                                            />
+                                        </div>
 
-                                    <div class="pl-1">
-                                        {grade.grade}
+                                        <div class="pl-1">
+                                            {grade.grade}
+                                        </div>
                                     </div>
-                                </div>
-                            )}
-                        </For>
+                                )}
+                            </For>
+                        </div>
 
                         <div class="flex flex-col items-center justify-center">
                             <a href={`/${lang}/resources`}>
