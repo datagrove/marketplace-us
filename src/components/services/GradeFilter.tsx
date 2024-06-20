@@ -55,7 +55,9 @@ export const GradeFilter: Component<Props> = (props) => {
 
     onMount(() => {
         if (localStorage.getItem("selectedGrades")) {
-            setSelectedGrades([...JSON.parse(localStorage.getItem("selectedGrades")!)]);
+            setSelectedGrades([
+                ...JSON.parse(localStorage.getItem("selectedGrades")!),
+            ]);
             checkGradeBoxes();
         }
     });
@@ -63,20 +65,22 @@ export const GradeFilter: Component<Props> = (props) => {
     function checkGradeBoxes() {
         console.log("selectedGrades: ", selectedGrades());
         selectedGrades().map((grade) => {
-            let gradeCheckElements = document.getElementsByClassName("grade " + grade) as HTMLCollectionOf<HTMLInputElement>;
-            
+            let gradeCheckElements = document.getElementsByClassName(
+                "grade " + grade
+            ) as HTMLCollectionOf<HTMLInputElement>;
+
             if (gradeCheckElements) {
                 for (let i = 0; i < gradeCheckElements.length; i++) {
                     gradeCheckElements[i].checked = true;
                 }
             }
-        })
+        });
     }
 
     return (
-        <div>            
+        <div>
             {/* Filter Menus for md+ view */}
-            <div class="hidden w-full bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
+            <div class="mt-2 hidden w-full bg-background1 dark:bg-background1-DM md:block md:rounded-lg md:border-2 md:border-border2 dark:md:border-border2-DM">
                 {/*Grade*/}
                 <div class="md:flex-column flex-wrap pb-2 md:rounded md:border-b-2 md:border-border2 md:text-left dark:md:border-border2-DM">
                     <div class="flex flex-wrap justify-between">
@@ -86,10 +90,11 @@ export const GradeFilter: Component<Props> = (props) => {
                     <div class="ml-2 md:flex md:h-fit md:flex-wrap md:overflow-auto md:text-left">
                         <For each={grade()}>
                             {(item) => (
-                                <div class="w-1/2 flex flex-row">
+                                <div class="flex w-1/2 flex-row">
                                     <input
                                         aria-label={
-                                            t("ariaLabels.checkboxGrade") + " " +
+                                            t("ariaLabels.checkboxGrade") +
+                                            " " +
                                             item.grade
                                         }
                                         type="checkbox"
@@ -97,10 +102,9 @@ export const GradeFilter: Component<Props> = (props) => {
                                         onClick={() => {
                                             setGradesFilter(item);
                                         }}
-                                        id = {"grade " + item.id.toString()}
-
+                                        id={"grade " + item.id.toString()}
                                     />
-                                    <div class="text-ptext1 dark:text-ptext1-DM inline-block">
+                                    <div class="inline-block text-ptext1 dark:text-ptext1-DM">
                                         {item.grade}
                                     </div>
                                 </div>

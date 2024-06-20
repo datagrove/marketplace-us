@@ -17,6 +17,7 @@ import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import useLocalStorage from "@lib/LocalStorageHook";
+import { IconX } from "@tabler/icons-solidjs";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -316,40 +317,6 @@ export const ResourcesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <Show when={screenSize() !== "sm"}>
-                <div class="clear-filters-btns flex flex-wrap items-center justify-center md:mb-2">
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearAllFilters}
-                        aria-label={t("clearFilters.filterButtons.0.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.0.text")}
-                        </p>
-                    </button>
-
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearSubjects}
-                        aria-label={t("clearFilters.filterButtons.1.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.1.text")}
-                        </p>
-                    </button>
-
-                    <button
-                        class="clearBtnRectangle"
-                        onclick={clearGrade}
-                        aria-label={t("clearFilters.filterButtons.2.ariaLabel")}
-                    >
-                        <p class="text-xs">
-                            {t("clearFilters.filterButtons.2.text")}
-                        </p>
-                    </button>
-                </div>
-            </Show>
-
             <Show when={screenSize() === "sm"}>
                 <FiltersMobile
                     clearSubjects={clearSubjects}
@@ -360,10 +327,71 @@ export const ResourcesView: Component = () => {
                 />
             </Show>
 
+            <Show when={screenSize() === "sm"}>
+                <div class="mb-2 bg-gradient-to-r from-btn1 py-2 dark:from-btn1-DM">
+                    <h1 class="text-lg text-ptext1 dark:text-ptext1-DM">
+                        {t("pageTitles.services")}
+                    </h1>
+                </div>
+            </Show>
+
             <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <Show when={screenSize() !== "sm"}>
                     <div class="sticky top-0 w-3/12">
-                        <div class="w-11/12 mr-4">
+                        <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
+                            <div class="flex w-full">
+                                <button
+                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
+                                    onclick={clearGrade}
+                                    aria-label={t(
+                                        "clearFilters.filterButtons.2.ariaLabel"
+                                    )}
+                                >
+                                    <div class="flex items-center">
+                                        <IconX stroke={"2"} class="h-3 w-3" />
+                                        <p class="text-xs">
+                                            {t(
+                                                "clearFilters.filterButtons.2.text"
+                                            )}
+                                        </p>
+                                    </div>
+                                </button>
+
+                                <button
+                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
+                                    onclick={clearSubjects}
+                                    aria-label={t(
+                                        "clearFilters.filterButtons.1.ariaLabel"
+                                    )}
+                                >
+                                    <div class="flex items-center">
+                                        <IconX stroke={"2"} class="h-3 w-3" />
+                                        <p class="text-xs">
+                                            {t(
+                                                "clearFilters.filterButtons.1.text"
+                                            )}
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <button
+                                class="clearBtnRectangle flex w-full justify-center"
+                                onclick={clearAllFilters}
+                                aria-label={t(
+                                    "clearFilters.filterButtons.0.ariaLabel"
+                                )}
+                            >
+                                <div class="flex items-center">
+                                    <IconX stroke={"2"} class="h-3 w-3" />
+                                    <p class="text-xs">
+                                        {t("clearFilters.filterButtons.0.text")}
+                                    </p>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="mr-4 w-11/12">
                             <GradeFilter
                                 filterPostsByGrade={filterPostsByGrade}
                             />
@@ -384,13 +412,20 @@ export const ResourcesView: Component = () => {
                             {t("messages.noPostsSearch")}
                         </h1>
                     </div>
+                    <Show when={screenSize() !== "sm"}>
+                        <div class="mb-2 flex w-full items-center justify-center bg-gradient-to-l from-btn1 dark:from-btn1-DM md:h-24">
+                            <h1 class="text-center text-lg text-ptext1 dark:text-ptext1-DM md:text-3xl">
+                                {t("pageTitles.services")}
+                            </h1>
+                        </div>
+                    </Show>
                     <div class="hidden md:inline">
                         <ViewCard posts={currentPosts()} />
                     </div>
                     <Show when={screenSize() === "sm"}>
-                    <div class="flex justify-center">
-                        <MobileViewCard posts={currentPosts()} />
-                    </div>
+                        <div class="flex justify-center">
+                            <MobileViewCard posts={currentPosts()} />
+                        </div>
                     </Show>
                 </div>
             </div>

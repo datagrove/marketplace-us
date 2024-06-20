@@ -36,7 +36,6 @@ export interface uiObject {
         sellerFeePayout: string;
         copyright: string;
         marketplacetax: string;
-
     };
 
     pageDescriptions: {
@@ -114,56 +113,56 @@ export interface uiObject {
         viewOrders: string;
     };
 
-  messages: {
-    noAccount: string,
-    emailValid: string,
-    emailLackRequirements: string,
-    passwordLength: string,
-    passwordValid: string,
-    passwordLackRequirements: string, 
-    phoneLackRequirements: string,
-    phoneValid: string,
-    passwordMatch: string,
-    passwordReset: string,
-    forgotPassword: string,
-    alreadyAccount: string,
-    error404: string,
-    onlyCreator: string,
-    signInAsCreator: string,
-    checkEmail: string,
-    checkConfirmEmail: string,
-    signIn: string,
-    createCreatorAccount: string,
-    createUserAccount: string,
-    viewCreatorAccount: string,
-    noPosts: string,
-    noPost: string,
-    selectAnImage: string,
-    noCreator: string,
-    translation: string,
-    translations: string,
-    clickWrap1: string,
-    clickWrap2: string,
-    fetch: string,
-    todoFetch: string,
-    mustSignIn: string,
-    profileEdits: string,
-    noUser: string,
-    noPostsSearch: string,
-    noStripeAccount: string,
-    selectSubject: string,
-    comingSoon: string,
-    emailNotProvided: string,
-    report: string;
-    free: string;
-    freeResourceCreated: string;
-    noPurchasedItems: string;
-    insufficientStripeBalance: string;
-    payoutRequested: string;
-    payoutSetup: string;
-    requestPayout: string;
-    currentBalance: string;
-  },
+    messages: {
+        noAccount: string;
+        emailValid: string;
+        emailLackRequirements: string;
+        passwordLength: string;
+        passwordValid: string;
+        passwordLackRequirements: string;
+        phoneLackRequirements: string;
+        phoneValid: string;
+        passwordMatch: string;
+        passwordReset: string;
+        forgotPassword: string;
+        alreadyAccount: string;
+        error404: string;
+        onlyCreator: string;
+        signInAsCreator: string;
+        checkEmail: string;
+        checkConfirmEmail: string;
+        signIn: string;
+        createCreatorAccount: string;
+        createUserAccount: string;
+        viewCreatorAccount: string;
+        noPosts: string;
+        noPost: string;
+        selectAnImage: string;
+        noCreator: string;
+        translation: string;
+        translations: string;
+        clickWrap1: string;
+        clickWrap2: string;
+        fetch: string;
+        todoFetch: string;
+        mustSignIn: string;
+        profileEdits: string;
+        noUser: string;
+        noPostsSearch: string;
+        noStripeAccount: string;
+        selectSubject: string;
+        comingSoon: string;
+        emailNotProvided: string;
+        report: string;
+        free: string;
+        freeResourceCreated: string;
+        noPurchasedItems: string;
+        insufficientStripeBalance: string;
+        payoutRequested: string;
+        payoutSetup: string;
+        requestPayout: string;
+        currentBalance: string;
+    };
 
     formLabels: {
         title: string;
@@ -250,25 +249,25 @@ export interface uiObject {
         clickToContribute: string;
     };
 
-  menus: {
-    resources: string;
-    contactUs: string;
-    profile: string;
-    ratingsReviews: string;
-    questions: string;
-    freeDownload: string;
-    creatorResources: string;
-    payouts: string;
-    reviews: string;
-    details: string;
-    description: string;
-    qA: string;
-    purchases: string;
-    favorites: string;
-    following: string;
-    purchased: string;
-    updated: string;
-  };
+    menus: {
+        resources: string;
+        contactUs: string;
+        profile: string;
+        ratingsReviews: string;
+        questions: string;
+        freeDownload: string;
+        creatorResources: string;
+        payouts: string;
+        reviews: string;
+        details: string;
+        description: string;
+        qA: string;
+        purchases: string;
+        favorites: string;
+        following: string;
+        purchased: string;
+        updated: string;
+    };
 
     toolTips: {
         firstName: string;
@@ -459,5 +458,5 @@ export interface uiObject {
         orderID: string;
         total: string;
         purchases: string;
-    }
+    };
 }

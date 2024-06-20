@@ -4,7 +4,7 @@
 
 @layer components {
     .btn-primary {
-        @apply cursor-pointer max-h-14 rounded-full bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md active:animate-click dark:bg-btn1-DM dark:text-btn1Text-DM md:text-[1vw];
+        @apply max-h-14 cursor-pointer rounded-full bg-btn1 px-4 py-2 font-bold text-btn1Text shadow-md active:animate-click dark:bg-btn1-DM dark:text-btn1Text-DM md:text-[1vw];
     }
 
     .btn-secondary {
@@ -32,7 +32,7 @@
     }
 
     .clearBtnRectangle {
-        @apply mx-1 mt-2 flex rounded border border-gray-600 px-2 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300;
+        @apply m-1 flex rounded border border-gray-600 px-1 text-gray-600 drop-shadow-md dark:border-gray-300 dark:text-gray-300;
     }
 
     .socialBtn {
