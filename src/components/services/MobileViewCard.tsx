@@ -141,7 +141,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class=" md:min-w-[270px]">
+        <div class="">
             {newPosts().map((post: Post) => (
                 <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
@@ -207,13 +207,20 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     <h6 class="text-[10px] font-bold">
                                         {t("formLabels.subjects")}
                                     </h6>
-                                    {post.subject!.map((subject: string) => {
-                                        return (
-                                            <p class="text-[10px] font-light">
-                                                {subject}
-                                            </p>
-                                        );
-                                    })}
+                                    {post
+                                        .subject!.slice(0, 3)
+                                        .map((subject: string) => {
+                                            return (
+                                                <div class="text-[10px] font-light">
+                                                    {subject}
+                                                </div>
+                                            );
+                                        })}
+                                    <Show when={post.subject!.length > 3}>
+                                        <div class="text-[10px] font-light">
+                                            ...
+                                        </div>
+                                    </Show>
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">

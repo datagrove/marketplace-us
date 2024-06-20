@@ -403,7 +403,7 @@ export const ResourcesView: Component = () => {
                     </div>
                 </Show>
 
-                <div class="w-8/12 items-center md:flex-1">
+                <div class="w-11/12 md:w-8/12 items-center md:flex-1">
                     <div
                         id="no-posts-message"
                         class="my-1 hidden rounded bg-btn1 py-2 dark:bg-btn1-DM"
