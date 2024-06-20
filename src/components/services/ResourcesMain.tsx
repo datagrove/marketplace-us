@@ -328,8 +328,8 @@ export const ResourcesView: Component = () => {
             </Show>
 
             <Show when={screenSize() === "sm"}>
-                <div class="mb-2 bg-gradient-to-r from-btn1 py-2 dark:from-btn1-DM">
-                    <h1 class="text-lg text-ptext1 dark:text-ptext1-DM">
+                <div class="mb-2 bg-btn1 py-2 dark:bg-btn1-DM rounded-lg">
+                    <h1 class="text-lg text-ptext1-DM dark:text-ptext1">
                         {t("pageTitles.services")}
                     </h1>
                 </div>
@@ -413,8 +413,8 @@ export const ResourcesView: Component = () => {
                         </h1>
                     </div>
                     <Show when={screenSize() !== "sm"}>
-                        <div class="mb-2 flex w-full items-center justify-center bg-gradient-to-l from-btn1 dark:from-btn1-DM md:h-24">
-                            <h1 class="text-center text-lg text-ptext1 dark:text-ptext1-DM md:text-3xl">
+                        <div class="mb-2 flex w-full items-center justify-center bg-btn1 dark:bg-btn1-DM md:h-24 rounded-lg opacity-80">
+                            <h1 class="text-center text-lg text-ptext1-DM dark:text-ptext1 md:text-3xl">
                                 {t("pageTitles.services")}
                             </h1>
                         </div>

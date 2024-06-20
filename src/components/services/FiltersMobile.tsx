@@ -191,7 +191,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     }
 
     return (
-        <div class="sticky top-0 z-40 mx-4 h-full w-3/4 max-w-[300px] bg-background1 dark:bg-background1-DM">
+        <div class="sticky top-0 z-40 px-4 pt-4 h-full w-full bg-background1 dark:bg-background1-DM">
             <button
                 class="w-full"
                 onClick={() => {
@@ -219,7 +219,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                     <Show when={showFilterNumber() === true}>
                         <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
-                            <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                            <p class="text-[10px] text-ptext2 dark:text-ptext1">
                                 {gradeFilterCount() + subjectFilterCount()}
                             </p>
                         </div>
@@ -229,7 +229,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                 </div>
             </button>
 
-            <div class="absolute h-full w-full">
+            <div class="absolute h-full w-11/12">
                 <Show when={showFilters() === true}>
                     <div class="main-pop-out relative h-96 w-full rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
                         <button

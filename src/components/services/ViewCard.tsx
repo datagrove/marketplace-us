@@ -137,7 +137,7 @@ export const ViewCard: Component<Props> = (props) => {
                 {newPosts().map((post: Post) => (
                     <li class="w-[99%]">
                         <a href={`/${lang}/posts/${post.id}`}>
-                            <div class="mb-2 box-content flex flex-grow w-full flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM h-full">
+                            <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
                                         <img
@@ -163,9 +163,9 @@ export const ViewCard: Component<Props> = (props) => {
 
                                 <div
                                     id="cardContent"
-                                    class="flex w-5/6 flex-col px-1 pt-1 text-left min-h-48 place-content-between"
+                                    class="flex min-h-48 w-5/6 flex-col place-content-between px-1 pt-1 text-left"
                                 >
-                                    <div class="flex flex-col h-full min-h-48 place-content-between">
+                                    <div class="flex h-full min-h-48 flex-col place-content-between">
                                         <div class="flex flex-col">
                                             <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                 {post.title}
@@ -193,7 +193,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             </div>
                                         </div>
 
-                                        <div class="flex my-1">
+                                        <div class="my-1 flex">
                                             <p
                                                 class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
                                                 innerHTML={post.content}
@@ -234,12 +234,17 @@ export const ViewCard: Component<Props> = (props) => {
                                             <div class="grid w-full grid-cols-4 text-[10px]">
                                                 <div class="col-span-1">
                                                     <div class="">
-                                                        {t("formLabels.resourceTypes")}:
+                                                        {t(
+                                                            "formLabels.resourceTypes"
+                                                        )}
+                                                        :
                                                     </div>
                                                 </div>
-                                                <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM align-middle">
+                                                <div class="prose col-span-3 flex-wrap align-middle text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                     <div class="flex-wrap">
-                                                    {post.resourceTypes!.join(", ")}
+                                                        {post.resourceTypes!.join(
+                                                            ", "
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,7 +291,7 @@ export const ViewCard: Component<Props> = (props) => {
                                     </div>
                                 </div>
 
-                                <div class="flex flex-col pr-1 h-full min-h-48 w-1/5 min-w-[88px] justify-start mt-2">
+                                <div class="mt-2 flex h-full min-h-48 w-1/5 min-w-[88px] flex-col justify-start pr-1">
                                     <div class="price-reviews-div inline-block w-full text-end">
                                         <Show when={post.price}>
                                             <p class="text-lg font-bold">
@@ -317,7 +322,7 @@ export const ViewCard: Component<Props> = (props) => {
                                         </div>
                                     </div>
 
-                                    <div class="fileTypes-div flex w-full flex-col items-start justify-start h-fit mt-1">
+                                    <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start">
                                         {/* <div class="flex w-full items-start justify-start">
                                             <svg
                                                 width="16px"
