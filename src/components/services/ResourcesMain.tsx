@@ -328,7 +328,7 @@ export const ResourcesView: Component = () => {
             </Show>
 
             <Show when={screenSize() === "sm"}>
-                <div class="mb-2 bg-btn1 py-2 dark:bg-btn1-DM rounded-lg">
+                <div class="mb-2 rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
                     <h1 class="text-lg text-ptext1-DM dark:text-ptext1">
                         {t("pageTitles.services")}
                     </h1>
@@ -403,7 +403,7 @@ export const ResourcesView: Component = () => {
                     </div>
                 </Show>
 
-                <div class="w-11/12 md:w-8/12 items-center md:flex-1">
+                <div class="w-11/12 items-center md:w-8/12 md:flex-1">
                     <div
                         id="no-posts-message"
                         class="my-1 hidden rounded bg-btn1 py-2 dark:bg-btn1-DM"
@@ -413,15 +413,17 @@ export const ResourcesView: Component = () => {
                         </h1>
                     </div>
                     <Show when={screenSize() !== "sm"}>
-                        <div class="mb-2 flex w-full items-center justify-center bg-btn1 dark:bg-btn1-DM md:h-24 rounded-lg opacity-80">
+                        <div class="mb-2 flex w-full items-center justify-center rounded-lg bg-btn1 opacity-80 dark:bg-btn1-DM md:h-24">
                             <h1 class="text-center text-lg text-ptext1-DM dark:text-ptext1 md:text-3xl">
                                 {t("pageTitles.services")}
                             </h1>
                         </div>
                     </Show>
-                    <div class="hidden md:inline">
-                        <ViewCard posts={currentPosts()} />
-                    </div>
+                    <Show when={screenSize() !== "sm"}>
+                        <div class="inline">
+                            <ViewCard posts={currentPosts()} />
+                        </div>
+                    </Show>
                     <Show when={screenSize() === "sm"}>
                         <div class="flex justify-center">
                             <MobileViewCard posts={currentPosts()} />
