@@ -11,7 +11,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 interface Props {
-    item: Post;
+    item: Partial<Post>;
 }
 
 async function DownloadFiles(resource_urls: string) {
@@ -66,10 +66,10 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
     };
 
     onMount(async () => {
-        console.log("Item")
-        console.log(props.item)
+        console.log("Item");
+        console.log(props.item);
         setSession(User?.session);
-        await fetchUser(User?.session?.user.id!);
+        // await fetchUser(User?.session?.user.id!);
         await getPurchasedItems();
     });
 
@@ -88,8 +88,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         }
         const orderedItemsIds = orders?.map((order) => order.order_number);
 
-        console.log("orders")
-        console.log(orders)
+        console.log("orders");
+        console.log(orders);
 
         const { data: orderDetails, error: orderDetailsError } = await supabase
             .from("order_details")
@@ -125,6 +125,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                 return;
             }
             setPurchasedItems(productsInfo);
+            console.log("Purchased Items");
             console.log(purchasedItems());
         }
     };
@@ -132,12 +133,20 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
     function initializeDownload(e: Event) {
         e.preventDefault();
         e.stopPropagation();
-        if (purchasedItemsId().includes(props.item.id)) {
-            purchasedItems().map((purchasedItem) => {
-                if (purchasedItem.id === props.item.id) {
-                    DownloadFiles(purchasedItem.resource_urls);
-                }
-            });
+
+        console.log("Starting Download");
+
+        console.log(props.item.id);
+
+        if (props.item.id !== undefined) {
+            if (purchasedItemsId().includes(props.item.id)) {
+                purchasedItems().map((purchasedItem) => {
+                    if (purchasedItem.id === props.item.id) {
+                        console.log(purchasedItem.resource_urls);
+                        DownloadFiles(purchasedItem.resource_urls);
+                    }
+                });
+            }
         }
     }
     return (
