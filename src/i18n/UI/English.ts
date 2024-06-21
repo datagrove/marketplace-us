@@ -235,6 +235,7 @@ export const English = {
         images: "Preview Images",
         yes: "Yes",
         no: "No",
+        more: "more",
     },
 
     postLabels: {

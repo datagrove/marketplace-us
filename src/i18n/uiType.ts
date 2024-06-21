@@ -212,6 +212,7 @@ export interface uiObject {
         images: string;
         yes: string;
         no: string;
+        more: string;
     };
 
     postLabels: {

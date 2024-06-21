@@ -241,6 +241,7 @@ export const French = {
         images: "Aperçu des Images",
         yes: "Ouais",
         no: "Non",
+        more: "plus",
     },
 
     postLabels: {

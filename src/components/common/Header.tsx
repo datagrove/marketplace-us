@@ -27,7 +27,7 @@ export const Header: Component = () => {
                 </div>
                 <div class="navLines flex items-center" id="navLines">
                     <div class="all-logo">
-                        <a id="logo" href={`/${lang}`}>
+                        <a id="logo" href={`/${lang}`} aria-label={t("ariaLabels.todo")}>
                             <svg
                                 width="180"
                                 height="180"

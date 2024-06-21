@@ -8,7 +8,7 @@ import TeamAbout from "@src/components/common/TeamAbout.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("about", ({ data }) => data.lang === lang);
+const policyPage = await getCollection("about", ({ data }) => data.lang === lang && data.type === "about");
 const { Content } = await policyPage[0].render();
 ---
 

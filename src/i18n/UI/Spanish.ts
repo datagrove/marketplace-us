@@ -238,6 +238,7 @@ export const Spanish = {
         images: "Vista Previa de Imágenes",
         yes: "Sí",
         no: "No",
+        more: "más",
     },
 
     postLabels: {

@@ -50,6 +50,31 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                     // Set the default quantity to 1
                     post.quantity = 1;
+
+                    const { data: resourceTypeData, error } = await supabase
+                        .from("resource_types")
+                        .select("*");
+
+                    if (error) {
+                        console.log("supabase error: " + error.message);
+                    } else {
+                        post.resourceTypes = [];
+                        resourceTypeData.forEach((databaseResourceTypes) => {
+                            post.resource_types.map(
+                                (itemResourceType: string) => {
+                                    if (
+                                        itemResourceType ===
+                                        databaseResourceTypes.id.toString()
+                                    ) {
+                                        post.resourceTypes!.push(
+                                            databaseResourceTypes.type
+                                        );
+                                    }
+                                }
+                            );
+                        });
+                    }
+
                     return post;
                 })
             );
@@ -141,7 +166,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class=" md:min-w-[270px]">
+        <div class="">
             {newPosts().map((post: Post) => (
                 <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
@@ -185,7 +210,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </Show>
 
                                         <div class="reviews-div flex w-full items-center justify-end text-end">
-                                            <svg
+                                            {/* <svg
                                                 width="12px"
                                                 height="12px"
                                                 viewBox="0 0 32 32"
@@ -198,42 +223,58 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                                             <p class="ml-1 text-xs">
                                                 4.9 (30.3K)
-                                            </p>
+                                            </p> */}
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[10px] font-bold">
+                                    <h6 class="text-[12px] font-bold">
                                         {t("formLabels.subjects")}
                                     </h6>
-                                    {post.subject!.map((subject: string) => {
-                                        return (
-                                            <p class="text-[10px] font-light">
-                                                {subject}
-                                            </p>
-                                        );
-                                    })}
+                                    {post
+                                        .subject!.slice(0, 3)
+                                        .map((subject: string) => {
+                                            return (
+                                                <div class="text-[10px] font-light">
+                                                    {subject}
+                                                </div>
+                                            );
+                                        })}
+                                    <Show when={post.subject!.length > 3}>
+                                        <div class="text-[10px] font-light">
+                                            ...{t("formLabels.more")}
+                                        </div>
+                                    </Show>
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[10px] font-bold">
+                                    <h6 class="text-[12px] font-bold">
                                         {t("formLabels.grades")}
                                     </h6>
-                                    {post.grade!.map((grade: string) => {
-                                        return (
-                                            <p class="text-[10px] font-light">
-                                                {grade}
-                                            </p>
-                                        );
-                                    })}
+                                    {post
+                                        .grade!.slice(0, 3)
+                                        .map((grade: string) => {
+                                            return (
+                                                <p class="text-[10px] font-light">
+                                                    {grade}
+                                                </p>
+                                            );
+                                        })}
+                                    <Show when={post.grade!.length > 3}>
+                                        <div class="text-[10px] font-light">
+                                            ...{t("formLabels.more")}
+                                        </div>
+                                    </Show>
                                 </div>
                             </div>
                         </div>
                     </a>
 
                     <div class="title-creator mb-1 ml-1">
-                        <div class="line-clamp-2 flex py-0.5">{post.title}</div>
+                        <div class="mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:text-ptext1-DM text-start py-0.5 pt-4">
+                            {post.title}
+                        </div>
                         <a href={`/${lang}/creator/${post?.seller_id}`}>
                             <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
@@ -316,28 +357,53 @@ export const MobileViewCard: Component<Props> = (props) => {
                             id={`${post.id}content`}
                             class="hidden w-full flex-col justify-start"
                         >
-                            <p class="mb-2 line-clamp-3 text-start text-[10px]">
-                                {post.content}
-                            </p>
+                            <p
+                                class="prose mb-2 line-clamp-3 text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM"
+                                innerHTML={post.content}
+                            ></p>
 
-                            <div class="grid grid-cols-[100px_1fr] grid-rows-2">
-                                <h6 class="text-start text-[10px] font-bold">
-                                    {t("formLabels.resourceTypes")}:{" "}
-                                </h6>
-                                <p class="truncate text-start text-[10px]">
-                                    Worksheets, Activities, Printables
-                                </p>
+                            <div class="details grid grid-cols-5">
+                                {/* SUBJECTS */}
+                                <div class=" col-span-2 mr-2 text-end text-[10px] font-bold">
+                                    {t("formLabels.subjects")}:
+                                </div>
+                                <div class="prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {Array.from(post.subject!).join(", ")}
+                                    </div>
+                                </div>
 
-                                <h6 class="text-start text-[10px] font-bold">
+                                {/* GRADES */}
+                                <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
+                                    <div class="">
+                                        {t("formLabels.grades")}:
+                                    </div>
+                                </div>
+                                <div class="prose col-span-3 flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {post.grade!.join(", ")}
+                                    </div>
+                                </div>
+
+                                {/* RESOURCE TYPES */}
+                                <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
+                                    {t("formLabels.resourceTypes")}:
+                                </div>
+                                <div class="prose col-span-3 flex flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {post.resourceTypes!.join(", ")}
+                                    </div>
+                                </div>
+                                {/* <h6 class="text-start text-[10px] font-bold">
                                     {t("formLabels.standards")}:{" "}
                                 </h6>
                                 <p class="truncate text-start text-[10px]">
                                     RF.K.2, RF.K.3, RF.K.3c
-                                </p>
+                                </p> */}
                             </div>
 
                             <div class="mt-2 flex">
-                                <div class="mr-3 flex items-center justify-start">
+                                {/* <div class="mr-3 flex items-center justify-start">
                                     <svg
                                         width="12px"
                                         height="12px"
@@ -432,7 +498,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     <p class="my-0.5 ml-1 text-[10px]">
                                         Longer File Type Name
                                     </p>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

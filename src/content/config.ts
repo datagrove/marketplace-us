@@ -13,6 +13,7 @@ const aboutCollection = defineCollection({
     type: "content",
     schema: z.object({
         lang: z.string(),
+        type: z.string(),
     }),
 });
 
