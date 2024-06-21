@@ -1,4 +1,128 @@
-<h2>Reset Password</h2>
 
-<p>Follow this link to reset the password for your user:</p>
-<p><a href="{{ .ConfirmationURL }}">Reset Password</a></p>
+<body style="font-family: &quot;Poppins&quot;, Arial, sans-serif">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center" style="padding: 20px">
+                <table
+                    class="content"
+                    width="600"
+                    border="0"
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="border-collapse: collapse; border: 1px solid #cccccc"
+                >
+                    <!-- Header -->
+                    <tr>
+ <td class="header" style="background-color: #198900; padding: 40px; text-align: center; color: white; font-size: 36px;font-weight:bold;">
+                        LearnGrove
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td
+                            class="body"
+                            style="
+                                padding: 40px;
+                                text-align: left;
+                                font-size: 16px;
+                                line-height: 1.6;
+                            "
+                        >
+                            Hello {{ .Data.first_name }} {{ .Data.last_name }}, <br />
+                            Thank you for signing up with LearnGrove! We're excited to have you join our community.<br/>
+                            To get started, please confirm your email address by clicking the button below: <br/>
+              </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td
+                            style="
+                                padding: 0px 40px 0px 40px;
+                                text-align: center;
+                            "
+                        >
+                            <table
+                                cellspacing="0"
+                                cellpadding="0"
+                                style="margin: auto"
+                            >
+                                <tr>
+                                    <td
+                                        align="center"
+                                        style="
+                                            background-color: #345c72;
+                                            padding: 10px 20px;
+                                            border-radius: 5px;
+                                        "
+                                    >
+                                <a href="{{ .ConfirmationURL }}"
+                                            style="
+                                                color: #ffffff;
+                                                text-decoration: none;
+                                                font-weight: bold;
+                                            "
+                                    >Confirm your email</a
+                    >
+                                    </td>
+                                </tr>
+                            </table>
+                    </tr>
+                    <tr>
+      </td>
+                        <td
+                            class="body"
+                            style="
+                                padding: 40px;
+                                text-align: left;
+                                font-size: 16px;
+                                line-height: 1.6;
+                            "
+                        >
+                        If you did not sign up for a LearnGrove account, please ignore this email.
+                        </td>
+                    </tr>
+                            <tr>
+                                <td
+                                    class="footer"
+                                    style="
+                                        background-color: #2D2D2D;
+                                        padding: 40px;
+                                        text-align: center;
+                                        color: white;
+                                        font-size: 14px;
+                                    "
+                                >
+                                    <p style="font-size: 28px">LearnGrove</p>
+                                <p>
+                                    Brought to you by
+                                    <a
+                                        href="https://datagrove.com"
+                                        style="color: #1DD762;">Datagrove</a
+                                    >
+                                     . All rights reserved.
+                                </p>
+                            </tr>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+<style>
+    @media screen and (max-width: 600px) {
+        .content {
+            width: 100% !important;
+            display: block !important;
+            padding: 10px !important;
+        }
+        .header,
+        .body,
+        .footer {
+            padding: 20px !important;
+            width: 100%;
+        }
+    }
+</style>

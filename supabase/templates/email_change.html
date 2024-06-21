@@ -5,3 +5,135 @@
         </p>
     </body>
 </html>
+
+<body style="font-family: &quot;Poppins&quot;, Arial, sans-serif">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td align="center" style="padding: 20px">
+                <table
+                    class="content"
+                    width="600"
+                    border="0"
+                    cellspacing="0"
+                    cellpadding="0"
+                    style="border-collapse: collapse; border: 1px solid #cccccc"
+                >
+                    <!-- Header -->
+                    <tr>
+ <td class="header" style="background-color: #198900; padding: 40px; text-align: center; color: white; font-size: 36px;font-weight:bold;">
+                        LearnGrove
+                        </td>
+                    </tr>
+
+                    <!-- Body -->
+                    <tr>
+                        <td
+                            class="body"
+                            style="
+                                padding: 40px;
+                                text-align: left;
+                                font-size: 16px;
+                                line-height: 1.6;
+                            "
+                        >
+                            Hello {{ .Data.first_name }} {{ .Data.last_name }}, <br />
+                            We received a request to change the email address associated with your 
+                            LearnGrove account.From  {{ .Email }} to {{ .NewEmail }}. To complete the update, please confirm your
+                            new email address by clicking the button below:
+              </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td
+                            style="
+                                padding: 0px 40px 0px 40px;
+                                text-align: center;
+                            "
+                        >
+                            <table
+                                cellspacing="0"
+                                cellpadding="0"
+                                style="margin: auto"
+                            >
+                                <tr>
+                                    <td
+                                        align="center"
+                                        style="
+                                            background-color: #345c72;
+                                            padding: 10px 20px;
+                                            border-radius: 5px;
+                                        "
+                                    >
+                                <a href="{{ .ConfirmationURL }}"
+                                            style="
+                                                color: #ffffff;
+                                                text-decoration: none;
+                                                font-weight: bold;
+                                            "
+                                    >Change Email</a
+                    >
+                                    </td>
+                                </tr>
+                            </table>
+                    </tr>
+                    <tr>
+      </td>
+                        <td
+                            class="body"
+                            style="
+                                padding: 40px;
+                                text-align: left;
+                                font-size: 16px;
+                                line-height: 1.6;
+                            "
+                        >
+                            If you didn't ask to change your
+                            password, don't worry! Your password is still safe
+                            and you can delete this email. 
+                        </td>
+                    </tr>
+                    <!-- Footer -->
+                            <tr>
+                                <td
+                                    class="footer"
+                                    style="
+                                        background-color: #2D2D2D;
+                                        padding: 40px;
+                                        text-align: center;
+                                        color: white;
+                                        font-size: 14px;
+                                    "
+                                >
+                                    <p style="font-size: 28px">LearnGrove</p>
+                                <p>
+                                    Brought to you by
+                                    <a
+                                        href="https://datagrove.com"
+                                        style="color: #1DD762;">Datagrove</a
+                                    >
+                                     . All rights reserved.
+                                </p>
+                            </tr>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+<style>
+    @media screen and (max-width: 600px) {
+        .content {
+            width: 100% !important;
+            display: block !important;
+            padding: 10px !important;
+        }
+        .header,
+        .body,
+        .footer {
+            padding: 20px !important;
+            width: 100%;
+        }
+    }
+</style>

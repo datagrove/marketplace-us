@@ -93,9 +93,9 @@ enable_confirmations = false
 
 # Uncomment to customize email template
 # Confirmation Email
-[auth.email.template.invite]
+[auth.email.template.confirmation]
 subject = "You have been invited"
-content_path = "./supabase/templates/invite.html"
+content_path = "./supabase/templates/confirmation.html"
 
 # Recovery Email
 [auth.email.template.recovery]
