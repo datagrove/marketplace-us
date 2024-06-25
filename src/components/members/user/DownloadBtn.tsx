@@ -129,21 +129,20 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             console.log("Purchased Items");
             console.log(purchasedItems());
 
-            console.log("Checking purchased items")
+            console.log("Checking purchased items");
 
             if (props.item.id !== undefined) {
                 if (purchasedItemsId().includes(props.item.id)) {
-                    for (const purchasedItem of purchasedItems()){
+                    for (const purchasedItem of purchasedItems()) {
                         if (purchasedItem.id === props.item.id) {
                             console.log(purchasedItem.resource_urls);
                             setDownloadEnabled(true);
                             console.log(downloadEnabled());
                             break;
                         }
-                    };
+                    }
                 }
             }
-            
         }
     };
 
@@ -157,13 +156,13 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
 
         if (props.item.id !== undefined) {
             if (purchasedItemsId().includes(props.item.id)) {
-                for (const purchasedItem of purchasedItems()){
+                for (const purchasedItem of purchasedItems()) {
                     if (purchasedItem.id === props.item.id) {
                         console.log(purchasedItem.resource_urls);
                         DownloadFiles(purchasedItem.resource_urls);
                         break;
                     }
-                };
+                }
             }
         }
     }

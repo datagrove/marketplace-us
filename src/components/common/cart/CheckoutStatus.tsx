@@ -91,7 +91,7 @@ export const CheckoutStatus: Component = () => {
                     first_name: "Guest",
                     last_name: "User",
                     email: email,
-                })
+                });
 
             if (profileError) {
                 console.log(profileError);
@@ -103,7 +103,7 @@ export const CheckoutStatus: Component = () => {
                     display_name: null,
                     user_id: currentUser.id,
                     image_url: null,
-                })
+                });
             // const response = await fetch("/api/convertAnonUser", {
             //   method: "POST",
             //   body: JSON.stringify({
@@ -211,7 +211,10 @@ export const CheckoutStatus: Component = () => {
                         ) : (
                             products().map((item) => (
                                 <div class="my-2 grid grid-cols-4 justify-between md:my-4">
-                                    <a href={`/${lang}/posts/${item.id}`} class="col-span-3">
+                                    <a
+                                        href={`/${lang}/posts/${item.id}`}
+                                        class="col-span-3"
+                                    >
                                         <p class="line-clamp-2 w-full">
                                             {item.title}
                                         </p>

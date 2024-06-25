@@ -144,12 +144,12 @@ export const CartView = () => {
                         <CartCardDonate onSetDonation={updateDonation} />
                     </Show>
                     <a href={`/${lang}/resources`}>
-                    <button
-                        class="btn-primary mb-2 mt-4"
-                        aria-label={t("buttons.continueShopping")}
-                    >
-                        {t("buttons.continueShopping")}
-                    </button>
+                        <button
+                            class="btn-primary mb-2 mt-4"
+                            aria-label={t("buttons.continueShopping")}
+                        >
+                            {t("buttons.continueShopping")}
+                        </button>
                     </a>
                 </div>
             </div>

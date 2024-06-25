@@ -95,7 +95,7 @@ export const ViewUserPurchases: Component = () => {
                 );
                 return;
             } else {
-                console.log(productsInfo)
+                console.log(productsInfo);
                 const newItems = await Promise.all(
                     productsInfo?.map(async (item) => {
                         item.subject = [];
@@ -142,7 +142,7 @@ export const ViewUserPurchases: Component = () => {
                             );
                             item.price = priceData.unit_amount! / 100;
                         }
-                        console.log(item)
+                        console.log(item);
                         return item;
                     })
                 );
@@ -151,23 +151,23 @@ export const ViewUserPurchases: Component = () => {
                     return b.purchaseDate.localeCompare(a.purchaseDate);
                 });
 
-                console.log(itemsOrdered)
-                console.log(newItems)
+                console.log(itemsOrdered);
+                console.log(newItems);
 
                 const newItemsDates = newItems.map((item) => {
                     const orderInfo = itemsOrdered?.find(
-                        (order) => (order.product_id === item.id)
+                        (order) => order.product_id === item.id
                     );
-                    if (orderInfo){
+                    if (orderInfo) {
                         return {
                             ...item,
-                            purchaseDate: orderInfo.purchaseDate
-                        }
+                            purchaseDate: orderInfo.purchaseDate,
+                        };
                     }
                     return item;
                 });
 
-                console.log(newItemsDates)
+                console.log(newItemsDates);
 
                 setPurchasedItems(newItemsDates);
                 console.log(purchasedItems());
@@ -196,7 +196,6 @@ export const ViewUserPurchases: Component = () => {
             console.log(error);
         }
     };
-
 
     return (
         <div>

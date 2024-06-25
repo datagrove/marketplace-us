@@ -13,8 +13,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log("user Id: " + response.userId);
     console.log("orderId: " + response.orderId);
 
-
-
     //Just console.log the formData for troubleshooting
     //   const lang = formData.get("lang");
     //    //@ts-ignore
@@ -43,11 +41,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             currency: "usd",
             // Need to capture the donation amount
             unit_amount: response.donation_amount * 100,
-            product: 'prod_Q7jrvANf1W8KVn',
+            product: "prod_Q7jrvANf1W8KVn",
             tax_behavior: "exclusive",
         },
         quantity: 1,
-    })
+    });
 
     const session = await stripe.checkout.sessions.create({
         ui_mode: "embedded",
@@ -59,9 +57,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             userId: response.userId,
             orderId: response.orderId,
         },
-        consent_collection: { terms_of_service: "required", promotions: "auto" },
+        consent_collection: {
+            terms_of_service: "required",
+            promotions: "auto",
+        },
         payment_intent_data: {
-            transfer_group: response.orderId
+            transfer_group: response.orderId,
         },
         billing_address_collection: "auto",
     });
