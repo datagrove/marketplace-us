@@ -73,10 +73,14 @@ export const English = {
             "Read more about this resource. Explore additional images and the full description of the resource.",
         faq: "Explore our comprehensive FAQ page for answers to common questions about our services, policies, and more.",
         viewCart: "View your cart and checkout with ease.",
-        community: "Read our Community Guidelines to understand the principles that foster respect, collaboration, and a supportive environment for all members.",
-        sellerFeePayout: "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
-        copyright: "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
-        marketplacetax: "Learn about our marketplace sales tax collection and tax implications.",
+        community:
+            "Read our Community Guidelines to understand the principles that foster respect, collaboration, and a supportive environment for all members.",
+        sellerFeePayout:
+            "Learn about our seller fees and payout processes, including detailed information on transaction fees, payout fees, and schedules",
+        copyright:
+            "Understand our Copyright and Trademark Policy to protect your intellectual property rights and ensure compliance with our guidelines for the use of copyrighted and trademarked materials.",
+        marketplacetax:
+            "Learn about our marketplace sales tax collection and tax implications.",
         taxCodeLearnMore: "Learn more about tax codes for LearnGrove resources",
     },
 
@@ -269,7 +273,8 @@ export const English = {
         becomeCreator: "Want to become a Learning Resource Creator?",
         clickToBecomeCreator: "Click here to get started!",
         welcome: "What is LearnGrove?",
-        clickToLearnMore: "Click here to learn more about our community and commitment",
+        clickToLearnMore:
+            "Click here to learn more about our community and commitment",
         contribute: "Contribute to the LearnGrove Community",
         clickToContribute: "Click here to share your input",
     },
@@ -308,7 +313,7 @@ export const English = {
         locationUpdate:
             "If you update your location all fields must be completed.",
         postImages:
-            'You may upload up to five images as a preview or demonstration of your resource. The first image uploaded will be displayed on resource previews. Preview images are only for preview purposes - you will upload your full resource below.',
+            "You may upload up to five images as a preview or demonstration of your resource. The first image uploaded will be displayed on resource previews. Preview images are only for preview purposes - you will upload your full resource below.",
         firstNameEdit:
             "This should be your legal name as it appears on your government ID. If you do not provide a display name your first and last name will be displayed instead. These values can be updated after creating a user or creator profile. Since this is your legal name, the same first and last name must be used on your user and creator profiles.",
         lastNameEdit:
@@ -320,9 +325,10 @@ export const English = {
         grades: "Please select all grade levels to which this resource is suitable. These will be used for filtering of resources for shoppers.",
         contribution:
             "Choose what percentage of your price you can contribute to platform maintenance and development. Similar platforms take between 11% and 45% of your sales. We want to give you the power to support the platform based on the value it provides. Not sure the right amount? We recommend starting at 15%, you can update it later in your creator profile. If you set platform support to 0% you will still be charged for processing fees.",
-        taxCode: "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
+        taxCode:
+            "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
         resourceTypes: "Please select all applicable resource types.",
-        price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure."
+        price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
     },
 
     apiErrors: {
