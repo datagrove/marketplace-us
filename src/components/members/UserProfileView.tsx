@@ -64,6 +64,7 @@ export const UserProfileView: Component = () => {
 
 
     onMount(async () => {
+        console.log(User)
         setSession(User?.session);
         await fetchUser(User?.session?.user.id!);
         // await getPurchasedItems();
@@ -185,7 +186,7 @@ export const UserProfileView: Component = () => {
                 console.log(error);
             } else if (data[0] === undefined) {
                 alert(t("messages.noUser")); //TODO: Change alert message
-                location.href = `/${lang}`;
+                // location.href = `/${lang}`;
             } else {
                 console.log(data);
                 setUser(data[0]);

@@ -83,11 +83,33 @@ export const CheckoutStatus: Component = () => {
                 console.log(error);
             }
             console.log(data);
+
+            const { data: profile, error: profileError } = await supabase
+                .from("profiles")
+                .insert({
+                    user_id: currentUser.id,
+                    first_name: "Guest",
+                    last_name: "User",
+                    email: email,
+                })
+
+            if (profileError) {
+                console.log(profileError);
+            }
+
+            const { data: user, error: userError } = await supabase
+                .from("users")
+                .insert({
+                    display_name: null,
+                    user_id: currentUser.id,
+                    image_url: null,
+                })
             // const response = await fetch("/api/convertAnonUser", {
             //   method: "POST",
             //   body: JSON.stringify({
             //     userId: currentUser?.id,
-            //     email: session()?.customer_details?.email
+            //     email: session()?.customer_details?.email,
+            //     lang: lang,
             //   })
             // });
             // const res = await response.json();

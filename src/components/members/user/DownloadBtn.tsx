@@ -44,6 +44,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
     const [purchasedItemsId, setPurchasedItemsId] = createSignal<Array<number>>(
         []
     );
+    const [downloadEnabled, setDownloadEnabled] = createSignal(false);
 
     const fetchUser = async (user_id: string) => {
         try {
@@ -127,6 +128,22 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             setPurchasedItems(productsInfo);
             console.log("Purchased Items");
             console.log(purchasedItems());
+
+            console.log("Checking purchased items")
+
+            if (props.item.id !== undefined) {
+                if (purchasedItemsId().includes(props.item.id)) {
+                    for (const purchasedItem of purchasedItems()){
+                        if (purchasedItem.id === props.item.id) {
+                            console.log(purchasedItem.resource_urls);
+                            setDownloadEnabled(true);
+                            console.log(downloadEnabled());
+                            break;
+                        }
+                    };
+                }
+            }
+            
         }
     };
 
@@ -140,21 +157,23 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
 
         if (props.item.id !== undefined) {
             if (purchasedItemsId().includes(props.item.id)) {
-                purchasedItems().map((purchasedItem) => {
+                for (const purchasedItem of purchasedItems()){
                     if (purchasedItem.id === props.item.id) {
                         console.log(purchasedItem.resource_urls);
                         DownloadFiles(purchasedItem.resource_urls);
+                        break;
                     }
-                });
+                };
             }
         }
     }
     return (
         <div class="relative z-10 w-full">
             <button
-                class="btn-cart my-2 w-full shadow-none"
+                class={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
                 aria-label={t("buttons.downloadResources")}
                 onclick={(e) => initializeDownload(e)}
+                disabled={!downloadEnabled()}
             >
                 {t("buttons.downloadResources")}
             </button>

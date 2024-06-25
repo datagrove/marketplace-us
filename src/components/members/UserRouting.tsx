@@ -16,7 +16,7 @@ export const UserRouting = () => {
         t("pageTitles.createUserAccount")
     );
     const [routing, setRouting] = createSignal<string>(
-        `/${lang}/user/createaccount`
+        `/${lang}/user/profile`
     );
 
     const CreateEditUserProfilelink = document.getElementById(
