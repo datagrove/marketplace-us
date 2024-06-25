@@ -73,11 +73,16 @@ export const Spanish = {
             "Lea más sobre este recurso. Explore imágenes adicionales y la descripción completa del recurso.",
         faq: "Explore nuestra completa página de preguntas frecuentes para obtener respuestas a preguntas comunes sobre nuestros servicios, políticas y más.",
         viewCart: "Vea su carrito y realice el pago con facilidad.",
-        community: "Lea nuestras Pautas comunitarias para comprender los principios que fomentan el respeto, la colaboración y un entorno de apoyo para todos los miembros.",
-        sellerFeePayout: "Conozca nuestras tarifas de vendedor y procesos de pago, incluida información detallada sobre tarifas de transacción, tarifas de pago y cronogramas.",
-        copyright: "Comprenda nuestra Política de derechos de autor y marcas comerciales para proteger sus derechos de propiedad intelectual y garantizar el cumplimiento de nuestras pautas para el uso de materiales con derechos de autor y marcas registradas.",
-        marketplacetax: "Conozca la recaudación de impuestos sobre las ventas de nuestro mercado y sus implicaciones fiscales.",
-        taxCodeLearnMore: "Obtenga más información sobre los códigos impositivos para los recursos de LearnGrove",
+        community:
+            "Lea nuestras Pautas comunitarias para comprender los principios que fomentan el respeto, la colaboración y un entorno de apoyo para todos los miembros.",
+        sellerFeePayout:
+            "Conozca nuestras tarifas de vendedor y procesos de pago, incluida información detallada sobre tarifas de transacción, tarifas de pago y cronogramas.",
+        copyright:
+            "Comprenda nuestra Política de derechos de autor y marcas comerciales para proteger sus derechos de propiedad intelectual y garantizar el cumplimiento de nuestras pautas para el uso de materiales con derechos de autor y marcas registradas.",
+        marketplacetax:
+            "Conozca la recaudación de impuestos sobre las ventas de nuestro mercado y sus implicaciones fiscales.",
+        taxCodeLearnMore:
+            "Obtenga más información sobre los códigos impositivos para los recursos de LearnGrove",
     },
 
     buttons: {
@@ -143,15 +148,14 @@ export const Spanish = {
         error404: "Algo salió mal",
         onlyCreator: "Solo los proveedores pueden crear publicaciones.",
         signInAsCreator:
-            "Inicie sesión en un perfil de proveedor para poder publicar.",
+            "Inicie sesión en un perfil de creador para poder publicar.",
         checkEmail:
             "¡Revise su correo electrónico para ver el enlace de reinicio! Si no recibió el correo electrónico, revise su carpeta de correo no deseado. Los enlaces son válidos por 24 horas.",
         checkConfirmEmail:
             "Si este correo electrónico aún no está registrado, recibirá un enlace de confirmación por correo electrónico. Por favor revise su carpeta de spam si no recibió el correo electrónico. Los enlaces son válidos durante 24 horas.",
         signIn: "Inicie sesión para acceder a esta página",
-        createCreatorAccount:
-            "Inicie sesión para crear un perfil de proveedor",
-        createUserAccount: "Inicie sesión para crear un perfil de usere",
+        createCreatorAccount: "Inicie sesión para crear un perfil de creador",
+        createUserAccount: "Inicie sesión para crear un perfil de usuario",
         viewCreatorAccount:
             "No tiene un perfil de proveedor, por favor cree una para ver su perfil de proveedor",
         noPosts: "No hay publicaciones disponibles",
@@ -169,8 +173,8 @@ export const Spanish = {
             "¡Todo, el perro de servicio, te traerá los servicios que necesitas!",
         mustSignIn: "Debes iniciar sesión para ver los recursos disponibles.",
         profileEdits:
-            "¡Las ediciones del perfil solo se guardarán después de hacer clic en el botón Guardar perfil!",
-        noUser: "No se encontró ningún usere.",
+            "¡Las ediciones del perfil solo se guardarán después de hacer click en el botón Guardar perfil!",
+        noUser: "No se encontró ningún usuario.",
         noPostsSearch:
             "Ninguna publicación coincide con esta búsqueda específica - pruebe con un filtro o palabra clave diferente",
         noStripeAccount:
@@ -181,15 +185,17 @@ export const Spanish = {
         report: "Reportar este recurso a LearnGrove",
         free: "GRATIS",
         freeResourceCreated: "¡Recurso gratuito creado!",
-        noPurchasedItems: "Parece que aún no has comprado nada. ¡Ies hora de empezar a comprar!",
+        noPurchasedItems:
+            "Parece que aún no has comprado nada. ¡Es hora de empezar a comprar!",
         insufficientStripeBalance:
             "Saldo de Stripe insuficiente. Consulta tu panel de Stripe para obtener más información.",
         payoutRequested: "¡Éxito! Has solicitado tu pago Stripe de",
-        payoutSetup: "Complete la configuración de su cuenta Stripe para continuar. Su cuenta debe tener pagos habilitados antes de que pueda solicitar un pago. Haga clic en Ir al panel de Stripe para completar este paso.",
-        requestPayout: "Haga clic en el botón Solicitar pago para solicitar su pago de Stripe. Se le cobrarán $2,25 al saldo de su cuenta y el resto se enviará a su cuenta bancaria o tarjeta de débito según su configuración de Stripe. Para conocer el saldo de Stripe más actualizado, visita tu panel de Stripe.",
-        currentBalance: "Su saldo actual es aproximadamente:",
+        payoutSetup:
+            "Complete la configuración de su cuenta de Stripe para continuar. Su cuenta debe tener pagos habilitados antes de que pueda solicitar un pago. Haga click en Ir al panel de Stripe para completar este paso.",
+        requestPayout:
+            "Haga clic en el botón Solicitar pago para solicitar su pago de Stripe. Se le cobrarán $2,25 al saldo de su cuenta y el resto se enviará a su cuenta bancaria o tarjeta de débito según su configuración de Stripe. Para conocer el saldo de Stripe más actualizado, visita tu panel de Stripe.",
+        currentBalance: "Su saldo actual es de aproximadamente:",
     },
-
 
     formLabels: {
         title: "Título",
@@ -263,37 +269,39 @@ export const Spanish = {
         orderSummary: "Resumen del pedido",
         items: "elementos",
     },
-  homePageText: {
-    headline: "Todo lo que necesitas para hacer el trabajo.",
-    subHeadline:
-      "Los proveedores publican servicios. Los useres pueden selecionar los servicios. El trabajo se hace.",
-    ariaLabel: "Imagen para el marcador de posición de información",
-    becomeCreator: "¿Listo para convertirte en un creador de recursos de aprendizaje?",
-    clickToBecomeCreator: "¡Haz clic para comenzar!",
-    welcome: "¿Qué es LearnGrove?",
-    clickToLearnMore: "Haga clic aquí para obtener más información sobre nuestra comunidad y compromiso",
-    contribute: "Contribuir a la comunidad Learngrove",
-    clickToContribute: "Haga clic aquí para compartir su opinión",
-  },
-  menus: {
-    resources: "Buscar Recursos",
-    contactUs: "Contáctenos",
-    profile: "Perfil",
-    ratingsReviews: "Puntajes y Reseñas",
-    questions: "Preguntas",
-    freeDownload: "Descarga Gratis",
-    creatorResources: "Mis recursos",
-    payouts: "Pagos",
-    reviews: "Opiniones",
-    details: "Detalles",
-    description: "Descripción",
-    qA: "Sección de Preguntas",
-    purchases: "Compras",
-    favorites: "Favoritas",
-    following: "Siguiente",
-    purchased: "Comprado el ",
-    updated: "Actualizado el ",
-  },
+    homePageText: {
+        headline: "Todo lo que necesitas para hacer el trabajo.",
+        subHeadline:
+            "Los proveedores publican servicios. Los useres pueden selecionar los servicios. El trabajo se hace.",
+        ariaLabel: "Imagen para el marcador de posición de información",
+        becomeCreator:
+            "¿Listo para convertirte en un creador de recursos de aprendizaje?",
+        clickToBecomeCreator: "¡Haz clic para comenzar!",
+        welcome: "¿Qué es LearnGrove?",
+        clickToLearnMore:
+            "Haga clic aquí para obtener más información sobre nuestra comunidad y compromiso",
+        contribute: "Contribuir a la comunidad Learngrove",
+        clickToContribute: "Haga clic aquí para compartir su opinión",
+    },
+    menus: {
+        resources: "Buscar Recursos",
+        contactUs: "Contáctenos",
+        profile: "Perfil",
+        ratingsReviews: "Puntajes y Reseñas",
+        questions: "Preguntas",
+        freeDownload: "Descarga Gratis",
+        creatorResources: "Mis recursos",
+        payouts: "Pagos",
+        reviews: "Opiniones",
+        details: "Detalles",
+        description: "Descripción",
+        qA: "Sección de Preguntas",
+        purchases: "Compras",
+        favorites: "Favoritas",
+        following: "Siguiente",
+        purchased: "Comprado el ",
+        updated: "Actualizado el ",
+    },
 
     toolTips: {
         firstName:
@@ -321,7 +329,8 @@ export const Spanish = {
         grades: "Seleccione todos los niveles de grado para los cuales este recurso es adecuado. Estos se utilizarán para filtrar recursos para los compradores.",
         contribution:
             "Elige qué porcentaje de tu precio puedes contribuir al mantenimiento y desarrollo de la plataforma. Plataformas similares se llevan entre el 11% y el 45% de tus ventas. Queremos darle el poder de respaldar la plataforma en función del valor que proporciona. ¿No estás seguro de la cantidad correcta? Recomendamos comenzar con el 15%, puedes actualizarlo más adelante en tu perfil de proveedor.",
-        taxCode: "La categoría de impuestos determina cómo se calcularán los impuestos sobre las ventas en los estados donde LearnGrove recauda y remite impuestos en su nombre. Como se indica en los Términos, usted es responsable de elegir la categoría fiscal adecuada para cada recurso que incluya. Haga clic en el enlace a continuación para obtener más información.",
+        taxCode:
+            "La categoría de impuestos determina cómo se calcularán los impuestos sobre las ventas en los estados donde LearnGrove recauda y remite impuestos en su nombre. Como se indica en los Términos, usted es responsable de elegir la categoría fiscal adecuada para cada recurso que incluya. Haga clic en el enlace a continuación para obtener más información.",
         resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
         price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
     },
@@ -552,7 +561,7 @@ export const Spanish = {
             { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
             { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
             { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
-            { text: "Ver Resultados", ariaLabel: "Ver Resultados"},
+            { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
         ],
     },
 
