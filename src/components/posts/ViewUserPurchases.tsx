@@ -200,7 +200,15 @@ export const ViewUserPurchases: Component = () => {
     return (
         <div>
             <div id="Cards">
-                <ViewPurchaseCard posts={purchasedItems()} />
+                <Show when={purchasedItems().length > 0}>
+                    <ViewPurchaseCard posts={purchasedItems()} />
+                </Show>
+                <Show when={purchasedItems().length === 0}>
+                    <p class="mb-6 italic">{t("messages.noPurchasedItems")}</p>
+                    <a href={`/${lang}/services`} class="btn-primary">
+                        {t("buttons.browseCatalog")}
+                    </a>
+                </Show>
             </div>
         </div>
     );
