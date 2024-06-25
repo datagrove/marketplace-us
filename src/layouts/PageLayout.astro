@@ -20,12 +20,12 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 <Layout {pageTitle} {pageDescription}>
     <div class="flex flex-col min-h-screen">
         <div class="header pt-4">
-            <Header client:only="solid-js"/>
+            <Header client:only="solid-js" />
         </div>
         <main class="flex-grow">
             <div class="flex justify-center mx-2">
-            <WindowSize client:only="solid-js"/>
-                    <slot />
+                <WindowSize client:only="solid-js" />
+                <slot />
             </div>
         </main>
         <div class={`footer ${stickyFooter ? "sticky" : ""} bottom-0 z-50`}>

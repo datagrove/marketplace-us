@@ -125,7 +125,7 @@ export const MobileViewCard: Component<Props> = (props) => {
         }
     };
 
-    function changeShowBtn(e:Event, postId: number) {
+    function changeShowBtn(e: Event, postId: number) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -275,9 +275,11 @@ export const MobileViewCard: Component<Props> = (props) => {
                     </a>
 
                     <div class="title-creator mb-1 ml-1">
-                        <div class="mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:text-ptext1-DM text-start py-0.5 pt-4">
-                            {post.title}
-                        </div>
+                        <a href={`/${lang}/posts/${post.id}`}>
+                            <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
+                                {post.title}
+                            </div>
+                        </a>
                         <a href={`/${lang}/creator/${post?.seller_id}`}>
                             <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
@@ -356,57 +358,60 @@ export const MobileViewCard: Component<Props> = (props) => {
                             </svg>
                         </button>
 
-                        <div
-                            id={`${post.id}content`}
-                            class="hidden w-full flex-col justify-start"
-                        >
-                            <p
-                                class="prose mb-2 line-clamp-3 text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM"
-                                innerHTML={post.content}
-                            ></p>
+                        <a href={`/${lang}/posts/${post.id}`}>
+                            <div
+                                id={`${post.id}content`}
+                                class="hidden w-full flex-col justify-start"
+                            >
+                                <p
+                                    class="prose mb-2 line-clamp-3 text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM"
+                                    innerHTML={post.content}
+                                ></p>
 
-                            <div class="details grid grid-cols-5">
-                                {/* SUBJECTS */}
-                                <div class=" col-span-2 mr-2 text-end text-[10px] font-bold">
-                                    {t("formLabels.subjects")}:
-                                </div>
-                                <div class="prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
-                                    <div class="flex-wrap">
-                                        {Array.from(post.subject!).join(", ")}
+                                <div class="details grid grid-cols-5">
+                                    {/* SUBJECTS */}
+                                    <div class=" col-span-2 mr-2 text-end text-[10px] font-bold">
+                                        {t("formLabels.subjects")}:
                                     </div>
-                                </div>
+                                    <div class="prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                        <div class="flex-wrap">
+                                            {Array.from(post.subject!).join(
+                                                ", "
+                                            )}
+                                        </div>
+                                    </div>
 
-                                {/* GRADES */}
-                                <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
-                                    <div class="">
-                                        {t("formLabels.grades")}:
+                                    {/* GRADES */}
+                                    <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
+                                        <div class="">
+                                            {t("formLabels.grades")}:
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="prose col-span-3 flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
-                                    <div class="flex-wrap">
-                                        {post.grade!.join(", ")}
+                                    <div class="prose col-span-3 flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                        <div class="flex-wrap">
+                                            {post.grade!.join(", ")}
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* RESOURCE TYPES */}
-                                <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
-                                    {t("formLabels.resourceTypes")}:
-                                </div>
-                                <div class="prose col-span-3 flex flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
-                                    <div class="flex-wrap">
-                                        {post.resourceTypes!.join(", ")}
+                                    {/* RESOURCE TYPES */}
+                                    <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
+                                        {t("formLabels.resourceTypes")}:
                                     </div>
-                                </div>
-                                {/* <h6 class="text-start text-[10px] font-bold">
+                                    <div class="prose col-span-3 flex flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                        <div class="flex-wrap">
+                                            {post.resourceTypes!.join(", ")}
+                                        </div>
+                                    </div>
+                                    {/* <h6 class="text-start text-[10px] font-bold">
                                     {t("formLabels.standards")}:{" "}
                                 </h6>
                                 <p class="truncate text-start text-[10px]">
                                     RF.K.2, RF.K.3, RF.K.3c
                                 </p> */}
-                            </div>
+                                </div>
 
-                            <div class="mt-2 flex">
-                                {/* <div class="mr-3 flex items-center justify-start">
+                                <div class="mt-2 flex">
+                                    {/* <div class="mr-3 flex items-center justify-start">
                                     <svg
                                         width="12px"
                                         height="12px"
@@ -502,8 +507,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         Longer File Type Name
                                     </p>
                                 </div> */}
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
 
                     <div class="cart my-2 w-full px-1">
