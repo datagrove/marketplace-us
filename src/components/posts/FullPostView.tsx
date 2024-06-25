@@ -448,11 +448,11 @@ export const ViewFullPost: Component<Props> = (props) => {
     console.log(postImages());
 
     return (
-        <div id="large-full-card-div" class="h-full">
-            <div id="image-title-details-cart-div" class="flex">
+        <div id="large-full-card-div" class="mx-2 h-full w-full mb-2">
+            <div id="image-title-details-cart-div" class="grid grid-cols-7">
                 <div
                     id="images-div"
-                    class="mr-1 flex w-[300px] flex-col items-center justify-center lg:h-[400px] lg:w-[400px]"
+                    class="col-span-3 mr-1 flex w-[300px] flex-col items-center justify-center lg:h-[400px] lg:w-[400px]"
                 >
                     <Show when={postImages().length > 0}>
                         <Show when={postImages().length === 1}>
@@ -517,14 +517,18 @@ export const ViewFullPost: Component<Props> = (props) => {
                     </Show>
                 </div>
 
-                <div id="details-cart-div" class="ml-1 w-2/3">
+                <div id="details-cart-div" class="col-span-4 col-start-4 ml-1">
                     <div id="title-div">
                         <div>
-                            <h3 class="text-2xl font-bold">{post()?.title}</h3>
+                            <h3 class="w-full text-2xl font-bold">
+                                {post()?.title}
+                            </h3>
                         </div>
                     </div>
 
                     <div id="ratings-div" class="my-1 flex flex-col">
+                        {/* TODO: Add Ratings
+                        
                         <div id="ratings-stars-div" class="mr-2 flex w-fit">
                             <svg
                                 fill="none"
@@ -575,13 +579,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                             >
                                 <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
                             </svg>
-                        </div>
+                        </div> */}
 
-                        {/* TODO: fix hard coding */}
-                        <div id="ratings-text-div" class="flex">
+                        {/* TODO: fix hard coding/add back reviews */}
+                        {/* <div id="ratings-text-div" class="flex">
                             <p class="font-bold">4.9</p>
                             <p>(30.3K ratings)</p>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div
@@ -616,14 +620,14 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 </a>
                             </div>
 
-                            <div class="flex items-center">
+                            {/* <div class="flex items-center">
                                 <div>117.1K Followers</div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
                     <div id="follower-div" class="flex">
-                        <button
+                        {/* <button
                             class="dark:ptext-DM my-2 flex items-center justify-center rounded-full bg-btn1 px-4 text-ptext2 dark:bg-btn1-DM"
                             onClick={() => alert(t("messages.comingSoon"))}
                         >
@@ -694,12 +698,48 @@ export const ViewFullPost: Component<Props> = (props) => {
                             <p class="mx-0.5 text-sm">
                                 {t("buttons.following")}
                             </p>
-                        </button>
+                        </button> */}
                     </div>
 
-                    <div id="resource-info-div" class="my-2">
-                        <div class="flex">
-                            <div
+                    <div id="resource-info-div" class="my-4 ml-6">
+                        <div class="">
+                            <div class="my-2 grid w-full grid-cols-4 text-[10px]">
+                                <div class="col-span-1 mr-2 text-end">
+                                    <div class="font-bold">
+                                        {t("formLabels.subjects")}:
+                                    </div>
+                                </div>
+                                <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {post()?.subject?.join(", ")}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-2 grid w-full grid-cols-4 text-[10px]">
+                                <div class="col-span-1 mr-2 text-end">
+                                    <div class="font-bold">
+                                        {t("formLabels.grades")}:
+                                    </div>
+                                </div>
+                                <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {post()?.grade?.join(", ")}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-2 grid w-full grid-cols-4 text-[10px]">
+                                <div class="col-span-1 mr-2 text-end">
+                                    <div class="font-bold">
+                                        {t("formLabels.resourceTypes")}:
+                                    </div>
+                                </div>
+                                <div class="prose col-span-3 flex-wrap align-middle text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                    <div class="flex-wrap">
+                                        {post()?.resourceTypes!.join(", ")}
+                                    </div>
+                                </div>
+                            </div>
+                            {/* <div
                                 id="resource-labels"
                                 class="mr-2 flex w-2/5 flex-col items-end justify-end"
                             >
@@ -722,7 +762,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
                             <div id="resource-information" class="ml-2 w-3/5">
                                 <p class="lg:text-md truncate text-xs">
-                                    {post()?.post_grade.join(", ")}
+                                    {post()?.grade?.join(", ")}
                                 </p>
                                 <p class="lg:text-md truncate text-xs">
                                     {post()?.subject?.join(", ")}
@@ -736,7 +776,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 <p class="lg:text-md truncate text-xs italic">
                                     {t("messages.comingSoon")}
                                 </p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
 
@@ -754,9 +794,22 @@ export const ViewFullPost: Component<Props> = (props) => {
 
                     {/* </Show> */}
                     {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
+                    <div class="price-div mx-2 mb-4 flex justify-end">
+                        <Show when={post()?.price! === 0}>
+                            <p class="text-2xl font-bold">
+                                {t("messages.free")}
+                            </p>
+                        </Show>
+                        <Show when={post()?.price! > 0}>
+                            <p class="text-2xl font-bold">
+                                ${post()?.price.toFixed(2)}
+                            </p>
+                        </Show>
+                    </div>
+
                     <div
                         id="add-cart-div"
-                        class="mb-1 mr-2 mt-8 flex justify-end"
+                        class="mb-1 mr-2 flex justify-end "
                     >
                         <Quantity
                             quantity={1}
@@ -802,7 +855,8 @@ export const ViewFullPost: Component<Props> = (props) => {
                     >
                         <p class="text-xl">{t("menus.description")}</p>
                     </a>
-                    <a
+                    {/* TODO : Add back for reviews and Q&A
+                     <a
                         href="#reviewsLg"
                         id="reviewsLgLink"
                         class="tabLinkLg mr-10"
@@ -817,7 +871,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         onClick={lgTabLinkClick}
                     >
                         <p class="text-xl">{t("menus.qA")}</p>
-                    </a>
+                    </a> */}
                 </div>
 
                 <div id="lg-details-div" class="inline">
@@ -836,9 +890,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             <p class="mt-1 font-light uppercase">
                                 {t("formLabels.grades")}
                             </p>
-                            <div class="flex">
-                                {post()?.post_grade.join(", ")}
-                            </div>
+                            <div class="flex">{post()?.grade?.join(", ")}</div>
                         </div>
 
                         <div>
@@ -860,13 +912,14 @@ export const ViewFullPost: Component<Props> = (props) => {
                             </div>
                         </div>
 
+                        {/* TODO: Add back for filetypes and pages
                         <div>
                             <p class="mt-4 font-light uppercase">
                                 {t("formLabels.fileTypes")}
                             </p>
                             <p class="italic">{t("messages.comingSoon")}</p>
-                            {/* TODO: add file type to database and then populate */}
-                            {/* { post()?.file_type.join(", ")} */}
+                            TODO: add file type to database and then populate
+                            { post()?.file_type.join(", ")}
                         </div>
 
                         <div>
@@ -874,9 +927,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {t("formLabels.pages")}
                             </p>
                             <p class="italic">{t("messages.comingSoon")}</p>
-                            {/* TODO: add file type to database and then populate */}
-                            {/* { post()?.file_type.join(", ")} */}
-                        </div>
+                            TODO: add file type to database and then populate
+                            { post()?.file_type.join(", ")}
+                        </div> */}
                     </div>
                 </div>
 
