@@ -125,7 +125,10 @@ export const MobileViewCard: Component<Props> = (props) => {
         }
     };
 
-    function changeShowBtn(postId: number) {
+    function changeShowBtn(e:Event, postId: number) {
+        e.preventDefault();
+        e.stopPropagation();
+
         let postID = postId.toString();
         let showMoreID = `${postID}more`;
         let showLessID = `${postID}less`;
@@ -306,7 +309,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                         <button
                             id={`${post.id}more`}
                             class="flex w-full justify-center"
-                            onclick={(e) => changeShowBtn(post.id)}
+                            onclick={(e) => changeShowBtn(e, post.id)}
                         >
                             <p
                                 class={`${post.id}more pr-1 text-htext1 dark:text-htext1-DM`}
@@ -332,7 +335,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                         <button
                             id={`${post.id}less`}
                             class="hidden w-full justify-center"
-                            onclick={(e) => changeShowBtn(post.id)}
+                            onclick={(e) => changeShowBtn(e, post.id)}
                         >
                             <p class="pr-1 text-htext1 dark:text-htext1-DM">
                                 {t("buttons.showLess")}
