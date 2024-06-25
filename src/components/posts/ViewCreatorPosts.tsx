@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import { MobileViewCard } from "@components/services/MobileViewCard";
 import supabase from "../../lib/supabaseClient";
@@ -9,6 +9,9 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
+
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
@@ -23,6 +26,7 @@ export const ViewCreatorPosts: Component = () => {
     // initialize posts and session
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [session, setSession] = createSignal<AuthSession | null>(null);
+    const screenSize = useStore(windowSize);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -88,13 +92,17 @@ export const ViewCreatorPosts: Component = () => {
     });
     return (
         <div class="">
-            <div class="hidden md:inline">
+            <Show when={screenSize() !== "sm"}>
+            <div class="">
                 <ViewCard posts={posts()} />
             </div>
+            </Show>
 
-            <div class="inline md:hidden">
+            <Show when={screenSize() === "sm"}>
+            <div class="">
                 <MobileViewCard posts={posts()} />
             </div>
+            </Show>
         </div>
     );
 };

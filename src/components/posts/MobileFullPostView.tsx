@@ -344,7 +344,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     }
 
     return (
-        <div id="mobile-full-card" class="relative h-full w-96 px-1">
+        <div id="mobile-full-card" class="h-full w-11/12">
             <div
                 id="full-resource-title"
                 class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM"
@@ -352,6 +352,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 <p class="text-2xl font-bold">{post()?.title}</p>
             </div>
 
+            {/* TODO: Add back ratings
             <div id="ratings-div" class="my-1 flex">
                 <div id="ratings-stars-div" class="mr-2 flex w-fit">
                     <svg
@@ -405,12 +406,12 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     </svg>
                 </div>
 
-                {/* TODO: fix hard coding */}
+                TODO: fix hard coding
                 <div id="ratings-text-div" class="flex">
                     <p class="font-bold">4.9</p>
                     <p>(30.3K ratings)</p>
                 </div>
-            </div>
+            </div> */}
 
             <div id="creator-followers-div" class="flex w-full items-center">
                 <div
@@ -437,7 +438,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         </a>
                     </div>
 
-                    <div class="flex w-full items-center">
+                    {/* <div class="flex w-full items-center">
                         <div>117.1K Followers</div>
 
                         <div>
@@ -516,7 +517,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 </p>
                             </button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -527,18 +528,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             <img
                                 src={postImages()[0]}
                                 id="one-image"
-                                class="flex max-h-[370px] max-w-[370px] items-center justify-center rounded dark:bg-background1"
+                                class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
                         </div>
                     </Show>
 
                     <Show when={postImages().length > 1}>
-                        <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                        <div class="mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
                             <img
                                 src={postImages()[0]}
                                 id="mobile-main-image"
-                                class="max-h-[370px] max-w-[370px] rounded dark:bg-background1"
+                                class="max-h-[370px] max-w-full rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
                         </div>
@@ -591,7 +592,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <p class="text-2xl font-bold">{t("messages.free")}</p>
                     </Show>
                     <Show when={post()?.price! > 0}>
-                        <p class="text-2xl font-bold">{post()?.price}</p>
+                        <p class="text-2xl font-bold">${post()?.price.toFixed(2)}</p>
                     </Show>
                 </div>
 
@@ -627,6 +628,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         {t("menus.description")}
                     </p>
                 </a>
+                {/* TODO: Add back for reviews and Q&A
                 <a
                     href="#reviews"
                     id="reviewsLink"
@@ -646,7 +648,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     <p id="qa-text" class="">
                         {t("menus.qA")}
                     </p>
-                </a>
+                </a> */}
             </div>
 
             <div
@@ -679,7 +681,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <p class="mt-1 font-light uppercase">
                             {t("formLabels.grades")}
                         </p>
-                        <div class="flex">{post()?.post_grade.join(", ")}</div>
+                        <div class="flex">{post()?.grade?.join(", ")}</div>
                     </div>
 
                     <div>
@@ -696,13 +698,14 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <div>{post()?.resourceTypes!.join(", ")}</div>
                     </div>
 
+                    {/* TODO Add Back
                     <div>
                         <p class="mt-4 font-light uppercase">
                             {t("formLabels.fileTypes")}
                         </p>
                         <p class="italic">{t("messages.comingSoon")}</p>
-                        {/* TODO: add file type to database and then populate */}
-                        {/* { post()?.file_type.join(", ")} */}
+                        TODO: add file type to database and then populate
+                        { post()?.file_type.join(", ")}
                     </div>
 
                     <div>
@@ -710,9 +713,9 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             {t("formLabels.pages")}
                         </p>
                         <p class="italic">{t("messages.comingSoon")}</p>
-                        {/* TODO: add file type to database and then populate */}
-                        {/* { post()?.file_type.join(", ")} */}
-                    </div>
+                        TODO: add file type to database and then populate
+                        { post()?.file_type.join(", ")}
+                    </div> */}
                 </div>
             </div>
 
@@ -748,6 +751,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 ></div>
             </div>
 
+            {/* TODO: Add back for Reviews
             <div
                 id="reviews"
                 class="mb-2 border-t border-border1 dark:border-border1-DM"
@@ -775,8 +779,9 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 <p id="post-reviews-div" class="hidden italic">
                     {t("messages.comingSoon")}
                 </p>
-            </div>
+            </div> */}
 
+            {/* TODO: Add back for Q&A
             <div
                 id="qa"
                 class="mb-2 border-t border-border1 dark:border-border1-DM"
@@ -804,7 +809,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 <p id="post-qa-div" class="hidden italic">
                     {t("messages.comingSoon")}
                 </p>
-            </div>
+            </div> */}
 
             <div class="flex w-fit items-center justify-start">
                 <svg
