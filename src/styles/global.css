@@ -12,11 +12,15 @@
     }
 
     .btn-disabled {
-        @apply max-h-14 rounded-full bg-gray-500 px-4 py-2 font-bold text-btn1Text dark:text-btn1Text-DM md:text-[1vw];
+        @apply max-h-14 rounded-full bg-gray-500 px-4 py-2 font-bold text-btn1Text-DM md:text-[1vw];
     }
 
     .btn-cart {
         @apply max-h-14 w-full rounded-full bg-btn1 py-1 text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM md:w-auto md:px-2 md:py-1 md:text-[1.25vw] md:font-bold;
+    }
+
+    .btn-cart-disabled {
+        @apply max-h-14 w-full rounded-full bg-gray-500 py-1 text-btn1Text-DM md:w-auto md:px-2 md:py-1 md:text-[1.25vw] md:font-bold;
     }
 
     button > * {

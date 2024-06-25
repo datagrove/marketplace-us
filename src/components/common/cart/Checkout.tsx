@@ -34,22 +34,22 @@ export const CheckoutView = () => {
     const [zeroOrder, setZeroOrder] = createSignal<boolean>(false);
 
     onMount(async () => {
-        console.log(items)
+        console.log(items);
         await createOrder();
         await getTotal();
         await fetchClientCheckoutSecret();
         await mountCheckout();
     });
 
-    async function getTotal () {
-        let total = 0
+    async function getTotal() {
+        let total = 0;
         items.map((item) => {
-            total += item.price * item.quantity
-        })
-        total += donation_amount ? parseInt(donation_amount) : 0 
-        setOrderTotal(total)
+            total += item.price * item.quantity;
+        });
+        total += donation_amount ? parseInt(donation_amount) : 0;
+        setOrderTotal(total);
         if (orderTotal() === 0) {
-            setZeroOrder(true)
+            setZeroOrder(true);
         }
     }
 

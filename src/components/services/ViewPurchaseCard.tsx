@@ -24,7 +24,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
     console.log(props.posts);
 
     createEffect(async () => {
-  
         if (props.posts) {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
@@ -71,12 +70,10 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
         }
     };
 
-    
-
     return (
-        <div class="">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {purchasedItems().map((post) => (
-                <div class="flex border-b-2 mb-4 pb-2">
+                <div class="mb-4 flex max-w-max justify-self-center border-b-2 pb-2">
                     {/* { setProductID(post.id) } */}
                     <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">

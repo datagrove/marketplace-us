@@ -75,6 +75,10 @@ export const CreatorProfileView: Component = () => {
         }
     });
 
+    const resetPassword = () => {
+        window.location.href = `/${lang}/password/reset`;
+    };
+
     const fetchCreator = async (user_id: string) => {
         if (session()) {
             try {
@@ -105,7 +109,7 @@ export const CreatorProfileView: Component = () => {
         e.preventDefault();
 
         let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
-        console.log(currLinkId)
+        console.log(currLinkId);
         // let currLinkId = e.currentTarget?.id;
         let currEl = document.getElementById(currLinkId);
         let allLgLinks = document.getElementsByClassName(
@@ -355,7 +359,7 @@ export const CreatorProfileView: Component = () => {
                     </Show>
 
                     <Show when={editMode() === true}>
-                        <div class="absolute top-6 left-4 md:left-12">
+                        <div class="absolute left-4 top-6 md:left-12">
                             <UserImage
                                 url={imageUrl()}
                                 size={150}
@@ -623,7 +627,7 @@ export const CreatorProfileView: Component = () => {
                         <a
                             href="#ratingsCreatorView"
                             id="creatorViewRatingsLink"
-                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10 hidden"
+                            class="creatorViewtabLinkLg mr-2 hidden md:mr-6 lg:mr-10"
                             onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
@@ -633,7 +637,7 @@ export const CreatorProfileView: Component = () => {
                         <a
                             href="#questionsCreatorView"
                             id="creatorViewQuestionsLink"
-                            class="creatorViewtabLinkLg mr-2 md:mr-6 lg:mr-10 hidden"
+                            class="creatorViewtabLinkLg mr-2 hidden md:mr-6 lg:mr-10"
                             onClick={creatorViewTabClick}
                         >
                             <p class="text-sm font-bold md:text-base lg:text-xl">
@@ -769,6 +773,15 @@ export const CreatorProfileView: Component = () => {
                                         value={creator()?.seller_about}
                                     ></textarea>
                                 </div>
+                            </Show>
+
+                            <Show when={editMode() === false}>
+                                <button
+                                    class="btn-primary font-bold"
+                                    onClick={resetPassword}
+                                >
+                                    {t("buttons.resetPassword")}
+                                </button>
                             </Show>
                         </div>
                     </div>
