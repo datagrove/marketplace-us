@@ -460,7 +460,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 <img
                                     src={postImages()[0]}
                                     id="one-image"
-                                    class="flex items-center justify-center rounded dark:bg-background1"
+                                    class="flex max-h-[300px] max-w-[300px] items-center justify-center rounded dark:bg-background1"
                                     alt={`${t("postLabels.image")}`}
                                 />
                             </div>
@@ -472,25 +472,25 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     <img
                                         src={postImages()[0]}
                                         id="main-image"
-                                        class="rounded dark:bg-background1"
+                                        class="max-h-[290px] max-w-[290px] rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
                                 </div>
 
-                                <div class="flex w-full justify-around px-1">
+                                <div class="mt-1 flex w-full justify-around px-1">
                                     {postImages().map(
                                         (image: string, index: number) => (
-                                            <div class="flex h-16 w-1/6 items-center justify-center md:mt-2">
+                                            <div class="flex h-12 w-12 items-center justify-center md:mt-2">
                                                 {index === 0 ? (
                                                     <div
                                                         // id={ index.toString() }
                                                         id={`img${index.toString()}`}
-                                                        class="imageLink flex h-14 w-14 items-center justify-center border-b-2 border-green-500"
+                                                        class="imageLink flex h-full w-full items-center justify-center"
                                                         onClick={imageClick}
                                                     >
                                                         <img
                                                             src={image}
-                                                            class="mb-2 rounded"
+                                                            class="mb-2 h-full w-full rounded object-cover"
                                                             alt={`${t("postLabels.image")} ${index + 2}`}
                                                         />
                                                     </div>
@@ -498,12 +498,12 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                     <div
                                                         // id={ index.toString() }
                                                         id={`img${index.toString()}`}
-                                                        class="imageLink flex h-16 w-16 items-center justify-center"
+                                                        class="imageLink flex h-full w-full items-center justify-center"
                                                         onClick={imageClick}
                                                     >
                                                         <img
                                                             src={image}
-                                                            class="mb-2 rounded dark:bg-background1"
+                                                            class="mb-2 h-full w-full rounded object-cover"
                                                             alt={`${t("postLabels.image")} ${index + 2}`}
                                                         />
                                                     </div>

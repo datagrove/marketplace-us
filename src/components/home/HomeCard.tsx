@@ -83,54 +83,62 @@ export const HomeCard: Component<Props> = (props) => {
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
-                        <div class="mx-2 mb-4 w-40 rounded border-2 border-border1 p-1 dark:border-border1-DM md:mx-1 md:mb-0">
-                            <a href={`/${lang}/posts/${post.id}`}>
-                                <div
-                                    id="homeCard-img"
-                                    class="w-34 flex h-36 items-center justify-center"
+                        <div class="mx-2 mb-4 flex h-[264px] w-40 flex-wrap justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
+                            <div class="home-card-img-div flex h-4/6 w-full items-center justify-center">
+                                <a
+                                    href={`/${lang}/posts/${post.id}`}
+                                    class="h-full"
                                 >
-                                    {post.image_url ? (
-                                        <img
-                                            src={post.image_url}
-                                            alt={
-                                                post.image_urls.split(",")[0]
-                                                    ? "User Image"
-                                                    : "No Image"
-                                            }
-                                        />
-                                    ) : (
-                                        <svg
-                                            width="200px"
-                                            height="200px"
-                                            viewBox="0 0 152.13541 152.13544"
-                                            version="1.1"
-                                            id="svg1"
-                                            class="fill-icon1 dark:fill-icon1-DM"
-                                        >
-                                            <defs id="defs1" />
-                                            <g
-                                                id="layer1"
-                                                transform="translate(-55.18229,-70.37966)"
+                                    <div
+                                        id="homeCard-img"
+                                        class="flex h-full w-full items-center justify-center"
+                                    >
+                                        {post.image_url ? (
+                                            <img
+                                                src={post.image_url}
+                                                alt={
+                                                    post.image_urls.split(
+                                                        ","
+                                                    )[0]
+                                                        ? "User Image"
+                                                        : "No Image"
+                                                }
+                                                class="max-h-full max-w-full"
+                                            />
+                                        ) : (
+                                            <svg
+                                                // width="100px"
+                                                // height="100px"
+                                                viewBox="0 0 152.13541 152.13544"
+                                                version="1.1"
+                                                id="svg1"
+                                                class="h-full w-full fill-icon1 dark:fill-icon1-DM"
                                             >
+                                                <defs id="defs1" />
                                                 <g
-                                                    id="g1"
-                                                    transform="matrix(0.82682292,0,0,0.82682292,25.416666,40.614035)"
+                                                    id="layer1"
+                                                    transform="translate(-55.18229,-70.37966)"
                                                 >
-                                                    <path
-                                                        d="M 208,36 H 48 A 12.01312,12.01312 0 0 0 36,48 v 160 a 12.01312,12.01312 0 0 0 12,12 h 160 a 12.01312,12.01312 0 0 0 12,-12 V 48 A 12.01312,12.01312 0 0 0 208,36 Z m 4,172 a 4.004,4.004 0 0 1 -4,4 H 48 a 4.004,4.004 0 0 1 -4,-4 v -30.34369 l 33.17187,-33.171 a 4.00208,4.00208 0 0 1 5.65723,0 l 20.68652,20.68652 a 12.011,12.011 0 0 0 16.96973,0 l 44.68652,-44.68652 a 4.00208,4.00208 0 0 1 5.65723,0 L 212,161.65625 Z m 0,-57.65625 -35.51465,-35.51465 a 11.99916,11.99916 0 0 0 -16.96973,0 l -44.68652,44.68652 a 4.00681,4.00681 0 0 1 -5.65723,0 L 88.48535,138.8291 a 12.01009,12.01009 0 0 0 -16.96973,0 L 44,166.34393 V 48 a 4.004,4.004 0 0 1 4,-4 h 160 a 4.004,4.004 0 0 1 4,4 z M 108.001,92 v 0.0019 a 8.001,8.001 0 1 1 0,-0.0019 z"
-                                                        id="path1"
-                                                    />
+                                                    <g
+                                                        id="g1"
+                                                        transform="matrix(0.82682292,0,0,0.82682292,25.416666,40.614035)"
+                                                    >
+                                                        <path
+                                                            d="M 208,36 H 48 A 12.01312,12.01312 0 0 0 36,48 v 160 a 12.01312,12.01312 0 0 0 12,12 h 160 a 12.01312,12.01312 0 0 0 12,-12 V 48 A 12.01312,12.01312 0 0 0 208,36 Z m 4,172 a 4.004,4.004 0 0 1 -4,4 H 48 a 4.004,4.004 0 0 1 -4,-4 v -30.34369 l 33.17187,-33.171 a 4.00208,4.00208 0 0 1 5.65723,0 l 20.68652,20.68652 a 12.011,12.011 0 0 0 16.96973,0 l 44.68652,-44.68652 a 4.00208,4.00208 0 0 1 5.65723,0 L 212,161.65625 Z m 0,-57.65625 -35.51465,-35.51465 a 11.99916,11.99916 0 0 0 -16.96973,0 l -44.68652,44.68652 a 4.00681,4.00681 0 0 1 -5.65723,0 L 88.48535,138.8291 a 12.01009,12.01009 0 0 0 -16.96973,0 L 44,166.34393 V 48 a 4.004,4.004 0 0 1 4,-4 h 160 a 4.004,4.004 0 0 1 4,4 z M 108.001,92 v 0.0019 a 8.001,8.001 0 1 1 0,-0.0019 z"
+                                                            id="path1"
+                                                        />
+                                                    </g>
                                                 </g>
-                                            </g>
-                                        </svg>
-                                    )}
-                                </div>
-                            </a>
+                                            </svg>
+                                        )}
+                                    </div>
+                                </a>
+                            </div>
 
-                            <div id="homeCard-text" class="">
-                                <div class="h-12">
+                            <div id="homeCard-text" class="h-1/6">
+                                <div class="">
                                     <a href={`/${lang}/posts/${post.id}`}>
-                                        <p class="line-clamp-2 pt-2 text-start text-sm font-bold">
+                                        <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
                                             {post.title}
                                         </p>
                                     </a>
@@ -165,7 +173,7 @@ export const HomeCard: Component<Props> = (props) => {
 
                             <div
                                 id="homeCard-ratings-price"
-                                class="flex items-end"
+                                class="flex h-1/6 items-end"
                             >
                                 <div class="flex w-2/3 items-end">
                                     <div class="flex items-end justify-start">

@@ -523,40 +523,40 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             <div id="images" class="flex flex-col items-center justify-center">
                 <Show when={postImages().length > 0}>
                     <Show when={postImages().length === 1}>
-                        <div class="my-2 flex h-[375px] w-[375px] items-center justify-center rounded border border-gray-400">
+                        <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
                             <img
                                 src={postImages()[0]}
                                 id="one-image"
-                                class="flex items-center justify-center rounded dark:bg-background1"
+                                class="flex max-h-[370px] max-w-[370px] items-center justify-center rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
                         </div>
                     </Show>
 
                     <Show when={postImages().length > 1}>
-                        <div class="my-2 flex h-[375px] w-[375px] items-center justify-center rounded border border-gray-400 p-1">
+                        <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
                             <img
                                 src={postImages()[0]}
                                 id="mobile-main-image"
-                                class="rounded dark:bg-background1"
+                                class="max-h-[370px] max-w-[370px] rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
                         </div>
 
-                        <div class="my-4 flex justify-start">
+                        <div class="mt-4 flex w-full justify-start">
                             {postImages().map(
                                 (image: string, index: number) => (
-                                    <div class="flex h-16 w-1/6 items-center justify-center">
+                                    <div class="flex h-16 w-1/5 items-center justify-center">
                                         {index === 0 ? (
                                             <div
                                                 // id={ index.toString() }
                                                 id={`mobileImg${index.toString()}`}
-                                                class="mobileImageLink flex h-16 items-center justify-center border-b-2 border-green-500"
+                                                class="mobileImageLink flex h-16 w-16 items-center justify-center"
                                                 onClick={(e) => imageClick(e)}
                                             >
                                                 <img
                                                     src={image}
-                                                    class="mb-2 rounded"
+                                                    class="mb-2 h-full w-full rounded object-cover"
                                                     alt={`${t("postLabels.image")} ${index + 2}`}
                                                 />
                                             </div>
@@ -564,12 +564,12 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                             <div
                                                 // id={ index.toString() }
                                                 id={`mobileImg${index.toString()}`}
-                                                class="mobileImageLink flex h-16 items-center justify-center"
+                                                class="mobileImageLink flex h-16 w-16 items-center justify-center"
                                                 onClick={(e) => imageClick(e)}
                                             >
                                                 <img
                                                     src={image}
-                                                    class="mb-2 rounded dark:bg-background1"
+                                                    class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
                                                     alt={`${t("postLabels.image")} ${index + 2}`}
                                                 />
                                             </div>
@@ -588,10 +588,10 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             >
                 <div class="mx-1 flex justify-end">
                     <Show when={post()?.price! === 0}>
-                    <p class="text-2xl font-bold">{t("messages.free")}</p>
+                        <p class="text-2xl font-bold">{t("messages.free")}</p>
                     </Show>
                     <Show when={post()?.price! > 0}>
-                    <p class="text-2xl font-bold">{post()?.price}</p>
+                        <p class="text-2xl font-bold">{post()?.price}</p>
                     </Show>
                 </div>
 
