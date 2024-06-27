@@ -8,7 +8,6 @@ const CONFIG = {
 
     title: "LearnGrove",
     description: "LearnGrove is a community marketplace for educational resources. LearnGrove serves as a comprehensive hub where creators can share - and learners can discover - tailored educational resources. Bridging the gap between the creator and learners enhancing access to high-quality educational content while fostering a thriving community of learners and educators.",
-    //NEED TO ADD NEW URL
     url: url,
 
 
