@@ -31,8 +31,15 @@
                         >
                             Hello {{ .Data.first_name }} {{ .Data.last_name }}, <br />
                             We received a request to change the email address associated with your 
-                            LearnGrove account.From  {{ .Email }} to {{ .NewEmail }}. To complete the update, please confirm your
-                            new email address by clicking the button below:
+                            LearnGrove account.<br />
+                            <br />
+                            If you checked out as a guest, confirming your email will allow you to review and access your purchases in the future.<br />
+                            <br />
+                            If you were previously registered with LearnGrove your email was: {{ .Email }}<br />
+                            <br />
+                            The new email address that was requested to be associated with your account is: {{ .NewEmail }}. <br />
+                            <br />
+                            Please confirm your email address by clicking the button below:
               </p>
                         </td>
                     </tr>
