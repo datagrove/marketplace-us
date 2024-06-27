@@ -4,6 +4,7 @@ import { useTranslations } from "@i18n/utils";
 import stripe from "@lib/stripe";
 import { SITE } from "@src/config";
 import type { Post } from "@lib/types";
+const productId = import.meta.env.PUBLIC_VITE_STRIPE_PLATFORM_SUPPORT_PRODUCT;
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const response = await request.json();
@@ -41,7 +42,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             currency: "usd",
             // Need to capture the donation amount
             unit_amount: response.donation_amount * 100,
-            product: "prod_QN5c7NoQ72IBZ5",
+            product: productId,
             tax_behavior: "exclusive",
         },
         quantity: 1,
