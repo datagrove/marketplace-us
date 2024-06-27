@@ -5,6 +5,7 @@ import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { Quantity } from "@components/common/cart/Quantity";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
+import LearnGroveCommunity from "@src/assets/LearnGroveCommunity.png";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -29,7 +30,7 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                         <div class=" box-content flex h-full w-full flex-row  items-start justify-start">
                             <div class="mr-2 flex h-full w-24 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                 <img
-                                    src={"src/assets/LearnGroveCommunity.png"}
+                                    src={LearnGroveCommunity.src}
                                     // TODO Internationalize
                                     alt="Build Your LearnGrove"
                                     class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
