@@ -21,7 +21,7 @@ const defaultLocale = defaultLang
 export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
-  site: SITE.pagesDevUrl,
+  site: SITE.url,
   trailingSlash: 'never',
   build: {
     format: 'file',
