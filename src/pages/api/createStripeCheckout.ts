@@ -41,7 +41,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             currency: "usd",
             // Need to capture the donation amount
             unit_amount: response.donation_amount * 100,
-            product: "prod_Q7jrvANf1W8KVn",
+            product: "prod_QN5c7NoQ72IBZ5",
             tax_behavior: "exclusive",
         },
         quantity: 1,
