@@ -180,8 +180,10 @@ export const CreateNewPost: Component = () => {
     const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
-    const [allRequirementsMet, setAllRequirementsMet] = createSignal<boolean>(false);
-    const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] = createSignal<boolean>(false);
+    const [allRequirementsMet, setAllRequirementsMet] =
+        createSignal<boolean>(false);
+    const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
+        createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -303,44 +305,42 @@ export const CreateNewPost: Component = () => {
         }
     });
 
-    createEffect(async() => {
+    createEffect(async () => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
-        
-        
         let title = document.getElementById("Title");
-        let description = document.getElementById("Content") as HTMLInputElement;
-        let content = tinymce.get('tinymceEditor')?.getContent();
+        let description = document.getElementById(
+            "Content"
+        ) as HTMLInputElement;
+        let content = tinymce.get("tinymceEditor")?.getContent();
         // let contentTest = tinymce.get('tinyeditor')?.getContent(), patt;
 
         // console.log("contentTest: ", contentTest);
 
-        // patt = /^<p>(&nbsp;\s)+(&nbsp;)+<\/p>$/g; 
+        // patt = /^<p>(&nbsp;\s)+(&nbsp;)+<\/p>$/g;
 
         description.addEventListener("invalid", (event) => {
             setShowDescriptionErrorMessage(true);
+        });
 
-        })
+        console.log("Content: ", typeof content);
 
-        console.log("Content: ", typeof(content));
-
-        if(content !== "" && content !== undefined) {
+        if (content !== "" && content !== undefined) {
             setAllRequirementsMet(true);
         }
-        
+
         // if(description?.innerText !== "") {
         //     setAllRequirementsMet(true);
         // } else {
         //     setAllRequirementsMet(false);
         // }
-        
+
         // if(subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && title?.nodeValue !== "") {
         //     setAllRequirementsMet(true);
         // } else {
         //     setAllRequirementsMet(false);
         // }
-
-    })
+    });
 
     async function submit(e: SubmitEvent) {
         e.preventDefault();
@@ -544,8 +544,8 @@ export const CreateNewPost: Component = () => {
     function mountTiny() {
         TinyComp({ id: "#Content", mode: mode.theme });
 
-        if(!TinyComp) {
-            console.log("No tiny comp")
+        if (!TinyComp) {
+            console.log("No tiny comp");
         }
     }
 
@@ -578,7 +578,7 @@ export const CreateNewPost: Component = () => {
                     ></textarea>
                 </label>
 
-                <Show when={ showDescriptionErrorMessage() }>
+                <Show when={showDescriptionErrorMessage()}>
                     <p>ADD DESCRIPTION </p>
                 </Show>
 
@@ -641,7 +641,7 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="w-full flex justify-between items-center relative rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
+                            class="relative flex w-full items-center justify-between rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
                             onClick={() => subjectCheckboxes()}
                         >
                             <p
@@ -650,15 +650,17 @@ export const CreateNewPost: Component = () => {
                             >
                                 {t("formLabels.chooseSubject")}
                             </p>
-                            
-                            <svg id="subject-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+
+                            <svg
+                                id="subject-arrow"
+                                class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                            >
                                 <path
                                     fill-rule="evenodd"
                                     d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                     clip-rule="evenodd"
                                 />
                             </svg>
-
                         </div>
                         <div
                             id="subjectCheckboxes"
@@ -735,8 +737,11 @@ export const CreateNewPost: Component = () => {
 
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
-                        <div class="relative rounded border border-inputBorder1 dark:bg-background2-DM" onClick={() => gradeCheckboxes()}>
-                            <div class="flex justify-between items-center">
+                        <div
+                            class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
+                            onClick={() => gradeCheckboxes()}
+                        >
+                            <div class="flex items-center justify-between">
                                 <p
                                     id="chooseGrade"
                                     class="bg-background after:height-[20px] after:width-[20px] w-full px-1 text-ptext1 after:text-inputBorder1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
@@ -744,7 +749,10 @@ export const CreateNewPost: Component = () => {
                                     {t("formLabels.chooseGrade")}
                                 </p>
 
-                                <svg id="grade-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+                                <svg
+                                    id="grade-arrow"
+                                    class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                                >
                                     <path
                                         fill-rule="evenodd"
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -832,7 +840,7 @@ export const CreateNewPost: Component = () => {
                             class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
                             onClick={() => resourceTypesCheckboxes()}
                         >
-                            <div class="flex justify-between items-center">
+                            <div class="flex items-center justify-between">
                                 <p
                                     id="chooseResourceType"
                                     class="bg-background w-full  px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
@@ -840,7 +848,10 @@ export const CreateNewPost: Component = () => {
                                     {t("formLabels.chooseResourceTypes")}
                                 </p>
 
-                                <svg id="resource-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+                                <svg
+                                    id="resource-arrow"
+                                    class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                                >
                                     <path
                                         fill-rule="evenodd"
                                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -1069,7 +1080,9 @@ export const CreateNewPost: Component = () => {
                         id="post"
                         disabled={!uploadFinished()}
                         class={`text-2xl ${
-                            allRequirementsMet() ? "btn-primary" : "btn-disabled"
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
                         }`}
                     >
                         {t("buttons.listResource")}
