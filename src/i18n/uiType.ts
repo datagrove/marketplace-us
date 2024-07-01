@@ -162,6 +162,7 @@ export interface uiObject {
         payoutSetup: string;
         requestPayout: string;
         currentBalance: string;
+        descriptionRequired: string;
     };
 
     formLabels: {

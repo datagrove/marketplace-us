@@ -181,7 +181,7 @@ export const CreateNewPost: Component = () => {
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
     const [allRequirementsMet, setAllRequirementsMet] =
-        createSignal<boolean>(false);
+        createSignal<boolean>(true);
     const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
         createSignal<boolean>(false);
 
@@ -192,6 +192,18 @@ export const CreateNewPost: Component = () => {
                 mountTiny();
             }
         });
+
+        let description = document.getElementById("Content");
+        description?.addEventListener("invalid", (e) => {
+            e.preventDefault();
+
+            setShowDescriptionErrorMessage(true);
+            window.location.href="#content-label";
+
+            setTimeout(() => {
+                setShowDescriptionErrorMessage(false);
+            }, 5000);
+        }) 
     });
 
     createEffect(async () => {
@@ -309,25 +321,30 @@ export const CreateNewPost: Component = () => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
         let title = document.getElementById("Title");
-        let description = document.getElementById(
-            "Content"
-        ) as HTMLInputElement;
-        let content = tinymce.get("tinymceEditor")?.getContent();
+
+        console.log("tax code:", selectedTaxCode()?.value)
+        // let isFreeCheckbox = document.getElementById("isFreeCheckbox") as HTMLInputElement;
+
+        // console.log("freebox: ", isFreeCheckbox?.checked)
+        // let description = document.getElementById(
+        //     "Content"
+        // ) as HTMLInputElement;
+        // let content = tinymce.get("tinymceEditor")?.getContent();
         // let contentTest = tinymce.get('tinyeditor')?.getContent(), patt;
 
         // console.log("contentTest: ", contentTest);
 
         // patt = /^<p>(&nbsp;\s)+(&nbsp;)+<\/p>$/g;
 
-        description.addEventListener("invalid", (event) => {
-            setShowDescriptionErrorMessage(true);
-        });
+        // description.addEventListener("invalid", (event) => {
+        //     setShowDescriptionErrorMessage(true);
+        // });
 
-        console.log("Content: ", typeof content);
+        // console.log("Content: ", typeof content);
 
-        if (content !== "" && content !== undefined) {
-            setAllRequirementsMet(true);
-        }
+        // if (content !== "" && content !== undefined) {
+        //     setAllRequirementsMet(true);
+        // }
 
         // if(description?.innerText !== "") {
         //     setAllRequirementsMet(true);
@@ -335,11 +352,15 @@ export const CreateNewPost: Component = () => {
         //     setAllRequirementsMet(false);
         // }
 
-        // if(subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && title?.nodeValue !== "") {
-        //     setAllRequirementsMet(true);
-        // } else {
-        //     setAllRequirementsMet(false);
-        // }
+        // TODO: add validation that there is something in the description box
+
+        if(title?.nodeValue !== "" && subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && isFree() && uploadFinished()) {
+            setAllRequirementsMet(true);
+        } else if(title?.nodeValue !== "" && subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && !isFree() && price().length > 0 && selectedTaxCode()?.value !== "" && uploadFinished()) {
+            setAllRequirementsMet(true);
+        } else {
+            setAllRequirementsMet(false);
+        }
     });
 
     async function submit(e: SubmitEvent) {
@@ -387,54 +408,57 @@ export const CreateNewPost: Component = () => {
         setFormData(formData);
     }
 
-    let expanded = false;
+    let subjectExpanded = false;
     function subjectCheckboxes() {
         let checkboxes = document.getElementById("subjectCheckboxes");
         let subjectArrow = document.getElementById("subject-arrow");
 
-        if (!expanded) {
+        if (!subjectExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             subjectArrow?.classList.add("rotate-180");
-            expanded = true;
+            subjectExpanded = true;
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             subjectArrow?.classList.remove("rotate-180");
-            expanded = false;
+            subjectExpanded = false;
         }
     }
 
+    let gradeExpanded = false;
     function gradeCheckboxes() {
         let checkboxes = document.getElementById("gradeCheckboxes");
         let gradeArrow = document.getElementById("grade-arrow");
 
-        if (!expanded) {
+        if (!gradeExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             gradeArrow?.classList.add("rotate-180");
-            expanded = true;
+            gradeExpanded = true;
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             gradeArrow?.classList.remove("rotate-180");
-            expanded = false;
+            gradeExpanded = false;
         }
     }
+
+    let resourceExpanded = false;
     function resourceTypesCheckboxes() {
         let checkboxes = document.getElementById("resourceTypesCheckboxes");
         let resourceArrow = document.getElementById("resource-arrow");
 
-        if (!expanded) {
+        if (!resourceExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             resourceArrow?.classList.add("rotate-180");
-            expanded = true;
+            resourceExpanded = true;
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             resourceArrow?.classList.remove("rotate-180");
-            expanded = false;
+            resourceExpanded = false;
         }
     }
     function setSubjectArray(e: Event) {
@@ -565,7 +589,7 @@ export const CreateNewPost: Component = () => {
 
                 <br />
 
-                <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
+                <label id="content-label" for="Content" class="text-ptext1 dark:text-ptext1-DM">
                     {t("menus.description")}
                     <textarea
                         id="Content"
@@ -579,7 +603,7 @@ export const CreateNewPost: Component = () => {
                 </label>
 
                 <Show when={showDescriptionErrorMessage()}>
-                    <p>ADD DESCRIPTION </p>
+                    <p class="text-alert1 dark:text-alert1-DM italic font-lg">{t("messages.descriptionRequired")}</p>
                 </Show>
 
                 <div class="my-4 flex w-full flex-col justify-center">

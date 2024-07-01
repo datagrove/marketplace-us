@@ -192,6 +192,7 @@ export const French = {
         requestPayout:
             "Cliquez sur le bouton Demander un paiement pour demander votre paiement Stripe. Vous serez facturé 2,25 $ sur le solde de votre compte et le reste sera envoyé sur votre compte bancaire ou votre carte de débit en fonction de vos paramètres Stripe. Pour obtenir votre solde Stripe le plus à jour, veuillez visiter votre tableau de bord Stripe.",
         currentBalance: "Votre solde actuel est d'environ :",
+        descriptionRequired: "Vous devez inclure une description de l'annonce",
     },
 
     formLabels: {
