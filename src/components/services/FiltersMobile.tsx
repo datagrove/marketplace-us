@@ -36,7 +36,6 @@ const { data, error } = await supabase.from("post_subject").select("*");
 if (error) {
     console.log("supabase error: " + error.message);
 } else {
-    console.log(data);
     data.forEach((subject) => {
         subjects.push({ subject: subject.subject, id: subject.id });
     });

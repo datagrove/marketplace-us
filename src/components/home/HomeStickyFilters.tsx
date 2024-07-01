@@ -196,9 +196,9 @@ export const HomeStickyFilters: Component = () => {
         if (selectedGrades().length > 0) {
             localStorage.setItem("selectedGrades", JSON.stringify(selectedGrades()));
         }
-        if (selectedGrades().length === 0) {
-            localStorage.removeItem("selectedGrades");
-        }
+        // if (selectedGrades().length === 0) {
+        //     localStorage.removeItem("selectedGrades");
+        // }
     });
 
     return (

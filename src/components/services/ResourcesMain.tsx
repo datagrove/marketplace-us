@@ -92,7 +92,6 @@ export const ResourcesView: Component = () => {
     });
 
     const searchPosts = async () => {
-        console.log("search posts");
         if (localStorage.getItem("searchString")) {
             setSearchString(localStorage.getItem("searchString"));
         }
@@ -109,6 +108,7 @@ export const ResourcesView: Component = () => {
         } else {
             setSubjectFilters([...subjectFilters(), currentCategory]);
         }
+    
 
         filterPosts();
     };
@@ -127,6 +127,9 @@ export const ResourcesView: Component = () => {
 
         if (res === null || res === undefined) {
             noPostsMessage?.classList.remove("hidden");
+            setTimeout(() => {
+                noPostsMessage?.classList.add("hidden");
+            }, 3000);
 
             setPosts([]);
             setCurrentPosts([]);
@@ -193,7 +196,6 @@ export const ResourcesView: Component = () => {
                     : []
             );
 
-            console.log(allUpdatedPosts);
             setPosts(allUpdatedPosts!);
             setCurrentPosts(allUpdatedPosts!);
         } else {
@@ -210,7 +212,6 @@ export const ResourcesView: Component = () => {
                         item.product_subject.map((productSubject: string) => {
                             if (productSubject === productCategories.id) {
                                 item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
                             }
                         });
                     });
@@ -234,8 +235,6 @@ export const ResourcesView: Component = () => {
                     return item;
                 })
             );
-
-            console.log("res", resPosts);
             setPosts(resPosts);
             setCurrentPosts(resPosts);
         }
@@ -250,12 +249,11 @@ export const ResourcesView: Component = () => {
         } else {
             setGradeFilters([...gradeFilters(), grade]);
         }
-        console.log(gradeFilters());
+
         filterPosts();
     };
 
     const clearAllFilters = () => {
-        console.log("clearing all filters");
         let searchInput = document.getElementById("search") as HTMLInputElement;
         const subjectCheckboxes = document.querySelectorAll(
             "input[type='checkbox'].subject"
@@ -269,11 +267,15 @@ export const ResourcesView: Component = () => {
         }
 
         gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) checkbox.click();
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
         });
 
         subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) checkbox.click();
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
         });
 
         setSearchPost([]);

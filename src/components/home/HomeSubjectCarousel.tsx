@@ -97,8 +97,8 @@ export const HomeSubjectCarousel: Component = () => {
                                 }
 
                                 localStorage.setItem(
-                                    "subjectCarouselSelection",
-                                    JSON.stringify(currBtn.id)
+                                    "selectedSubjects",
+                                    JSON.stringify([currBtn.id])
                                 );
                                 window.location.href = `/${lang}/resources`;
                             }}
