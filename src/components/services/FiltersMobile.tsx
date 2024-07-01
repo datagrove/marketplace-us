@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createEffect, createSignal, For, Show } from "solid-js";
+import { createEffect, createSignal, For, Show, onMount } from "solid-js";
 
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
@@ -36,7 +36,6 @@ const { data, error } = await supabase.from("post_subject").select("*");
 if (error) {
     console.log("supabase error: " + error.message);
 } else {
-    console.log(data);
     data.forEach((subject) => {
         subjects.push({ subject: subject.subject, id: subject.id });
     });
@@ -85,6 +84,31 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
 
+    onMount(() => {
+        if (localStorage.getItem("selectedSubjects")) {
+            setSelectedSubjects([...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+            setSubjectFilterCount(selectedSubjects().length);
+            checkSubjectBoxes();
+        } else {
+            setSelectedSubjects([]);
+            subject().forEach((subject) => {
+                subject.checked = false;
+            })
+        }
+        if (localStorage.getItem("selectedGrades")) {
+            setGradeFilters([
+                ...JSON.parse(localStorage.getItem("selectedGrades")!),
+            ]);
+            setGradeFilterCount(gradeFilters().length);
+            checkGradeBoxes();
+        } else {
+            setGradeFilters([]);
+            grade().forEach((grade) => {
+                grade.checked = false;
+            })
+        }
+    });
+
     createEffect(() => {
         if (gradeFilterCount() === 0 && subjectFilterCount() === 0) {
             setShowFilterNumber(false);
@@ -92,6 +116,26 @@ export const FiltersMobile: Component<Props> = (props) => {
             setShowFilterNumber(true);
         }
     });
+
+    function checkSubjectBoxes() {
+        selectedSubjects().map((item) => {
+            subject().map((subject) => {
+                if (subject.id.toString() === item) {
+                    subject.checked = true;
+                }
+            })
+        })
+    }
+
+    function checkGradeBoxes() {
+        gradeFilters().map((item) => {
+            grade().map((grade) => {
+                if (grade.id.toString() === item) {
+                    grade.checked = true;
+                }
+            })
+        })
+    }
 
 
     const setGradesFilter = ( id: string ) => {
@@ -471,7 +515,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                             type="checkbox"
                                             id={ item.id }
                                             checked= { item.checked }
-                                            class="subject mr-2 scale-125 leading-tight"
+                                            class={`subject ${item.id.toString()} mr-2 scale-125 leading-tight`}
                                             onClick = {(e) => subjectCheckboxClick(e) }
                                         />
                                     </div>

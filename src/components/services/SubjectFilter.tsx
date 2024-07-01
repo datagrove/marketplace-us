@@ -17,7 +17,6 @@ const { data, error } = await supabase.from("post_subject").select("*");
 if (error) {
     console.log("supabase error: " + error.message);
 } else {
-    console.log(data);
     data.forEach((subject) => {
         subjects.push({ subject: subject.subject, id: subject.id });
     });
@@ -52,7 +51,6 @@ export const SubjectFilter: Component<Props> = (props) => {
     });
 
     function checkSubjectBoxes() {
-        console.log(selectedSubjects());
         selectedSubjects().map((subject) => {
             let subjectCheckElements = document.getElementsByClassName("subject " + subject) as HTMLCollectionOf<HTMLInputElement>;
             if (subjectCheckElements) {
@@ -78,7 +76,6 @@ export const SubjectFilter: Component<Props> = (props) => {
                                     type="checkbox"
                                     class={`subject ${item.id.toString()} mr-2 leading-tight`}
                                     onClick={ () => {
-                                        console.log("Subject selected: " + item.name);
                                         props.filterPosts(item.id.toString());
                                     }}
                                 />

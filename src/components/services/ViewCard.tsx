@@ -56,7 +56,6 @@ export const ViewCard: Component<Props> = (props) => {
                         : null;
                     // Set the default quantity to 1
                     post.quantity = 1;
-                    console.log(post);
 
                     const { data: resourceTypeData, error } = await supabase
                         .from("resource_types")
