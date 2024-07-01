@@ -23,7 +23,7 @@ export const TinyComp = (props: Props) => {
         if(currentEditor) {
             currentEditor.destroy();
         }
-        console.log(props.id)
+        console.log("tinymce props.id:", props.id)
         // Initialize TinyMCE
         await tinymce.init({
             selector: props.id,
@@ -43,6 +43,11 @@ export const TinyComp = (props: Props) => {
             setup: function (editor) {
                 editor.on("change", function () {
                     tinymce.triggerSave();
+
+                    let currentContent = tinymce?.activeEditor?.selection.getContent({ format: 'text'});
+                    
+                    console.log("tinymce content: ", currentContent);
+                    
                 });
             },
         });

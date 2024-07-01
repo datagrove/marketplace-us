@@ -20,6 +20,7 @@ import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
 import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
+import tinymce from "tinymce";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -179,6 +180,8 @@ export const CreateNewPost: Component = () => {
     const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
+    const [allRequirementsMet, setAllRequirementsMet] = createSignal<boolean>(false);
+    const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -300,6 +303,45 @@ export const CreateNewPost: Component = () => {
         }
     });
 
+    createEffect(async() => {
+        console.log("allRequirementsMet: ", allRequirementsMet());
+
+        
+        
+        let title = document.getElementById("Title");
+        let description = document.getElementById("Content") as HTMLInputElement;
+        let content = tinymce.get('tinymceEditor')?.getContent();
+        // let contentTest = tinymce.get('tinyeditor')?.getContent(), patt;
+
+        // console.log("contentTest: ", contentTest);
+
+        // patt = /^<p>(&nbsp;\s)+(&nbsp;)+<\/p>$/g; 
+
+        description.addEventListener("invalid", (event) => {
+            setShowDescriptionErrorMessage(true);
+
+        })
+
+        console.log("Content: ", typeof(content));
+
+        if(content !== "" && content !== undefined) {
+            setAllRequirementsMet(true);
+        }
+        
+        // if(description?.innerText !== "") {
+        //     setAllRequirementsMet(true);
+        // } else {
+        //     setAllRequirementsMet(false);
+        // }
+        
+        // if(subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && title?.nodeValue !== "") {
+        //     setAllRequirementsMet(true);
+        // } else {
+        //     setAllRequirementsMet(false);
+        // }
+
+    })
+
     async function submit(e: SubmitEvent) {
         e.preventDefault();
 
@@ -348,38 +390,50 @@ export const CreateNewPost: Component = () => {
     let expanded = false;
     function subjectCheckboxes() {
         let checkboxes = document.getElementById("subjectCheckboxes");
+        let subjectArrow = document.getElementById("subject-arrow");
+
         if (!expanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
+            subjectArrow?.classList.add("rotate-180");
             expanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
+            subjectArrow?.classList.remove("rotate-180");
             expanded = false;
         }
     }
 
     function gradeCheckboxes() {
         let checkboxes = document.getElementById("gradeCheckboxes");
+        let gradeArrow = document.getElementById("grade-arrow");
+
         if (!expanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
+            gradeArrow?.classList.add("rotate-180");
             expanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
+            gradeArrow?.classList.remove("rotate-180");
             expanded = false;
         }
     }
     function resourceTypesCheckboxes() {
         let checkboxes = document.getElementById("resourceTypesCheckboxes");
+        let resourceArrow = document.getElementById("resource-arrow");
+
         if (!expanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
+            resourceArrow?.classList.add("rotate-180");
             expanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
+            resourceArrow?.classList.remove("rotate-180");
             expanded = false;
         }
     }
@@ -489,6 +543,10 @@ export const CreateNewPost: Component = () => {
 
     function mountTiny() {
         TinyComp({ id: "#Content", mode: mode.theme });
+
+        if(!TinyComp) {
+            console.log("No tiny comp")
+        }
     }
 
     return (
@@ -519,6 +577,10 @@ export const CreateNewPost: Component = () => {
                         ref={mountTiny}
                     ></textarea>
                 </label>
+
+                <Show when={ showDescriptionErrorMessage() }>
+                    <p>ADD DESCRIPTION </p>
+                </Show>
 
                 <div class="my-4 flex w-full flex-col justify-center">
                     <div class="flex items-center">
@@ -579,21 +641,28 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="relative"
+                            class="w-full flex justify-between items-center relative rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
                             onClick={() => subjectCheckboxes()}
                         >
                             <p
                                 id="chooseSubject"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
                             >
                                 {t("formLabels.chooseSubject")}
                             </p>
+                            
+                            <svg id="subject-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
 
-                            <div class="absolute"></div>
                         </div>
                         <div
                             id="subjectCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={subjects()}>
                                 {(subject) => (
@@ -666,19 +735,29 @@ export const CreateNewPost: Component = () => {
 
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
-                        <div class="relative" onClick={() => gradeCheckboxes()}>
-                            <p
-                                id="chooseGrade"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
-                            >
-                                {t("formLabels.chooseGrade")}
-                            </p>
+                        <div class="relative rounded border border-inputBorder1 dark:bg-background2-DM" onClick={() => gradeCheckboxes()}>
+                            <div class="flex justify-between items-center">
+                                <p
+                                    id="chooseGrade"
+                                    class="bg-background after:height-[20px] after:width-[20px] w-full px-1 text-ptext1 after:text-inputBorder1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                >
+                                    {t("formLabels.chooseGrade")}
+                                </p>
+
+                                <svg id="grade-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
 
                             <div class="absolute"></div>
                         </div>
                         <div
                             id="gradeCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto  bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={grades()}>
                                 {(grade) => (
@@ -750,21 +829,31 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="relative"
+                            class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
                             onClick={() => resourceTypesCheckboxes()}
                         >
-                            <p
-                                id="chooseResourceType"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
-                            >
-                                {t("formLabels.chooseResourceTypes")}
-                            </p>
+                            <div class="flex justify-between items-center">
+                                <p
+                                    id="chooseResourceType"
+                                    class="bg-background w-full  px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                >
+                                    {t("formLabels.chooseResourceTypes")}
+                                </p>
+
+                                <svg id="resource-arrow" class="inline-block h-5 w-5 transform transition-transform fill-icon1 dark:fill-icon1-DM">
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
 
                             <div class="absolute"></div>
                         </div>
                         <div
                             id="resourceTypesCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={resourceTypes()}>
                                 {(type) => (
@@ -895,7 +984,7 @@ export const CreateNewPost: Component = () => {
                                             </g>
                                         </svg>
 
-                                        <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                        <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
                                             {t("toolTips.price")}
                                         </span>
                                     </div>
@@ -935,7 +1024,7 @@ export const CreateNewPost: Component = () => {
                                         </g>
                                     </svg>
 
-                                    <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                    <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
                                         {t("toolTips.taxCode")}
                                     </span>
                                 </div>
@@ -980,7 +1069,7 @@ export const CreateNewPost: Component = () => {
                         id="post"
                         disabled={!uploadFinished()}
                         class={`text-2xl ${
-                            uploadFinished() ? "btn-primary" : "btn-disabled"
+                            allRequirementsMet() ? "btn-primary" : "btn-disabled"
                         }`}
                     >
                         {t("buttons.listResource")}
