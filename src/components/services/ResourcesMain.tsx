@@ -262,6 +262,9 @@ export const ResourcesView: Component = () => {
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
 
+        console.log(subjectCheckboxes);
+        console.log(gradeCheckboxes);
+
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
         }
@@ -278,9 +281,14 @@ export const ResourcesView: Component = () => {
             }
         });
 
+        localStorage.removeItem("selectedGrades");
+        localStorage.removeItem("selectedSubjects");
+        localStorage.removeItem("searchString");
+        localStorage.removeItem("selectedResourceTypes");
+
         setSearchPost([]);
         setSearchString("");
-        localStorage.setItem("searchString", "");
+        // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
         filterPosts();
@@ -292,9 +300,12 @@ export const ResourcesView: Component = () => {
         ) as NodeListOf<HTMLInputElement>;
 
         subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) checkbox.click();
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            };
         });
 
+        localStorage.removeItem("selectedSubjects");
         setSubjectFilters([]);
         filterPosts();
     };
@@ -304,10 +315,15 @@ export const ResourcesView: Component = () => {
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
 
+        console.log(gradeCheckboxes);
+
         gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) checkbox.click();
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            };
         });
 
+        localStorage.removeItem("selectedGrades");
         setGradeFilters([]);
         filterPosts();
     };
