@@ -85,6 +85,7 @@ export const ViewUserPurchases: Component = () => {
                 await supabase
                     .from("seller_post")
                     .select("*")
+                    .order("id", { ascending: false })
                     .in("id", products);
             if (productsInfoError) {
                 console.log(

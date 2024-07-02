@@ -12,7 +12,6 @@ import stripe from "@lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 
-
 const lang = getLangFromUrl(new URL(window.location.href));
 
 //get the categories from the language files so they translate with changes in the language picker
@@ -40,6 +39,7 @@ export const ViewCreatorPosts: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .order("id", { ascending: false })
             .eq("user_id", session()!.user.id)
             .eq("listing_status", true);
         if (!data) {
@@ -93,15 +93,15 @@ export const ViewCreatorPosts: Component = () => {
     return (
         <div class="">
             <Show when={screenSize() !== "sm"}>
-            <div class="">
-                <ViewCard posts={posts()} />
-            </div>
+                <div class="">
+                    <ViewCard posts={posts()} />
+                </div>
             </Show>
 
             <Show when={screenSize() === "sm"}>
-            <div class="">
-                <MobileViewCard posts={posts()} />
-            </div>
+                <div class="">
+                    <MobileViewCard posts={posts()} />
+                </div>
             </Show>
         </div>
     );
