@@ -184,6 +184,7 @@ export const CreateNewPost: Component = () => {
         createSignal<boolean>(true);
     const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
         createSignal<boolean>(false);
+    const [description, setDescription] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -198,12 +199,12 @@ export const CreateNewPost: Component = () => {
             e.preventDefault();
 
             setShowDescriptionErrorMessage(true);
-            window.location.href="#content-label";
+            window.location.href = "#content-label";
 
             setTimeout(() => {
                 setShowDescriptionErrorMessage(false);
             }, 5000);
-        }) 
+        });
     });
 
     createEffect(async () => {
@@ -273,7 +274,6 @@ export const CreateNewPost: Component = () => {
                 const { data: resourceType, error } = await supabase
                     .from("resource_types")
                     .select("*");
-                console.log(resourceType);
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
@@ -321,8 +321,10 @@ export const CreateNewPost: Component = () => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
         let title = document.getElementById("Title");
+        let description = document.getElementById("#Content");
+        console.log(description?.innerText);
 
-        console.log("tax code:", selectedTaxCode()?.value)
+        console.log("tax code:", selectedTaxCode()?.value);
         // let isFreeCheckbox = document.getElementById("isFreeCheckbox") as HTMLInputElement;
 
         // console.log("freebox: ", isFreeCheckbox?.checked)
@@ -354,9 +356,25 @@ export const CreateNewPost: Component = () => {
 
         // TODO: add validation that there is something in the description box
 
-        if(title?.nodeValue !== "" && subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && isFree() && uploadFinished()) {
+        if (
+            title?.nodeValue !== "" &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            isFree() &&
+            uploadFinished()
+        ) {
             setAllRequirementsMet(true);
-        } else if(title?.nodeValue !== "" && subjectPick().length > 0 && gradePick().length > 0 && resourceTypesPick().length > 0 && !isFree() && price().length > 0 && selectedTaxCode()?.value !== "" && uploadFinished()) {
+        } else if (
+            title?.nodeValue !== "" &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            !isFree() &&
+            price().length > 0 &&
+            selectedTaxCode()?.value !== "" &&
+            uploadFinished()
+        ) {
             setAllRequirementsMet(true);
         } else {
             setAllRequirementsMet(false);
@@ -566,17 +584,36 @@ export const CreateNewPost: Component = () => {
     }
 
     function mountTiny() {
-        TinyComp({ id: "#Content", mode: mode.theme });
+        TinyComp({
+            id: "#Content",
+            mode: mode.theme,
+            currentContent: processContent,
+        });
 
         if (!TinyComp) {
             console.log("No tiny comp");
         }
     }
 
+    function processContent(content: string) {
+        if (content.length > 0) {
+            setDescription(true);
+            console.log("Description: " + description());
+        } else {
+            setDescription(false);
+            console.log("Description: " + description());
+        }
+    }
+
     return (
         <div>
             <form onSubmit={submit}>
+                <div class="text-center text-xs">
+                    <span class="text-alert1">* </span>
+                    <span class="italic">{t("formLabels.required")}</span>
+                </div>
                 <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
+                    <span class="text-alert1">* </span>
                     {t("formLabels.title")}
                     <input
                         type="text"
@@ -589,7 +626,12 @@ export const CreateNewPost: Component = () => {
 
                 <br />
 
-                <label id="content-label" for="Content" class="text-ptext1 dark:text-ptext1-DM">
+                <label
+                    id="content-label"
+                    for="Content"
+                    class="text-ptext1 dark:text-ptext1-DM"
+                >
+                    <span class="text-alert1">* </span>
                     {t("menus.description")}
                     <textarea
                         id="Content"
@@ -603,7 +645,9 @@ export const CreateNewPost: Component = () => {
                 </label>
 
                 <Show when={showDescriptionErrorMessage()}>
-                    <p class="text-alert1 dark:text-alert1-DM italic font-lg">{t("messages.descriptionRequired")}</p>
+                    <p class="font-lg italic text-alert1 dark:text-alert1-DM">
+                        {t("messages.descriptionRequired")}
+                    </p>
                 </Show>
 
                 <div class="my-4 flex w-full flex-col justify-center">
@@ -672,6 +716,7 @@ export const CreateNewPost: Component = () => {
                                 id="chooseSubject"
                                 class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
                             >
+                                <span class="text-alert1">* </span>{" "}
                                 {t("formLabels.chooseSubject")}
                             </p>
 
@@ -770,6 +815,7 @@ export const CreateNewPost: Component = () => {
                                     id="chooseGrade"
                                     class="bg-background after:height-[20px] after:width-[20px] w-full px-1 text-ptext1 after:text-inputBorder1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                                 >
+                                    <span class="text-alert1">* </span>{" "}
                                     {t("formLabels.chooseGrade")}
                                 </p>
 
@@ -869,6 +915,7 @@ export const CreateNewPost: Component = () => {
                                     id="chooseResourceType"
                                     class="bg-background w-full  px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
                                 >
+                                    <span class="text-alert1">* </span>{" "}
                                     {t("formLabels.chooseResourceTypes")}
                                 </p>
 
@@ -952,7 +999,10 @@ export const CreateNewPost: Component = () => {
                 {/* Price Implementation */}
                 <div class="justfify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
-                        <p>{t("formLabels.isResourceFree")}?</p>
+                        <p>
+                            <span class="text-alert1">* </span>
+                            {t("formLabels.isResourceFree")}?
+                        </p>
                         <div>
                             <label for="isFreeCheckbox" class="ml-4">
                                 {t("formLabels.yes")}
@@ -980,7 +1030,10 @@ export const CreateNewPost: Component = () => {
                     <Show when={!isFree()}>
                         <div class="flex items-center">
                             <div class="mt-2 flex w-full flex-col">
-                                <p>{t("formLabels.pricePost")}</p>
+                                <p>
+                                    <span class="text-alert1">* </span>
+                                    {t("formLabels.pricePost")}
+                                </p>
 
                                 <div class="flex items-center">
                                     <input
