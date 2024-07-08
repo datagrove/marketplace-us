@@ -21,6 +21,7 @@ export const ViewUserPurchases: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [user, setUser] = createSignal<User>();
     const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
+    const [loading, setLoading] = createSignal<boolean>(true);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -35,6 +36,7 @@ export const ViewUserPurchases: Component = () => {
     });
 
     const getPurchasedItems = async () => {
+        setLoading(true);
         console.log("Session Info: ");
         console.log(session());
         const { data: orders, error } = await supabase
@@ -171,6 +173,7 @@ export const ViewUserPurchases: Component = () => {
                 console.log(newItemsDates);
 
                 setPurchasedItems(newItemsDates);
+                setLoading(false);
                 console.log(purchasedItems());
             }
         }
@@ -201,14 +204,18 @@ export const ViewUserPurchases: Component = () => {
     return (
         <div>
             <div id="Cards">
-                <Show when={purchasedItems().length > 0}>
-                    <ViewPurchaseCard posts={purchasedItems()} />
-                </Show>
-                <Show when={purchasedItems().length === 0}>
-                    <p class="mb-6 italic">{t("messages.noPurchasedItems")}</p>
-                    <a href={`/${lang}/services`} class="btn-primary">
-                        {t("buttons.browseCatalog")}
-                    </a>
+                <Show when={!loading()} fallback={<div>{t("buttons.loading")}</div>}>
+                    <Show when={purchasedItems().length > 0}>
+                        <ViewPurchaseCard posts={purchasedItems()} />
+                    </Show>
+                    <Show when={purchasedItems().length === 0}>
+                        <p class="mb-6 italic">
+                            {t("messages.noPurchasedItems")}
+                        </p>
+                        <a href={`/${lang}/services`} class="btn-primary">
+                            {t("buttons.browseCatalog")}
+                        </a>
+                    </Show>
                 </Show>
             </div>
         </div>
