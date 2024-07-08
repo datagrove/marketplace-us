@@ -64,6 +64,7 @@ export async function fetchAllPosts() {
         const { data: allPosts, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .order("id", { ascending: false })
             .eq("listing_status", true);
 
         if (error) {

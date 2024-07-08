@@ -49,6 +49,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .order("id", { ascending: false })
             .eq("listing_status", true)
             .limit(8);
         if (!data) {
@@ -129,22 +130,33 @@ export const Home: Component = () => {
             <HomeStickyFilters />
 
             <div id="home-scrolling" class="scroll">
-                <a href={ `/${ lang}/creator/createaccount`}>
+                <a href={`/${lang}/creator/createaccount`}>
                     <div
                         id="header-image"
-                        class="flex h-24 justify-center items-center bg-gradient-to-r from-highlight1 dark:from-[#3E8E3E] dark:via-highlight1-DM dark:to-[#3E8E3E] rounded-md"
+                        class="flex h-24 items-center justify-center rounded-md bg-gradient-to-r from-highlight1 dark:from-[#3E8E3E] dark:via-highlight1-DM dark:to-[#3E8E3E]"
                     >
-                        <Show when={ screenSize() !== "sm"}>
+                        <Show when={screenSize() !== "sm"}>
                             <div>
-                                <svg fill="none" width="80px" height="80px" viewBox="0 0 256 256" id="Flat" class="fill-icon1 dark:fill-icon1 h-24 md:w-24">
-                                    <path d="M224,52H160a36.02912,36.02912,0,0,0-32,19.53955A36.02912,36.02912,0,0,0,96,52H32A12.01343,12.01343,0,0,0,20,64V192a12.01343,12.01343,0,0,0,12,12H96a28.03146,28.03146,0,0,1,28,28,4,4,0,0,0,8,0,28.03146,28.03146,0,0,1,28-28h64a12.01343,12.01343,0,0,0,12-12V64A12.01343,12.01343,0,0,0,224,52ZM96,196H32a4.00427,4.00427,0,0,1-4-4V64a4.00427,4.00427,0,0,1,4-4H96a28.03146,28.03146,0,0,1,28,28V209.39648A35.949,35.949,0,0,0,96,196Zm132-4a4.00427,4.00427,0,0,1-4,4H160a35.94218,35.94218,0,0,0-28,13.40747V88a28.03146,28.03146,0,0,1,28-28h64a4.00427,4.00427,0,0,1,4,4Z"/>
+                                <svg
+                                    fill="none"
+                                    width="80px"
+                                    height="80px"
+                                    viewBox="0 0 256 256"
+                                    id="Flat"
+                                    class="h-24 fill-icon1 dark:fill-icon1 md:w-24"
+                                >
+                                    <path d="M224,52H160a36.02912,36.02912,0,0,0-32,19.53955A36.02912,36.02912,0,0,0,96,52H32A12.01343,12.01343,0,0,0,20,64V192a12.01343,12.01343,0,0,0,12,12H96a28.03146,28.03146,0,0,1,28,28,4,4,0,0,0,8,0,28.03146,28.03146,0,0,1,28-28h64a12.01343,12.01343,0,0,0,12-12V64A12.01343,12.01343,0,0,0,224,52ZM96,196H32a4.00427,4.00427,0,0,1-4-4V64a4.00427,4.00427,0,0,1,4-4H96a28.03146,28.03146,0,0,1,28,28V209.39648A35.949,35.949,0,0,0,96,196Zm132-4a4.00427,4.00427,0,0,1-4,4H160a35.94218,35.94218,0,0,0-28,13.40747V88a28.03146,28.03146,0,0,1,28-28h64a4.00427,4.00427,0,0,1,4,4Z" />
                                 </svg>
                             </div>
                         </Show>
-                        
+
                         <div class="ml-1">
-                            <h1 class="text-ptext1 dark:text-ptext1 md:text-2xl">{t("homePageText.becomeCreator")}</h1>
-                            <p class="text-ptext2 dark:text-ptext1 text-sm md:text-lg italic">{t("homePageText.clickToBecomeCreator")}</p>
+                            <h1 class="text-ptext1 dark:text-ptext1 md:text-2xl">
+                                {t("homePageText.becomeCreator")}
+                            </h1>
+                            <p class="text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
+                                {t("homePageText.clickToBecomeCreator")}
+                            </p>
                         </div>
                     </div>
                 </a>
@@ -174,15 +186,15 @@ export const Home: Component = () => {
                     <HomeSubjectCarousel />
                 </div>
 
-                <a href={ `/${lang}/about`}>
+                <a href={`/${lang}/about`}>
                     <div
                         id="home-image-1"
-                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM dark:via-black dark:to-inputBorder1-DM rounded-md"
+                        class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM dark:via-black dark:to-inputBorder1-DM"
                     >
-                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                        <h1 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
                             {t("homePageText.welcome")}
                         </h1>
-                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                        <p class="mt-4 text-center text-sm italic text-ptext1 dark:text-ptext1-DM md:text-lg">
                             {t("homePageText.clickToLearnMore")}
                         </p>
                     </div>
@@ -207,12 +219,12 @@ export const Home: Component = () => {
                 <a href="https://forms.gle/e1snHR7pnAFRTa1MA" target="_blank">
                     <div
                         id="home-image-1"
-                        class="my-8 flex flex-col h-36 items-center justify-center bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM rounded-md"
+                        class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
                     >
-                        <h1 class="text-htext1 dark:text-htext1-DM text-2xl md:text-4xl font-bold text-center">
+                        <h1 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
                             {t("homePageText.contribute")}
                         </h1>
-                        <p class="text-ptext1 dark:text-ptext1-DM mt-4 italic text-center text-sm md:text-lg">
+                        <p class="mt-4 text-center text-sm italic text-ptext1 dark:text-ptext1-DM md:text-lg">
                             {t("homePageText.clickToContribute")}
                         </p>
                     </div>
