@@ -321,43 +321,10 @@ export const CreateNewPost: Component = () => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
         let title = document.getElementById("Title");
-        let description = document.getElementById("#Content");
-        console.log(description?.innerText);
-
-        console.log("tax code:", selectedTaxCode()?.value);
-        // let isFreeCheckbox = document.getElementById("isFreeCheckbox") as HTMLInputElement;
-
-        // console.log("freebox: ", isFreeCheckbox?.checked)
-        // let description = document.getElementById(
-        //     "Content"
-        // ) as HTMLInputElement;
-        // let content = tinymce.get("tinymceEditor")?.getContent();
-        // let contentTest = tinymce.get('tinyeditor')?.getContent(), patt;
-
-        // console.log("contentTest: ", contentTest);
-
-        // patt = /^<p>(&nbsp;\s)+(&nbsp;)+<\/p>$/g;
-
-        // description.addEventListener("invalid", (event) => {
-        //     setShowDescriptionErrorMessage(true);
-        // });
-
-        // console.log("Content: ", typeof content);
-
-        // if (content !== "" && content !== undefined) {
-        //     setAllRequirementsMet(true);
-        // }
-
-        // if(description?.innerText !== "") {
-        //     setAllRequirementsMet(true);
-        // } else {
-        //     setAllRequirementsMet(false);
-        // }
-
-        // TODO: add validation that there is something in the description box
 
         if (
             title?.nodeValue !== "" &&
+            description() &&
             subjectPick().length > 0 &&
             gradePick().length > 0 &&
             resourceTypesPick().length > 0 &&
@@ -367,6 +334,7 @@ export const CreateNewPost: Component = () => {
             setAllRequirementsMet(true);
         } else if (
             title?.nodeValue !== "" &&
+            description() &&
             subjectPick().length > 0 &&
             gradePick().length > 0 &&
             resourceTypesPick().length > 0 &&
