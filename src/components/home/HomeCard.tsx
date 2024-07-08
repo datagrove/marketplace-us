@@ -175,31 +175,38 @@ export const HomeCard: Component<Props> = (props) => {
                                 id="homeCard-ratings-price"
                                 class="flex h-1/6 items-end"
                             >
-                                <div class="flex w-2/3 items-end">
-                                    <div class="flex items-end justify-start">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="15px"
-                                            height="15px"
-                                            viewBox="0 0 32 32"
-                                            class="fill-icon1 dark:fill-icon1-DM"
-                                        >
-                                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                                        </svg>
+                                {/* <div class="flex w-2/3 items-end"> */}
+                                {/*     <div class="flex items-end justify-start"> */}
+                                {/*         <svg */}
+                                {/*             xmlns="http://www.w3.org/2000/svg" */}
+                                {/*             width="15px" */}
+                                {/*             height="15px" */}
+                                {/*             viewBox="0 0 32 32" */}
+                                {/*             class="fill-icon1 dark:fill-icon1-DM" */}
+                                {/*         > */}
+                                {/*             <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" /> */}
+                                {/*         </svg> */}
+                                {/**/}
+                                {/*         <p class="ml-1 mr-0.5 text-xs font-bold"> */}
+                                {/*             4.9 */}
+                                {/*         </p> */}
+                                {/*         <p class="text-xs font-light"> */}
+                                {/*             (30.3K) */}
+                                {/*         </p> */}
+                                {/*     </div> */}
+                                {/* </div> */}
 
-                                        <p class="ml-1 mr-0.5 text-xs font-bold">
-                                            4.9
+                                <div class="flex w-1/3 items-end justify-end text-left">
+                                    <Show when={post.price}>
+                                        <p class="text-xs font-bold">
+                                            ${post.price}
                                         </p>
-                                        <p class="text-xs font-light">
-                                            (30.3K)
+                                    </Show>
+                                    <Show when={!post.price}>
+                                        <p class="text-xs font-bold">
+                                            {t("message.free")}
                                         </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex w-1/3 items-end justify-end">
-                                    <p class="text-xs font-bold">
-                                        ${post.price}
-                                    </p>
+                                    </Show>
                                 </div>
                             </div>
                         </div>
