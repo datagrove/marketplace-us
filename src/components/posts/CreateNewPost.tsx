@@ -20,6 +20,7 @@ import { CreateStripeProductPrice } from "./CreateStripeProductPrice";
 import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
+import tinymce from "tinymce";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -179,6 +180,11 @@ export const CreateNewPost: Component = () => {
     const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
+    const [allRequirementsMet, setAllRequirementsMet] =
+        createSignal<boolean>(true);
+    const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
+        createSignal<boolean>(false);
+    const [description, setDescription] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -186,6 +192,18 @@ export const CreateNewPost: Component = () => {
                 setMode({ theme: event.newValue });
                 mountTiny();
             }
+        });
+
+        let description = document.getElementById("Content");
+        description?.addEventListener("invalid", (e) => {
+            e.preventDefault();
+
+            setShowDescriptionErrorMessage(true);
+            window.location.href = "#content-label";
+
+            setTimeout(() => {
+                setShowDescriptionErrorMessage(false);
+            }, 5000);
         });
     });
 
@@ -256,7 +274,6 @@ export const CreateNewPost: Component = () => {
                 const { data: resourceType, error } = await supabase
                     .from("resource_types")
                     .select("*");
-                console.log(resourceType);
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
@@ -297,6 +314,38 @@ export const CreateNewPost: Component = () => {
         } else {
             alert(t("messages.signInAsCreator"));
             location.href = `/${lang}/login`;
+        }
+    });
+
+    createEffect(async () => {
+        console.log("allRequirementsMet: ", allRequirementsMet());
+
+        let title = document.getElementById("Title");
+
+        if (
+            title?.nodeValue !== "" &&
+            description() &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            isFree() &&
+            uploadFinished()
+        ) {
+            setAllRequirementsMet(true);
+        } else if (
+            title?.nodeValue !== "" &&
+            description() &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            !isFree() &&
+            price().length > 0 &&
+            selectedTaxCode()?.value !== "" &&
+            uploadFinished()
+        ) {
+            setAllRequirementsMet(true);
+        } else {
+            setAllRequirementsMet(false);
         }
     });
 
@@ -345,42 +394,57 @@ export const CreateNewPost: Component = () => {
         setFormData(formData);
     }
 
-    let expanded = false;
+    let subjectExpanded = false;
     function subjectCheckboxes() {
         let checkboxes = document.getElementById("subjectCheckboxes");
-        if (!expanded) {
+        let subjectArrow = document.getElementById("subject-arrow");
+
+        if (!subjectExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
-            expanded = true;
+            subjectArrow?.classList.add("rotate-180");
+            subjectExpanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
-            expanded = false;
+            subjectArrow?.classList.remove("rotate-180");
+            subjectExpanded = false;
         }
     }
 
+    let gradeExpanded = false;
     function gradeCheckboxes() {
         let checkboxes = document.getElementById("gradeCheckboxes");
-        if (!expanded) {
+        let gradeArrow = document.getElementById("grade-arrow");
+
+        if (!gradeExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
-            expanded = true;
+            gradeArrow?.classList.add("rotate-180");
+            gradeExpanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
-            expanded = false;
+            gradeArrow?.classList.remove("rotate-180");
+            gradeExpanded = false;
         }
     }
+
+    let resourceExpanded = false;
     function resourceTypesCheckboxes() {
         let checkboxes = document.getElementById("resourceTypesCheckboxes");
-        if (!expanded) {
+        let resourceArrow = document.getElementById("resource-arrow");
+
+        if (!resourceExpanded) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
-            expanded = true;
+            resourceArrow?.classList.add("rotate-180");
+            resourceExpanded = true;
         } else {
-            checkboxes?.classList.remove("block");
+            checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
-            expanded = false;
+            resourceArrow?.classList.remove("rotate-180");
+            resourceExpanded = false;
         }
     }
     function setSubjectArray(e: Event) {
@@ -488,13 +552,36 @@ export const CreateNewPost: Component = () => {
     }
 
     function mountTiny() {
-        TinyComp({ id: "#Content", mode: mode.theme });
+        TinyComp({
+            id: "#Content",
+            mode: mode.theme,
+            currentContent: processContent,
+        });
+
+        if (!TinyComp) {
+            console.log("No tiny comp");
+        }
+    }
+
+    function processContent(content: string) {
+        if (content.length > 0) {
+            setDescription(true);
+            console.log("Description: " + description());
+        } else {
+            setDescription(false);
+            console.log("Description: " + description());
+        }
     }
 
     return (
         <div>
             <form onSubmit={submit}>
+                <div class="text-center text-xs">
+                    <span class="text-alert1">* </span>
+                    <span class="italic">{t("formLabels.required")}</span>
+                </div>
                 <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
+                    <span class="text-alert1">* </span>
                     {t("formLabels.title")}
                     <input
                         type="text"
@@ -507,7 +594,12 @@ export const CreateNewPost: Component = () => {
 
                 <br />
 
-                <label for="Content" class="text-ptext1 dark:text-ptext1-DM">
+                <label
+                    id="content-label"
+                    for="Content"
+                    class="text-ptext1 dark:text-ptext1-DM"
+                >
+                    <span class="text-alert1">* </span>
                     {t("menus.description")}
                     <textarea
                         id="Content"
@@ -519,6 +611,12 @@ export const CreateNewPost: Component = () => {
                         ref={mountTiny}
                     ></textarea>
                 </label>
+
+                <Show when={showDescriptionErrorMessage()}>
+                    <p class="font-lg italic text-alert1 dark:text-alert1-DM">
+                        {t("messages.descriptionRequired")}
+                    </p>
+                </Show>
 
                 <div class="my-4 flex w-full flex-col justify-center">
                     <div class="flex items-center">
@@ -579,21 +677,31 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="relative"
+                            class="relative flex w-full items-center justify-between rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
                             onClick={() => subjectCheckboxes()}
                         >
                             <p
                                 id="chooseSubject"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
                             >
+                                <span class="text-alert1">* </span>{" "}
                                 {t("formLabels.chooseSubject")}
                             </p>
 
-                            <div class="absolute"></div>
+                            <svg
+                                id="subject-arrow"
+                                class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
                         </div>
                         <div
                             id="subjectCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={subjects()}>
                                 {(subject) => (
@@ -666,19 +774,36 @@ export const CreateNewPost: Component = () => {
 
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
-                        <div class="relative" onClick={() => gradeCheckboxes()}>
-                            <p
-                                id="chooseGrade"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
-                            >
-                                {t("formLabels.chooseGrade")}
-                            </p>
+                        <div
+                            class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
+                            onClick={() => gradeCheckboxes()}
+                        >
+                            <div class="flex items-center justify-between">
+                                <p
+                                    id="chooseGrade"
+                                    class="bg-background after:height-[20px] after:width-[20px] w-full px-1 text-ptext1 after:text-inputBorder1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                >
+                                    <span class="text-alert1">* </span>{" "}
+                                    {t("formLabels.chooseGrade")}
+                                </p>
+
+                                <svg
+                                    id="grade-arrow"
+                                    class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
 
                             <div class="absolute"></div>
                         </div>
                         <div
                             id="gradeCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto  bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={grades()}>
                                 {(grade) => (
@@ -750,21 +875,35 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="relative"
+                            class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
                             onClick={() => resourceTypesCheckboxes()}
                         >
-                            <p
-                                id="chooseResourceType"
-                                class="bg-background after:height-[20px] after:width-[20px] w-full rounded border border-inputBorder1 px-1 text-ptext1 after:absolute after:-top-0.5 after:right-2 after:rotate-180 after:text-inputBorder1 after:content-['_^'] focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
-                            >
-                                {t("formLabels.chooseResourceTypes")}
-                            </p>
+                            <div class="flex items-center justify-between">
+                                <p
+                                    id="chooseResourceType"
+                                    class="bg-background w-full  px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                >
+                                    <span class="text-alert1">* </span>{" "}
+                                    {t("formLabels.chooseResourceTypes")}
+                                </p>
+
+                                <svg
+                                    id="resource-arrow"
+                                    class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
 
                             <div class="absolute"></div>
                         </div>
                         <div
                             id="resourceTypesCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded border border-inputBorder1 bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={resourceTypes()}>
                                 {(type) => (
@@ -828,7 +967,10 @@ export const CreateNewPost: Component = () => {
                 {/* Price Implementation */}
                 <div class="justfify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
-                        <p>{t("formLabels.isResourceFree")}?</p>
+                        <p>
+                            <span class="text-alert1">* </span>
+                            {t("formLabels.isResourceFree")}?
+                        </p>
                         <div>
                             <label for="isFreeCheckbox" class="ml-4">
                                 {t("formLabels.yes")}
@@ -856,7 +998,10 @@ export const CreateNewPost: Component = () => {
                     <Show when={!isFree()}>
                         <div class="flex items-center">
                             <div class="mt-2 flex w-full flex-col">
-                                <p>{t("formLabels.pricePost")}</p>
+                                <p>
+                                    <span class="text-alert1">* </span>
+                                    {t("formLabels.pricePost")}
+                                </p>
 
                                 <div class="flex items-center">
                                     <input
@@ -895,7 +1040,7 @@ export const CreateNewPost: Component = () => {
                                             </g>
                                         </svg>
 
-                                        <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                        <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
                                             {t("toolTips.price")}
                                         </span>
                                     </div>
@@ -935,7 +1080,7 @@ export const CreateNewPost: Component = () => {
                                         </g>
                                     </svg>
 
-                                    <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                    <span class="invisible absolute z-10 m-4 mx-auto w-48 -translate-x-full translate-y-3 rounded-md bg-background2 p-2 text-sm text-ptext2 opacity-0 transition-opacity peer-hover:visible peer-hover:opacity-100 dark:bg-background2-DM dark:text-ptext2-DM">
                                         {t("toolTips.taxCode")}
                                     </span>
                                 </div>
@@ -980,7 +1125,9 @@ export const CreateNewPost: Component = () => {
                         id="post"
                         disabled={!uploadFinished()}
                         class={`text-2xl ${
-                            uploadFinished() ? "btn-primary" : "btn-disabled"
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
                         }`}
                     >
                         {t("buttons.listResource")}

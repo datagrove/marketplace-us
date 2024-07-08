@@ -148,7 +148,7 @@ export const CreatorRegistration: Component = () => {
     return (
         <div class="">
             <form onSubmit={submit}>
-                <div class="mb-4">
+                <div class="mb-4 mt-2 text-center text-xs">
                     <span class="text-alert1">* </span>
                     <span class="italic">{t("formLabels.required")}</span>
                 </div>
@@ -158,6 +158,7 @@ export const CreatorRegistration: Component = () => {
                             for="FirstName"
                             class="text-ptext1 dark:text-ptext1-DM"
                         >
+                            <span class="text-alert1">* </span>
                             {t("formLabels.firstName")}:
                         </label>
                         <div class="group relative mr-2 flex items-center">
@@ -204,6 +205,7 @@ export const CreatorRegistration: Component = () => {
                             for="LastName"
                             class="text-ptext1 dark:text-ptext1-DM"
                         >
+                            <span class="text-alert1">* </span>
                             {t("formLabels.lastName")}:
                         </label>
                         <div class="group relative mr-2 flex items-center">
@@ -353,6 +355,7 @@ export const CreatorRegistration: Component = () => {
                             for="contribution"
                             class="text-ptext1 dark:text-ptext1-DM"
                         >
+                            <span class="text-alert1">* </span>{" "}
                             {t("formLabels.platformSupport")}:
                             <div class="inline"> {contribution()}%</div>
                         </label>

@@ -195,6 +195,7 @@ export const Spanish = {
         requestPayout:
             "Haga clic en el botón Solicitar pago para solicitar su pago de Stripe. Se le cobrarán $2,25 al saldo de su cuenta y el resto se enviará a su cuenta bancaria o tarjeta de débito según su configuración de Stripe. Para conocer el saldo de Stripe más actualizado, visita tu panel de Stripe.",
         currentBalance: "Su saldo actual es de aproximadamente:",
+        descriptionRequired: "Debes incluir una descripción del listado",
     },
 
     formLabels: {
