@@ -109,6 +109,7 @@ export const UserProfileView: Component = () => {
                 await supabase
                     .from("sellerposts")
                     .select("*")
+                    .order("id", { ascending: false })
                     .in("id", products);
             if (productsInfoError) {
                 console.log(

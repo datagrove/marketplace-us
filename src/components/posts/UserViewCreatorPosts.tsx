@@ -25,6 +25,7 @@ export const UserViewCreatorPosts: Component<Props> = (props) => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .order("id", { ascending: false })
             .eq("seller_id", props.id)
             .eq("listing_status", true);
         if (!data) {
