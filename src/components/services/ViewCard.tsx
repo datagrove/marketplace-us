@@ -134,7 +134,7 @@ export const ViewCard: Component<Props> = (props) => {
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
                 {newPosts().map((post: Post) => (
-                    <li class="w-[99%]">
+                    <li class="w-[99%] mb-3">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
