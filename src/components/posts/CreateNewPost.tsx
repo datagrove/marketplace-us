@@ -538,14 +538,14 @@ export const CreateNewPost: Component = () => {
                 .getElementById("isResourceTypeValid")
                 ?.classList.remove("hidden");
             document
-                .getElementById("resourceTypesToolTip")
+                .getElementById("resourceTypeToolTip")
                 ?.classList.add("hidden");
         } else if (gradePick().length === 0) {
             document
                 .getElementById("isResourceTypeValid")
                 ?.classList.add("hidden");
             document
-                .getElementById("resourceTypesToolTip")
+                .getElementById("resourceTypeToolTip")
                 ?.classList.remove("hidden");
         }
         console.log(resourceTypesPick());
@@ -965,7 +965,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Price Implementation */}
-                <div class="justfify-evenly mt-6 flex flex-col ">
+                <div class="justify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
                         <p>
                             <span class="text-alert1">* </span>
