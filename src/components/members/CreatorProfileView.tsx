@@ -439,7 +439,7 @@ export const CreatorProfileView: Component = () => {
                         </div>
                     </Show>
 
-                    <div class="flex items-center md:grid md:grid-cols-[525px_50px_150px] lg:grid-cols-[750px_50px_150px] xl:grid-cols-[900px_50px_200px]">
+                    <div class="flex items-center md:grid md:grid-cols-[425px_50px_250px] lg:grid-cols-[650px_50px_250px] xl:grid-cols-[900px_50px_200px]">
                         <div class="creator-name-edit-button-div">
                             <Show when={editMode() === false}>
                                 <div class="mr-2 md:mr-0">
@@ -536,7 +536,7 @@ export const CreatorProfileView: Component = () => {
                         </div>
                     </div>
 
-                    <div
+                    {/* <div
                         id="creator-view-reviews-div"
                         class="flex items-center"
                     >
@@ -599,7 +599,7 @@ export const CreatorProfileView: Component = () => {
                             <p class="font-bold">4.9</p>
                             <p class="font-light">&nbsp (21.K)</p>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
 
                 <div id="creator-view-tabs-content-div" class="mt-8 md:mt-2">
