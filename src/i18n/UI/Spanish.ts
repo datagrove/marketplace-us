@@ -291,7 +291,7 @@ export const Spanish = {
         ratingsReviews: "Puntajes y Reseñas",
         questions: "Preguntas",
         freeDownload: "Descarga Gratis",
-        creatorResources: "Mis recursos",
+        creatorResources: "Recursos",
         payouts: "Pagos",
         reviews: "Opiniones",
         details: "Detalles",

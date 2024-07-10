@@ -217,12 +217,12 @@ export const CartCardMobile: Component<Props> = (props) => {
                                     </div>
                                     <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2">
                                         {/* Price */}
-                                        <Show when={item.price}>
+                                        <Show when={item.price > 0}>
                                             ${(
                                                 item.price * item.quantity
                                             ).toFixed(2)}
                                         </Show>
-                                        <Show when={!item.price}>
+                                        <Show when={item.price === 0}>
                                             {t("messages.free")}
                                         </Show>
                                     </div>

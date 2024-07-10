@@ -38,8 +38,8 @@ export const ViewCard: Component<Props> = (props) => {
     }
 
     createEffect(async () => {
-        // console.log("View Card Posts")
-        // console.log(props.posts)
+        console.log("View Card Posts")
+        console.log(props.posts)
         if (props.posts) {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
@@ -134,7 +134,7 @@ export const ViewCard: Component<Props> = (props) => {
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
                 {newPosts().map((post: Post) => (
-                    <li class="w-[99%]">
+                    <li class="w-[99%] mb-3">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
@@ -292,13 +292,13 @@ export const ViewCard: Component<Props> = (props) => {
 
                                 <div class="mt-2 flex h-full min-h-48 w-1/5 min-w-[88px] flex-col justify-start pr-1">
                                     <div class="price-reviews-div inline-block w-full text-end">
-                                        <Show when={post.price}>
+                                        <Show when={post.price > 0}>
                                             <p class="text-lg font-bold">
                                                 ${post.price.toFixed(2)}
                                             </p>
                                         </Show>
 
-                                        <Show when={!post.price}>
+                                        <Show when={post.price === 0}>
                                             <p class="text-lg font-bold">
                                                 {t("messages.free")}
                                             </p>

@@ -200,13 +200,13 @@ export const MobileViewCard: Component<Props> = (props) => {
                             <div class="content mr-1 w-1/2">
                                 <div class="flex items-start justify-end">
                                     <div class="price-reviews-div inline-block text-end">
-                                        <Show when={post.price}>
+                                        <Show when={post.price > 0}>
                                             <p class="text-lg font-bold">
-                                                ${post.price}{" "}
+                                                ${post.price.toFixed(2)}
                                             </p>
                                         </Show>
 
-                                        <Show when={!post.price}>
+                                        <Show when={post.price === 0}>
                                             <p class="text-lg font-bold">
                                                 {t("messages.free")}
                                             </p>
