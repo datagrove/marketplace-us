@@ -112,7 +112,7 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                                 type="number"
                                                 min={0}
                                                 step={1}
-                                                oncut={(e) =>
+                                                onClick={(e) =>
                                                     e.preventDefault()
                                                 }
                                                 value={donation()}
