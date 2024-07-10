@@ -311,7 +311,7 @@ export const UserCreatorView: Component<Props> = (props) => {
                 </Show>
             </div>
 
-            {/* <div
+            <div
                 id="user-creator-view-username-reviews-follow"
                 class="mx-4 mt-10"
             >
@@ -321,7 +321,7 @@ export const UserCreatorView: Component<Props> = (props) => {
                         : creator()?.seller_name}
                 </h2>
 
-                <div
+               {/* <div
                     id="user-creator-view-reviews-div"
                     class="flex items-center"
                 >
@@ -473,7 +473,7 @@ export const UserCreatorView: Component<Props> = (props) => {
                         {t("menus.DownloadResources")}
                     </button>
                 </div> */}
-            {/* </div> */}
+            </div>
 
             <div id="user-creator-view-tabs-content-div" class="mx-4 mt-8">
                 <div
@@ -531,6 +531,8 @@ export const UserCreatorView: Component<Props> = (props) => {
                 </div>
 
                 <div id="userCreatorViewProfile" class="inline">
+
+                        
                     <Show when={creator()?.email}>
                         <div class="flex">
                             <p class="font-bold">
@@ -552,6 +554,23 @@ export const UserCreatorView: Component<Props> = (props) => {
                             </p>
                         </div>
                     </Show>
+
+                    <div class="about flex">
+                            <label
+                                for="about"
+                                class="font-bold text-ptext1 dark:text-ptext1-DM"
+                            >
+                                {t("formLabels.about")}: &nbsp;
+                            </label>
+
+                            
+                                <p
+                                    class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
+                                    innerHTML={creator()?.seller_about}
+                                ></p>
+
+                            
+                    </div>
                 </div>
 
                 <div id="userCreatorViewResources" class="hidden">

@@ -287,7 +287,7 @@ export const English = {
         ratingsReviews: "Ratings and Reviews",
         questions: "Questions",
         freeDownload: "Free Download",
-        creatorResources: "My Resources",
+        creatorResources: "Resources",
         payouts: "Payouts",
         reviews: "Reviews",
         details: "Details",

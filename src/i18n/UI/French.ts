@@ -288,7 +288,7 @@ export const French = {
     ratingsReviews: "Notes et Avis",
     questions: "Des Questions",
     freeDownload: "Téléchargement Gratuit",
-    creatorResources: "Mes ressources",
+    creatorResources: "Ressources",
     payouts: "Paiements",
     reviews: "Commentaires",
     details: "Détails",
