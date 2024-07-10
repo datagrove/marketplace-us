@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -22,8 +22,9 @@ export const HomeCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [postImages, setPostImages] = createSignal<string[]>([]);
 
-    createEffect(async () => {
+    onMount(async () => {
         if (props.posts) {
+            console.log(props.posts);
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: any) => {
                     post.image_urls
@@ -83,11 +84,11 @@ export const HomeCard: Component<Props> = (props) => {
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
-                        <div class="mx-2 mb-4 flex h-[264px] w-40 flex-wrap justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
-                            <div class="home-card-img-div flex h-4/6 w-full items-center justify-center">
+                        <div class="mx-2 mb-4 grid h-[275px] w-40 grid-rows-9 grid-cols-1 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
+                            <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pt-1 pb-1">
                                 <a
                                     href={`/${lang}/posts/${post.id}`}
-                                    class="h-full"
+                                    class="h-full w-full"
                                 >
                                     <div
                                         id="homeCard-img"
@@ -103,7 +104,7 @@ export const HomeCard: Component<Props> = (props) => {
                                                         ? "User Image"
                                                         : "No Image"
                                                 }
-                                                class="max-h-full max-w-full"
+                                                class="max-h-full max-w-full rounded-lg"
                                             />
                                         ) : (
                                             <svg
@@ -135,8 +136,8 @@ export const HomeCard: Component<Props> = (props) => {
                                 </a>
                             </div>
 
-                            <div id="homeCard-text" class="h-1/6">
-                                <div class="">
+                            <div id="homeCard-text" class="row-span-3 grid grid-rows-3">
+                                <div class="row-span-2">
                                     <a href={`/${lang}/posts/${post.id}`}>
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
                                             {post.title}
@@ -173,7 +174,7 @@ export const HomeCard: Component<Props> = (props) => {
 
                             <div
                                 id="homeCard-ratings-price"
-                                class="flex h-1/6 items-end"
+                                class="row-span-1 text-end"
                             >
                                 {/* <div class="flex w-2/3 items-end"> */}
                                 {/*     <div class="flex items-end justify-start"> */}
@@ -196,15 +197,15 @@ export const HomeCard: Component<Props> = (props) => {
                                 {/*     </div> */}
                                 {/* </div> */}
 
-                                <div class="flex w-1/3 items-end justify-end text-left">
-                                    <Show when={post.price}>
+                                <div class=" text-end">
+                                    <Show when={post.price > 0}>
                                         <p class="text-xs font-bold">
-                                            ${post.price}
+                                            ${post.price.toFixed(2)}
                                         </p>
                                     </Show>
-                                    <Show when={!post.price}>
+                                    <Show when={post.price === 0}>
                                         <p class="text-xs font-bold">
-                                            {t("message.free")}
+                                            {t("messages.free")}
                                         </p>
                                     </Show>
                                 </div>

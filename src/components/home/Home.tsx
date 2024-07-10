@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createEffect, createSignal, Show } from "solid-js";
+import { createEffect, createSignal, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { HomeStickyFilters } from "./HomeStickyFilters";
@@ -45,7 +45,7 @@ export const Home: Component = () => {
 
     let test: any;
 
-    createEffect(async () => {
+    onMount(async () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
@@ -79,7 +79,8 @@ export const Home: Component = () => {
                     return item;
                 })
             );
-            setPopularPosts(data);
+            setPopularPosts(newItems);
+            console.log(popularPosts());
         }
     });
 
@@ -119,7 +120,7 @@ export const Home: Component = () => {
                     return item;
                 })
             );
-            setNewPosts(data);
+            setNewPosts(popItems);
         }
     });
 

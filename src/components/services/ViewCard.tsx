@@ -38,8 +38,8 @@ export const ViewCard: Component<Props> = (props) => {
     }
 
     createEffect(async () => {
-        // console.log("View Card Posts")
-        // console.log(props.posts)
+        console.log("View Card Posts")
+        console.log(props.posts)
         if (props.posts) {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
@@ -292,13 +292,13 @@ export const ViewCard: Component<Props> = (props) => {
 
                                 <div class="mt-2 flex h-full min-h-48 w-1/5 min-w-[88px] flex-col justify-start pr-1">
                                     <div class="price-reviews-div inline-block w-full text-end">
-                                        <Show when={post.price}>
+                                        <Show when={post.price > 0}>
                                             <p class="text-lg font-bold">
                                                 ${post.price.toFixed(2)}
                                             </p>
                                         </Show>
 
-                                        <Show when={!post.price}>
+                                        <Show when={post.price === 0}>
                                             <p class="text-lg font-bold">
                                                 {t("messages.free")}
                                             </p>
