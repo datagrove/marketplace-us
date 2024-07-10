@@ -126,7 +126,7 @@ export const English = {
         requestStripePayout: "Request Payout",
         listResource: "List Resource",
         continueShopping: "Continue Shopping",
-        viewOrders: "View Orders",
+        viewOrders: "View Purchases",
     },
 
     messages: {
