@@ -448,7 +448,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     console.log(postImages());
 
     return (
-        <div id="large-full-card-div" class="mx-2 h-full w-full mb-2">
+        <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
             <div id="image-title-details-cart-div" class="grid grid-cols-7">
                 <div
                     id="images-div"
@@ -791,6 +791,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                     {/*     ) */}
                     {/*   } */}
                     {/* > */}
+                    <Show when={session()?.user.id === post()?.user_id}>
+                        <button>Edit</button>
+                    </Show>
 
                     {/* </Show> */}
                     {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
@@ -807,10 +810,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         </Show>
                     </div>
 
-                    <div
-                        id="add-cart-div"
-                        class="mb-1 mr-2 flex justify-end "
-                    >
+                    <div id="add-cart-div" class="mb-1 mr-2 flex justify-end ">
                         <Quantity
                             quantity={1}
                             updateQuantity={updateQuantity}
