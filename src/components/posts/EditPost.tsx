@@ -112,14 +112,14 @@ const excludeTaxCodes = new Set([
 
 let uploadFilesRef: any;
 
-async function postFormData(formData: FormData) {
+async function updateFormData(formData: FormData) {
     const info = formData;
     const response = await fetch("/api/creatorUpdatePost", {
-        method: "UPDATE",
+        method: "POST",
         body: formData,
     });
     const data = await response.json();
-    console.log(response.status);
+    console.log(response, "response");
     if (response.status === 200) {
         //Get plain text description
         let tmpDiv = document.createElement("div");
@@ -157,7 +157,7 @@ interface Props {
 export const EditPost: Component<Props> = (props: Props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [formData, setFormData] = createSignal<FormData>();
-    const [response] = createResource(formData, postFormData);
+    const [response] = createResource(formData, updateFormData);
     const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
     const [mode, setMode] = createStore({
         theme: localStorage.getItem("theme"),
@@ -182,7 +182,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         Array<{ id: number; type: string }>
     >([]);
     const [uploadFinished, setUploadFinished] = createSignal(false);
-    const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
+    // const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
 
@@ -197,7 +197,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 mountTiny();
             }
         });
-        setGradePick(props.post?.post_grade!);
+        setGradePick(props.post?.grade!);
         setSubjectPick(props.post?.subject!);
         setResourceTypesPick(props.post?.resourceTypes!);
         if (props.post?.image_urls!) {
@@ -356,10 +356,10 @@ export const EditPost: Component<Props> = (props: Props) => {
         }
 
         if (imageUrl() !== null) {
-            formData.append("resource_url", resourceURL()!.toString());
+            formData.append("resource_url", "");
         }
         if (props.post?.id! !== undefined) {
-            formData.append("idSupabase", JSON.stringify(props.post?.id!));
+            formData.append("idSupabase", props.post?.id!);
         }
         setFormData(formData);
         console.log(formData);
@@ -1065,33 +1065,33 @@ export const EditPost: Component<Props> = (props: Props) => {
                     </Show>
                 </div>
 
-                <div class="mt-6">
-                    {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */}
-                    {/* TODO: Fix the text centering for Drop files here or browse files */}
-                    <UploadFiles
-                        target={"#uploadResource"}
-                        bucket="resources"
-                        setUppyRef={(uppy) => (uploadFilesRef = uppy)}
-                        onUpload={(url: string) => {
-                            setResourceURL([...resourceURL(), url]);
-                        }}
-                        removeFile={(url: string) => {
-                            setResourceURL(
-                                resourceURL().filter((u) => u !== url)
-                            );
-                        }}
-                        setUploadFinished={(uploadFinished) =>
-                            setUploadFinished(uploadFinished)
-                        }
-                    />
-                    <div id="uploadResource" class="w-full"></div>
-                </div>
+                {/* <div class="mt-6"> */}
+                {/*     {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */} */}
+                {/*     {/* TODO: Fix the text centering for Drop files here or browse files */} */}
+                {/*     <UploadFiles */}
+                {/*         target={"#uploadResource"} */}
+                {/*         bucket="resources" */}
+                {/*         setUppyRef={(uppy) => (uploadFilesRef = uppy)} */}
+                {/*         onUpload={(url: string) => { */}
+                {/*             setResourceURL([...resourceURL(), url]); */}
+                {/*         }} */}
+                {/*         removeFile={(url: string) => { */}
+                {/*             setResourceURL( */}
+                {/*                 resourceURL().filter((u) => u !== url) */}
+                {/*             ); */}
+                {/*         }} */}
+                {/*         setUploadFinished={(uploadFinished) => */}
+                {/*             setUploadFinished(uploadFinished) */}
+                {/*         } */}
+                {/*     /> */}
+                {/*     <div id="uploadResource" class="w-full"></div> */}
+                {/* </div> */}
 
                 <br />
                 <div class="flex justify-center">
                     <button
                         id="post"
-                        disabled={!uploadFinished()}
+                        // disabled={!uploadFinished()}
                         class={`text-2xl ${
                             uploadFinished() ? "btn-primary" : "btn-disabled"
                         }`}

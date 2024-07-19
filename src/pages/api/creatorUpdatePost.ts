@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
 
-export const UPDATE: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
 
     for (let pair of formData.entries()) {
@@ -31,7 +31,7 @@ export const UPDATE: APIRoute = async ({ request, redirect }) => {
     const imageUrl = formData.get("image_url")
         ? formData.get("image_url")
         : null;
-    const resourceUrl = formData.get("resource_url");
+    // const resourceUrl = formData.get("resource_url");
     const resourceType = formData.get("resource_types");
     console.log("imageURL: " + imageUrl);
     console.log(formData, "api");
@@ -41,10 +41,9 @@ export const UPDATE: APIRoute = async ({ request, redirect }) => {
         !title ||
         !subject ||
         !content ||
-        !gradeLevel ||
-        !resourceUrl ||
-        !tax_code ||
-        price === ""
+        !gradeLevel
+        // !resourceUrl ||
+        // !tax_code
     ) {
         return new Response(
             JSON.stringify({
@@ -97,13 +96,14 @@ export const UPDATE: APIRoute = async ({ request, redirect }) => {
         post_grade: JSON.parse(gradeLevel as string),
         image_urls: imageUrl,
         user_id: user.id,
-        resource_urls: resourceUrl,
+        // resource_urls: resourceUrl,
         resource_types: JSON.parse(resourceType as string),
     };
     const { error, data } = await supabase
         .from("seller_post")
         .update([postSubmission])
         .eq("id", idSupabase);
+    console.log(postSubmission);
 
     if (error) {
         console.log(error);
@@ -113,14 +113,16 @@ export const UPDATE: APIRoute = async ({ request, redirect }) => {
             }),
             { status: 500 }
         );
-    } else if (!data) {
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.noPost"),
-            }),
-            { status: 500 }
-        );
-    } else {
+    }
+    // else if (!data) {
+    //       return new Response(
+    //           JSON.stringify({
+    //               message: t("apiErrors.noPost"),
+    //           }),
+    //           { status: 500 }
+    //       );
+    // }
+    else {
         console.log("Post Data: " + JSON.stringify(data));
     }
 
