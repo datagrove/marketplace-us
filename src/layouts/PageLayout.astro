@@ -6,6 +6,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { ui } from "../i18n/ui";
 import type { uiObject } from "../i18n/uiType";
 import { WindowSize } from "../components/common/WindowSize";
+import Banner from "../components/common/notices/Banner";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -18,7 +19,14 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 ---
 
 <Layout {pageTitle} {pageDescription}>
-    <div class="flex flex-col min-h-screen">
+    <!-- For best experience keep banner content to <85 characters -->
+    <!-- <Banner
+        content="This is a test banner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        linkLocation="https://example.com"
+        linkLabel="Go to example.com"
+        client:only="solid-js"
+    /> -->
+    <div class="flex flex-col min-h-screen md:mx-4">
         <div class="header pt-4">
             <Header client:only="solid-js" />
         </div>
