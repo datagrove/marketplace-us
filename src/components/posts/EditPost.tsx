@@ -114,8 +114,8 @@ let uploadFilesRef: any;
 
 async function postFormData(formData: FormData) {
     const info = formData;
-    const response = await fetch("/api/creatorCreatePost", {
-        method: "POST",
+    const response = await fetch("/api/creatorUpdatePost", {
+        method: "UPDATE",
         body: formData,
     });
     const data = await response.json();
@@ -197,6 +197,12 @@ export const EditPost: Component<Props> = (props: Props) => {
                 mountTiny();
             }
         });
+        setGradePick(props.post?.post_grade!);
+        setSubjectPick(props.post?.subject!);
+        setResourceTypesPick(props.post?.resourceTypes!);
+        if (props.post?.image_urls!) {
+            setImageUrl(props.post?.image_urls!);
+        }
     });
 
     createEffect(async () => {
@@ -352,7 +358,11 @@ export const EditPost: Component<Props> = (props: Props) => {
         if (imageUrl() !== null) {
             formData.append("resource_url", resourceURL()!.toString());
         }
+        if (props.post?.id! !== undefined) {
+            formData.append("idSupabase", JSON.stringify(props.post?.id!));
+        }
         setFormData(formData);
+        console.log(formData);
     }
 
     let expanded = false;
@@ -434,6 +444,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setGradeArray(e: Event) {
+        console.log(gradePick());
         if ((e.target as HTMLInputElement).checked) {
             setGradePick([
                 ...gradePick(),
@@ -609,17 +620,49 @@ export const EditPost: Component<Props> = (props: Props) => {
                         >
                             <For each={subjects()}>
                                 {(subject) => (
-                                    <label class="ml-2 block">
-                                        <input
-                                            type="checkbox"
-                                            id={subject.id.toString()}
-                                            value={subject.id.toString()}
-                                            onchange={(e) => setSubjectArray(e)}
-                                        />
-                                        <span class="ml-2">
-                                            {subject.subject}
-                                        </span>
-                                    </label>
+                                    <div>
+                                        <Show
+                                            when={props.post?.subject!.includes(
+                                                subject.subject
+                                            )}
+                                        >
+                                            <label class="ml-2 block">
+                                                <input
+                                                    type="checkbox"
+                                                    id={subject.id.toString()}
+                                                    value={subject.id.toString()}
+                                                    onchange={(e) =>
+                                                        setSubjectArray(e)
+                                                    }
+                                                    checked
+                                                />
+                                                <span class="ml-2">
+                                                    {subject.subject}
+                                                </span>
+                                            </label>
+                                        </Show>
+                                        <Show
+                                            when={
+                                                !props.post?.subject!.includes(
+                                                    subject.subject
+                                                )
+                                            }
+                                        >
+                                            <label class="ml-2 block">
+                                                <input
+                                                    type="checkbox"
+                                                    id={subject.id.toString()}
+                                                    value={subject.id.toString()}
+                                                    onchange={(e) =>
+                                                        setSubjectArray(e)
+                                                    }
+                                                />
+                                                <span class="ml-2">
+                                                    {subject.subject}
+                                                </span>
+                                            </label>
+                                        </Show>
+                                    </div>
                                 )}
                             </For>
                         </div>
@@ -695,13 +738,43 @@ export const EditPost: Component<Props> = (props: Props) => {
                             <For each={grades()}>
                                 {(grade) => (
                                     <label class="ml-2 block">
-                                        <input
-                                            type="checkbox"
-                                            id={grade.id.toString()}
-                                            value={grade.id.toString()}
-                                            onchange={(e) => setGradeArray(e)}
-                                        />
-                                        <span class="ml-2">{grade.grade}</span>
+                                        <Show
+                                            when={props.post?.grade!.includes(
+                                                grade.grade
+                                            )}
+                                        >
+                                            <input
+                                                checked
+                                                type="checkbox"
+                                                id={grade.id.toString()}
+                                                value={grade.id.toString()}
+                                                onchange={(e) =>
+                                                    setGradeArray(e)
+                                                }
+                                            />
+                                            <span class="ml-2">
+                                                {grade.grade}
+                                            </span>
+                                        </Show>
+                                        <Show
+                                            when={
+                                                !props.post?.grade!.includes(
+                                                    grade.grade
+                                                )
+                                            }
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id={grade.id.toString()}
+                                                value={grade.id.toString()}
+                                                onchange={(e) =>
+                                                    setGradeArray(e)
+                                                }
+                                            />
+                                            <span class="ml-2">
+                                                {grade.grade}
+                                            </span>
+                                        </Show>
                                     </label>
                                 )}
                             </For>
@@ -781,15 +854,43 @@ export const EditPost: Component<Props> = (props: Props) => {
                             <For each={resourceTypes()}>
                                 {(type) => (
                                     <label class="ml-2 block">
-                                        <input
-                                            type="checkbox"
-                                            id={type.id.toString()}
-                                            value={type.id.toString()}
-                                            onchange={(e) =>
-                                                setResourceTypesArray(e)
+                                        <Show
+                                            when={props.post?.resource_types!.includes(
+                                                type.id.toString()
+                                            )}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id={type.id.toString()}
+                                                value={type.id.toString()}
+                                                onchange={(e) =>
+                                                    setResourceTypesArray(e)
+                                                }
+                                                checked
+                                            />
+                                            <span class="ml-2">
+                                                {type.type}
+                                            </span>
+                                        </Show>
+                                        <Show
+                                            when={
+                                                !props.post?.resource_types!.includes(
+                                                    type.id.toString()
+                                                )
                                             }
-                                        />
-                                        <span class="ml-2">{type.type}</span>
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                id={type.id.toString()}
+                                                value={type.id.toString()}
+                                                onchange={(e) =>
+                                                    setResourceTypesArray(e)
+                                                }
+                                            />
+                                            <span class="ml-2">
+                                                {type.type}
+                                            </span>
+                                        </Show>
                                     </label>
                                 )}
                             </For>
