@@ -5,20 +5,23 @@ import type { HeadingProps } from "./utils";
 
 type ModalProps = {
     children: JSX.Element;
+    buttonClass: string;
+    buttonId: string;
+    buttonContent: JSX.Element;
     heading: HeadingProps["heading"];
     headingLevel?: HeadingProps["headingLevel"];
 };
 
 const Modal: Component<ModalProps> = (props) => {
-    const [isOpen, setIsOpen] = createSignal(false);
+    const [isOpen, setIsOpen] = createSignal<boolean>(false);
     const [modal, setModal] = createSignal<HTMLElement | null>(null);
 
     const focusableElements =
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-
     createEffect(() => {
         if (isOpen()) {
+            console.log("modal open");
             const originalFocusedElement =
                 document.activeElement as HTMLElement;
             const modalFocusableElements =
@@ -56,35 +59,55 @@ const Modal: Component<ModalProps> = (props) => {
         }
     });
 
+    function openModal (e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen(true);
+    }
+
+    function closeModal (e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsOpen(false);
+    }
     return (
         <>
-            <button type="button" onClick={() => setIsOpen(true)}>
-                Open Modal
+            <button
+                class={props.buttonClass}
+                id={props.buttonId}
+                type="button"
+                onClick={(e) => openModal(e)}
+            >
+                {props.buttonContent}
             </button>
             <Show when={isOpen()}>
                 <div
                     role="presentation"
-                    class="modal__backdrop"
-                    onClick={() => setIsOpen(false)}
+                    class="modal__backdrop min-h-100vh min-w-100vw fixed inset-0  z-[55] dark:bg-background1 bg-background1-DM bg-opacity-50 dark:bg-opacity-30"
+                    onClick={(e) => closeModal(e)}
                     onKeyPress={(e) =>
-                        (e.key || e.code) === "Escape" ? setIsOpen(false) : null
+                        (e.key || e.code) === "Escape" ? closeModal(e) : null
                     }
                 />
-                <section role="dialog" class="modal" ref={setModal}>
-                    <header>
+                <section
+                    role="dialog"
+                    class="modal p-4 min-h-100vh w-100vw fixed inset-0 z-[60] overflow-y-auto dark:bg-background1-DM bg-background1 md:-translate-x-1/2 md:-translate-y-1/2 md:left-1/2 md:top-1/2 md:max-h-[calc(100vh-4rem)] md:min-h-fit md:w-[calc(100vw-4rem)] md:max-w-[768px] md:rounded-xl"
+                    ref={setModal}
+                >
+                    <header class="flex flex-row flex-nowrap border-b-[1px] gap-[2rem] justify-between sticky items-center">
                         {getHeading({
                             heading: props.heading,
                             headingLevel: props?.headingLevel,
                         })}
                         <button
                             aria-label="Close Dialog"
-                            class="modal__close"
-                            onClick={() => setIsOpen(false)}
+                            class="modal__close text-xl"
+                            onClick={(e) => closeModal(e)}
                         >
                             &times;
                         </button>
                     </header>
-                    <div class="modal__body">{props.children}</div>
+                    <div class="modal__body pt-2">{props.children}</div>
                 </section>
             </Show>
         </>
