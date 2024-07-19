@@ -14,8 +14,8 @@ const Banner: Component<BannerProps> = (props) => {
 
     createEffect(() => {
         const today = new Date();
-        const startDate = props.startDate ? new Date(props.startDate) : null;
-        const endDate = props.endDate ? new Date(props.endDate) : null;
+        const startDate = props.startDate ? new Date(`${props.startDate}T00:00:00`) : null;
+        const endDate = props.endDate ? new Date(`${props.endDate}T23:59:59`) : null;
 
         if (startDate && endDate) {
             setIsInDateRange(today >= startDate && today <= endDate);

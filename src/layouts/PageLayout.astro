@@ -20,7 +20,7 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 
 <Layout {pageTitle} {pageDescription}>
     <!-- 
-    For best experience keep banner content to <85 characters 
+    For best experience keep banner content to <90 characters 
     linkLocation and linkLabel are optional but make sure to include both if used
     possible banner props are:
     content: string | JSX.Element
@@ -29,14 +29,14 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
     startDate?: string YYYY-MM-DD
     endDate?: string YYYY-MM-DD
      -->
-    <!-- <Banner
-        content="This is a test banner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    <Banner
+        content="This is a test banner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
         linkLocation="https://example.com"
         linkLabel="Go to example.com"
-        startDate="2024-07-19"
-        endDate="2024-07-21"
+        startDate="2024-07-17"
+        endDate="2024-07-19"
         client:only="solid-js"
-    /> -->
+    />
     <div class="flex flex-col min-h-screen md:mx-4">
         <div class="header pt-4">
             <Header client:only="solid-js" />
