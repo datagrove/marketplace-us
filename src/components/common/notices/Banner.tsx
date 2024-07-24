@@ -16,6 +16,7 @@ const Banner: Component<BannerProps> = (props) => {
         createSignal<number>(Date.parse('01 Jan 1970 00:00:00 GMT'));
 
     onMount(() => {
+        //Check if the banner was last dismissed more than  30 days ago, if so clear the local storage for banner
         const todayLess30Days = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
         if(localStorage.getItem("bannerDismissedTimestamp") !== null) {
             if (parseInt(localStorage.getItem("bannerDismissedTimestamp")!) < todayLess30Days) {
@@ -23,12 +24,13 @@ const Banner: Component<BannerProps> = (props) => {
             }
         }
 
-
+        //If the banner is dismissed and the timestamp is set in local storage then set bannerState to true and set timestamp
         if (localStorage.getItem("bannerDismissed") !== null && localStorage.getItem("bannerDismissedTimestamp") !== null) {
             setBannerState(localStorage.getItem("bannerDismissed") === "true");
             setBannerStateTimestamp(parseInt(localStorage.getItem("bannerDismissedTimestamp")!));
         }
 
+        //If there is a start date for this banner and it is after the last time the banner was dismissed then remove the local storage for banner
         if(props.startDate) {
             const startDate = new Date(`${props.startDate}T00:00:00`);
             const startIndex = Date.parse(startDate.toString());
