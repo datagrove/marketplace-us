@@ -16,6 +16,14 @@ const Banner: Component<BannerProps> = (props) => {
         createSignal<number>(Date.parse('01 Jan 1970 00:00:00 GMT'));
 
     onMount(() => {
+        const todayLess30Days = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
+        if(localStorage.getItem("bannerDismissedTimestamp") !== null) {
+            if (parseInt(localStorage.getItem("bannerDismissedTimestamp")!) < todayLess30Days) {
+                localStorage.removeItem("bannerDismissedTimestamp");
+            }
+        }
+
+
         if (localStorage.getItem("bannerDismissed") !== null && localStorage.getItem("bannerDismissedTimestamp") !== null) {
             setBannerState(localStorage.getItem("bannerDismissed") === "true");
             setBannerStateTimestamp(parseInt(localStorage.getItem("bannerDismissedTimestamp")!));
