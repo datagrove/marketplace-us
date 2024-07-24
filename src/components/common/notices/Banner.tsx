@@ -70,18 +70,19 @@ const Banner: Component<BannerProps> = (props) => {
                         aria-label={props.linkLabel}
                         target="_blank"
                     >
-                        <div class="w-full bg-btn1-DM text-center">
+                        <div class="w-full bg-btn1-DM text-center flex relative">
                             <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)]">
                                 {props.content}
                             </div>
                             <button
                                 aria-label="Close Banner"
-                                class="banner__close text-xl"
+                                class="banner__close text-xl inline-block absolute right-3 top-1/2 -translate-y-1/2 -translate-x-1/2"
                                 onClick={(e) => closeBanner(e)}
                             >
                                 &times;
                             </button>
                         </div>
+                        
                     </a>
                 </Show>
                 <Show when={!props.linkLocation}>
