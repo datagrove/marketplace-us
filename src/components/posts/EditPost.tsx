@@ -196,18 +196,23 @@ export const EditPost: Component<Props> = (props: Props) => {
                 setMode({ theme: event.newValue });
                 mountTiny();
             }
-        });
-        setGradePick(props.post?.grade!);
+     j  });
+        setGradePick(props.post?.post_grade!);
         setSubjectPick(props.post?.subject!);
-        setResourceTypesPick(props.post?.resourceTypes!);
+        setResourceTypesPick(props.post?.resource_types!);
+    console.log(props.post?.product_subject,"hola")
         if (props.post?.image_urls!) {
             setImageUrl(props.post?.image_urls!);
         }
+    
     });
 
     createEffect(async () => {
         const { data, error } = await supabase.auth.getSession();
         setSession(data.session);
+    gradePick()
+    subjectPick()
+    resourceTypesPick()
 
         if (session()) {
             //Check if they are a creator
@@ -314,6 +319,7 @@ export const EditPost: Component<Props> = (props: Props) => {
             alert(t("messages.signInAsCreator"));
             location.href = `/${lang}/login`;
         }
+    
     });
 
     async function submit(e: SubmitEvent) {

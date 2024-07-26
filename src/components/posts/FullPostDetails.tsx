@@ -27,4 +27,3 @@ export const FullPostDetails: Component<Props> = (props: Props) => {
         </div>
     );
 };
-
