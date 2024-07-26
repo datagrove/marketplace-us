@@ -49,7 +49,7 @@ export const Home: Component = () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
-            .order("id", { ascending: false })
+            .order("id", { ascending: true })
             .eq("listing_status", true)
             .limit(8);
         if (!data) {

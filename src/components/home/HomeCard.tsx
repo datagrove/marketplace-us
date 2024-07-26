@@ -22,8 +22,9 @@ export const HomeCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [postImages, setPostImages] = createSignal<string[]>([]);
 
-    onMount(async () => {
+    createEffect(async () => {
         if (props.posts) {
+            console.log("props.posts");
             console.log(props.posts);
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: any) => {
@@ -34,6 +35,24 @@ export const HomeCard: Component<Props> = (props) => {
                         : (post.image_url = null);
                     // Set the default quantity to 1
                     post.quantity = 1;
+
+                    const { data, error } = await supabase
+                        .from("sellerview")
+                        .select("*")
+                        .eq("seller_id", post.seller_id);
+
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (data) {
+                        if (data[0].image_url) {
+                            post.seller_img = await downloadCreatorImage(
+                                data[0].image_url
+                            );
+                        }
+                    }
+
                     return post;
                 })
             );
@@ -59,21 +78,20 @@ export const HomeCard: Component<Props> = (props) => {
         }
     };
 
-    const downloadImages = async (image_Urls: string) => {
+    const downloadCreatorImage = async (image_Url: string) => {
         try {
-            const imageUrls = image_Urls.split(",");
-            imageUrls.forEach(async (imageUrl: string) => {
-                const { data, error } = await supabase.storage
-                    .from("post.image")
-                    .download(imageUrl);
-                if (error) {
-                    throw error;
-                }
-                const url = URL.createObjectURL(data);
-                setPostImages([...postImages(), url]);
-            });
+            const { data, error } = await supabase.storage
+                .from("user.image")
+                .download(image_Url);
+            if (error) {
+                throw error;
+            }
+            const url = URL.createObjectURL(data);
+            return url;
         } catch (error) {
-            console.log(error);
+            if (error instanceof Error) {
+                console.log("Error downloading image: ", error.message);
+            }
         }
     };
 
@@ -84,8 +102,8 @@ export const HomeCard: Component<Props> = (props) => {
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
-                        <div class="mx-2 mb-4 grid h-[275px] w-40 grid-rows-9 grid-cols-1 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
-                            <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pt-1 pb-1">
+                        <div class="mx-2 mb-4 grid h-[275px] w-40 grid-cols-1 grid-rows-9 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
+                            <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pb-1 pt-1">
                                 <a
                                     href={`/${lang}/posts/${post.id}`}
                                     class="h-full w-full"
@@ -136,7 +154,10 @@ export const HomeCard: Component<Props> = (props) => {
                                 </a>
                             </div>
 
-                            <div id="homeCard-text" class="row-span-3 grid grid-rows-3">
+                            <div
+                                id="homeCard-text"
+                                class="row-span-3 grid grid-rows-3"
+                            >
                                 <div class="row-span-2">
                                     <a href={`/${lang}/posts/${post.id}`}>
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
@@ -149,7 +170,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     <div class="my-1 flex items-center">
                                         <div>
                                             {post.seller_img ? (
-                                                <img src={post.seller_img} />
+                                                <img src={post.seller_img} class = {`w-[25px] h-[25px] rounded-full`} />
                                             ) : (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

@@ -12,7 +12,7 @@ export interface Post {
     product_id: string; //Stripe Product ID of the post
     product_subject: Array<string>; //Array of subject IDs, does not contain actual subject names
     post_grade: Array<string>; //Array of grade IDs, does not contain actual grade names
-    resource_types: Array<string>; // Array of resocource types IDs, does not contain actual resource_types names
+    resource_types: Array<string>; // Array of resource types IDs, does not contain actual resource_types names
     listing_status: boolean; //Boolean of whether the post is listed or not
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
