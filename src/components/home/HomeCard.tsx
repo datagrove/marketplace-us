@@ -22,7 +22,7 @@ export const HomeCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [postImages, setPostImages] = createSignal<string[]>([]);
 
-    onMount(async () => {
+    createEffect(async () => {
         if (props.posts) {
             console.log("props.posts");
             console.log(props.posts);
