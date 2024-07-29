@@ -137,23 +137,26 @@ export const ViewUserFavorites: Component = () => {
                 setLoading(false);
                 console.log(favoritedItems());
 
-                const itemsOrdered = favorites?.map((item) => {
-                    item.product = [];
-                    const product = favoritesProducts?.map((product) => {
+                const favoriteLists = favorites?.map((item) => {
+                    console.log(item);
+                    item.products = [];
+                    favoritesProducts?.map((product) => {
                         if (product.list_number === item.list_number) {
                             const productInfo = newItems.find(
                                 (products) => product.product_id === products.id
                             );
                             if (productInfo) {
-                                console.log(productInfo)
-                                item.product.push(productInfo);
+                                console.log(productInfo);
+                                item.products.push(productInfo);
+                                console.log(item);
                             }
                         }
                     });
+                    return item;
                 });
 
                 console.log("itemsOrdered: ");
-                console.log(itemsOrdered);
+                console.log(favoriteLists);
             }
         }
     };
