@@ -46,12 +46,15 @@ export const ViewUserFavorites: Component = () => {
             return;
         }
 
-        const favoritesListIds = favorites?.map((favorite) => favorite.list_number);
+        const favoritesListIds = favorites?.map(
+            (favorite) => favorite.list_number
+        );
 
-        const { data: favoritesProducts, error: favoritesProductsError } = await supabase
-            .from("favorites_products")
-            .select("product_id, list_number")
-            .in("list_number", favoritesListIds);
+        const { data: favoritesProducts, error: favoritesProductsError } =
+            await supabase
+                .from("favorites_products")
+                .select("product_id, list_number")
+                .in("list_number", favoritesListIds);
         if (favoritesProductsError) {
             console.log(
                 "Favorite Details Error: " +
@@ -135,15 +138,18 @@ export const ViewUserFavorites: Component = () => {
                 console.log(favoritedItems());
 
                 const itemsOrdered = favorites?.map((item) => {
-                    item.product= [];
-                    const product = favoritesProducts?.find(
-                        (product) => product.list_number === item.list_number
-                        
-                    );
-                    const productInfo = newItems.find(product)
-                    if (product) {
-                            item.product.push(product)
-                    }
+                    item.product = [];
+                    const product = favoritesProducts?.map((product) => {
+                        if (product.list_number === item.list_number) {
+                            const productInfo = newItems.find(
+                                (products) => product.product_id === products.id
+                            );
+                            if (productInfo) {
+                                console.log(productInfo)
+                                item.product.push(productInfo);
+                            }
+                        }
+                    });
                 });
 
                 console.log("itemsOrdered: ");
@@ -177,7 +183,10 @@ export const ViewUserFavorites: Component = () => {
     return (
         <div>
             <div id="Cards">
-                <Show when={!loading()} fallback={<div>{t("buttons.loading")}</div>}>
+                <Show
+                    when={!loading()}
+                    fallback={<div>{t("buttons.loading")}</div>}
+                >
                     <Show when={favoritedItems().length > 0}>
                         <ViewPurchaseCard posts={favoritedItems()} />
                     </Show>
