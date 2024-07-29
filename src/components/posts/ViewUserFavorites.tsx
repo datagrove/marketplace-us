@@ -81,7 +81,7 @@ export const ViewUserFavorites: Component = () => {
                 );
                 return;
             } else {
-                console.log(productsInfo);
+                // console.log(productsInfo);
                 const newItems = await Promise.all(
                     productsInfo?.map(async (item) => {
                         item.subject = [];
@@ -128,15 +128,17 @@ export const ViewUserFavorites: Component = () => {
                             );
                             item.price = priceData.unit_amount! / 100;
                         }
-                        console.log(item);
+                        // console.log(item);
                         return item;
                     })
                 );
 
                 setFavoritedItems(newItems);
                 setLoading(false);
-                console.log(favoritedItems());
+                // console.log(favoritedItems());
 
+                // This creates a list of each favorite list with all the products in that favorite list
+                // Use this when we go to implement multiple lists
                 const favoriteLists = favorites?.map((item) => {
                     console.log(item);
                     item.products = [];
@@ -146,17 +148,12 @@ export const ViewUserFavorites: Component = () => {
                                 (products) => product.product_id === products.id
                             );
                             if (productInfo) {
-                                console.log(productInfo);
                                 item.products.push(productInfo);
-                                console.log(item);
                             }
                         }
                     });
                     return item;
                 });
-
-                console.log("itemsOrdered: ");
-                console.log(favoriteLists);
             }
         }
     };

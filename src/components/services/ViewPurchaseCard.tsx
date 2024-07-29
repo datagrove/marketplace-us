@@ -217,9 +217,9 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                 <p class="text-xs font-light">
                                     {t("menus.purchased")} &nbsp{" "}
                                 </p>
-                                {/* <p class="text-xs font-light">
+                                <p class="text-xs font-light">
                                     {post.purchaseDate.slice(0, 10)}
-                                </p> */}
+                                </p>
                             </div>
 
                             <div class="flex">
@@ -234,9 +234,9 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                 <p class="text-xs font-light">
                                     {t("menus.updated")} &nbsp
                                 </p>
-                                {/* <p class="text-xs font-light">
+                                <p class="text-xs font-light">
                                     {post.created_at.slice(0, 10)}
-                                </p> */}
+                                </p>
                             </div>
                         </div>
 

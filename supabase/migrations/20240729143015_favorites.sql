@@ -173,3 +173,14 @@ as permissive
 for select
 to authenticated
 using ((auth.uid() = customer_id));
+
+alter table "public"."favorites" add column "default_list" boolean not null default false;
+
+create policy "Delete only your own entries"
+on "public"."favorites_products"
+as permissive
+for delete
+to authenticated
+using ((EXISTS ( SELECT 1
+   FROM favorites
+  WHERE ((favorites.customer_id = auth.uid()) AND (favorites.list_number = favorites_products.list_number)))));
