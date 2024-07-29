@@ -140,7 +140,7 @@ export const ViewUserFavorites: Component = () => {
                         (product) => product.list_number === item.list_number
                         
                     );
-                    const productInfo = newItems.find(prod)
+                    const productInfo = newItems.find(product)
                     if (product) {
                             item.product.push(product)
                     }
@@ -185,7 +185,7 @@ export const ViewUserFavorites: Component = () => {
                         <p class="mb-6 italic">
                             {t("messages.noPurchasedItems")}
                         </p>
-                        <a href={`/${lang}/services`} class="btn-primary">
+                        <a href={`/${lang}/resources`} class="btn-primary">
                             {t("buttons.browseCatalog")}
                         </a>
                     </Show>

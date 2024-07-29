@@ -212,7 +212,7 @@ export const ViewUserPurchases: Component = () => {
                         <p class="mb-6 italic">
                             {t("messages.noPurchasedItems")}
                         </p>
-                        <a href={`/${lang}/services`} class="btn-primary">
+                        <a href={`/${lang}/resources`} class="btn-primary">
                             {t("buttons.browseCatalog")}
                         </a>
                     </Show>

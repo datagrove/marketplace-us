@@ -447,7 +447,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             </div>
                                         </div>
                                         <div class="relative col-span-1 flex w-full justify-end align-top">
-                                            <div class="inline-block">
+                                            <div class="inline-block border-2 border-red-500">
                                                 <FavoriteButton
                                                     id={post.id}
                                                 />
