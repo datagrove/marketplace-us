@@ -22,6 +22,7 @@ import stripe from "@lib/stripe";
 import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
+import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -76,104 +77,6 @@ export const UserProfileView: Component = () => {
     //     await fetchUser(session()?.user.id!);
     //   }
     // });
-
-    const getPurchasedItems = async () => {
-        console.log("Session Info: ");
-        console.log(session());
-        const { data: orders, error } = await supabase
-            .from("orders")
-            .select("*")
-            .eq("customer_id", session()?.user.id);
-        if (error) {
-            console.log("Orders Error: " + error.code + " " + error.message);
-            return;
-        }
-        const orderedItemsIds = orders?.map((order) => order.order_number);
-
-        const { data: orderDetails, error: orderDetailsError } = await supabase
-            .from("order_details")
-            .select("product_id")
-            .in("order_number", orderedItemsIds);
-        if (orderDetailsError) {
-            console.log(
-                "Order Details Error: " +
-                    orderDetailsError.code +
-                    " " +
-                    orderDetailsError.message
-            );
-        }
-        const products = orderDetails?.map((item) => item.product_id);
-        console.log(products);
-        if (products !== undefined) {
-            const { data: productsInfo, error: productsInfoError } =
-                await supabase
-                    .from("sellerposts")
-                    .select("*")
-                    .order("id", { ascending: false })
-                    .in("id", products);
-            if (productsInfoError) {
-                console.log(
-                    "Products Info Error: " +
-                        productsInfoError.code +
-                        " " +
-                        productsInfoError.message
-                );
-                return;
-            } else {
-                const newItems = await Promise.all(
-                    productsInfo?.map(async (item) => {
-                        item.subject = [];
-                        productCategories.forEach((productCategories) => {
-                            item.product_subject.map(
-                                (productSubject: string) => {
-                                    if (
-                                        productSubject === productCategories.id
-                                    ) {
-                                        item.subject.push(
-                                            productCategories.name
-                                        );
-                                        console.log(productCategories.name);
-                                    }
-                                }
-                            );
-                        });
-                        delete item.product_subject;
-
-                        const { data: gradeData, error: gradeError } =
-                            await supabase.from("grade_level").select("*");
-
-                        if (gradeError) {
-                            console.log(
-                                "supabase error: " + gradeError.message
-                            );
-                        } else {
-                            item.grade = [];
-                            gradeData.forEach((databaseGrade) => {
-                                item.post_grade.map((itemGrade: string) => {
-                                    if (
-                                        itemGrade ===
-                                        databaseGrade.id.toString()
-                                    ) {
-                                        item.grade.push(databaseGrade.grade);
-                                    }
-                                });
-                            });
-                        }
-
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-                        return item;
-                    })
-                );
-                setPurchasedItems(newItems);
-                console.log(purchasedItems());
-            }
-        }
-    };
 
     const fetchUser = async (user_id: string) => {
         try {
@@ -436,8 +339,9 @@ export const UserProfileView: Component = () => {
                                             {t("menus.profile")}
                                         </a>
 
-                                        {/* TODO: Add Back when feature is ready
+                                        
                                         <a id="user-profile-tab-favorites-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.favorites")}</a>
+                                        {/* TODO: Add Back when feature is ready
                                         <a id="user-profile-tab-following-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.following")}</a>
                                          */}
                                     </div>
@@ -599,9 +503,9 @@ export const UserProfileView: Component = () => {
                                 </Show>
 
                                 <Show when={tabSelected() === "favorites"}>
-                                    <p class="italic">
-                                        {t("messages.comingSoon")}
-                                    </p>
+                                    <div>
+                                        <ViewUserFavorites />
+                                    </div>
                                 </Show>
 
                                 <Show when={tabSelected() === "following"}>

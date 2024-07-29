@@ -99,16 +99,23 @@ export const Auth: Component = (props) => {
                         image_url: null,
                     };
 
-                    const { data: userData, error: userError } =
-                        await supabase
-                            .from("users")
-                            .insert([userSubmission]);
+                    const { data: userData, error: userError } = await supabase
+                        .from("users")
+                        .insert([userSubmission]);
                     if (userError) {
                         console.log(userError.message);
                         alert(t("apiErrors.userCreateProfileError"));
                         return;
                     }
-
+                    const { data: favoriteList, error: favoriteError } =
+                        await supabase.from("favorites").insert({
+                            customer_id: data.user?.id,
+                            list_name: t("menus.favorites"),
+                            default_list: true,
+                        });
+                    if (favoriteError) {
+                        console.log(favoriteError.message);
+                    }
                     if (error) throw error;
                     alert(t("messages.checkConfirmEmail"));
                     if (data && data.user) {

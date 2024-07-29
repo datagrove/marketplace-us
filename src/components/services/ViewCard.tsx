@@ -10,6 +10,7 @@ import { AddToCart } from "../common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn";
+import { FavoriteButton } from "@components/posts/AddFavorite";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -442,6 +443,13 @@ export const ViewCard: Component<Props> = (props) => {
                                                     id={post.id}
                                                     userId={post.user_id}
                                                     postImage={post.image_urls}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="relative col-span-1 flex w-full justify-end align-top">
+                                            <div class="inline-block">
+                                                <FavoriteButton
+                                                    id={post.id}
                                                 />
                                             </div>
                                         </div>
