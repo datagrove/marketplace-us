@@ -9,6 +9,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
 
 import stripe from "@lib/stripe";
@@ -448,7 +449,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     console.log(postImages());
 
     return (
-        <div id="large-full-card-div" class="mx-2 h-full w-full mb-2">
+        <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
             <div id="image-title-details-cart-div" class="grid grid-cols-7">
                 <div
                     id="images-div"
@@ -456,25 +457,45 @@ export const ViewFullPost: Component<Props> = (props) => {
                 >
                     <Show when={postImages().length > 0}>
                         <Show when={postImages().length === 1}>
-                            <div class="flex h-[300px] w-[300px] items-center justify-center rounded border border-gray-400">
-                                <img
-                                    src={postImages()[0]}
-                                    id="one-image"
-                                    class="flex max-h-[300px] max-w-[300px] items-center justify-center rounded dark:bg-background1"
-                                    alt={`${t("postLabels.image")}`}
-                                />
+                            <div class="relative flex h-[300px] w-[300px] items-center justify-center rounded border border-gray-400">
+                                <div class="top-4.5 absolute">
+                                    <img
+                                        src={postImages()[0]}
+                                        id="one-image"
+                                        class="flex max-h-[300px] max-w-[300px] items-center justify-center rounded dark:bg-background1"
+                                        alt={`${t("postLabels.image")}`}
+                                    />
+
+                                    <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                        <div class="inline-block">
+                                            <FavoriteButton
+                                                id={Number(props.postId)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </Show>
 
                         <Show when={postImages().length > 1}>
                             <div class="flex h-full w-full flex-col items-center justify-center">
-                                <div class="flex h-[290px] w-[290px] items-center justify-center lg:h-[330px] lg:w-[330px]">
-                                    <img
-                                        src={postImages()[0]}
-                                        id="main-image"
-                                        class="max-h-[290px] max-w-[290px] rounded dark:bg-background1"
-                                        alt={`${t("postLabels.image")}`}
-                                    />
+                                <div class="relative flex h-[290px] w-[290px] items-center justify-center lg:h-[330px] lg:w-[330px]">
+                                    <div class="top-4.5 absolute">
+                                        <img
+                                            src={postImages()[0]}
+                                            id="main-image"
+                                            class="max-h-[290px] max-w-[290px] rounded dark:bg-background1"
+                                            alt={`${t("postLabels.image")}`}
+                                        />
+
+                                        <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                            <div class="inline-block">
+                                                <FavoriteButton
+                                                    id={Number(props.postId)}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mt-1 flex w-full justify-around px-1">
@@ -807,10 +828,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         </Show>
                     </div>
 
-                    <div
-                        id="add-cart-div"
-                        class="mb-1 mr-2 flex justify-end "
-                    >
+                    <div id="add-cart-div" class="mb-1 mr-2 flex justify-end ">
                         <Quantity
                             quantity={1}
                             updateQuantity={updateQuantity}

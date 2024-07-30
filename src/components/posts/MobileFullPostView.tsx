@@ -8,6 +8,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
+import { FavoriteButton } from "@components/posts/AddFavorite";
 import stripe from "@lib/stripe";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -524,24 +525,38 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             <div id="images" class="flex flex-col items-center justify-center">
                 <Show when={postImages().length > 0}>
                     <Show when={postImages().length === 1}>
-                        <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
-                            <img
-                                src={postImages()[0]}
-                                id="one-image"
-                                class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
-                                alt={`${t("postLabels.image")}`}
-                            />
+                        <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                            <div class="top-4.5 absolute">
+                                <img
+                                    src={postImages()[0]}
+                                    id="one-image"
+                                    class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
+                                    alt={`${t("postLabels.image")}`}
+                                />
+                                <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                    <div class="inline-block">
+                                        <FavoriteButton
+                                            id={Number(props.postId)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Show>
 
                     <Show when={postImages().length > 1}>
-                        <div class="mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
+                        <div class="relative mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
                             <img
                                 src={postImages()[0]}
                                 id="mobile-main-image"
                                 class="max-h-[370px] max-w-full rounded dark:bg-background1"
                                 alt={`${t("postLabels.image")}`}
                             />
+                            <div class="absolute right-2.5 top-2.5 col-span-1 flex justify-end">
+                                <div class="inline-block">
+                                    <FavoriteButton id={Number(props.postId)} />
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-4 flex w-full justify-start">
@@ -592,7 +607,9 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <p class="text-2xl font-bold">{t("messages.free")}</p>
                     </Show>
                     <Show when={post()?.price! > 0}>
-                        <p class="text-2xl font-bold">${post()?.price.toFixed(2)}</p>
+                        <p class="text-2xl font-bold">
+                            ${post()?.price.toFixed(2)}
+                        </p>
                     </Show>
                 </div>
 

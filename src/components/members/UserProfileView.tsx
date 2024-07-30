@@ -339,8 +339,13 @@ export const UserProfileView: Component = () => {
                                             {t("menus.profile")}
                                         </a>
 
-                                        
-                                        <a id="user-profile-tab-favorites-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.favorites")}</a>
+                                        <a
+                                            id="user-profile-tab-favorites-link"
+                                            class="user-profile-tab-link mr-4 text-sm font-bold"
+                                            onClick={(e) => tabClick(e)}
+                                        >
+                                            {t("menus.favorites")}
+                                        </a>
                                         {/* TODO: Add Back when feature is ready
                                         <a id="user-profile-tab-following-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.following")}</a>
                                          */}
@@ -503,7 +508,7 @@ export const UserProfileView: Component = () => {
                                 </Show>
 
                                 <Show when={tabSelected() === "favorites"}>
-                                    <div>
+                                    <div id="favorites">
                                         <ViewUserFavorites />
                                     </div>
                                 </Show>

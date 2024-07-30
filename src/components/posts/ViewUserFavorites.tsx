@@ -8,6 +8,11 @@ import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
+import { ViewCard } from "@components/services/ViewCard.tsx";
+import { MobileViewCard } from "@components/services/MobileViewCard.tsx";
+
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -22,6 +27,8 @@ export const ViewUserFavorites: Component = () => {
     const [user, setUser] = createSignal<User>();
     const [favoritedItems, setFavoritedItems] = createSignal<Array<any>>([]);
     const [loading, setLoading] = createSignal<boolean>(true);
+
+    const screenSize = useStore(windowSize);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -187,8 +194,21 @@ export const ViewUserFavorites: Component = () => {
                     when={!loading()}
                     fallback={<div>{t("buttons.loading")}</div>}
                 >
-                    <Show when={favoritedItems().length > 0}>
-                        <ViewPurchaseCard posts={favoritedItems()} />
+                    <Show
+                        when={
+                            favoritedItems().length > 0 && screenSize() !== "sm"
+                        }
+                    >
+                        {/* <ViewPurchaseCard posts={favoritedItems()} /> */}
+                        <ViewCard posts={favoritedItems()} />
+                    </Show>
+
+                    <Show
+                        when={
+                            favoritedItems().length > 0 && screenSize() === "sm"
+                        }
+                    >
+                        <MobileViewCard posts={favoritedItems()} />
                     </Show>
                     <Show when={favoritedItems().length === 0}>
                         <p class="mb-6 italic">
