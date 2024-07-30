@@ -186,7 +186,7 @@ export const FavoriteButton: Component<Props> = (props) => {
                         stroke="none"
                         viewBox="0 0 512.00 512.00"
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-8 w-8 fill-icon1 dark:fill-icon1-DM rounded-full border border-border2 dark:border-border1"
+                        class="h-8 w-8 fill-icon1 dark:fill-icon1-DM rounded-full border border-inputBorder1 dark:border-inputBorder1-DM bg-icon1 dark:bg-icon1-DM"
                     >
                         <g
                             id="SVGRepo_bgCarrier"
