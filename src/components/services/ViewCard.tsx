@@ -138,26 +138,48 @@ export const ViewCard: Component<Props> = (props) => {
                     <li class="w-[99%] mb-3">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
+
+                                
                                 <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
-                                        <img
-                                            src={post.image_url}
-                                            alt={
-                                                post.image_urls?.split(",")[0]
-                                                    ? "User Image"
-                                                    : "No image"
-                                            }
-                                            class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
-                                        />
+                                        <div class="relative">
+                                            <img
+                                                src={post.image_url}
+                                                alt={
+                                                    post.image_urls?.split(",")[0]
+                                                        ? "User Image"
+                                                        : "No image"
+                                                }
+                                                class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            />
+
+                                            <div class="col-span-1 flex justify-end absolute top-2 right-2">
+                                                <div class="inline-block">
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     ) : (
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="35 0 186 256"
-                                            id="Flat"
-                                            class="h-full w-full fill-icon1 dark:fill-icon1-DM"
-                                        >
-                                            <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z" />
-                                        </svg>
+                                        <div class="relative ">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="35 0 186 256"
+                                                id="Flat"
+                                                class="h-full w-full fill-icon1 dark:fill-icon1-DM"
+                                            >
+                                                <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z" />
+                                            </svg>
+
+                                            <div class="col-span-1 flex justify-end align-top absolute top-10 right-2">
+                                                <div class="inline-block">
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
 
@@ -443,13 +465,6 @@ export const ViewCard: Component<Props> = (props) => {
                                                     id={post.id}
                                                     userId={post.user_id}
                                                     postImage={post.image_urls}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div class="relative col-span-1 flex w-full justify-end align-top">
-                                            <div class="inline-block border-2 border-red-500">
-                                                <FavoriteButton
-                                                    id={post.id}
                                                 />
                                             </div>
                                         </div>
