@@ -157,7 +157,7 @@ export const FavoriteButton: Component<Props> = (props) => {
                 </button>
             </Show>
             <Show when={added() === true}>
-                <div class="rounded-lg bg-background1 dark:bg-background1-DM text-black -right-1 top-24 absolute w-[194px] z-0 py-0.5 shadow-md">
+                <div class="rounded-lg bg-background1 dark:bg-background1-DM text-black -right-1 top-24 absolute w-[190px] md:w-[194px] xl:w-[240px] z-0 py-0.5 shadow-md">
                     <p class="text-center text-ptext1 dark:text-ptext1-DM italic pr-1">{t("messages.addedToFavorites")}</p>
                 </div>
             </Show>

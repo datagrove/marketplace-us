@@ -138,11 +138,9 @@ export const ViewCard: Component<Props> = (props) => {
                     <li class="w-[99%] mb-3">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
-
-                                
-                                <div class="mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
+                                <div class="relative mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
-                                        <div class="relative">
+                                        <div class="absolute top-0">
                                             <img
                                                 src={post.image_url}
                                                 alt={
@@ -162,7 +160,7 @@ export const ViewCard: Component<Props> = (props) => {
                                             </div>
                                         </div>
                                     ) : (
-                                        <div class="relative ">
+                                        <div class="relative">
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="35 0 186 256"
