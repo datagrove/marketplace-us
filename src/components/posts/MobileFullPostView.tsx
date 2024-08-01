@@ -9,6 +9,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import stripe from "@lib/stripe";
+import { ReportResource } from "./ReportResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -21,6 +22,7 @@ interface Props {
     postId: string | undefined;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
 export const MobileViewFullPost: Component<Props> = (props) => {
     const test1 = ["../../../src/assets/services.png"];
     const test2 = [
@@ -811,28 +813,14 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </p>
             </div> */}
 
-            <div class="flex w-fit items-center justify-start">
-                <svg
-                    fill="none"
-                    width="20px"
-                    height="20px"
-                    viewBox="0 0 24 24"
-                    class="fill-alert1 dark:fill-alert1-DM"
-                >
-                    <g data-name="Layer 2">
-                        <g data-name="flag">
-                            <polyline points="24 24 0 24 0 0" opacity="0" />
-                            <path d="M19.27 4.68a1.79 1.79 0 0 0-1.6-.25 7.53 7.53 0 0 1-2.17.28 8.54 8.54 0 0 1-3.13-.78A10.15 10.15 0 0 0 8.5 3c-2.89 0-4 1-4.2 1.14a1 1 0 0 0-.3.72V20a1 1 0 0 0 2 0v-4.3a6.28 6.28 0 0 1 2.5-.41 8.54 8.54 0 0 1 3.13.78 10.15 10.15 0 0 0 3.87.93 7.66 7.66 0 0 0 3.5-.7 1.74 1.74 0 0 0 1-1.55V6.11a1.77 1.77 0 0 0-.73-1.43zM18 14.59a6.32 6.32 0 0 1-2.5.41 8.36 8.36 0 0 1-3.13-.79 10.34 10.34 0 0 0-3.87-.92 9.51 9.51 0 0 0-2.5.29V5.42A6.13 6.13 0 0 1 8.5 5a8.36 8.36 0 0 1 3.13.79 10.34 10.34 0 0 0 3.87.92 9.41 9.41 0 0 0 2.5-.3z" />
-                        </g>
-                    </g>
-                </svg>
 
-                <a href="mailto:info@learngrove.co">
-                    <p class="text-light pl-1 italic">{t("messages.report")}</p>
-                </a>
-            </div>
-
-            <div class="flex w-full items-center justify-end">
+            <div class="flex w-full items-center justify-between">
+            <div class="mb-1 mr-2 mt-4">
+                    <ReportResource
+                        post={post()!}
+                        user_id={User.session?.user.id!}
+                    />
+                </div>
                 <div class="mt-2 flex w-fit items-end justify-end bg-background2 px-2 dark:bg-background2-DM">
                     <a href="#mobile-full-card">
                         <p class="text-ptext2 dark:text-ptext2-DM">

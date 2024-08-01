@@ -165,6 +165,7 @@ export interface uiObject {
         currentBalance: string;
         descriptionRequired: string;
         reportResource: string;
+        pleaseDescribe: string;
     };
 
     formLabels: {
