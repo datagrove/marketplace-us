@@ -59,7 +59,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                 alert(t("messages.noUser")); //TODO: Change alert message
                 location.href = `/${lang}`;
             } else {
-                console.log(data);
+                // console.log(data);
             }
         } catch (error) {
             console.log(error);
@@ -67,16 +67,16 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
     };
 
     onMount(async () => {
-        console.log("Item");
-        console.log(props.item);
+        // console.log("Item");
+        // console.log(props.item);
         setSession(User?.session);
         // await fetchUser(User?.session?.user.id!);
         await getPurchasedItems();
     });
 
     const getPurchasedItems = async () => {
-        console.log("Session Info: ");
-        console.log(session());
+        // console.log("Session Info: ");
+        // console.log(session());
         const { data: orders, error } = await supabase
             .from("orders")
             .select("*")
@@ -89,8 +89,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         }
         const orderedItemsIds = orders?.map((order) => order.order_number);
 
-        console.log("orders");
-        console.log(orders);
+        // console.log("orders");
+        // console.log(orders);
 
         const { data: orderDetails, error: orderDetailsError } = await supabase
             .from("order_details")
@@ -105,7 +105,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             );
         }
         const products = orderDetails?.map((item) => item.product_id);
-        console.log(products);
+        // console.log(products);
         if (products) {
             setPurchasedItemsId(products);
         }
@@ -126,18 +126,18 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                 return;
             }
             setPurchasedItems(productsInfo);
-            console.log("Purchased Items");
-            console.log(purchasedItems());
+            // console.log("Purchased Items");
+            // console.log(purchasedItems());
 
-            console.log("Checking purchased items");
+            // console.log("Checking purchased items");
 
             if (props.item.id !== undefined) {
                 if (purchasedItemsId().includes(props.item.id)) {
                     for (const purchasedItem of purchasedItems()) {
                         if (purchasedItem.id === props.item.id) {
-                            console.log(purchasedItem.resource_urls);
+                            // console.log(purchasedItem.resource_urls);
                             setDownloadEnabled(true);
-                            console.log(downloadEnabled());
+                            // console.log(downloadEnabled());
                             break;
                         }
                     }
@@ -150,9 +150,9 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
         e.preventDefault();
         e.stopPropagation();
 
-        console.log("Starting Download");
+        // console.log("Starting Download");
 
-        console.log(props.item.id);
+        // console.log(props.item.id);
 
         if (props.item.id !== undefined) {
             if (purchasedItemsId().includes(props.item.id)) {

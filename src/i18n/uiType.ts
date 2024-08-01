@@ -163,6 +163,7 @@ export interface uiObject {
         requestPayout: string;
         currentBalance: string;
         descriptionRequired: string;
+        addedToFavorites: string;
     };
 
     formLabels: {

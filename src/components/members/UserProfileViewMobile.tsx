@@ -19,6 +19,7 @@ import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
 import stripe from "@lib/stripe";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
+import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -200,7 +201,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
 
                 <div class="user-profile-tabs my-4 flex items-center justify-between border-b border-gray-300 pb-2">
                     <div class="">
-                    <a
+                        <a
                             id="user-profile-mobile-tab-purchases-link"
                             class="user-profile-mobile-tab-link mr-4 border-b-2 border-green-500 text-sm font-bold"
                             onClick={(e) => tabClick(e)}
@@ -214,8 +215,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                         >
                             {t("menus.profile")}
                         </a>
-                        
-                        {/* TODO: Add favorites and following tab when implemented
+
                         <a
                             id="user-profile-mobile-tab-favorites-link"
                             class="user-profile-mobile-tab-link mr-4 text-sm font-bold"
@@ -223,6 +223,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                         >
                             {t("menus.favorites")}
                         </a>
+                        {/* TODO: Add favorites and following tab when implemented
                         <a
                             id="user-profile-mobile-tab-following-link"
                             class="user-profile-mobile-tab-link mr-4 text-sm font-bold"
@@ -397,7 +398,9 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                 </Show>
 
                 <Show when={tabSelected() === "favorites"}>
-                    <p class="italic">{t("messages.comingSoon")}</p>
+                    <div>
+                        <ViewUserFavorites />
+                    </div>
                 </Show>
 
                 <Show when={tabSelected() === "following"}>
