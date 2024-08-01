@@ -196,6 +196,7 @@ export const French = {
         descriptionRequired: "Vous devez inclure une description de l'annonce",
         reportResource: "En cliquant sur Soumettre, vous générerez un e-mail dans votre client par défaut à envoyer à notre équipe d'assistance pour examiner votre rapport. Veuillez laisser toutes les informations générées telles quelles pour permettre à notre équipe d'enquêter sur votre rapport. Si vous préférez envoyer un e-mail en utilisant votre client préféré, veuillez copier et coller les informations ci-dessus dans votre e-mail à <b>support@learngrove.co</b>.",
         pleaseDescribe: "S'il vous plaît décrivez le problème", 
+        addedToFavorites: "Ajouté aux Favoris!",
     },
 
     formLabels: {

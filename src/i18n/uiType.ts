@@ -166,6 +166,7 @@ export interface uiObject {
         descriptionRequired: string;
         reportResource: string;
         pleaseDescribe: string;
+        addedToFavorites: string;
     };
 
     formLabels: {
