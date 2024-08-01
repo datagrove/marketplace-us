@@ -12,6 +12,7 @@ import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
 
 import stripe from "@lib/stripe";
+import { ReportResource } from "./ReportResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -448,7 +449,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     console.log(postImages());
 
     return (
-        <div id="large-full-card-div" class="mx-2 h-full w-full mb-2">
+        <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
             <div id="image-title-details-cart-div" class="grid grid-cols-7">
                 <div
                     id="images-div"
@@ -807,10 +808,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         </Show>
                     </div>
 
-                    <div
-                        id="add-cart-div"
-                        class="mb-1 mr-2 flex justify-end "
-                    >
+                    <div id="add-cart-div" class="mb-1 mr-2 flex justify-end">
                         <Quantity
                             quantity={1}
                             updateQuantity={updateQuantity}
@@ -824,11 +822,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 item={{ ...post()!, quantity: 1 }}
                                 buttonClick={resetQuantity}
                             />
-                        </div>
-                        <div class="my-4 flex items-center justify-center">
-                            <button class="btn-primary md:hidden">
-                                {t("menus.freeDownload")}
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -970,7 +963,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                 </div>
             </div>
 
-            <div class="flex w-full items-center justify-end">
+            <div class="flex w-full items-center justify-between">
+                <div class="mb-1 mr-2 mt-4">
+                    <ReportResource
+                        post={post()!}
+                        user_id={session()?.user.id!}
+                    />
+                </div>
                 <div class="mt-2 flex w-fit items-end justify-end bg-background2 px-2 dark:bg-background2-DM">
                     <a href="#large-full-card-div">
                         <p class="text-ptext2 dark:text-ptext2-DM">
