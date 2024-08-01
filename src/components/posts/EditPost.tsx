@@ -21,6 +21,7 @@ import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
 import type { Post } from "@lib/types";
+import { UpdateStripeProduct } from "./UpdateStripeProduct";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -126,7 +127,7 @@ async function updateFormData(formData: FormData) {
     tmpDiv.innerHTML = formData.get("Content") as string;
     let description = tmpDiv.textContent || tmpDiv.innerText || "";
     if ((formData.get("Price") as string) != null) {
-      CreateStripeProductPrice({
+      UpdateStripeProduct({
         name: String(formData.get("Title")),
         description: description,
         price: parseInt(formData.get("Price") as string),
@@ -152,6 +153,7 @@ async function updateFormData(formData: FormData) {
 }
 interface Props {
   post: Post | undefined;
+  // tax: string | undefined;
 }
 
 export const EditPost: Component<Props> = (props: Props) => {
@@ -162,9 +164,9 @@ export const EditPost: Component<Props> = (props: Props) => {
   const [mode, setMode] = createStore({
     theme: localStorage.getItem("theme"),
   });
-  const taxCodeOptions: HTMLOptionElement[] = [];
-  const [selectedTaxCode, setSelectedTaxCode] =
-    createSignal<HTMLOptionElement>();
+  // const taxCodeOptions: HTMLOptionElement[] = [];
+  // const [selectedTaxCode, setSelectedTaxCode] =
+  //   createSignal<HTMLOptionElement>();
   const [subjects, setSubjects] = createSignal<
     Array<{ id: number; subject: string }>
   >([]);
@@ -240,39 +242,39 @@ export const EditPost: Component<Props> = (props: Props) => {
       }
 
       //Tax Code
-      try {
-        const { data: taxCodes } = await stripe.taxCodes.list({
-          limit: 100,
-        });
-        if (error) {
-          console.log("stripe error: " + error.message);
-        } else {
-          taxCodes.forEach((taxCode) => {
-            if (
-              //Digital Products
-              /^txcd_1.*/.test(taxCode.id) &&
-              //Not in our filter list
-              !Array.from(excludeTaxCodes).some(
-                (excludeTaxCode) =>
-                  excludeTaxCode.test(taxCode.id)
-              )
-            ) {
-              let taxCodeOption = new Option(
-                taxCode.name,
-                taxCode.id
-              );
-              taxCodeOption.setAttribute(
-                "data-description",
-                taxCode.description
-              );
-              taxCodeOptions.push(taxCodeOption);
-            }
-          });
-        }
-      } catch (error) {
-        console.log("Other error: " + error);
-      }
-
+      // try {
+      //   const { data: taxCodes } = await stripe.taxCodes.list({
+      //     limit: 100,
+      //   });
+      //   if (error) {
+      //     console.log("stripe error: " + error.message);
+      //   } else {
+      //     taxCodes.forEach((taxCode) => {
+      //       if (
+      //         //Digital Products
+      //         /^txcd_1.*/.test(taxCode.id) &&
+      //         //Not in our filter list
+      //         !Array.from(excludeTaxCodes).some(
+      //           (excludeTaxCode) =>
+      //             excludeTaxCode.test(taxCode.id)
+      //         )
+      //       ) {
+      //         let taxCodeOption = new Option(
+      //           taxCode.name,
+      //           taxCode.id
+      //         );
+      //         taxCodeOption.setAttribute(
+      //           "data-description",
+      //           taxCode.description
+      //         );
+      //         taxCodeOptions.push(taxCodeOption);
+      //       }
+      //     });
+      //   }
+      // } catch (error) {
+      //   console.log("Other error: " + error);
+      // }
+      //
       //Resource Type Level
       try {
         const { data: resourceType, error } = await supabase
@@ -348,11 +350,11 @@ export const EditPost: Component<Props> = (props: Props) => {
       formData.set("Price", price());
     }
 
-    if (selectedTaxCode() !== undefined) {
-      formData.append("TaxCode", selectedTaxCode()!.value.toString());
-    } else if (price() === "0") {
-      formData.append("TaxCode", "txcd_10000000");
-    }
+    // if (selectedTaxCode() !== undefined) {
+    //   formData.append("TaxCode", selectedTaxCode()!.value.toString());
+    // } else if (price() === "0") {
+    //   formData.append("TaxCode", "txcd_10000000");
+    // }
 
     if (subjectPick() !== undefined) {
       formData.append("subject", JSON.stringify(subjectPick()));
