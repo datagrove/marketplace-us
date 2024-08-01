@@ -199,7 +199,7 @@ export const EditPost: Component<Props> = (props: Props) => {
       }
     });
     setGradePick(props.post?.post_grade!);
-    setSubjectPick(props.post?.subject!);
+    setSubjectPick(subjectOriginalArrayInNumbers)
     setResourceTypesPick(props.post?.resource_types!);
     console.log(props.post?.product_subject, "hola")
     if (props.post?.image_urls!) {
@@ -324,15 +324,12 @@ export const EditPost: Component<Props> = (props: Props) => {
 
     subjects().map((subject) => {
 
-      for (let i = 0; i < props.post?.subject?.length; i++) {
-
+      for (let i = 0; i < props.post?.subject?.length!; i++) {
         console.log(props.post?.subject[i])
         if (subject.subject === props.post?.subject[i]) {
-
+          subjectOriginalArrayInNumbers.push(subject.id.toString())
         }
       }
-
-
     })
 
   });
