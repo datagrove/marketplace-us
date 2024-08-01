@@ -184,3 +184,5 @@ to authenticated
 using ((EXISTS ( SELECT 1
    FROM favorites
   WHERE ((favorites.customer_id = auth.uid()) AND (favorites.list_number = favorites_products.list_number)))));
+
+ALTER POLICY "Give users authenticated select access 936eml_0" ON "storage"."objects" TO anon;
