@@ -43,7 +43,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
   const [session, setSession] = createSignal<AuthSession | null>(null);
 
-  const [editRender, setEditRender] = createSignal<boolean>();
+  const [editRender, setEditRender] = createSignal<boolean>(false);
 
   if (UserError) {
     console.log("User Error: " + UserError.message);
@@ -95,7 +95,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                 }
               );
             });
-            delete item.product_subject;
 
             const { data: gradeData, error: gradeError } =
               await supabase.from("grade_level").select("*");
@@ -817,7 +816,7 @@ export const ViewFullPost: Component<Props> = (props) => {
               <Show when={session()?.user.id === post()?.user_id}>
                 <button
                   onclick={() => {
-                    setEditRender(!setEditRender());
+                    setEditRender(!editRender());
                     console.log(editRender());
                   }}
                 >
@@ -1016,8 +1015,8 @@ export const ViewFullPost: Component<Props> = (props) => {
           </div>
         </div>
       </Show>
-      <Show when={editRender()}>
-        <EditPost post={post()} />
+      <Show when={editRender() && post()}>
+        <EditPost post={post()!} />
       </Show>
     </div>
   );
