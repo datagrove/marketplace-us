@@ -126,6 +126,7 @@ export const French = {
         viewOrders: "Voir les Achats",
         reportResource: "Signaler cette ressource",
         updateResource: "Mettre à jour la Ressource",
+        editPost: "Editer",
     },
 
     messages: {

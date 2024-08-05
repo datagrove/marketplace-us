@@ -129,6 +129,7 @@ export const English = {
         viewOrders: "View Purchases",
         reportResource: "Report this Resource",
         updateResource: "Update Resource",
+        editPost: "Edit",
     },
 
     messages: {

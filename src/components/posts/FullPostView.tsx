@@ -826,12 +826,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                             {/* > */}
                             <Show when={session()?.user.id === post()?.user_id}>
                                 <button
+                                    class="btn-primary"
                                     onclick={() => {
                                         setEditRender(!editRender());
                                         //(editRender());
                                     }}
                                 >
-                                    Edit
+                                    {t("buttons.editPost")}
                                 </button>
                             </Show>
 
