@@ -816,7 +816,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <button
                   onclick={() => {
                     setEditRender(!editRender());
-                    // console.log(editRender());
+                    //(editRender());
                   }}
                 >
                   Edit

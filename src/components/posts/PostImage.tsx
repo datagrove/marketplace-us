@@ -18,19 +18,40 @@ const PostImage: Component<Props> = (props) => {
     const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
     // const [imageUrl, setImageUrl] = createSignal({ placeholderImg });
     const [uploading, setUploading] = createSignal(false);
+    const [hasRun, setHasRun] = createSignal(false);
     const [imageIds, setImageIds] = createSignal<Array<string>>([]);
 
-    onMount(async () => {
+    createEffect(() => {
         console.log("Mounting", props.url);
-
-        if (props.url) {
-            await updateImages();
+        console.log("Has Run", hasRun());
+        if (props.url && !hasRun()) {
+            if (Array.isArray(props.url) && props.url.length > 0) {
+                updateImages();
+                setHasRun (true);
+            } else if (props.url !== null && typeof props.url === "string") {
+                downloadImage(props.url);
+                setHasRun (true);
+            } 
         }
     });
 
-    createEffect(async () => {
-        await updateImages();
-    });
+    // const updateImages = async () => {
+    //     if (Array.isArray(props.url)) {
+    //         for (const url of props.url) {
+    //             if (!imageIds().includes(url)) {
+    //                 await downloadImage(url);
+    //             }
+    //         }
+    //     } else {
+    //         if (!imageIds().includes(props.url!)) {
+    //             await downloadImage(props.url!);
+    //         }
+    //     }
+    // };
+
+    // createEffect(async () => {
+    //     await updateImages();
+    // });
 
     const updateImages = async () => {
         console.log("Update Images", props.url);
@@ -56,6 +77,7 @@ const PostImage: Component<Props> = (props) => {
 
     const downloadImage = async (path: string) => {
         try {
+            console.log("ImageUrl", imageUrl());
             console.log("Downloading", path);
             const { data, error } = await supabase.storage
                 .from("post.image")
@@ -65,6 +87,7 @@ const PostImage: Component<Props> = (props) => {
             }
 
             const url = URL.createObjectURL(data);
+
             setImageIds(prevIds => {
                 const newIds = new Set(prevIds);
                 newIds.add(path);
@@ -85,6 +108,7 @@ const PostImage: Component<Props> = (props) => {
         }
     };
 
+    
     const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (
         event
     ) => {
@@ -108,9 +132,10 @@ const PostImage: Component<Props> = (props) => {
             if (uploadError) {
                 throw uploadError;
             }
-
+            setHasRun(true);
             props.onUpload(event, filePath);
-            // downloadImage(filePath);
+            
+            downloadImage(filePath);
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);
@@ -135,6 +160,14 @@ const PostImage: Component<Props> = (props) => {
             imageArray.splice(blobIndex, 1);
             setImageUrl(imageArray);
             console.log(imageUrl());
+        }
+
+        const imageIdArray = [...imageIds()];
+        
+        if (index > -1) {
+            imageIdArray.splice(index, 1);
+            setImageIds(imageIdArray);
+            console.log(imageIds());
         }
     };
 
