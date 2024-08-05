@@ -124,6 +124,7 @@ export const French = {
         listResource: "Publier la Ressource",
         continueShopping: "Continuer vos achats",
         viewOrders: "Voir les Achats",
+        updateResource: "Mettre à jour la Ressource",
     },
 
     messages: {

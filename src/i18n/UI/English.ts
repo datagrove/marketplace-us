@@ -127,6 +127,7 @@ export const English = {
         listResource: "List Resource",
         continueShopping: "Continue Shopping",
         viewOrders: "View Orders",
+        updateResource: "Update Resource",
     },
 
     messages: {
