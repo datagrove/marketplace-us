@@ -550,12 +550,13 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         </div>
                         <Show when={session()?.user.id === post()?.user_id}>
                             <button
+                                class="btn-primary"
                                 onclick={() => {
                                     setEditRender(!editRender());
-                                    console.log(editRender());
+                                    //(editRender());
                                 }}
                             >
-                                Edit
+                                {t("buttons.editPost")}
                             </button>
                         </Show>
                     </div>
