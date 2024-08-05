@@ -88,8 +88,10 @@ export const EditPost: Component<Props> = (props: Props) => {
         setGradePick(props.post?.post_grade!);
         setSubjectPick(props.post.product_subject);
         setResourceTypesPick(props.post?.resource_types!);
+
         if (props.post?.image_urls) {
             setImageUrl(props.post?.image_urls.split(","));
+            // console.log(imageUrl())
         }
         //Image_urls is a single string of urls comma separated
         // if (props.post?.image_urls) {
@@ -125,7 +127,6 @@ export const EditPost: Component<Props> = (props: Props) => {
                 const { data: resourceType, error } = await supabase
                     .from("resource_types")
                     .select("*");
-                console.log(resourceType);
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
@@ -172,7 +173,7 @@ export const EditPost: Component<Props> = (props: Props) => {
 
     createEffect(() => {
         setImageLength(imageUrl().length);
-        console.log(imageLength());
+        // console.log(imageLength());
     })
 
     async function submit(e: SubmitEvent) {
@@ -289,7 +290,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 .getElementById("subjectToolTip")
                 ?.classList.remove("hidden");
         }
-        console.log(subjectPick());
+
     }
 
     function formatPrice(resourcePrice: string) {
@@ -303,7 +304,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setGradeArray(e: Event) {
-        console.log(gradePick());
+        // console.log(gradePick());
         if ((e.target as HTMLInputElement).checked) {
             setGradePick([
                 ...gradePick(),
@@ -326,7 +327,7 @@ export const EditPost: Component<Props> = (props: Props) => {
             document.getElementById("isGradeValid")?.classList.add("hidden");
             document.getElementById("gradeToolTip")?.classList.remove("hidden");
         }
-        console.log(gradePick());
+        // console.log(gradePick());
     }
 
     function setResourceTypesArray(e: Event) {
@@ -364,7 +365,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 .getElementById("resourceTypesToolTip")
                 ?.classList.remove("hidden");
         }
-        console.log(resourceTypesPick());
+        // console.log(resourceTypesPick());
     }
 
     function mountTiny() {

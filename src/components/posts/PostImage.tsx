@@ -20,31 +20,64 @@ const PostImage: Component<Props> = (props) => {
     const [uploading, setUploading] = createSignal(false);
     const [imageIds, setImageIds] = createSignal<Array<string>>([]);
 
-   onMount(() => {
+    onMount(async () => {
+        console.log("Mounting", props.url);
+
         if (props.url) {
-            if (Array.isArray(props.url)) {
-                props.url.forEach((url) => {
-                    downloadImage(url);
-                });
-                return;
-            } else {
-            downloadImage(props.url);
-            }
+            await updateImages();
         }
     });
 
+    createEffect(async () => {
+        await updateImages();
+    });
+
+    const updateImages = async () => {
+        console.log("Update Images", props.url);
+        console.log("Image Ids", imageIds());
+        if (props.url) {
+            if (Array.isArray(props.url)) {
+                const urlsToDownload = props.url.filter(
+                    (url) => !imageIds().includes(url)
+                );
+                console.log("Urls to download", urlsToDownload);
+                await Promise.all(
+                    urlsToDownload.map(async (url) => {
+                        await downloadImage(url);
+                    })
+                ); // for (const url of urlsToDownload) {
+            } else {
+                if (!imageIds().includes(props.url)) {
+                    await downloadImage(props.url);
+                }
+            }
+        }
+    };
 
     const downloadImage = async (path: string) => {
         try {
+            console.log("Downloading", path);
             const { data, error } = await supabase.storage
                 .from("post.image")
                 .download(path);
             if (error) {
                 throw error;
             }
-            setImageIds([...imageIds(), path]);
+
             const url = URL.createObjectURL(data);
-            setImageUrl([...imageUrl(), url]);
+            setImageIds(prevIds => {
+                const newIds = new Set(prevIds);
+                newIds.add(path);
+                return Array.from(newIds);
+            });
+    
+            setImageUrl(prevUrls => {
+                // Ensure no duplicate URLs
+                if (!prevUrls.includes(url)) {
+                    return [...prevUrls, url];
+                }
+                return prevUrls;
+            });
         } catch (error) {
             if (error instanceof Error) {
                 console.log("Error downloading image: ", error.message);
@@ -77,7 +110,7 @@ const PostImage: Component<Props> = (props) => {
             }
 
             props.onUpload(event, filePath);
-            downloadImage(filePath);
+            // downloadImage(filePath);
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);
@@ -87,7 +120,7 @@ const PostImage: Component<Props> = (props) => {
         }
     };
 
-    const removeImage = async (index: number, image:string) => {
+    const removeImage = async (index: number, image: string) => {
         console.log(imageIds());
         const imageId = imageIds()[index];
         console.log(imageId);
@@ -152,7 +185,7 @@ const PostImage: Component<Props> = (props) => {
                 </span>
             </div>
 
-            {imageUrl().length > 0 && imageUrl().length <= 5 ? (
+            {imageUrl().length > 0 ? (
                 imageUrl().map((image, index) => (
                     <img
                         src={image}

@@ -153,7 +153,7 @@ export const ViewFullPost: Component<Props> = (props) => {
           })
         );
         setPost(newItem[0]);
-        console.log(post()?.product_subject)
+        // console.log(post()?.product_subject)
       }
     } catch (error) {
       console.log(error);
@@ -299,7 +299,7 @@ export const ViewFullPost: Component<Props> = (props) => {
       "",
       "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
     );
-    console.log("TestLink: ", testLink);
+    // console.log("TestLink: ", testLink);
     // return false;
   }
 
@@ -412,7 +412,6 @@ export const ViewFullPost: Component<Props> = (props) => {
   }
 
   function closeDetails() {
-    console.log("change details function");
 
     let details = document.getElementById("lg-details-div");
 
@@ -448,7 +447,7 @@ export const ViewFullPost: Component<Props> = (props) => {
       qa.classList.add("hidden");
     }
   }
-  console.log(postImages());
+  // console.log(postImages());
 
   return (
     <div>
@@ -817,7 +816,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 <button
                   onclick={() => {
                     setEditRender(!editRender());
-                    console.log(editRender());
+                    // console.log(editRender());
                   }}
                 >
                   Edit
