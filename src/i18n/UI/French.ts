@@ -125,6 +125,7 @@ export const French = {
         continueShopping: "Continuer vos achats",
         viewOrders: "Voir les Achats",
         reportResource: "Signaler cette ressource",
+        updateResource: "Mettre à jour la Ressource",
     },
 
     messages: {

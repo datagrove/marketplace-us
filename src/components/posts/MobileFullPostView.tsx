@@ -10,6 +10,8 @@ import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import stripe from "@lib/stripe";
+import { EditPost } from "./EditPost";
+import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -38,8 +40,24 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     const [postImages, setPostImages] = createSignal<string[]>([]);
     const [testImages, setTestImages] = createSignal<string[]>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
+    const [session, setSession] = createSignal<AuthSession | null>(null);
 
-    // setTestImages(test2);
+    const [editRender, setEditRender] = createSignal<boolean>(false);
+
+    onMount(async () => {
+        const { data: User, error: UserError } =
+            await supabase.auth.getSession();
+        if (UserError) {
+            console.log("User Error: " + UserError.message);
+        } else {
+            if (User.session === null) {
+                console.log("User Session: " + User.session);
+                setSession(null);
+            } else {
+                setSession(User.session);
+            }
+        }
+    });
 
     onMount(async () => {
         if (props.postId === undefined) {
@@ -88,7 +106,6 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 }
                             );
                         });
-                        delete item.product_subject;
 
                         const { data: gradeData, error: gradeError } =
                             await supabase.from("grade_level").select("*");
@@ -347,15 +364,17 @@ export const MobileViewFullPost: Component<Props> = (props) => {
     }
 
     return (
-        <div id="mobile-full-card" class="h-full w-11/12">
-            <div
-                id="full-resource-title"
-                class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM"
-            >
-                <p class="text-2xl font-bold">{post()?.title}</p>
-            </div>
+        <>
+            <Show when={!editRender()}>
+                <div id="mobile-full-card" class="h-full w-11/12">
+                    <div
+                        id="full-resource-title"
+                        class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM"
+                    >
+                        <p class="text-2xl font-bold">{post()?.title}</p>
+                    </div>
 
-            {/* TODO: Add back ratings
+                    {/* TODO: Add back ratings
             <div id="ratings-div" class="my-1 flex">
                 <div id="ratings-stars-div" class="mr-2 flex w-fit">
                     <svg
@@ -416,33 +435,40 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </div>
             </div> */}
 
-            <div id="creator-followers-div" class="flex w-full items-center">
-                <div
-                    id="creator-img-div"
-                    class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
-                >
-                    <a href={`/${lang}/creator/${post()?.seller_id}`}>
-                        <svg
-                            fill="none"
-                            width="40px"
-                            height="40px"
-                            viewBox="0 0 32 32"
-                            class="fill-icon1 dark:fill-icon1-DM"
+                    <div
+                        id="creator-followers-div"
+                        class="flex w-full items-center"
+                    >
+                        <div
+                            id="creator-img-div"
+                            class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
                         >
-                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                        </svg>
-                    </a>
-                </div>
+                            <a href={`/${lang}/creator/${post()?.seller_id}`}>
+                                <svg
+                                    fill="none"
+                                    width="40px"
+                                    height="40px"
+                                    viewBox="0 0 32 32"
+                                    class="fill-icon1 dark:fill-icon1-DM"
+                                >
+                                    <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                </svg>
+                            </a>
+                        </div>
 
-                <div id="creator-follower-text-div" class="ml-1 w-5/6">
-                    <div>
-                        <a href={`/${lang}/creator/${post()?.seller_id}`}>
-                            <p class="font-bold">{post()?.seller_name}</p>
-                        </a>
-                    </div>
+                        <div id="creator-follower-text-div" class="ml-1 w-5/6">
+                            <div>
+                                <a
+                                    href={`/${lang}/creator/${post()?.seller_id}`}
+                                >
+                                    <p class="font-bold">
+                                        {post()?.seller_name}
+                                    </p>
+                                </a>
+                            </div>
 
-                    {/* <div class="flex w-full items-center">
-                        <div>117.1K Followers</div>
+                            {/* <div class="flex w-full items-center">
+                            <div>117.1K Followers</div>
 
                         <div>
                             <button
@@ -521,133 +547,141 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             </button>
                         </div>
                     </div> */}
-                </div>
-            </div>
-
-            <div id="images" class="flex flex-col items-center justify-center">
-                <Show when={postImages().length > 0}>
-                    <Show when={postImages().length === 1}>
-                        <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
-                            <div class="top-4.5 absolute">
-                                <img
-                                    src={postImages()[0]}
-                                    id="one-image"
-                                    class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
-                                    alt={`${t("postLabels.image")}`}
-                                />
-                                <div class="absolute right-2 top-2 col-span-1 flex justify-end">
-                                    <div class="inline-block">
-                                        <FavoriteButton
-                                            id={Number(props.postId)}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
-                    </Show>
-
-                    <Show when={postImages().length > 1}>
-                        <div class="relative mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
-                            <img
-                                src={postImages()[0]}
-                                id="mobile-main-image"
-                                class="max-h-[370px] max-w-full rounded dark:bg-background1"
-                                alt={`${t("postLabels.image")}`}
-                            />
-                            <div class="absolute right-2.5 top-2.5 col-span-1 flex justify-end">
-                                <div class="inline-block">
-                                    <FavoriteButton id={Number(props.postId)} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 flex w-full justify-start">
-                            {postImages().map(
-                                (image: string, index: number) => (
-                                    <div class="flex h-16 w-1/5 items-center justify-center">
-                                        {index === 0 ? (
-                                            <div
-                                                // id={ index.toString() }
-                                                id={`mobileImg${index.toString()}`}
-                                                class="mobileImageLink flex h-16 w-16 items-center justify-center"
-                                                onClick={(e) => imageClick(e)}
-                                            >
-                                                <img
-                                                    src={image}
-                                                    class="mb-2 h-full w-full rounded object-cover"
-                                                    alt={`${t("postLabels.image")} ${index + 2}`}
-                                                />
-                                            </div>
-                                        ) : (
-                                            <div
-                                                // id={ index.toString() }
-                                                id={`mobileImg${index.toString()}`}
-                                                class="mobileImageLink flex h-16 w-16 items-center justify-center"
-                                                onClick={(e) => imageClick(e)}
-                                            >
-                                                <img
-                                                    src={image}
-                                                    class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
-                                                    alt={`${t("postLabels.image")} ${index + 2}`}
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-                                )
-                            )}
-                        </div>
-                    </Show>
-                </Show>
-            </div>
-
-            <div
-                id="cart-price-div"
-                class="sticky top-0 my-4 flex flex-col bg-background1 dark:bg-background1-DM"
-            >
-                <div class="mx-1 flex justify-end">
-                    <Show when={post()?.price! === 0}>
-                        <p class="text-2xl font-bold">{t("messages.free")}</p>
-                    </Show>
-                    <Show when={post()?.price! > 0}>
-                        <p class="text-2xl font-bold">
-                            ${post()?.price.toFixed(2)}
-                        </p>
-                    </Show>
-                </div>
-
-                <div class="my-2 flex justify-between">
-                    <Quantity quantity={1} updateQuantity={updateQuantity} />
-                    <div class="ml-4 w-full">
-                        <AddToCart
-                            item={{ ...post()!, quantity: 1 }}
-                            buttonClick={resetQuantity}
-                        />
+                        <Show when={session()?.user.id === post()?.user_id}>
+                            <button
+                                onclick={() => {
+                                    setEditRender(!editRender());
+                                    console.log(editRender());
+                                }}
+                            >
+                                Edit
+                            </button>
+                        </Show>
                     </div>
-                </div>
-            </div>
 
-            <div class="flex justify-start pb-2 ">
-                <a
-                    href="#details"
-                    id="detailsLink"
-                    class="tabLink mr-6 border-b-2 border-green-500"
-                    onClick={tabLinkClick}
-                >
-                    <p id="details-text" class="">
-                        {t("menus.details")}
-                    </p>
-                </a>
-                <a
-                    href="#description"
-                    id="descriptionLink"
-                    class="tabLink mr-6"
-                    onClick={tabLinkClick}
-                >
-                    <p id="description-text" class="">
-                        {t("menus.description")}
-                    </p>
-                </a>
-                {/* TODO: Add back for reviews and Q&A
+                    <div
+                        id="images"
+                        class="flex flex-col items-center justify-center"
+                    >
+                        <Show when={postImages().length > 0}>
+                            <Show when={postImages().length === 1}>
+                                <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                                    <img
+                                        src={postImages()[0]}
+                                        id="one-image"
+                                        class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
+                                        alt={`${t("postLabels.image")}`}
+                                    />
+                                </div>
+                            </Show>
+
+                            <Show when={postImages().length > 1}>
+                                <div class="mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
+                                    <img
+                                        src={postImages()[0]}
+                                        id="mobile-main-image"
+                                        class="max-h-[370px] max-w-full rounded dark:bg-background1"
+                                        alt={`${t("postLabels.image")}`}
+                                    />
+                                </div>
+
+                                <div class="mt-4 flex w-full justify-start">
+                                    {postImages().map(
+                                        (image: string, index: number) => (
+                                            <div class="flex h-16 w-1/5 items-center justify-center">
+                                                {index === 0 ? (
+                                                    <div
+                                                        // id={ index.toString() }
+                                                        id={`mobileImg${index.toString()}`}
+                                                        class="mobileImageLink flex h-16 w-16 items-center justify-center"
+                                                        onClick={(e) =>
+                                                            imageClick(e)
+                                                        }
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            class="mb-2 h-full w-full rounded object-cover"
+                                                            alt={`${t("postLabels.image")} ${index + 2}`}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div
+                                                        // id={ index.toString() }
+                                                        id={`mobileImg${index.toString()}`}
+                                                        class="mobileImageLink flex h-16 w-16 items-center justify-center"
+                                                        onClick={(e) =>
+                                                            imageClick(e)
+                                                        }
+                                                    >
+                                                        <img
+                                                            src={image}
+                                                            class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
+                                                            alt={`${t("postLabels.image")} ${index + 2}`}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            </Show>
+                        </Show>
+                    </div>
+
+                    <div
+                        id="cart-price-div"
+                        class="sticky top-0 my-4 flex flex-col bg-background1 dark:bg-background1-DM"
+                    >
+                        <div class="mx-1 flex justify-end">
+                            <Show when={post()?.price! === 0}>
+                                <p class="text-2xl font-bold">
+                                    {t("messages.free")}
+                                </p>
+                            </Show>
+                            <Show when={post()?.price! > 0}>
+                                <p class="text-2xl font-bold">
+                                    ${post()?.price.toFixed(2)}
+                                </p>
+                            </Show>
+                        </div>
+
+                        <div class="my-2 flex justify-between">
+                            <Quantity
+                                quantity={1}
+                                updateQuantity={updateQuantity}
+                            />
+                            <div class="ml-4 w-full">
+                                <AddToCart
+                                    item={{ ...post()!, quantity: 1 }}
+                                    buttonClick={resetQuantity}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start pb-2 ">
+                        <a
+                            href="#details"
+                            id="detailsLink"
+                            class="tabLink mr-6 border-b-2 border-green-500"
+                            onClick={tabLinkClick}
+                        >
+                            <p id="details-text" class="">
+                                {t("menus.details")}
+                            </p>
+                        </a>
+                        <a
+                            href="#description"
+                            id="descriptionLink"
+                            class="tabLink mr-6"
+                            onClick={tabLinkClick}
+                        >
+                            <p id="description-text" class="">
+                                {t("menus.description")}
+                            </p>
+                        </a>
+                        {/* TODO: Add back for reviews and Q&A
                 <a
                     href="#reviews"
                     id="reviewsLink"
@@ -668,56 +702,60 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         {t("menus.qA")}
                     </p>
                 </a> */}
-            </div>
-
-            <div
-                id="details"
-                class="mb-2 border-t border-border1 dark:border-border1-DM"
-            >
-                <div class="flex justify-between">
-                    <p class="text-lg">{t("menus.details")}</p>
-
-                    <button onClick={changeDetails}>
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="none"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            id="details-arrow"
-                            class="rotate-180 stroke-icon1 dark:stroke-icon1-DM"
-                        >
-                            <polyline points="19 12 12 19 5 12" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div id="post-details-div" class="inline">
-                    <div>
-                        <p class="mt-1 font-light uppercase">
-                            {t("formLabels.grades")}
-                        </p>
-                        <div class="flex">{post()?.grade?.join(", ")}</div>
                     </div>
 
-                    <div>
-                        <p class="mt-4 font-light uppercase">
-                            {t("formLabels.subjects")}
-                        </p>
-                        <div class="flex">{post()?.subject?.join(", ")}</div>
-                    </div>
+                    <div
+                        id="details"
+                        class="mb-2 border-t border-border1 dark:border-border1-DM"
+                    >
+                        <div class="flex justify-between">
+                            <p class="text-lg">{t("menus.details")}</p>
 
-                    <div>
-                        <p class="mt-4 font-light uppercase">
-                            {t("formLabels.resourceTypes")}
-                        </p>
-                        <div>{post()?.resourceTypes!.join(", ")}</div>
-                    </div>
+                            <button onClick={changeDetails}>
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    id="details-arrow"
+                                    class="rotate-180 stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </button>
+                        </div>
 
-                    {/* TODO Add Back
+                        <div id="post-details-div" class="inline">
+                            <div>
+                                <p class="mt-1 font-light uppercase">
+                                    {t("formLabels.grades")}
+                                </p>
+                                <div class="flex">
+                                    {post()?.grade?.join(", ")}
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="mt-4 font-light uppercase">
+                                    {t("formLabels.subjects")}
+                                </p>
+                                <div class="flex">
+                                    {post()?.subject?.join(", ")}
+                                </div>
+                            </div>
+
+                            <div>
+                                <p class="mt-4 font-light uppercase">
+                                    {t("formLabels.resourceTypes")}
+                                </p>
+                                <div>{post()?.resourceTypes!.join(", ")}</div>
+                            </div>
+
+                            {/* TODO Add Back
                     <div>
                         <p class="mt-4 font-light uppercase">
                             {t("formLabels.fileTypes")}
@@ -735,42 +773,42 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         TODO: add file type to database and then populate
                         { post()?.file_type.join(", ")}
                     </div> */}
-                </div>
-            </div>
+                        </div>
+                    </div>
 
-            <div
-                id="description"
-                class="mb-2 border-t border-border1 dark:border-border1-DM"
-            >
-                <div class="flex justify-between">
-                    <p class="text-lg">{t("menus.description")}</p>
-                    <button onClick={changeDescription}>
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="none"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            id="description-arrow"
-                            class="stroke-icon1 dark:stroke-icon1-DM"
-                        >
-                            <polyline points="19 12 12 19 5 12" />
-                        </svg>
-                    </button>
-                </div>
-                {/* <p>{ post()?.grade.join(", ") }</p> */}
+                    <div
+                        id="description"
+                        class="mb-2 border-t border-border1 dark:border-border1-DM"
+                    >
+                        <div class="flex justify-between">
+                            <p class="text-lg">{t("menus.description")}</p>
+                            <button onClick={changeDescription}>
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    id="description-arrow"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        {/* <p>{ post()?.grade.join(", ") }</p> */}
 
-                <div
-                    id="post-description-div"
-                    class="prose hidden dark:prose-invert"
-                    innerHTML={post()?.content}
-                ></div>
-            </div>
+                        <div
+                            id="post-description-div"
+                            class="prose hidden dark:prose-invert"
+                            innerHTML={post()?.content}
+                        ></div>
+                    </div>
 
-            {/* TODO: Add back for Reviews
+                    {/* TODO: Add back for Reviews
             <div
                 id="reviews"
                 class="mb-2 border-t border-border1 dark:border-border1-DM"
@@ -800,7 +838,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </p>
             </div> */}
 
-            {/* TODO: Add back for Q&A
+                    {/* TODO: Add back for Q&A
             <div
                 id="qa"
                 class="mb-2 border-t border-border1 dark:border-border1-DM"
@@ -830,22 +868,29 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </p>
             </div> */}
 
+                    <div class="flex w-full items-center justify-between">
+                        <div class="mb-1 mr-2 mt-4">
+                            <ReportResource
+                                post={post()!}
+                                user_id={User.session?.user.id!}
+                            />
+                        </div>
+                    </div>
 
-            <div class="flex w-full items-center justify-between">
-            <div class="mb-1 mr-2 mt-4">
-                    <ReportResource
-                        post={post()!}
-                        user_id={User.session?.user.id!}
-                    />
+                    <div class="flex w-full items-center justify-end">
+                        <div class="mt-2 flex w-fit items-end justify-end bg-background2 px-2 dark:bg-background2-DM">
+                            <a href="#mobile-full-card">
+                                <p class="text-ptext2 dark:text-ptext2-DM">
+                                    {t("buttons.top")}
+                                </p>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-2 flex w-fit items-end justify-end bg-background2 px-2 dark:bg-background2-DM">
-                    <a href="#mobile-full-card">
-                        <p class="text-ptext2 dark:text-ptext2-DM">
-                            {t("buttons.top")}
-                        </p>
-                    </a>
-                </div>
-            </div>
-        </div>
+            </Show>
+            <Show when={editRender() && post()}>
+                <EditPost post={post()!} />
+            </Show>
+        </>
     );
 };

@@ -112,6 +112,7 @@ export interface uiObject {
         continueShopping: string;
         viewOrders: string;
         reportResource: string;
+        updateResource: string;
     };
 
     messages: {

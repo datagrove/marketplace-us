@@ -128,6 +128,7 @@ export const English = {
         continueShopping: "Continue Shopping",
         viewOrders: "View Purchases",
         reportResource: "Report this Resource",
+        updateResource: "Update Resource",
     },
 
     messages: {

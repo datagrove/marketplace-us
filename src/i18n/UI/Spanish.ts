@@ -128,6 +128,7 @@ export const Spanish = {
         continueShopping: "Seguir comprando",
         viewOrders: "Ver Compras",
         reportResource: "Reportar este recurso",
+        updateResource: "Actualizar Recurso",
     },
 
     messages: {
