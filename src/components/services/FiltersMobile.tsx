@@ -1,5 +1,7 @@
 import type { Component } from "solid-js";
 import { createEffect, createSignal, For, Show, onMount } from "solid-js";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
@@ -11,7 +13,7 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategoryData = values.subjectCategoryInfo;
 
-let grades: Array<{ grade: string; id: number, checked: boolean }> = [];
+let grades: Array<{ grade: string; id: number; checked: boolean }> = [];
 let subjects: Array<any> = [];
 
 const { data: gradeData, error: gradeError } = await supabase
@@ -43,12 +45,12 @@ if (error) {
 
 const subjectData = productCategoryData.subjects;
 
-let allSubjectInfo: Array <{
+let allSubjectInfo: Array<{
     name: string;
     description: string;
     ariaLabel: string;
     id: string;
-    checked: boolean
+    checked: boolean;
 }> = [];
 
 for (let i = 0; i < subjectData.length; i++) {
@@ -74,26 +76,32 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [showSubjects, setShowSubjects] = createSignal(false);
     const [showFilters, setShowFilters] = createSignal(false);
     const [grade, setGrade] =
-        createSignal<Array<{ grade: string; id: number, checked: boolean }>>(grades);
-    const [gradeFilters, setGradeFilters] = createSignal<
-        Array<string>
-    >([]);
+        createSignal<Array<{ grade: string; id: number; checked: boolean }>>(
+            grades
+        );
+    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
     const [subject, setSubject] = createSignal<Array<any>>(allSubjectInfo);
-    const [selectedSubjects, setSelectedSubjects] = createSignal<Array<string>>([]);
+    const [selectedSubjects, setSelectedSubjects] = createSignal<Array<string>>(
+        []
+    );
     const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
 
+    const screenSize = useStore(windowSize);
+
     onMount(() => {
         if (localStorage.getItem("selectedSubjects")) {
-            setSelectedSubjects([...JSON.parse(localStorage.getItem("selectedSubjects")!)]);
+            setSelectedSubjects([
+                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
+            ]);
             setSubjectFilterCount(selectedSubjects().length);
             checkSubjectBoxes();
         } else {
             setSelectedSubjects([]);
             subject().forEach((subject) => {
                 subject.checked = false;
-            })
+            });
         }
         if (localStorage.getItem("selectedGrades")) {
             setGradeFilters([
@@ -105,7 +113,11 @@ export const FiltersMobile: Component<Props> = (props) => {
             setGradeFilters([]);
             grade().forEach((grade) => {
                 grade.checked = false;
-            })
+            });
+        }
+
+        if (screenSize() !== "sm") {
+            setShowFilters(true);
         }
     });
 
@@ -123,8 +135,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                 if (subject.id.toString() === item) {
                     subject.checked = true;
                 }
-            })
-        })
+            });
+        });
     }
 
     function checkGradeBoxes() {
@@ -133,16 +145,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                 if (grade.id.toString() === item) {
                     grade.checked = true;
                 }
-            })
-        })
+            });
+        });
     }
 
-
-    const setGradesFilter = ( id: string ) => {
+    const setGradesFilter = (id: string) => {
         if (gradeFilters().includes(id)) {
-            let currentGradeFilters = gradeFilters().filter(
-                (el) => el !== id
-            );
+            let currentGradeFilters = gradeFilters().filter((el) => el !== id);
             setGradeFilters(currentGradeFilters);
             setGradeFilterCount(gradeFilters().length);
         } else {
@@ -162,15 +171,14 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
     };
 
-
     const clearAllFiltersMobile = () => {
         props.clearAllFilters();
         grade().forEach((grade) => {
             grade.checked = false;
-        })
+        });
         subject().forEach((subject) => {
             subject.checked = false;
-        })
+        });
         setGradeFilters([]);
         setSelectedSubjects([]);
         setGradeFilterCount(0);
@@ -182,7 +190,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         props.clearSubjects();
         subject().forEach((subject) => {
             subject.checked = false;
-        })
+        });
         setSelectedSubjects([]);
         setSubjectFilterCount(0);
     };
@@ -191,26 +199,26 @@ export const FiltersMobile: Component<Props> = (props) => {
         props.clearGrade();
         grade().forEach((grade) => {
             grade.checked = false;
-        })
+        });
         setGradeFilterCount(0);
         setGradeFilters([]);
     };
 
-    const gradeCheckboxClick = (e:Event) => {
+    const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
 
         setGradesFilter(currCheckboxID);
-    }
+    };
 
-    const subjectCheckboxClick = (e:Event) => {
+    const subjectCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
 
         setSubjectFilter(currCheckboxID);
-    }
+    };
 
-    function setSubjectFilter( id: string ) {
+    function setSubjectFilter(id: string) {
         if (selectedSubjects().includes(id)) {
             let currentSubjectFilters = selectedSubjects().filter(
                 (el) => el !== id
@@ -235,47 +243,51 @@ export const FiltersMobile: Component<Props> = (props) => {
     }
 
     return (
-        <div class="sticky top-0 z-40 px-4 pt-4 h-full w-full bg-background1 dark:bg-background1-DM">
-            <button
-                class="w-full"
-                onClick={() => {
-                    if (showGrades() === true || showSubjects() === true) {
-                        setShowGrades(false);
-                        setShowSubjects(false);
-                        setShowFilters(false);
-                    } else if (showFilters() === true) {
-                        setShowFilters(false);
-                    } else {
-                        setShowFilters(true);
-                    }
-                }}
-            >
-                <div class="relative flex h-full items-center">
-                    <svg
-                        fill="none"
-                        width="20px"
-                        height="20px"
-                        viewBox="0 0 32 32"
-                        class="fill-icon1 dark:fill-icon1-DM"
-                    >
-                        <path d="M31.078 1.366c-0.221-0.371-0.621-0.616-1.078-0.616-0 0-0 0-0 0h-28c-0.69 0-1.25 0.56-1.25 1.25 0 0.223 0.058 0.432 0.16 0.613l-0.003-0.006 9.843 17.717v5.676c0 0.486 0.278 0.908 0.684 1.114l0.007 0.003 8 4c0.163 0.084 0.355 0.133 0.559 0.133 0.243 0 0.47-0.070 0.661-0.191l-0.005 0.003c0.359-0.223 0.594-0.615 0.594-1.062 0-0 0-0.001 0-0.001v0-9.676l9.842-17.717c0.1-0.175 0.159-0.385 0.159-0.609 0-0.233-0.064-0.452-0.176-0.638l0.003 0.006zM18.908 19.393c-0.099 0.175-0.158 0.384-0.158 0.607v7.977l-5.5-2.75v-5.227c0-0 0-0.001 0-0.002 0-0.222-0.058-0.431-0.16-0.612l0.003 0.006-8.969-16.143h23.751z"></path>
-                    </svg>
+        <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-[300px] md:px-0 md:pt-0">
+            <Show when={screenSize() === "sm"}>
+                <button
+                    class="w-full"
+                    onClick={() => {
+                        if (showGrades() === true || showSubjects() === true) {
+                            setShowGrades(false);
+                            setShowSubjects(false);
+                            setShowFilters(false);
+                        } else if (showFilters() === true) {
+                            setShowFilters(false);
+                        } else {
+                            setShowFilters(true);
+                        }
+                    }}
+                >
+                    <div class="relative flex h-full items-center">
+                        <svg
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 dark:fill-icon1-DM"
+                        >
+                            <path d="M31.078 1.366c-0.221-0.371-0.621-0.616-1.078-0.616-0 0-0 0-0 0h-28c-0.69 0-1.25 0.56-1.25 1.25 0 0.223 0.058 0.432 0.16 0.613l-0.003-0.006 9.843 17.717v5.676c0 0.486 0.278 0.908 0.684 1.114l0.007 0.003 8 4c0.163 0.084 0.355 0.133 0.559 0.133 0.243 0 0.47-0.070 0.661-0.191l-0.005 0.003c0.359-0.223 0.594-0.615 0.594-1.062 0-0 0-0.001 0-0.001v0-9.676l9.842-17.717c0.1-0.175 0.159-0.385 0.159-0.609 0-0.233-0.064-0.452-0.176-0.638l0.003 0.006zM18.908 19.393c-0.099 0.175-0.158 0.384-0.158 0.607v7.977l-5.5-2.75v-5.227c0-0 0-0.001 0-0.002 0-0.222-0.058-0.431-0.16-0.612l0.003 0.006-8.969-16.143h23.751z"></path>
+                        </svg>
 
-                    <Show when={showFilterNumber() === true}>
-                        <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
-                            <p class="text-[10px] text-ptext2 dark:text-ptext1">
-                                {gradeFilterCount() + subjectFilterCount()}
-                            </p>
-                        </div>
-                    </Show>
+                        <Show when={showFilterNumber() === true}>
+                            <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
+                                <p class="text-[10px] text-ptext2 dark:text-ptext1">
+                                    {gradeFilterCount() + subjectFilterCount()}
+                                </p>
+                            </div>
+                        </Show>
 
-                    <h1 class="ml-2 py-2 text-xl">{t("buttons.filters")}</h1>
-                </div>
-            </button>
+                        <h1 class="ml-2 py-2 text-xl">
+                            {t("buttons.filters")}
+                        </h1>
+                    </div>
+                </button>
+            </Show>
 
             <div class="absolute h-full w-11/12">
                 <Show when={showFilters() === true}>
-                    <div class="main-pop-out relative h-96 w-full rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <div class="main-pop-out relative h-96 w-full rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:shadow-none">
                         <button
                             class="w-full"
                             onClick={() => {
@@ -285,7 +297,6 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     setShowSubjects(false);
                                 }
                                 setShowGrades(!showGrades());
-
                             }}
                         >
                             <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
@@ -391,7 +402,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                 </Show>
 
                 <Show when={showGrades() === true}>
-                    <div class="grades-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <div class="grades-pop-out absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
                         <button
                             class="w-full"
                             onClick={() => {
@@ -448,7 +459,9 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 //         gradeFilterCount() + 1
                                                 //     );
                                                 // }}
-                                                onClick = { (e) => gradeCheckboxClick(e) }
+                                                onClick={(e) =>
+                                                    gradeCheckboxClick(e)
+                                                }
                                             />
                                         </div>
                                         <div class="flex items-center">
@@ -513,10 +526,12 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     <div class="flex items-center">
                                         <input
                                             type="checkbox"
-                                            id={ item.id }
-                                            checked= { item.checked }
+                                            id={item.id}
+                                            checked={item.checked}
                                             class={`subject ${item.id.toString()} mr-2 scale-125 leading-tight`}
-                                            onClick = {(e) => subjectCheckboxClick(e) }
+                                            onClick={(e) =>
+                                                subjectCheckboxClick(e)
+                                            }
                                         />
                                     </div>
 

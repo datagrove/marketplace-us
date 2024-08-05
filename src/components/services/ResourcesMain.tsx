@@ -355,7 +355,15 @@ export const ResourcesView: Component = () => {
 
             <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <Show when={screenSize() !== "sm"}>
-                    <div class="sticky top-0 w-3/12">
+
+                <FiltersMobile
+                    clearSubjects={clearSubjects}
+                    clearGrade={clearGrade}
+                    clearAllFilters={clearAllFilters}
+                    filterPostsByGrade={filterPostsByGrade}
+                    filterPostsBySubject={setCategoryFilter}
+                />
+                    {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
                             <div class="flex w-full">
                                 <button
@@ -418,7 +426,7 @@ export const ResourcesView: Component = () => {
                         <div class="w-11/12 md:mr-4">
                             <SubjectFilter filterPosts={setCategoryFilter} />
                         </div>
-                    </div>
+                    </div> */}
                 </Show>
 
                 <div class="w-11/12 items-center md:w-8/12 md:flex-1">

@@ -108,6 +108,24 @@ INSERT INTO "public"."users" ("user_id", "created_at", "display_name", "image_ur
 	('2ae7eb64-750a-42b9-8d8d-c8b9bf780092', '2024-03-05 15:37:01.129356+00',  NULL, NULL),
 	('111d3bed-1c92-4cf5-a66f-2ecaf3e717c3', '2024-03-05 15:37:01.129356+00',  NULL, NULL);
 
+--
+-- Data for Name: favorites; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."favorites" ("list_number", "created_date", "list_name", "customer_id", "default_list") VALUES
+	('ab7953f0-9d18-4931-9d9b-d0da8a34be2e', '2024-07-29 19:34:17.839591+00', 'Default', 'f885208b-ef4a-4f75-8543-a808db576a13', true),
+	('63c4ca8c-9756-4d14-b2dd-80f4ecfea132', '2024-07-29 19:34:24.502515+00', 'Default', '2ae7eb64-750a-42b9-8d8d-c8b9bf780092', true),
+	('def968c2-e00e-4757-a1c4-e58c2fc62e62', '2024-07-29 19:34:55.724177+00', 'Default', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', true),
+	('f37eff1f-c87c-49b0-ae22-9d811e3877d8', '2024-07-29 19:35:04.163172+00', 'Default', 'ec946adf-7315-4721-a238-ed600dd153d7', true),
+	('379b68a1-0f1a-4e9b-b436-97ab63386bf5', '2024-07-29 19:35:16.533882+00', 'Default', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', true),
+	('28ac5cf5-1696-460c-a910-e9ba043595d6', '2024-07-29 19:35:26.607824+00', 'Default', '111d3bed-1c92-4cf5-a66f-2ecaf3e717c3', true),
+	('d51eee6e-1ac9-496a-8fde-46b59268b0a3', '2024-07-29 19:35:37.595003+00', 'Default', 'df188225-8970-42a4-a54f-97b303c2b2ed', true),
+	('db6dc253-5a4c-447a-ba88-45f974e4762a', '2024-07-29 19:35:46.96794+00', 'Default', 'df10c4ca-2f2a-4ff1-b2c6-68a51ca94cf9', true),
+	('7510b8cb-2afe-4860-a02d-b72522633673', '2024-07-29 19:35:58.749509+00', 'Default', 'a23376db-215d-49c4-9d9d-791c26579543', true),
+	('f8de78a4-ef7c-42af-9d21-bac9487a0aa2', '2024-07-29 19:36:09.154761+00', 'Default', 'bae9af94-3ee7-47dd-9389-181cd5906814', true),
+	('e099fef6-46e1-4526-8e6c-b57abd498565', '2024-07-29 19:36:20.79681+00', 'Default', '1caa66a7-d9a2-462f-93c4-e65946d61c02', true),
+	('a69287ac-cd46-4832-9f37-ac5d45d138c4', '2024-07-29 19:36:29.498511+00', 'Default', '84a298b6-9caf-4305-9bfe-3ea325df9188', true);
+
 
 
 INSERT INTO "public"."profiles" ("created_at", "first_name", "last_name", "user_id", "email") VALUES
