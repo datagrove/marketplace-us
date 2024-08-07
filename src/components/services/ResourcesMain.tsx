@@ -40,7 +40,7 @@ export const ResourcesView: Component = () => {
   const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
   const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
   const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-  const [secularFilters, setSecularFilters] = createSignal<Array<string>>([]);
+  const [secularFilters, setSecularFilters] = createSignal<boolean>();
   const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
     []
   );
@@ -88,10 +88,9 @@ export const ResourcesView: Component = () => {
       localStorage.getItem("selectedSecular") !== null &&
       localStorage.getItem("selectedSecular")
     ) {
-      setSecularFilters([
-        ...secularFilters(),
-        ...JSON.parse(localStorage.getItem("selectedSecular")!),
-      ]);
+      setSecularFilters(
+        JSON.parse(localStorage.getItem("selectedSecular")!),
+      );
     }
     await filterPosts();
   });
@@ -267,7 +266,7 @@ export const ResourcesView: Component = () => {
     filterPosts();
   };
 
-  const filterPostsBySecular = (secular: string) => {
+  const filterPostsBySecular = (secular: boolean) => {
     // if (gradeFilters().includes(grade)) {
     //   let currentGradeFilters = gradeFilters().filter(
     //     (el) => el !== grade
@@ -276,7 +275,9 @@ export const ResourcesView: Component = () => {
     // } else {
     //   setGradeFilters([...gradeFilters(), grade]);
     // }
-    console.log(gradeFilters());
+
+
+    console.log(secular);
     filterPosts();
   };
 
@@ -307,7 +308,7 @@ export const ResourcesView: Component = () => {
     localStorage.setItem("searchString", "");
     setSubjectFilters([]);
     setGradeFilters([]);
-    setSecularFilters([])
+    setSecularFilters(false)
     filterPosts();
   };
 
