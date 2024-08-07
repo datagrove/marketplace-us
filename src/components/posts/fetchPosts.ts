@@ -27,8 +27,8 @@ export async function fetchFilteredPosts(
     if (searchString.length !== 0) {
       query = query.textSearch("title_content", searchString);
     }
-    if (secularFilter) {
-      query = query.is("secular", secularFilter)
+    if (secularFilter === true) {
+      query = query.is("secular", true)
     }
 
     try {

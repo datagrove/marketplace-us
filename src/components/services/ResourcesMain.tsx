@@ -84,14 +84,6 @@ export const ResourcesView: Component = () => {
       ]);
     }
 
-    if (
-      localStorage.getItem("selectedSecular") !== null &&
-      localStorage.getItem("selectedSecular")
-    ) {
-      setSecularFilters(
-        JSON.parse(localStorage.getItem("selectedSecular")!),
-      );
-    }
     await filterPosts();
   });
 
@@ -100,7 +92,6 @@ export const ResourcesView: Component = () => {
     localStorage.removeItem("selectedSubjects");
     localStorage.removeItem("searchString");
     localStorage.removeItem("selectedResourceTypes");
-    localStorage.removeItem("selectedSecular")
   });
 
   const searchPosts = async () => {
@@ -269,17 +260,7 @@ export const ResourcesView: Component = () => {
 
   const filterPostsBySecular = (secular: boolean) => {
 
-    // if (gradeFilters().includes(grade)) {
-    //   let currentGradeFilters = gradeFilters().filter(
-    //     (el) => el !== grade
-    //   );
-    //   setGradeFilters(currentGradeFilters);
-    // } else {
-    //   setGradeFilters([...gradeFilters(), grade]);
-    // }
-
-
-    console.log(secular);
+    setSecularFilters(secular)
     filterPosts();
   };
 

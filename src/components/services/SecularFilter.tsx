@@ -1,10 +1,28 @@
 
-import type { Component } from "solid-js";
+import { fetchFilteredPosts } from "@components/posts/fetchPosts";
+import { createSignal, onMount, type Component } from "solid-js";
 interface Props {
   // Define the type for the filterPosts prop
   filterPostsBySecular: (secular: boolean) => void;
 }
 export const SecularFilter: Component<Props> = (props) => {
+  const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false)
+
+
+  function initializeSecular(e: Event) {
+    if ((e.target as HTMLInputElement)?.checked) {
+      setSelectedSecular((e.target as HTMLInputElement)?.checked)
+      props.filterPostsBySecular(selectedSecular())
+    }
+
+  }
+
+  onMount(() => {
+    if (localStorage.getItem("selectedSecular")) {
+      setSelectedSecular(JSON.parse(localStorage.getItem("selectedSecular")!));
+    }
+  });
+
 
   return (
     <div>
@@ -19,8 +37,9 @@ export const SecularFilter: Component<Props> = (props) => {
           <input
             type="checkbox"
             class={`ml-2 leading-tight`}
-            onClick={() => {
-              console.log("secular filter: " + props.filterPostsBySecular);
+            checked={selectedSecular()}
+            onClick={(e) => {
+              initializeSecular(e)
             }}
           />
         </div>
