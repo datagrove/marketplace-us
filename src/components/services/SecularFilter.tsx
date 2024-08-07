@@ -9,7 +9,7 @@ export const SecularFilter: Component<Props> = (props) => {
   return (
     <div>
 
-      <div class="flex flex-row pl-2">
+      <div class="flex flex-row pr-2">
         <div>
           <span class="text-ptext1 dark:text-ptext1-DM">
             Secular
@@ -18,7 +18,7 @@ export const SecularFilter: Component<Props> = (props) => {
         <div>
           <input
             type="checkbox"
-            class={`mr-2 leading-tight`}
+            class={`ml-2 leading-tight`}
             onClick={() => {
               console.log("secular filter: " + props.filterPostsBySecular);
             }}
