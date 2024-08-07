@@ -40,7 +40,7 @@ export const ResourcesView: Component = () => {
   const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
   const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
   const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-  const [secularFilters, setSecularFilters] = createSignal<boolean>();
+  const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
   const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
     []
   );
@@ -134,7 +134,8 @@ export const ResourcesView: Component = () => {
       subjectFilters(),
       gradeFilters(),
       searchString(),
-      resourceFilters()
+      resourceFilters(),
+      secularFilters()
     );
 
     if (res === null || res === undefined) {
@@ -267,6 +268,7 @@ export const ResourcesView: Component = () => {
   };
 
   const filterPostsBySecular = (secular: boolean) => {
+
     // if (gradeFilters().includes(grade)) {
     //   let currentGradeFilters = gradeFilters().filter(
     //     (el) => el !== grade
