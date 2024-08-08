@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -24,6 +24,8 @@ export const HomeCard: Component<Props> = (props) => {
 
     createEffect(async () => {
         if (props.posts) {
+            console.log("props.posts");
+            console.log(props.posts);
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: any) => {
                     post.image_urls
@@ -33,6 +35,24 @@ export const HomeCard: Component<Props> = (props) => {
                         : (post.image_url = null);
                     // Set the default quantity to 1
                     post.quantity = 1;
+
+                    const { data, error } = await supabase
+                        .from("sellerview")
+                        .select("*")
+                        .eq("seller_id", post.seller_id);
+
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (data) {
+                        if (data[0].image_url) {
+                            post.seller_img = await downloadCreatorImage(
+                                data[0].image_url
+                            );
+                        }
+                    }
+
                     return post;
                 })
             );
@@ -58,21 +78,20 @@ export const HomeCard: Component<Props> = (props) => {
         }
     };
 
-    const downloadImages = async (image_Urls: string) => {
+    const downloadCreatorImage = async (image_Url: string) => {
         try {
-            const imageUrls = image_Urls.split(",");
-            imageUrls.forEach(async (imageUrl: string) => {
-                const { data, error } = await supabase.storage
-                    .from("post.image")
-                    .download(imageUrl);
-                if (error) {
-                    throw error;
-                }
-                const url = URL.createObjectURL(data);
-                setPostImages([...postImages(), url]);
-            });
+            const { data, error } = await supabase.storage
+                .from("user.image")
+                .download(image_Url);
+            if (error) {
+                throw error;
+            }
+            const url = URL.createObjectURL(data);
+            return url;
         } catch (error) {
-            console.log(error);
+            if (error instanceof Error) {
+                console.log("Error downloading image: ", error.message);
+            }
         }
     };
 
@@ -83,11 +102,11 @@ export const HomeCard: Component<Props> = (props) => {
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
-                        <div class="mx-2 mb-4 flex h-[264px] w-40 flex-wrap justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
-                            <div class="home-card-img-div flex h-4/6 w-full items-center justify-center">
+                        <div class="mx-2 mb-4 grid h-[275px] w-40 grid-cols-1 grid-rows-9 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
+                            <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pb-1 pt-1">
                                 <a
                                     href={`/${lang}/posts/${post.id}`}
-                                    class="h-full"
+                                    class="h-full w-full"
                                 >
                                     <div
                                         id="homeCard-img"
@@ -103,7 +122,7 @@ export const HomeCard: Component<Props> = (props) => {
                                                         ? "User Image"
                                                         : "No Image"
                                                 }
-                                                class="max-h-full max-w-full"
+                                                class="max-h-full max-w-full rounded-lg"
                                             />
                                         ) : (
                                             <svg
@@ -135,8 +154,11 @@ export const HomeCard: Component<Props> = (props) => {
                                 </a>
                             </div>
 
-                            <div id="homeCard-text" class="h-1/6">
-                                <div class="">
+                            <div
+                                id="homeCard-text"
+                                class="row-span-3 grid grid-rows-3"
+                            >
+                                <div class="row-span-2">
                                     <a href={`/${lang}/posts/${post.id}`}>
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
                                             {post.title}
@@ -148,7 +170,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     <div class="my-1 flex items-center">
                                         <div>
                                             {post.seller_img ? (
-                                                <img src={post.seller_img} />
+                                                <img src={post.seller_img} class = {`w-[25px] h-[25px] rounded-full`} />
                                             ) : (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -173,33 +195,40 @@ export const HomeCard: Component<Props> = (props) => {
 
                             <div
                                 id="homeCard-ratings-price"
-                                class="flex h-1/6 items-end"
+                                class="row-span-1 text-end"
                             >
-                                <div class="flex w-2/3 items-end">
-                                    <div class="flex items-end justify-start">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="15px"
-                                            height="15px"
-                                            viewBox="0 0 32 32"
-                                            class="fill-icon1 dark:fill-icon1-DM"
-                                        >
-                                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                                        </svg>
+                                {/* <div class="flex w-2/3 items-end"> */}
+                                {/*     <div class="flex items-end justify-start"> */}
+                                {/*         <svg */}
+                                {/*             xmlns="http://www.w3.org/2000/svg" */}
+                                {/*             width="15px" */}
+                                {/*             height="15px" */}
+                                {/*             viewBox="0 0 32 32" */}
+                                {/*             class="fill-icon1 dark:fill-icon1-DM" */}
+                                {/*         > */}
+                                {/*             <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" /> */}
+                                {/*         </svg> */}
+                                {/**/}
+                                {/*         <p class="ml-1 mr-0.5 text-xs font-bold"> */}
+                                {/*             4.9 */}
+                                {/*         </p> */}
+                                {/*         <p class="text-xs font-light"> */}
+                                {/*             (30.3K) */}
+                                {/*         </p> */}
+                                {/*     </div> */}
+                                {/* </div> */}
 
-                                        <p class="ml-1 mr-0.5 text-xs font-bold">
-                                            4.9
+                                <div class=" text-end">
+                                    <Show when={post.price > 0}>
+                                        <p class="text-xs font-bold">
+                                            ${post.price.toFixed(2)}
                                         </p>
-                                        <p class="text-xs font-light">
-                                            (30.3K)
+                                    </Show>
+                                    <Show when={post.price === 0}>
+                                        <p class="text-xs font-bold">
+                                            {t("messages.free")}
                                         </p>
-                                    </div>
-                                </div>
-
-                                <div class="flex w-1/3 items-end justify-end">
-                                    <p class="text-xs font-bold">
-                                        ${post.price}
-                                    </p>
+                                    </Show>
                                 </div>
                             </div>
                         </div>

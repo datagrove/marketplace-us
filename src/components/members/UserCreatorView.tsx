@@ -321,7 +321,7 @@ export const UserCreatorView: Component<Props> = (props) => {
                         : creator()?.seller_name}
                 </h2>
 
-                <div
+               {/* <div
                     id="user-creator-view-reviews-div"
                     class="flex items-center"
                 >
@@ -459,23 +459,23 @@ export const UserCreatorView: Component<Props> = (props) => {
                                     stroke-linejoin="round"
                                     class="stroke-icon2 dark:stroke-icon2-DM"
                                 />
-                            </svg>
+                            </svg> */}
                             {/* TODO: language file updated in mobile version */}
-                            <p class="mx-0.5 text-sm">
+                            {/* <p class="mx-0.5 text-sm">
                                 {t("buttons.following")}
                             </p>
-                        </button>
-                    </div>
-                </div>
+                        </button> */}
+                    {/* </div> */}
+                {/* </div> */}
 
-                <div class="my-4 flex items-center justify-center">
+                {/* <div class="my-4 flex items-center justify-center">
                     <button class="btn-primary md:hidden">
                         {t("menus.DownloadResources")}
                     </button>
-                </div>
+                </div> */}
             </div>
 
-            <div id="user-creator-view-tabs-content-div" class="mx-4 mt-2">
+            <div id="user-creator-view-tabs-content-div" class="mx-4 mt-8">
                 <div
                     id="user-creator-view-tabs"
                     class="mb-4 mt-8 flex md:mt-0"
@@ -500,15 +500,15 @@ export const UserCreatorView: Component<Props> = (props) => {
                             {t("menus.creatorResources")}
                         </p>
                     </a>
-                    <a
+                    {/* <a
                         href="#ratingsUserView"
                         id="userCreatorViewRatingsLink"
                         class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
                         onClick={creatorViewTabClick}
                     >
                         <p class="font-bold lg:text-xl">{t("menus.reviews")}</p>
-                    </a>
-                    <a
+                    </a> */}
+                    {/* <a
                         href="#questionsUserView"
                         id="userCreatorViewQuestionsLink"
                         class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
@@ -517,8 +517,8 @@ export const UserCreatorView: Component<Props> = (props) => {
                         <p class="font-bold lg:text-xl">
                             {t("menus.questions")}
                         </p>
-                    </a>
-                    <a
+                    </a> */}
+                    {/* <a
                         href="#downloadUserView"
                         id="userCreatorViewDownloadLink"
                         class="userViewtabLinkLg mr-4 md:mr-6 lg:mr-10"
@@ -527,10 +527,12 @@ export const UserCreatorView: Component<Props> = (props) => {
                         <p class="hidden text-sm font-bold md:inline md:text-base lg:text-xl">
                             {t("menus.freeDownload")}
                         </p>
-                    </a>
+                    </a> */}
                 </div>
 
                 <div id="userCreatorViewProfile" class="inline">
+
+                        
                     <Show when={creator()?.email}>
                         <div class="flex">
                             <p class="font-bold">
@@ -552,6 +554,23 @@ export const UserCreatorView: Component<Props> = (props) => {
                             </p>
                         </div>
                     </Show>
+
+                    <div class="about flex">
+                            <label
+                                for="about"
+                                class="font-bold text-ptext1 dark:text-ptext1-DM"
+                            >
+                                {t("formLabels.about")}: &nbsp;
+                            </label>
+
+                            
+                                <p
+                                    class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
+                                    innerHTML={creator()?.seller_about}
+                                ></p>
+
+                            
+                    </div>
                 </div>
 
                 <div id="userCreatorViewResources" class="hidden">

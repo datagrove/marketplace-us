@@ -8,6 +8,11 @@ import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
+import { ViewCard } from "@components/services/ViewCard.tsx";
+import { MobileViewCard } from "@components/services/MobileViewCard.tsx";
+
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -17,11 +22,13 @@ const productCategories = values.subjectCategoryInfo.subjects;
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
-export const ViewUserPurchases: Component = () => {
+export const ViewUserFavorites: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [user, setUser] = createSignal<User>();
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
+    const [favoritedItems, setFavoritedItems] = createSignal<Array<any>>([]);
     const [loading, setLoading] = createSignal<boolean>(true);
+
+    const screenSize = useStore(windowSize);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -32,56 +39,39 @@ export const ViewUserPurchases: Component = () => {
     onMount(async () => {
         setSession(User?.session);
         await fetchUser(User?.session?.user.id!);
-        await getPurchasedItems();
+        await getFavorites();
     });
 
-    const getPurchasedItems = async () => {
+    const getFavorites = async () => {
         setLoading(true);
-        console.log("Session Info: ");
-        console.log(session());
-        const { data: orders, error } = await supabase
-            .from("orders")
+        const { data: favorites, error } = await supabase
+            .from("favorites")
             .select("*")
-            .eq("customer_id", session()?.user.id)
-            .eq("order_status", true);
+            .eq("customer_id", session()?.user.id);
         if (error) {
-            console.log("Orders Error: " + error.code + " " + error.message);
+            console.log("Favorite Error: " + error.code + " " + error.message);
             return;
         }
 
-        const orderedItemsIds = orders?.map((order) => order.order_number);
+        const favoritesListIds = favorites?.map(
+            (favorite) => favorite.list_number
+        );
 
-        const { data: orderDetails, error: orderDetailsError } = await supabase
-            .from("order_details")
-            .select("product_id, order_number")
-            .in("order_number", orderedItemsIds);
-        if (orderDetailsError) {
+        const { data: favoritesProducts, error: favoritesProductsError } =
+            await supabase
+                .from("favorites_products")
+                .select("product_id, list_number")
+                .in("list_number", favoritesListIds);
+        if (favoritesProductsError) {
             console.log(
-                "Order Details Error: " +
-                    orderDetailsError.code +
+                "Favorite Details Error: " +
+                    favoritesProductsError.code +
                     " " +
-                    orderDetailsError.message
+                    favoritesProductsError.message
             );
         }
 
-        const itemsOrdered = orderDetails?.map((item) => {
-            const order = orders.find(
-                (order) => order.order_number === item.order_number
-            );
-            if (order) {
-                return {
-                    ...item,
-                    purchaseDate: new Date(order.order_date).toISOString(),
-                };
-            } else {
-                return {
-                    ...item,
-                    purchaseDate: new Date("2000-01-01").toISOString(),
-                };
-            }
-        });
-
-        const products = orderDetails?.map((item) => item.product_id);
+        const products = favoritesProducts?.map((item) => item.product_id);
         if (products !== undefined) {
             const { data: productsInfo, error: productsInfoError } =
                 await supabase
@@ -98,7 +88,7 @@ export const ViewUserPurchases: Component = () => {
                 );
                 return;
             } else {
-                console.log(productsInfo);
+                // console.log(productsInfo);
                 const newItems = await Promise.all(
                     productsInfo?.map(async (item) => {
                         item.subject = [];
@@ -145,36 +135,32 @@ export const ViewUserPurchases: Component = () => {
                             );
                             item.price = priceData.unit_amount! / 100;
                         }
-                        console.log(item);
+                        // console.log(item);
                         return item;
                     })
                 );
 
-                itemsOrdered?.sort(function (a, b) {
-                    return b.purchaseDate.localeCompare(a.purchaseDate);
-                });
+                setFavoritedItems(newItems);
+                setLoading(false);
+                // console.log(favoritedItems());
 
-                console.log(itemsOrdered);
-                console.log(newItems);
-
-                const newItemsDates = newItems.map((item) => {
-                    const orderInfo = itemsOrdered?.find(
-                        (order) => order.product_id === item.id
-                    );
-                    if (orderInfo) {
-                        return {
-                            ...item,
-                            purchaseDate: orderInfo.purchaseDate,
-                        };
-                    }
+                // This creates a list of each favorite list with all the products in that favorite list
+                // Use this when we go to implement multiple lists
+                const favoriteLists = favorites?.map((item) => {
+                    console.log(item);
+                    item.products = [];
+                    favoritesProducts?.map((product) => {
+                        if (product.list_number === item.list_number) {
+                            const productInfo = newItems.find(
+                                (products) => product.product_id === products.id
+                            );
+                            if (productInfo) {
+                                item.products.push(productInfo);
+                            }
+                        }
+                    });
                     return item;
                 });
-
-                console.log(newItemsDates);
-
-                setPurchasedItems(newItemsDates);
-                setLoading(false);
-                console.log(purchasedItems());
             }
         }
     };
@@ -204,11 +190,27 @@ export const ViewUserPurchases: Component = () => {
     return (
         <div>
             <div id="Cards">
-                <Show when={!loading()} fallback={<div>{t("buttons.loading")}</div>}>
-                    <Show when={purchasedItems().length > 0}>
-                        <ViewPurchaseCard posts={purchasedItems()} />
+                <Show
+                    when={!loading()}
+                    fallback={<div>{t("buttons.loading")}</div>}
+                >
+                    <Show
+                        when={
+                            favoritedItems().length > 0 && screenSize() !== "sm"
+                        }
+                    >
+                        {/* <ViewPurchaseCard posts={favoritedItems()} /> */}
+                        <ViewCard posts={favoritedItems()} />
                     </Show>
-                    <Show when={purchasedItems().length === 0}>
+
+                    <Show
+                        when={
+                            favoritedItems().length > 0 && screenSize() === "sm"
+                        }
+                    >
+                        <MobileViewCard posts={favoritedItems()} />
+                    </Show>
+                    <Show when={favoritedItems().length === 0}>
                         <p class="mb-6 italic">
                             {t("messages.noPurchasedItems")}
                         </p>

@@ -91,10 +91,10 @@ export const Cart = () => {
                                     {item.quantity}
                                 </div>
                                 <div class="inline-block text-start">
-                                    <Show when={item.price}>
+                                    <Show when={item.price > 0}>
                                         ${item.price.toFixed(2)}
                                     </Show>
-                                    <Show when={!item.price}>
+                                    <Show when={item.price === 0}>
                                         {t("messages.free")}
                                     </Show>
                                 </div>

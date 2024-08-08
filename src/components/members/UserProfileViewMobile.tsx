@@ -19,6 +19,7 @@ import type { Post } from "@lib/types";
 import { ViewCard } from "@components/services/ViewCard";
 import stripe from "@lib/stripe";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
+import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -61,7 +62,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
     // const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
-    const [tabSelected, setTabSelected] = createSignal<string>("profile");
+    const [tabSelected, setTabSelected] = createSignal<string>("purchases");
 
     const resetPassword = () => {
         window.location.href = `/${lang}/password/reset`;
@@ -188,7 +189,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                                 stroke-linejoin="miter"
                                 fill="none"
                                 color="none"
-                                class="fill-icon1 stroke-icon2 dark:fill-icon1-DM dark:stroke-icon2-DM"
+                                class="fill-icon1 stroke-icon2 dark:fill-icon1-DM dark:stroke-icon1"
                             >
                                 <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z" />{" "}
                                 <rect width="10" height="8" x="7" y="13" />{" "}
@@ -201,20 +202,20 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                 <div class="user-profile-tabs my-4 flex items-center justify-between border-b border-gray-300 pb-2">
                     <div class="">
                         <a
-                            id="user-profile-mobile-tab-profile-link"
-                            class="user-profile-mobile-tab-link mr-4 border-b-2 border-green-500 text-sm font-bold"
-                            onClick={(e) => tabClick(e)}
-                        >
-                            {t("menus.profile")}
-                        </a>
-                        <a
                             id="user-profile-mobile-tab-purchases-link"
-                            class="user-profile-mobile-tab-link mr-4 text-sm font-bold"
+                            class="user-profile-mobile-tab-link mr-4 border-b-2 border-green-500 text-sm font-bold"
                             onClick={(e) => tabClick(e)}
                         >
                             {t("menus.purchases")}
                         </a>
-                        {/* TODO: Add favorites and following tab when implemented
+                        <a
+                            id="user-profile-mobile-tab-profile-link"
+                            class="user-profile-mobile-tab-link mr-4  text-sm font-bold"
+                            onClick={(e) => tabClick(e)}
+                        >
+                            {t("menus.profile")}
+                        </a>
+
                         <a
                             id="user-profile-mobile-tab-favorites-link"
                             class="user-profile-mobile-tab-link mr-4 text-sm font-bold"
@@ -222,6 +223,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                         >
                             {t("menus.favorites")}
                         </a>
+                        {/* TODO: Add favorites and following tab when implemented
                         <a
                             id="user-profile-mobile-tab-following-link"
                             class="user-profile-mobile-tab-link mr-4 text-sm font-bold"
@@ -396,7 +398,9 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
                 </Show>
 
                 <Show when={tabSelected() === "favorites"}>
-                    <p class="italic">{t("messages.comingSoon")}</p>
+                    <div>
+                        <ViewUserFavorites />
+                    </div>
                 </Show>
 
                 <Show when={tabSelected() === "following"}>

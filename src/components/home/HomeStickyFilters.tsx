@@ -196,9 +196,12 @@ export const HomeStickyFilters: Component = () => {
         if (selectedGrades().length > 0) {
             localStorage.setItem("selectedGrades", JSON.stringify(selectedGrades()));
         }
-        if (selectedGrades().length === 0) {
-            localStorage.removeItem("selectedGrades");
+        if (selected_subjects_array.length > 0) {
+            localStorage.setItem("selectedSubjects", JSON.stringify(selected_subjects_array));
         }
+        // if (selectedGrades().length === 0) {
+        //     localStorage.removeItem("selectedGrades");
+        // }
     });
 
     return (
