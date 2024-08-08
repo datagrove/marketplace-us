@@ -17,14 +17,13 @@ export async function fetchFilteredPosts(
   secularFilter: boolean
 ) {
 
-        
+
   try {
     let query = supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("listing_status", true);
-    let query = supabase.from("sellerposts").select("*").eq("listing_status", true);
+      .from("sellerposts")
+      .select("*")
+      .order("id", { ascending: false })
+      .eq("listing_status", true);
     if (subjectFilters.length !== 0) {
       query = query.overlaps("product_subject", subjectFilters);
     }
@@ -68,12 +67,12 @@ export async function fetchFilteredPosts(
 }
 
 export async function fetchAllPosts() {
-    try {
-        const { data: allPosts, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("listing_status", true);
+  try {
+    const { data: allPosts, error } = await supabase
+      .from("sellerposts")
+      .select("*")
+      .order("id", { ascending: false })
+      .eq("listing_status", true);
 
 
     if (error) {
