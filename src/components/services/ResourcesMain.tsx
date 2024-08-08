@@ -289,8 +289,9 @@ export const ResourcesView: Component = () => {
     // localStorage.setItem("searchString", "");
     setSubjectFilters([]);
     setGradeFilters([]);
-    filterPosts();
     setSecularFilters(false)
+    console.log(secularFilters())
+    filterPosts();
   };
 
   const clearSubjects = () => {
