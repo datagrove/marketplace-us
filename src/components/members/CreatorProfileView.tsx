@@ -416,9 +416,12 @@ export const CreatorProfileView: Component = () => {
                         <div class="mb-2 flex justify-end md:hidden">
                             <button
                                 class="btn-primary flex w-1/2 items-center justify-center"
-                                onClick={() =>
-                                    (window.location.href = `/${lang}/posts/createpost`)
-                                }
+                                type="button"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    window.location.href = `/${lang}/posts/createpost`;
+                                }}
                             >
                                 <svg
                                     fill="none"
