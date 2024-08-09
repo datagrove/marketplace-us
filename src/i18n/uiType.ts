@@ -219,7 +219,7 @@ export interface uiObject {
         yes: string;
         no: string;
         more: string;
-        secular: boolean;
+        secular: string;
     };
 
     postLabels: {

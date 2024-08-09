@@ -255,6 +255,11 @@ export const ResourcesView: Component = () => {
 
         filterPosts();
     };
+    const filterPostsBySecular = (secular: boolean) => {
+
+      setSecularFilters(secular)
+      filterPosts();
+    };
 
     const clearAllFilters = () => {
         let searchInput = document.getElementById("search") as HTMLInputElement;
@@ -346,6 +351,7 @@ export const ResourcesView: Component = () => {
                     clearAllFilters={clearAllFilters}
                     filterPostsByGrade={filterPostsByGrade}
                     filterPostsBySubject={setCategoryFilter}
+                    secularFilter={filterPostsBySecular}
                 />
             </Show>
 
