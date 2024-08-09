@@ -703,7 +703,12 @@ export const CreateNewPost: Component = () => {
                                 id="chooseSubject"
                                 class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
                             >
-                                <span class="text-alert1">* </span>{" "}
+                                <Show when={subjectPick().length > 0}>
+                                    {subjectPick().map((subject) => (
+                                        subject
+                                    ))}
+                                    </Show>
+                                    <span class="text-alert1">* </span>{" "}
                                 {t("formLabels.chooseSubject")}
                             </p>
 
