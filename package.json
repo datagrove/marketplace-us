@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro build && workbox injectManifest workbox-config.cjs",
     "preview": "wrangler pages dev ./dist",
-    "astro": "astro"
+    "astro": "astro",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^10.4.1",
@@ -57,6 +58,8 @@
     "@types/tinymce": "^4.6.9",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/astro": "^0.2.0",
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.8",
     "prettier": "^3.0.1",
     "prettier-plugin-astro": "^0.11.0",
     "prettier-plugin-tailwindcss": "^0.5.3",
@@ -66,5 +69,8 @@
     "workbox-routing": "^7.0.0",
     "workbox-strategies": "^7.0.0",
     "wrangler": "^3.4.0"
+  },
+  "lint-staged": {
+    "*.{js,css,md,tsx,astro}": "prettier --write"
   }
 }
