@@ -185,6 +185,10 @@ export const CreateNewPost: Component = () => {
     const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
         createSignal<boolean>(false);
     const [description, setDescription] = createSignal<boolean>(false);
+    const [subjectExpanded, setSubjectExpanded] = createSignal<boolean>(false);
+    const [gradeExpanded, setGradeExpanded] = createSignal<boolean>(false);
+    const [resourceExpanded, setResourceExpanded] =
+        createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -394,57 +398,72 @@ export const CreateNewPost: Component = () => {
         setFormData(formData);
     }
 
-    let subjectExpanded = false;
     function subjectCheckboxes() {
+        if(gradeExpanded()){
+            gradeCheckboxes();
+        }
+        if (resourceExpanded()){
+            resourceTypesCheckboxes();
+        }
         let checkboxes = document.getElementById("subjectCheckboxes");
         let subjectArrow = document.getElementById("subject-arrow");
 
-        if (!subjectExpanded) {
+        if (!subjectExpanded()) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             subjectArrow?.classList.add("rotate-180");
-            subjectExpanded = true;
+            setSubjectExpanded(true);
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             subjectArrow?.classList.remove("rotate-180");
-            subjectExpanded = false;
+            setSubjectExpanded(false);
         }
     }
 
-    let gradeExpanded = false;
     function gradeCheckboxes() {
+        if (subjectExpanded()){
+            subjectCheckboxes();
+        }
+        if (resourceExpanded()){
+            resourceTypesCheckboxes();
+        }
         let checkboxes = document.getElementById("gradeCheckboxes");
         let gradeArrow = document.getElementById("grade-arrow");
 
-        if (!gradeExpanded) {
+        if (!gradeExpanded()) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             gradeArrow?.classList.add("rotate-180");
-            gradeExpanded = true;
+            setGradeExpanded(true);
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             gradeArrow?.classList.remove("rotate-180");
-            gradeExpanded = false;
+            setGradeExpanded(false);
         }
     }
 
-    let resourceExpanded = false;
     function resourceTypesCheckboxes() {
+        if (subjectExpanded()){
+            subjectCheckboxes();
+        }
+        if (gradeExpanded()){
+            gradeCheckboxes();
+        }
         let checkboxes = document.getElementById("resourceTypesCheckboxes");
         let resourceArrow = document.getElementById("resource-arrow");
 
-        if (!resourceExpanded) {
+        if (!resourceExpanded()) {
             checkboxes?.classList.remove("hidden");
             checkboxes?.classList.add("md:grid");
             resourceArrow?.classList.add("rotate-180");
-            resourceExpanded = true;
+            setResourceExpanded(true);
         } else {
             checkboxes?.classList.remove("md:grid");
             checkboxes?.classList.add("hidden");
             resourceArrow?.classList.remove("rotate-180");
-            resourceExpanded = false;
+            setResourceExpanded(false);
         }
     }
     function setSubjectArray(e: Event) {
