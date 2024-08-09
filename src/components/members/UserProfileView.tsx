@@ -22,6 +22,7 @@ import stripe from "@lib/stripe";
 import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
+import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -60,7 +61,7 @@ export const UserProfileView: Component = () => {
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
     const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
-    const [tabSelected, setTabSelected] = createSignal<string>("profile");
+    const [tabSelected, setTabSelected] = createSignal<string>("purchases");
 
     onMount(async () => {
         console.log(User);
@@ -76,103 +77,6 @@ export const UserProfileView: Component = () => {
     //     await fetchUser(session()?.user.id!);
     //   }
     // });
-
-    const getPurchasedItems = async () => {
-        console.log("Session Info: ");
-        console.log(session());
-        const { data: orders, error } = await supabase
-            .from("orders")
-            .select("*")
-            .eq("customer_id", session()?.user.id);
-        if (error) {
-            console.log("Orders Error: " + error.code + " " + error.message);
-            return;
-        }
-        const orderedItemsIds = orders?.map((order) => order.order_number);
-
-        const { data: orderDetails, error: orderDetailsError } = await supabase
-            .from("order_details")
-            .select("product_id")
-            .in("order_number", orderedItemsIds);
-        if (orderDetailsError) {
-            console.log(
-                "Order Details Error: " +
-                    orderDetailsError.code +
-                    " " +
-                    orderDetailsError.message
-            );
-        }
-        const products = orderDetails?.map((item) => item.product_id);
-        console.log(products);
-        if (products !== undefined) {
-            const { data: productsInfo, error: productsInfoError } =
-                await supabase
-                    .from("sellerposts")
-                    .select("*")
-                    .in("id", products);
-            if (productsInfoError) {
-                console.log(
-                    "Products Info Error: " +
-                        productsInfoError.code +
-                        " " +
-                        productsInfoError.message
-                );
-                return;
-            } else {
-                const newItems = await Promise.all(
-                    productsInfo?.map(async (item) => {
-                        item.subject = [];
-                        productCategories.forEach((productCategories) => {
-                            item.product_subject.map(
-                                (productSubject: string) => {
-                                    if (
-                                        productSubject === productCategories.id
-                                    ) {
-                                        item.subject.push(
-                                            productCategories.name
-                                        );
-                                        console.log(productCategories.name);
-                                    }
-                                }
-                            );
-                        });
-                        delete item.product_subject;
-
-                        const { data: gradeData, error: gradeError } =
-                            await supabase.from("grade_level").select("*");
-
-                        if (gradeError) {
-                            console.log(
-                                "supabase error: " + gradeError.message
-                            );
-                        } else {
-                            item.grade = [];
-                            gradeData.forEach((databaseGrade) => {
-                                item.post_grade.map((itemGrade: string) => {
-                                    if (
-                                        itemGrade ===
-                                        databaseGrade.id.toString()
-                                    ) {
-                                        item.grade.push(databaseGrade.grade);
-                                    }
-                                });
-                            });
-                        }
-
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-                        return item;
-                    })
-                );
-                setPurchasedItems(newItems);
-                console.log(purchasedItems());
-            }
-        }
-    };
 
     const fetchUser = async (user_id: string) => {
         try {
@@ -397,7 +301,7 @@ export const UserProfileView: Component = () => {
                                                     stroke-linejoin="miter"
                                                     fill="none"
                                                     color="none"
-                                                    class="fill-icon1 stroke-icon2 dark:fill-icon1-DM dark:stroke-icon2-DM"
+                                                    class="fill-icon1 stroke-icon2 dark:fill-icon1-DM dark:stroke-icon1"
                                                 >
                                                     <path d="M17.2928932,3.29289322 L21,7 L21,20 C21,20.5522847 20.5522847,21 20,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,4 C3,3.44771525 3.44771525,3 4,3 L16.5857864,3 C16.8510029,3 17.1053568,3.10535684 17.2928932,3.29289322 Z" />{" "}
                                                     <rect
@@ -421,21 +325,28 @@ export const UserProfileView: Component = () => {
                                 <div class="user-profile-tabs my-4 flex items-center justify-between border-b border-gray-300 pb-2">
                                     <div class="">
                                         <a
-                                            id="user-profile-tab-profile-link"
-                                            class="user-profile-tab-link mr-4 border-b-2 border-green-500 text-sm font-bold"
-                                            onClick={(e) => tabClick(e)}
-                                        >
-                                            {t("menus.profile")}
-                                        </a>
-                                        <a
                                             id="user-profile-tab-purchases-link"
-                                            class="user-profile-tab-link mr-4 text-sm font-bold"
+                                            class="user-profile-tab-link mr-4 border-b-2 border-green-500 text-sm font-bold"
                                             onClick={(e) => tabClick(e)}
                                         >
                                             {t("menus.purchases")}
                                         </a>
+                                        <a
+                                            id="user-profile-tab-profile-link"
+                                            class="user-profile-tab-link mr-4  text-sm font-bold"
+                                            onClick={(e) => tabClick(e)}
+                                        >
+                                            {t("menus.profile")}
+                                        </a>
+
+                                        <a
+                                            id="user-profile-tab-favorites-link"
+                                            class="user-profile-tab-link mr-4 text-sm font-bold"
+                                            onClick={(e) => tabClick(e)}
+                                        >
+                                            {t("menus.favorites")}
+                                        </a>
                                         {/* TODO: Add Back when feature is ready
-                                        <a id="user-profile-tab-favorites-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.favorites")}</a>
                                         <a id="user-profile-tab-following-link" class="user-profile-tab-link font-bold mr-4 text-sm" onClick={ (e) => tabClick(e) }>{t("menus.following")}</a>
                                          */}
                                     </div>
@@ -597,9 +508,9 @@ export const UserProfileView: Component = () => {
                                 </Show>
 
                                 <Show when={tabSelected() === "favorites"}>
-                                    <p class="italic">
-                                        {t("messages.comingSoon")}
-                                    </p>
+                                    <div id="favorites">
+                                        <ViewUserFavorites />
+                                    </div>
                                 </Show>
 
                                 <Show when={tabSelected() === "following"}>

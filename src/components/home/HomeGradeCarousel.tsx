@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
@@ -10,18 +10,45 @@ const values = ui[lang] as uiObject;
 const productCategoryData = values.subjectCategoryInfo;
 
 function selectGradeCarousel(gradeBtn: any) {
-    localStorage.setItem("selectedGradeCarousel", JSON.stringify(gradeBtn.id));
+    localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
+    console.log(JSON.stringify([gradeBtn.id]))
     window.location.href = `/${lang}/resources`;
 }
 
 export const HomeGradeCarousel: Component = () => {
+    const [grades, setGrades] = createSignal<
+        Array<{ grade: string; id: number }>
+    >([]);
+
+    onMount(async () => {
+        const { data: gradeData, error: grade_error } = await supabase
+            .from("grade_level")
+            .select("grade, id");
+
+        if (grade_error) {
+            console.log("supabase error: " + grade_error.message);
+        } else {
+            setGrades(gradeData);
+        }
+    });
+
     return (
         <div class="w-full overflow-x-scroll">
             {/* <svg width="80px" height="80px" viewBox="0 0 256 256" id="Flat" class="fill-icon1 dark:fill-icon1-DM">
                 <path d="M128,28A100,100,0,1,0,228,128,100.1127,100.1127,0,0,0,128,28Zm0,192a92,92,0,1,1,92-92A92.10478,92.10478,0,0,1,128,220Zm8-136v92a4,4,0,0,1-8,0V91.47266l-17.78223,11.84961a4.00018,4.00018,0,0,1-4.43554-6.65821l24-15.99316A4.00031,4.00031,0,0,1,136,84Z"/>
             </svg> */}
             <div class="flex w-fit">
-                <button
+                {grades().map((grade) => (
+                    <button
+                    id={grade.id.toString()}
+                    aria-label= {grade.grade}
+                    class="gradeHomeSelectBtn"
+                    onclick={(e) => selectGradeCarousel(e.target)}
+                >
+                    <h1 class="text-2xl md:text-3xl">{grade.grade}</h1>
+                </button>
+                ))}
+                {/* <button
                     id="PK"
                     class="gradeHomeSelectBtn"
                     onclick={(e) => selectGradeCarousel(e.target)}
@@ -141,7 +168,7 @@ export const HomeGradeCarousel: Component = () => {
                     <h1 class="md:text-auto text-center text-xs">
                         Continuing Education
                     </h1>
-                </button>
+                </button> */}
             </div>
         </div>
     );

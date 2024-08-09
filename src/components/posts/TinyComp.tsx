@@ -13,6 +13,7 @@ import "tinymce/plugins/quickbars";
 interface Props {
     id: string;
     mode: string | null;
+    currentContent?: (content: string) => void;
 }
 
 export const TinyComp = (props: Props) => {
@@ -20,16 +21,21 @@ export const TinyComp = (props: Props) => {
     const currentEditor = tinymce.get(props.id);
 
     const initializeTinyMCE = async () => {
-        if(currentEditor) {
+        if (currentEditor) {
             currentEditor.destroy();
         }
-        console.log(props.id)
         // Initialize TinyMCE
         await tinymce.init({
             selector: props.id,
             max_width: 384,
-            skin_url: mode() === "dark" ? "/tinymce/skins/ui/oxide-dark" : "/tinymce/skins/ui/oxide",
-            content_css: mode() === "dark" ? "/tinymce/skins/content/dark/content.min.css" : "/tinymce/skins/content/default/content.min.css",
+            skin_url:
+                mode() === "dark"
+                    ? "/tinymce/skins/ui/oxide-dark"
+                    : "/tinymce/skins/ui/oxide",
+            content_css:
+                mode() === "dark"
+                    ? "/tinymce/skins/content/dark/content.min.css"
+                    : "/tinymce/skins/content/default/content.min.css",
             promotion: false,
             plugins: "lists, quickbars",
             quickbars_image_toolbar: false,
@@ -43,6 +49,12 @@ export const TinyComp = (props: Props) => {
             setup: function (editor) {
                 editor.on("change", function () {
                     tinymce.triggerSave();
+                    if (props.currentContent) {
+                        props.currentContent(
+                            //@ts-ignore
+                            document.querySelector(props.id)?.value
+                        );
+                    }
                 });
             },
         });

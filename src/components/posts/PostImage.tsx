@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import { createEffect, createSignal, type JSX, Show } from "solid-js";
+import { createEffect, createSignal, type JSX, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import placeholderImg from "../../assets/userImagePlaceholder.svg";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -9,29 +9,98 @@ const t = useTranslations(lang);
 
 interface Props {
     size: number;
-    url: string | null;
+    url: string | string[] | null;
     onUpload: (event: Event, filePath: string) => void;
+    removeImage?: (imageId: string) => void;
 }
 
 const PostImage: Component<Props> = (props) => {
     const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
     // const [imageUrl, setImageUrl] = createSignal({ placeholderImg });
     const [uploading, setUploading] = createSignal(false);
+    const [hasRun, setHasRun] = createSignal(false);
+    const [imageIds, setImageIds] = createSignal<Array<string>>([]);
 
     createEffect(() => {
-        if (props.url) downloadImage(props.url);
+        console.log("Mounting", props.url);
+        console.log("Has Run", hasRun());
+        if (props.url && !hasRun()) {
+            if (Array.isArray(props.url) && props.url.length > 0) {
+                updateImages();
+                setHasRun (true);
+            } else if (props.url !== null && typeof props.url === "string") {
+                downloadImage(props.url);
+                setHasRun (true);
+            } 
+        }
     });
+
+    // const updateImages = async () => {
+    //     if (Array.isArray(props.url)) {
+    //         for (const url of props.url) {
+    //             if (!imageIds().includes(url)) {
+    //                 await downloadImage(url);
+    //             }
+    //         }
+    //     } else {
+    //         if (!imageIds().includes(props.url!)) {
+    //             await downloadImage(props.url!);
+    //         }
+    //     }
+    // };
+
+    // createEffect(async () => {
+    //     await updateImages();
+    // });
+
+    const updateImages = async () => {
+        console.log("Update Images", props.url);
+        console.log("Image Ids", imageIds());
+        if (props.url) {
+            if (Array.isArray(props.url)) {
+                const urlsToDownload = props.url.filter(
+                    (url) => !imageIds().includes(url)
+                );
+                console.log("Urls to download", urlsToDownload);
+                await Promise.all(
+                    urlsToDownload.map(async (url) => {
+                        await downloadImage(url);
+                    })
+                ); // for (const url of urlsToDownload) {
+            } else {
+                if (!imageIds().includes(props.url)) {
+                    await downloadImage(props.url);
+                }
+            }
+        }
+    };
 
     const downloadImage = async (path: string) => {
         try {
+            console.log("ImageUrl", imageUrl());
+            console.log("Downloading", path);
             const { data, error } = await supabase.storage
                 .from("post.image")
                 .download(path);
             if (error) {
                 throw error;
             }
+
             const url = URL.createObjectURL(data);
-            setImageUrl([...imageUrl(), url]);
+
+            setImageIds(prevIds => {
+                const newIds = new Set(prevIds);
+                newIds.add(path);
+                return Array.from(newIds);
+            });
+    
+            setImageUrl(prevUrls => {
+                // Ensure no duplicate URLs
+                if (!prevUrls.includes(url)) {
+                    return [...prevUrls, url];
+                }
+                return prevUrls;
+            });
         } catch (error) {
             if (error instanceof Error) {
                 console.log("Error downloading image: ", error.message);
@@ -39,6 +108,7 @@ const PostImage: Component<Props> = (props) => {
         }
     };
 
+    
     const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (
         event
     ) => {
@@ -62,14 +132,42 @@ const PostImage: Component<Props> = (props) => {
             if (uploadError) {
                 throw uploadError;
             }
-
+            setHasRun(true);
             props.onUpload(event, filePath);
+            
+            downloadImage(filePath);
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message);
             }
         } finally {
             setUploading(false);
+        }
+    };
+
+    const removeImage = async (index: number, image: string) => {
+        console.log(imageIds());
+        const imageId = imageIds()[index];
+        console.log(imageId);
+        if (props.removeImage) {
+            props.removeImage(imageId);
+        }
+        // const url = URL.createObjectURL(image)
+        // console.log("Removing image: ", index);
+        const imageArray = [...imageUrl()];
+        const blobIndex = imageArray.indexOf(image);
+        if (blobIndex > -1) {
+            imageArray.splice(blobIndex, 1);
+            setImageUrl(imageArray);
+            console.log(imageUrl());
+        }
+
+        const imageIdArray = [...imageIds()];
+        
+        if (index > -1) {
+            imageIdArray.splice(index, 1);
+            setImageIds(imageIdArray);
+            console.log(imageIds());
         }
     };
 
@@ -120,8 +218,8 @@ const PostImage: Component<Props> = (props) => {
                 </span>
             </div>
 
-            {imageUrl().length > 0 && imageUrl().length <= 5 ? (
-                imageUrl().map((image) => (
+            {imageUrl().length > 0 ? (
+                imageUrl().map((image, index) => (
                     <img
                         src={image}
                         alt={imageUrl() ? "Image" : "No image"}
@@ -130,6 +228,7 @@ const PostImage: Component<Props> = (props) => {
                             height: `${props.size}px`,
                             width: `${props.size}px`,
                         }}
+                        onclick={() => removeImage(index, image)}
                     />
                 ))
             ) : (

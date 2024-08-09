@@ -126,7 +126,9 @@ export const English = {
         requestStripePayout: "Request Payout",
         listResource: "List Resource",
         continueShopping: "Continue Shopping",
-        viewOrders: "View Orders",
+        viewOrders: "View Purchases",
+        reportResource: "Report this Resource",
+        updateResource: "Update Resource",
     },
 
     messages: {
@@ -190,6 +192,11 @@ export const English = {
         requestPayout:
             "Click the Request Payout button to request your Stripe payout. You will be charged $2.25 to your account balance and the remainder will be sent to your bank account or debit card based on your Stripe settings. For your most up to date Stripe Balance, please visit your stripe dashboard.",
         currentBalance: "Your current balance is approximately:",
+        descriptionRequired: "You must include a listing description",
+        reportResource: "Clicking submit will generate an email in your default client to send to our support team to review your report. Please leave all generated information as entered to allow our team to investigate your report. If you would prefer to send an email using your preferred client, please copy and paste the information above into your email to <b>support@learngrove.co</b>",
+        pleaseDescribe: "Please describe the issue",
+        addedToFavorites: "Added to Favorites!",
+
     },
 
     formLabels: {
@@ -286,7 +293,7 @@ export const English = {
         ratingsReviews: "Ratings and Reviews",
         questions: "Questions",
         freeDownload: "Free Download",
-        creatorResources: "My Resources",
+        creatorResources: "Resources",
         payouts: "Payouts",
         reviews: "Reviews",
         details: "Details",

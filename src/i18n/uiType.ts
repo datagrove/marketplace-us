@@ -111,6 +111,8 @@ export interface uiObject {
         listResource: string;
         continueShopping: string;
         viewOrders: string;
+        reportResource: string;
+        updateResource: string;
     };
 
     messages: {
@@ -162,6 +164,10 @@ export interface uiObject {
         payoutSetup: string;
         requestPayout: string;
         currentBalance: string;
+        descriptionRequired: string;
+        reportResource: string;
+        pleaseDescribe: string;
+        addedToFavorites: string;
     };
 
     formLabels: {

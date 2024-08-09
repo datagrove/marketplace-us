@@ -27,14 +27,18 @@ const Dropdown: Component<Props> = (Props: Props) => {
         <div class="relative inline-block w-full">
             {/* Dropdown button */}
             <button
-                class="w-full flex rounded justify-between border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                class="flex w-full justify-between rounded border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen());
                 }}
             >
                 <div class="ml-1 inline-block">
-                    {Props.selectedOption || t("formLabels.chooseTaxCode") || t("formLabels.dropdownDefault")}
+                    {/* TODO: This should take a prop to define whether it is required or not and what label to use */}
+                    <span class="text-alert1">* </span>
+                    {Props.selectedOption ||
+                        t("formLabels.chooseTaxCode") ||
+                        t("formLabels.dropdownDefault")}
                 </div>
                 {/* Dropdown icon */}
                 <div class="inline-block">
@@ -51,9 +55,7 @@ const Dropdown: Component<Props> = (Props: Props) => {
                 </div>
             </button>
             {isOpen() && (
-                <div
-                    class="mb-4 max-h-96 max-w-fit overflow-auto whitespace-normal rounded bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                >
+                <div class="mb-4 max-h-96 max-w-fit overflow-auto whitespace-normal rounded bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM">
                     {Props.options.map((option) => (
                         <div
                             class="cursor-pointer whitespace-normal px-4 py-2 hover:bg-background1 dark:hover:bg-background1-DM"

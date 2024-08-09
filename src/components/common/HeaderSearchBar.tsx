@@ -12,10 +12,10 @@ const t = useTranslations(lang);
 
 
 export const SearchBar: Component = () => {
-    const [searchString, setSearchString] = useLocalStorage("searchString", "");
+    const [searchString, setSearchString] = createSignal<string>("");
 
     onMount(() => {
-        if (localStorage.getItem("searchString")) {
+        if (localStorage.getItem("searchString") !== null) {
             setSearchString(localStorage.getItem("searchString")!);
         }
     });
@@ -61,7 +61,7 @@ export const SearchBar: Component = () => {
                     name="query"
                     id="headerSearch"
                     class="h-full rounded-full w-full ml-2 py-3 dark:bg-background1-DM bg-background1"
-                    value={searchString()}
+                    value={searchString() ? searchString() : ""}
                     oninput={(e) => setSearchString(e.target.value)}
                 />
                 <IconSearch class="search-icon mr-2" />

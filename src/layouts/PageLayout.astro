@@ -6,6 +6,7 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import { ui } from "../i18n/ui";
 import type { uiObject } from "../i18n/uiType";
 import { WindowSize } from "../components/common/WindowSize";
+import Banner from "../components/common/notices/Banner";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -18,7 +19,25 @@ const { pageTitle, pageDescription, stickyFooter = true } = Astro.props;
 ---
 
 <Layout {pageTitle} {pageDescription}>
-    <div class="flex flex-col min-h-screen">
+    <!-- 
+    For best experience keep banner content to <90 characters 
+    linkLocation and linkLabel are optional but make sure to include both if used
+    possible banner props are:
+    content: string | JSX.Element
+    linkLocation?: string
+    linkLabel?: string
+    startDate?: string YYYY-MM-DD
+    endDate?: string YYYY-MM-DD
+     -->
+    <Banner
+        content="This is a test banner Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+        linkLocation="https://example.com"
+        linkLabel="Go to example.com"
+        startDate="2024-01-17"
+        endDate="2024-07-24"
+        client:only="solid-js"
+    />
+    <div class="flex flex-col min-h-screen md:mx-4">
         <div class="header pt-4">
             <Header client:only="solid-js" />
         </div>

@@ -1,12 +1,15 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, Show } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
+import { MobileViewCard } from "@components/services/MobileViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
@@ -20,11 +23,13 @@ interface Props {
 
 export const UserViewCreatorPosts: Component<Props> = (props) => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
+    const screenSize = useStore(windowSize);
 
     createEffect(async () => {
         const { data, error } = await supabase
             .from("sellerposts")
             .select("*")
+            .order("id", { ascending: false })
             .eq("seller_id", props.id)
             .eq("listing_status", true);
         if (!data) {
@@ -78,7 +83,12 @@ export const UserViewCreatorPosts: Component<Props> = (props) => {
     });
     return (
         <div class="">
-            <ViewCard posts={posts()} />
+            <Show when={screenSize() !== "sm"}>
+                <ViewCard posts={posts()} />
+            </Show>
+            <Show when={screenSize() === "sm"}>
+                <MobileViewCard posts={posts()} />
+            </Show>
         </div>
     );
 };

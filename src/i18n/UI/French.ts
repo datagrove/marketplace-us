@@ -124,6 +124,8 @@ export const French = {
         listResource: "Publier la Ressource",
         continueShopping: "Continuer vos achats",
         viewOrders: "Voir les Achats",
+        reportResource: "Signaler cette ressource",
+        updateResource: "Mettre à jour la Ressource",
     },
 
     messages: {
@@ -192,6 +194,10 @@ export const French = {
         requestPayout:
             "Cliquez sur le bouton Demander un paiement pour demander votre paiement Stripe. Vous serez facturé 2,25 $ sur le solde de votre compte et le reste sera envoyé sur votre compte bancaire ou votre carte de débit en fonction de vos paramètres Stripe. Pour obtenir votre solde Stripe le plus à jour, veuillez visiter votre tableau de bord Stripe.",
         currentBalance: "Votre solde actuel est d'environ :",
+        descriptionRequired: "Vous devez inclure une description de l'annonce",
+        reportResource: "En cliquant sur Soumettre, vous générerez un e-mail dans votre client par défaut à envoyer à notre équipe d'assistance pour examiner votre rapport. Veuillez laisser toutes les informations générées telles quelles pour permettre à notre équipe d'enquêter sur votre rapport. Si vous préférez envoyer un e-mail en utilisant votre client préféré, veuillez copier et coller les informations ci-dessus dans votre e-mail à <b>support@learngrove.co</b>.",
+        pleaseDescribe: "S'il vous plaît décrivez le problème", 
+        addedToFavorites: "Ajouté aux Favoris!",
     },
 
     formLabels: {
@@ -287,7 +293,7 @@ export const French = {
     ratingsReviews: "Notes et Avis",
     questions: "Des Questions",
     freeDownload: "Téléchargement Gratuit",
-    creatorResources: "Mes ressources",
+    creatorResources: "Ressources",
     payouts: "Paiements",
     reviews: "Commentaires",
     details: "Détails",

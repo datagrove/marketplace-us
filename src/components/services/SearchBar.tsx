@@ -25,8 +25,10 @@ export const SearchBar: Component<Props> = (props) => {
     });
 
     const clickSearch = () => {
-        localStorage.setItem("searchString", searchString());
-        props.search(searchString());
+        if (searchString !== null) {
+            localStorage.setItem("searchString", searchString());
+            props.search(searchString());
+        }
     };
 
     // function onStorageChange(event: StorageEvent) {
