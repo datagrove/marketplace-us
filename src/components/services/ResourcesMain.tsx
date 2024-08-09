@@ -8,6 +8,7 @@ import { MobileViewCard } from "./MobileViewCard";
 import { GradeFilter } from "./GradeFilter";
 import { SecularFilter } from "./SecularFilter";
 import { SubjectFilter } from "./SubjectFilter";
+import { SecularFilter } from "./SecularFilter";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
@@ -44,8 +45,9 @@ export const ResourcesView: Component = () => {
     []
   );
   const [searchString, setSearchString] = useLocalStorage("searchString", "");
-  const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
   const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
+  const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
+
 
   const screenSize = useStore(windowSize);
 
@@ -94,7 +96,6 @@ export const ResourcesView: Component = () => {
   });
 
   const searchPosts = async () => {
-    console.log("search posts");
     if (localStorage.getItem("searchString")) {
       setSearchString(localStorage.getItem("searchString"));
     }
@@ -111,7 +112,6 @@ export const ResourcesView: Component = () => {
     } else {
       setSubjectFilters([...subjectFilters(), currentCategory]);
     }
-
     filterPosts();
   };
 
@@ -130,6 +130,10 @@ export const ResourcesView: Component = () => {
 
     if (res === null || res === undefined) {
       noPostsMessage?.classList.remove("hidden");
+      setTimeout(() => {
+        noPostsMessage?.classList.add("hidden");
+      }, 3000);
+
 
       setPosts([]);
       setCurrentPosts([]);
@@ -195,8 +199,6 @@ export const ResourcesView: Component = () => {
           })
           : []
       );
-
-      console.log(allUpdatedPosts);
       setPosts(allUpdatedPosts!);
       setCurrentPosts(allUpdatedPosts!);
     } else {
@@ -213,7 +215,6 @@ export const ResourcesView: Component = () => {
             item.product_subject.map((productSubject: string) => {
               if (productSubject === productCategories.id) {
                 item.subject.push(productCategories.name);
-                console.log(productCategories.name);
               }
             });
           });
@@ -237,8 +238,6 @@ export const ResourcesView: Component = () => {
           return item;
         })
       );
-
-      console.log("res", resPosts);
       setPosts(resPosts);
       setCurrentPosts(resPosts);
     }
@@ -253,17 +252,10 @@ export const ResourcesView: Component = () => {
     } else {
       setGradeFilters([...gradeFilters(), grade]);
     }
-    console.log(gradeFilters());
     filterPosts();
   };
 
-  const filterPostsBySecular = (secular: boolean) => {
-
-    setSecularFilters(secular)
-    filterPosts();
-  };
   const clearAllFilters = () => {
-    console.log("clearing all filters");
     let searchInput = document.getElementById("search") as HTMLInputElement;
     const subjectCheckboxes = document.querySelectorAll(
       "input[type='checkbox'].subject"
@@ -272,26 +264,38 @@ export const ResourcesView: Component = () => {
       "input[type='checkbox'].grade"
     ) as NodeListOf<HTMLInputElement>;
 
+
+    console.log(subjectCheckboxes);
+    console.log(gradeCheckboxes);
     if (searchInput !== null && searchInput.value !== null) {
       searchInput.value = "";
     }
 
     gradeCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
+
+      if (checkbox && checkbox.checked) {
+        checkbox.checked = false;
+      }
     });
 
     subjectCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
+      if (checkbox && checkbox.checked) {
+        checkbox.checked = false;
+      }
     });
+
+    localStorage.removeItem("selectedGrades");
+    localStorage.removeItem("selectedSubjects");
+    localStorage.removeItem("searchString");
+    localStorage.removeItem("selectedResourceTypes");
 
     setSearchPost([]);
     setSearchString("");
     // localStorage.setItem("searchString", "");
     setSubjectFilters([]);
     setGradeFilters([]);
-    setSecularFilters(false)
-    console.log(secularFilters())
     filterPosts();
+    setSecularFilters(false);
   };
 
   const clearSubjects = () => {
@@ -300,9 +304,13 @@ export const ResourcesView: Component = () => {
     ) as NodeListOf<HTMLInputElement>;
 
     subjectCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
+
+      if (checkbox && checkbox.checked) {
+        checkbox.checked = false;
+      };
     });
 
+    localStorage.removeItem("selectedSubjects");
     setSubjectFilters([]);
     filterPosts();
   };
@@ -311,11 +319,15 @@ export const ResourcesView: Component = () => {
     const gradeCheckboxes = document.querySelectorAll(
       "input[type='checkbox'].grade"
     ) as NodeListOf<HTMLInputElement>;
+    console.log(gradeCheckboxes);
 
     gradeCheckboxes.forEach((checkbox) => {
-      if (checkbox && checkbox.checked) checkbox.click();
+      if (checkbox && checkbox.checked) {
+        checkbox.checked = false;
+      };
     });
 
+    localStorage.removeItem("selectedGrades");
     setGradeFilters([]);
     filterPosts();
   };
@@ -337,86 +349,70 @@ export const ResourcesView: Component = () => {
           secularFilter={filterPostsBySecular}
         />
       </Show>
+          {/* <div class="sticky top-0 w-3/12">
+                        <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
+                            <div class="flex w-full">
+                                <button
+                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
+                                    onclick={clearGrade}
+                                    aria-label={t(
+                                        "clearFilters.filterButtons.2.ariaLabel"
+                                    )}
+                                >
+                                    <div class="flex items-center">
+                                        <IconX stroke={"2"} class="h-3 w-3" />
+                                        <p class="text-xs">
+                                            {t(
+                                                "clearFilters.filterButtons.2.text"
+                                            )}
+                                        </p>
+                                    </div>
+                                </button>
 
-      <Show when={screenSize() === "sm"}>
-        <div class="mb-2 rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
-          <h1 class="text-lg text-ptext1-DM dark:text-ptext1">
-            {t("pageTitles.services")}
-          </h1>
-        </div>
-      </Show>
+                                <button
+                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
+                                    onclick={clearSubjects}
+                                    aria-label={t(
+                                        "clearFilters.filterButtons.1.ariaLabel"
+                                    )}
+                                >
+                                    <div class="flex items-center">
+                                        <IconX stroke={"2"} class="h-3 w-3" />
+                                        <p class="text-xs">
+                                            {t(
+                                                "clearFilters.filterButtons.1.text"
+                                            )}
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
 
-      <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
-        <Show when={screenSize() !== "sm"}>
-          <div class="sticky top-0 w-3/12">
-            <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
-              <div class="flex w-full">
-                <button
-                  class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                  onclick={clearGrade}
-                  aria-label={t(
-                    "clearFilters.filterButtons.2.ariaLabel"
-                  )}
-                >
-                  <div class="flex items-center">
-                    <IconX stroke={"2"} class="h-3 w-3" />
-                    <p class="text-xs">
-                      {t(
-                        "clearFilters.filterButtons.2.text"
-                      )}
-                    </p>
-                  </div>
-                </button>
+                            <button
+                                class="clearBtnRectangle flex w-full justify-center"
+                                onclick={clearAllFilters}
+                                aria-label={t(
+                                    "clearFilters.filterButtons.0.ariaLabel"
+                                )}
+                            >
+                                <div class="flex items-center">
+                                    <IconX stroke={"2"} class="h-3 w-3" />
+                                    <p class="text-xs">
+                                        {t("clearFilters.filterButtons.0.text")}
+                                    </p>
+                                </div>
+                            </button>
+                        </div>
 
-                <button
-                  class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                  onclick={clearSubjects}
-                  aria-label={t(
-                    "clearFilters.filterButtons.1.ariaLabel"
-                  )}
-                >
-                  <div class="flex items-center">
-                    <IconX stroke={"2"} class="h-3 w-3" />
-                    <p class="text-xs">
-                      {t(
-                        "clearFilters.filterButtons.1.text"
-                      )}
-                    </p>
-                  </div>
-                </button>
-              </div>
+                        <div class="mr-4 w-11/12">
+                            <GradeFilter
+                                filterPostsByGrade={filterPostsByGrade}
+                            />
+                        </div>
 
-              <button
-                class="clearBtnRectangle flex w-full justify-center"
-                onclick={clearAllFilters}
-                aria-label={t(
-                  "clearFilters.filterButtons.0.ariaLabel"
-                )}
-              >
-                <div class="flex items-center">
-                  <IconX stroke={"2"} class="h-3 w-3" />
-                  <p class="text-xs">
-                    {t("clearFilters.filterButtons.0.text")}
-                  </p>
-                </div>
-              </button>
-            </div>
-
-            <div class="mr-4 w-11/12">
-              <GradeFilter
-                filterPostsByGrade={filterPostsByGrade}
-              />
-            </div>
-
-            <div class="mr-4 w-11/12">
-              <SecularFilter
-                filterPostsBySecular={filterPostsBySecular}
-              />
-            </div>
-            <div class="w-11/12 md:mr-4">
-              <SubjectFilter filterPosts={setCategoryFilter} />
-            </div>
-          </div>
+                        <div class="w-11/12 md:mr-4">
+                            <SubjectFilter filterPosts={setCategoryFilter} />
+                        </div>
+                    </div> */}
         </Show>
 
         <div class="w-11/12 items-center md:w-8/12 md:flex-1">

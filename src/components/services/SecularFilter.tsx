@@ -6,17 +6,19 @@ import { createSignal, onMount, type Component } from "solid-js";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
+
 interface Props {
   // Define the type for the filterPosts prop
   filterPostsBySecular: (secular: boolean) => void;
 }
-
 export const SecularFilter: Component<Props> = (props) => {
   const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false)
 
 
   function initializeSecular(e: Event) {
+
     if ((e.target as HTMLInputElement)?.checked !== null) {
+
       setSelectedSecular((e.target as HTMLInputElement)?.checked)
       props.filterPostsBySecular(selectedSecular())
     }
@@ -56,5 +58,3 @@ export const SecularFilter: Component<Props> = (props) => {
       </div>
     </div>
   )
-
-}
