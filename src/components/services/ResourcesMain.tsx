@@ -334,6 +334,7 @@ export const ResourcesView: Component = () => {
           clearAllFilters={clearAllFilters}
           filterPostsByGrade={filterPostsByGrade}
           filterPostsBySubject={setCategoryFilter}
+          secularFilter={filterPostsBySecular}
         />
       </Show>
 

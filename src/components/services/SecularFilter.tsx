@@ -1,16 +1,22 @@
 
 import { fetchFilteredPosts } from "@components/posts/fetchPosts";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { createSignal, onMount, type Component } from "solid-js";
+
+const lang = getLangFromUrl(new URL(window.location.href));
+const t = useTranslations(lang);
+
 interface Props {
   // Define the type for the filterPosts prop
   filterPostsBySecular: (secular: boolean) => void;
 }
+
 export const SecularFilter: Component<Props> = (props) => {
   const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false)
 
 
   function initializeSecular(e: Event) {
-    if ((e.target as HTMLInputElement)?.checked) {
+    if ((e.target as HTMLInputElement)?.checked !== null) {
       setSelectedSecular((e.target as HTMLInputElement)?.checked)
       props.filterPostsBySecular(selectedSecular())
     }
@@ -31,8 +37,7 @@ export const SecularFilter: Component<Props> = (props) => {
         <div>
           <div class="flex flex-row pl-2">
             <div class="flex flex-wrap justify-between">
-              {/* <div class="w-4/5 pl-4">{t("formLabels.subjects")}</div> */}
-              <div class="w-4/5 px-2 ">Secular</div>
+              <div class="w-4/5 px-2 ">{t("formLabels.secular")}</div>
             </div>
             <div>
               <input

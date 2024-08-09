@@ -975,7 +975,7 @@ export const CreateNewPost: Component = () => {
           <div class="mt-2 flex justify-between">
             <p>
               <span class="text-alert1">* </span>
-              {t("formLabels.isResourceFree")}?
+              {t("formLabels.secular")}?
             </p>
             <div>
               <label class="ml-4">
