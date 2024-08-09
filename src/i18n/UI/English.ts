@@ -570,6 +570,7 @@ export const English = {
         ariaLabel: "Clear Governing District",
       },
       { text: "View Results", ariaLabel: "View Results" },
+      { text: "Clear Secular", ariaLabel: "CLear Secular" },
     ],
   },
 

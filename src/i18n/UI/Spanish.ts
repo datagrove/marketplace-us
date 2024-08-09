@@ -251,7 +251,7 @@ export const Spanish = {
     yes: "Sí",
     no: "No",
     more: "más",
-    secular: "Secular",
+    secular: "Laico",
   },
 
   postLabels: {
@@ -569,6 +569,7 @@ export const Spanish = {
       { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
       { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
       { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
+      { text: "Borrar Filtro Laico", ariaLabel: "Boorar filtor Laico" },
     ],
   },
 

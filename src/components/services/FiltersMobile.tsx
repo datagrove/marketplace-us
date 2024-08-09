@@ -200,6 +200,10 @@ export const FiltersMobile: Component<Props> = (props) => {
     setSubjectFilterCount(0);
   };
 
+  const clearSecularFiltersMobile = () => {
+    setSelectedSecular(false)
+  };
+
   const clearGradeFiltersMobile = () => {
     props.clearGrade();
     grade().forEach((grade) => {
@@ -432,7 +436,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
               <button
                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
-                onClick={clearAllFiltersMobile}
+                onClick={clearSecularFiltersMobile}
               >
                 {t("clearFilters.filterButtons.0.text")}
               </button>
@@ -581,13 +585,11 @@ export const FiltersMobile: Component<Props> = (props) => {
                     class={`mr-2 leading-tight`}
                     checked={selectedSecular()}
                     onClick={(e) => {
-                      // secularCheckboxClick(e)
+                      secularCheckboxClick(e)
                     }}
                   />
                 </div>
-
               </div>
-
             </div>
 
             <div class="my-2">
@@ -595,7 +597,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                 onClick={clearSubjectFiltersMobile}
               >
-                {t("clearFilters.filterButtons.1.text")}
+                {t("clearFilters.filterButtons.6.text")}
               </button>
             </div>
           </div>
