@@ -201,6 +201,12 @@ const [showSecular, setShowSecular,] = createSignal<boolean>(false);
         setSubjectFilterCount(0);
     };
 
+    const clearSecularFilterMobile = () => {
+    setSelectedSecular(false)
+    props.secularFilter(selectedSecular())
+
+  }
+
     const clearGradeFiltersMobile = () => {
         props.clearGrade();
         grade().forEach((grade) => {
@@ -595,9 +601,10 @@ const [showSecular, setShowSecular,] = createSignal<boolean>(false);
                     <div class="my-2">
                       <button
                         class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
-                        onClick={clearSubjectFiltersMobile}
+                        onClick={clearSecularFilterMobile}
+                        // onClick={clearSubjectFiltersMobile}
                       >
-                        {t("clearFilters.filterButtons.1.text")}
+                        {t("clearFilters.filterButtons.6.text")}
                       </button>
                     </div>
                   </div>
