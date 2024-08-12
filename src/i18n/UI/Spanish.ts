@@ -202,6 +202,7 @@ export const Spanish = {
         reportResource: "Al hacer clic en enviar, se generará un correo electrónico en su cliente predeterminado para enviarlo a nuestro equipo de soporte para revisar su informe. Deje toda la información generada tal como se ingresó para permitir que nuestro equipo investigue su informe. Si prefiere enviar un correo electrónico utilizando su cliente preferido, copie y pegue la información anterior en su correo electrónico a <b>support@learngrove.co</b>.",
         pleaseDescribe: "Por favor describe el problema",
         addedToFavorites: "¡Añadida a favoritos!",
+        noFavoriteItems: "No hay elementos favoritos",
     },
 
     formLabels: {
