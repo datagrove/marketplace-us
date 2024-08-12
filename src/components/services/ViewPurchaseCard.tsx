@@ -85,7 +85,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                             ? "User Image"
                                             : "No image"
                                     }
-                                    class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                    class="h-full w-full rounded-lg bg-background1 object-contain dark:bg-background1-DM"
                                 />
                             ) : (
                                 <svg
