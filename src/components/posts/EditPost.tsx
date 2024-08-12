@@ -69,10 +69,10 @@ export const EditPost: Component<Props> = (props: Props) => {
     // const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
-    const [secular, setSecular] = createSignal<boolean>(false)
+    const [secular, setSecular] = createSignal<boolean>(false);
 
     onMount(async () => {
-        console.log(props.post)
+        console.log(props.post);
 
         const { data, error } = await supabase.auth.getSession();
         setSession(data.session);
@@ -89,7 +89,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         setGradePick(props.post?.post_grade!);
         setSubjectPick(props.post.product_subject);
         setResourceTypesPick(props.post?.resource_types!);
-        setSecular(props.post.secular)
+        setSecular(props.post.secular);
 
         if (props.post?.image_urls) {
             setImageUrl(props.post?.image_urls.split(","));
@@ -170,13 +170,12 @@ export const EditPost: Component<Props> = (props: Props) => {
             alert(t("messages.signInAsCreator"));
             location.href = `/${lang}/login`;
         }
-
     });
 
     createEffect(() => {
         setImageLength(imageUrl().length);
         // console.log(imageLength());
-    })
+    });
 
     async function submit(e: SubmitEvent) {
         e.preventDefault();
@@ -196,7 +195,6 @@ export const EditPost: Component<Props> = (props: Props) => {
         tmpDiv.innerHTML = formData.get("Content") as string;
         let description = tmpDiv.textContent || tmpDiv.innerText || "";
         formData.append("description", description);
-
 
         if (subjectPick() !== undefined) {
             formData.append("subject", JSON.stringify(subjectPick()));
@@ -222,9 +220,9 @@ export const EditPost: Component<Props> = (props: Props) => {
         }
 
         if (secular() !== null) {
-            formData.append("secular", secular().toString())
+            formData.append("secular", secular().toString());
         }
-    
+
         if (props.post?.id! !== undefined) {
             formData.append("idSupabase", props.post!.id.toString());
         }
@@ -297,7 +295,6 @@ export const EditPost: Component<Props> = (props: Props) => {
                 .getElementById("subjectToolTip")
                 ?.classList.remove("hidden");
         }
-
     }
 
     function formatPrice(resourcePrice: string) {
@@ -378,8 +375,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     function mountTiny() {
         TinyComp({ id: "#Content", mode: mode.theme });
     }
-    
-    
+
     function removeImage(imageId: string) {
         console.log(imageUrl());
         const index = imageUrl().indexOf(imageId);
@@ -457,7 +453,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                             </div>
                         </div>
                     </div>
-                    <div class="w-full">             
+                    <div class="w-full">
                         <PostImage
                             url={imageUrl()}
                             size={96}
@@ -818,26 +814,24 @@ export const EditPost: Component<Props> = (props: Props) => {
                     </div>
                 </div>
 
-              {/* Secular */}
-                <div class="justify-evenly mt-6 flex flex-col ">
-                  <div class="mt-2 flex justify-between">
-                    <p>
-                      <span class="text-alert1">* </span>
-                      {t("formLabels.isResourceFree")}?
-                    </p>
-                    <div>
-                      <label class="ml-4">
-                        {t("formLabels.yes")}
-                      </label>
-                      <input
-                        type="checkbox"
-                        id="secularCheckbox"
-                        class="ml-1"
-                        checked={secular()}
-                        onChange={() => setSecular(!secular())}
-                      />
+                {/* Secular */}
+                <div class="mt-6 flex flex-col justify-evenly ">
+                    <div class="mt-2 flex justify-between">
+                        <p>
+                            <span class="text-alert1">* </span>
+                            {t("formLabels.secular")}?
+                        </p>
+                        <div>
+                            <label class="ml-4">{t("formLabels.yes")}</label>
+                            <input
+                                type="checkbox"
+                                id="secularCheckbox"
+                                class="ml-1"
+                                checked={secular()}
+                                onChange={() => setSecular(!secular())}
+                            />
+                        </div>
                     </div>
-                  </div>
                 </div>
 
                 {/* Price Implementation */}
@@ -925,7 +919,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                     <button
                         id="post"
                         // disabled={!uploadFinished()}
-                        class={`text-2xl btn-primary mb-4`}
+                        class={`btn-primary mb-4 text-2xl`}
                     >
                         {t("buttons.updateResource")}
                     </button>
