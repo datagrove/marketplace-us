@@ -185,7 +185,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                                     ? "User Image"
                                                     : "No image"
                                             }
-                                            class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            class="h-48 w-48 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                         />
 
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
