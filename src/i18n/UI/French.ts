@@ -249,6 +249,7 @@ export const French = {
         yes: "Ouais",
         no: "Non",
         more: "plus",
+        secular: "Laïque"
     },
 
     postLabels: {
@@ -581,6 +582,7 @@ export const French = {
                 ariaLabel: "Effacer le Filtre de District de Gouvernement",
             },
             { text: "Voir les Résultats", ariaLabel: "Voir les Résultats"},
+            { text: "Propre Laïque", ariaLabel: "Propre Laïque" },
         ],
     },
 

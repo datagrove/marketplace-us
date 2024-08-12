@@ -248,6 +248,7 @@ export const English = {
         yes: "Yes",
         no: "No",
         more: "more",
+        secular:"Secular",
     },
 
     postLabels: {
@@ -570,6 +571,7 @@ export const English = {
                 ariaLabel: "Clear Governing District",
             },
             { text: "View Results", ariaLabel: "View Results" },
+            { text: "Clear Secular", ariaLabel: "Clear Secular" },
         ],
     },
 
