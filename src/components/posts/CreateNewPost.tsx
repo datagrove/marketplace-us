@@ -181,7 +181,7 @@ export const CreateNewPost: Component = () => {
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
     const [allRequirementsMet, setAllRequirementsMet] =
-        createSignal<boolean>(true);
+        createSignal<boolean>(false);
     const [showDescriptionErrorMessage, setShowDescriptionErrorMessage] =
         createSignal<boolean>(false);
     const [description, setDescription] = createSignal<boolean>(false);
@@ -335,7 +335,8 @@ export const CreateNewPost: Component = () => {
             gradePick().length > 0 &&
             resourceTypesPick().length > 0 &&
             isFree() &&
-            uploadFinished()
+            uploadFinished() &&
+            imageUrl().length > 0
         ) {
             setAllRequirementsMet(true);
         } else if (
@@ -347,7 +348,8 @@ export const CreateNewPost: Component = () => {
             !isFree() &&
             price().length > 0 &&
             selectedTaxCode()?.value !== "" &&
-            uploadFinished()
+            uploadFinished() &&
+            imageUrl().length > 0
         ) {
             setAllRequirementsMet(true);
         } else {
@@ -673,7 +675,7 @@ export const CreateNewPost: Component = () => {
                                     </g>
                                 </svg>
 
-                                <span class="translate-x-1/8 invisible absolute m-4 mx-auto w-48 translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
+                                <span class="translate-x-1/8 invisible absolute z-10 m-4 mx-auto w-48 translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
                                     {t("toolTips.postImages")}
                                 </span>
                             </div>
@@ -1042,11 +1044,7 @@ export const CreateNewPost: Component = () => {
                 {/* Secular Implementation */}
                 <div class="mt-6 flex flex-col justify-evenly ">
                     <div class="mt-2 flex justify-between">
-                        <p>
-                            {" "}
-                            <span class="text-alert1">* </span>
-                            {t("formLabels.secular")}?
-                        </p>
+                        <p>{t("formLabels.secular")}?</p>
                         <div>
                             <label class="ml-4">{t("formLabels.yes")}</label>
                             <input
@@ -1219,7 +1217,7 @@ export const CreateNewPost: Component = () => {
                 <div class="flex justify-center">
                     <button
                         id="post"
-                        disabled={!uploadFinished()}
+                        disabled={!allRequirementsMet()}
                         class={`text-2xl ${
                             allRequirementsMet()
                                 ? "btn-primary"

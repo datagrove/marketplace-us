@@ -65,8 +65,8 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [resourceTypesPick, setResourceTypesPick] = createSignal<Array<string>>([]);
     //prettier-ignore
     const [resourceTypes, setResourceTypes] = createSignal<Array<{ id: number; type: string }>>([]);
-    const [uploadFinished, setUploadFinished] = createSignal(false);
-    // const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
+    const [allRequirementsMet, setAllRequirementsMet] =
+        createSignal<boolean>(false);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
     const [secular, setSecular] = createSignal<boolean>(false);
@@ -175,6 +175,24 @@ export const EditPost: Component<Props> = (props: Props) => {
     createEffect(() => {
         setImageLength(imageUrl().length);
         // console.log(imageLength());
+    });
+
+    createEffect(async () => {
+        console.log("allRequirementsMet: ", allRequirementsMet());
+
+        let title = document.getElementById("Title");
+
+        if (
+            title?.nodeValue !== "" &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            imageUrl().length > 0
+        ) {
+            setAllRequirementsMet(true);
+        } else {
+            setAllRequirementsMet(false);
+        }
     });
 
     async function submit(e: SubmitEvent) {
@@ -817,10 +835,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 {/* Secular */}
                 <div class="mt-6 flex flex-col justify-evenly ">
                     <div class="mt-2 flex justify-between">
-                        <p>
-                            <span class="text-alert1">* </span>
-                            {t("formLabels.secular")}?
-                        </p>
+                        <p>{t("formLabels.secular")}?</p>
                         <div>
                             <label class="ml-4">{t("formLabels.yes")}</label>
                             <input
@@ -835,7 +850,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 </div>
 
                 {/* Price Implementation */}
-                <div class="justfify-evenly mt-6 flex flex-col ">
+                {/* <div class="justfify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
                         <p>{t("formLabels.isResourceFree")}?</p>
                         <div>
@@ -912,14 +927,18 @@ export const EditPost: Component<Props> = (props: Props) => {
                             </div>
                         </div>
                     </Show>
-                </div>
+                </div> */}
 
                 <br />
                 <div class="flex justify-center">
                     <button
                         id="post"
-                        // disabled={!uploadFinished()}
-                        class={`btn-primary mb-4 text-2xl`}
+                        disabled={!allRequirementsMet()}
+                        class={`text-2xl ${
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
+                        }`}
                     >
                         {t("buttons.updateResource")}
                     </button>
