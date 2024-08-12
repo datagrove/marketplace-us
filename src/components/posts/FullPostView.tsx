@@ -464,7 +464,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                         >
                             <Show when={postImages().length > 0}>
                                 <Show when={postImages().length === 1}>
-                                    <div class="flex h-[300px] w-[300px] items-center justify-center rounded border border-gray-400">
+                                    <div class="flex h-[300px] w-[300px] items-center justify-center rounded">
                                         <img
                                             src={postImages()[0]}
                                             id="one-image"
