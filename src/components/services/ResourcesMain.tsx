@@ -337,6 +337,19 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
+    const clearSecular = () => {
+        const secularCheckbox = document.getElementById('secularCheck') as HTMLInputElement
+
+        console.log(secularCheckbox);
+
+            if (secularCheckbox && secularCheckbox.checked) {
+                secularCheckbox.checked = false;
+            };
+
+        setSecularFilters(false);
+        filterPosts();
+    };
+
     return (
         <div class="">
             <div>
@@ -352,6 +365,7 @@ export const ResourcesView: Component = () => {
                     filterPostsByGrade={filterPostsByGrade}
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
+                    clearSecular={clearSecular}
                 />
             </Show>
 
@@ -373,6 +387,7 @@ export const ResourcesView: Component = () => {
                     filterPostsByGrade={filterPostsByGrade}
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
+                    clearSecular={clearSecular}
                 />
                     {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">

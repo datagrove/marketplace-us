@@ -37,7 +37,7 @@ export async function fetchFilteredPosts(
         }
 
         try {
-            console.log(query);
+            // console.log(query);
             const { data: posts, error } = await query;
             if (error) {
                 console.log("supabase error: " + error.code + error.message);

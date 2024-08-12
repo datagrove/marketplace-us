@@ -44,7 +44,7 @@ export const SecularFilter: Component<Props> = (props) => {
             <div>
               <input
                 type="checkbox"
-                class={`mr-2 leading-tight`}
+                class={`secularCheck mr-2 leading-tight`}
                 checked={selectedSecular()}
                 onClick={(e) => {
                   initializeSecular(e)

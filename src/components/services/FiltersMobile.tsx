@@ -70,6 +70,7 @@ interface Props {
     clearGrade: () => void;
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
+    clearSecular:() => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
