@@ -189,6 +189,7 @@ export const CreateNewPost: Component = () => {
     const [gradeExpanded, setGradeExpanded] = createSignal<boolean>(false);
     const [resourceExpanded, setResourceExpanded] =
         createSignal<boolean>(false);
+    const [secular, setSecular] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -399,10 +400,10 @@ export const CreateNewPost: Component = () => {
     }
 
     function subjectCheckboxes() {
-        if(gradeExpanded()){
+        if (gradeExpanded()) {
             gradeCheckboxes();
         }
-        if (resourceExpanded()){
+        if (resourceExpanded()) {
             resourceTypesCheckboxes();
         }
         let checkboxes = document.getElementById("subjectCheckboxes");
@@ -422,10 +423,10 @@ export const CreateNewPost: Component = () => {
     }
 
     function gradeCheckboxes() {
-        if (subjectExpanded()){
+        if (subjectExpanded()) {
             subjectCheckboxes();
         }
-        if (resourceExpanded()){
+        if (resourceExpanded()) {
             resourceTypesCheckboxes();
         }
         let checkboxes = document.getElementById("gradeCheckboxes");
@@ -445,10 +446,10 @@ export const CreateNewPost: Component = () => {
     }
 
     function resourceTypesCheckboxes() {
-        if (subjectExpanded()){
+        if (subjectExpanded()) {
             subjectCheckboxes();
         }
-        if (gradeExpanded()){
+        if (gradeExpanded()) {
             gradeCheckboxes();
         }
         let checkboxes = document.getElementById("resourceTypesCheckboxes");
@@ -704,11 +705,9 @@ export const CreateNewPost: Component = () => {
                                 class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
                             >
                                 <Show when={subjectPick().length > 0}>
-                                    {subjectPick().map((subject) => (
-                                        subject
-                                    ))}
-                                    </Show>
-                                    <span class="text-alert1">* </span>{" "}
+                                    {subjectPick().map((subject) => subject)}
+                                </Show>
+                                <span class="text-alert1">* </span>{" "}
                                 {t("formLabels.chooseSubject")}
                             </p>
 
@@ -989,7 +988,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Price Implementation */}
-                <div class="justify-evenly mt-6 flex flex-col ">
+                <div class="mt-6 flex flex-col justify-evenly ">
                     <div class="mt-2 flex justify-between">
                         <p>
                             <span class="text-alert1">* </span>
