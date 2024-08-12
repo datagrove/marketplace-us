@@ -31,9 +31,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     : null;
   // const resourceUrl = formData.get("resource_url");
   const resourceType = formData.get("resource_types");
-  const secular = formData.get("secular");
   console.log("imageURL: " + imageUrl);
   console.log(formData, "api");
+  const secular = formData.get("secular")
 
   // Validate the formData - you'll probably want to do more than this
   if (
@@ -128,7 +128,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       user_id: user.id,
       stripe_price_id: default_price,
       resource_types: JSON.parse(resourceType as string),
-      secular: secular?.valueOf(),
+      secular: secular?.valueOf()
     };
     const { error, data } = await supabase
       .from("seller_post")
