@@ -69,6 +69,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     // const [resourceURL, setResourceURL] = createSignal<Array<string>>([]);
     const [price, setPrice] = createSignal<string>("");
     const [isFree, setIsFree] = createSignal<boolean>(false);
+    const [secular, setSecular] = createSignal<boolean>(false)
 
     onMount(async () => {
         console.log(props.post)
@@ -88,6 +89,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         setGradePick(props.post?.post_grade!);
         setSubjectPick(props.post.product_subject);
         setResourceTypesPick(props.post?.resource_types!);
+        setSecular(props.post.secular)
 
         if (props.post?.image_urls) {
             setImageUrl(props.post?.image_urls.split(","));
@@ -218,6 +220,11 @@ export const EditPost: Component<Props> = (props: Props) => {
         if (imageUrl() !== null) {
             formData.append("resource_url", "");
         }
+
+        if (secular() !== null) {
+            formData.append("secular", secular().toString())
+        }
+    
         if (props.post?.id! !== undefined) {
             formData.append("idSupabase", props.post!.id.toString());
         }
@@ -809,6 +816,28 @@ export const EditPost: Component<Props> = (props: Props) => {
                             <path d="m4.94960124 7.88894106-1.91927115-1.91927115c-.29289322-.29289321-.76776696-.29289321-1.06066018 0-.29289321.29289322-.29289321.76776696 0 1.06066018l2.5 2.5c.31185072.31185071.82415968.28861186 1.10649605-.05019179l5.00000004-6c.265173-.31820767.22218-.7911312-.0960277-1.05630426s-.7911312-.22218001-1.05630426.09602766z" />
                         </svg>
                     </div>
+                </div>
+
+              {/* Secular */}
+                <div class="justify-evenly mt-6 flex flex-col ">
+                  <div class="mt-2 flex justify-between">
+                    <p>
+                      <span class="text-alert1">* </span>
+                      {t("formLabels.isResourceFree")}?
+                    </p>
+                    <div>
+                      <label class="ml-4">
+                        {t("formLabels.yes")}
+                      </label>
+                      <input
+                        type="checkbox"
+                        id="secularCheckbox"
+                        class="ml-1"
+                        checked={secular()}
+                        onChange={() => setSecular(!secular())}
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Price Implementation */}

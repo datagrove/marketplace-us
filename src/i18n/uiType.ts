@@ -219,6 +219,7 @@ export interface uiObject {
         yes: string;
         no: string;
         more: string;
+        secular: string;
     };
 
     postLabels: {
@@ -450,6 +451,7 @@ export interface uiObject {
 
     clearFilters: {
         filterButtons: [
+            { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },

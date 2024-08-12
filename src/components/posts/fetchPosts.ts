@@ -3,6 +3,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
+import type { SecularFilter } from "@components/services/SecularFilter";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -13,7 +14,8 @@ export async function fetchFilteredPosts(
     // subjectFilters: Array<string>,
     gradeFilters: Array<string>,
     searchString: string,
-    resourceFilters: Array<string>
+    resourceFilters: Array<string>,
+    secularFilter: boolean
 ) {
     try {
         let query = supabase
@@ -30,9 +32,12 @@ export async function fetchFilteredPosts(
         if (searchString.length !== 0) {
             query = query.textSearch("title_content", searchString);
         }
+        if (secularFilter === true) {
+          query = query.is("secular", true)
+        }
 
         try {
-            console.log(query);
+            // console.log(query);
             const { data: posts, error } = await query;
             if (error) {
                 console.log("supabase error: " + error.code + error.message);
@@ -48,7 +53,6 @@ export async function fetchFilteredPosts(
                         return item;
                     })
                 );
-                console.log(newItems, "aaaaaaaaaaaaaaaaaa");
                 return newItems;
             }
         } catch (e) {
