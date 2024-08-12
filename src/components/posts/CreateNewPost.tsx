@@ -399,7 +399,7 @@ export const CreateNewPost: Component = () => {
         }
 
         if (secular() !== null) {
-            formData.append("secular", secular().toString())
+            formData.append("secular", secular().toString());
         }
 
         setFormData(formData);
@@ -691,7 +691,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Subject Picker */}
-                <div class="mt-2 flex flex-wrap justify-start">
+                <div class="mt-2 flex justify-start">
                     <label
                         for="subject"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -706,16 +706,30 @@ export const CreateNewPost: Component = () => {
                             class="relative flex w-full items-center justify-between rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
                             onClick={() => subjectCheckboxes()}
                         >
-                            <p
+                            <div
                                 id="chooseSubject"
-                                class="bg-background px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM "
+                                class="bg-background w-11/12 px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
                             >
                                 <Show when={subjectPick().length > 0}>
-                                    {subjectPick().map((subject) => subject)}
+                                    {subjectPick().map((subject) =>
+                                        subjects()
+                                            .filter(
+                                                (item) =>
+                                                    item.id.toString() ===
+                                                    subject
+                                            )
+                                            .map((item) => (
+                                                <span class="mr-1">
+                                                    {item.subject},
+                                                </span>
+                                            ))
+                                    )}
                                 </Show>
-                                <span class="text-alert1">* </span>{" "}
-                                {t("formLabels.chooseSubject")}
-                            </p>
+                                <Show when={subjectPick().length === 0}>
+                                    <span class="text-alert1">* </span>
+                                    {t("formLabels.chooseSubject")}
+                                </Show>
+                            </div>
 
                             <svg
                                 id="subject-arrow"
@@ -792,7 +806,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Grade Picker */}
-                <div class="mt-2 flex flex-wrap justify-start">
+                <div class="mt-2 flex justify-start">
                     <label
                         for="grade"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -804,31 +818,43 @@ export const CreateNewPost: Component = () => {
                     {/* Creates a list of checkboxes that drop down to multiple select */}
                     <div class="flex-grow">
                         <div
-                            class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
+                            class="relative flex w-full items-center justify-between rounded border border-inputBorder1 dark:bg-background2-DM"
                             onClick={() => gradeCheckboxes()}
                         >
-                            <div class="flex items-center justify-between">
-                                <p
-                                    id="chooseGrade"
-                                    class="bg-background after:height-[20px] after:width-[20px] w-full px-1 text-ptext1 after:text-inputBorder1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
-                                >
-                                    <span class="text-alert1">* </span>{" "}
+                            <div
+                                id="chooseGrade"
+                                class="bg-background flex w-11/12 flex-wrap px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
+                            >
+                                <Show when={gradePick().length > 0}>
+                                    {gradePick().map((grade) =>
+                                        grades()
+                                            .filter(
+                                                (item) =>
+                                                    item.id.toString() === grade
+                                            )
+                                            .map((item) => (
+                                                <span class="mr-1">
+                                                    {item.grade},
+                                                </span>
+                                            ))
+                                    )}
+                                </Show>
+                                <Show when={gradePick().length === 0}>
+                                    <span class="text-alert1">* </span>
                                     {t("formLabels.chooseGrade")}
-                                </p>
-
-                                <svg
-                                    id="grade-arrow"
-                                    class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
-                                >
-                                    <path
-                                        fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"
-                                    />
-                                </svg>
+                                </Show>
                             </div>
 
-                            <div class="absolute"></div>
+                            <svg
+                                id="grade-arrow"
+                                class="inline-block h-5 w-5 transform fill-icon1 transition-transform dark:fill-icon1-DM"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
                         </div>
                         <div
                             id="gradeCheckboxes"
@@ -892,7 +918,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* resourceTypes Picker */}
-                <div class="mt-2 flex flex-wrap justify-start">
+                <div class="mt-2 flex justify-start">
                     <label
                         for="resourceTypes"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -908,13 +934,33 @@ export const CreateNewPost: Component = () => {
                             onClick={() => resourceTypesCheckboxes()}
                         >
                             <div class="flex items-center justify-between">
-                                <p
+                                <div
                                     id="chooseResourceType"
-                                    class="bg-background w-full  px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM after:dark:text-inputBorder1-DM dark:focus:border-highlight1-DM"
+                                    class="bg-background flex w-11/12 flex-wrap px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
                                 >
-                                    <span class="text-alert1">* </span>{" "}
-                                    {t("formLabels.chooseResourceTypes")}
-                                </p>
+                                    <Show when={resourceTypesPick().length > 0}>
+                                        {resourceTypesPick().map(
+                                            (resourceType) =>
+                                                resourceTypes()
+                                                    .filter(
+                                                        (item) =>
+                                                            item.id.toString() ===
+                                                            resourceType
+                                                    )
+                                                    .map((item) => (
+                                                        <span class="mr-1">
+                                                            {item.type},
+                                                        </span>
+                                                    ))
+                                        )}
+                                    </Show>
+                                    <Show
+                                        when={resourceTypesPick().length === 0}
+                                    >
+                                        <span class="text-alert1">* </span>{" "}
+                                        {t("formLabels.chooseResourceTypes")}
+                                    </Show>
+                                </div>
 
                                 <svg
                                     id="resource-arrow"
@@ -994,24 +1040,24 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Secular Implementation */}
-                <div class="justify-evenly mt-6 flex flex-col ">
-                  <div class="mt-2 flex justify-between">
-                    <p> <span class="text-alert1">* </span>
-                      {t("formLabels.secular")}?
-                    </p>
-                    <div>
-                      <label class="ml-4">
-                        {t("formLabels.yes")}
-                      </label>
-                      <input
-                        type="checkbox"
-                        id="secularCheckbox"
-                        class="ml-1"
-                        checked={secular()}
-                        onChange={() => setSecular(!secular())}
-                      />
+                <div class="mt-6 flex flex-col justify-evenly ">
+                    <div class="mt-2 flex justify-between">
+                        <p>
+                            {" "}
+                            <span class="text-alert1">* </span>
+                            {t("formLabels.secular")}?
+                        </p>
+                        <div>
+                            <label class="ml-4">{t("formLabels.yes")}</label>
+                            <input
+                                type="checkbox"
+                                id="secularCheckbox"
+                                class="ml-1"
+                                checked={secular()}
+                                onChange={() => setSecular(!secular())}
+                            />
+                        </div>
                     </div>
-                  </div>
                 </div>
 
                 {/* Price Implementation */}

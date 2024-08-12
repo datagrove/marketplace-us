@@ -445,17 +445,16 @@ export const FiltersMobile: Component<Props> = (props) => {
                             >
                                 {t("clearFilters.filterButtons.0.text")}
                             </button>
-                            <button
-                                class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-ptext2-DM"
-                                onClick={() => {
-                                    if (screenSize() === "sm") {
+                            <Show when={screenSize() === "sm"}>
+                                <button
+                                    class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-ptext2-DM"
+                                    onClick={() => {
                                         setShowFilters(false);
-                                    } else {
-                                    }
-                                }}
-                            >
-                                {t("clearFilters.filterButtons.5.text")}
-                            </button>
+                                    }}
+                                >
+                                    {t("clearFilters.filterButtons.5.text")}
+                                </button>
+                            </Show>
                         </div>
                     </div>
                 </Show>
