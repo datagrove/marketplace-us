@@ -437,26 +437,27 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                     <div
                         id="creator-followers-div"
-                        class="flex w-full items-center"
+                        class="flex w-full items-center h-16"
                     >
                         <div
-                            id="creator-img-div"
-                            class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
+                            id="creator-img-div border"
+                            class="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300"
                         >
                             <a href={`/${lang}/creator/${post()?.seller_id}`}>
                                 <svg
                                     fill="none"
-                                    width="40px"
-                                    height="40px"
                                     viewBox="0 0 32 32"
-                                    class="fill-icon1 dark:fill-icon1-DM"
+                                    class="h-12 w-12 fill-icon1 dark:fill-icon1-DM"
                                 >
                                     <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
                                 </svg>
                             </a>
                         </div>
 
-                        <div id="creator-follower-text-div" class="ml-1 w-5/6">
+                        <div
+                            id="creator-follower-text-div"
+                            class="border-red- ml-1 w-4/6"
+                        >
                             <div>
                                 <a
                                     href={`/${lang}/creator/${post()?.seller_id}`}
@@ -549,14 +550,17 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     </div> */}
                         </div>
                         <Show when={session()?.user.id === post()?.user_id}>
-                            <button
-                                onclick={() => {
-                                    setEditRender(!editRender());
-                                    console.log(editRender());
-                                }}
-                            >
-                                Edit
-                            </button>
+                            <div class="flex">
+                                <button
+                                    class="btn-primary"
+                                    onclick={() => {
+                                        setEditRender(!editRender());
+                                        //(editRender());
+                                    }}
+                                >
+                                    {t("buttons.editPost")}
+                                </button>
+                            </div>
                         </Show>
                     </div>
 

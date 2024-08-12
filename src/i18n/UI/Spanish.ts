@@ -129,6 +129,7 @@ export const Spanish = {
         viewOrders: "Ver Compras",
         reportResource: "Reportar este recurso",
         updateResource: "Actualizar Recurso",
+        editPost: "Editar",
     },
 
     messages: {

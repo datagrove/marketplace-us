@@ -113,6 +113,7 @@ export interface uiObject {
         viewOrders: string;
         reportResource: string;
         updateResource: string;
+        editPost: string;
     };
 
     messages: {
