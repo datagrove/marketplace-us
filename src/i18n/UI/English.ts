@@ -339,6 +339,7 @@ export const English = {
             "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
         resourceTypes: "Please select all applicable resource types.",
         price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
+        secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc."
     },
 
     apiErrors: {

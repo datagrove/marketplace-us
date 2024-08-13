@@ -342,6 +342,7 @@ export const Spanish = {
             "La categoría de impuestos determina cómo se calcularán los impuestos sobre las ventas en los estados donde LearnGrove recauda y remite impuestos en su nombre. Como se indica en los Términos, usted es responsable de elegir la categoría fiscal adecuada para cada recurso que incluya. Haga clic en el enlace a continuación para obtener más información.",
         resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
         price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
+        secular: "LearnGrove reconoce que un plan de estudios o recurso secular podría significar cosas diferentes para diferentes estudiantes y facilitadores del aprendizaje. En LearnGrove utilizamos este término para referirnos tanto a los recursos neutrales a la fe como a aquellos que pueden enseñar una visión del mundo que está alineada con cualquier religión en particular, pero que pueden enseñar conceptos que están en conflicto directo con una religión en particular. Dejamos en manos de nuestros creadores determinar si creen que sus recursos son adecuados para un entorno secular. Le recomendamos encarecidamente que incluya detalles adicionales en su descripción para detallar cómo su recurso aborda diversos temas, como creación versus evolución, textos literarios religiosos, etc.",
     },
 
     apiErrors: {

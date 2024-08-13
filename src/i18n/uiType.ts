@@ -296,6 +296,7 @@ export interface uiObject {
         taxCode: string;
         resourceTypes: string;
         price: string;
+        secular: string;
     };
 
     apiErrors: {
