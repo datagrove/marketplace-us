@@ -43,7 +43,7 @@ export const ResourcesView: Component = () => {
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
         []
     );
-    const [searchString, setSearchString] = useLocalStorage("searchString", "");
+    const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
 
@@ -72,7 +72,9 @@ export const ResourcesView: Component = () => {
             localStorage.getItem("searchString") !== null &&
             localStorage.getItem("searchString") !== undefined
         ) {
-            setSearchString(localStorage.getItem("searchString")!);
+            const searchStringValue =
+                localStorage.getItem("searchString") || "";
+            setSearchString(searchStringValue);
         }
         if (
             localStorage.getItem("selectedResourceTypes") !== null &&
@@ -94,8 +96,8 @@ export const ResourcesView: Component = () => {
     });
 
     const searchPosts = async () => {
-        if (localStorage.getItem("searchString")) {
-            setSearchString(localStorage.getItem("searchString"));
+        if (localStorage.getItem("searchString") !== null) {
+            setSearchString(localStorage.getItem("searchString") as string);
         }
 
         filterPosts();
@@ -110,7 +112,6 @@ export const ResourcesView: Component = () => {
         } else {
             setSubjectFilters([...subjectFilters(), currentCategory]);
         }
-    
 
         filterPosts();
     };
@@ -256,9 +257,8 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
     const filterPostsBySecular = (secular: boolean) => {
-
-      setSecularFilters(secular)
-      filterPosts();
+        setSecularFilters(secular);
+        filterPosts();
     };
 
     const clearAllFilters = () => {
@@ -299,8 +299,9 @@ export const ResourcesView: Component = () => {
         // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
-        filterPosts();
         setSecularFilters(false);
+
+        filterPosts();
     };
 
     const clearSubjects = () => {
@@ -311,7 +312,7 @@ export const ResourcesView: Component = () => {
         subjectCheckboxes.forEach((checkbox) => {
             if (checkbox && checkbox.checked) {
                 checkbox.checked = false;
-            };
+            }
         });
 
         localStorage.removeItem("selectedSubjects");
@@ -329,7 +330,7 @@ export const ResourcesView: Component = () => {
         gradeCheckboxes.forEach((checkbox) => {
             if (checkbox && checkbox.checked) {
                 checkbox.checked = false;
-            };
+            }
         });
 
         localStorage.removeItem("selectedGrades");
@@ -338,13 +339,15 @@ export const ResourcesView: Component = () => {
     };
 
     const clearSecular = () => {
-        const secularCheckbox = document.getElementById('secularCheck') as HTMLInputElement
+        const secularCheckbox = document.getElementById(
+            "secularCheck"
+        ) as HTMLInputElement;
 
         console.log(secularCheckbox);
 
-            if (secularCheckbox && secularCheckbox.checked) {
-                secularCheckbox.checked = false;
-            };
+        if (secularCheckbox && secularCheckbox.checked) {
+            secularCheckbox.checked = false;
+        }
 
         setSecularFilters(false);
         filterPosts();
@@ -379,16 +382,15 @@ export const ResourcesView: Component = () => {
 
             <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <Show when={screenSize() !== "sm"}>
-
-                <FiltersMobile
-                    clearSubjects={clearSubjects}
-                    clearGrade={clearGrade}
-                    clearAllFilters={clearAllFilters}
-                    filterPostsByGrade={filterPostsByGrade}
-                    filterPostsBySubject={setCategoryFilter}
-                    secularFilter={filterPostsBySecular}
-                    clearSecular={clearSecular}
-                />
+                    <FiltersMobile
+                        clearSubjects={clearSubjects}
+                        clearGrade={clearGrade}
+                        clearAllFilters={clearAllFilters}
+                        filterPostsByGrade={filterPostsByGrade}
+                        filterPostsBySubject={setCategoryFilter}
+                        secularFilter={filterPostsBySecular}
+                        clearSecular={clearSecular}
+                    />
                     {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
                             <div class="flex w-full">

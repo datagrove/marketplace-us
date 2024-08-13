@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const SearchBar: Component<Props> = (props) => {
-    const [searchString, setSearchString] = useLocalStorage("searchString", "");
+    const [searchString, setSearchString] = createSignal<string>("");
 
     onMount(() => {
         if (localStorage.getItem("searchString")) {
@@ -25,7 +25,7 @@ export const SearchBar: Component<Props> = (props) => {
     });
 
     const clickSearch = () => {
-        if (searchString !== null) {
+        if (searchString() !== null && searchString() !== "") {
             localStorage.setItem("searchString", searchString());
             props.search(searchString());
         }

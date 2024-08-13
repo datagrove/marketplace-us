@@ -199,6 +199,7 @@ export const French = {
         reportResource: "En cliquant sur Soumettre, vous générerez un e-mail dans votre client par défaut à envoyer à notre équipe d'assistance pour examiner votre rapport. Veuillez laisser toutes les informations générées telles quelles pour permettre à notre équipe d'enquêter sur votre rapport. Si vous préférez envoyer un e-mail en utilisant votre client préféré, veuillez copier et coller les informations ci-dessus dans votre e-mail à <b>support@learngrove.co</b>.",
         pleaseDescribe: "S'il vous plaît décrivez le problème", 
         addedToFavorites: "Ajouté aux Favoris!",
+        noFavoriteItems: "Vous n'avez aucun favori!",
     },
 
     formLabels: {
@@ -336,7 +337,8 @@ export const French = {
             "Choisissez quel pourcentage de votre prix vous pouvez contribuer à la maintenance et au développement de la plateforme. Les plateformes similaires représentent entre 11 % et 45 % de vos ventes. Nous voulons vous donner le pouvoir de prendre en charge la plateforme en fonction de la valeur qu'elle apporte. Vous ne savez pas quel est le bon montant ? Nous vous recommandons de commencer à 15 %, vous pourrez le mettre à jour ultérieurement dans votre profil de fournisseur.",
         taxCode: "La catégorie de taxe détermine la manière dont la taxe de vente sera calculée dans les États où LearnGrove collecte et verse la taxe en votre nom. Comme indiqué dans les Conditions, vous êtes responsable du choix de la catégorie fiscale appropriée pour chaque ressource que vous répertoriez. Cliquez sur le lien ci-dessous pour en savoir plus.",
         resourceTypes: "Veuillez sélectionner tous les types de ressources applicables.",
-        price: "Le prix saisi est le prix facturé au client. Le créateur recevra le montant restant après frais. Consultez les conditions pour plus d'informations sur la structure tarifaire LearnGrove."
+        price: "Le prix saisi est le prix facturé au client. Le créateur recevra le montant restant après frais. Consultez les conditions pour plus d'informations sur la structure tarifaire LearnGrove.",
+        secular: "LearnGrove reconnaît qu'un programme ou une ressource laïque peut signifier différentes choses pour différents créateurs, apprenants et facilitateurs d'apprentissage. Chez LearnGrove, nous utilisons ce terme pour désigner à la fois les ressources neutres en matière de foi ainsi que celles qui peuvent enseigner une vision du monde qui n'est pas conforme à une religion particulière, mais qui peuvent enseigner des concepts qui sont en conflit direct avec une religion particulière. Nous laissons à nos créateurs le soin de déterminer s'ils estiment que leurs ressources sont adaptées à un environnement laïc. Nous vous recommandons fortement d'inclure des détails supplémentaires dans votre description pour détailler la manière dont votre ressource aborde divers sujets tels que la création par rapport à l'évolution, les textes littéraires religieux, etc.",
     },
 
     apiErrors: {
@@ -554,6 +556,12 @@ export const French = {
                 description: "Description Spécialité",
                 ariaLabel: "Spécialité",
                 id: "8",
+            },
+            {
+                name: "Arts de la langue anglaise",
+                description: "Description Arts de la langue anglaise",
+                ariaLabel: "Arts de la langue anglaise",
+                id: "9",
             },
             // Add more products as needed
         ],

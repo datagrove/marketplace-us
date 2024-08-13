@@ -12,22 +12,23 @@ interface Props {
 }
 
 export const ReportResource: Component<Props> = (props) => {
+    function formatContent(e: Event) {
+        e.preventDefault();
 
-function formatContent(e: Event){
-    e.preventDefault();
+        const postInfo = document.getElementById(
+            "postInfo"
+        ) as HTMLInputElement;
+        const postInfoValue = postInfo.value.trim();
 
-    const postInfo = document.getElementById("postInfo") as HTMLInputElement;
-    const postInfoValue = postInfo.value.trim();
+        const issue = document.getElementById("issue") as HTMLInputElement;
+        const issueValue = issue.value.trim();
 
-    const issue = document.getElementById("issue") as HTMLInputElement;
-    const issueValue = issue.value.trim();
+        const formattedContent = `${postInfoValue}\n\nIssue:\n${issueValue}`;
 
-    const formattedContent = `${postInfoValue}\n\nIssue:\n${issueValue}`;
+        const mailtoLink = `mailto:support@learngrove.co?subject=Report Resource&body=${encodeURIComponent(formattedContent)}`;
 
-    const mailtoLink = `mailto:support@learngrove.co?subject=Report Resource&body=${encodeURIComponent(formattedContent)}`;
-
-    window.location.href = mailtoLink;
-}
+        window.location.href = mailtoLink;
+    }
 
     return (
         <>
@@ -67,7 +68,7 @@ function formatContent(e: Event){
                             name="Post Information"
                             id="postInfo"
                             readonly
-                            class="h-24 flex-wrap md:h-20"
+                            class="h-24 flex-wrap rounded-lg border bg-gray-300 text-black md:h-20"
                             value={`Post Id: ${props.post.id} 
 Post Title: ${props.post.title}
 Reporting Id: ${props.user_id}`}
@@ -80,7 +81,7 @@ Reporting Id: ${props.user_id}`}
                             name="Issue"
                             rows="5"
                             placeholder={t("messages.pleaseDescribe")}
-                            class="mb-4 mt-2 block w-full rounded-lg text-black placeholder:italic placeholder:text-black"
+                            class="mb-4 mt-2 block w-full rounded-lg border border-border1 px-1 text-black placeholder:italic placeholder:text-black"
                         />
                         <label
                             class=""

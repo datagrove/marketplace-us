@@ -243,7 +243,7 @@ SELECT pg_catalog.setval('"public"."minor_municipality_id_seq"', 1, false);
 -- Name: post_subject_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 8, true);
+SELECT pg_catalog.setval('"public"."post_subject_id_seq"', 9, true);
 
 --
 -- Name: seller_post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres

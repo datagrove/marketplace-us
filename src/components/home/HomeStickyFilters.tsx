@@ -18,7 +18,8 @@ let selected_subjects_array: Array<string> = [];
 
 const { data: subject, error: subject_error } = await supabase
     .from("post_subject")
-    .select("subject, id");
+    .select("subject, id")
+    .order("subject", { ascending: true });
 
 if (subject_error) {
     console.error("supabase error: " + subject_error.message);
@@ -156,8 +157,6 @@ function fetchFilteredResources() {
     }
 }
 
-
-
 export const HomeStickyFilters: Component = () => {
     const [subjects, setSubjects] =
         createSignal<Array<{ product_subject: string; id: number }>>(
@@ -180,7 +179,7 @@ export const HomeStickyFilters: Component = () => {
         }
     });
 
-    function selectGrades (id: string) {
+    function selectGrades(id: string) {
         if (selectedGrades().includes(id)) {
             let currentGradeFilters = selectedGrades().filter(
                 (el) => el !== id
@@ -194,10 +193,16 @@ export const HomeStickyFilters: Component = () => {
 
     window.addEventListener("beforeunload", () => {
         if (selectedGrades().length > 0) {
-            localStorage.setItem("selectedGrades", JSON.stringify(selectedGrades()));
+            localStorage.setItem(
+                "selectedGrades",
+                JSON.stringify(selectedGrades())
+            );
         }
         if (selected_subjects_array.length > 0) {
-            localStorage.setItem("selectedSubjects", JSON.stringify(selected_subjects_array));
+            localStorage.setItem(
+                "selectedSubjects",
+                JSON.stringify(selected_subjects_array)
+            );
         }
         // if (selectedGrades().length === 0) {
         //     localStorage.removeItem("selectedGrades");
@@ -228,10 +233,10 @@ export const HomeStickyFilters: Component = () => {
                         id="gradeDiv"
                         class="absolute top-8 z-40 hidden h-fit w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
-                        <div class="flex flex-wrap h-5/6">
+                        <div class="flex h-5/6 flex-wrap">
                             <For each={grades()}>
                                 {(grade) => (
-                                    <div class="flex pl-1 pr-4 w-1/2">
+                                    <div class="flex w-1/2 pl-1 pr-4">
                                         <div>
                                             <input
                                                 aria-label="replace"
@@ -245,9 +250,7 @@ export const HomeStickyFilters: Component = () => {
                                             />
                                         </div>
 
-                                        <div class="pl-1">
-                                            {grade.grade}
-                                        </div>
+                                        <div class="pl-1">{grade.grade}</div>
                                     </div>
                                 )}
                             </For>
@@ -255,11 +258,9 @@ export const HomeStickyFilters: Component = () => {
 
                         <div class="flex flex-col items-center justify-center">
                             <a href={`/${lang}/resources`}>
-                            <button
-                                class="mx-2 my-2 rounded-full bg-btn2 px-4 py-1 dark:bg-btn2-DM"
-                            >
-                                {t("buttons.findResources")}
-                            </button>
+                                <button class="mx-2 my-2 rounded-full bg-btn2 px-4 py-1 dark:bg-btn2-DM">
+                                    {t("buttons.findResources")}
+                                </button>
                             </a>
                         </div>
                     </div>

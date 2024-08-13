@@ -3,6 +3,8 @@ import { createEffect, createSignal, type JSX, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import placeholderImg from "../../assets/userImagePlaceholder.svg";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { useStore } from "@nanostores/solid";
+import { windowSize } from "@components/common/WindowSizeStore";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -20,6 +22,7 @@ const PostImage: Component<Props> = (props) => {
     const [uploading, setUploading] = createSignal(false);
     const [hasRun, setHasRun] = createSignal(false);
     const [imageIds, setImageIds] = createSignal<Array<string>>([]);
+    const screenSize = useStore(windowSize);
 
     createEffect(() => {
         console.log("Mounting", props.url);
@@ -27,11 +30,11 @@ const PostImage: Component<Props> = (props) => {
         if (props.url && !hasRun()) {
             if (Array.isArray(props.url) && props.url.length > 0) {
                 updateImages();
-                setHasRun (true);
+                setHasRun(true);
             } else if (props.url !== null && typeof props.url === "string") {
                 downloadImage(props.url);
-                setHasRun (true);
-            } 
+                setHasRun(true);
+            }
         }
     });
 
@@ -88,13 +91,13 @@ const PostImage: Component<Props> = (props) => {
 
             const url = URL.createObjectURL(data);
 
-            setImageIds(prevIds => {
+            setImageIds((prevIds) => {
                 const newIds = new Set(prevIds);
                 newIds.add(path);
                 return Array.from(newIds);
             });
-    
-            setImageUrl(prevUrls => {
+
+            setImageUrl((prevUrls) => {
                 // Ensure no duplicate URLs
                 if (!prevUrls.includes(url)) {
                     return [...prevUrls, url];
@@ -108,7 +111,6 @@ const PostImage: Component<Props> = (props) => {
         }
     };
 
-    
     const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (
         event
     ) => {
@@ -134,7 +136,7 @@ const PostImage: Component<Props> = (props) => {
             }
             setHasRun(true);
             props.onUpload(event, filePath);
-            
+
             downloadImage(filePath);
         } catch (error) {
             if (error instanceof Error) {
@@ -163,7 +165,7 @@ const PostImage: Component<Props> = (props) => {
         }
 
         const imageIdArray = [...imageIds()];
-        
+
         if (index > -1) {
             imageIdArray.splice(index, 1);
             setImageIds(imageIdArray);
@@ -220,16 +222,38 @@ const PostImage: Component<Props> = (props) => {
 
             {imageUrl().length > 0 ? (
                 imageUrl().map((image, index) => (
-                    <img
-                        src={image}
-                        alt={imageUrl() ? "Image" : "No image"}
-                        class="user image mb-4 mr-2 rounded border-2 border-inputBorder1 dark:border-inputBorder1-DM"
-                        style={{
-                            height: `${props.size}px`,
-                            width: `${props.size}px`,
-                        }}
-                        onclick={() => removeImage(index, image)}
-                    />
+                    <div class="group">
+                        <div class="relative overflow-hidden">
+                            <img
+                                src={image}
+                                alt={imageUrl() ? "Image" : "No image"}
+                                class="user image mb-4 mr-2 rounded border-2 border-inputBorder1 dark:border-inputBorder1-DM"
+                                style={{
+                                    height: `${props.size}px`,
+                                    width: `${props.size}px`,
+                                }}
+                                onclick={() => removeImage(index, image)}
+                            />
+                            <div class="absolute right-3 top-2">
+                                <svg
+                                    viewBox="-1.7 0 20.4 20.4"
+                                    class="h-8 w-8 fill-gray-500"
+                                    onclick={() => removeImage(index, image)}
+                                >
+                                    <path d="M16.417 10.283A7.917 7.917 0 1 1 8.5 2.366a7.916 7.916 0 0 1 7.917 7.917zm-6.804.01 3.032-3.033a.792.792 0 0 0-1.12-1.12L8.494 9.173 5.46 6.14a.792.792 0 0 0-1.12 1.12l3.034 3.033-3.033 3.033a.792.792 0 0 0 1.12 1.119l3.032-3.033 3.033 3.033a.792.792 0 0 0 1.12-1.12z" />
+                                </svg>
+                            </div>
+                            {/* <Show when={screenSize() !== "sm"}>
+                            <div class="absolute -bottom-10 flex h-full w-full items-start justify-center bg-gray-600/20 opacity-0 transition-all duration-300 group-hover:bottom-0 group-hover:opacity-100">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path d="M13.414 12l4.95-4.95a1 1 0 0 0-1.414-1.414L12 10.586l-4.95-4.95A1 1 0 0 0 5.636 7.05l4.95 4.95-4.95 4.95a1 1 0 0 0 1.414 1.414l4.95-4.95 4.95 4.95a1 1 0 0 0 1.414-1.414z" />
+                                </svg>
+                            </div>
+                            </Show> */}
+                        </div>
+                    </div>
                 ))
             ) : (
                 <div class="flex justify-center"></div>

@@ -197,6 +197,7 @@ export const English = {
         reportResource: "Clicking submit will generate an email in your default client to send to our support team to review your report. Please leave all generated information as entered to allow our team to investigate your report. If you would prefer to send an email using your preferred client, please copy and paste the information above into your email to <b>support@learngrove.co</b>",
         pleaseDescribe: "Please describe the issue",
         addedToFavorites: "Added to Favorites!",
+        noFavoriteItems: "No favorites yet - go get shopping!",
 
     },
 
@@ -338,6 +339,7 @@ export const English = {
             "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
         resourceTypes: "Please select all applicable resource types.",
         price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
+        secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc."
     },
 
     apiErrors: {
@@ -516,7 +518,7 @@ export const English = {
             },
             {
                 name: "Art & Music",
-                description: "Geography description",
+                description: "Art & Music description",
                 ariaLabel: "Art & Music",
                 id: "3",
             },
@@ -549,6 +551,12 @@ export const English = {
                 description: "Specialty description",
                 ariaLabel: "Specialty",
                 id: "8",
+            },
+            {
+                name: "English Language Arts",
+                description: "English Language Arts description",
+                ariaLabel: "English Language Arts",
+                id: "9",
             },
             // Add more products as needed
         ],

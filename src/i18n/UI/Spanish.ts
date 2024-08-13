@@ -202,6 +202,7 @@ export const Spanish = {
         reportResource: "Al hacer clic en enviar, se generará un correo electrónico en su cliente predeterminado para enviarlo a nuestro equipo de soporte para revisar su informe. Deje toda la información generada tal como se ingresó para permitir que nuestro equipo investigue su informe. Si prefiere enviar un correo electrónico utilizando su cliente preferido, copie y pegue la información anterior en su correo electrónico a <b>support@learngrove.co</b>.",
         pleaseDescribe: "Por favor describe el problema",
         addedToFavorites: "¡Añadida a favoritos!",
+        noFavoriteItems: "No hay elementos favoritos",
     },
 
     formLabels: {
@@ -341,6 +342,7 @@ export const Spanish = {
             "La categoría de impuestos determina cómo se calcularán los impuestos sobre las ventas en los estados donde LearnGrove recauda y remite impuestos en su nombre. Como se indica en los Términos, usted es responsable de elegir la categoría fiscal adecuada para cada recurso que incluya. Haga clic en el enlace a continuación para obtener más información.",
         resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
         price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
+        secular: "LearnGrove reconoce que un plan de estudios o recurso secular podría significar cosas diferentes para diferentes creadores, estudiantes y facilitadores de aprendizaje. En LearnGrove utilizamos este término para referirnos tanto a los recursos neutrales a la fe como a aquellos que pueden enseñar una visión del mundo que no está alineada con ninguna religión en particular, pero que pueden enseñar conceptos que están en conflicto directo con una religión en particular. Dejamos en manos de nuestros creadores determinar si creen que sus recursos son adecuados para un entorno secular. Le recomendamos encarecidamente que incluya detalles adicionales en su descripción para detallar cómo su recurso aborda diversos temas, como creación versus evolución, textos literarios religiosos, etc.",
     },
 
     apiErrors: {
@@ -554,6 +556,12 @@ export const Spanish = {
                 description: "Descripcion especialidad",
                 ariaLabel: "Especilidad",
                 id: "8",
+            },
+            {
+                name: "Artes del lenguaje inglés",
+                description: "Descripcion eArtes del lenguaje inglés",
+                ariaLabel: "Artes del lenguaje inglés",
+                id: "9",
             },
             // Add more products as needed
         ],
