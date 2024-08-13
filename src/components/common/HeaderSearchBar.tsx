@@ -13,13 +13,26 @@ export const SearchBar: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
 
     onMount(() => {
-        if (localStorage.getItem("searchString") !== null) {
+        if (
+            localStorage.getItem("searchString") !== null &&
+            localStorage.getItem("searchString") !== "" &&
+            localStorage.getItem("searchString") !== "null"
+        ) {
             setSearchString(localStorage.getItem("searchString")!);
         }
+        // if (localStorage.getItem("searchString") !== null || localStorage.getItem("searchString") !== "" || localStorage.getItem("searchString") !== "null") {
+        //     localStorage.removeItem("searchString");
+        // }
     });
 
     const clickSearch = (e: Event) => {
-        localStorage.setItem("searchString", searchString());
+        if (
+            searchString() !== null &&
+            searchString() !== "" &&
+            searchString() !== "null"
+        ) {
+            localStorage.setItem("searchString", searchString());
+        }
 
         // console.log(window.location.href)
         if (

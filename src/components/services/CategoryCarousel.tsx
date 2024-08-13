@@ -21,7 +21,10 @@ import social from "../../assets/categoryIcons/social.svg";
 
 let subjects: Array<any> = [];
 
-const { data, error } = await supabase.from("post_subject").select("*");
+const { data, error } = await supabase
+    .from("post_subject")
+    .select("*")
+    .order("subject", { ascending: true });
 
 if (error) {
     console.log("supabase error: " + error.message);
@@ -69,10 +72,10 @@ interface Props {
     filterPosts: (currentSubject: string) => void;
 }
 
-let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-let light = window.matchMedia(
-    "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference"
-).matches;
+// let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+// let light = window.matchMedia(
+//     "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference"
+// ).matches;
 
 export const CategoryCarousel: Component<Props> = (props) => {
     return (

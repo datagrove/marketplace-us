@@ -437,7 +437,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                     <div
                         id="creator-followers-div"
-                        class="flex w-full items-center h-16"
+                        class="flex h-16 w-full items-center"
                     >
                         <div
                             id="creator-img-div border"
@@ -893,7 +893,9 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <EditPost post={post()!} />
+                <div class="p-2">
+                    <EditPost post={post()!} />
+                </div>
             </Show>
         </>
     );

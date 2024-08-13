@@ -43,7 +43,7 @@ export const ResourcesView: Component = () => {
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
         []
     );
-    const [searchString, setSearchString] = useLocalStorage("searchString", "");
+    const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
 
@@ -72,7 +72,9 @@ export const ResourcesView: Component = () => {
             localStorage.getItem("searchString") !== null &&
             localStorage.getItem("searchString") !== undefined
         ) {
-            setSearchString(localStorage.getItem("searchString")!);
+            const searchStringValue =
+                localStorage.getItem("searchString") || "";
+            setSearchString(searchStringValue);
         }
         if (
             localStorage.getItem("selectedResourceTypes") !== null &&
@@ -94,8 +96,8 @@ export const ResourcesView: Component = () => {
     });
 
     const searchPosts = async () => {
-        if (localStorage.getItem("searchString")) {
-            setSearchString(localStorage.getItem("searchString"));
+        if (localStorage.getItem("searchString") !== null) {
+            setSearchString(localStorage.getItem("searchString") as string);
         }
 
         filterPosts();

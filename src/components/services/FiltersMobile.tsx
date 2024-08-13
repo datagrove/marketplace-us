@@ -33,7 +33,10 @@ if (gradeError) {
     grades.sort((a, b) => (a.id > b.id ? 0 : -1));
 }
 
-const { data, error } = await supabase.from("post_subject").select("*");
+const { data, error } = await supabase
+    .from("post_subject")
+    .select("*")
+    .order("subject", { ascending: true });
 
 if (error) {
     console.log("supabase error: " + error.message);
@@ -43,7 +46,9 @@ if (error) {
     });
 }
 
-const subjectData = productCategoryData.subjects;
+const subjectData = productCategoryData.subjects.sort((a, b) =>
+    a.name.localeCompare(b.name)
+);
 
 let allSubjectInfo: Array<{
     name: string;
