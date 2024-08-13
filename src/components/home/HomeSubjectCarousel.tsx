@@ -15,9 +15,10 @@ import art from "../../assets/categoryIcons/art.svg";
 import geography from "../../assets/categoryIcons/geography.svg";
 import math from "../../assets/categoryIcons/math.svg";
 import science from "../../assets/categoryIcons/science.svg";
-import specialty from "../../assets/categoryIcons/specialty.svg";
-import holiday from "../../assets/categoryIcons/history.svg";
+import specialty from "../../assets/categoryIcons/thought-bubble.svg";
+import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
+import ela from "../../assets/categoryIcons/open-book.svg";
 
 let categories: Array<any> = [];
 
@@ -51,6 +52,8 @@ categories.map((category) => {
         category.icon = social;
     } else if (category.id === 8) {
         category.icon = specialty;
+    } else if (category.id === 9) {
+        category.icon = ela;
     }
 });
 
@@ -118,7 +121,7 @@ export const HomeSubjectCarousel: Component = () => {
                             </div>
 
                             <div class="flex h-44 flex-row items-center justify-center">
-                                <p class="text-center text-xs text-ptext1 dark:text-ptext2-DM">
+                                <p class="pt-1 text-center text-xs text-ptext1 dark:text-ptext2-DM">
                                     {item.name}{" "}
                                 </p>
                             </div>
