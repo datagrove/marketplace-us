@@ -557,6 +557,12 @@ export const French = {
                 ariaLabel: "Spécialité",
                 id: "8",
             },
+            {
+                name: "Arts de la langue anglaise",
+                description: "Description Arts de la langue anglaise",
+                ariaLabel: "Arts de la langue anglaise",
+                id: "9",
+            },
             // Add more products as needed
         ],
     },

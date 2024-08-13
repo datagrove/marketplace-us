@@ -557,6 +557,12 @@ export const Spanish = {
                 ariaLabel: "Especilidad",
                 id: "8",
             },
+            {
+                name: "Artes del lenguaje inglés",
+                description: "Descripcion eArtes del lenguaje inglés",
+                ariaLabel: "Artes del lenguaje inglés",
+                id: "9",
+            },
             // Add more products as needed
         ],
     },

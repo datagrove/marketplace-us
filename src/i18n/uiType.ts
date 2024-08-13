@@ -440,7 +440,7 @@ export interface uiObject {
             { name: string; description: string; ariaLabel: string; id: "6" },
             { name: string; description: string; ariaLabel: string; id: "7" },
             { name: string; description: string; ariaLabel: string; id: "8" },
-            // { name: string, description: string, ariaLabel: string, id: "9" },
+            { name: string, description: string, ariaLabel: string, id: "9" },
             // { name: string, description: string, ariaLabel: string, id: "10" },
             // { name: string, description: string, ariaLabel: string, id: "11" },
             // { name: string, description: string, ariaLabel: string, id: "12" },

@@ -518,7 +518,7 @@ export const English = {
             },
             {
                 name: "Art & Music",
-                description: "Geography description",
+                description: "Art & Music description",
                 ariaLabel: "Art & Music",
                 id: "3",
             },
@@ -551,6 +551,12 @@ export const English = {
                 description: "Specialty description",
                 ariaLabel: "Specialty",
                 id: "8",
+            },
+            {
+                name: "English Language Arts",
+                description: "English Language Arts description",
+                ariaLabel: "English Language Arts",
+                id: "9",
             },
             // Add more products as needed
         ],
