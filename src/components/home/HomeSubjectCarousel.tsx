@@ -88,7 +88,7 @@ export const HomeSubjectCarousel: Component = () => {
                     <img src={leftArrow.src} alt="Left Arrow" />
                 </button>
 
-                <div class="flex h-[7.5rem] w-full items-start justify-between pt-2">
+                <div class="flex h-[8rem] w-full items-start justify-between pt-2">
                     {allCategoryInfo?.map((item) => (
                         <button
                             id={item.id}
