@@ -464,13 +464,20 @@ export const ViewFullPost: Component<Props> = (props) => {
                         >
                             <Show when={postImages().length > 0}>
                                 <Show when={postImages().length === 1}>
-                                    <div class="flex h-[300px] w-[300px] items-center justify-center rounded">
+                                    <div class="relative flex h-[300px] w-[300px] items-center justify-center rounded">
                                         <img
                                             src={postImages()[0]}
                                             id="one-image"
-                                            class="flex max-h-[300px] max-w-[300px] items-center justify-center rounded dark:bg-background1"
+                                            class="flex h-[300px] w-[300px] items-center justify-center rounded object-contain dark:bg-background1-DM"
                                             alt={`${t("postLabels.image")}`}
                                         />
+                                        <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                            <div class="inline-block">
+                                                <FavoriteButton
+                                                    id={Number(props.postId)}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </Show>
 
@@ -481,7 +488,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                 <img
                                                     src={postImages()[0]}
                                                     id="main-image"
-                                                    class="max-h-[290px] max-w-[290px] rounded dark:bg-background1"
+                                                    class="h-[290px] w-[290px] rounded object-contain dark:bg-background1-DM"
                                                     alt={`${t("postLabels.image")}`}
                                                 />
                                                 <div class="absolute right-2 top-2 col-span-1 flex justify-end">

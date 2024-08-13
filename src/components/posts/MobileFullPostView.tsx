@@ -570,24 +570,38 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     >
                         <Show when={postImages().length > 0}>
                             <Show when={postImages().length === 1}>
-                                <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                                <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
                                     <img
                                         src={postImages()[0]}
                                         id="one-image"
                                         class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
+                                    <div class="absolute right-6 top-2 col-span-1 flex justify-end">
+                                        <div class="inline-block">
+                                            <FavoriteButton
+                                                id={Number(props.postId)}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </Show>
 
                             <Show when={postImages().length > 1}>
-                                <div class="mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
+                                <div class="relative mt-2 flex h-[375px] w-[375px] max-w-full items-center justify-center rounded p-1">
                                     <img
                                         src={postImages()[0]}
                                         id="mobile-main-image"
                                         class="max-h-[370px] max-w-full rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
+                                    <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                        <div class="inline-block">
+                                            <FavoriteButton
+                                                id={Number(props.postId)}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mt-4 flex w-full justify-start">
