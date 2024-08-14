@@ -170,6 +170,7 @@ export interface uiObject {
         pleaseDescribe: string;
         addedToFavorites: string;
         noFavoriteItems: string;
+        signIntoAddToFavorites: string;
     };
 
     formLabels: {

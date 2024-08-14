@@ -23,6 +23,7 @@ export const FavoriteButton: Component<Props> = (props) => {
         []
     );
     const [isFavorited, setIsFavorited] = createSignal<boolean>(false);
+    const [notUser, setNotUser] = createSignal<boolean>(false);
 
     onMount(async () => {
         if (UserError) {
@@ -36,20 +37,22 @@ export const FavoriteButton: Component<Props> = (props) => {
             }
         }
 
-        const { data, error } = await supabase
-            .from("favorites")
-            .select("list_number")
-            .eq("default_list", true);
-        if (error) {
-            console.log("supabase errror: " + error.message);
-        }
-
-        if (data) {
-            if (data.length > 0) {
-                setListNumber(data[0].list_number);
+        if (session() !== null) {
+            const { data, error } = await supabase
+                .from("favorites")
+                .select("list_number")
+                .eq("default_list", true);
+            if (error) {
+                console.log("supabase errror: " + error.message);
             }
+
+            if (data) {
+                if (data.length > 0) {
+                    setListNumber(data[0].list_number);
+                }
+            }
+            getFavorites();
         }
-        getFavorites();
     });
 
     // createEffect(() => {
@@ -99,18 +102,25 @@ export const FavoriteButton: Component<Props> = (props) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const { data, error } = await supabase
-            .from("favorites_products")
-            .insert({
-                list_number: listNumber(),
-                product_id: props.id,
-            });
-        if (error) {
-            console.log("supabase errror: " + error.message);
+        if (session() === null) {
+            setNotUser(true);
+            setTimeout(() => setNotUser(false), 3000);
         }
-        setAdded(true);
-        getFavorites();
-        setTimeout(() => setAdded(false), 3000);
+
+        if (notUser() === false) {
+            const { data, error } = await supabase
+                .from("favorites_products")
+                .insert({
+                    list_number: listNumber(),
+                    product_id: props.id,
+                });
+            if (error) {
+                console.log("supabase errror: " + error.message);
+            }
+            setAdded(true);
+            getFavorites();
+            setTimeout(() => setAdded(false), 3000);
+        }
     }
 
     async function removeFromFavorites(e: Event) {
@@ -221,6 +231,13 @@ export const FavoriteButton: Component<Props> = (props) => {
                 <div class="absolute -right-1 top-24 z-0 w-[190px] rounded-lg bg-background1 py-0.5 text-black shadow-md dark:bg-background1-DM md:w-[194px] lg:w-[240px]">
                     <p class="pr-1 text-center italic text-ptext1 dark:text-ptext1-DM">
                         {t("messages.addedToFavorites")}
+                    </p>
+                </div>
+            </Show>
+            <Show when={notUser() === true}>
+                <div class="absolute -right-1 top-24 z-0 w-[190px] rounded-lg bg-background1 py-0.5 text-black shadow-md dark:bg-background1-DM md:w-[194px] lg:w-[240px]">
+                    <p class="pr-1 text-center italic text-ptext1 dark:text-ptext1-DM">
+                        {t("messages.signIntoAddToFavorites")}
                     </p>
                 </div>
             </Show>

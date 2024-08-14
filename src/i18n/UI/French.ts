@@ -200,6 +200,7 @@ export const French = {
         pleaseDescribe: "S'il vous plaît décrivez le problème", 
         addedToFavorites: "Ajouté aux Favoris!",
         noFavoriteItems: "Vous n'avez aucun favori!",
+        signIntoAddToFavorites: "Connectez-vous pour ajouter aux favoris",
     },
 
     formLabels: {
