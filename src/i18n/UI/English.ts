@@ -198,6 +198,7 @@ export const English = {
         pleaseDescribe: "Please describe the issue",
         addedToFavorites: "Added to Favorites!",
         noFavoriteItems: "No favorites yet - go get shopping!",
+        signIntoAddToFavorites: "Sign in to add to favorites",
 
     },
 

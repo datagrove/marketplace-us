@@ -203,6 +203,7 @@ export const Spanish = {
         pleaseDescribe: "Por favor describe el problema",
         addedToFavorites: "¡Añadida a favoritos!",
         noFavoriteItems: "No hay elementos favoritos",
+        signIntoAddToFavorites:"Inicie sesión para agregar a favoritos",
     },
 
     formLabels: {
