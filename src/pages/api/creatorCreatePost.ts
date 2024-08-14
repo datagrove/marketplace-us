@@ -24,15 +24,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const tax_code = formData.get("TaxCode");
   const price = formData.get("Price");
   const gradeLevel = formData.get("grade");
-  // const majorMunicipality = formData.get("MajorMunicipality");
-  // const minorMunicipality = formData.get("MinorMunicipality");
-  // const governingDistrict = formData.get("GoverningDistrict");
   const imageUrl = formData.get("image_url")
     ? formData.get("image_url")
     : null;
   const resourceUrl = formData.get("resource_url");
   const resourceType = formData.get("resource_types");
   const secular = formData.get("secular");
+  const resourceLinks = formData.get("resource_links");
+
+
   console.log("imageURL: " + imageUrl);
   console.log(formData);
 
@@ -42,7 +42,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     !subject ||
     !content ||
     !gradeLevel ||
-    !resourceUrl ||
+    !resourceUrl && !resourceLinks||
     !tax_code ||
     price === ""
   ) {
@@ -90,6 +90,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     );
   }
 
+  const resourceLinksList = resourceLinks?.toString().split(",");
+  console.log(resourceLinksList);
+
   let postSubmission = {
     title: title,
     content: content,
@@ -100,6 +103,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     resource_urls: resourceUrl,
     resource_types: JSON.parse(resourceType as string),
     secular: secular?.valueOf(),
+    resource_links: resourceLinksList,
   };
   const { error, data } = await supabase
     .from("seller_post")
