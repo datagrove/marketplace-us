@@ -191,6 +191,9 @@ export const CreateNewPost: Component = () => {
     const [resourceExpanded, setResourceExpanded] =
         createSignal<boolean>(false);
     const [secular, setSecular] = createSignal<boolean>(false);
+    const [isAdmin, setIsAdmin] = createSignal<boolean>(false);
+    const [isHosted, setIsHosted] = createSignal<boolean>(false);
+    const [resourceLinks, setResourceLinks] = createSignal<string>("");
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -235,6 +238,10 @@ export const CreateNewPost: Component = () => {
                     ) {
                         alert(t("messages.noStripeAccount"));
                         window.location.href = `/${lang}/creator/profile`;
+
+                        //Check if the user as claims_admin role
+                    } else if (session()?.user.app_metadata.claims_admin) {
+                        setIsAdmin(true);
                     }
                 }
             } catch (error) {
@@ -323,6 +330,7 @@ export const CreateNewPost: Component = () => {
         }
     });
 
+    //Check if all requirements have been met
     createEffect(async () => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
@@ -350,6 +358,21 @@ export const CreateNewPost: Component = () => {
             selectedTaxCode()?.value !== "" &&
             uploadFinished() &&
             imageUrl().length > 0
+        ) {
+            setAllRequirementsMet(true);
+        } else if (
+            isAdmin() &&
+            title?.nodeValue !== "" &&
+            description() &&
+            subjectPick().length > 0 &&
+            gradePick().length > 0 &&
+            resourceTypesPick().length > 0 &&
+            //Remove is free if we allow paid hosted resources in the future
+            isFree() &&
+            imageUrl().length > 0 &&
+            resourceLinks() !== "" &&
+            resourceLinks() !== null &&
+            resourceLinks() !== undefined
         ) {
             setAllRequirementsMet(true);
         } else {
@@ -402,6 +425,10 @@ export const CreateNewPost: Component = () => {
 
         if (secular() !== null) {
             formData.append("secular", secular().toString());
+        }
+
+        if (isHosted() && resourceLinks() !== null && resourceLinks() !== "") {
+            formData.append("resource_links", resourceLinks());
         }
 
         setFormData(formData);
@@ -577,6 +604,10 @@ export const CreateNewPost: Component = () => {
                 ?.classList.remove("hidden");
         }
         console.log(resourceTypesPick());
+    }
+
+    function setHostedLinks(value: string) {
+        setResourceLinks(value);
     }
 
     function mountTiny() {
@@ -1089,8 +1120,53 @@ export const CreateNewPost: Component = () => {
                     </div>
                 </div>
 
+                {/* Hosted Implementation */}
+                <Show when={isAdmin()}>
+                    <div class="mt-2 flex justify-between">
+                        <p>Hosted Resource?</p>
+                        <div>
+                            <label for="isHostedCheckbox" class="ml-4">
+                                {t("formLabels.yes")}
+                            </label>
+                            <input
+                                type="checkbox"
+                                id="isHostedCheckbox"
+                                class="ml-1"
+                                checked={isHosted()}
+                                onChange={() => {
+                                    setIsHosted(true);
+                                    // Currently we are only allowing FREE hosted resources
+                                    setIsFree(true);
+                                }}
+                            />
+
+                            <label for="isNotHostedCheckbox" class="ml-4">
+                                {t("formLabels.no")}
+                            </label>
+                            <input
+                                type="checkbox"
+                                id="isNotHostedCheckbox"
+                                class="ml-1"
+                                checked={!isHosted()}
+                                onChange={() => setIsHosted(false)}
+                            />
+                        </div>
+                    </div>
+                </Show>
+                <Show when={isHosted()}>
+                    <p class="">Enter a comma separated list of links</p>
+                    <input
+                        required
+                        type="text"
+                        class="flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                        id="HostedLink"
+                        name="HostedLink"
+                        onInput={(e) => setHostedLinks(e.target.value)}
+                    />
+                </Show>
+
                 {/* Price Implementation */}
-                <div class="mt-6 flex flex-col justify-evenly ">
+                <div class="mt-2 flex flex-col justify-evenly ">
                     <div class="mt-2 flex justify-between">
                         <p>
                             <span class="text-alert1">* </span>
@@ -1120,6 +1196,7 @@ export const CreateNewPost: Component = () => {
                             />
                         </div>
                     </div>
+
                     <Show when={!isFree()}>
                         <div class="flex items-center">
                             <div class="mt-2 flex w-full flex-col">
@@ -1222,27 +1299,29 @@ export const CreateNewPost: Component = () => {
                     </Show>
                 </div>
 
-                <div class="mt-6">
-                    {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */}
-                    {/* TODO: Fix the text centering for Drop files here or browse files */}
-                    <UploadFiles
-                        target={"#uploadResource"}
-                        bucket="resources"
-                        setUppyRef={(uppy) => (uploadFilesRef = uppy)}
-                        onUpload={(url: string) => {
-                            setResourceURL([...resourceURL(), url]);
-                        }}
-                        removeFile={(url: string) => {
-                            setResourceURL(
-                                resourceURL().filter((u) => u !== url)
-                            );
-                        }}
-                        setUploadFinished={(uploadFinished) =>
-                            setUploadFinished(uploadFinished)
-                        }
-                    />
-                    <div id="uploadResource" class="w-full"></div>
-                </div>
+                <Show when={!isHosted()}>
+                    <div class="mt-6">
+                        {/* TODO: Mark this as required and provide Error if no files uploaded when trying to post */}
+                        {/* TODO: Fix the text centering for Drop files here or browse files */}
+                        <UploadFiles
+                            target={"#uploadResource"}
+                            bucket="resources"
+                            setUppyRef={(uppy) => (uploadFilesRef = uppy)}
+                            onUpload={(url: string) => {
+                                setResourceURL([...resourceURL(), url]);
+                            }}
+                            removeFile={(url: string) => {
+                                setResourceURL(
+                                    resourceURL().filter((u) => u !== url)
+                                );
+                            }}
+                            setUploadFinished={(uploadFinished) =>
+                                setUploadFinished(uploadFinished)
+                            }
+                        />
+                        <div id="uploadResource" class="w-full"></div>
+                    </div>
+                </Show>
 
                 <br />
                 <div class="flex justify-center">

@@ -130,6 +130,7 @@ export const Spanish = {
         reportResource: "Reportar este recurso",
         updateResource: "Actualizar Recurso",
         editPost: "Editar",
+        getLinks: "Obtener enlaces",
     },
 
     messages: {
@@ -204,6 +205,8 @@ export const Spanish = {
         addedToFavorites: "¡Añadida a favoritos!",
         noFavoriteItems: "No hay elementos favoritos",
         signIntoAddToFavorites:"Inicie sesión para agregar a favoritos",
+        resourceLinks: "¡Gracias por usar LearnGrove! Aquí están sus enlaces:",
+        externalResourceDisclaimer: "LearnGrove proporciona enlaces a estos recursos externos para su comodidad. LearnGrove no es responsable ni tiene control sobre la información contenida en ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado. Muchos de estos sitios externos se financian a través de publicidad que puede utilizar cookies y otras tecnologías de seguimiento para orientar sus intereses para esa publicidad. Tenga cuidado al hacer clic en cualquier enlace de un sitio externo para asegurarse de acceder solo a los enlaces que desea.",
     },
 
     formLabels: {
@@ -255,6 +258,7 @@ export const Spanish = {
         no: "No",
         more: "más",
         secular: "Laico",
+        resourceLinks: "Enlaces de Recurso",
     },
 
     postLabels: {
