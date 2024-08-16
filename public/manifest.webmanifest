@@ -1,27 +1,21 @@
 {
-  "name": "LearnGrove",
-  "short_name": "LearnGrove",
-  "icons": [
-    {
-      "src": "/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    { 
-        "src": "/icon-512.png", 
-        "type": "image/png", 
-        "sizes": "512x512" 
-    },
-    {
-      "src": "/icon-512.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "theme_color": "#1DD762",
-  "background_color": "#1DD762",
-  "orientation": "portrait-primary"
+    "name": "LearnGrove",
+    "short_name": "LearnGrove",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png?v=2",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png?v=2",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#198900",
+    "background_color": "#198900",
+    "orientation": "portrait-primary"
 }

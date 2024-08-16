@@ -12,7 +12,7 @@ const CONFIG = {
 
 
     defaultTheme: "system", // Values: "system" | "light" | "dark" | "light:only" | "dark:only"
-    themeColor: "#1DD762",
+    themeColor: "#198900",
 
     language: "en",
     textDirection: "ltr",

@@ -9,22 +9,36 @@ import useLocalStorage from "@lib/LocalStorageHook";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-
-
 export const SearchBar: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
 
     onMount(() => {
-        if (localStorage.getItem("searchString") !== null) {
+        if (
+            localStorage.getItem("searchString") !== null &&
+            localStorage.getItem("searchString") !== "" &&
+            localStorage.getItem("searchString") !== "null"
+        ) {
             setSearchString(localStorage.getItem("searchString")!);
         }
+        // if (localStorage.getItem("searchString") !== null || localStorage.getItem("searchString") !== "" || localStorage.getItem("searchString") !== "null") {
+        //     localStorage.removeItem("searchString");
+        // }
     });
 
     const clickSearch = (e: Event) => {
-        localStorage.setItem("searchString", searchString());
+        if (
+            searchString() !== null &&
+            searchString() !== "" &&
+            searchString() !== "null"
+        ) {
+            localStorage.setItem("searchString", searchString());
+        }
 
         // console.log(window.location.href)
-        if (window.location.pathname !== `/resources` && window.location.pathname !== `/${lang}/resources`) {
+        if (
+            window.location.pathname !== `/resources` &&
+            window.location.pathname !== `/${lang}/resources`
+        ) {
             window.location.href = `/${lang}/resources`;
         } else {
             //This relies on the search button on the resources page from the SearchBar component - if that button gets removed then this will need to be changed
@@ -51,8 +65,8 @@ export const SearchBar: Component = () => {
     });
 
     return (
-        <div class="search-form w-full h-full mx-4 mt-2 flex justify-center items-center">
-            <div class="w-full h-full flex justify-between items-center form rounded-full border border-border1 px-1 text-ptext1  focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM">
+        <div class="search-form mx-4 mt-2 flex h-full w-full items-center justify-center">
+            <div class="form flex h-full w-full items-center justify-between rounded-full border border-border1 px-1 text-ptext1  focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM">
                 <label class="sr-only" for="search">
                     {t("formLabels.search")}
                 </label>
@@ -60,11 +74,11 @@ export const SearchBar: Component = () => {
                     type="text"
                     name="query"
                     id="headerSearch"
-                    class="h-full rounded-full w-full ml-2 py-3 dark:bg-background1-DM bg-background1"
+                    class="ml-2 h-full w-full rounded-full bg-background1 py-3 dark:bg-background1-DM"
                     value={searchString() ? searchString() : ""}
                     oninput={(e) => setSearchString(e.target.value)}
                 />
-                <IconSearch class="search-icon mr-2" />
+                <IconSearch class="search-icon mr-2 dark:text-white" />
             </div>
         </div>
     );

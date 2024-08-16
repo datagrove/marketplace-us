@@ -437,26 +437,27 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                     <div
                         id="creator-followers-div"
-                        class="flex w-full items-center"
+                        class="flex h-16 w-full items-center"
                     >
                         <div
-                            id="creator-img-div"
-                            class="flex h-16 w-16 items-center justify-center rounded-full bg-gray-300"
+                            id="creator-img-div border"
+                            class="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300"
                         >
                             <a href={`/${lang}/creator/${post()?.seller_id}`}>
                                 <svg
                                     fill="none"
-                                    width="40px"
-                                    height="40px"
                                     viewBox="0 0 32 32"
-                                    class="fill-icon1 dark:fill-icon1-DM"
+                                    class="h-12 w-12 fill-icon1 dark:fill-icon1-DM"
                                 >
                                     <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
                                 </svg>
                             </a>
                         </div>
 
-                        <div id="creator-follower-text-div" class="ml-1 w-5/6">
+                        <div
+                            id="creator-follower-text-div"
+                            class="border-red- ml-1 w-4/6"
+                        >
                             <div>
                                 <a
                                     href={`/${lang}/creator/${post()?.seller_id}`}
@@ -549,14 +550,17 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     </div> */}
                         </div>
                         <Show when={session()?.user.id === post()?.user_id}>
-                            <button
-                                onclick={() => {
-                                    setEditRender(!editRender());
-                                    console.log(editRender());
-                                }}
-                            >
-                                Edit
-                            </button>
+                            <div class="flex">
+                                <button
+                                    class="btn-primary"
+                                    onclick={() => {
+                                        setEditRender(!editRender());
+                                        //(editRender());
+                                    }}
+                                >
+                                    {t("buttons.editPost")}
+                                </button>
+                            </div>
                         </Show>
                     </div>
 
@@ -566,24 +570,38 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     >
                         <Show when={postImages().length > 0}>
                             <Show when={postImages().length === 1}>
-                                <div class="mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                                <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
                                     <img
                                         src={postImages()[0]}
                                         id="one-image"
                                         class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
+                                    <div class="absolute right-6 top-2 col-span-1 flex justify-end">
+                                        <div class="inline-block">
+                                            <FavoriteButton
+                                                id={Number(props.postId)}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </Show>
 
                             <Show when={postImages().length > 1}>
-                                <div class="mt-2 flex max-h-[370px] max-w-full items-center justify-center rounded p-1">
+                                <div class="relative mt-2 flex h-[375px] w-[375px] max-w-full items-center justify-center rounded p-1">
                                     <img
                                         src={postImages()[0]}
                                         id="mobile-main-image"
                                         class="max-h-[370px] max-w-full rounded dark:bg-background1"
                                         alt={`${t("postLabels.image")}`}
                                     />
+                                    <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                        <div class="inline-block">
+                                            <FavoriteButton
+                                                id={Number(props.postId)}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mt-4 flex w-full justify-start">
@@ -889,7 +907,9 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <EditPost post={post()!} />
+                <div class="p-2">
+                    <EditPost post={post()!} />
+                </div>
             </Show>
         </>
     );

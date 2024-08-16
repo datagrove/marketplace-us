@@ -113,6 +113,8 @@ export interface uiObject {
         viewOrders: string;
         reportResource: string;
         updateResource: string;
+        editPost: string;
+        getLinks: string;
     };
 
     messages: {
@@ -168,6 +170,10 @@ export interface uiObject {
         reportResource: string;
         pleaseDescribe: string;
         addedToFavorites: string;
+        noFavoriteItems: string;
+        signIntoAddToFavorites: string;
+        resourceLinks: string;
+        externalResourceDisclaimer: string;
     };
 
     formLabels: {
@@ -219,6 +225,8 @@ export interface uiObject {
         yes: string;
         no: string;
         more: string;
+        secular: string;
+        resourceLinks: string;
     };
 
     postLabels: {
@@ -293,6 +301,7 @@ export interface uiObject {
         taxCode: string;
         resourceTypes: string;
         price: string;
+        secular: string;
     };
 
     apiErrors: {
@@ -436,7 +445,7 @@ export interface uiObject {
             { name: string; description: string; ariaLabel: string; id: "6" },
             { name: string; description: string; ariaLabel: string; id: "7" },
             { name: string; description: string; ariaLabel: string; id: "8" },
-            // { name: string, description: string, ariaLabel: string, id: "9" },
+            { name: string, description: string, ariaLabel: string, id: "9" },
             // { name: string, description: string, ariaLabel: string, id: "10" },
             // { name: string, description: string, ariaLabel: string, id: "11" },
             // { name: string, description: string, ariaLabel: string, id: "12" },
@@ -450,6 +459,7 @@ export interface uiObject {
 
     clearFilters: {
         filterButtons: [
+            { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },
             { text: string; ariaLabel: string },

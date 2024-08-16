@@ -33,7 +33,10 @@ if (gradeError) {
     grades.sort((a, b) => (a.id > b.id ? 0 : -1));
 }
 
-const { data, error } = await supabase.from("post_subject").select("*");
+const { data, error } = await supabase
+    .from("post_subject")
+    .select("*")
+    .order("subject", { ascending: true });
 
 if (error) {
     console.log("supabase error: " + error.message);
@@ -43,7 +46,9 @@ if (error) {
     });
 }
 
-const subjectData = productCategoryData.subjects;
+const subjectData = productCategoryData.subjects.sort((a, b) =>
+    a.name.localeCompare(b.name)
+);
 
 let allSubjectInfo: Array<{
     name: string;
@@ -69,6 +74,8 @@ interface Props {
     clearSubjects: () => void;
     clearGrade: () => void;
     clearAllFilters: () => void;
+    secularFilter: (secular: boolean) => void;
+    clearSecular: () => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
@@ -87,6 +94,8 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
+    const [showSecular, setShowSecular] = createSignal<boolean>(false);
+    const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
 
     const screenSize = useStore(windowSize);
 
@@ -184,6 +193,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         setGradeFilterCount(0);
         setSubjectFilterCount(0);
         setShowFilterNumber(false);
+        setSelectedSecular(false);
     };
 
     const clearSubjectFiltersMobile = () => {
@@ -193,6 +203,11 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
         setSelectedSubjects([]);
         setSubjectFilterCount(0);
+    };
+
+    const clearSecularFilterMobile = () => {
+        setSelectedSecular(false);
+        props.secularFilter(selectedSecular());
     };
 
     const clearGradeFiltersMobile = () => {
@@ -216,6 +231,13 @@ export const FiltersMobile: Component<Props> = (props) => {
         let currCheckboxID = currCheckbox.id;
 
         setSubjectFilter(currCheckboxID);
+    };
+
+    const secularCheckboxClick = (e: Event) => {
+        if ((e.target as HTMLInputElement)?.checked !== null) {
+            setSelectedSecular((e.target as HTMLInputElement)?.checked);
+            props.secularFilter(selectedSecular());
+        }
     };
 
     function setSubjectFilter(id: string) {
@@ -248,7 +270,11 @@ export const FiltersMobile: Component<Props> = (props) => {
                 <button
                     class="w-full"
                     onClick={() => {
-                        if (showGrades() === true || showSubjects() === true) {
+                        if (
+                            showGrades() === true ||
+                            showSubjects() === true ||
+                            showSecular() === true
+                        ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
@@ -382,6 +408,41 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                setShowFilters(false);
+                                setShowSecular(!showSecular());
+                            }}
+                        >
+                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                    {t("formLabels.secular")}
+                                </h2>
+
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowRightIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M15 18l6-6-6-6" />
+                                    <path
+                                        stroke-linecap="round"
+                                        d="M21 12h-1"
+                                    />
+                                </svg>
+                            </div>
+                        </button>
+
                         <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
                             <button
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
@@ -389,14 +450,16 @@ export const FiltersMobile: Component<Props> = (props) => {
                             >
                                 {t("clearFilters.filterButtons.0.text")}
                             </button>
-                            <button
-                                class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-ptext2-DM"
-                                onClick={() => {
-                                    setShowFilters(false);
-                                }}
-                            >
-                                {t("clearFilters.filterButtons.5.text")}
-                            </button>
+                            <Show when={screenSize() === "sm"}>
+                                <button
+                                    class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-ptext2-DM"
+                                    onClick={() => {
+                                        setShowFilters(false);
+                                    }}
+                                >
+                                    {t("clearFilters.filterButtons.5.text")}
+                                </button>
+                            </Show>
                         </div>
                     </div>
                 </Show>
@@ -480,6 +543,74 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 onClick={clearGradeFiltersMobile}
                             >
                                 {t("clearFilters.filterButtons.2.text")}
+                            </button>
+                        </div>
+                    </div>
+                </Show>
+
+                {/* Secular */}
+                <Show when={showSecular() === true}>
+                    <div class="subjects-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                if (showFilters() === false) {
+                                    setShowSecular(false);
+                                    setShowFilters(true);
+                                }
+                            }}
+                        >
+                            <div class="flex items-center border-b border-border1 pb-1 pl-2 dark:border-border1-DM">
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowLeftIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M9 6l-6 6 6 6" />
+                                    <path stroke-linecap="round" d="M3 12h1" />
+                                </svg>
+                                <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {t("formLabels.secular")}
+                                </h2>
+                            </div>
+                        </button>
+
+                        <div>
+                            <div class="flex flex-row pl-2">
+                                <div class="flex flex-wrap justify-between">
+                                    <div class="w-4/5 px-2 ">
+                                        {t("formLabels.secular")}
+                                    </div>
+                                </div>
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        class={`mr-2 leading-tight`}
+                                        checked={selectedSecular()}
+                                        onClick={(e) => {
+                                            secularCheckboxClick(e);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-2">
+                            <button
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={clearSecularFilterMobile}
+                                // onClick={clearSubjectFiltersMobile}
+                            >
+                                {t("clearFilters.filterButtons.6.text")}
                             </button>
                         </div>
                     </div>

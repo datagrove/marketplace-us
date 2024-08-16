@@ -212,7 +212,7 @@ export const ViewUserFavorites: Component = () => {
                     </Show>
                     <Show when={favoritedItems().length === 0}>
                         <p class="mb-6 italic">
-                            {t("messages.noPurchasedItems")}
+                            {t("messages.noFavoriteItems")}
                         </p>
                         <a href={`/${lang}/resources`} class="btn-primary">
                             {t("buttons.browseCatalog")}

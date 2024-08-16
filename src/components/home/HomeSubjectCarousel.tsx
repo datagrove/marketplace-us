@@ -15,13 +15,17 @@ import art from "../../assets/categoryIcons/art.svg";
 import geography from "../../assets/categoryIcons/geography.svg";
 import math from "../../assets/categoryIcons/math.svg";
 import science from "../../assets/categoryIcons/science.svg";
-import specialty from "../../assets/categoryIcons/specialty.svg";
-import holiday from "../../assets/categoryIcons/history.svg";
+import specialty from "../../assets/categoryIcons/thought-bubble.svg";
+import holiday from "../../assets/categoryIcons/holiday.svg";
 import social from "../../assets/categoryIcons/social.svg";
+import ela from "../../assets/categoryIcons/open-book.svg";
 
 let categories: Array<any> = [];
 
-const { data, error } = await supabase.from("post_subject").select("*");
+const { data, error } = await supabase
+    .from("post_subject")
+    .select("*")
+    .order("subject", { ascending: true });
 
 if (error) {
     console.log("supabase error: " + error.message);
@@ -48,6 +52,8 @@ categories.map((category) => {
         category.icon = social;
     } else if (category.id === 8) {
         category.icon = specialty;
+    } else if (category.id === 9) {
+        category.icon = ela;
     }
 });
 
@@ -69,10 +75,10 @@ interface Props {
     filterPosts: (currentCategory: number) => void;
 }
 
-let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-let light = window.matchMedia(
-    "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference"
-).matches;
+// let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+// let light = window.matchMedia(
+//     "(prefers-color-scheme: light)" || "(prefers-color-scheme: no-preference"
+// ).matches;
 
 export const HomeSubjectCarousel: Component = () => {
     return (
@@ -82,7 +88,7 @@ export const HomeSubjectCarousel: Component = () => {
                     <img src={leftArrow.src} alt="Left Arrow" />
                 </button>
 
-                <div class="flex h-[7.5rem] w-full items-start justify-between pt-2">
+                <div class="flex h-[8rem] w-full items-start justify-between pt-2">
                     {allCategoryInfo?.map((item) => (
                         <button
                             id={item.id}
@@ -115,7 +121,7 @@ export const HomeSubjectCarousel: Component = () => {
                             </div>
 
                             <div class="flex h-44 flex-row items-center justify-center">
-                                <p class="text-center text-xs text-ptext1 dark:text-ptext2-DM">
+                                <p class="pt-1 text-center text-xs text-ptext1 dark:text-ptext2-DM">
                                     {item.name}{" "}
                                 </p>
                             </div>

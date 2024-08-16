@@ -129,6 +129,8 @@ export const English = {
         viewOrders: "View Purchases",
         reportResource: "Report this Resource",
         updateResource: "Update Resource",
+        editPost: "Edit",
+        getLinks: "Get Links",
     },
 
     messages: {
@@ -196,6 +198,10 @@ export const English = {
         reportResource: "Clicking submit will generate an email in your default client to send to our support team to review your report. Please leave all generated information as entered to allow our team to investigate your report. If you would prefer to send an email using your preferred client, please copy and paste the information above into your email to <b>support@learngrove.co</b>",
         pleaseDescribe: "Please describe the issue",
         addedToFavorites: "Added to Favorites!",
+        noFavoriteItems: "No favorites yet - go get shopping!",
+        signIntoAddToFavorites: "Sign in to add to favorites",
+        resourceLinks: "Thanks for using LearnGrove! Here are your links:",
+        externalResourceDisclaimer: "LearnGrove provides links to these external resources as a convenience. LearnGrove is not responsible for and has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site. In no event shall LearnGrove be responsible for your use of a linked site. Many of these external sites are funded through advertising which may make use of cookies and other tracking technology to target your interests for that advertising. Please be careful when clicking on any links on an external site to ensure you are only accessing links you intend to.",
 
     },
 
@@ -247,6 +253,8 @@ export const English = {
         yes: "Yes",
         no: "No",
         more: "more",
+        secular:"Secular",
+        resourceLinks:"Resource Links",
     },
 
     postLabels: {
@@ -336,6 +344,7 @@ export const English = {
             "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
         resourceTypes: "Please select all applicable resource types.",
         price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
+        secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc."
     },
 
     apiErrors: {
@@ -514,7 +523,7 @@ export const English = {
             },
             {
                 name: "Art & Music",
-                description: "Geography description",
+                description: "Art & Music description",
                 ariaLabel: "Art & Music",
                 id: "3",
             },
@@ -548,6 +557,12 @@ export const English = {
                 ariaLabel: "Specialty",
                 id: "8",
             },
+            {
+                name: "English Language Arts",
+                description: "English Language Arts description",
+                ariaLabel: "English Language Arts",
+                id: "9",
+            },
             // Add more products as needed
         ],
     },
@@ -569,6 +584,7 @@ export const English = {
                 ariaLabel: "Clear Governing District",
             },
             { text: "View Results", ariaLabel: "View Results" },
+            { text: "Clear Secular", ariaLabel: "Clear Secular" },
         ],
     },
 

@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import { createStore } from "solid-js/store";
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
@@ -6,6 +6,7 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import supabase from "@lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
 import type { User } from "@lib/types";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -39,12 +40,15 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 export const DownloadBtn: Component<Props> = (props: Props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [purchasedItems, setPurchasedItems] = createSignal<
-        Array<{ resource_urls: string; id: number }>
+        Array<{ resource_urls: string; resource_links: string[]; id: number }>
     >([]);
     const [purchasedItemsId, setPurchasedItemsId] = createSignal<Array<number>>(
         []
     );
     const [downloadEnabled, setDownloadEnabled] = createSignal(false);
+    const [resourceURLs, setResourceURLs] = createSignal<string>("");
+    const [resourceLinks, setResourceLinks] = createSignal<Array<string>>([]);
+    const [showLinks, setShowLinks] = createSignal(false);
 
     const fetchUser = async (user_id: string) => {
         try {
@@ -113,7 +117,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             const { data: productsInfo, error: productsInfoError } =
                 await supabase
                     .from("seller_post")
-                    .select("resource_urls,id")
+                    .select("resource_urls, resource_links, id")
                     .in("id", products);
 
             if (productsInfoError) {
@@ -137,6 +141,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                         if (purchasedItem.id === props.item.id) {
                             // console.log(purchasedItem.resource_urls);
                             setDownloadEnabled(true);
+                            setResourceURLs(purchasedItem.resource_urls);
+                            setResourceLinks(purchasedItem.resource_links);
                             // console.log(downloadEnabled());
                             break;
                         }
@@ -166,16 +172,69 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             }
         }
     }
+
+    function serveLinks() {
+        if (downloadEnabled()) {
+            return (
+                <>
+                    <div class="mb-4 font-bold">
+                        {t("messages.resourceLinks")}
+                    </div>
+                    {resourceLinks().map((link) => (
+                        <div>
+                            <a
+                                class="text-btn1 underline dark:text-btn1-DM"
+                                href={link}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                {link}
+                            </a>
+                        </div>
+                    ))}
+                    <div class="mt-4 italic">
+                        {t("messages.externalResourceDisclaimer")}
+                    </div>
+                </>
+            );
+        }
+    }
+
+    //     <button
+    //     class={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
+    //     aria-label={t("buttons.downloadResources")}
+    //     onclick={(e) => serveLinks(e)}
+    //     disabled={!downloadEnabled()}
+    // >
+    //     {/* TODO Internationalize */}
+    //     Get Links
+    // </button>
+
     return (
-        <div class="relative z-10 w-full">
-            <button
-                class={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
-                aria-label={t("buttons.downloadResources")}
-                onclick={(e) => initializeDownload(e)}
-                disabled={!downloadEnabled()}
-            >
-                {t("buttons.downloadResources")}
-            </button>
-        </div>
+        <>
+            <div class="relative z-10 w-full">
+                <Show when={!resourceURLs()}>
+                    <Modal
+                        buttonClass={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
+                        buttonId=""
+                        buttonContent={t("buttons.getLinks")}
+                        heading={t("formLabels.resourceLinks")}
+                        headingLevel={2}
+                        children={<>{serveLinks()}</>}
+                    ></Modal>
+                </Show>
+
+                <Show when={resourceURLs()}>
+                    <button
+                        class={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
+                        aria-label={t("buttons.downloadResources")}
+                        onclick={(e) => initializeDownload(e)}
+                        disabled={!downloadEnabled()}
+                    >
+                        {t("buttons.downloadResources")}
+                    </button>
+                </Show>
+            </div>
+        </>
     );
 };
