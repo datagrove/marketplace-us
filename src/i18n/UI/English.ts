@@ -130,6 +130,7 @@ export const English = {
         reportResource: "Report this Resource",
         updateResource: "Update Resource",
         editPost: "Edit",
+        getLinks: "Get Links",
     },
 
     messages: {
@@ -199,6 +200,8 @@ export const English = {
         addedToFavorites: "Added to Favorites!",
         noFavoriteItems: "No favorites yet - go get shopping!",
         signIntoAddToFavorites: "Sign in to add to favorites",
+        resourceLinks: "Thanks for using LearnGrove! Here are your links:",
+        externalResourceDisclaimer: "LearnGrove provides links to these external resources as a convenience. LearnGrove is not responsible for and has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site. In no event shall LearnGrove be responsible for your use of a linked site. Many of these external sites are funded through advertising which may make use of cookies and other tracking technology to target your interests for that advertising. Please be careful when clicking on any links on an external site to ensure you are only accessing links you intend to.",
 
     },
 
@@ -251,6 +254,7 @@ export const English = {
         no: "No",
         more: "more",
         secular:"Secular",
+        resourceLinks:"Resource Links",
     },
 
     postLabels: {
