@@ -114,6 +114,7 @@ export interface uiObject {
         reportResource: string;
         updateResource: string;
         editPost: string;
+        getLinks: string;
     };
 
     messages: {
@@ -171,6 +172,8 @@ export interface uiObject {
         addedToFavorites: string;
         noFavoriteItems: string;
         signIntoAddToFavorites: string;
+        resourceLinks: string;
+        externalResourceDisclaimer: string;
     };
 
     formLabels: {
@@ -223,6 +226,7 @@ export interface uiObject {
         no: string;
         more: string;
         secular: string;
+        resourceLinks: string;
     };
 
     postLabels: {

@@ -178,7 +178,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
             return (
                 <>
                     <div class="mb-4 font-bold">
-                        Thanks for using LearnGrove! Here are your links:
+                        {t("messages.resourceLinks")}
                     </div>
                     {resourceLinks().map((link) => (
                         <div>
@@ -192,7 +192,9 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                             </a>
                         </div>
                     ))}
-                    <div class="mt-4 italic">{t("socialModal.disclaimer")}</div>
+                    <div class="mt-4 italic">
+                        {t("messages.externalResourceDisclaimer")}
+                    </div>
                 </>
             );
         }
@@ -215,8 +217,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                     <Modal
                         buttonClass={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
                         buttonId=""
-                        buttonContent="Go To Links"
-                        heading="Resource Links"
+                        buttonContent={t("buttons.getLinks")}
+                        heading={t("formLabels.resourceLinks")}
                         headingLevel={2}
                         children={<>{serveLinks()}</>}
                     ></Modal>
