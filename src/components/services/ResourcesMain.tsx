@@ -40,6 +40,7 @@ export const ResourcesView: Component = () => {
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [resourceTypesFilters, setResourceTypeFilters] = createSignal<Array<string>>([]);
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
         []
     );
@@ -124,6 +125,7 @@ export const ResourcesView: Component = () => {
         const res = await allFilters.fetchFilteredPosts(
             subjectFilters(),
             gradeFilters(),
+            resourceFilters(),
             searchString(),
             resourceFilters(),
             secularFilters()
@@ -195,6 +197,28 @@ export const ResourcesView: Component = () => {
                                   });
                               });
                           }
+
+                          const { data: resourceTypesData, error: resourceTypesError } =
+                              await supabase.from("resource_types").select("*");
+
+                          if (resourceTypesError) {
+                              console.log(
+                                  "supabase error: " + resourceTypesError.message
+                              );
+                          } else {
+                              item.resourceTypes = [];
+                              resourceTypesData.forEach((databaseResourceTypes) => {
+                                  item.resource_types.map((itemResourceTypes: string) => {
+                                      if (
+                                          itemResourceTypes ===
+                                          databaseResourceTypes.id.toString()
+                                      ) {
+                                          item.resource_types.push(databaseResourceTypes.resource_types);
+                                      }
+                                  });
+                              });
+                          }
+
                           return item;
                       })
                     : []
