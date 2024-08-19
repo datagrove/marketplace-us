@@ -92,7 +92,7 @@ interface Props {
     filterPostsByResourceTypes: (type: string) => void;
     clearSubjects: () => void;
     clearGrade: () => void;
-    clearResurceTypes: () => void;
+    clearResourceTypes: () => void;
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
@@ -638,7 +638,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <div class="ml-8 flex flex-wrap">
                             <For each={resourceType()}>
                                 {(item, index) => (
-                                    <div class="flex w-1/2 flex-row flex-wrap py-1">
+                                    <div class="flex w-5/6 flex-row flex-wrap py-1">
                                         <div class="flex items-center">
                                             {/* TODO - capture selected checkboxes in a signal, if included pre-check them */}
                                             <input
@@ -677,7 +677,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearResourceTypesFiltersMobile}
                             >
-                                {t("clearFilters.filterButtons.2.text")}
+                                {/* {t("clearFilters.filterButtons.2.text")} */}
+                                Clear Resource Type
                             </button>
                         </div>
                     </div>

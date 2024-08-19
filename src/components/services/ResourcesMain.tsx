@@ -125,9 +125,9 @@ export const ResourcesView: Component = () => {
         const res = await allFilters.fetchFilteredPosts(
             subjectFilters(),
             gradeFilters(),
-            resourceTypesFilters(),
-            resourceFilters(),
             searchString(),
+            resourceTypesFilters(),
+            secularFilters(),
         );
 
         if (res === null || res === undefined) {
@@ -415,7 +415,7 @@ export const ResourcesView: Component = () => {
         });
 
         // localStorage.removeItem("selectedGrades");
-        setResourceFilters([]);
+        setResourceTypeFilters([]);
         filterPosts();
     };
 
