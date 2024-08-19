@@ -171,7 +171,6 @@ export const FiltersMobile: Component<Props> = (props) => {
         if (gradeFilterCount() === 0 && subjectFilterCount() === 0 && resourceTypesFilterCount() === 0 && selectedSecular() === false) {
             setShowFilterNumber(false);
         } else {
-            setSecularInNumber(1)
             setShowFilterNumber(true);
         }
     });
@@ -330,12 +329,10 @@ export const FiltersMobile: Component<Props> = (props) => {
         if ((e.target as HTMLInputElement)?.checked !== null) {
             setSelectedSecular((e.target as HTMLInputElement)?.checked);
             props.secularFilter(selectedSecular());
-          setSecularInNumber(1)
         }
-        if ((e.target as HTMLInputElement)?.checked !== null) {
-        }else{
-          setSecularInNumber(0)
-        }
+        if (selectedSecular() === true){
+        setSecularInNumber(1)
+    }
         
     };
 
