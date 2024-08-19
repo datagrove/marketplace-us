@@ -285,7 +285,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
     const clearResourceTypesFiltersMobile = () => {
-        props.clearResurceTypes();
+        props.clearResourceTypes();
         resourceType().forEach((type) => {
             type.checked = false;
         });
@@ -828,7 +828,6 @@ export const FiltersMobile: Component<Props> = (props) => {
                             <button
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearSecularFilterMobile}
-                                // onClick={clearSubjectFiltersMobile}
                             >
                                 {t("clearFilters.filterButtons.6.text")}
                             </button>

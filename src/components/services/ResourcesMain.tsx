@@ -473,7 +473,7 @@ export const ResourcesView: Component = () => {
                         filterPostsBySubject={setCategoryFilter}
                         secularFilter={filterPostsBySecular}
                         clearSecular={clearSecular}
-                        clearResurceTypes={clearResourceTypes}
+                        clearResourceTypes={clearResourceTypes}
                         filterPostsByResourceTypes={filterPostsByResourceTypes}
                     />
                     {/* <div class="sticky top-0 w-3/12">
