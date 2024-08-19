@@ -7,6 +7,7 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { SecularFilter } from "./SecularFilter";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -123,6 +124,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
     const [showSecular, setShowSecular] = createSignal<boolean>(false);
     const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
+    const [secularInNumber, setSecularInNumber] = createSignal<number>(0);
 
     const screenSize = useStore(windowSize);
 
@@ -145,7 +147,15 @@ export const FiltersMobile: Component<Props> = (props) => {
             ]);
             setGradeFilterCount(gradeFilters().length);
             checkGradeBoxes();
+        }
+        if (localStorage.getItem("selectedResoruceType")) {
+            setResourceTypesFilters([
+                ...JSON.parse(localStorage.getItem("selectedResoruceType")!),
+            ]);
+            setResourceTypesFilterCount(resourceTypesFilters().length);
+            checkResourceTypesBoxes();
         } else {
+
             setGradeFilters([]);
             grade().forEach((grade) => {
                 grade.checked = false;
@@ -158,9 +168,10 @@ export const FiltersMobile: Component<Props> = (props) => {
     });
 
     createEffect(() => {
-        if (gradeFilterCount() === 0 && subjectFilterCount() === 0 && resourceTypesFilterCount() === 0) {
+        if (gradeFilterCount() === 0 && subjectFilterCount() === 0 && resourceTypesFilterCount() === 0 && selectedSecular() === false) {
             setShowFilterNumber(false);
         } else {
+            setSecularInNumber(1)
             setShowFilterNumber(true);
         }
     });
@@ -224,8 +235,8 @@ export const FiltersMobile: Component<Props> = (props) => {
             setResourceTypesFilters(currentResourceTypesFilters);
             setResourceTypesFilterCount(resourceTypesFilters().length);
         } else {
-            setGradeFilters([...gradeFilters(), id]);
-            setGradeFilterCount(gradeFilters().length);
+            setResourceTypesFilters([...resourceTypesFilters(), id]);
+            setResourceTypesFilterCount(resourceTypesFilters().length);
         }
         props.filterPostsByResourceTypes(id);
 
@@ -273,6 +284,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     const clearSecularFilterMobile = () => {
         setSelectedSecular(false);
         props.secularFilter(selectedSecular());
+        setSecularInNumber(0)
     };
 
     const clearGradeFiltersMobile = () => {
@@ -318,7 +330,13 @@ export const FiltersMobile: Component<Props> = (props) => {
         if ((e.target as HTMLInputElement)?.checked !== null) {
             setSelectedSecular((e.target as HTMLInputElement)?.checked);
             props.secularFilter(selectedSecular());
+          setSecularInNumber(1)
         }
+        if ((e.target as HTMLInputElement)?.checked !== null) {
+        }else{
+          setSecularInNumber(0)
+        }
+        
     };
 
     function setSubjectFilter(id: string) {
@@ -382,7 +400,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <Show when={showFilterNumber() === true}>
                             <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
                                 <p class="text-[10px] text-ptext2 dark:text-ptext1">
-                                    {gradeFilterCount() + subjectFilterCount() + resourceTypesFilterCount()}
+                                    {gradeFilterCount() + subjectFilterCount() + resourceTypesFilterCount() + secularInNumber() }
                                 </p>
                             </div>
                         </Show>
@@ -451,16 +469,15 @@ export const FiltersMobile: Component<Props> = (props) => {
                             onClick={() => {
                                 setShowFilters(false);
 
-                                if (showSubjects() === true) {
-                                    setShowSubjects(false);
+                                if (showResourceTypes() === true) {
+                                    setShowResourceTypes(false);
                                 }
                                 setShowResourceTypes(!showResourceTypes());
                             }}
                         >
                             <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
                                 <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {/* {t("formLabels.grades")} */}
-                                      resourceType
+                                    {t("formLabels.resourceTypes")}
                                 </h2>
 
                                 <Show when={resourceTypesFilterCount() > 0}>
@@ -553,6 +570,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     {t("formLabels.secular")}
                                 </h2>
 
+                                <Show when={secularInNumber() > 0 && selectedSecular() === true}>
+                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                            {secularInNumber()}
+                                        </p>
+                                    </div>
+                                </Show>
                                 <svg
                                     width="30px"
                                     height="30px"
@@ -599,7 +623,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
 
                 <Show when={showResourceTypes() === true}>
-                    <div class="grades-pop-out absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <div class=" absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
                         <button
                             class="w-full"
                             onClick={() => {
@@ -629,8 +653,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 </svg>
 
                                 <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
-                                    {/* {t("formLabels.grades")} */}
-                                      Resource Types
+                                    {t("formLabels.resourceTypes")}
                                 </h2>
                             </div>
                         </button>
@@ -640,7 +663,6 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 {(item, index) => (
                                     <div class="flex w-5/6 flex-row flex-wrap py-1">
                                         <div class="flex items-center">
-                                            {/* TODO - capture selected checkboxes in a signal, if included pre-check them */}
                                             <input
                                                 aria-label={
                                                     t(
@@ -651,12 +673,6 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 id={item.id.toString()}
                                                 checked={item.checked}
                                                 class="resourceType mr-4 scale-125 leading-tight"
-                                                // onClick={() => {
-                                                //     setGradesFilter(item);
-                                                //     setGradeFilterCount(
-                                                //         gradeFilterCount() + 1
-                                                //     );
-                                                // }}
                                                 onClick={(e) =>
                                                     resourceTypesCheckboxClick(e)
                                                 }
@@ -677,8 +693,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearResourceTypesFiltersMobile}
                             >
-                                {/* {t("clearFilters.filterButtons.2.text")} */}
-                                Clear Resource Type
+                                {t("clearFilters.filterButtons.7.text")}
                             </button>
                         </div>
                     </div>
@@ -818,6 +833,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         checked={selectedSecular()}
                                         onClick={(e) => {
                                             secularCheckboxClick(e);
+                                          
                                         }}
                                     />
                                 </div>
