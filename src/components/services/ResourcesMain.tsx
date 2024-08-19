@@ -125,10 +125,9 @@ export const ResourcesView: Component = () => {
         const res = await allFilters.fetchFilteredPosts(
             subjectFilters(),
             gradeFilters(),
+            resourceTypesFilters(),
             resourceFilters(),
             searchString(),
-            resourceFilters(),
-            secularFilters()
         );
 
         if (res === null || res === undefined) {
@@ -260,6 +259,21 @@ export const ResourcesView: Component = () => {
                             });
                         });
                     }
+                    const { data: resourceTypesData, error: resourceTypesError } =
+                        await supabase.from("resource_types").select("*");
+
+                    if (resourceTypesError) {
+                        console.log("supabase error: " + resourceTypesError.message);
+                    } else {
+                        item.resource_types= [];
+                        resourceTypesData.forEach((databaseResourceTypes) => {
+                            item.resource_types.map((itemResourceTypes: string) => {
+                                if (itemResourceTypes === databaseResourceTypes.id.toString()) {
+                                    item.resource_types.push(databaseResourceTypes.resource_types);
+                                }
+                            });
+                        });
+                    }
                     return item;
                 })
             );
@@ -280,6 +294,20 @@ export const ResourcesView: Component = () => {
 
         filterPosts();
     };
+
+    const filterPostsByResourceTypes = (type: string) => {
+        if (resourceTypesFilters().includes(type)) {
+            let currentResourceTypesFilter= resourceTypesFilters().filter(
+                (el) => el !== type 
+            );
+            setResourceTypeFilters(currentResourceTypesFilter);
+        } else {
+            setResourceTypeFilters([...resourceTypesFilters(), type]);
+        }
+
+        filterPosts();
+    };
+
     const filterPostsBySecular = (secular: boolean) => {
         setSecularFilters(secular);
         filterPosts();
@@ -293,9 +321,13 @@ export const ResourcesView: Component = () => {
         const gradeCheckboxes = document.querySelectorAll(
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
+        const resourceTypesCheckoxes= document.querySelectorAll(
+            "input[type='checkbox'].resourceType"
+        ) as NodeListOf<HTMLInputElement>;
 
         console.log(subjectCheckboxes);
         console.log(gradeCheckboxes);
+        console.log(resourceTypesCheckoxes);
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
@@ -313,6 +345,12 @@ export const ResourcesView: Component = () => {
             }
         });
 
+        resourceTypesCheckoxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
+        });
+
         localStorage.removeItem("selectedGrades");
         localStorage.removeItem("selectedSubjects");
         localStorage.removeItem("searchString");
@@ -323,6 +361,7 @@ export const ResourcesView: Component = () => {
         // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
+        setResourceTypeFilters([])
         setSecularFilters(false);
 
         filterPosts();
@@ -362,6 +401,24 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
+    const clearResourceTypes= () => {
+        const resourceTypesCheckoxes= document.querySelectorAll(
+            "input[type='checkbox'].resourceType"
+        ) as NodeListOf<HTMLInputElement>;
+
+        console.log(resourceTypesCheckoxes);
+
+        resourceTypesCheckoxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
+        });
+
+        // localStorage.removeItem("selectedGrades");
+        setResourceFilters([]);
+        filterPosts();
+    };
+
     const clearSecular = () => {
         const secularCheckbox = document.getElementById(
             "secularCheck"
@@ -393,6 +450,8 @@ export const ResourcesView: Component = () => {
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
+                    filterPostsByResourceTypes={filterPostsByResourceTypes}
+                    clearResurceTypes={clearResourceTypes}
                 />
             </Show>
 
@@ -414,6 +473,8 @@ export const ResourcesView: Component = () => {
                         filterPostsBySubject={setCategoryFilter}
                         secularFilter={filterPostsBySecular}
                         clearSecular={clearSecular}
+                        clearResurceTypes={clearResourceTypes}
+                        filterPostsByResourceTypes={filterPostsByResourceTypes}
                     />
                     {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">

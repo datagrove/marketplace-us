@@ -15,6 +15,7 @@ const productCategoryData = values.subjectCategoryInfo;
 
 let grades: Array<{ grade: string; id: number; checked: boolean }> = [];
 let subjects: Array<any> = [];
+let resourceTypes: Array<{ type: string; id: number; checked: boolean }> = [];
 
 const { data: gradeData, error: gradeError } = await supabase
     .from("grade_level")
@@ -31,6 +32,23 @@ if (gradeError) {
         });
     });
     grades.sort((a, b) => (a.id > b.id ? 0 : -1));
+}
+
+const { data: resourceTypesData, error: resourceTypesError } = await supabase
+    .from("resource_types")
+    .select("*");
+
+if (resourceTypesError) {
+    console.log("supabase error: " + resourceTypesError.message);
+} else {
+    resourceTypesData.forEach((type) => {
+        resourceTypes.push({
+            type: type.type,
+            id: type.id,
+            checked: false,
+        });
+    });
+    resourceTypes.sort((a, b) => (a.id > b.id ? 0 : -1));
 }
 
 const { data, error } = await supabase
@@ -71,8 +89,10 @@ for (let i = 0; i < subjectData.length; i++) {
 interface Props {
     filterPostsByGrade: (grade: string) => void;
     filterPostsBySubject: (currentSubject: string) => void;
+    filterPostsByResourceTypes: (type: string) => void;
     clearSubjects: () => void;
     clearGrade: () => void;
+    clearResurceTypes: () => void;
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
@@ -80,18 +100,25 @@ interface Props {
 
 export const FiltersMobile: Component<Props> = (props) => {
     const [showGrades, setShowGrades] = createSignal(false);
+    const [showResourceTypes, setShowResourceTypes] = createSignal(false);
     const [showSubjects, setShowSubjects] = createSignal(false);
     const [showFilters, setShowFilters] = createSignal(false);
     const [grade, setGrade] =
         createSignal<Array<{ grade: string; id: number; checked: boolean }>>(
             grades
         );
+    const [resourceType, setResourceType] =
+        createSignal<Array<{ type: string; id: number; checked: boolean}>>(
+           resourceTypes 
+        );
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [resourceTypesFilters, setResourceTypesFilters] = createSignal<Array<string>>([]);
     const [subject, setSubject] = createSignal<Array<any>>(allSubjectInfo);
     const [selectedSubjects, setSelectedSubjects] = createSignal<Array<string>>(
         []
     );
     const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
+    const [resourceTypesFilterCount, setResourceTypesFilterCount] = createSignal<number>(0);
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
     const [showFilterNumber, setShowFilterNumber] = createSignal(false);
     const [showSecular, setShowSecular] = createSignal<boolean>(false);
@@ -131,7 +158,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     });
 
     createEffect(() => {
-        if (gradeFilterCount() === 0 && subjectFilterCount() === 0) {
+        if (gradeFilterCount() === 0 && subjectFilterCount() === 0 && resourceTypesFilterCount() === 0) {
             setShowFilterNumber(false);
         } else {
             setShowFilterNumber(true);
@@ -153,6 +180,16 @@ export const FiltersMobile: Component<Props> = (props) => {
             grade().map((grade) => {
                 if (grade.id.toString() === item) {
                     grade.checked = true;
+                }
+            });
+        });
+    }
+
+    function checkResourceTypesBoxes() {
+        resourceTypesFilters().map((item) => {
+            resourceType().map((type) => {
+                if (type.id.toString() === item) {
+                    type.checked = true;
                 }
             });
         });
@@ -180,6 +217,29 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
     };
 
+
+    const setResourceTypesFilter = (id: string) => {
+        if (resourceTypesFilters().includes(id)) {
+            let currentResourceTypesFilters = resourceTypesFilters().filter((el) => el !== id);
+            setResourceTypesFilters(currentResourceTypesFilters);
+            setResourceTypesFilterCount(resourceTypesFilters().length);
+        } else {
+            setGradeFilters([...gradeFilters(), id]);
+            setGradeFilterCount(gradeFilters().length);
+        }
+        props.filterPostsByResourceTypes(id);
+
+        resourceType().forEach((type) => {
+            if (type.id.toString() === id) {
+                if (type.checked) {
+                    type.checked = false;
+                } else {
+                    type.checked = true;
+                }
+            }
+        });
+    };
+
     const clearAllFiltersMobile = () => {
         props.clearAllFilters();
         grade().forEach((grade) => {
@@ -188,10 +248,15 @@ export const FiltersMobile: Component<Props> = (props) => {
         subject().forEach((subject) => {
             subject.checked = false;
         });
+        resourceType().forEach((type) => {
+            type.checked = false;
+        });
         setGradeFilters([]);
         setSelectedSubjects([]);
+        setResourceTypesFilters([]);
         setGradeFilterCount(0);
         setSubjectFilterCount(0);
+        setResourceTypesFilterCount(0)
         setShowFilterNumber(false);
         setSelectedSecular(false);
     };
@@ -219,11 +284,27 @@ export const FiltersMobile: Component<Props> = (props) => {
         setGradeFilters([]);
     };
 
+    const clearResourceTypesFiltersMobile = () => {
+        props.clearResurceTypes();
+        resourceType().forEach((type) => {
+            type.checked = false;
+        });
+        setResourceTypesFilterCount(0);
+        setResourceTypesFilters([]);
+    };
+
     const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
 
         setGradesFilter(currCheckboxID);
+    };
+
+    const resourceTypesCheckboxClick = (e: Event) => {
+        let currCheckbox = e.currentTarget as HTMLInputElement;
+        let currCheckboxID = currCheckbox.id;
+
+        setResourceTypesFilter(currCheckboxID);
     };
 
     const subjectCheckboxClick = (e: Event) => {
@@ -273,11 +354,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                         if (
                             showGrades() === true ||
                             showSubjects() === true ||
-                            showSecular() === true
+                            showSecular() === true ||
+                            showResourceTypes() === true 
                         ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
+                            setShowResourceTypes(false)
                         } else if (showFilters() === true) {
                             setShowFilters(false);
                         } else {
@@ -299,7 +382,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <Show when={showFilterNumber() === true}>
                             <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
                                 <p class="text-[10px] text-ptext2 dark:text-ptext1">
-                                    {gradeFilterCount() + subjectFilterCount()}
+                                    {gradeFilterCount() + subjectFilterCount() + resourceTypesFilterCount()}
                                 </p>
                             </div>
                         </Show>
@@ -334,6 +417,56 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
                                         <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
                                             {gradeFilterCount()}
+                                        </p>
+                                    </div>
+                                </Show>
+
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowRightIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M15 18l6-6-6-6" />
+                                    <path
+                                        stroke-linecap="round"
+                                        d="M21 12h-1"
+                                    />
+                                </svg>
+                            </div>
+                        </button>
+
+                        {/* Resource Type Filter Outside */}
+
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                setShowFilters(false);
+
+                                if (showSubjects() === true) {
+                                    setShowSubjects(false);
+                                }
+                                setShowResourceTypes(!showResourceTypes());
+                            }}
+                        >
+                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                    {/* {t("formLabels.grades")} */}
+                                      resourceType
+                                </h2>
+
+                                <Show when={resourceTypesFilterCount() > 0}>
+                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                            {resourceTypesFilterCount()}
                                         </p>
                                     </div>
                                 </Show>
@@ -460,6 +593,92 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     {t("clearFilters.filterButtons.5.text")}
                                 </button>
                             </Show>
+                        </div>
+                    </div>
+                </Show>
+
+
+                <Show when={showResourceTypes() === true}>
+                    <div class="grades-pop-out absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                if (showFilters() === false) {
+                                    setShowResourceTypes(false);
+                                    setShowFilters(true);
+                                }
+                            }}
+                        >
+                            <div class="flex items-center border-b border-border1 pb-1 pl-2 dark:border-border1-DM">
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowLeftIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M9 6l-6 6 6 6" />
+                                    <path stroke-linecap="round" d="M3 12h1" />
+                                </svg>
+
+                                <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {/* {t("formLabels.grades")} */}
+                                      Resource Types
+                                </h2>
+                            </div>
+                        </button>
+
+                        <div class="ml-8 flex flex-wrap">
+                            <For each={resourceType()}>
+                                {(item, index) => (
+                                    <div class="flex w-1/2 flex-row flex-wrap py-1">
+                                        <div class="flex items-center">
+                                            {/* TODO - capture selected checkboxes in a signal, if included pre-check them */}
+                                            <input
+                                                aria-label={
+                                                    t(
+                                                        "ariaLabels.checkboxGrade"
+                                                    ) + item.type
+                                                }
+                                                type="checkbox"
+                                                id={item.id.toString()}
+                                                checked={item.checked}
+                                                class="resourceType mr-4 scale-125 leading-tight"
+                                                // onClick={() => {
+                                                //     setGradesFilter(item);
+                                                //     setGradeFilterCount(
+                                                //         gradeFilterCount() + 1
+                                                //     );
+                                                // }}
+                                                onClick={(e) =>
+                                                    resourceTypesCheckboxClick(e)
+                                                }
+                                            />
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span class="text-lg text-ptext1 dark:text-ptext1-DM">
+                                                {item.type}
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
+                            </For>
+                        </div>
+
+                        <div class="my-2">
+                            <button
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={clearResourceTypesFiltersMobile}
+                            >
+                                {t("clearFilters.filterButtons.2.text")}
+                            </button>
                         </div>
                     </div>
                 </Show>
