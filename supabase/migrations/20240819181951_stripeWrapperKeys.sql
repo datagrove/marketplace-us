@@ -1,3 +1,5 @@
+DROP SERVER if exists stripe_server;
+
 CREATE SERVER stripe_server FOREIGN DATA WRAPPER stripe_wrapper OPTIONS (api_key_id 'placeholder');
 
 CREATE PROCEDURE install_stripe_secret_reference() AS $$
