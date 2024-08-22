@@ -76,6 +76,9 @@ interface Props {
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
+    downHostedFilter: (downHosted: boolean) => void;
+    clearDownHosted: () => void
+
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
