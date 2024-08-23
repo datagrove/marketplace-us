@@ -108,7 +108,6 @@ export const ViewCard: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    //TODO Update to signed URLS
     const downloadImage = async (path: string) => {
         try {
             const { data: webpData, error: webpError } = await supabase.storage

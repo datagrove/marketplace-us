@@ -198,7 +198,6 @@ export const ViewFullPost: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    //TODO: Needs to download both URLs from the folders for the Picture element
     const downloadImages = async (image_Urls: string) => {
         try {
             const imageUrls = image_Urls.split(",");
@@ -228,7 +227,6 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
     };
 
-    //TODO: Why doesn't seller image show up?
     const downloadCreatorImage = async (path: string) => {
         try {
             const { data: webpData, error: webpError } = await supabase.storage

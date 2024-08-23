@@ -52,7 +52,7 @@ export const UserCreatorView: Component<Props> = (props) => {
     //   }
     // })
 
-    //TODO: Refactor to use screenSize store
+    //REFACTOR: Refactor to use screenSize store
     window.onresize = function () {
         if (window.screen.width >= 768) {
             setLargeScreen(true);
