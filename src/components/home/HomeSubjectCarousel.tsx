@@ -84,10 +84,6 @@ export const HomeSubjectCarousel: Component = () => {
     return (
         <div class="my-2 rounded-lg p-1">
             <div class="flex-start flex justify-between overflow-x-auto drop-shadow-md scrollbar-thin scrollbar-track-background1  scrollbar-thumb-shadow-LM scrollbar-track-rounded-full scrollbar-thumb-rounded-full dark:drop-shadow-[0_4px_3px_rgba(97,97,97,1)] dark:scrollbar-track-background1-DM dark:scrollbar-thumb-shadow-DM">
-                <button class="hidden w-12">
-                    <img src={leftArrow.src} alt="Left Arrow" />
-                </button>
-
                 <div class="flex h-[8rem] w-full items-start justify-between pt-2">
                     {allCategoryInfo?.map((item) => (
                         <button
@@ -128,10 +124,6 @@ export const HomeSubjectCarousel: Component = () => {
                         </button>
                     ))}
                 </div>
-
-                <button class="hidden w-12">
-                    <img src={rightArrow.src} alt="Right Arrow" />
-                </button>
             </div>
         </div>
     );

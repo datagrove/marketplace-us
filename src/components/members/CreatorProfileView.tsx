@@ -49,7 +49,10 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 export const CreatorProfileView: Component = () => {
     const [creator, setCreator] = createSignal<Creator>();
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [creatorImage, setCreatorImage] = createSignal<string>("");
+    const [creatorImage, setCreatorImage] = createSignal<{
+        webpUrl: string;
+        jpegUrl: string;
+    }>({ webpUrl: "", jpegUrl: "" });
     const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
     const [imageUrl, setImageUrl] = createSignal<string | null>(null);
     const [screenSize, setScreenSize] = createSignal<
@@ -260,14 +263,23 @@ export const CreatorProfileView: Component = () => {
 
     const downloadImage = async (image_Url: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("user.image")
-                .download(image_Url);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${image_Url}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
-            setCreatorImage(url);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`jpeg/${image_Url}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            setCreatorImage({ webpUrl, jpegUrl });
         } catch (error) {
             console.log(error);
         }
@@ -317,11 +329,17 @@ export const CreatorProfileView: Component = () => {
                     <Show when={editMode() === false}>
                         <Show when={creatorImage()}>
                             <div class="absolute left-4 top-6 flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM md:left-12">
-                                <img
-                                    src={creatorImage()}
-                                    class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
-                                    alt={`${t("postLabels.creatorProfileImage")} 1`}
-                                />
+                                <picture>
+                                    <source
+                                        srcset={creatorImage().webpUrl}
+                                        type="image/webp"
+                                    />
+                                    <img
+                                        src={creatorImage().jpegUrl}
+                                        class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
+                                        alt={`${t("postLabels.creatorProfileImage")} 1`}
+                                    />
+                                </picture>
                             </div>
                         </Show>
 

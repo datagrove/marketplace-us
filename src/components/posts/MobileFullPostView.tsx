@@ -27,18 +27,10 @@ interface Props {
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const MobileViewFullPost: Component<Props> = (props) => {
-    const test1 = ["../../../src/assets/services.png"];
-    const test2 = [
-        "../../../src/assets/services.png",
-        "../../../src/assets/question.svg",
-        "../../../src/assets/servicesDM.png",
-        "../../../src/assets/userImagePlaceholder.svg",
-        "../../../src/assets/attention-mark.svg",
-    ];
-
     const [post, setPost] = createSignal<Post>();
-    const [postImages, setPostImages] = createSignal<string[]>([]);
-    const [testImages, setTestImages] = createSignal<string[]>([]);
+    const [postImages, setPostImages] = createSignal<
+        { webpUrl: string; jpegUrl: string }[]
+    >([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
@@ -106,6 +98,24 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 }
                             );
                         });
+
+                        const { data: sellerImg, error: sellerImgError } =
+                            await supabase
+                                .from("sellerview")
+                                .select("*")
+                                .eq("seller_id", item.seller_id);
+
+                        if (sellerImgError) {
+                            console.log(sellerImgError);
+                        }
+
+                        if (sellerImg) {
+                            if (sellerImg[0].image_url) {
+                                item.seller_img = await downloadCreatorImage(
+                                    sellerImg[0].image_url
+                                );
+                            }
+                        }
 
                         const { data: gradeData, error: gradeError } =
                             await supabase.from("grade_level").select("*");
@@ -197,17 +207,55 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         try {
             const imageUrls = image_Urls.split(",");
             imageUrls.forEach(async (imageUrl: string) => {
-                const { data, error } = await supabase.storage
-                    .from("post.image")
-                    .download(imageUrl);
-                if (error) {
-                    throw error;
+                const { data: webpData, error: webpError } =
+                    await supabase.storage
+                        .from("post.image")
+                        .createSignedUrl(`webp/${imageUrl}.webp`, 60 * 60);
+                if (webpError) {
+                    throw webpError;
                 }
-                const url = URL.createObjectURL(data);
-                setPostImages([...postImages(), url]);
+                const webpUrl = webpData.signedUrl;
+
+                const { data: jpegData, error: jpegError } =
+                    await supabase.storage
+                        .from("post.image")
+                        .createSignedUrl(`jpeg/${imageUrl}.jpeg`, 60 * 60);
+                if (jpegError) {
+                    throw jpegError;
+                }
+                const jpegUrl = jpegData.signedUrl;
+
+                setPostImages([...postImages(), { webpUrl, jpegUrl }]);
             });
         } catch (error) {
             console.log(error);
+        }
+    };
+
+    const downloadCreatorImage = async (path: string) => {
+        try {
+            const { data: webpData, error: webpError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
+            }
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
+            return url;
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log("Error downloading image: ", error.message);
+            }
         }
     };
 
@@ -342,6 +390,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         let allMobileImages =
             document.getElementsByClassName("mobileImageLink");
         let mainImage = document.getElementById("mobile-main-image");
+        let mainPicture = mainImage?.parentElement as HTMLPictureElement;
         let arrayIndex = Number(mobileCurrImageID.slice(-1));
 
         console.log(mobileCurrImage);
@@ -360,7 +409,12 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             mobileCurrImage?.classList.add("border-green-500");
         }
 
-        mainImage?.setAttribute("src", postImages()[arrayIndex]);
+        mainImage?.setAttribute("src", postImages()[arrayIndex].jpegUrl);
+
+        let sourceElement = mainPicture?.querySelector(
+            "source[type='image/webp']"
+        );
+        sourceElement?.setAttribute("srcset", postImages()[arrayIndex].webpUrl);
     }
 
     return (
@@ -440,17 +494,31 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         class="flex h-16 w-full items-center"
                     >
                         <div
-                            id="creator-img-div border"
+                            id="creator-img-div"
                             class="flex h-14 w-14 items-center justify-center rounded-full bg-gray-300"
                         >
                             <a href={`/${lang}/creator/${post()?.seller_id}`}>
-                                <svg
-                                    fill="none"
-                                    viewBox="0 0 32 32"
-                                    class="h-12 w-12 fill-icon1 dark:fill-icon1-DM"
-                                >
-                                    <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                </svg>
+                                {post()?.seller_img ? (
+                                    <picture>
+                                        <source
+                                            type="image/webp"
+                                            srcset={post()?.seller_img?.webpUrl}
+                                        />
+                                        <img
+                                            src={post()?.seller_img?.jpegUrl}
+                                            alt="Seller image"
+                                            class="h-14 w-14 rounded-full object-cover"
+                                        />
+                                    </picture>
+                                ) : (
+                                    <svg
+                                        fill="none"
+                                        viewBox="0 0 32 32"
+                                        class="h-14 w-14 fill-icon1 dark:fill-icon1-DM"
+                                    >
+                                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                    </svg>
+                                )}
                             </a>
                         </div>
 
@@ -571,12 +639,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         <Show when={postImages().length > 0}>
                             <Show when={postImages().length === 1}>
                                 <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
-                                    <img
-                                        src={postImages()[0]}
-                                        id="one-image"
-                                        class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
-                                        alt={`${t("postLabels.image")}`}
-                                    />
+                                    <picture>
+                                        <source
+                                            srcset={postImages()[0].webpUrl}
+                                            type="image/webp"
+                                        />
+                                        <img
+                                            src={postImages()[0].jpegUrl}
+                                            id="one-image"
+                                            class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
+                                            alt={`${t("postLabels.image")}`}
+                                        />
+                                    </picture>
                                     <div class="absolute right-6 top-2 col-span-1 flex justify-end">
                                         <div class="inline-block">
                                             <FavoriteButton
@@ -589,12 +663,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                             <Show when={postImages().length > 1}>
                                 <div class="relative mt-2 flex h-[375px] w-[375px] max-w-full items-center justify-center rounded p-1">
-                                    <img
-                                        src={postImages()[0]}
-                                        id="mobile-main-image"
-                                        class="max-h-[370px] max-w-full rounded dark:bg-background1"
-                                        alt={`${t("postLabels.image")}`}
-                                    />
+                                    <picture>
+                                        <source
+                                            srcset={postImages()[0].webpUrl}
+                                            type="image/webp"
+                                        />
+                                        <img
+                                            src={postImages()[0].jpegUrl}
+                                            id="mobile-main-image"
+                                            class="max-h-[370px] max-w-full rounded dark:bg-background1"
+                                            alt={`${t("postLabels.image")}`}
+                                        />
+                                    </picture>
                                     <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                         <div class="inline-block">
                                             <FavoriteButton
@@ -606,7 +686,13 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                                 <div class="mt-4 flex w-full justify-start">
                                     {postImages().map(
-                                        (image: string, index: number) => (
+                                        (
+                                            image: {
+                                                webpUrl: string;
+                                                jpegUrl: string;
+                                            },
+                                            index: number
+                                        ) => (
                                             <div class="flex h-16 w-1/5 items-center justify-center">
                                                 {index === 0 ? (
                                                     <div
@@ -617,11 +703,21 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                                             imageClick(e)
                                                         }
                                                     >
-                                                        <img
-                                                            src={image}
-                                                            class="mb-2 h-full w-full rounded object-cover"
-                                                            alt={`${t("postLabels.image")} ${index + 2}`}
-                                                        />
+                                                        <picture>
+                                                            <source
+                                                                srcset={
+                                                                    image.webpUrl
+                                                                }
+                                                                type="image/webp"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    image.jpegUrl
+                                                                }
+                                                                class="mb-2 h-full w-full rounded object-cover"
+                                                                alt={`${t("postLabels.image")} ${index + 2}`}
+                                                            />
+                                                        </picture>
                                                     </div>
                                                 ) : (
                                                     <div
@@ -632,11 +728,21 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                                             imageClick(e)
                                                         }
                                                     >
-                                                        <img
-                                                            src={image}
-                                                            class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
-                                                            alt={`${t("postLabels.image")} ${index + 2}`}
-                                                        />
+                                                        <picture>
+                                                            <source
+                                                                srcset={
+                                                                    image.webpUrl
+                                                                }
+                                                                type="image/webp"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    image.jpegUrl
+                                                                }
+                                                                class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
+                                                                alt={`${t("postLabels.image")} ${index + 2}`}
+                                                            />
+                                                        </picture>
                                                     </div>
                                                 )}
                                             </div>

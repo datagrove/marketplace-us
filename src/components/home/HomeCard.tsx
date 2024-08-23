@@ -27,12 +27,12 @@ export const HomeCard: Component<Props> = (props) => {
             console.log("props.posts");
             console.log(props.posts);
             const updatedPosts = await Promise.all(
-                props.posts.map(async (post: any) => {
+                props.posts.map(async (post: Post) => {
                     post.image_urls
                         ? (post.image_url = await downloadImage(
                               post.image_urls.split(",")[0]
                           ))
-                        : (post.image_url = null);
+                        : (post.image_url = undefined);
                     // Set the default quantity to 1
                     post.quantity = 1;
 
@@ -61,15 +61,26 @@ export const HomeCard: Component<Props> = (props) => {
         }
     });
 
+    //REFACTOR: make this a helper function for all components that need it
     const downloadImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("post.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -78,15 +89,26 @@ export const HomeCard: Component<Props> = (props) => {
         }
     };
 
+    //REFACTOR: make this a helper function for all components that need it
     const downloadCreatorImage = async (image_Url: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("user.image")
-                .download(image_Url);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${image_Url}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`jpeg/${image_Url}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -113,17 +135,24 @@ export const HomeCard: Component<Props> = (props) => {
                                         class="flex h-full w-full items-center justify-center"
                                     >
                                         {post.image_url ? (
-                                            <img
-                                                src={post.image_url}
-                                                alt={
-                                                    post.image_urls.split(
-                                                        ","
-                                                    )[0]
-                                                        ? "User Image"
-                                                        : "No Image"
-                                                }
-                                                class="max-h-full max-w-full rounded-lg"
-                                            />
+                                            <picture>
+                                                <source
+                                                    srcset={
+                                                        post.image_url.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={post.image_url.jpegUrl}
+                                                    alt={
+                                                        post.image_urls.split(
+                                                            ","
+                                                        )[0]
+                                                            ? `Post Image ${post.image_urls.split(",")[0]}.jpeg`
+                                                            : "No Image"
+                                                    }
+                                                    class="h-40 w-40 rounded-lg object-contain"
+                                                />
+                                            </picture>
                                         ) : (
                                             <svg
                                                 // width="100px"
@@ -159,18 +188,45 @@ export const HomeCard: Component<Props> = (props) => {
                                 class="row-span-3 grid grid-rows-3"
                             >
                                 <div class="row-span-2">
-                                    <a href={`/${lang}/posts/${post.id}`}>
+                                    <div
+                                        onclick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            window.location.href = `/${lang}/posts/${post.id}`;
+                                        }}
+                                    >
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
                                             {post.title}
                                         </p>
-                                    </a>
+                                    </div>
                                 </div>
 
-                                <a href={`/${lang}/creator/${post.user_id}`}>
+                                <div
+                                    onclick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        window.location.href = `/${lang}/creator/${post.seller_id}`;
+                                    }}
+                                >
                                     <div class="my-1 flex items-center">
                                         <div>
                                             {post.seller_img ? (
-                                                <img src={post.seller_img} class = {`w-[25px] h-[25px] rounded-full`} />
+                                                <picture>
+                                                    <source
+                                                        srcset={
+                                                            post.seller_img
+                                                                .webpUrl
+                                                        }
+                                                    />
+                                                    <img
+                                                        src={
+                                                            post.seller_img
+                                                                .jpegUrl
+                                                        }
+                                                        class={`h-[25px] w-[25px] rounded-full`}
+                                                        alt={`${post.seller_name} image`}
+                                                    />
+                                                </picture>
                                             ) : (
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +238,6 @@ export const HomeCard: Component<Props> = (props) => {
                                                     <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
                                                 </svg>
                                             )}
-                                            <img />
                                         </div>
                                         <div class="truncate">
                                             <p class="ml-1 truncate text-xs font-light text-link1 dark:text-link1-DM">
@@ -190,7 +245,7 @@ export const HomeCard: Component<Props> = (props) => {
                                             </p>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
 
                             <div

@@ -5,19 +5,20 @@ import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
+import type { PurchasedPost } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 interface Props {
     // Define the type for the filterPosts prop
-    posts: Array<any>;
+    posts: Array<PurchasedPost>;
 }
 
-const { data: User, error: UserError } = await supabase.auth.getSession();
-
 export const ViewPurchaseCard: Component<Props> = (props) => {
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
+    const [purchasedItems, setPurchasedItems] = createSignal<
+        Array<PurchasedPost>
+    >([]);
     const [review, setReview] = createSignal<string>("");
 
     console.log("Card Purchases");
@@ -26,7 +27,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
     createEffect(async () => {
         if (props.posts) {
             const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
+                props.posts.map(async (post: PurchasedPost) => {
                     post.image_urls
                         ? (post.image_url = await downloadImage(
                               post.image_urls.split(",")[0]
@@ -53,15 +54,26 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
         alert(t("messages.comingSoon"));
     };
 
+    //REFACTOR: Helper Function
     const downloadImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("post.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -78,15 +90,21 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                     <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">
                             {post.image_url ? (
-                                <img
-                                    src={post.image_url}
-                                    alt={
-                                        post.image_urls?.split(",")[0]
-                                            ? "User Image"
-                                            : "No image"
-                                    }
-                                    class="h-full w-full rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                />
+                                <picture>
+                                    <source
+                                        srcset={post.image_url.webpUrl}
+                                        type="image/webp"
+                                    />
+                                    <img
+                                        src={post.image_url.jpegUrl}
+                                        alt={
+                                            post.image_urls?.split(",")[0]
+                                                ? "User Image"
+                                                : "No image"
+                                        }
+                                        class="h-full w-full rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                    />
+                                </picture>
                             ) : (
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +119,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             )}
                         </div>
 
-                        <div
+                        {/* <div
                             id="user-profile-ratings-div"
                             class="purchased-item-stars flex w-full items-center justify-between"
                         >
@@ -140,7 +158,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             >
                                 ☆
                             </span>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div class="purchased-item-text-buttons ml-2 w-full">
@@ -153,7 +171,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     {post.seller_name}
                                 </p>
                             </a>
-                            <button
+                            {/* <button
                                 class="dark:btn1-DM mr-0.5 flex w-1/3 items-center justify-center rounded-full bg-btn1 text-ptext2 dark:text-ptext2-DM"
                                 onClick={follow}
                             >
@@ -194,7 +212,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                 <p class="mx-0.5 text-[10px]">
                                     {t("buttons.follow")}
                                 </p>
-                            </button>
+                            </button> */}
                         </div>
 
                         <div class="mb-2 mt-4">

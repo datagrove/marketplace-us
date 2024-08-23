@@ -20,10 +20,15 @@ export interface Post {
     subject: Array<string> | null; //Array of subject names
     grade: Array<string> | null; //Array of grade names
     resourceTypes: Array<string> | null; //Array of resourceTypes names
-    image_url: string | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
-    seller_img: string | undefined; //Profile Image of the seller
+    image_url: {webpUrl: string, jpegUrl: string} | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
+    seller_img: {webpUrl: string, jpegUrl: string} | undefined; //Profile Image of the seller
     price: number; //Price of the post
     quantity: number; //Quantity to add to cart from post
+}
+
+export interface PurchasedPost extends Post {
+    purchaseDate: string;
+    created_at: string;
 }
 
 export interface User {
