@@ -43,12 +43,23 @@ export const MobileViewCard: Component<Props> = (props) => {
                           ))
                         : (post.image_url = null);
 
-                    post.seller_img
-                        ? (post.seller_img = await downloadSellerImage(
-                              post.seller_img
-                          ))
-                        : null;
+                    const { data: sellerImg, error: sellerImgError } =
+                        await supabase
+                            .from("sellerview")
+                            .select("*")
+                            .eq("seller_id", post.seller_id);
 
+                    if (sellerImgError) {
+                        console.log(sellerImgError);
+                    }
+
+                    if (sellerImg) {
+                        if (sellerImg[0].image_url) {
+                            post.seller_img = await downloadCreatorImage(
+                                sellerImg[0].image_url
+                            );
+                        }
+                    }
                     // Set the default quantity to 1
                     post.quantity = 1;
 
@@ -94,13 +105,23 @@ export const MobileViewCard: Component<Props> = (props) => {
 
     const downloadImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("post.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -109,15 +130,25 @@ export const MobileViewCard: Component<Props> = (props) => {
         }
     };
 
-    const downloadSellerImage = async (path: string) => {
+    const downloadCreatorImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("user.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -170,24 +201,31 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class="border-2">
+        <div class="w-full">
             {newPosts().map((post: Post) => (
-                <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
+                <div class="mb-4 rounded-lg border border-border1 dark:border-border1-DM">
                     <a href={`/${lang}/posts/${post.id}`}>
                         <div class="photo-price flex h-48 w-full justify-between rounded-lg bg-background1 dark:bg-background1-DM">
                             <div class="relative flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                 {post.image_url ? (
                                     <div class="absolute top-0">
-                                        <img
-                                            src={post.image_url}
-                                            alt={
-                                                post.image_urls!.split(",")[0]
-                                                    ? "User Image"
-                                                    : "No image"
-                                            }
-                                            class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                        />
-
+                                        <picture>
+                                            <source
+                                                srcset={post.image_url.webpUrl}
+                                                type="image/webp"
+                                            />
+                                            <img
+                                                src={post.image_url.jpegUrl}
+                                                alt={
+                                                    post.image_urls!.split(
+                                                        ","
+                                                    )[0]
+                                                        ? "User Image"
+                                                        : "No image"
+                                                }
+                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                            />
+                                        </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                             <div class="inline-block">
                                                 <FavoriteButton id={post.id} />
@@ -300,15 +338,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                         <a href={`/${lang}/creator/${post?.seller_id}`}>
                             <div class="flex w-fit items-center py-1 pr-4">
                                 {post.seller_img ? (
-                                    <img
-                                        src={post.seller_img}
-                                        alt="Seller image"
-                                    />
+                                    <picture>
+                                        <source
+                                            srcset={post.seller_img.webpUrl}
+                                            type="image/webp"
+                                        />
+                                        <img
+                                            src={post.seller_img.jpegUrl}
+                                            alt="Seller image"
+                                            class="mr-1 h-8 w-8 rounded-full object-cover"
+                                        />
+                                    </picture>
                                 ) : (
                                     <svg
                                         width="24px"
                                         height="24px"
-                                        class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
+                                        class="mr-1 h-8 w-8 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
                                         viewBox="0 0 32 32"
                                     >
                                         <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />

@@ -632,6 +632,17 @@ export const CreateNewPost: Component = () => {
         }
     }
 
+    function removeImage(imageId: string) {
+        console.log(imageUrl());
+        const index = imageUrl().indexOf(imageId);
+        const imageArray = [...imageUrl()];
+        if (index > -1) {
+            imageArray.splice(index, 1);
+            setImageUrl(imageArray);
+            console.log(imageUrl());
+        }
+    }
+
     return (
         <div>
             <form onSubmit={submit}>
@@ -718,7 +729,9 @@ export const CreateNewPost: Component = () => {
                             size={96}
                             onUpload={(e: Event, url: string) => {
                                 setImageUrl([...imageUrl(), url]);
+                                console.log(imageUrl());
                             }}
+                            removeImage={(imageId) => removeImage(imageId)}
                         />
                     </div>
                 </div>

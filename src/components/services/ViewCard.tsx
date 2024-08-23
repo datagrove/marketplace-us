@@ -23,7 +23,7 @@ interface Props {
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
+    const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
@@ -39,8 +39,6 @@ export const ViewCard: Component<Props> = (props) => {
     }
 
     createEffect(async () => {
-        console.log("View Card Posts");
-        console.log(props.posts);
         if (props.posts) {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
@@ -50,13 +48,26 @@ export const ViewCard: Component<Props> = (props) => {
                           ))
                         : (post.image_url = undefined);
 
-                    post.seller_img
-                        ? (post.seller_img = await downloadSellerImage(
-                              post.seller_img
-                          ))
-                        : null;
                     // Set the default quantity to 1
                     post.quantity = 1;
+
+                    const { data: sellerImg, error: sellerImgError } =
+                        await supabase
+                            .from("sellerview")
+                            .select("*")
+                            .eq("seller_id", post.seller_id);
+
+                    if (sellerImgError) {
+                        console.log(sellerImgError);
+                    }
+
+                    if (sellerImg) {
+                        if (sellerImg[0].image_url) {
+                            post.seller_img = await downloadCreatorImage(
+                                sellerImg[0].image_url
+                            );
+                        }
+                    }
 
                     const { data: resourceTypeData, error } = await supabase
                         .from("resource_types")
@@ -97,15 +108,26 @@ export const ViewCard: Component<Props> = (props) => {
         setQuantity(1);
     };
 
+    //TODO Update to signed URLS
     const downloadImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("post.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -114,15 +136,25 @@ export const ViewCard: Component<Props> = (props) => {
         }
     };
 
-    const downloadSellerImage = async (path: string) => {
+    const downloadCreatorImage = async (path: string) => {
         try {
-            const { data, error } = await supabase.storage
+            const { data: webpData, error: webpError } = await supabase.storage
                 .from("user.image")
-                .download(path);
-            if (error) {
-                throw error;
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
+            if (webpError) {
+                throw webpError;
             }
-            const url = URL.createObjectURL(data);
+            const webpUrl = webpData.signedUrl;
+
+            const { data: jpegData, error: jpegError } = await supabase.storage
+                .from("user.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
+            if (jpegError) {
+                throw jpegError;
+            }
+            const jpegUrl = jpegData.signedUrl;
+
+            const url = { webpUrl, jpegUrl };
             return url;
         } catch (error) {
             if (error instanceof Error) {
@@ -141,17 +173,25 @@ export const ViewCard: Component<Props> = (props) => {
                                 <div class="relative mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
                                         <div class="absolute top-0">
-                                            <img
-                                                src={post.image_url}
-                                                alt={
-                                                    post.image_urls?.split(
-                                                        ","
-                                                    )[0]
-                                                        ? "User Image"
-                                                        : "No image"
-                                                }
-                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                            />
+                                            <picture>
+                                                <source
+                                                    type="image/webp"
+                                                    srcset={
+                                                        post.image_url.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={post.image_url.jpegUrl}
+                                                    alt={
+                                                        post.image_urls?.split(
+                                                            ","
+                                                        )[0]
+                                                            ? "User Image"
+                                                            : "No image"
+                                                    }
+                                                    class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                />
+                                            </picture>
 
                                             <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                                 <div class="inline-block">
@@ -196,8 +236,12 @@ export const ViewCard: Component<Props> = (props) => {
                                             <div class="flex items-center">
                                                 {post.seller_img ? (
                                                     <img
-                                                        src={post.seller_img}
+                                                        src={
+                                                            post.seller_img
+                                                                .jpegUrl
+                                                        }
                                                         alt="Seller image"
+                                                        class="mr-1 h-8 w-8 rounded-full"
                                                     />
                                                 ) : (
                                                     <svg
