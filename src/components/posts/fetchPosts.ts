@@ -35,6 +35,9 @@ export async function fetchFilteredPosts(
         if (secularFilter === true) {
           query = query.is("secular", true)
         }
+        if (resourceFilters.length !== 0) {
+            query = query.overlaps("resource_types", resourceFilters);
+        }
 
         try {
             // console.log(query);
