@@ -234,14 +234,23 @@ export const ViewCard: Component<Props> = (props) => {
 
                                             <div class="flex items-center">
                                                 {post.seller_img ? (
-                                                    <img
-                                                        src={
-                                                            post.seller_img
-                                                                .jpegUrl
-                                                        }
-                                                        alt="Seller image"
-                                                        class="mr-1 h-8 w-8 rounded-full"
-                                                    />
+                                                    <picture>
+                                                        <source
+                                                            srcset={
+                                                                post.seller_img
+                                                                    .webpUrl
+                                                            }
+                                                            type="image/webp"
+                                                        />
+                                                        <img
+                                                            src={
+                                                                post.seller_img
+                                                                    .jpegUrl
+                                                            }
+                                                            alt="Seller image"
+                                                            class="mr-1 h-8 w-8 rounded-full"
+                                                        />
+                                                    </picture>
                                                 ) : (
                                                     <svg
                                                         width="24px"
