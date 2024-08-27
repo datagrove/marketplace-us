@@ -10,84 +10,86 @@ const t = useTranslations(lang);
 
 // one giant filter function that includes the logic for all combinations
 export async function fetchFilteredPosts(
-    subjectFilters: Array<string>,
-    // subjectFilters: Array<string>,
-    gradeFilters: Array<string>,
-    searchString: string,
-    resourceFilters: Array<string>,
-    secularFilter: boolean
-) {
-    try {
-        let query = supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("listing_status", true);
-        if (subjectFilters.length !== 0) {
-            query = query.overlaps("product_subject", subjectFilters);
-        }
-        if (gradeFilters.length !== 0) {
-            query = query.overlaps("post_grade", gradeFilters);
-        }
-        if (searchString.length !== 0) {
-            query = query.textSearch("title_content", searchString);
-        }
-        if (secularFilter === true) {
-          query = query.is("secular", true)
-        }
+  subjectFilters: Array<string>,
+  // subjectFilters: Array<string>,
+  gradeFilters: Array<string>,
+  searchString: string,
+  resourceFilters: Array<string>,
+  secularFilter: boolean,
+  downHostedFilter: boolean
 
-        try {
-            // console.log(query);
-            const { data: posts, error } = await query;
-            if (error) {
-                console.log("supabase error: " + error.code + error.message);
-            } else {
-                const newItems = await Promise.all(
-                    posts?.map(async (item) => {
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-                        return item;
-                    })
-                );
-                return newItems;
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    } catch (e) {
-        console.error(e);
+) {
+  try {
+    let query = supabase
+      .from("sellerposts")
+      .select("*")
+      .order("id", { ascending: false })
+      .eq("listing_status", true);
+    if (subjectFilters.length !== 0) {
+      query = query.overlaps("product_subject", subjectFilters);
     }
+    if (gradeFilters.length !== 0) {
+      query = query.overlaps("post_grade", gradeFilters);
+    }
+    if (searchString.length !== 0) {
+      query = query.textSearch("title_content", searchString);
+    }
+    if (secularFilter === true) {
+      query = query.is("secular", true)
+    }
+
+    try {
+      // console.log(query);
+      const { data: posts, error } = await query;
+      if (error) {
+        console.log("supabase error: " + error.code + error.message);
+      } else {
+        const newItems = await Promise.all(
+          posts?.map(async (item) => {
+            if (item.price_id !== null) {
+              const priceData = await stripe.prices.retrieve(
+                item.price_id
+              );
+              item.price = priceData.unit_amount! / 100;
+            }
+            return item;
+          })
+        );
+        return newItems;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export async function fetchAllPosts() {
-    try {
-        const { data: allPosts, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("listing_status", true);
+  try {
+    const { data: allPosts, error } = await supabase
+      .from("sellerposts")
+      .select("*")
+      .order("id", { ascending: false })
+      .eq("listing_status", true);
 
-        if (error) {
-            console.log("supabase error: " + error.message);
-        } else {
-            const newItems = await Promise.all(
-                allPosts?.map(async (item) => {
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
+    if (error) {
+      console.log("supabase error: " + error.message);
+    } else {
+      const newItems = await Promise.all(
+        allPosts?.map(async (item) => {
+          if (item.price_id !== null) {
+            const priceData = await stripe.prices.retrieve(
+              item.price_id
             );
-            return newItems;
-        }
-    } catch (e) {
-        console.error(e);
+            item.price = priceData.unit_amount! / 100;
+          }
+          return item;
+        })
+      );
+      return newItems;
     }
+  } catch (e) {
+    console.error(e);
+  }
 }
