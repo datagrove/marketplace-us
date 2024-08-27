@@ -259,6 +259,7 @@ export const Spanish = {
     more: "más",
     secular: "Laico",
     downHosted: "Hosteado",
+    downloadable: "Descargable",
     resourceLinks: "Enlaces de Recurso",
   },
 
