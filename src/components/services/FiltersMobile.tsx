@@ -97,7 +97,7 @@ interface Props {
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
-    downHostedFilter: (downHosted: boolean) => void;
+    downHostedFilter: (downHosted: number) => void;
     clearDownHosted: () => void;
 }
 
@@ -128,7 +128,9 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
     const [secularInNumber, setSecularInNumber] = createSignal<number>(0);
     const [showDownHosted, setShowDownHosted] = createSignal<boolean>(false);
-    const [selectedDownHosted, setSelectedDownHosted] = createSignal<boolean>(false);
+    // 1 = searchForHostedResoruce, 2 = searchForDown
+    const [selectedDownHosted, setSelectedDownHosted] = createSignal<number> (0);
+    const [selectedDownHostedCheck, setSelectedDownHostedCheck] = createSignal<boolean> (false);
 
     const screenSize = useStore(windowSize);
 
@@ -273,7 +275,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         setResourceTypesFilterCount(0)
         setShowFilterNumber(false);
         setSelectedSecular(false);
-        setSelectedDownHosted(false);
+        setSelectedDownHosted(0);
     };
 
     const clearSubjectFiltersMobile = () => {
@@ -310,8 +312,8 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
     const clearDownHostedFilterMobile = () => {
-      setSelectedDownHosted(false);
-      props.downHostedFilter(selectedDownHosted());
+      setSelectedDownHosted(0);
+      props.downHostedFilter(selectedDownHosted()!);
     };
 
     const gradeCheckboxClick = (e: Event) => {
@@ -346,9 +348,48 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
   const downHostedCheckboxClick = (e: Event) => {
-    if ((e.target as HTMLInputElement)?.checked !== null) {
-      setSelectedDownHosted((e.target as HTMLInputElement)?.checked);
-      props.downHostedFilter(selectedDownHosted());
+     
+    const isCheck = document.getElementsByClassName("checkBoxDown") as HTMLCollectionOf<HTMLInputElement>;
+    console.log(isCheck[0].checked)
+    if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === false ) {
+      setSelectedDownHosted(1)
+      console.log("first downhosted")
+    props.downHostedFilter(selectedDownHosted()!);
+    }else if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === false ){
+      console.log("first unchecked")
+      setSelectedDownHosted(0)
+    props.downHostedFilter(selectedDownHosted()!);
+    }else if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === true){
+      console.log("first unchecked but second checked")
+      setSelectedDownHosted(2)
+      props.downHostedFilter(selectedDownHosted()!);
+    }else if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === true) {
+      console.log("first 4")
+      setSelectedDownHosted(0)
+      props.downHostedFilter(selectedDownHosted()!);
+    }
+  };
+
+
+  const downCheckboxClick = (e: Event) => {
+    const isCheck = document.getElementsByClassName("checkBoxHosted") as HTMLCollectionOf<HTMLInputElement>;
+    console.log(isCheck[0].checked)
+    if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === false ){
+      setSelectedDownHosted(2)
+      console.log("second down")
+    console.log(selectedDownHosted())
+      props.downHostedFilter(selectedDownHosted()!);
+    }if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === false ){
+      console.log("second unchecked")
+      setSelectedDownHosted(0)
+      props.downHostedFilter(selectedDownHosted()!);
+    }if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === true){
+      console.log("second unchecked but first checked")
+      setSelectedDownHosted(1)
+      props.downHostedFilter(selectedDownHosted()!);
+    }if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === true) {
+      setSelectedDownHosted(0)
+      props.downHostedFilter(selectedDownHosted()!);
     }
   };
 
@@ -950,10 +991,28 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <div>
                           <input
                             type="checkbox"
-                            class={`mr-2 leading-tight`}
-                            checked={selectedDownHosted()}
+                            class={`mr-2 leading-tight checkBoxHosted`}
+                            checked={selectedDownHostedCheck()!}
                             onClick={(e) => {
                               downHostedCheckboxClick(e);
+                            }}
+                          />
+                        </div>
+                      </div>
+                      <div class="flex flex-row pl-2">
+                        <div class="flex flex-wrap justify-between">
+                          <div class="w-4/5 px-2 ">
+                            {/* {t("formLabels.downHosted")} */}
+                            Downloadable
+                          </div>
+                        </div>
+                        <div>
+                          <input
+                            type="checkbox"
+                            class={`mr-2 leading-tight checkBoxDown`}
+                            checked={selectedDownHostedCheck()!}
+                            onClick={(e) => {
+                              downCheckboxClick(e);
                             }}
                           />
                         </div>
