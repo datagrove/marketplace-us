@@ -435,7 +435,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             >
               <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
                 <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                  {t("formLabels.secular")}
+                  {t("formLabels.downHosted")}
                 </h2>
 
                 <svg
@@ -632,7 +632,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                   <path stroke-linecap="round" d="M3 12h1" />
                 </svg>
                 <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
-                  {t("formLabels.secular")}
+                  {t("formLabels.downHosted")}
                 </h2>
               </div>
             </button>
@@ -641,7 +641,7 @@ export const FiltersMobile: Component<Props> = (props) => {
               <div class="flex flex-row pl-2">
                 <div class="flex flex-wrap justify-between">
                   <div class="w-4/5 px-2 ">
-                    {t("formLabels.secular")}
+                    {t("formLabels.downHosted")}
                   </div>
                 </div>
                 <div>
@@ -663,7 +663,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                 onClick={clearDownHostedFilterMobile}
               // onClick={clearSubjectFiltersMobile}
               >
-                {t("clearFilters.filterButtons.6.text")}
+                {t("clearFilters.filterButtons.7.text")}
               </button>
             </div>
           </div>
