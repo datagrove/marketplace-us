@@ -475,7 +475,7 @@ export const ResourcesView: Component = () => {
                     clearSecular={clearSecular}
                     filterPostsByResourceTypes={filterPostsByResourceTypes}
                     clearResourceTypes={clearResourceTypes}
-                    downHostedFilter={downHostedFilter}
+                    downHostedFilter={filterPostsByDownHosted}
                     clearDownHosted={clearDownHosted}
                 />
             </Show>
@@ -500,7 +500,7 @@ export const ResourcesView: Component = () => {
                         clearSecular={clearSecular}
                         clearResourceTypes={clearResourceTypes}
                         filterPostsByResourceTypes={filterPostsByResourceTypes}
-                        downHostedFilter={downHostedFilter}
+                        downHostedFilter={filterPostsByDownHosted}
                         clearDownHosted={clearDownHosted}
                     />
                     {/* <div class="sticky top-0 w-3/12">

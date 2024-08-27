@@ -965,7 +965,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         onClick={clearDownHostedFilterMobile}
                       // onClick={clearSubjectFiltersMobile}
                       >
-                        {t("clearFilters.filterButtons.7.text")}
+                        {t("clearFilters.filterButtons.8.text")}
                       </button>
                         </div>
                   </div>
