@@ -131,7 +131,10 @@ export const FiltersMobile: Component<Props> = (props) => {
     // 1 = searchForHostedResoruce, 2 = searchForDown
     const [selectedDownHosted, setSelectedDownHosted] = createSignal<number> (0);
     const [selectedDownHostedCheck, setSelectedDownHostedCheck] = createSignal<boolean> (false);
+      const [selectedHostedCheck,setSelectedHostedCheck]= createSignal<boolean>(false)
+      const [selectedDownCheck,setSelectedDownCheck] = createSignal<boolean>(false)
 
+    const [downHostedInNumber, setDownHostedInNumber] = createSignal<number>(0);
     const screenSize = useStore(windowSize);
 
     onMount(() => {
@@ -319,6 +322,7 @@ export const FiltersMobile: Component<Props> = (props) => {
       isCheckDown[0].checked = false
       setSelectedDownHostedCheck(false)
       props.downHostedFilter(selectedDownHosted()!);
+      setDownHostedInNumber(0)
     };
 
     const gradeCheckboxClick = (e: Event) => {
@@ -359,19 +363,31 @@ export const FiltersMobile: Component<Props> = (props) => {
     if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === false ) {
       setSelectedDownHosted(1)
       console.log("first downhosted")
+        setDownHostedInNumber(1)
     props.downHostedFilter(selectedDownHosted()!);
+      setSelectedHostedCheck(true)
+      setSelectedDownCheck(false)
     }else if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === false ){
       console.log("first unchecked")
       setSelectedDownHosted(0)
     props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(0)
+      setSelectedHostedCheck(false)
+      setSelectedDownCheck(false)
     }else if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === true){
       console.log("first unchecked but second checked")
       setSelectedDownHosted(2)
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(1)
+      setSelectedHostedCheck(false)
+      setSelectedDownCheck(true)
     }else if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === true) {
       console.log("first 4")
-      setSelectedDownHosted(0)
+      setSelectedDownHosted(3)
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(2)
+      setSelectedHostedCheck(true)
+      setSelectedDownCheck(true)
     }
   };
 
@@ -384,17 +400,30 @@ export const FiltersMobile: Component<Props> = (props) => {
       console.log("second down")
     console.log(selectedDownHosted())
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(1)
+      setSelectedHostedCheck(false)
+      setSelectedDownCheck(true)
     }if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === false ){
       console.log("second unchecked")
       setSelectedDownHosted(0)
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(0)
+      setSelectedHostedCheck(false)
+      setSelectedDownCheck(false)
     }if((e.target as HTMLInputElement)?.checked === false && isCheck[0].checked === true){
       console.log("second unchecked but first checked")
       setSelectedDownHosted(1)
+      setSelectedHostedCheck(true)
+      setSelectedDownCheck(false)
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(1)
     }if((e.target as HTMLInputElement)?.checked === true && isCheck[0].checked === true) {
-      setSelectedDownHosted(0)
+      setSelectedDownHosted(3)
       props.downHostedFilter(selectedDownHosted()!);
+        setDownHostedInNumber(2)
+      console.log(downHostedInNumber(),)
+      setSelectedHostedCheck(true)
+      setSelectedDownCheck(true)
     }
   };
 
@@ -462,7 +491,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         <Show when={showFilterNumber() === true}>
                             <div class="-ml-1 flex h-5 w-5 items-center justify-center self-start rounded-full bg-btn1 dark:bg-btn1-DM">
                                 <p class="text-[10px] text-ptext2 dark:text-ptext1">
-                                    {gradeFilterCount() + subjectFilterCount() + resourceTypesFilterCount() + secularInNumber() }
+                                    {gradeFilterCount() + subjectFilterCount() + resourceTypesFilterCount() + secularInNumber() + downHostedInNumber() }
                                 </p>
                             </div>
                         </Show>
@@ -675,6 +704,13 @@ export const FiltersMobile: Component<Props> = (props) => {
                               {t("formLabels.downHosted")}
                             </h2>
 
+                                <Show when={downHostedInNumber() > 0 && selectedDownHosted() > 0 }>
+                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                            {downHostedInNumber()}
+                                        </p>
+                                    </div>
+                                </Show>
                             <svg
                               width="30px"
                               height="30px"
@@ -997,7 +1033,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                           <input
                             type="checkbox"
                             class={`mr-2 leading-tight checkBoxHosted`}
-                            checked={selectedDownHostedCheck()}
+                            checked={selectedHostedCheck()}
                             onClick={(e) => {
                               downHostedCheckboxClick(e);
                             }}
@@ -1014,7 +1050,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                           <input
                             type="checkbox"
                             class={`mr-2 leading-tight checkBoxDown`}
-                            checked={selectedDownHostedCheck()}
+                            checked={selectedDownCheck()}
                             onClick={(e) => {
                               downCheckboxClick(e);
                             }}
