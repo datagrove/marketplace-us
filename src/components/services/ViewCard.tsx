@@ -230,35 +230,49 @@ export const ViewCard: Component<Props> = (props) => {
                                     class="flex min-h-48 w-5/6 flex-col place-content-between px-1 pt-1 text-left"
                                 >
                                     <div class="flex h-full min-h-48 flex-col place-content-between">
-                                        <div class="flex flex-col">
-                                            <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
-                                                {post.title}
-                                            </p>
-
-                                            <div class="flex items-center">
-                                                {post.seller_img ? (
-                                                    <img
-                                                        src={
-                                                            post.seller_img
-                                                                .jpegUrl
-                                                        }
-                                                        alt="Seller image"
-                                                        class="mr-1 h-8 w-8 rounded-full"
-                                                    />
-                                                ) : (
-                                                    <svg
-                                                        width="24px"
-                                                        height="24px"
-                                                        class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
-                                                        viewBox="0 0 32 32"
-                                                    >
-                                                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                                    </svg>
-                                                )}
-                                                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM md:text-base">
-                                                    {post.seller_name}
+                                        <div class="flex flex-row justify-between">
+                                            <div class="flex w-full flex-col border border-red-500">
+                                                <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    {post.title}
                                                 </p>
+
+                                                <div class="flex items-center">
+                                                    {post.seller_img ? (
+                                                        <img
+                                                            src={
+                                                                post.seller_img
+                                                                    .jpegUrl
+                                                            }
+                                                            alt="Seller image"
+                                                            class="mr-1 h-8 w-8 rounded-full"
+                                                        />
+                                                    ) : (
+                                                        <svg
+                                                            width="24px"
+                                                            height="24px"
+                                                            class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
+                                                            viewBox="0 0 32 32"
+                                                        >
+                                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                                        </svg>
+                                                    )}
+                                                    <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM md:text-base">
+                                                        {post.seller_name}
+                                                    </p>
+                                                </div>
                                             </div>
+                                            <Show when={post.draft_status}>
+                                                <div class="w-1/4 border border-green-500">
+                                                    <Show
+                                                        when={post.draft_status}
+                                                    >
+                                                        <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                                            {/* TODO: Internationalize */}
+                                                            Draft
+                                                        </div>
+                                                    </Show>
+                                                </div>
+                                            </Show>
                                         </div>
 
                                         <div class="my-1 flex">
@@ -359,7 +373,7 @@ export const ViewCard: Component<Props> = (props) => {
                                     </div>
                                 </div>
 
-                                <div class="mt-2 flex h-full min-h-48 w-1/5 min-w-[88px] flex-col justify-start pr-1">
+                                <div class="mt-2 flex h-full min-h-48 w-1/6 min-w-[88px] flex-col justify-start pr-1">
                                     <div class="price-reviews-div inline-block w-full text-end">
                                         <Show when={post.price > 0}>
                                             <p class="text-lg font-bold">
