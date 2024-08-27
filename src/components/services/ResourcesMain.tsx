@@ -47,6 +47,7 @@ export const ResourcesView: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
+    const [downHostedFilter, setDownHostedFilter] = createSignal<boolean>(false);
 
     const screenSize = useStore(windowSize);
 
@@ -128,6 +129,7 @@ export const ResourcesView: Component = () => {
             searchString(),
             resourceTypesFilters(),
             secularFilters(),
+            downHostedFilter(),
         );
 
         if (res === null || res === undefined) {
@@ -313,6 +315,11 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
+    const filterPostsByDownHosted = (downHosted: boolean) => {
+      setDownHostedFilter(downHosted);
+      filterPosts();
+    };
+
     const clearAllFilters = () => {
         let searchInput = document.getElementById("search") as HTMLInputElement;
         const subjectCheckboxes = document.querySelectorAll(
@@ -363,6 +370,7 @@ export const ResourcesView: Component = () => {
         setGradeFilters([]);
         setResourceTypeFilters([])
         setSecularFilters(false);
+        setDownHostedFilter(false);
 
         filterPosts();
     };
@@ -434,6 +442,21 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
+    const clearDownHosted = () => {
+      const downHostedCheckbox = document.getElementById(
+        "downHostedCheck"
+      ) as HTMLInputElement;
+
+      console.log(downHostedCheckbox);
+
+      if (downHostedCheckbox && downHostedCheckbox.checked) {
+        downHostedCheckbox.checked = false;
+      }
+
+      setDownHostedFilter(false);
+      filterPosts();
+    };
+
     return (
         <div class="">
             <div>
@@ -451,7 +474,9 @@ export const ResourcesView: Component = () => {
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
                     filterPostsByResourceTypes={filterPostsByResourceTypes}
-                    clearResurceTypes={clearResourceTypes}
+                    clearResourceTypes={clearResourceTypes}
+                    downHostedFilter={downHostedFilter}
+                    clearDownHosted={clearDownHosted}
                 />
             </Show>
 
@@ -475,6 +500,8 @@ export const ResourcesView: Component = () => {
                         clearSecular={clearSecular}
                         clearResourceTypes={clearResourceTypes}
                         filterPostsByResourceTypes={filterPostsByResourceTypes}
+                        downHostedFilter={downHostedFilter}
+                        clearDownHosted={clearDownHosted}
                     />
                     {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">

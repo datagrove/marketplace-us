@@ -258,6 +258,7 @@ export const Spanish = {
     no: "No",
     more: "más",
     secular: "Laico",
+    downHosted: "Hosteado",
     resourceLinks: "Enlaces de Recurso",
   },
 
@@ -585,6 +586,7 @@ export const Spanish = {
       { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
       { text: "Limpiar Laico", ariaLabel: "Limpiar Laico" },
       { text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
+      { text: "Limpiar Tipo de Hosteado", ariaLabel: "Limpiar Tipo de Hosteado" },
     ],
   },
 

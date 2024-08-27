@@ -97,6 +97,8 @@ interface Props {
     clearAllFilters: () => void;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
+    downHostedFilter: (downHosted: boolean) => void;
+    clearDownHosted: () => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
@@ -125,6 +127,8 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [showSecular, setShowSecular] = createSignal<boolean>(false);
     const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
     const [secularInNumber, setSecularInNumber] = createSignal<number>(0);
+    const [showDownHosted, setShowDownHosted] = createSignal<boolean>(false);
+    const [selectedDownHosted, setSelectedDownHosted] = createSignal<boolean>(false);
 
     const screenSize = useStore(windowSize);
 
@@ -269,6 +273,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         setResourceTypesFilterCount(0)
         setShowFilterNumber(false);
         setSelectedSecular(false);
+        setSelectedDownHosted(false);
     };
 
     const clearSubjectFiltersMobile = () => {
@@ -304,6 +309,11 @@ export const FiltersMobile: Component<Props> = (props) => {
         setResourceTypesFilters([]);
     };
 
+    const clearDownHostedFilterMobile = () => {
+      setSelectedDownHosted(false);
+      props.downHostedFilter(selectedDownHosted());
+    };
+
     const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = currCheckbox.id;
@@ -333,8 +343,14 @@ export const FiltersMobile: Component<Props> = (props) => {
         if (selectedSecular() === true){
         setSecularInNumber(1)
     }
-        
     };
+
+  const downHostedCheckboxClick = (e: Event) => {
+    if ((e.target as HTMLInputElement)?.checked !== null) {
+      setSelectedDownHosted((e.target as HTMLInputElement)?.checked);
+      props.downHostedFilter(selectedDownHosted());
+    }
+  };
 
     function setSubjectFilter(id: string) {
         if (selectedSubjects().includes(id)) {
@@ -370,12 +386,15 @@ export const FiltersMobile: Component<Props> = (props) => {
                             showGrades() === true ||
                             showSubjects() === true ||
                             showSecular() === true ||
-                            showResourceTypes() === true 
+                            showResourceTypes() === true ||
+                            showDownHosted() === true
                         ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
                             setShowResourceTypes(false)
+                            setShowSecular(false);
+                            setShowDownHosted(false);
                         } else if (showFilters() === true) {
                             setShowFilters(false);
                         } else {
@@ -595,6 +614,42 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     />
                                 </svg>
                             </div>
+                        </button>
+        
+                        {/* downHostedFilter Outside */}
+                        <button
+                          class="w-full"
+                          onClick={() => {
+                            setShowFilters(false);
+                            setShowDownHosted(!showDownHosted());
+                          }}
+                        >
+                          <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                            <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                              {t("formLabels.downHosted")}
+                            </h2>
+
+                            <svg
+                              width="30px"
+                              height="30px"
+                              viewBox="0 0 24 24"
+                              role="img"
+                              aria-labelledby="arrowRightIconTitle"
+                              stroke="none"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              fill="none"
+                              color="#000000"
+                              class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                            >
+                              <path d="M15 18l6-6-6-6" />
+                              <path
+                                stroke-linecap="round"
+                                d="M21 12h-1"
+                              />
+                            </svg>
+                          </div>
                         </button>
 
                         <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
@@ -846,6 +901,74 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </button>
                         </div>
                     </div>
+                </Show>
+
+
+                {/* downHostedFilter */}
+                <Show when={showDownHosted() === true}>
+                  <div class="subjects-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <button
+                      class="w-full"
+                      onClick={() => {
+                        if (showFilters() === false) {
+                          setShowDownHosted(false);
+                          setShowFilters(true);
+                        }
+                      }}
+                    >
+                      <div class="flex items-center border-b border-border1 pb-1 pl-2 dark:border-border1-DM">
+                        <svg
+                          width="30px"
+                          height="30px"
+                          viewBox="0 0 24 24"
+                          role="img"
+                          aria-labelledby="arrowLeftIconTitle"
+                          stroke="none"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          fill="none"
+                          color="#000000"
+                          class="stroke-icon1 dark:stroke-icon1-DM"
+                        >
+                          <path d="M9 6l-6 6 6 6" />
+                          <path stroke-linecap="round" d="M3 12h1" />
+                        </svg>
+                        <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                          {t("formLabels.downHosted")}
+                        </h2>
+                      </div>
+                    </button>
+
+                    <div>
+                      <div class="flex flex-row pl-2">
+                        <div class="flex flex-wrap justify-between">
+                          <div class="w-4/5 px-2 ">
+                            {t("formLabels.downHosted")}
+                          </div>
+                        </div>
+                        <div>
+                          <input
+                            type="checkbox"
+                            class={`mr-2 leading-tight`}
+                            checked={selectedDownHosted()}
+                            onClick={(e) => {
+                              downHostedCheckboxClick(e);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-2">
+                      <button
+                        class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                        onClick={clearDownHostedFilterMobile}
+                      // onClick={clearSubjectFiltersMobile}
+                      >
+                        {t("clearFilters.filterButtons.7.text")}
+                      </button>
+                        </div>
+                  </div>
                 </Show>
 
                 <Show when={showSubjects() === true}>

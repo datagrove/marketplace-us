@@ -15,7 +15,8 @@ export async function fetchFilteredPosts(
     gradeFilters: Array<string>,
     searchString: string,
     resourceFilters: Array<string>,
-    secularFilter: boolean
+    secularFilter: boolean,
+    downHostedFilter: boolean
 ) {
     try {
         let query = supabase
@@ -38,9 +39,12 @@ export async function fetchFilteredPosts(
         if (resourceFilters.length !== 0) {
             query = query.overlaps("resource_types", resourceFilters);
         }
+        if (downHostedFilter === true) {
+          query = query.not("resource_urls", "is", null)
+        }
 
         try {
-            // console.log(query);
+            console.log(query);
             const { data: posts, error } = await query;
             if (error) {
                 console.log("supabase error: " + error.code + error.message);

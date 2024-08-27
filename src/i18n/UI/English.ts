@@ -254,6 +254,7 @@ export const English = {
     no: "No",
     more: "more",
     secular: "Secular",
+    downHosted: "Hosted",
     resourceLinks: "Resource Links",
   },
 
@@ -586,6 +587,7 @@ export const English = {
       { text: "View Results", ariaLabel: "View Results" },
       { text: "Clear Secular", ariaLabel: "Clear Secular" },
       { text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
+      { text: "Clear Hosted", ariaLabel: "Clear Hosted" },
     ],
   },
 
