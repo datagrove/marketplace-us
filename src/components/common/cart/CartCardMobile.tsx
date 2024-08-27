@@ -5,6 +5,12 @@ import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { Quantity } from "@components/common/cart/Quantity";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
+import {
+    downloadPostImage,
+    downloadUserImage,
+    lazyLoadImage,
+} from "@lib/imageHelper";
+import userPlaceHolder from "@src/assets/userImagePlaceholder.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -25,7 +31,7 @@ export const CartCardMobile: Component<Props> = (props) => {
                 props.items.map(async (item: Post) => {
                     const newItem = { ...item };
                     newItem.image_urls
-                        ? (newItem.image_url = await downloadImage(
+                        ? (newItem.image_url = await downloadPostImage(
                               newItem.image_urls.split(",")[0]
                           ))
                         : (newItem.image_url = undefined);
@@ -42,7 +48,7 @@ export const CartCardMobile: Component<Props> = (props) => {
 
                     if (sellerImg) {
                         if (sellerImg[0].image_url) {
-                            newItem.seller_img = await downloadCreatorImage(
+                            newItem.seller_img = await downloadUserImage(
                                 sellerImg[0].image_url
                             );
                         }
@@ -100,62 +106,6 @@ export const CartCardMobile: Component<Props> = (props) => {
         props.deleteItem();
     };
 
-    //REFACTOR Helper Functions
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    //REFACTOR Helper Functions
-    const downloadCreatorImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap">
@@ -166,17 +116,24 @@ export const CartCardMobile: Component<Props> = (props) => {
                                 {item.image_url ? (
                                     <picture>
                                         <source
-                                            srcset={item.image_url.webpUrl}
+                                            data-srcset={item.image_url.webpUrl}
                                             type="image/webp"
                                         />
                                         <img
-                                            src={item.image_url.jpegUrl}
+                                            src={userPlaceHolder.src}
+                                            data-src={item.image_url.jpegUrl}
                                             alt={
                                                 item.image_urls?.split(",")[0]
                                                     ? "User Image"
                                                     : "No image"
                                             }
                                             class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            loading="lazy"
+                                            onload={(e) => {
+                                                lazyLoadImage(
+                                                    e.currentTarget as HTMLImageElement
+                                                );
+                                            }}
                                         />
                                     </picture>
                                 ) : (
@@ -223,7 +180,7 @@ export const CartCardMobile: Component<Props> = (props) => {
                                             {item.seller_img ? (
                                                 <picture>
                                                     <source
-                                                        srcset={
+                                                        data-srcset={
                                                             item.seller_img
                                                                 .webpUrl
                                                         }
@@ -231,6 +188,9 @@ export const CartCardMobile: Component<Props> = (props) => {
                                                     />
                                                     <img
                                                         src={
+                                                            userPlaceHolder.src
+                                                        }
+                                                        data-src={
                                                             item.seller_img
                                                                 .jpegUrl
                                                         }
@@ -240,7 +200,13 @@ export const CartCardMobile: Component<Props> = (props) => {
                                                                   "Seller Image"
                                                                 : "No image"
                                                         }
-                                                        class="mr-2 h-6 w-6 rounded-full bg-background1 object-cover dark:bg-icon1-DM"
+                                                        class="mr-2 h-8 w-8 rounded-full bg-background1 object-cover dark:bg-icon1-DM"
+                                                        loading="lazy"
+                                                        onload={(e) => {
+                                                            lazyLoadImage(
+                                                                e.currentTarget as HTMLImageElement
+                                                            );
+                                                        }}
                                                     />
                                                 </picture>
                                             ) : (

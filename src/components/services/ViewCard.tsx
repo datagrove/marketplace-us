@@ -11,6 +11,12 @@ import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn";
 import { FavoriteButton } from "@components/posts/AddFavorite";
+import {
+    downloadPostImage,
+    downloadUserImage,
+    lazyLoadImage,
+} from "@lib/imageHelper";
+import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -43,7 +49,7 @@ export const ViewCard: Component<Props> = (props) => {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
                     post.image_urls
-                        ? (post.image_url = await downloadImage(
+                        ? (post.image_url = await downloadPostImage(
                               post.image_urls.split(",")[0]
                           ))
                         : (post.image_url = undefined);
@@ -63,7 +69,7 @@ export const ViewCard: Component<Props> = (props) => {
 
                     if (sellerImg) {
                         if (sellerImg[0].image_url) {
-                            post.seller_img = await downloadCreatorImage(
+                            post.seller_img = await downloadUserImage(
                                 sellerImg[0].image_url
                             );
                         }
@@ -108,60 +114,6 @@ export const ViewCard: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    const downloadCreatorImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
@@ -175,12 +127,15 @@ export const ViewCard: Component<Props> = (props) => {
                                             <picture>
                                                 <source
                                                     type="image/webp"
-                                                    srcset={
+                                                    data-srcset={
                                                         post.image_url.webpUrl
                                                     }
                                                 />
                                                 <img
-                                                    src={post.image_url.jpegUrl}
+                                                    src={postPlaceHolder.src}
+                                                    data-src={
+                                                        post.image_url.jpegUrl
+                                                    }
                                                     alt={
                                                         post.image_urls?.split(
                                                             ","
@@ -189,6 +144,12 @@ export const ViewCard: Component<Props> = (props) => {
                                                             : "No image"
                                                     }
                                                     class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                    loading="lazy"
+                                                    onload={(e) => {
+                                                        lazyLoadImage(
+                                                            e.currentTarget as HTMLImageElement
+                                                        );
+                                                    }}
                                                 />
                                             </picture>
 
@@ -323,45 +284,6 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* <div class="details-div grid h-1/3 grid-cols-[85px_1fr] grid-rows-4">
-                                            <div class="text-[10px]">
-                                                <h6>
-                                                    {t("formLabels.subjects")}:{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t("formLabels.grades")}:{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t(
-                                                        "formLabels.resourceTypes"
-                                                    )}
-                                                    :{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t("formLabels.standards")}:{" "}
-                                                </h6>
-                                            </div>
-
-                                            <div class="text-[10px]">
-                                                <p class="truncate">
-                                                    {Array.from(
-                                                        post.subject!
-                                                    ).join(", ")}
-                                                </p>
-                                                <p class="truncate">
-                                                    {post.grade!.join(", ")}
-                                                </p>
-                                                <p class="truncate">
-                                                    {post.resourceTypes!.join(
-                                                        ", "
-                                                    )}
-                                                </p>
-                                                <p class="truncate">
-                                                    1NBT.C.4, K.OA.A.2
-                                                </p>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </div>
 
@@ -378,124 +300,10 @@ export const ViewCard: Component<Props> = (props) => {
                                                 {t("messages.free")}
                                             </p>
                                         </Show>
-                                        <div class="reviews-div flex w-full items-center justify-end text-end">
-                                            {/* <svg
-                                                width="12px"
-                                                height="12px"
-                                                viewBox="0 0 32 32"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <script />
-                                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                                                <script />
-                                            </svg>
-
-                                            <p class="ml-1 text-xs">
-                                                4.9 (30.3K)
-                                            </p> */}
-                                        </div>
+                                        <div class="reviews-div flex w-full items-center justify-end text-end"></div>
                                     </div>
 
-                                    <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start">
-                                        {/* <div class="flex w-full items-start justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                File Type 1
-                                            </p>
-                                        </div> */}
-
-                                        {/* <div class="flex w-full items-center justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                Short
-                                            </p>
-                                        </div> */}
-
-                                        {/* <div class="flex w-full items-center justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                Longer File Type
-                                            </p>
-                                        </div> */}
-                                    </div>
+                                    <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start"></div>
 
                                     <div class="mb-1 flex w-full flex-col text-end">
                                         <Show

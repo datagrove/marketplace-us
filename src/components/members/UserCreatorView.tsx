@@ -7,6 +7,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { Creator } from "@lib/types";
+import { downloadUserImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -123,34 +124,15 @@ export const UserCreatorView: Component<Props> = (props) => {
                 console.log("No Image");
                 console.log(creatorImage());
             } else {
-                await downloadImage(creator()?.image_url!);
+                const imageUrls = await downloadUserImage(
+                    creator()?.image_url!
+                );
+                if (imageUrls) {
+                    setCreatorImage(imageUrls);
+                }
             }
         }
     });
-
-    const downloadImage = async (image_Url: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${image_Url}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${image_Url}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            setCreatorImage({ webpUrl, jpegUrl });
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     function creatorViewTabClick(e: Event) {
         e.preventDefault();

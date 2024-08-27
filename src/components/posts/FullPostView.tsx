@@ -12,6 +12,7 @@ import { Quantity } from "@components/common/cart/Quantity";
 import { EditPost } from "./EditPost";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
+import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
 
 import stripe from "@lib/stripe";
 import { ReportResource } from "./ReportResource";
@@ -107,7 +108,7 @@ export const ViewFullPost: Component<Props> = (props) => {
 
                         if (sellerImg) {
                             if (sellerImg[0].image_url) {
-                                item.seller_img = await downloadCreatorImage(
+                                item.seller_img = await downloadUserImage(
                                     sellerImg[0].image_url
                                 );
                             }
@@ -185,7 +186,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                 post()?.image_urls === null
             ) {
             } else {
-                await downloadImages(post()?.image_urls!);
+                const imageUrls = post()?.image_urls?.split(",");
+                imageUrls?.forEach(async (imageUrl: string) => {
+                    const url = await downloadPostImage(imageUrl);
+                    if (url) {
+                        setPostImages([...postImages(), url]);
+                    }
+                });
             }
         }
     });
@@ -196,62 +203,6 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImages = async (image_Urls: string) => {
-        try {
-            const imageUrls = image_Urls.split(",");
-            imageUrls.forEach(async (imageUrl: string) => {
-                const { data: webpData, error: webpError } =
-                    await supabase.storage
-                        .from("post.image")
-                        .createSignedUrl(`webp/${imageUrl}.webp`, 60 * 60);
-                if (webpError) {
-                    throw webpError;
-                }
-                const webpUrl = webpData.signedUrl;
-
-                const { data: jpegData, error: jpegError } =
-                    await supabase.storage
-                        .from("post.image")
-                        .createSignedUrl(`jpeg/${imageUrl}.jpeg`, 60 * 60);
-                if (jpegError) {
-                    throw jpegError;
-                }
-                const jpegUrl = jpegData.signedUrl;
-
-                setPostImages([...postImages(), { webpUrl, jpegUrl }]);
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const downloadCreatorImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     let slideIndex = 1;
