@@ -313,6 +313,11 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     const clearDownHostedFilterMobile = () => {
       setSelectedDownHosted(0);
+      let isCheckHosted = document.getElementsByClassName("checkBoxHosted") as HTMLCollectionOf<HTMLInputElement>;
+      isCheckHosted[0].checked = false
+      let isCheckDown = document.getElementsByClassName("checkBoxDown") as HTMLCollectionOf<HTMLInputElement>;
+      isCheckDown[0].checked = false
+      setSelectedDownHostedCheck(false)
       props.downHostedFilter(selectedDownHosted()!);
     };
 
@@ -992,7 +997,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                           <input
                             type="checkbox"
                             class={`mr-2 leading-tight checkBoxHosted`}
-                            checked={selectedDownHostedCheck()!}
+                            checked={selectedDownHostedCheck()}
                             onClick={(e) => {
                               downHostedCheckboxClick(e);
                             }}
@@ -1002,15 +1007,14 @@ export const FiltersMobile: Component<Props> = (props) => {
                       <div class="flex flex-row pl-2">
                         <div class="flex flex-wrap justify-between">
                           <div class="w-4/5 px-2 ">
-                            {/* {t("formLabels.downHosted")} */}
-                            Downloadable
+                            {t("formLabels.downloadable")}
                           </div>
                         </div>
                         <div>
                           <input
                             type="checkbox"
                             class={`mr-2 leading-tight checkBoxDown`}
-                            checked={selectedDownHostedCheck()!}
+                            checked={selectedDownHostedCheck()}
                             onClick={(e) => {
                               downCheckboxClick(e);
                             }}

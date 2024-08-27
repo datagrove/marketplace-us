@@ -227,6 +227,7 @@ export interface uiObject {
     more: string;
     secular: string;
     downHosted: string;
+    downlodable: string;
     resourceLinks: string;
   };
 

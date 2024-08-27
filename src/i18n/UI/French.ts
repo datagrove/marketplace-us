@@ -256,6 +256,7 @@ export const French = {
     more: "plus",
     secular: "Laïque",
     downHosted: "Hébergé",
+    downloadable: "Téléchargeable",
     resourceLinks: "Liens vers les ressources",
   },
 

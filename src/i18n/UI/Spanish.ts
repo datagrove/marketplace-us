@@ -586,7 +586,7 @@ export const Spanish = {
       { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
       { text: "Limpiar Laico", ariaLabel: "Limpiar Laico" },
       { text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
-      { text: "Limpiar Tipo de Hosteado", ariaLabel: "Limpiar Tipo de Hosteado" },
+      { text: "Limpiar Tipo de Hosteado y Descargable", ariaLabel: "Limpiar Tipo de Hosteado y Descargable" },
     ],
   },
 
