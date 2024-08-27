@@ -78,7 +78,8 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 .from("sellerposts")
                 .select("*")
                 .eq("id", id)
-                .eq("listing_status", true);
+                .eq("listing_status", true)
+                .eq("draft_status", false);
 
             if (error) {
                 console.log(error);

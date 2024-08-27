@@ -476,7 +476,7 @@ export const ResourcesView: Component = () => {
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
                     filterPostsByResourceTypes={filterPostsByResourceTypes}
-                    clearResurceTypes={clearResourceTypes}
+                    clearResourceTypes={clearResourceTypes}
                 />
             </Show>
 

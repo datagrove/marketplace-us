@@ -22,7 +22,8 @@ export async function fetchFilteredPosts(
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .eq("listing_status", true);
+            .eq("listing_status", true)
+            .eq("draft_status", false);
         if (subjectFilters.length !== 0) {
             query = query.overlaps("product_subject", subjectFilters);
         }
@@ -72,7 +73,8 @@ export async function fetchAllPosts() {
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .eq("listing_status", true);
+            .eq("listing_status", true)
+            .eq("draft_status", false);
 
         if (error) {
             console.log("supabase error: " + error.message);

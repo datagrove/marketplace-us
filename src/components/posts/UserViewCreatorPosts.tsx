@@ -31,7 +31,8 @@ export const UserViewCreatorPosts: Component<Props> = (props) => {
             .select("*")
             .order("id", { ascending: false })
             .eq("seller_id", props.id)
-            .eq("listing_status", true);
+            .eq("listing_status", true)
+            .eq("draft_status", false);
         if (!data) {
             alert("No posts available.");
         }
