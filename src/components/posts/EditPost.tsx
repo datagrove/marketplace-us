@@ -17,6 +17,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
 import { createStore } from "solid-js/store";
 import type { Post } from "@lib/types";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -136,6 +137,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
+                    sortResourceTypes(resourceType);
                     resourceType.forEach((type) => {
                         setResourceTypes([
                             ...resourceTypes(),

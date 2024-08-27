@@ -76,6 +76,7 @@ export const ViewCard: Component<Props> = (props) => {
                     if (error) {
                         console.log("supabase error: " + error.message);
                     } else {
+                        sortResourceTypes(resourceTypeData);
                         post.resourceTypes = [];
                         resourceTypeData.forEach((databaseResourceTypes) => {
                             post.resource_types.map(

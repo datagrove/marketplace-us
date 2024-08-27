@@ -13,6 +13,7 @@ import stripe from "@lib/stripe";
 import { EditPost } from "./EditPost";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -145,6 +146,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         if (error) {
                             console.log("supabase error: " + error.message);
                         } else {
+                            sortResourceTypes(resourceTypeData);
                             item.resourceTypes = [];
                             resourceTypeData.forEach(
                                 (databaseResourceTypes) => {

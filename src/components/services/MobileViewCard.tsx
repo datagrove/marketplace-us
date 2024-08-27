@@ -11,6 +11,7 @@ import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import { doc } from "prettier";
 import type { AuthSession } from "@supabase/supabase-js";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -70,6 +71,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                     if (error) {
                         console.log("supabase error: " + error.message);
                     } else {
+                        sortResourceTypes(resourceTypeData);
                         post.resourceTypes = [];
                         resourceTypeData.forEach((databaseResourceTypes) => {
                             post.resource_types.map(

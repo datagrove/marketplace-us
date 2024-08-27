@@ -21,6 +21,7 @@ import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
 import tinymce from "tinymce";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -290,6 +291,7 @@ export const CreateNewPost: Component = () => {
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
+                    sortResourceTypes(resourceType);
                     resourceType.forEach((type) => {
                         setResourceTypes([
                             ...resourceTypes(),
