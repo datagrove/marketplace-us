@@ -263,7 +263,7 @@ SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
 -- Name: resource_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('"public"."resource_types_id_seq"', 11, true);
+SELECT pg_catalog.setval('"public"."resource_types_id_seq"', 12, true);
 
 
 --

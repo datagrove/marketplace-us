@@ -19,6 +19,7 @@ import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import useLocalStorage from "@lib/LocalStorageHook";
 import { IconX } from "@tabler/icons-solidjs";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -40,6 +41,9 @@ export const ResourcesView: Component = () => {
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
+        Array<string>
+    >([]);
     const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
         []
     );
@@ -125,7 +129,7 @@ export const ResourcesView: Component = () => {
             subjectFilters(),
             gradeFilters(),
             searchString(),
-            resourceFilters(),
+            resourceTypesFilters(),
             secularFilters()
         );
 
@@ -195,6 +199,38 @@ export const ResourcesView: Component = () => {
                                   });
                               });
                           }
+
+                          const {
+                              data: resourceTypesData,
+                              error: resourceTypesError,
+                          } = await supabase.from("resource_types").select("*");
+
+                          if (resourceTypesError) {
+                              console.log(
+                                  "supabase error: " +
+                                      resourceTypesError.message
+                              );
+                          } else {
+                              sortResourceTypes(resourceTypesData);
+                              item.resourceTypes = [];
+                              resourceTypesData.forEach(
+                                  (databaseResourceTypes) => {
+                                      item.resource_types.map(
+                                          (itemResourceTypes: string) => {
+                                              if (
+                                                  itemResourceTypes ===
+                                                  databaseResourceTypes.id.toString()
+                                              ) {
+                                                  item.resource_types.push(
+                                                      databaseResourceTypes.resource_types
+                                                  );
+                                              }
+                                          }
+                                      );
+                                  }
+                              );
+                          }
+
                           return item;
                       })
                     : []
@@ -236,6 +272,33 @@ export const ResourcesView: Component = () => {
                             });
                         });
                     }
+                    const {
+                        data: resourceTypesData,
+                        error: resourceTypesError,
+                    } = await supabase.from("resource_types").select("*");
+
+                    if (resourceTypesError) {
+                        console.log(
+                            "supabase error: " + resourceTypesError.message
+                        );
+                    } else {
+                        sortResourceTypes(resourceTypesData);
+                        item.resource_types = [];
+                        resourceTypesData.forEach((databaseResourceTypes) => {
+                            item.resource_types.map(
+                                (itemResourceTypes: string) => {
+                                    if (
+                                        itemResourceTypes ===
+                                        databaseResourceTypes.id.toString()
+                                    ) {
+                                        item.resource_types.push(
+                                            databaseResourceTypes.resource_types
+                                        );
+                                    }
+                                }
+                            );
+                        });
+                    }
                     return item;
                 })
             );
@@ -256,6 +319,20 @@ export const ResourcesView: Component = () => {
 
         filterPosts();
     };
+
+    const filterPostsByResourceTypes = (type: string) => {
+        if (resourceTypesFilters().includes(type)) {
+            let currentResourceTypesFilter = resourceTypesFilters().filter(
+                (el) => el !== type
+            );
+            setResourceTypeFilters(currentResourceTypesFilter);
+        } else {
+            setResourceTypeFilters([...resourceTypesFilters(), type]);
+        }
+
+        filterPosts();
+    };
+
     const filterPostsBySecular = (secular: boolean) => {
         setSecularFilters(secular);
         filterPosts();
@@ -269,9 +346,13 @@ export const ResourcesView: Component = () => {
         const gradeCheckboxes = document.querySelectorAll(
             "input[type='checkbox'].grade"
         ) as NodeListOf<HTMLInputElement>;
+        const resourceTypesCheckoxes = document.querySelectorAll(
+            "input[type='checkbox'].resourceType"
+        ) as NodeListOf<HTMLInputElement>;
 
         console.log(subjectCheckboxes);
         console.log(gradeCheckboxes);
+        console.log(resourceTypesCheckoxes);
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
@@ -289,6 +370,12 @@ export const ResourcesView: Component = () => {
             }
         });
 
+        resourceTypesCheckoxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
+        });
+
         localStorage.removeItem("selectedGrades");
         localStorage.removeItem("selectedSubjects");
         localStorage.removeItem("searchString");
@@ -299,6 +386,7 @@ export const ResourcesView: Component = () => {
         // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
+        setResourceTypeFilters([]);
         setSecularFilters(false);
 
         filterPosts();
@@ -338,6 +426,24 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
+    const clearResourceTypes = () => {
+        const resourceTypesCheckoxes = document.querySelectorAll(
+            "input[type='checkbox'].resourceType"
+        ) as NodeListOf<HTMLInputElement>;
+
+        console.log(resourceTypesCheckoxes);
+
+        resourceTypesCheckoxes.forEach((checkbox) => {
+            if (checkbox && checkbox.checked) {
+                checkbox.checked = false;
+            }
+        });
+
+        // localStorage.removeItem("selectedGrades");
+        setResourceTypeFilters([]);
+        filterPosts();
+    };
+
     const clearSecular = () => {
         const secularCheckbox = document.getElementById(
             "secularCheck"
@@ -369,6 +475,8 @@ export const ResourcesView: Component = () => {
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
+                    filterPostsByResourceTypes={filterPostsByResourceTypes}
+                    clearResourceTypes={clearResourceTypes}
                 />
             </Show>
 
@@ -390,6 +498,8 @@ export const ResourcesView: Component = () => {
                         filterPostsBySubject={setCategoryFilter}
                         secularFilter={filterPostsBySecular}
                         clearSecular={clearSecular}
+                        clearResourceTypes={clearResourceTypes}
+                        filterPostsByResourceTypes={filterPostsByResourceTypes}
                     />
                     {/* <div class="sticky top-0 w-3/12">
                         <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">

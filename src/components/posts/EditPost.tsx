@@ -17,6 +17,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
 import { createStore } from "solid-js/store";
 import type { Post } from "@lib/types";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -74,6 +75,9 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [resourceExpanded, setResourceExpanded] =
         createSignal<boolean>(false);
     const [secular, setSecular] = createSignal<boolean>(false);
+    const [draftStatus, setDraftStatus] = createSignal<boolean>(false);
+    const [startDraftStatus, setStartDraftStatus] =
+        createSignal<boolean>(false);
 
     onMount(async () => {
         console.log(props.post);
@@ -94,6 +98,8 @@ export const EditPost: Component<Props> = (props: Props) => {
         setSubjectPick(props.post.product_subject);
         setResourceTypesPick(props.post?.resource_types!);
         setSecular(props.post.secular);
+        setDraftStatus(props.post.draft_status);
+        setStartDraftStatus(props.post.draft_status);
 
         if (props.post?.image_urls) {
             setImageUrl(props.post?.image_urls.split(","));
@@ -136,6 +142,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
+                    sortResourceTypes(resourceType);
                     resourceType.forEach((type) => {
                         setResourceTypes([
                             ...resourceTypes(),
@@ -199,6 +206,32 @@ export const EditPost: Component<Props> = (props: Props) => {
         }
     });
 
+    function saveAsDraft(e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+        setDraftStatus(true);
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            form.requestSubmit();
+        }
+    }
+
+    function listResourcePost(e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            setDraftStatus(false);
+            form.requestSubmit();
+        }
+    }
+
     async function submit(e: SubmitEvent) {
         e.preventDefault();
 
@@ -217,6 +250,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         tmpDiv.innerHTML = formData.get("Content") as string;
         let description = tmpDiv.textContent || tmpDiv.innerText || "";
         formData.append("description", description);
+        formData.append("draft_status", JSON.stringify(draftStatus()));
 
         if (subjectPick() !== undefined) {
             formData.append("subject", JSON.stringify(subjectPick()));
@@ -437,6 +471,49 @@ export const EditPost: Component<Props> = (props: Props) => {
             imageArray.splice(index, 1);
             setImageUrl(imageArray);
             console.log(imageUrl());
+        }
+    }
+
+    function postButton() {
+        if (startDraftStatus() === false) {
+            return (
+                <>
+                    <button
+                        id="post"
+                        disabled={!allRequirementsMet()}
+                        class={`text-2xl ${
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
+                        }`}
+                    >
+                        {t("buttons.updateResource")}
+                    </button>
+                </>
+            );
+        } else if (startDraftStatus() === true) {
+            return (
+                <>
+                    <button
+                        id="post"
+                        disabled={!allRequirementsMet()}
+                        class={`text-2xl ${
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
+                        }`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            listResourcePost(e);
+                        }}
+                    >
+                        {t("buttons.listResource")}
+                    </button>
+                </>
+            );
+        } else {
+            return <></>;
         }
     }
 
@@ -1064,16 +1141,17 @@ export const EditPost: Component<Props> = (props: Props) => {
                 <br />
                 <div class="flex justify-center">
                     <button
-                        id="post"
-                        disabled={!allRequirementsMet()}
-                        class={`text-2xl ${
-                            allRequirementsMet()
-                                ? "btn-primary"
-                                : "btn-disabled"
-                        }`}
+                        id="save-as-draft"
+                        class={`btn-primary text-2xl`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            saveAsDraft(e);
+                        }}
                     >
-                        {t("buttons.updateResource")}
+                        Save as Draft
                     </button>
+                    {postButton()}
                 </div>
             </form>
         </div>
