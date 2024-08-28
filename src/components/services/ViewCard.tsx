@@ -231,7 +231,7 @@ export const ViewCard: Component<Props> = (props) => {
                                 >
                                     <div class="flex h-full min-h-48 flex-col place-content-between">
                                         <div class="flex flex-row justify-between">
-                                            <div class="flex w-full flex-col border border-red-500">
+                                            <div class="flex w-full flex-col">
                                                 <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                     {post.title}
                                                 </p>
@@ -262,7 +262,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </div>
                                             </div>
                                             <Show when={post.draft_status}>
-                                                <div class="w-1/4 border border-green-500">
+                                                <div class="w-1/4">
                                                     <Show
                                                         when={post.draft_status}
                                                     >
