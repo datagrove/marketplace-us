@@ -128,7 +128,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
     const [secularInNumber, setSecularInNumber] = createSignal<number>(0);
     const [showDownHosted, setShowDownHosted] = createSignal<boolean>(false);
-    // 1 = searchForHostedResoruce, 2 = searchForDown
+    // 1 = searchForHostedResoruce, 2 = searchForDownloadableResource
     const [selectedDownHosted, setSelectedDownHosted] = createSignal<number> (0);
     const [selectedDownHostedCheck, setSelectedDownHostedCheck] = createSignal<boolean> (false);
       const [selectedHostedCheck,setSelectedHostedCheck]= createSignal<boolean>(false)
@@ -270,6 +270,9 @@ export const FiltersMobile: Component<Props> = (props) => {
         resourceType().forEach((type) => {
             type.checked = false;
         });
+
+        setSelectedHostedCheck(false)
+        setSelectedDownHostedCheck(false)
         setGradeFilters([]);
         setSelectedSubjects([]);
         setResourceTypesFilters([]);

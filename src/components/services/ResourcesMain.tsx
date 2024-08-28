@@ -47,7 +47,7 @@ export const ResourcesView: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
-    const [downHostedFilter, setDownHostedFilter] = createSignal<boolean>(false);
+    const [downHostedFilter, setDownHostedFilter] = createSignal<number>(0);
 
     const screenSize = useStore(windowSize);
 
@@ -315,7 +315,7 @@ export const ResourcesView: Component = () => {
         filterPosts();
     };
 
-    const filterPostsByDownHosted = (downHosted: boolean) => {
+    const filterPostsByDownHosted = (downHosted: number) => {
       setDownHostedFilter(downHosted);
       filterPosts();
     };
@@ -331,6 +331,7 @@ export const ResourcesView: Component = () => {
         const resourceTypesCheckoxes= document.querySelectorAll(
             "input[type='checkbox'].resourceType"
         ) as NodeListOf<HTMLInputElement>;
+
 
         console.log(subjectCheckboxes);
         console.log(gradeCheckboxes);
@@ -370,7 +371,7 @@ export const ResourcesView: Component = () => {
         setGradeFilters([]);
         setResourceTypeFilters([])
         setSecularFilters(false);
-        setDownHostedFilter(false);
+        setDownHostedFilter(0);
 
         filterPosts();
     };
@@ -443,17 +444,21 @@ export const ResourcesView: Component = () => {
     };
 
     const clearDownHosted = () => {
-      const downHostedCheckbox = document.getElementById(
-        "downHostedCheck"
-      ) as HTMLInputElement;
 
-      console.log(downHostedCheckbox);
+      const isCheckHosted = document.getElementsByClassName("checkBoxHosted") as HTMLCollectionOf<HTMLInputElement>;
+      const isCheckDown = document.getElementsByClassName("checkBoxDown") as HTMLCollectionOf<HTMLInputElement>;
 
-      if (downHostedCheckbox && downHostedCheckbox.checked) {
-        downHostedCheckbox.checked = false;
+      if ( isCheckHosted[0].checked) {
+      console.log("check box clear")
+        isCheckHosted[0].checked = false;
       }
 
-      setDownHostedFilter(false);
+      if (isCheckDown[0].checked) {
+      console.log("check box clear")
+        isCheckDown[0].checked = false;
+      }
+
+      setDownHostedFilter(0);
       filterPosts();
     };
 
