@@ -40,7 +40,7 @@ export async function fetchFilteredPosts(
             query = query.overlaps("resource_types", resourceFilters);
         }
         if (downHostedFilter === 1) {
-          query = query.not("resource_urls", "is", null)
+          query = query.not("resource_links", "is", null)
         }
         if (downHostedFilter === 2) {
           query = query.is("resource_urls", null)
