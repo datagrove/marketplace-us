@@ -13,6 +13,7 @@ import stripe from "@lib/stripe";
 import { EditPost } from "./EditPost";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -28,6 +29,7 @@ interface Props {
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const MobileViewFullPost: Component<Props> = (props) => {
     const [post, setPost] = createSignal<Post>();
+    const [postData, setPostData] = createSignal<Array<Post>>([]);
     const [postImages, setPostImages] = createSignal<
         { webpUrl: string; jpegUrl: string }[]
     >([]);
@@ -71,113 +73,129 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         }
     });
 
+    //REFACTOR into a helper function for both Full post views
     const fetchPost = async (id: number) => {
         try {
-            const { data, error } = await supabase
+            const { data: notDraftData, error } = await supabase
                 .from("sellerposts")
                 .select("*")
                 .eq("id", id)
-                .eq("listing_status", true);
-
+                .eq("listing_status", true)
+                .eq("draft_status", false);
             if (error) {
                 console.log(error);
-            } else if (data[0] === undefined) {
+            } else if (notDraftData[0] === undefined && User.session) {
+                const { data: userData, error } = await supabase
+                    .from("sellerposts")
+                    .select("*")
+                    .eq("id", id)
+                    .eq("listing_status", true)
+                    .eq("user_id", User.session?.user.id);
+
+                if (error) {
+                    console.log(error);
+                } else if (userData[0] === undefined) {
+                    alert(t("messages.noPost"));
+                    location.href = `/${lang}/resources`;
+                } else {
+                    setPostData(userData);
+                    console.log(postData());
+                }
+            } else if (notDraftData[0] === undefined && User.session === null) {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/resources`;
             } else {
-                const updatedPost = await Promise.all(
-                    data?.map(async (item) => {
-                        item.subject = [];
-                        postSubjects.forEach((postSubject) => {
-                            item.product_subject.map(
-                                (productSubject: string) => {
-                                    if (productSubject === postSubject.id) {
-                                        item.subject.push(postSubject.name);
-                                        console.log(postSubject.name);
+                setPostData(notDraftData);
+                console.log(postData());
+            }
+
+            const newItem: Post[] = await Promise.all(
+                postData()?.map(async (item) => {
+                    item.subject = [];
+                    postSubjects.forEach((postSubject) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === postSubject.id) {
+                                item.subject?.push(postSubject.name);
+                                console.log(postSubject.name);
+                            }
+                        });
+                    });
+
+                    const { data: sellerImg, error: sellerImgError } =
+                        await supabase
+                            .from("sellerview")
+                            .select("*")
+                            .eq("seller_id", item.seller_id);
+
+                    if (sellerImgError) {
+                        console.log(sellerImgError);
+                    }
+
+                    if (sellerImg) {
+                        if (sellerImg[0].image_url) {
+                            item.seller_img = await downloadCreatorImage(
+                                sellerImg[0].image_url
+                            );
+                        }
+                    }
+
+                    const { data: gradeData, error: gradeError } =
+                        await supabase.from("grade_level").select("*");
+
+                    if (gradeError) {
+                        console.log("supabase error: " + gradeError.message);
+                    } else {
+                        item.grade = [];
+                        gradeData.forEach((databaseGrade) => {
+                            item.post_grade.map((itemGrade: string) => {
+                                if (itemGrade === databaseGrade.id.toString()) {
+                                    item.grade?.push(databaseGrade.grade);
+                                }
+                            });
+                        });
+                    }
+
+                    const { data: resourceTypeData, error } = await supabase
+                        .from("resource_types")
+                        .select("*");
+
+                    if (error) {
+                        console.log("supabase error: " + error.message);
+                    } else {
+                        sortResourceTypes(resourceTypeData);
+                        item.resourceTypes = [];
+                        resourceTypeData.forEach((databaseResourceTypes) => {
+                            item.resource_types.map(
+                                (itemResourceType: string) => {
+                                    if (
+                                        itemResourceType ===
+                                        databaseResourceTypes.id.toString()
+                                    ) {
+                                        item.resourceTypes!.push(
+                                            databaseResourceTypes.type
+                                        );
                                     }
                                 }
                             );
                         });
+                    }
 
-                        const { data: sellerImg, error: sellerImgError } =
-                            await supabase
-                                .from("sellerview")
-                                .select("*")
-                                .eq("seller_id", item.seller_id);
+                    if (item.price_id !== null) {
+                        const priceData = await stripe.prices.retrieve(
+                            item.price_id
+                        );
+                        item.price = priceData.unit_amount! / 100;
+                    }
 
-                        if (sellerImgError) {
-                            console.log(sellerImgError);
-                        }
-
-                        if (sellerImg) {
-                            if (sellerImg[0].image_url) {
-                                item.seller_img = await downloadCreatorImage(
-                                    sellerImg[0].image_url
-                                );
-                            }
-                        }
-
-                        const { data: gradeData, error: gradeError } =
-                            await supabase.from("grade_level").select("*");
-
-                        if (gradeError) {
-                            console.log(
-                                "supabase error: " + gradeError.message
-                            );
-                        } else {
-                            item.grade = [];
-                            gradeData.forEach((databaseGrade) => {
-                                item.post_grade.map((itemGrade: string) => {
-                                    if (
-                                        itemGrade ===
-                                        databaseGrade.id.toString()
-                                    ) {
-                                        item.grade.push(databaseGrade.grade);
-                                    }
-                                });
-                            });
-                        }
-
-                        const { data: resourceTypeData, error } = await supabase
-                            .from("resource_types")
-                            .select("*");
-
-                        if (error) {
-                            console.log("supabase error: " + error.message);
-                        } else {
-                            item.resourceTypes = [];
-                            resourceTypeData.forEach(
-                                (databaseResourceTypes) => {
-                                    item.resource_types.map(
-                                        (itemResourceType: string) => {
-                                            if (
-                                                itemResourceType ===
-                                                databaseResourceTypes.id.toString()
-                                            ) {
-                                                item.resourceTypes!.push(
-                                                    databaseResourceTypes.type
-                                                );
-                                            }
-                                        }
-                                    );
-                                }
-                            );
-                        }
-
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-
-                        return item;
-                    })
-                );
-
-                console.log(updatedPost[0]);
-                setPost(updatedPost[0]);
-            }
+                    return item;
+                })
+            );
+            setPost(newItem[0]);
+            // console.log(post()?.product_subject)
+            // } else {
+            //     alert(t("messages.noPost"));
+            //     location.href = `/${lang}/resources`;
+            // }
         } catch (error) {
             console.log(error);
         }
@@ -425,7 +443,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         id="full-resource-title"
                         class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM"
                     >
-                        <p class="text-2xl font-bold">{post()?.title}</p>
+                        <div class="flex w-full flex-row justify-between pr-2 text-2xl font-bold">
+                            {post()?.title}
+                            <Show when={post()?.draft_status === true}>
+                                <div class="w-1/4">
+                                    <Show when={post()?.draft_status === true}>
+                                        <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                            {t("formLabels.draft")}
+                                        </div>
+                                    </Show>
+                                </div>
+                            </Show>
+                        </div>
                     </div>
 
                     {/* TODO: Add back ratings

@@ -31,9 +31,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     : null;
   // const resourceUrl = formData.get("resource_url");
   const resourceType = formData.get("resource_types");
-  console.log("imageURL: " + imageUrl);
-  console.log(formData, "api");
   const secular = formData.get("secular")
+  const resourceLinks = formData.get("resource_links");
+  const draft_status = formData.get("draft_status");
 
   // Validate the formData - you'll probably want to do more than this
   if (
@@ -118,6 +118,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     });
   })
 
+  const resourceLinksList = resourceLinks?.toString().split(",");
+
   if (stripe_update.active) {
     let postSubmission = {
       title: title,
@@ -128,7 +130,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       user_id: user.id,
       stripe_price_id: default_price,
       resource_types: JSON.parse(resourceType as string),
-      secular: secular?.valueOf()
+      secular: secular?.valueOf(),
+      resource_links: resourceLinksList,
+      draft_status: draft_status?.valueOf(),
     };
     const { error, data } = await supabase
       .from("seller_post")

@@ -51,6 +51,7 @@ export const Home: Component = () => {
             .select("*")
             .order("id", { ascending: true })
             .eq("listing_status", true)
+            .eq("draft_status", false)
             .limit(8);
         if (!data) {
             alert("No posts available.");
@@ -89,6 +90,7 @@ export const Home: Component = () => {
             .from("sellerposts")
             .select("*")
             .eq("listing_status", true)
+            .eq("draft_status", false)
             .order("id", { ascending: false })
             .limit(8);
 

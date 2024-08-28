@@ -15,6 +15,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 
 import stripe from "@lib/stripe";
 import { ReportResource } from "./ReportResource";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -30,6 +31,7 @@ interface Props {
 const { data: User, error: UserError } = await supabase.auth.getSession();
 export const ViewFullPost: Component<Props> = (props) => {
     const [post, setPost] = createSignal<Post>();
+    const [postData, setPostData] = createSignal<Array<Post>>([]);
     const [postImages, setPostImages] = createSignal<
         { webpUrl: string; jpegUrl: string }[]
     >([]);
@@ -66,113 +68,125 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const fetchPost = async (id: number) => {
         try {
-            const { data, error } = await supabase
+            const { data: notDraftData, error } = await supabase
                 .from("sellerposts")
                 .select("*")
                 .eq("id", id)
-                .eq("listing_status", true);
-
+                .eq("listing_status", true)
+                .eq("draft_status", false);
             if (error) {
                 console.log(error);
-            } else if (data[0] === undefined) {
+            } else if (notDraftData[0] === undefined && User.session) {
+                const { data: userData, error } = await supabase
+                    .from("sellerposts")
+                    .select("*")
+                    .eq("id", id)
+                    .eq("listing_status", true)
+                    .eq("user_id", User.session?.user.id);
+
+                if (error) {
+                    console.log(error);
+                } else if (userData[0] === undefined) {
+                    alert(t("messages.noPost"));
+                    location.href = `/${lang}/resources`;
+                } else {
+                    setPostData(userData);
+                    console.log(postData());
+                }
+            } else if (notDraftData[0] === undefined && User.session === null) {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/resources`;
             } else {
-                const newItem: Post[] = await Promise.all(
-                    data?.map(async (item) => {
-                        item.subject = [];
-                        productCategories.forEach((productCategories) => {
-                            item.product_subject.map(
-                                (productSubject: string) => {
+                setPostData(notDraftData);
+                console.log(postData());
+            }
+
+            const newItem: Post[] = await Promise.all(
+                postData()?.map(async (item) => {
+                    item.subject = [];
+                    productCategories.forEach((productCategories) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === productCategories.id) {
+                                item.subject?.push(productCategories.name);
+                            }
+                        });
+                    });
+
+                    const { data: sellerImg, error: sellerImgError } =
+                        await supabase
+                            .from("sellerview")
+                            .select("*")
+                            .eq("seller_id", item.seller_id);
+
+                    if (sellerImgError) {
+                        console.log(sellerImgError);
+                    }
+
+                    if (sellerImg) {
+                        if (sellerImg[0].image_url) {
+                            item.seller_img = await downloadCreatorImage(
+                                sellerImg[0].image_url
+                            );
+                        }
+                    }
+
+                    const { data: gradeData, error: gradeError } =
+                        await supabase.from("grade_level").select("*");
+
+                    if (gradeError) {
+                        console.log("supabase error: " + gradeError.message);
+                    } else {
+                        item.grade = [];
+                        gradeData.forEach((databaseGrade) => {
+                            item.post_grade.map((itemGrade: string) => {
+                                if (itemGrade === databaseGrade.id.toString()) {
+                                    item.grade?.push(databaseGrade.grade);
+                                }
+                            });
+                        });
+                    }
+
+                    const { data: resourceTypeData, error } = await supabase
+                        .from("resource_types")
+                        .select("*");
+
+                    if (error) {
+                        console.log("supabase error: " + error.message);
+                    } else {
+                        sortResourceTypes(resourceTypeData);
+                        item.resourceTypes = [];
+                        resourceTypeData.forEach((databaseResourceTypes) => {
+                            item.resource_types.map(
+                                (itemResourceType: string) => {
                                     if (
-                                        productSubject === productCategories.id
+                                        itemResourceType ===
+                                        databaseResourceTypes.id.toString()
                                     ) {
-                                        item.subject.push(
-                                            productCategories.name
+                                        item.resourceTypes!.push(
+                                            databaseResourceTypes.type
                                         );
                                     }
                                 }
                             );
                         });
+                    }
 
-                        const { data: sellerImg, error: sellerImgError } =
-                            await supabase
-                                .from("sellerview")
-                                .select("*")
-                                .eq("seller_id", item.seller_id);
+                    if (item.price_id !== null) {
+                        const priceData = await stripe.prices.retrieve(
+                            item.price_id
+                        );
+                        item.price = priceData.unit_amount! / 100;
+                    }
 
-                        if (sellerImgError) {
-                            console.log(sellerImgError);
-                        }
-
-                        if (sellerImg) {
-                            if (sellerImg[0].image_url) {
-                                item.seller_img = await downloadCreatorImage(
-                                    sellerImg[0].image_url
-                                );
-                            }
-                        }
-
-                        const { data: gradeData, error: gradeError } =
-                            await supabase.from("grade_level").select("*");
-
-                        if (gradeError) {
-                            console.log(
-                                "supabase error: " + gradeError.message
-                            );
-                        } else {
-                            item.grade = [];
-                            gradeData.forEach((databaseGrade) => {
-                                item.post_grade.map((itemGrade: string) => {
-                                    if (
-                                        itemGrade ===
-                                        databaseGrade.id.toString()
-                                    ) {
-                                        item.grade.push(databaseGrade.grade);
-                                    }
-                                });
-                            });
-                        }
-
-                        const { data: resourceTypeData, error } = await supabase
-                            .from("resource_types")
-                            .select("*");
-
-                        if (error) {
-                            console.log("supabase error: " + error.message);
-                        } else {
-                            item.resourceTypes = [];
-                            resourceTypeData.forEach(
-                                (databaseResourceTypes) => {
-                                    item.resource_types.map(
-                                        (itemResourceType: string) => {
-                                            if (
-                                                itemResourceType ===
-                                                databaseResourceTypes.id.toString()
-                                            ) {
-                                                item.resourceTypes!.push(
-                                                    databaseResourceTypes.type
-                                                );
-                                            }
-                                        }
-                                    );
-                                }
-                            );
-                        }
-
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-
-                        return item;
-                    })
-                );
-                setPost(newItem[0]);
-                // console.log(post()?.product_subject)
-            }
+                    return item;
+                })
+            );
+            setPost(newItem[0]);
+            // console.log(post()?.product_subject)
+            // } else {
+            //     alert(t("messages.noPost"));
+            //     location.href = `/${lang}/resources`;
+            // }
         } catch (error) {
             console.log(error);
         }
@@ -198,7 +212,6 @@ export const ViewFullPost: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    //TODO: Needs to download both URLs from the folders for the Picture element
     const downloadImages = async (image_Urls: string) => {
         try {
             const imageUrls = image_Urls.split(",");
@@ -659,9 +672,25 @@ export const ViewFullPost: Component<Props> = (props) => {
                         >
                             <div id="title-div">
                                 <div>
-                                    <h3 class="w-full text-2xl font-bold">
+                                    <div class="flex w-full flex-row justify-between pr-2 text-2xl font-bold">
                                         {post()?.title}
-                                    </h3>
+                                        <Show
+                                            when={post()?.draft_status === true}
+                                        >
+                                            <div class="w-1/4">
+                                                <Show
+                                                    when={
+                                                        post()?.draft_status ===
+                                                        true
+                                                    }
+                                                >
+                                                    <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                                        {t("formLabels.draft")}
+                                                    </div>
+                                                </Show>
+                                            </div>
+                                        </Show>
+                                    </div>
                                 </div>
                             </div>
 

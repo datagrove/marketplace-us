@@ -115,6 +115,7 @@ export interface uiObject {
     updateResource: string;
     editPost: string;
     getLinks: string;
+    checkoutAsGuest: string;
   };
 
   messages: {
@@ -227,6 +228,7 @@ export interface uiObject {
     more: string;
     secular: string;
     resourceLinks: string;
+    draft: string;
   };
 
   postLabels: {
