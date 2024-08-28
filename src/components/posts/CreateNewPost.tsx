@@ -195,6 +195,7 @@ export const CreateNewPost: Component = () => {
     const [isAdmin, setIsAdmin] = createSignal<boolean>(false);
     const [isHosted, setIsHosted] = createSignal<boolean>(false);
     const [resourceLinks, setResourceLinks] = createSignal<string>("");
+    const [draftStatus, setDraftStatus] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -382,12 +383,25 @@ export const CreateNewPost: Component = () => {
         }
     });
 
+    function saveAsDraft(e: Event) {
+        e.preventDefault();
+        setDraftStatus(true);
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            form.requestSubmit();
+        }
+    }
+
     async function submit(e: SubmitEvent) {
         e.preventDefault();
 
         const formData = new FormData(e.target as HTMLFormElement);
         formData.append("access_token", session()?.access_token!);
         formData.append("refresh_token", session()?.refresh_token!);
+        formData.append("draft_status", JSON.stringify(draftStatus()));
         formData.append("lang", lang);
         if (isFree()) {
             setPrice("0");
@@ -1340,6 +1354,17 @@ export const CreateNewPost: Component = () => {
 
                 <br />
                 <div class="flex justify-center">
+                    <button
+                        id="save-as-draft"
+                        class={`btn-primary text-2xl`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            saveAsDraft(e);
+                        }}
+                    >
+                        Save as Draft
+                    </button>
                     <button
                         id="post"
                         disabled={!allRequirementsMet()}
