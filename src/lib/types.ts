@@ -16,6 +16,7 @@ export interface Post {
     listing_status: boolean; //Boolean of whether the post is listed or not
     secular: boolean;
     draft_status: boolean;
+    resource_urls: string;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null; //Array of subject names
