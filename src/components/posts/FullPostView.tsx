@@ -673,9 +673,26 @@ export const ViewFullPost: Component<Props> = (props) => {
                         >
                             <div id="title-div">
                                 <div>
-                                    <h3 class="w-full text-2xl font-bold">
+                                    <div class="flex w-full flex-row justify-between pr-2 text-2xl font-bold">
                                         {post()?.title}
-                                    </h3>
+                                        <Show
+                                            when={post()?.draft_status === true}
+                                        >
+                                            <div class="w-1/4">
+                                                <Show
+                                                    when={
+                                                        post()?.draft_status ===
+                                                        true
+                                                    }
+                                                >
+                                                    <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                                        {/* TODO: Internationalize */}
+                                                        Draft
+                                                    </div>
+                                                </Show>
+                                            </div>
+                                        </Show>
+                                    </div>
                                 </div>
                             </div>
 

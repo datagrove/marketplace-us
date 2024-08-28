@@ -443,7 +443,19 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         id="full-resource-title"
                         class="sticky top-0 z-30 bg-background1 dark:bg-background1-DM"
                     >
-                        <p class="text-2xl font-bold">{post()?.title}</p>
+                        <div class="flex w-full flex-row justify-between pr-2 text-2xl font-bold">
+                            {post()?.title}
+                            <Show when={post()?.draft_status === true}>
+                                <div class="w-1/4">
+                                    <Show when={post()?.draft_status === true}>
+                                        <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                            {/* TODO: Internationalize */}
+                                            Draft
+                                        </div>
+                                    </Show>
+                                </div>
+                            </Show>
+                        </div>
                     </div>
 
                     {/* TODO: Add back ratings
