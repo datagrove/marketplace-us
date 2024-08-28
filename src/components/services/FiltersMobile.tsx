@@ -130,9 +130,8 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [showDownHosted, setShowDownHosted] = createSignal<boolean>(false);
     // 1 = searchForHostedResoruce, 2 = searchForDownloadableResource
     const [selectedDownHosted, setSelectedDownHosted] = createSignal<number> (0);
-    const [selectedDownHostedCheck, setSelectedDownHostedCheck] = createSignal<boolean> (false);
-      const [selectedHostedCheck,setSelectedHostedCheck]= createSignal<boolean>(false)
-      const [selectedDownCheck,setSelectedDownCheck] = createSignal<boolean>(false)
+    const [selectedHostedCheck,setSelectedHostedCheck]= createSignal<boolean>(false)
+    const [selectedDownCheck,setSelectedDownCheck] = createSignal<boolean>(false)
 
     const [downHostedInNumber, setDownHostedInNumber] = createSignal<number>(0);
     const screenSize = useStore(windowSize);
@@ -272,7 +271,6 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
 
         setSelectedHostedCheck(false)
-        setSelectedDownHostedCheck(false)
         setGradeFilters([]);
         setSelectedSubjects([]);
         setResourceTypesFilters([]);
@@ -323,7 +321,6 @@ export const FiltersMobile: Component<Props> = (props) => {
       isCheckHosted[0].checked = false
       let isCheckDown = document.getElementsByClassName("checkBoxDown") as HTMLCollectionOf<HTMLInputElement>;
       isCheckDown[0].checked = false
-      setSelectedDownHostedCheck(false)
       props.downHostedFilter(selectedDownHosted()!);
       setDownHostedInNumber(0)
     };
