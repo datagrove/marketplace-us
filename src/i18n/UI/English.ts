@@ -131,6 +131,7 @@ export const English = {
     updateResource: "Update Resource",
     editPost: "Edit",
     getLinks: "Get Links",
+    checkoutAsGuest: "Checkout As Guest",
   },
 
   messages: {
@@ -257,6 +258,7 @@ export const English = {
     downHosted: "Hosted",
     downloadable: "Downloadable",
     resourceLinks: "Resource Links",
+    draft: "Draft",
   },
 
   postLabels: {

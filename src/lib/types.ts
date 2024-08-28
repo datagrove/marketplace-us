@@ -15,6 +15,8 @@ export interface Post {
     resource_types: Array<string>; // Array of resource types IDs, does not contain actual resource_types names
     listing_status: boolean; //Boolean of whether the post is listed or not
     secular: boolean;
+    draft_status: boolean;
+    resource_urls: string;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null; //Array of subject names

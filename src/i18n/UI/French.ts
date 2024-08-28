@@ -128,6 +128,7 @@ export const French = {
     updateResource: "Mettre à jour la Ressource",
     editPost: "Editer",
     getLinks: "Obtenir des Liens",
+    checkoutAsGuest: "Passer en tant qu'invite",
   },
 
   messages: {
@@ -258,6 +259,7 @@ export const French = {
     downHosted: "Hébergé",
     downloadable: "Téléchargeable",
     resourceLinks: "Liens vers les ressources",
+    draft: "Brouillon",
   },
 
   postLabels: {

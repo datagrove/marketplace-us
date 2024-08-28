@@ -8,6 +8,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SecularFilter } from "./SecularFilter";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -42,6 +43,7 @@ const { data: resourceTypesData, error: resourceTypesError } = await supabase
 if (resourceTypesError) {
     console.log("supabase error: " + resourceTypesError.message);
 } else {
+    sortResourceTypes(resourceTypesData);
     resourceTypesData.forEach((type) => {
         resourceTypes.push({
             type: type.type,
@@ -368,6 +370,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         if (selectedSecular() === true) {
             setSecularInNumber(1);
         }
+
     };
 
     const downHostedCheckboxClick = (e: Event) => {
@@ -462,6 +465,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             setSelectedHostedCheck(true);
             setSelectedDownCheck(true);
         }
+
     };
 
     function setSubjectFilter(id: string) {
@@ -500,13 +504,16 @@ export const FiltersMobile: Component<Props> = (props) => {
                             showSecular() === true ||
                             showResourceTypes() === true ||
                             showDownHosted() === true
+
                         ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
                             setShowResourceTypes(false);
+
                             setShowSecular(false);
                             setShowDownHosted(false);
+
                         } else if (showFilters() === true) {
                             setShowFilters(false);
                         } else {
@@ -533,6 +540,9 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         resourceTypesFilterCount() +
                                         secularInNumber() +
                                         downHostedInNumber()}
+
+                                        secularInNumber()}
+
                                 </p>
                             </div>
                         </Show>

@@ -131,6 +131,7 @@ export const Spanish = {
     updateResource: "Actualizar Recurso",
     editPost: "Editar",
     getLinks: "Obtener enlaces",
+    checkoutAsGuest: "Comprar como Invitado",
   },
 
   messages: {
@@ -261,6 +262,7 @@ export const Spanish = {
     downHosted: "Hosteado",
     downloadable: "Descargable",
     resourceLinks: "Enlaces de Recurso",
+    draft: "Borrador",
   },
 
   postLabels: {

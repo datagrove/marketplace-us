@@ -115,6 +115,7 @@ export interface uiObject {
     updateResource: string;
     editPost: string;
     getLinks: string;
+    checkoutAsGuest: string;
   };
 
   messages: {
@@ -229,6 +230,7 @@ export interface uiObject {
     downHosted: string;
     downloadable: string;
     resourceLinks: string;
+    draft: string;
   };
 
   postLabels: {

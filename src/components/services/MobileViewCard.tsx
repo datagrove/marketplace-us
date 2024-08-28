@@ -11,6 +11,7 @@ import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import { doc } from "prettier";
 import type { AuthSession } from "@supabase/supabase-js";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -70,6 +71,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                     if (error) {
                         console.log("supabase error: " + error.message);
                     } else {
+                        sortResourceTypes(resourceTypeData);
                         post.resourceTypes = [];
                         resourceTypeData.forEach((databaseResourceTypes) => {
                             post.resource_types.map(
@@ -329,41 +331,52 @@ export const MobileViewCard: Component<Props> = (props) => {
                         </div>
                     </a>
 
-                    <div class="title-creator mb-1 ml-1">
-                        <a href={`/${lang}/posts/${post.id}`}>
-                            <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
-                                {post.title}
+                    <div class="title-creator mb-1 ml-1 flex flex-row justify-between">
+                        <div class="w-full">
+                            <a href={`/${lang}/posts/${post.id}`}>
+                                <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {post.title}
+                                </div>
+                            </a>
+                            <a href={`/${lang}/creator/${post?.seller_id}`}>
+                                <div class="flex w-fit items-center py-1 pr-4">
+                                    {post.seller_img ? (
+                                        <picture>
+                                            <source
+                                                srcset={post.seller_img.webpUrl}
+                                                type="image/webp"
+                                            />
+                                            <img
+                                                src={post.seller_img.jpegUrl}
+                                                alt="Seller image"
+                                                class="mr-1 h-8 w-8 rounded-full object-cover"
+                                            />
+                                        </picture>
+                                    ) : (
+                                        <svg
+                                            width="24px"
+                                            height="24px"
+                                            class="mr-1 h-8 w-8 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
+                                            viewBox="0 0 32 32"
+                                        >
+                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                        </svg>
+                                    )}
+                                    <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
+                                        {post.seller_name}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <Show when={post.draft_status}>
+                            <div class="w-1/4">
+                                <Show when={post.draft_status}>
+                                    <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                        {t("formLabels.draft")}
+                                    </div>
+                                </Show>
                             </div>
-                        </a>
-                        <a href={`/${lang}/creator/${post?.seller_id}`}>
-                            <div class="flex w-fit items-center py-1 pr-4">
-                                {post.seller_img ? (
-                                    <picture>
-                                        <source
-                                            srcset={post.seller_img.webpUrl}
-                                            type="image/webp"
-                                        />
-                                        <img
-                                            src={post.seller_img.jpegUrl}
-                                            alt="Seller image"
-                                            class="mr-1 h-8 w-8 rounded-full object-cover"
-                                        />
-                                    </picture>
-                                ) : (
-                                    <svg
-                                        width="24px"
-                                        height="24px"
-                                        class="mr-1 h-8 w-8 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
-                                        viewBox="0 0 32 32"
-                                    >
-                                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                    </svg>
-                                )}
-                                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
-                                    {post.seller_name}
-                                </p>
-                            </div>
-                        </a>
+                        </Show>
                     </div>
 
                     <div
