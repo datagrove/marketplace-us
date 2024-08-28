@@ -449,8 +449,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 <div class="w-1/4">
                                     <Show when={post()?.draft_status === true}>
                                         <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
-                                            {/* TODO: Internationalize */}
-                                            Draft
+                                            {t("formLabels.draft")}
                                         </div>
                                     </Show>
                                 </div>

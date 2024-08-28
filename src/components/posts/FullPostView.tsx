@@ -212,7 +212,6 @@ export const ViewFullPost: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    //TODO: Needs to download both URLs from the folders for the Picture element
     const downloadImages = async (image_Urls: string) => {
         try {
             const imageUrls = image_Urls.split(",");
@@ -686,8 +685,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                     }
                                                 >
                                                     <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
-                                                        {/* TODO: Internationalize */}
-                                                        Draft
+                                                        {t("formLabels.draft")}
                                                     </div>
                                                 </Show>
                                             </div>

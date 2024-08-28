@@ -110,7 +110,6 @@ export const ViewCard: Component<Props> = (props) => {
         setQuantity(1);
     };
 
-    //TODO Update to signed URLS
     const downloadImage = async (path: string) => {
         try {
             const { data: webpData, error: webpError } = await supabase.storage
@@ -267,8 +266,9 @@ export const ViewCard: Component<Props> = (props) => {
                                                         when={post.draft_status}
                                                     >
                                                         <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
-                                                            {/* TODO: Internationalize */}
-                                                            Draft
+                                                            {t(
+                                                                "formLabels.draft"
+                                                            )}
                                                         </div>
                                                     </Show>
                                                 </div>

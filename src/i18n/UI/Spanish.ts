@@ -131,6 +131,7 @@ export const Spanish = {
     updateResource: "Actualizar Recurso",
     editPost: "Editar",
     getLinks: "Obtener enlaces",
+    checkoutAsGuest: "Comprar como Invitado",
   },
 
   messages: {
@@ -259,6 +260,7 @@ export const Spanish = {
     more: "más",
     secular: "Laico",
     resourceLinks: "Enlaces de Recurso",
+    draft: "Borrador",
   },
 
   postLabels: {
