@@ -13,6 +13,7 @@ create or replace view "public"."sellerposts" as  SELECT seller_post.id,
     seller_post.resource_types,
     seller_post.listing_status,
     seller_post.secular,
+    seller_post.draft_status,
     seller_post.resource_urls,
     seller_post.resource_links
    FROM ((seller_post
