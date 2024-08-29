@@ -71,11 +71,11 @@ export const CreatorProfileView: Component = () => {
     });
 
     onMount(() => {
+        console.log("Mount running");
         setSession(User.session);
         if (typeof session() === "undefined") {
             alert(t("messages.signIn"));
         }
-        lazyLoadAllImages();
     });
 
     createEffect(() => {
@@ -83,6 +83,10 @@ export const CreatorProfileView: Component = () => {
         if (typeof session() !== "undefined") {
             fetchCreator(session()?.user.id!);
         }
+    });
+
+    createEffect(() => {
+        console.log("creatorImage value:", creatorImage());
     });
 
     const resetPassword = () => {
@@ -266,6 +270,9 @@ export const CreatorProfileView: Component = () => {
                 );
                 if (imageUrls) {
                     setCreatorImage(imageUrls);
+
+                    console.log(creatorImage());
+                    lazyLoadAllImages();
                 }
             }
         }

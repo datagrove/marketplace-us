@@ -67,7 +67,9 @@ export const downloadUserImage = async (path: string) => {
 };
 
 export const lazyLoadImage = (img: HTMLImageElement) => {
+    console.log("Lazy loading image:", img);
     const dataSrc = img.dataset.src;
+    console.log("Data set:", img.dataset);
     // Check if the image src is already set to data-src
     if (dataSrc && img.src !== dataSrc) {
         console.log("Original src:", img.src);
@@ -96,10 +98,14 @@ export const lazyLoadImage = (img: HTMLImageElement) => {
 };
 
 export const lazyLoadAllImages = () => {
+    console.log("Lazy loading all images...");
     const images = document.querySelectorAll("img[data-src]");
+    console.log("Images:", images);
+    console.log("Images length:", images.length);
 
     images.forEach((img) => {
         const imageElement = img as HTMLImageElement;
+        console.log("Image:", imageElement);
 
         // Check if the image has already loaded (in case of caching)
         if (imageElement.complete) {
