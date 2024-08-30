@@ -41,68 +41,68 @@ export const ViewCard: Component<Props> = (props) => {
         }
     }
 
-    createEffect(async () => {
-        if (props.posts) {
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = undefined);
+    // createEffect(async () => {
+    //     if (props.posts) {
+    //         const updatedPosts = await Promise.all(
+    //             props.posts.map(async (post: Post) => {
+    //                 post.image_urls
+    //                     ? (post.image_url = await downloadPostImage(
+    //                           post.image_urls.split(",")[0]
+    //                       ))
+    //                     : (post.image_url = undefined);
 
-                    // Set the default quantity to 1
-                    post.quantity = 1;
+    //                 // Set the default quantity to 1
+    //                 post.quantity = 1;
 
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", post.seller_id);
+    //                 const { data: sellerImg, error: sellerImgError } =
+    //                     await supabase
+    //                         .from("sellerview")
+    //                         .select("*")
+    //                         .eq("seller_id", post.seller_id);
 
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
+    //                 if (sellerImgError) {
+    //                     console.log(sellerImgError);
+    //                 }
 
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            post.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
+    //                 if (sellerImg) {
+    //                     if (sellerImg[0].image_url) {
+    //                         post.seller_img = await downloadUserImage(
+    //                             sellerImg[0].image_url
+    //                         );
+    //                     }
+    //                 }
 
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
+    // const { data: resourceTypeData, error } = await supabase
+    //     .from("resource_types")
+    //     .select("*");
 
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        sortResourceTypes(resourceTypeData);
-                        post.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            post.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        post.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-                    return post;
-                })
-            );
+    // if (error) {
+    //     console.log("supabase error: " + error.message);
+    // } else {
+    //     sortResourceTypes(resourceTypeData);
+    //     post.resourceTypes = [];
+    //     resourceTypeData.forEach((databaseResourceTypes) => {
+    //         post.resource_types.map(
+    //             (itemResourceType: string) => {
+    //                 if (
+    //                     itemResourceType ===
+    //                     databaseResourceTypes.id.toString()
+    //                 ) {
+    //                     post.resourceTypes!.push(
+    //                         databaseResourceTypes.type
+    //                     );
+    //                 }
+    //             }
+    //         );
+    //     });
+    // }
+    //                 return post;
+    //             })
+    //         );
 
-            setNewPosts(updatedPosts);
-        }
-    });
+    //         setNewPosts(updatedPosts);
+    //     }
+    // });
 
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
@@ -115,7 +115,7 @@ export const ViewCard: Component<Props> = (props) => {
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
-                {newPosts().map((post: Post) => (
+                {props.posts.map((post: Post) => (
                     <li class="mb-3 w-[99%]">
                         <a href={`/${lang}/posts/${post.id}`}>
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">

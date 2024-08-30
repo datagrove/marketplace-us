@@ -16,10 +16,6 @@ import person from "@src/assets/person.svg";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-// const values = ui[lang] as uiObject
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
-
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
@@ -29,49 +25,10 @@ export const HomeCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [postImages, setPostImages] = createSignal<string[]>([]);
 
-    createEffect(async () => {
-        if (props.posts) {
-            console.log("props.posts");
-            console.log(props.posts);
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = undefined);
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data, error } = await supabase
-                        .from("sellerview")
-                        .select("*")
-                        .eq("seller_id", post.seller_id);
-
-                    if (error) {
-                        console.log(error);
-                    }
-
-                    if (data) {
-                        if (data[0].image_url) {
-                            post.seller_img = await downloadUserImage(
-                                data[0].image_url
-                            );
-                        }
-                    }
-
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
-
     return (
         <div class="mb-4 flex justify-center">
             <ul class="flex flex-wrap justify-center md:flex-nowrap">
-                {newPosts().map((post: any) => (
+                {props.posts.map((post: any) => (
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}

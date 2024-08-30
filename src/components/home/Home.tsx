@@ -84,6 +84,8 @@ export const Home: Component = () => {
             resourceFilters: [],
             secularFilter: false,
             lang: lang,
+            listing_status: true,
+            draft_status: false,
         });
 
         if (
@@ -105,6 +107,8 @@ export const Home: Component = () => {
             secularFilter: false,
             lang: lang,
             orderAscending: true,
+            listing_status: true,
+            draft_status: false,
         });
 
         if (

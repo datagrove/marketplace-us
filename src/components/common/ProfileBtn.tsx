@@ -10,11 +10,11 @@ import { CreatorRegistrationRouting } from "../members/CreatorRegistrationRoutin
 import { LanguagePicker } from "./LanguagePicker";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ProfileBtn = () => {
     const [isUser, setIsUser] = createSignal<boolean | null>(false);
 
@@ -74,11 +74,11 @@ export const ProfileBtn = () => {
         <div class="">
             <button
                 onclick={clickHandler}
-                class="mr-4 flex rounded-lg md:border border-border1 px-3 py-2 dark:border-border1-DM md:mr-0"
+                class="mr-4 flex rounded-lg border-border1 px-3 py-2 dark:border-border1-DM md:mr-0 md:border"
                 aria-label={t("ariaLabels.navigation")}
             >
                 <svg
-                    class="mr-2 h-4 w-4 fill-icon1 dark:fill-icon1-DM hidden md:block"
+                    class="mr-2 hidden h-4 w-4 fill-icon1 dark:fill-icon1-DM md:block"
                     viewBox="0 0 32 32"
                     xmlns="http://www.w3.org/2000/svg"
                 >

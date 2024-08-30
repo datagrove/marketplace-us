@@ -21,6 +21,8 @@ async function fetchPosts({
     searchString,
     resourceFilters,
     secularFilter,
+    listing_status,
+    draft_status,
 }: FilterPostsParams) {
     const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
@@ -31,6 +33,8 @@ async function fetchPosts({
             resourceFilters: resourceFilters,
             secularFilter: secularFilter,
             lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
         }),
     });
     const data = await response.json();
@@ -136,6 +140,8 @@ export const ResourcesView: Component = () => {
             resourceFilters: resourceTypesFilters(),
             secularFilter: secularFilters(),
             lang: lang,
+            listing_status: true,
+            draft_status: false,
         });
 
         console.log(res);
@@ -168,6 +174,8 @@ export const ResourcesView: Component = () => {
                 resourceFilters: [],
                 secularFilter: false,
                 lang: lang,
+                listing_status: true,
+                draft_status: false,
             });
 
             setPosts(allPosts);
