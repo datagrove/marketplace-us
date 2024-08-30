@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
+import type { FilterPostsParams, Post } from "@lib/types";
 import { createEffect, createSignal, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
@@ -28,6 +28,37 @@ function redirectToResourcesPage() {
     window.location.href = `/${lang}/resources`;
 }
 
+async function fetchPosts({
+    subjectFilters,
+    gradeFilters,
+    searchString,
+    resourceFilters,
+    secularFilter,
+    lang,
+    draft_status,
+    listing_status,
+    orderAscending,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            subjectFilters: subjectFilters,
+            gradeFilters: gradeFilters,
+            searchString: searchString,
+            resourceFilters: resourceFilters,
+            secularFilter: secularFilter,
+            lang: lang,
+            limit: 8,
+            draft_status: draft_status,
+            listing_status: listing_status,
+            orderAscending: orderAscending,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
+
 export const Home: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
@@ -46,83 +77,45 @@ export const Home: Component = () => {
     let test: any;
 
     onMount(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: true })
-            .eq("listing_status", true)
-            .eq("draft_status", false)
-            .limit(8);
-        if (!data) {
+        const res = await fetchPosts({
+            subjectFilters: [],
+            gradeFilters: [],
+            searchString: "",
+            resourceFilters: [],
+            secularFilter: false,
+            lang: lang,
+        });
+
+        if (
+            res.body === null ||
+            res.body === undefined ||
+            res.body.length < 1
+        ) {
             alert("No posts available.");
         }
-        if (error) {
-            console.log("supabase error: " + error.message);
+
+        setPopularPosts(res.body);
+        console.log("Pop posts", popularPosts());
+
+        const newRes = await fetchPosts({
+            subjectFilters: [],
+            gradeFilters: [],
+            searchString: "",
+            resourceFilters: [],
+            secularFilter: false,
+            lang: lang,
+            orderAscending: true,
+        });
+
+        if (
+            newRes.body === null ||
+            newRes.body === undefined ||
+            newRes.body.length < 1
+        ) {
+            alert("No posts available.");
         } else {
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productSubjects.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            setPopularPosts(newItems);
-            console.log(popularPosts());
-        }
-    });
-
-    createEffect(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .eq("listing_status", true)
-            .eq("draft_status", false)
-            .order("id", { ascending: false })
-            .limit(8);
-
-        if (!data) {
-            alert("No posts available");
-        }
-
-        if (error) {
-            console.error("supabase error: " + error.message);
-        } else {
-            const popItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productSubjects.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            setNewPosts(popItems);
+            setNewPosts(newRes.body);
+            console.log("New Posts", newPosts());
         }
     });
 

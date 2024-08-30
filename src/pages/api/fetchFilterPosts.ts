@@ -1,10 +1,11 @@
-import supabase from "@lib/supabaseClientServiceRole";
+import supabase from "@lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import { useTranslations } from "@i18n/utils";
 import type { FilterPostsParams, Post } from "@lib/types";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
+import stripe from "@lib/stripe";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const {
@@ -14,6 +15,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         resourceFilters,
         secularFilter,
         lang,
+        limit,
+        draft_status,
+        listing_status,
+        orderAscending
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
@@ -23,9 +28,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         let query = supabase
             .from("sellerposts")
             .select("*")
-            .order("id", { ascending: false })
-            .eq("listing_status", true)
-            .eq("draft_status", false);
+            .order("id", { ascending: orderAscending ? orderAscending : false })
+            .eq("listing_status", listing_status? listing_status : true)
+            .eq("draft_status", draft_status? draft_status : false);
 
         if (Array.isArray(subjectFilters) && subjectFilters.length !== 0) {
             query = query.overlaps("product_subject", subjectFilters);
@@ -41,6 +46,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         }
         if (Array.isArray(resourceFilters) && resourceFilters.length !== 0) {
             query = query.overlaps("resource_types", resourceFilters);
+        }
+        if (limit){
+            query = query.limit(limit)
         }
 
         const { data: posts, error } = await query;
@@ -116,6 +124,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                             }
                         });
                     });
+
+                    if (post.price_id !== null) {
+                        const priceData = await stripe.prices.retrieve(
+                            post.price_id
+                        );
+                        post.price = priceData.unit_amount! / 100;
+                    }
 
                     return post;
                 })

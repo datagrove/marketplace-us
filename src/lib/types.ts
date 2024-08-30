@@ -66,4 +66,8 @@ export interface FilterPostsParams {
     resourceFilters: string[]; 
     secularFilter: boolean;
     lang: "en" | "es" | "fr";   
+    limit?: number;
+    draft_status?: boolean;
+    listing_status?: boolean;
+    orderAscending?: boolean;
 }

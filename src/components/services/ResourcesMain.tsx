@@ -1,33 +1,19 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import { createSignal, createEffect, onMount, Show } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
-import { GradeFilter } from "./GradeFilter";
-import { SubjectFilter } from "./SubjectFilter";
-import { SecularFilter } from "./SecularFilter";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import * as allFilters from "../posts/fetchPosts";
-import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import useLocalStorage from "@lib/LocalStorageHook";
-import { IconX } from "@tabler/icons-solidjs";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
 import type { FilterPostsParams } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 async function fetchPosts({
     subjectFilters,
@@ -36,7 +22,7 @@ async function fetchPosts({
     resourceFilters,
     secularFilter,
 }: FilterPostsParams) {
-    const response = await fetch("/api/filterPosts", {
+    const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
         body: JSON.stringify({
             subjectFilters: subjectFilters,
@@ -154,53 +140,49 @@ export const ResourcesView: Component = () => {
 
         console.log(res);
 
-        // if (res === null || res === undefined) {
-        //     noPostsMessage?.classList.remove("hidden");
-        //     setTimeout(() => {
-        //         noPostsMessage?.classList.add("hidden");
-        //     }, 3000);
+        if (
+            res.body === null ||
+            res.body === undefined ||
+            res.body.length < 1
+        ) {
+            noPostsMessage?.classList.remove("hidden");
+            setTimeout(() => {
+                noPostsMessage?.classList.add("hidden");
+            }, 3000);
 
-        //     setPosts([]);
-        //     setCurrentPosts([]);
-        //     console.error();
-        // } else if (Object.keys(res).length === 0) {
-        //     noPostsMessage?.classList.remove("hidden");
+            setPosts([]);
+            setCurrentPosts([]);
+            console.error();
 
-        //     setTimeout(() => {
-        //         noPostsMessage?.classList.add("hidden");
-        //     }, 3000);
+            timeouts.push(
+                setTimeout(() => {
+                    //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+                    clearAllFilters();
+                }, 3000)
+            );
 
-        //     timeouts.push(
-        //         setTimeout(() => {
-        //             //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-        //             clearAllFilters();
-        //         }, 3000)
-        //     );
+            let allPosts = await fetchPosts({
+                subjectFilters: [],
+                gradeFilters: [],
+                searchString: "",
+                resourceFilters: [],
+                secularFilter: false,
+                lang: lang,
+            });
 
-        //     let allPosts = await fetchPosts({
-        //         subjectFilters: [],
-        //         gradeFilters: [],
-        //         searchString: "",
-        //         resourceFilters: [],
-        //         secularFilter: false,
-        //         lang: lang,
-        //     });
+            setPosts(allPosts);
+            setCurrentPosts(allPosts);
+            console.log(allPosts);
+        } else {
+            for (let i = 0; i < timeouts.length; i++) {
+                clearTimeout(timeouts[i]);
+            }
 
-        //     // setPosts(allUpdatedPosts!);
-        //     // setCurrentPosts(allUpdatedPosts!);
-        //     // setPosts(allPosts);
-        //     // setCurrentPosts(allPosts);
-        //     console.log(allPosts);
-        // } else {
-        //     for (let i = 0; i < timeouts.length; i++) {
-        //         clearTimeout(timeouts[i]);
-        //     }
+            timeouts = [];
 
-        //     timeouts = [];
-
-        // setPosts(resPosts);
-        // setCurrentPosts(resPosts);
-        // }
+            setPosts(res.body);
+            setCurrentPosts(res.body);
+        }
     };
 
     const filterPostsByGrade = (grade: string) => {
@@ -245,10 +227,6 @@ export const ResourcesView: Component = () => {
         const resourceTypesCheckoxes = document.querySelectorAll(
             "input[type='checkbox'].resourceType"
         ) as NodeListOf<HTMLInputElement>;
-
-        console.log(subjectCheckboxes);
-        console.log(gradeCheckboxes);
-        console.log(resourceTypesCheckoxes);
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
