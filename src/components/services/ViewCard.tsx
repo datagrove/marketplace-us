@@ -4,12 +4,8 @@ import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SocialMediaShares } from "../posts/SocialMediaShares";
-import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
-import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/members/user/DownloadBtn";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
 

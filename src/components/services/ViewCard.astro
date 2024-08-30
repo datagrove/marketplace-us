@@ -1,0 +1,14 @@
+---
+import PostComponent from "./PostComponent.astro";
+import { fetchAllPosts } from "@components/posts/fetchPosts";
+
+const posts = await fetchAllPosts();
+
+if (posts === null || posts === undefined) {
+    console.error();
+}
+---
+
+<div>
+    {posts?.map((post) => <PostComponent post={post} />)}
+</div>

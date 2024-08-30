@@ -140,7 +140,6 @@ export const ResourcesView: Component = () => {
     let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
     const filterPosts = async () => {
-        console.log("Filtering posts...");
         const noPostsMessage = document.getElementById("no-posts-message");
 
         const res = await fetchPosts({
@@ -152,55 +151,188 @@ export const ResourcesView: Component = () => {
             lang: lang,
         });
 
-        console.log(res);
+        if (res === null || res === undefined) {
+            noPostsMessage?.classList.remove("hidden");
+            setTimeout(() => {
+                noPostsMessage?.classList.add("hidden");
+            }, 3000);
 
-        // if (res === null || res === undefined) {
-        //     noPostsMessage?.classList.remove("hidden");
-        //     setTimeout(() => {
-        //         noPostsMessage?.classList.add("hidden");
-        //     }, 3000);
+            setPosts([]);
+            setCurrentPosts([]);
+            console.error();
+        } else if (Object.keys(res).length === 0) {
+            noPostsMessage?.classList.remove("hidden");
 
-        //     setPosts([]);
-        //     setCurrentPosts([]);
-        //     console.error();
-        // } else if (Object.keys(res).length === 0) {
-        //     noPostsMessage?.classList.remove("hidden");
+            setTimeout(() => {
+                noPostsMessage?.classList.add("hidden");
+            }, 3000);
 
-        //     setTimeout(() => {
-        //         noPostsMessage?.classList.add("hidden");
-        //     }, 3000);
+            timeouts.push(
+                setTimeout(() => {
+                    //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+                    clearAllFilters();
+                }, 3000)
+            );
 
-        //     timeouts.push(
-        //         setTimeout(() => {
-        //             //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-        //             clearAllFilters();
-        //         }, 3000)
-        //     );
+            let allPosts = await fetchPosts({
+                subjectFilters: [],
+                gradeFilters: [],
+                searchString: "",
+                resourceFilters: [],
+                secularFilter: false,
+                lang: lang,
+            });
 
-        //     let allPosts = await fetchPosts({
-        //         subjectFilters: [],
-        //         gradeFilters: [],
-        //         searchString: "",
-        //         resourceFilters: [],
-        //         secularFilter: false,
-        //         lang: lang,
-        //     });
+            //Add the categories to the posts in the current language
+            // const allUpdatedPosts = await Promise.all(
+            //     allPosts
+            //         ? allPosts.map(async (item) => {
+            //               item.subject = [];
+            //               productCategories.forEach((productCategories) => {
+            //                   item.product_subject.map(
+            //                       (productSubject: string) => {
+            //                           if (
+            //                               productSubject ===
+            //                               productCategories.id
+            //                           ) {
+            //                               item.subject.push(
+            //                                   productCategories.name
+            //                               );
+            //                           }
+            //                       }
+            //                   );
+            //               });
+            //               delete item.product_subject;
 
-        //     // setPosts(allUpdatedPosts!);
-        //     // setCurrentPosts(allUpdatedPosts!);
-        //     // setPosts(allPosts);
-        //     // setCurrentPosts(allPosts);
-        //     console.log(allPosts);
-        // } else {
-        //     for (let i = 0; i < timeouts.length; i++) {
-        //         clearTimeout(timeouts[i]);
-        //     }
+            //               const { data: gradeData, error: gradeError } =
+            //                   await supabase.from("grade_level").select("*");
 
-        //     timeouts = [];
+            //               if (gradeError) {
+            //                   console.log(
+            //                       "supabase error: " + gradeError.message
+            //                   );
+            //               } else {
+            //                   item.grade = [];
+            //                   gradeData.forEach((databaseGrade) => {
+            //                       item.post_grade.map((itemGrade: string) => {
+            //                           if (
+            //                               itemGrade ===
+            //                               databaseGrade.id.toString()
+            //                           ) {
+            //                               item.grade.push(databaseGrade.grade);
+            //                           }
+            //                       });
+            //                   });
+            //               }
 
-        // setPosts(resPosts);
-        // setCurrentPosts(resPosts);
-        // }
+            //               const {
+            //                   data: resourceTypesData,
+            //                   error: resourceTypesError,
+            //               } = await supabase.from("resource_types").select("*");
+
+            //               if (resourceTypesError) {
+            //                   console.log(
+            //                       "supabase error: " +
+            //                           resourceTypesError.message
+            //                   );
+            //               } else {
+            //                   sortResourceTypes(resourceTypesData);
+            //                   item.resourceTypes = [];
+            //                   resourceTypesData.forEach(
+            //                       (databaseResourceTypes) => {
+            //                           item.resource_types.map(
+            //                               (itemResourceTypes: string) => {
+            //                                   if (
+            //                                       itemResourceTypes ===
+            //                                       databaseResourceTypes.id.toString()
+            //                                   ) {
+            //                                       item.resource_types.push(
+            //                                           databaseResourceTypes.resource_types
+            //                                       );
+            //                                   }
+            //                               }
+            //                           );
+            //                       }
+            //                   );
+            //               }
+
+            //               return item;
+            //           })
+            //         : []
+            // );
+
+            // setPosts(allUpdatedPosts!);
+            // setCurrentPosts(allUpdatedPosts!);
+            // setPosts(allPosts);
+            // setCurrentPosts(allPosts);
+            console.log(allPosts);
+        } else {
+            for (let i = 0; i < timeouts.length; i++) {
+                clearTimeout(timeouts[i]);
+            }
+
+            timeouts = [];
+
+            let resPosts = await Promise.all(
+                res.map(async (item) => {
+                    item.subject = [];
+                    productCategories.forEach((productCategories) => {
+                        item.product_subject.map((productSubject: string) => {
+                            if (productSubject === productCategories.id) {
+                                item.subject.push(productCategories.name);
+                            }
+                        });
+                    });
+                    delete item.product_subject;
+
+                    const { data: gradeData, error: gradeError } =
+                        await supabase.from("grade_level").select("*");
+
+                    if (gradeError) {
+                        console.log("supabase error: " + gradeError.message);
+                    } else {
+                        item.grade = [];
+                        gradeData.forEach((databaseGrade) => {
+                            item.post_grade.map((itemGrade: string) => {
+                                if (itemGrade === databaseGrade.id.toString()) {
+                                    item.grade.push(databaseGrade.grade);
+                                }
+                            });
+                        });
+                    }
+                    const {
+                        data: resourceTypesData,
+                        error: resourceTypesError,
+                    } = await supabase.from("resource_types").select("*");
+
+                    if (resourceTypesError) {
+                        console.log(
+                            "supabase error: " + resourceTypesError.message
+                        );
+                    } else {
+                        sortResourceTypes(resourceTypesData);
+                        item.resource_types = [];
+                        resourceTypesData.forEach((databaseResourceTypes) => {
+                            item.resource_types.map(
+                                (itemResourceTypes: string) => {
+                                    if (
+                                        itemResourceTypes ===
+                                        databaseResourceTypes.id.toString()
+                                    ) {
+                                        item.resource_types.push(
+                                            databaseResourceTypes.resource_types
+                                        );
+                                    }
+                                }
+                            );
+                        });
+                    }
+                    return item;
+                })
+            );
+            setPosts(resPosts);
+            setCurrentPosts(resPosts);
+        }
     };
 
     const filterPostsByGrade = (grade: string) => {
