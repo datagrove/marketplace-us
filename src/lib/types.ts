@@ -1,3 +1,5 @@
+import type { ui } from "@i18n/ui.ts";
+
 export interface Post {
     //Posts should be pulled from the sellerposts view
     id: number; //Post ID used for directing to the post details page
@@ -17,6 +19,7 @@ export interface Post {
     secular: boolean;
     draft_status: boolean;
     resource_urls: string;
+    unit_amount: number;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null; //Array of subject names
@@ -54,4 +57,17 @@ export interface Creator {
     last_name: string;
     seller_about: string;
     contribution: number;
+}
+
+export interface FilterPostsParams {
+    subjectFilters: string[]; 
+    gradeFilters: string[];   
+    searchString: string;
+    resourceFilters: string[]; 
+    secularFilter: boolean;
+    lang: "en" | "es" | "fr";   
+    limit?: number;
+    draft_status?: boolean;
+    listing_status?: boolean;
+    orderAscending?: boolean;
 }

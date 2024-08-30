@@ -1,39 +1,42 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import { createSignal, createEffect, onMount, Show } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { CategoryCarousel } from "./CategoryCarousel";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
-import { GradeFilter } from "./GradeFilter";
-import { SubjectFilter } from "./SubjectFilter";
-import { SecularFilter } from "./SecularFilter";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import * as allFilters from "../posts/fetchPosts";
-import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import useLocalStorage from "@lib/LocalStorageHook";
-import { IconX } from "@tabler/icons-solidjs";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
+import type { FilterPostsParams } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
+async function fetchPosts({
+    subjectFilters,
+    gradeFilters,
+    searchString,
+    resourceFilters,
+    secularFilter,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            subjectFilters: subjectFilters,
+            gradeFilters: gradeFilters,
+            searchString: searchString,
+            resourceFilters: resourceFilters,
+            secularFilter: secularFilter,
+            lang: lang,
+        }),
+    });
+    const data = await response.json();
 
-// interface Props {
-//     subject: string | null;
-//     grade: string | null;
-//     searchString: string | null;
-//     resourceTypes: string | null;
-// }
+    return data;
+}
 
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
@@ -123,17 +126,25 @@ export const ResourcesView: Component = () => {
     let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
     const filterPosts = async () => {
+        console.log("Filtering posts...");
         const noPostsMessage = document.getElementById("no-posts-message");
 
-        const res = await allFilters.fetchFilteredPosts(
-            subjectFilters(),
-            gradeFilters(),
-            searchString(),
-            resourceTypesFilters(),
-            secularFilters()
-        );
+        const res = await fetchPosts({
+            subjectFilters: subjectFilters(),
+            gradeFilters: gradeFilters(),
+            searchString: searchString(),
+            resourceFilters: resourceTypesFilters(),
+            secularFilter: secularFilters(),
+            lang: lang,
+        });
 
-        if (res === null || res === undefined) {
+        console.log(res);
+
+        if (
+            res.body === null ||
+            res.body === undefined ||
+            res.body.length < 1
+        ) {
             noPostsMessage?.classList.remove("hidden");
             setTimeout(() => {
                 noPostsMessage?.classList.add("hidden");
@@ -142,12 +153,6 @@ export const ResourcesView: Component = () => {
             setPosts([]);
             setCurrentPosts([]);
             console.error();
-        } else if (Object.keys(res).length === 0) {
-            noPostsMessage?.classList.remove("hidden");
-
-            setTimeout(() => {
-                noPostsMessage?.classList.add("hidden");
-            }, 3000);
 
             timeouts.push(
                 setTimeout(() => {
@@ -156,88 +161,18 @@ export const ResourcesView: Component = () => {
                 }, 3000)
             );
 
-            let allPosts = await allFilters.fetchAllPosts();
+            let allPosts = await fetchPosts({
+                subjectFilters: [],
+                gradeFilters: [],
+                searchString: "",
+                resourceFilters: [],
+                secularFilter: false,
+                lang: lang,
+            });
 
-            //Add the categories to the posts in the current language
-            const allUpdatedPosts = await Promise.all(
-                allPosts
-                    ? allPosts.map(async (item) => {
-                          item.subject = [];
-                          productCategories.forEach((productCategories) => {
-                              item.product_subject.map(
-                                  (productSubject: string) => {
-                                      if (
-                                          productSubject ===
-                                          productCategories.id
-                                      ) {
-                                          item.subject.push(
-                                              productCategories.name
-                                          );
-                                      }
-                                  }
-                              );
-                          });
-                          delete item.product_subject;
-
-                          const { data: gradeData, error: gradeError } =
-                              await supabase.from("grade_level").select("*");
-
-                          if (gradeError) {
-                              console.log(
-                                  "supabase error: " + gradeError.message
-                              );
-                          } else {
-                              item.grade = [];
-                              gradeData.forEach((databaseGrade) => {
-                                  item.post_grade.map((itemGrade: string) => {
-                                      if (
-                                          itemGrade ===
-                                          databaseGrade.id.toString()
-                                      ) {
-                                          item.grade.push(databaseGrade.grade);
-                                      }
-                                  });
-                              });
-                          }
-
-                          const {
-                              data: resourceTypesData,
-                              error: resourceTypesError,
-                          } = await supabase.from("resource_types").select("*");
-
-                          if (resourceTypesError) {
-                              console.log(
-                                  "supabase error: " +
-                                      resourceTypesError.message
-                              );
-                          } else {
-                              sortResourceTypes(resourceTypesData);
-                              item.resourceTypes = [];
-                              resourceTypesData.forEach(
-                                  (databaseResourceTypes) => {
-                                      item.resource_types.map(
-                                          (itemResourceTypes: string) => {
-                                              if (
-                                                  itemResourceTypes ===
-                                                  databaseResourceTypes.id.toString()
-                                              ) {
-                                                  item.resource_types.push(
-                                                      databaseResourceTypes.resource_types
-                                                  );
-                                              }
-                                          }
-                                      );
-                                  }
-                              );
-                          }
-
-                          return item;
-                      })
-                    : []
-            );
-
-            setPosts(allUpdatedPosts!);
-            setCurrentPosts(allUpdatedPosts!);
+            setPosts(allPosts);
+            setCurrentPosts(allPosts);
+            console.log(allPosts);
         } else {
             for (let i = 0; i < timeouts.length; i++) {
                 clearTimeout(timeouts[i]);
@@ -245,65 +180,8 @@ export const ResourcesView: Component = () => {
 
             timeouts = [];
 
-            let resPosts = await Promise.all(
-                res.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-                    const {
-                        data: resourceTypesData,
-                        error: resourceTypesError,
-                    } = await supabase.from("resource_types").select("*");
-
-                    if (resourceTypesError) {
-                        console.log(
-                            "supabase error: " + resourceTypesError.message
-                        );
-                    } else {
-                        sortResourceTypes(resourceTypesData);
-                        item.resource_types = [];
-                        resourceTypesData.forEach((databaseResourceTypes) => {
-                            item.resource_types.map(
-                                (itemResourceTypes: string) => {
-                                    if (
-                                        itemResourceTypes ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        item.resource_types.push(
-                                            databaseResourceTypes.resource_types
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-                    return item;
-                })
-            );
-            setPosts(resPosts);
-            setCurrentPosts(resPosts);
+            setPosts(res.body);
+            setCurrentPosts(res.body);
         }
     };
 
@@ -349,10 +227,6 @@ export const ResourcesView: Component = () => {
         const resourceTypesCheckoxes = document.querySelectorAll(
             "input[type='checkbox'].resourceType"
         ) as NodeListOf<HTMLInputElement>;
-
-        console.log(subjectCheckboxes);
-        console.log(gradeCheckboxes);
-        console.log(resourceTypesCheckoxes);
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
@@ -501,70 +375,6 @@ export const ResourcesView: Component = () => {
                         clearResourceTypes={clearResourceTypes}
                         filterPostsByResourceTypes={filterPostsByResourceTypes}
                     />
-                    {/* <div class="sticky top-0 w-3/12">
-                        <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
-                            <div class="flex w-full">
-                                <button
-                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                                    onclick={clearGrade}
-                                    aria-label={t(
-                                        "clearFilters.filterButtons.2.ariaLabel"
-                                    )}
-                                >
-                                    <div class="flex items-center">
-                                        <IconX stroke={"2"} class="h-3 w-3" />
-                                        <p class="text-xs">
-                                            {t(
-                                                "clearFilters.filterButtons.2.text"
-                                            )}
-                                        </p>
-                                    </div>
-                                </button>
-
-                                <button
-                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                                    onclick={clearSubjects}
-                                    aria-label={t(
-                                        "clearFilters.filterButtons.1.ariaLabel"
-                                    )}
-                                >
-                                    <div class="flex items-center">
-                                        <IconX stroke={"2"} class="h-3 w-3" />
-                                        <p class="text-xs">
-                                            {t(
-                                                "clearFilters.filterButtons.1.text"
-                                            )}
-                                        </p>
-                                    </div>
-                                </button>
-                            </div>
-
-                            <button
-                                class="clearBtnRectangle flex w-full justify-center"
-                                onclick={clearAllFilters}
-                                aria-label={t(
-                                    "clearFilters.filterButtons.0.ariaLabel"
-                                )}
-                            >
-                                <div class="flex items-center">
-                                    <IconX stroke={"2"} class="h-3 w-3" />
-                                    <p class="text-xs">
-                                        {t("clearFilters.filterButtons.0.text")}
-                                    </p>
-                                </div>
-                            </button>
-                        </div>
-
-                        <div class="mr-4 w-11/12">
-                            <GradeFilter
-                                filterPostsByGrade={filterPostsByGrade}
-                            />
-                        </div>
-
-                        <div class="w-11/12 md:mr-4">
-                            <SubjectFilter filterPosts={setCategoryFilter} />
-                        </div>
-                    </div> */}
                 </Show>
 
                 <div class="w-11/12 items-center md:w-8/12 md:flex-1">
