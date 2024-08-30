@@ -3,6 +3,7 @@ import { createEffect, createSignal, type JSX } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import placeholderImg from "../../assets/userImagePlaceholder.svg";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { downloadUserImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -24,37 +25,14 @@ const UserImage: Component<Props> = (props) => {
     // const [imageUrl, setImageUrl] = createSignal({ placeholderImg });
     const [uploading, setUploading] = createSignal(false);
 
-    createEffect(() => {
-        if (props.url) downloadImage(props.url);
-    });
-
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-
-            const webpUrl = webpData.signedUrl;
-            const jpegUrl = jpegData.signedUrl;
-            const url = { webpUrl, jpegUrl };
-
-            setImageUrl(url);
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
+    createEffect(async () => {
+        if (props.url) {
+            const newUrl = await downloadUserImage(props.url);
+            if (newUrl) {
+                setImageUrl(newUrl);
             }
         }
-    };
+    });
 
     const uploadImage: JSX.EventHandler<HTMLInputElement, Event> = async (
         event
@@ -105,7 +83,10 @@ const UserImage: Component<Props> = (props) => {
                         }
                         props.onUpload(event, filePath);
 
-                        downloadImage(filePath);
+                        const newUrl = await downloadUserImage(filePath);
+                        if (newUrl) {
+                            setImageUrl(newUrl);
+                        }
                     } else {
                         throw new Error("Image formatting failed.");
                     }

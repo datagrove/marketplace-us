@@ -5,6 +5,13 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import {
+    downloadPostImage,
+    downloadUserImage,
+    lazyLoadImage,
+} from "@lib/imageHelper";
+import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
+import person from "@src/assets/person.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -29,7 +36,7 @@ export const HomeCard: Component<Props> = (props) => {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: Post) => {
                     post.image_urls
-                        ? (post.image_url = await downloadImage(
+                        ? (post.image_url = await downloadPostImage(
                               post.image_urls.split(",")[0]
                           ))
                         : (post.image_url = undefined);
@@ -47,7 +54,7 @@ export const HomeCard: Component<Props> = (props) => {
 
                     if (data) {
                         if (data[0].image_url) {
-                            post.seller_img = await downloadCreatorImage(
+                            post.seller_img = await downloadUserImage(
                                 data[0].image_url
                             );
                         }
@@ -60,62 +67,6 @@ export const HomeCard: Component<Props> = (props) => {
             setNewPosts(updatedPosts);
         }
     });
-
-    //REFACTOR: make this a helper function for all components that need it
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    //REFACTOR: make this a helper function for all components that need it
-    const downloadCreatorImage = async (image_Url: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${image_Url}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${image_Url}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
 
     return (
         <div class="mb-4 flex justify-center">
@@ -137,12 +88,15 @@ export const HomeCard: Component<Props> = (props) => {
                                         {post.image_url ? (
                                             <picture>
                                                 <source
-                                                    srcset={
+                                                    data-srcset={
                                                         post.image_url.webpUrl
                                                     }
                                                 />
                                                 <img
-                                                    src={post.image_url.jpegUrl}
+                                                    src={postPlaceHolder.src}
+                                                    data-src={
+                                                        post.image_url.jpegUrl
+                                                    }
                                                     alt={
                                                         post.image_urls.split(
                                                             ","
@@ -151,32 +105,35 @@ export const HomeCard: Component<Props> = (props) => {
                                                             : "No Image"
                                                     }
                                                     class="h-40 w-40 rounded-lg object-contain"
+                                                    loading="lazy"
+                                                    onload={(e) => {
+                                                        lazyLoadImage(
+                                                            e.currentTarget as HTMLImageElement
+                                                        );
+                                                    }}
                                                 />
                                             </picture>
                                         ) : (
-                                            <svg
-                                                // width="100px"
-                                                // height="100px"
-                                                viewBox="0 0 152.13541 152.13544"
-                                                version="1.1"
-                                                id="svg1"
-                                                class="h-full w-full fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <defs id="defs1" />
-                                                <g
-                                                    id="layer1"
-                                                    transform="translate(-55.18229,-70.37966)"
-                                                >
-                                                    <g
-                                                        id="g1"
-                                                        transform="matrix(0.82682292,0,0,0.82682292,25.416666,40.614035)"
-                                                    >
-                                                        <path
-                                                            d="M 208,36 H 48 A 12.01312,12.01312 0 0 0 36,48 v 160 a 12.01312,12.01312 0 0 0 12,12 h 160 a 12.01312,12.01312 0 0 0 12,-12 V 48 A 12.01312,12.01312 0 0 0 208,36 Z m 4,172 a 4.004,4.004 0 0 1 -4,4 H 48 a 4.004,4.004 0 0 1 -4,-4 v -30.34369 l 33.17187,-33.171 a 4.00208,4.00208 0 0 1 5.65723,0 l 20.68652,20.68652 a 12.011,12.011 0 0 0 16.96973,0 l 44.68652,-44.68652 a 4.00208,4.00208 0 0 1 5.65723,0 L 212,161.65625 Z m 0,-57.65625 -35.51465,-35.51465 a 11.99916,11.99916 0 0 0 -16.96973,0 l -44.68652,44.68652 a 4.00681,4.00681 0 0 1 -5.65723,0 L 88.48535,138.8291 a 12.01009,12.01009 0 0 0 -16.96973,0 L 44,166.34393 V 48 a 4.004,4.004 0 0 1 4,-4 h 160 a 4.004,4.004 0 0 1 4,4 z M 108.001,92 v 0.0019 a 8.001,8.001 0 1 1 0,-0.0019 z"
-                                                            id="path1"
-                                                        />
-                                                    </g>
-                                                </g>
+                                            <svg viewBox="0 0 180 180">
+                                                <circle
+                                                    cx="90.255"
+                                                    cy="90.193"
+                                                    r="86.345"
+                                                    style="fill:none;fill-opacity:1;stroke:currentColor;stroke-width:2.31085;stroke-dasharray:none;stroke-opacity:1"
+                                                />
+                                                <circle
+                                                    cx="90.114"
+                                                    cy="90.788"
+                                                    r="79.812"
+                                                    style="fill:none;fill-opacity:1;stroke:currentColor;stroke-width:2.13599;stroke-dasharray:none;stroke-opacity:1"
+                                                />
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M12.063 4.042c2.997-.367 5.737 1.714 6.22 4.689a1 1 0 0 0 .534.731 3.976 3.976 0 0 1 2.153 3.077c.266 2.187-1.285 4.17-3.452 4.435a3.846 3.846 0 0 1-1.018-.016c-.362-.057-.566-.155-.641-.218a1 1 0 0 0-1.274 1.542c.475.393 1.09.57 1.604.651a5.838 5.838 0 0 0 1.572.026c3.271-.4 5.592-3.386 5.195-6.661a5.974 5.974 0 0 0-2.794-4.372c-.86-3.764-4.432-6.348-8.342-5.87a7.607 7.607 0 0 0-5.836 4.065C2.755 6.635 1 9.606 1 12.631c0 .975.334 2.501 1.491 3.798 1.186 1.329 3.13 2.297 6.117 2.297a1 1 0 1 0 0-2c-2.526 0-3.885-.8-4.625-1.63-.769-.86-.983-1.88-.983-2.464 0-1.895.85-3.47 2.22-4.18a7.675 7.675 0 0 0-.036 2.116 1 1 0 1 0 1.986-.241 5.638 5.638 0 0 1 .401-2.884 5.615 5.615 0 0 1 4.492-3.4Zm4.595 8.71a1 1 0 0 0-1.316-1.505l-3.358 2.938-2.344-1.953a1 1 0 0 0-1.28 1.536l2.64 2.2V22a1 1 0 1 0 2 0v-6.046z"
+                                                    clip-rule="evenodd"
+                                                    style="fill:currentColor;fill-opacity:1;stroke:none;stroke-width:1.00012;stroke-dasharray:none;stroke-opacity:1"
+                                                    transform="matrix(5.90906 0 0 6.19044 17.877 12.727)"
+                                                />
                                             </svg>
                                         )}
                                     </div>
@@ -213,18 +170,25 @@ export const HomeCard: Component<Props> = (props) => {
                                             {post.seller_img ? (
                                                 <picture>
                                                     <source
-                                                        srcset={
+                                                        data-srcset={
                                                             post.seller_img
                                                                 .webpUrl
                                                         }
                                                     />
                                                     <img
-                                                        src={
+                                                        src={person.src}
+                                                        data-src={
                                                             post.seller_img
                                                                 .jpegUrl
                                                         }
                                                         class={`h-[25px] w-[25px] rounded-full`}
                                                         alt={`${post.seller_name} image`}
+                                                        loading="lazy"
+                                                        onload={(e) => {
+                                                            lazyLoadImage(
+                                                                e.currentTarget as HTMLImageElement
+                                                            );
+                                                        }}
                                                     />
                                                 </picture>
                                             ) : (

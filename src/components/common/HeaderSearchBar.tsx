@@ -67,7 +67,7 @@ export const SearchBar: Component = () => {
     return (
         <div class="search-form mx-4 mt-2 flex h-full w-full items-center justify-center">
             <div class="form flex h-full w-full items-center justify-between rounded-full border border-border1 px-1 text-ptext1  focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM">
-                <label class="sr-only" for="search">
+                <label class="sr-only" for="headerSearch">
                     {t("formLabels.search")}
                 </label>
                 <input

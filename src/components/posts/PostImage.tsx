@@ -5,6 +5,7 @@ import placeholderImg from "../../assets/userImagePlaceholder.svg";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
+import { downloadPostImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -63,29 +64,7 @@ const PostImage: Component<Props> = (props) => {
 
     const downloadImage = async (path: string) => {
         try {
-            //Start here and create 2 signed urls from the different folders webp and jpeg in the supabase storage
-            //return and object with both URLs to use in a picture tag
-            //Consider fallback for current images already uploaded and what to do when editing those posts
-            console.log("ImageUrl", imageUrl());
-            console.log("Downloading", path);
-
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-
-            const webpUrl = webpData.signedUrl;
-            const jpegUrl = jpegData.signedUrl;
-            const url = { webpUrl, jpegUrl };
+            const url = await downloadPostImage(path);
 
             setImageIds((prevIds) => {
                 const newIds = new Set(prevIds);
@@ -95,8 +74,10 @@ const PostImage: Component<Props> = (props) => {
 
             setImageUrl((prevUrls) => {
                 // Ensure no duplicate URLs
-                if (!prevUrls.includes(url)) {
-                    return [...prevUrls, url];
+                if (url) {
+                    if (!prevUrls.includes(url)) {
+                        return [...prevUrls, url];
+                    }
                 }
                 return prevUrls;
             });
