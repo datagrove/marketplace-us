@@ -12,6 +12,7 @@ import { FavoriteButton } from "@components/posts/AddFavorite";
 import { doc } from "prettier";
 import type { AuthSession } from "@supabase/supabase-js";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
+import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -39,7 +40,7 @@ export const MobileViewCard: Component<Props> = (props) => {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: any) => {
                     post.image_urls
-                        ? (post.image_url = await downloadImage(
+                        ? (post.image_url = await downloadPostImage(
                               post.image_urls.split(",")[0]
                           ))
                         : (post.image_url = null);
@@ -56,7 +57,7 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                     if (sellerImg) {
                         if (sellerImg[0].image_url) {
-                            post.seller_img = await downloadCreatorImage(
+                            post.seller_img = await downloadUserImage(
                                 sellerImg[0].image_url
                             );
                         }
@@ -103,60 +104,6 @@ export const MobileViewCard: Component<Props> = (props) => {
 
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    const downloadCreatorImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     function changeShowBtn(e: Event, postId: number) {

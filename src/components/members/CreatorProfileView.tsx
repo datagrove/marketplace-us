@@ -22,6 +22,12 @@ import { PayoutButton } from "@components/members/creator/PayoutButton";
 import { MobileViewCard } from "@components/services/MobileViewCard";
 import type { Creator } from "@lib/types";
 import { TinyComp } from "@components/posts/TinyComp";
+import {
+    downloadUserImage,
+    lazyLoadAllImages,
+    lazyLoadImage,
+} from "@lib/imageHelper";
+import person from "@src/assets/person.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -65,6 +71,7 @@ export const CreatorProfileView: Component = () => {
     });
 
     onMount(() => {
+        console.log("Mount running");
         setSession(User.session);
         if (typeof session() === "undefined") {
             alert(t("messages.signIn"));
@@ -76,6 +83,10 @@ export const CreatorProfileView: Component = () => {
         if (typeof session() !== "undefined") {
             fetchCreator(session()?.user.id!);
         }
+    });
+
+    createEffect(() => {
+        console.log("creatorImage value:", creatorImage());
     });
 
     const resetPassword = () => {
@@ -254,36 +265,18 @@ export const CreatorProfileView: Component = () => {
                 creator()?.image_url === null
             ) {
             } else {
-                await downloadImage(creator()?.image_url!);
-                setImageUrl(creator()?.image_url!);
-                console.log(imageUrl());
+                const imageUrls = await downloadUserImage(
+                    creator()?.image_url!
+                );
+                if (imageUrls) {
+                    setCreatorImage(imageUrls);
+
+                    console.log(creatorImage());
+                    lazyLoadAllImages();
+                }
             }
         }
     });
-
-    const downloadImage = async (image_Url: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${image_Url}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${image_Url}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            setCreatorImage({ webpUrl, jpegUrl });
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const enableEditMode = (e: Event) => {
         console.log("in the enableEditMode function");
@@ -331,13 +324,15 @@ export const CreatorProfileView: Component = () => {
                             <div class="absolute left-4 top-6 flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM md:left-12">
                                 <picture>
                                     <source
-                                        srcset={creatorImage().webpUrl}
+                                        data-srcset={creatorImage().webpUrl}
                                         type="image/webp"
                                     />
                                     <img
-                                        src={creatorImage().jpegUrl}
+                                        src={person.src}
+                                        data-src={creatorImage().jpegUrl}
                                         class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
                                         alt={`${t("postLabels.creatorProfileImage")} 1`}
+                                        loading="lazy"
                                     />
                                 </picture>
                             </div>

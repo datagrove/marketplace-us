@@ -14,6 +14,7 @@ import { EditPost } from "./EditPost";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
+import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -58,18 +59,6 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             location.href = `/${lang}/404`;
         } else if (props.postId) {
             await fetchPost(+props.postId);
-        }
-    });
-
-    onMount(async () => {
-        if (post() !== undefined) {
-            if (
-                post()?.image_urls === undefined ||
-                post()?.image_urls === null
-            ) {
-            } else {
-                await downloadImages(post()?.image_urls!);
-            }
         }
     });
 
@@ -133,7 +122,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
                     if (sellerImg) {
                         if (sellerImg[0].image_url) {
-                            item.seller_img = await downloadCreatorImage(
+                            item.seller_img = await downloadUserImage(
                                 sellerImg[0].image_url
                             );
                         }
@@ -208,7 +197,13 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 post()?.image_urls === null
             ) {
             } else {
-                await downloadImages(post()?.image_urls!);
+                const imageUrls = post()?.image_urls?.split(",");
+                imageUrls?.forEach(async (imageUrl: string) => {
+                    const url = await downloadPostImage(imageUrl);
+                    if (url) {
+                        setPostImages([...postImages(), url]);
+                    }
+                });
             }
         }
     });
@@ -219,62 +214,6 @@ export const MobileViewFullPost: Component<Props> = (props) => {
 
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImages = async (image_Urls: string) => {
-        try {
-            const imageUrls = image_Urls.split(",");
-            imageUrls.forEach(async (imageUrl: string) => {
-                const { data: webpData, error: webpError } =
-                    await supabase.storage
-                        .from("post.image")
-                        .createSignedUrl(`webp/${imageUrl}.webp`, 60 * 60);
-                if (webpError) {
-                    throw webpError;
-                }
-                const webpUrl = webpData.signedUrl;
-
-                const { data: jpegData, error: jpegError } =
-                    await supabase.storage
-                        .from("post.image")
-                        .createSignedUrl(`jpeg/${imageUrl}.jpeg`, 60 * 60);
-                if (jpegError) {
-                    throw jpegError;
-                }
-                const jpegUrl = jpegData.signedUrl;
-
-                setPostImages([...postImages(), { webpUrl, jpegUrl }]);
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const downloadCreatorImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("user.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     function changeDetails() {

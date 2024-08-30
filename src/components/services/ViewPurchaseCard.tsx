@@ -6,6 +6,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
 import type { PurchasedPost } from "@lib/types";
+import { downloadPostImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -29,7 +30,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
             const updatedPosts = await Promise.all(
                 props.posts.map(async (post: PurchasedPost) => {
                     post.image_urls
-                        ? (post.image_url = await downloadImage(
+                        ? (post.image_url = await downloadPostImage(
                               post.image_urls.split(",")[0]
                           ))
                         : (post.image_url = undefined);
@@ -52,34 +53,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
 
     const follow = () => {
         alert(t("messages.comingSoon"));
-    };
-
-    //REFACTOR: Helper Function
-    const downloadImage = async (path: string) => {
-        try {
-            const { data: webpData, error: webpError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`webp/${path}.webp`, 60 * 60);
-            if (webpError) {
-                throw webpError;
-            }
-            const webpUrl = webpData.signedUrl;
-
-            const { data: jpegData, error: jpegError } = await supabase.storage
-                .from("post.image")
-                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60);
-            if (jpegError) {
-                throw jpegError;
-            }
-            const jpegUrl = jpegData.signedUrl;
-
-            const url = { webpUrl, jpegUrl };
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     return (
