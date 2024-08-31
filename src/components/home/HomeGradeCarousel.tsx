@@ -1,17 +1,16 @@
 import type { Component } from "solid-js";
 import { createSignal, onMount } from "solid-js";
-import supabase from "../../lib/supabaseClient";
+import supabase from "../../lib/supabaseClientServer";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
+// const lang = getLangFromUrl(new URL(window.location.href));
 
-function selectGradeCarousel(gradeBtn: any) {
-    localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
-    console.log(JSON.stringify([gradeBtn.id]));
-    window.location.href = `/${lang}/resources`;
+interface Props {
+    lang: "en" | "es" | "fr";
 }
 
-export const HomeGradeCarousel: Component = () => {
+export const HomeGradeCarousel: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
     const [grades, setGrades] = createSignal<
         Array<{ grade: string; id: number }>
     >([]);
@@ -27,6 +26,12 @@ export const HomeGradeCarousel: Component = () => {
             setGrades(gradeData);
         }
     });
+
+    function selectGradeCarousel(gradeBtn: any) {
+        localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
+        console.log(JSON.stringify([gradeBtn.id]));
+        window.location.href = `/${lang()}/resources`;
+    }
 
     return (
         <div class="w-full overflow-x-scroll">

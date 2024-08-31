@@ -159,11 +159,6 @@ export const FiltersMobile: Component<Props> = (props) => {
             ]);
             setResourceTypesFilterCount(resourceTypesFilters().length);
             checkResourceTypesBoxes();
-        } else {
-            setGradeFilters([]);
-            grade().forEach((grade) => {
-                grade.checked = false;
-            });
         }
 
         if (screenSize() !== "sm") {
@@ -699,9 +694,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         <div class="flex items-center">
                                             <input
                                                 aria-label={
-                                                    t(
-                                                        "ariaLabels.checkboxGrade"
-                                                    ) + item.type
+                                                    item.type +
+                                                    t("ariaLabels.checkbox")
                                                 }
                                                 type="checkbox"
                                                 id={item.id.toString()}
@@ -773,7 +767,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                         <div class="ml-8 flex flex-wrap">
                             <For each={grade()}>
-                                {(item, index) => (
+                                {(item) => (
                                     <div class="flex w-1/2 flex-row flex-wrap py-1">
                                         <div class="flex items-center">
                                             {/* TODO - capture selected checkboxes in a signal, if included pre-check them */}

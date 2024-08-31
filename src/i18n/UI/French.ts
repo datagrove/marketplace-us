@@ -412,6 +412,7 @@ export const French = {
     increaseQuantity: "Augmenter la quantité",
     decreaseQuantity: "Diminuer la quantité",
     checkboxGrade: "Case à cocher pour sélectionner le niveau scolaire",
+    checkbox: "Case à cocher",
     readMoreAbout: "En savoir plus sur",
   },
 

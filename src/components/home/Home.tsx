@@ -1,19 +1,20 @@
-import type { Component } from "solid-js";
+import type { Component, JSXElement } from "solid-js";
 import type { FilterPostsParams, Post } from "@lib/types";
-import { createEffect, createSignal, Show, onMount } from "solid-js";
+import { createSignal, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
 import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
+// const lang = getLangFromUrl(new URL(window.location.href));
 
-function redirectToResourcesPage() {
-    window.location.href = `/${lang}/resources`;
+interface Props {
+    lang: "en" | "es" | "fr";
+    stickyFilters: JSXElement;
+    subjectCarousel: JSXElement;
 }
 
 async function fetchPosts({
@@ -47,7 +48,8 @@ async function fetchPosts({
     return data;
 }
 
-export const Home: Component = () => {
+export const Home: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
     const [popularPosts, setPopularPosts] = createSignal<Array<Post>>([]);
     const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
 
@@ -58,7 +60,7 @@ export const Home: Component = () => {
             searchString: "",
             resourceFilters: [],
             secularFilter: false,
-            lang: lang,
+            lang: lang(),
             listing_status: true,
             draft_status: false,
         });
@@ -80,7 +82,7 @@ export const Home: Component = () => {
             searchString: "",
             resourceFilters: [],
             secularFilter: false,
-            lang: lang,
+            lang: lang(),
             orderAscending: true,
             listing_status: true,
             draft_status: false,
@@ -100,12 +102,19 @@ export const Home: Component = () => {
 
     const screenSize = useStore(windowSize);
 
+    const t = useTranslations(props.lang);
+    function redirectToResourcesPage() {
+        window.location.href = `/${language}/resources`;
+    }
+
+    const language = lang();
+
     return (
         <div class="">
-            <HomeStickyFilters />
+            {props.stickyFilters}
 
             <div id="home-scrolling" class="scroll">
-                <a href={`/${lang}/creator/createaccount`}>
+                <a href={`/${language}/creator/createaccount`}>
                     <div
                         id="header-image"
                         class="flex h-24 items-center justify-center rounded-md bg-gradient-to-r from-highlight1 dark:from-[#3E8E3E] dark:via-highlight1-DM dark:to-[#3E8E3E]"
@@ -150,7 +159,7 @@ export const Home: Component = () => {
                         {t("pageTitles.popularResources")}
                     </h3>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
-                        <HomeCard posts={popularPosts()} />
+                        <HomeCard posts={popularPosts()} lang={lang()} />
                     </div>
                 </div>
 
@@ -158,10 +167,10 @@ export const Home: Component = () => {
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopBySubject")}
                     </h3>
-                    <HomeSubjectCarousel />
+                    {props.subjectCarousel}
                 </div>
 
-                <a href={`/${lang}/about`}>
+                <a href={`/${language}/about`}>
                     <div
                         id="home-image-1"
                         class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM dark:via-black dark:to-inputBorder1-DM"
@@ -180,7 +189,7 @@ export const Home: Component = () => {
                         {t("pageTitles.newResources")}
                     </h3>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
-                        <HomeCard posts={newPosts()} />
+                        <HomeCard posts={newPosts()} lang={lang()} />
                     </div>
                 </div>
 
@@ -188,7 +197,7 @@ export const Home: Component = () => {
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopByGrade")}
                     </h3>
-                    <HomeGradeCarousel />
+                    <HomeGradeCarousel lang={lang()} />
                 </div>
 
                 <a href="https://forms.gle/e1snHR7pnAFRTa1MA" target="_blank">

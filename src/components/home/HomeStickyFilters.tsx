@@ -1,166 +1,22 @@
 import type { Component } from "solid-js";
 import { createSignal, For, onMount } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import supabase from "@lib/supabaseClientServer";
+import { useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
-
-//all subjects in the database
-let subjects_array: Array<{ product_subject: string; id: number }> = [];
-//selected subjects
-let selected_subjects_array: Array<string> = [];
-
-const { data: subject, error: subject_error } = await supabase
-    .from("post_subject")
-    .select("subject, id")
-    .order("subject", { ascending: true });
-
-if (subject_error) {
-    console.error("supabase error: " + subject_error.message);
-} else {
-    subject.forEach((subject) => {
-        subjects_array.push({
-            product_subject: subject.subject,
-            id: subject.id,
-        });
-    });
-    subjects_array.sort((a, b) =>
-        a.product_subject > b.product_subject ? 0 : -1
-    );
+interface Props {
+    lang: "en" | "es" | "fr";
 }
 
-function hideFilterDivs() {
-    hideGradeFilters();
-    hideSubjectFilters();
-    hideResourceTypeFilters();
-}
-
-function showGradeFilters() {
-    let gradeDiv = document.getElementById("gradeDiv");
-
-    if (gradeDiv?.classList.contains("hidden")) {
-        gradeDiv.classList.remove("hidden");
-        gradeDiv.classList.add("inline");
-
-        hideSubjectFilters();
-        hideResourceTypeFilters();
-    } else if (gradeDiv?.classList.contains("inline")) {
-        gradeDiv?.classList.remove("inline");
-        gradeDiv?.classList.add("hidden");
-    }
-}
-
-function hideGradeFilters() {
-    let gradeDiv = document.getElementById("gradeDiv");
-
-    if (gradeDiv?.classList.contains("inline")) {
-        gradeDiv.classList.remove("inline");
-        gradeDiv.classList.add("hidden");
-    }
-}
-
-function showSubjectFilters() {
-    let subjectDiv = document.getElementById("subjectDiv");
-
-    if (subjectDiv?.classList.contains("hidden")) {
-        subjectDiv.classList.remove("hidden");
-        subjectDiv.classList.add("inline");
-
-        hideGradeFilters();
-        hideResourceTypeFilters();
-    } else {
-        subjectDiv?.classList.remove("inline");
-        subjectDiv?.classList.add("hidden");
-    }
-}
-
-function hideSubjectFilters() {
-    let subjectDiv = document.getElementById("subjectDiv");
-
-    if (subjectDiv?.classList.contains("inline")) {
-        subjectDiv.classList.remove("inline");
-        subjectDiv.classList.add("hidden");
-    }
-}
-
-function showResourceTypeFilters() {
-    let resourceTypeFilterDiv = document.getElementById("resourceTypeDiv");
-
-    if (resourceTypeFilterDiv?.classList.contains("hidden")) {
-        resourceTypeFilterDiv.classList.remove("hidden");
-        resourceTypeFilterDiv.classList.add("inline");
-
-        hideSubjectFilters();
-        hideGradeFilters();
-    } else if (resourceTypeFilterDiv?.classList.contains("inline")) {
-        resourceTypeFilterDiv?.classList.remove("inline");
-        resourceTypeFilterDiv?.classList.add("hidden");
-    }
-}
-
-function hideResourceTypeFilters() {
-    let resourceTypeFilterDiv = document.getElementById("resourceTypeDiv");
-
-    if (resourceTypeFilterDiv?.classList.contains("inline")) {
-        resourceTypeFilterDiv.classList.remove("inline");
-        resourceTypeFilterDiv.classList.add("hidden");
-    }
-}
-
-function addSelectedSubject(id: string) {
-    let subjectErrorMessage = document.getElementById("selectSubjectMessage");
-
-    subjectErrorMessage?.classList.remove("inline");
-    subjectErrorMessage?.classList.add("hidden");
-
-    if (selected_subjects_array.includes(id)) {
-        let currentSubjectFilters = selected_subjects_array.filter(
-            (el) => el !== id
-        );
-        selected_subjects_array = currentSubjectFilters;
-    } else {
-        selected_subjects_array.push(id);
-    }
-    console.log(selected_subjects_array);
-}
-
-function fetchFilteredResources() {
-    if (selected_subjects_array.length < 1) {
-        let errorMessage = document.getElementById("selectSubjectMessage");
-        let subjectCheckboxes =
-            document.getElementsByClassName("subjectCheckbox");
-
-        errorMessage?.classList.remove("hidden");
-        errorMessage?.classList.add("inline");
-
-        let check = setInterval(function () {
-            for (let i = 0; i < subjectCheckboxes.length; i++) {
-                subjectCheckboxes[i].addEventListener("change", () => {
-                    clearInterval(check);
-                });
-            }
-            errorMessage?.classList.remove("inline");
-            errorMessage?.classList.add("hidden");
-        }, 5000);
-    } else {
-        localStorage.setItem(
-            "selectedSubjects",
-            JSON.stringify(selected_subjects_array)
-        );
-        window.location.href = `/${lang}/resources`;
-    }
-}
-
-export const HomeStickyFilters: Component = () => {
+export const HomeStickyFilters: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
     const [subjects, setSubjects] =
-        createSignal<Array<{ product_subject: string; id: number }>>(
-            subjects_array
-        );
+        createSignal<Array<{ product_subject: string; id: number }>>();
     const [grades, setGrades] = createSignal<
         Array<{ grade: string; id: number }>
     >([]);
     const [selectedGrades, setSelectedGrades] = createSignal<Array<string>>([]);
+
+    const language = lang();
 
     onMount(async () => {
         const { data: gradeData, error: grade_error } = await supabase
@@ -172,7 +28,158 @@ export const HomeStickyFilters: Component = () => {
         } else {
             setGrades(gradeData);
         }
+
+        //all subjects in the database
+        let subjects_array: Array<{ product_subject: string; id: number }> = [];
+
+        const { data: subject, error: subject_error } = await supabase
+            .from("post_subject")
+            .select("subject, id")
+            .order("subject", { ascending: true });
+
+        if (subject_error) {
+            console.error("supabase error: " + subject_error.message);
+        } else {
+            subject.forEach((subject) => {
+                subjects_array.push({
+                    product_subject: subject.subject,
+                    id: subject.id,
+                });
+            });
+            subjects_array.sort((a, b) =>
+                a.product_subject > b.product_subject ? 0 : -1
+            );
+            setSubjects(subjects_array);
+        }
     });
+
+    const t = useTranslations(lang());
+    //selected subjects
+    let selected_subjects_array: Array<string> = [];
+
+    function hideFilterDivs() {
+        hideGradeFilters();
+        hideSubjectFilters();
+        hideResourceTypeFilters();
+    }
+
+    function showGradeFilters() {
+        let gradeDiv = document.getElementById("gradeDiv");
+
+        if (gradeDiv?.classList.contains("hidden")) {
+            gradeDiv.classList.remove("hidden");
+            gradeDiv.classList.add("inline");
+
+            hideSubjectFilters();
+            hideResourceTypeFilters();
+        } else if (gradeDiv?.classList.contains("inline")) {
+            gradeDiv?.classList.remove("inline");
+            gradeDiv?.classList.add("hidden");
+        }
+    }
+
+    function hideGradeFilters() {
+        let gradeDiv = document.getElementById("gradeDiv");
+
+        if (gradeDiv?.classList.contains("inline")) {
+            gradeDiv.classList.remove("inline");
+            gradeDiv.classList.add("hidden");
+        }
+    }
+
+    function showSubjectFilters() {
+        let subjectDiv = document.getElementById("subjectDiv");
+
+        if (subjectDiv?.classList.contains("hidden")) {
+            subjectDiv.classList.remove("hidden");
+            subjectDiv.classList.add("inline");
+
+            hideGradeFilters();
+            hideResourceTypeFilters();
+        } else {
+            subjectDiv?.classList.remove("inline");
+            subjectDiv?.classList.add("hidden");
+        }
+    }
+
+    function hideSubjectFilters() {
+        let subjectDiv = document.getElementById("subjectDiv");
+
+        if (subjectDiv?.classList.contains("inline")) {
+            subjectDiv.classList.remove("inline");
+            subjectDiv.classList.add("hidden");
+        }
+    }
+
+    function showResourceTypeFilters() {
+        let resourceTypeFilterDiv = document.getElementById("resourceTypeDiv");
+
+        if (resourceTypeFilterDiv?.classList.contains("hidden")) {
+            resourceTypeFilterDiv.classList.remove("hidden");
+            resourceTypeFilterDiv.classList.add("inline");
+
+            hideSubjectFilters();
+            hideGradeFilters();
+        } else if (resourceTypeFilterDiv?.classList.contains("inline")) {
+            resourceTypeFilterDiv?.classList.remove("inline");
+            resourceTypeFilterDiv?.classList.add("hidden");
+        }
+    }
+
+    function hideResourceTypeFilters() {
+        let resourceTypeFilterDiv = document.getElementById("resourceTypeDiv");
+
+        if (resourceTypeFilterDiv?.classList.contains("inline")) {
+            resourceTypeFilterDiv.classList.remove("inline");
+            resourceTypeFilterDiv.classList.add("hidden");
+        }
+    }
+
+    function addSelectedSubject(id: string) {
+        let subjectErrorMessage = document.getElementById(
+            "selectSubjectMessage"
+        );
+
+        subjectErrorMessage?.classList.remove("inline");
+        subjectErrorMessage?.classList.add("hidden");
+
+        if (selected_subjects_array.includes(id)) {
+            let currentSubjectFilters = selected_subjects_array.filter(
+                (el) => el !== id
+            );
+            selected_subjects_array = currentSubjectFilters;
+        } else {
+            selected_subjects_array.push(id);
+        }
+        console.log(selected_subjects_array);
+    }
+
+    function fetchFilteredResources() {
+        if (selected_subjects_array.length < 1) {
+            let errorMessage = document.getElementById("selectSubjectMessage");
+            let subjectCheckboxes =
+                document.getElementsByClassName("subjectCheckbox");
+
+            errorMessage?.classList.remove("hidden");
+            errorMessage?.classList.add("inline");
+
+            let check = setInterval(function () {
+                for (let i = 0; i < subjectCheckboxes.length; i++) {
+                    subjectCheckboxes[i].addEventListener("change", () => {
+                        clearInterval(check);
+                    });
+                }
+                errorMessage?.classList.remove("inline");
+                errorMessage?.classList.add("hidden");
+            }, 5000);
+        } else {
+            localStorage.setItem(
+                "selectedSubjects",
+                JSON.stringify(selected_subjects_array)
+            );
+            window.location.href = `/${language}/resources`;
+        }
+    }
 
     function selectGrades(id: string) {
         if (selectedGrades().includes(id)) {
@@ -210,8 +217,8 @@ export const HomeStickyFilters: Component = () => {
                 id="top-sticky-filter"
                 class="sticky top-0 flex w-full items-center justify-center bg-background2 py-1 dark:bg-background2-DM"
             >
-                <a onmouseover={hideFilterDivs} href={`/${lang}/resources`}>
-                    <h3 class="mx-5 hidden text-ptext2 dark:text-ptext2-DM md:inline">
+                <a onmouseover={hideFilterDivs} href={`/${language}/resources`}>
+                    <h3 class="mx-5 hidden text-xl text-ptext2 dark:text-ptext2-DM md:inline">
                         {t("buttons.browseCatalog")}
                     </h3>
                 </a>
@@ -258,7 +265,7 @@ export const HomeStickyFilters: Component = () => {
                         </div>
 
                         <div class="flex flex-col items-center justify-center ">
-                            <a href={`/${lang}/resources`}>
+                            <a href={`/${language}/resources`}>
                                 <button class="btn-primary mx-2 my-2 min-h-[59px] min-w-[59px] rounded-full  px-4 py-1 md:min-h-px md:min-w-px">
                                     {t("buttons.findResources")}
                                 </button>

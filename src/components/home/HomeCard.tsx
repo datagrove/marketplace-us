@@ -1,20 +1,22 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show, onMount } from "solid-js";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { Show, createSignal } from "solid-js";
+import { useTranslations } from "../../i18n/utils";
 import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 import person from "@src/assets/person.svg";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
-
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
+    lang: "en" | "es" | "fr";
 }
 
 export const HomeCard: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
+
+    const t = useTranslations(lang());
+
     return (
         <div class="mb-4 flex justify-center">
             <ul class="flex flex-wrap justify-center md:flex-nowrap">
@@ -25,7 +27,7 @@ export const HomeCard: Component<Props> = (props) => {
                         <div class="mx-2 mb-4 grid h-[275px] w-40 grid-cols-1 grid-rows-9 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
                             <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pb-1 pt-1">
                                 <a
-                                    href={`/${lang}/posts/${post.id}`}
+                                    href={`/${lang()}/posts/${post.id}`}
                                     class="h-full w-full"
                                     aria-label={`${t("ariaLabels.readMoreAbout")}${post.title}`}
                                 >
@@ -97,7 +99,7 @@ export const HomeCard: Component<Props> = (props) => {
                                         onclick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            window.location.href = `/${lang}/posts/${post.id}`;
+                                            window.location.href = `/${lang()}/posts/${post.id}`;
                                         }}
                                     >
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
@@ -110,7 +112,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     onclick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        window.location.href = `/${lang}/creator/${post.seller_id}`;
+                                        window.location.href = `/${lang()}/creator/${post.seller_id}`;
                                     }}
                                 >
                                     <div class="my-1 flex items-center">

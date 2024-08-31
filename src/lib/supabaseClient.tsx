@@ -9,7 +9,7 @@ const supabase = Supabase.createClient(supabaseUrl, supabaseAnonKey, {
         fetch: (...args) => fetch(...args),
     },
     auth: {
-        storage: localStorage,
+        storage: typeof window !== "undefined" ? localStorage : undefined,
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
