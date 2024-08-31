@@ -7,22 +7,10 @@ import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
 import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
-import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import stripe from "@lib/stripe";
-import * as allFilters from "../posts/fetchPosts";
-import { IconH1 } from "@tabler/icons-solidjs";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-const values = ui[lang] as uiObject;
-const productSubjects = values.subjectCategoryInfo.subjects;
-
-interface Props {
-    id: string | undefined;
-}
 
 function redirectToResourcesPage() {
     window.location.href = `/${lang}/resources`;
@@ -60,21 +48,8 @@ async function fetchPosts({
 }
 
 export const Home: Component = () => {
-    const [posts, setPosts] = createSignal<Array<Post>>([]);
-    const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [popularPosts, setPopularPosts] = createSignal<Array<Post>>([]);
     const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
-    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
-    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-    const [resourceTypeFilters, setResourceTypeFilters] = createSignal<
-        Array<string>
-    >([]);
-    const [fileTypeFilters, setFileTypeFilters] = createSignal<Array<string>>(
-        []
-    );
-    const [standardsFilters, setStandardsFilters] = createSignal<string>("");
-
-    let test: any;
 
     onMount(async () => {
         const res = await fetchPosts({
@@ -154,7 +129,7 @@ export const Home: Component = () => {
                             <h1 class="text-ptext1 dark:text-ptext1 md:text-2xl">
                                 {t("homePageText.becomeCreator")}
                             </h1>
-                            <p class="text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
+                            <p class="text-center text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
                                 {t("homePageText.clickToBecomeCreator")}
                             </p>
                         </div>
@@ -163,7 +138,7 @@ export const Home: Component = () => {
 
                 <div class="flex justify-center md:hidden">
                     <button
-                        class="mb-4 mt-6 rounded-full bg-btn2 px-16 py-1 shadow dark:bg-btn2-DM"
+                        class="btn-primary mb-2 mt-3 min-h-[44px] min-w-[44px] px-16 py-1"
                         onClick={redirectToResourcesPage}
                     >
                         {t("buttons.browseCatalog")}

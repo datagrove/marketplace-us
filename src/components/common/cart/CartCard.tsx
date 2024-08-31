@@ -58,7 +58,6 @@ export const CartCard: Component<Props> = (props) => {
             // );
 
             setNewItems(props.items);
-            console.log("Cart Card Props", newItems());
         }
     });
 

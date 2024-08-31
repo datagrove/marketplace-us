@@ -117,7 +117,12 @@ export const ViewCard: Component<Props> = (props) => {
             <ul class="flex w-full flex-wrap justify-center">
                 {props.posts.map((post: Post) => (
                     <li class="mb-3 w-[99%]">
-                        <a href={`/${lang}/posts/${post.id}`}>
+                        <a
+                            href={`/${lang}/posts/${post.id}`}
+                            aria-label={
+                                t("ariaLabels.readMoreAbout") + post.title
+                            }
+                        >
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="relative mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                     {post.image_url ? (
@@ -138,7 +143,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                         post.image_urls?.split(
                                                             ","
                                                         )[0]
-                                                            ? "User Image"
+                                                            ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
                                                     class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"

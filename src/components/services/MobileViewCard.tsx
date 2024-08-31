@@ -153,7 +153,10 @@ export const MobileViewCard: Component<Props> = (props) => {
         <div class="w-full">
             {newPosts().map((post: Post) => (
                 <div class="mb-4 rounded-lg border border-border1 dark:border-border1-DM">
-                    <a href={`/${lang}/posts/${post.id}`}>
+                    <a
+                        href={`/${lang}/posts/${post.id}`}
+                        aria-label={t("ariaLabels.readMoreAbout") + post.title}
+                    >
                         <div class="photo-price flex h-48 w-full justify-between rounded-lg bg-background1 dark:bg-background1-DM">
                             <div class="relative flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                 {post.image_url ? (
@@ -169,7 +172,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                                     post.image_urls!.split(
                                                         ","
                                                     )[0]
-                                                        ? "User Image"
+                                                        ? `User Image for Post ${post.title}`
                                                         : "No image"
                                                 }
                                                 class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
@@ -236,9 +239,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[12px] font-bold">
+                                    <div class="text-[12px] font-bold">
                                         {t("formLabels.subjects")}
-                                    </h6>
+                                    </div>
                                     {post
                                         .subject!.slice(0, 3)
                                         .map((subject: string) => {
@@ -256,9 +259,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[12px] font-bold">
+                                    <div class="text-[12px] font-bold">
                                         {t("formLabels.grades")}
-                                    </h6>
+                                    </div>
                                     {post
                                         .grade!.slice(0, 3)
                                         .map((grade: string) => {
@@ -280,12 +283,23 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                     <div class="title-creator mb-1 ml-1 flex flex-row justify-between">
                         <div class="w-full">
-                            <a href={`/${lang}/posts/${post.id}`}>
+                            <a
+                                href={`/${lang}/posts/${post.id}`}
+                                aria-label={
+                                    t("ariaLabels.readMoreAbout") + post.title
+                                }
+                            >
                                 <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
                                     {post.title}
                                 </div>
                             </a>
-                            <a href={`/${lang}/creator/${post?.seller_id}`}>
+                            <a
+                                href={`/${lang}/creator/${post?.seller_id}`}
+                                aria-label={
+                                    t("ariaLabels.readMoreAbout") +
+                                    post.seller_name
+                                }
+                            >
                                 <div class="flex w-fit items-center py-1 pr-4">
                                     {post.seller_img ? (
                                         <picture>
@@ -380,7 +394,12 @@ export const MobileViewCard: Component<Props> = (props) => {
                             </svg>
                         </button>
 
-                        <a href={`/${lang}/posts/${post.id}`}>
+                        <a
+                            href={`/${lang}/posts/${post.id}`}
+                            aria-label={
+                                t("ariaLabels.readMoreAbout") + post.title
+                            }
+                        >
                             <div
                                 id={`${post.id}content`}
                                 class="hidden w-full flex-col justify-start"

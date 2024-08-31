@@ -374,6 +374,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             <Show when={screenSize() === "sm"}>
                 <button
                     class="w-full"
+                    aria-label={t("buttons.filters")}
                     onClick={() => {
                         if (
                             showGrades() === true ||
@@ -426,6 +427,11 @@ export const FiltersMobile: Component<Props> = (props) => {
                     <div class="main-pop-out relative h-96 w-full rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:shadow-none">
                         <button
                             class="w-full"
+                            aria-label={
+                                t("formLabels.grades") +
+                                " " +
+                                t("buttons.filters")
+                            }
                             onClick={() => {
                                 setShowFilters(false);
 
@@ -475,6 +481,11 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                         <button
                             class="w-full"
+                            aria-label={
+                                t("formLabels.resourceTypes") +
+                                " " +
+                                t("buttons.filters")
+                            }
                             onClick={() => {
                                 setShowFilters(false);
 
@@ -522,6 +533,11 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                         <button
                             class="w-full"
+                            aria-label={
+                                t("formLabels.subjects") +
+                                " " +
+                                t("buttons.filters")
+                            }
                             onClick={() => {
                                 setShowFilters(false);
 
@@ -569,6 +585,11 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                         <button
                             class="w-full"
+                            aria-label={
+                                t("formLabels.secular") +
+                                " " +
+                                t("buttons.filters")
+                            }
                             onClick={() => {
                                 setShowFilters(false);
                                 setShowSecular(!showSecular());

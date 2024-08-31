@@ -1,17 +1,13 @@
 import type { Component } from "solid-js";
 import { createSignal, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const lang = getLangFromUrl(new URL(window.location.href));
-const values = ui[lang] as uiObject;
-const productCategoryData = values.subjectCategoryInfo;
 
 function selectGradeCarousel(gradeBtn: any) {
     localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
-    console.log(JSON.stringify([gradeBtn.id]))
+    console.log(JSON.stringify([gradeBtn.id]));
     window.location.href = `/${lang}/resources`;
 }
 
@@ -40,13 +36,13 @@ export const HomeGradeCarousel: Component = () => {
             <div class="flex w-fit">
                 {grades().map((grade) => (
                     <button
-                    id={grade.id.toString()}
-                    aria-label= {grade.grade}
-                    class="gradeHomeSelectBtn"
-                    onclick={(e) => selectGradeCarousel(e.target)}
-                >
-                    <h1 class="text-2xl md:text-3xl">{grade.grade}</h1>
-                </button>
+                        id={grade.id.toString()}
+                        aria-label={grade.grade}
+                        class="gradeHomeSelectBtn"
+                        onclick={(e) => selectGradeCarousel(e.target)}
+                    >
+                        <h1 class="text-2xl md:text-3xl">{grade.grade}</h1>
+                    </button>
                 ))}
                 {/* <button
                     id="PK"

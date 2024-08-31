@@ -1,15 +1,8 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import { createSignal, createEffect, Show, onMount } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import {
-    downloadPostImage,
-    downloadUserImage,
-    lazyLoadImage,
-} from "@lib/imageHelper";
+import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 import person from "@src/assets/person.svg";
 
@@ -22,9 +15,6 @@ interface Props {
 }
 
 export const HomeCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
-    const [postImages, setPostImages] = createSignal<string[]>([]);
-
     return (
         <div class="mb-4 flex justify-center">
             <ul class="flex flex-wrap justify-center md:flex-nowrap">
@@ -37,6 +27,7 @@ export const HomeCard: Component<Props> = (props) => {
                                 <a
                                     href={`/${lang}/posts/${post.id}`}
                                     class="h-full w-full"
+                                    aria-label={`${t("ariaLabels.readMoreAbout")}${post.title}`}
                                 >
                                     <div
                                         id="homeCard-img"

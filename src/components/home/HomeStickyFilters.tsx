@@ -1,15 +1,10 @@
 import type { Component } from "solid-js";
 import { createSignal, For, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import * as allFilters from "../posts/fetchPosts";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 //all subjects in the database
 let subjects_array: Array<{ product_subject: string; id: number }> = [];
@@ -224,41 +219,47 @@ export const HomeStickyFilters: Component = () => {
                 <div>
                     <h3
                         onclick={showGradeFilters}
-                        class="relative mx-5 text-ptext2 dark:text-ptext2-DM"
+                        class="relative mx-5 mt-3 min-h-[44px] min-w-[44px] text-xl text-ptext2 dark:text-ptext2-DM md:my-2 md:min-h-px md:min-w-px"
                     >
                         {t("formLabels.grades")}
                     </h3>
                     <div
                         onmouseleave={hideGradeFilters}
                         id="gradeDiv"
-                        class="absolute top-8 z-40 hidden h-fit w-48 rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-16 z-40 hidden max-h-[50svh] overflow-y-auto rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
                         <div class="flex h-5/6 flex-wrap">
                             <For each={grades()}>
                                 {(grade) => (
                                     <div class="flex w-1/2 pl-1 pr-4">
-                                        <div>
+                                        <div class="flex items-center">
                                             <input
-                                                aria-label="replace"
+                                                aria-label={`"replace"`}
                                                 type="checkbox"
+                                                id={`gradeCheckbox ${grade.id.toString()}`}
                                                 onClick={() =>
                                                     selectGrades(
                                                         grade.id.toString()
                                                     )
                                                 }
-                                                class="subjectCheckbox"
+                                                class="gradeCheckbox h-[24px] w-[24px]"
                                             />
                                         </div>
 
-                                        <div class="pl-1">{grade.grade}</div>
+                                        <label
+                                            for={`gradeCheckbox ${grade.id.toString()}`}
+                                            class="flex min-h-[44px] min-w-[44px] items-center pb-1 pl-1 pt-1 align-text-top text-xl md:min-h-px md:min-w-px"
+                                        >
+                                            {grade.grade}
+                                        </label>
                                     </div>
                                 )}
                             </For>
                         </div>
 
-                        <div class="flex flex-col items-center justify-center">
+                        <div class="flex flex-col items-center justify-center ">
                             <a href={`/${lang}/resources`}>
-                                <button class="mx-2 my-2 rounded-full bg-btn2 px-4 py-1 dark:bg-btn2-DM">
+                                <button class="btn-primary mx-2 my-2 min-h-[59px] min-w-[59px] rounded-full  px-4 py-1 md:min-h-px md:min-w-px">
                                     {t("buttons.findResources")}
                                 </button>
                             </a>
@@ -266,38 +267,42 @@ export const HomeStickyFilters: Component = () => {
                     </div>
                 </div>
 
-                <div>
+                <div class="flex">
                     <h3
                         onclick={showSubjectFilters}
-                        class="relative mx-5 text-ptext2 dark:text-ptext2-DM"
+                        class="relative mx-5 mt-3 min-h-[44px] min-w-[44px] text-xl text-ptext2 dark:text-ptext2-DM md:my-2 md:min-h-px md:min-w-px"
                     >
                         {t("formLabels.subjects")}
                     </h3>
                     <div
                         onmouseleave={hideSubjectFilters}
                         id="subjectDiv"
-                        class="absolute top-8 z-40 hidden rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
+                        class="absolute top-16 z-40 hidden max-h-[50svh] overflow-y-auto rounded border-2 border-border1 bg-background1 dark:border-border1-DM dark:bg-background1-DM"
                     >
                         {/* <p class="px-2">Add Subjects here</p> */}
                         <For each={subjects()}>
                             {(subject) => (
-                                <div class="flex pl-1 pr-4">
+                                <div class="flex items-center pl-1 pr-4">
                                     <div>
                                         <input
                                             aria-label="replace"
                                             type="checkbox"
+                                            id={`subjectCheckbox ${subject.id.toString()}`}
                                             onClick={() =>
                                                 addSelectedSubject(
                                                     subject.id.toString()
                                                 )
                                             }
-                                            class="subjectCheckbox"
+                                            class="subjectCheckbox h-[24px] w-[24px]"
                                         />
                                     </div>
 
-                                    <div class="pl-1">
+                                    <label
+                                        for={`subjectCheckbox ${subject.id.toString()}`}
+                                        class="flex min-h-[59px] min-w-[59px] items-center pb-1 pl-1 align-text-top text-xl md:min-h-px md:min-w-px"
+                                    >
                                         {subject.product_subject}
-                                    </div>
+                                    </label>
                                 </div>
                             )}
                         </For>
@@ -311,7 +316,7 @@ export const HomeStickyFilters: Component = () => {
                             </div>
 
                             <button
-                                class="mx-2 my-2 rounded-full bg-btn2 px-4 py-1 dark:bg-btn2-DM"
+                                class="btn-primary mx-2  my-2 min-h-[59px] min-w-[59px] px-4 py-1 md:min-h-px md:min-w-px"
                                 onclick={fetchFilteredResources}
                             >
                                 {t("buttons.findResources")}

@@ -407,6 +407,7 @@ export const English = {
     increaseQuantity: "Increase Quantity",
     decreaseQuantity: "Decrease Quantity",
     checkboxGrade: "Checkbox for selecting grade level",
+    readMoreAbout: "Read more about ",
   },
 
   headerData: {

@@ -16,7 +16,6 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 export const Header: Component = () => {
-
     const screenSize = useStore(windowSize);
 
     return (
@@ -27,7 +26,11 @@ export const Header: Component = () => {
                 </div>
                 <div class="navLines flex items-center" id="navLines">
                     <div class="all-logo">
-                        <a id="logo" href={`/${lang}`} aria-label={t("ariaLabels.todo")}>
+                        <a
+                            id="logo"
+                            href={`/${lang}`}
+                            aria-label={t("ariaLabels.todo")}
+                        >
                             <svg
                                 width="180"
                                 height="180"
@@ -70,13 +73,13 @@ export const Header: Component = () => {
                     </div>
 
                     <div>
-                        <h1 class="pl-2 text-3xl text-ptext1 dark:text-ptext1-DM md:text-5xl">
+                        <h1 class="min-h-[44px] min-w-[44px] pl-2 pt-1 text-3xl text-ptext1 dark:text-ptext1-DM md:text-5xl">
                             <a href={`/${lang}`}>{SITE.title}</a>
                         </h1>
                     </div>
                 </div>
                 <Show when={screenSize() !== "sm"}>
-                <SearchBar />
+                    <SearchBar />
                 </Show>
 
                 <div class="flex items-center md:w-[50%] md:justify-end lg:w-[40%] xl:w-[35%]">
@@ -95,7 +98,7 @@ export const Header: Component = () => {
             </div>
             <Show when={screenSize() === "sm"}>
                 <div class="flex w-full px-4 pb-1">
-                <SearchBar />
+                    <SearchBar />
                 </div>
             </Show>
         </header>

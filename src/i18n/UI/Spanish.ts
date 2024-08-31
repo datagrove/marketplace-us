@@ -414,6 +414,7 @@ export const Spanish = {
     decreaseQuantity: "Disminuir cantidad",
     checkboxGrade:
       "Casilla de verificación para seleccionar el nivel de grado",
+      readMoreAbout: "Leer más sobre",
   },
 
   headerData: {
