@@ -3,9 +3,7 @@ import type { FilterPostsParams, Post } from "@lib/types";
 import { createSignal, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
-import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
 import { useTranslations } from "../../i18n/utils";
 

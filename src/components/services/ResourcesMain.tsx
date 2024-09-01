@@ -5,8 +5,6 @@ import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
@@ -61,39 +59,29 @@ export const ResourcesView: Component = () => {
     const screenSize = useStore(windowSize);
 
     onMount(async () => {
-        if (
-            localStorage.getItem("selectedSubjects") !== null &&
-            localStorage.getItem("selectedSubjects")
-        ) {
+        const localSubjects = localStorage.getItem("selectedSubjects");
+        const localGrades = localStorage.getItem("selectedGrades");
+        const localSearch = localStorage.getItem("searchString");
+        const localResourceTypes = localStorage.getItem(
+            "selectedResourceTypes"
+        );
+        if (localSubjects !== null && localSubjects) {
             setSubjectFilters([
                 ...subjectFilters(),
-                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
+                ...JSON.parse(localSubjects),
             ]);
         }
-        if (
-            localStorage.getItem("selectedGrades") !== null &&
-            localStorage.getItem("selectedGrades")
-        ) {
-            setGradeFilters([
-                ...gradeFilters(),
-                ...JSON.parse(localStorage.getItem("selectedGrades")!),
-            ]);
+        if (localGrades !== null && localGrades) {
+            setGradeFilters([...gradeFilters(), ...JSON.parse(localGrades)]);
         }
-        if (
-            localStorage.getItem("searchString") !== null &&
-            localStorage.getItem("searchString") !== undefined
-        ) {
-            const searchStringValue =
-                localStorage.getItem("searchString") || "";
+        if (localSearch !== null && localSearch !== undefined) {
+            const searchStringValue = localSearch || "";
             setSearchString(searchStringValue);
         }
-        if (
-            localStorage.getItem("selectedResourceTypes") !== null &&
-            localStorage.getItem("selectedResourceTypes")
-        ) {
+        if (localResourceTypes !== null && localResourceTypes) {
             setResourceFilters([
                 ...resourceFilters(),
-                ...JSON.parse(localStorage.getItem("selectedResourceTypes")!),
+                ...JSON.parse(localResourceTypes),
             ]);
         }
         await filterPosts();

@@ -10,6 +10,7 @@ const t = useTranslations(lang);
 <PageLayout
     pageTitle={t("pageTitles.services")}
     pageDescription={t("pageDescriptions.services")}
+    stylesheets={`<link rel="preconnect" href=${import.meta.env.PUBLIC_VITE_SUPABASE_URL}`}
 >
     <div class="text-center mb-8 bg-background1 dark:bg-background1-DM w-full">
         <div class="text-center">
