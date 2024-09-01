@@ -25,7 +25,6 @@ interface Props {
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const MobileViewCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
@@ -34,73 +33,6 @@ export const MobileViewCard: Component<Props> = (props) => {
     } else {
         setSession(User.session);
     }
-
-    createEffect(async () => {
-        if (props.posts) {
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: any) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = null);
-
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", post.seller_id);
-
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
-
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            post.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        sortResourceTypes(resourceTypeData);
-                        post.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            post.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        post.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
-
-    const updateQuantity = (quantity: number) => {
-        setQuantity(quantity);
-    };
 
     const resetQuantity = () => {
         setQuantity(1);
@@ -151,7 +83,7 @@ export const MobileViewCard: Component<Props> = (props) => {
 
     return (
         <div class="w-full">
-            {newPosts().map((post: Post) => (
+            {props.posts.map((post: Post) => (
                 <div class="mb-4 rounded-lg border border-border1 dark:border-border1-DM">
                     <a
                         href={`/${lang}/posts/${post.id}`}

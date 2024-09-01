@@ -1,6 +1,5 @@
 import supabase from "@lib/supabaseClientServer";
 import type { APIRoute } from "astro";
-import { useTranslations } from "@i18n/utils";
 import type { FilterPostsParams, Post } from "@lib/types";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
