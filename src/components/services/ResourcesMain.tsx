@@ -396,7 +396,10 @@ export const ResourcesView: Component = () => {
                     </Show>
                     <Show when={screenSize() === "sm"}>
                         <div class="flex justify-center">
-                            <MobileViewCard posts={currentPosts()} />
+                            <MobileViewCard
+                                lang={lang}
+                                posts={currentPosts()}
+                            />
                         </div>
                     </Show>
                 </div>

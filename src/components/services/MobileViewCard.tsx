@@ -14,12 +14,10 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
 import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
-
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
+    lang: "en" | "es" | "fr";
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -27,6 +25,9 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 export const MobileViewCard: Component<Props> = (props) => {
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
+
+    const lang = props.lang;
+    const t = useTranslations(lang);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
