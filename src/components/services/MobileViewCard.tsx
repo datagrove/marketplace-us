@@ -4,15 +4,11 @@ import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SocialMediaShares } from "../posts/SocialMediaShares";
-import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
-import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
-import { doc } from "prettier";
 import type { AuthSession } from "@supabase/supabase-js";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
-import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
+import { lazyLoadImage } from "@lib/imageHelper";
+import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 
 interface Props {
     // Define the type for the filterPosts prop
@@ -84,7 +80,7 @@ export const MobileViewCard: Component<Props> = (props) => {
 
     return (
         <div class="w-full">
-            {props.posts.map((post: Post) => (
+            {props.posts.map((post: Post, index) => (
                 <div class="mb-4 rounded-lg border border-border1 dark:border-border1-DM">
                     <a
                         href={`/${lang}/posts/${post.id}`}
@@ -92,23 +88,61 @@ export const MobileViewCard: Component<Props> = (props) => {
                     >
                         <div class="photo-price flex h-48 w-full justify-between rounded-lg bg-background1 dark:bg-background1-DM">
                             <div class="relative flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
-                                {post.image_url ? (
+                                {post.image_url && index <= 1 ? (
                                     <div class="absolute top-0">
                                         <picture>
                                             <source
-                                                srcset={post.image_url.webpUrl}
                                                 type="image/webp"
+                                                srcset={post.image_url.webpUrl}
                                             />
                                             <img
                                                 src={post.image_url.jpegUrl}
                                                 alt={
-                                                    post.image_urls!.split(
+                                                    post.image_urls?.split(
                                                         ","
                                                     )[0]
                                                         ? `User Image for Post ${post.title}`
                                                         : "No image"
                                                 }
                                                 class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                fetchpriority="high"
+                                                loading="eager"
+                                            />
+                                        </picture>
+                                        <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                            <div class="inline-block">
+                                                <FavoriteButton id={post.id} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : post.image_url && index > 1 ? (
+                                    <div class="absolute top-0">
+                                        <picture>
+                                            <source
+                                                type="image/webp"
+                                                data-srcset={
+                                                    post.image_url.webpUrl
+                                                }
+                                            />
+                                            <img
+                                                src={postPlaceHolder.src}
+                                                data-src={
+                                                    post.image_url.jpegUrl
+                                                }
+                                                alt={
+                                                    post.image_urls?.split(
+                                                        ","
+                                                    )[0]
+                                                        ? `User Image for Post ${post.title}`
+                                                        : "No image"
+                                                }
+                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                loading="lazy"
+                                                onload={(e) => {
+                                                    lazyLoadImage(
+                                                        e.currentTarget as HTMLImageElement
+                                                    );
+                                                }}
                                             />
                                         </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
