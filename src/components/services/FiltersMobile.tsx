@@ -1,4 +1,4 @@
-import type { Component } from "solid-js";
+import type { Accessor, Component, Setter } from "solid-js";
 import { createEffect, createSignal, For, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
@@ -9,6 +9,7 @@ import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { SecularFilter } from "./SecularFilter";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
+import type { FilterPostsParams, Post } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -89,6 +90,33 @@ for (let i = 0; i < subjectData.length; i++) {
     });
 }
 
+async function fetchPosts({
+    subjectFilters,
+    gradeFilters,
+    searchString,
+    resourceFilters,
+    secularFilter,
+    listing_status,
+    draft_status,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            subjectFilters: subjectFilters,
+            gradeFilters: gradeFilters,
+            searchString: searchString,
+            resourceFilters: resourceFilters,
+            secularFilter: secularFilter,
+            lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
+
 interface Props {
     filterPostsByGrade: (grade: string) => void;
     filterPostsBySubject: (currentSubject: string) => void;
@@ -97,6 +125,7 @@ interface Props {
     clearGrade: () => void;
     clearResourceTypes: () => void;
     clearAllFilters: () => void;
+    clearFilters: boolean;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
 }
@@ -134,10 +163,13 @@ export const FiltersMobile: Component<Props> = (props) => {
     const screenSize = useStore(windowSize);
 
     onMount(() => {
-        if (localStorage.getItem("selectedSubjects")) {
-            setSelectedSubjects([
-                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
-            ]);
+        const localSubjects = localStorage.getItem("selectedSubjects");
+        const localGrades = localStorage.getItem("selectedGrades");
+        const localResourceTypes = localStorage.getItem(
+            "selectedResourceTypes"
+        );
+        if (localSubjects !== null && localSubjects) {
+            setSelectedSubjects([...JSON.parse(localSubjects)]);
             setSubjectFilterCount(selectedSubjects().length);
             checkSubjectBoxes();
         } else {
@@ -146,17 +178,14 @@ export const FiltersMobile: Component<Props> = (props) => {
                 subject.checked = false;
             });
         }
-        if (localStorage.getItem("selectedGrades")) {
-            setGradeFilters([
-                ...JSON.parse(localStorage.getItem("selectedGrades")!),
-            ]);
+        if (localGrades !== null && localGrades) {
+            setGradeFilters([...JSON.parse(localGrades)]);
             setGradeFilterCount(gradeFilters().length);
             checkGradeBoxes();
         }
-        if (localStorage.getItem("selectedResoruceType")) {
-            setResourceTypesFilters([
-                ...JSON.parse(localStorage.getItem("selectedResoruceType")!),
-            ]);
+
+        if (localResourceTypes !== null && localResourceTypes) {
+            setResourceTypesFilters([...JSON.parse(localResourceTypes)]);
             setResourceTypesFilterCount(resourceTypesFilters().length);
             checkResourceTypesBoxes();
         }
@@ -179,33 +208,48 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     });
 
+    createEffect(() => {
+        if (props.clearFilters) {
+            clearAllFiltersMobile();
+        }
+    });
+
     function checkSubjectBoxes() {
         selectedSubjects().map((item) => {
-            subject().map((subject) => {
-                if (subject.id.toString() === item) {
-                    subject.checked = true;
-                }
-            });
+            setSubject((prevSubject) =>
+                prevSubject.map((subject) => {
+                    if (subject.id.toString() === item) {
+                        return { ...subject, checked: true };
+                    }
+                    return subject;
+                })
+            );
         });
     }
 
     function checkGradeBoxes() {
         gradeFilters().map((item) => {
-            grade().map((grade) => {
-                if (grade.id.toString() === item) {
-                    grade.checked = true;
-                }
-            });
+            setGrade((prevGrade) =>
+                prevGrade.map((grade) => {
+                    if (grade.id.toString() === item) {
+                        return { ...grade, checked: true };
+                    }
+                    return grade;
+                })
+            );
         });
     }
 
     function checkResourceTypesBoxes() {
         resourceTypesFilters().map((item) => {
-            resourceType().map((type) => {
-                if (type.id.toString() === item) {
-                    type.checked = true;
-                }
-            });
+            setResourceType((prevResourceType) =>
+                prevResourceType.map((type) => {
+                    if (type.id.toString() === item) {
+                        return { ...type, checked: true };
+                    }
+                    return type;
+                })
+            );
         });
     }
 
@@ -218,17 +262,21 @@ export const FiltersMobile: Component<Props> = (props) => {
             setGradeFilters([...gradeFilters(), id]);
             setGradeFilterCount(gradeFilters().length);
         }
+        //Refactor send the full list just let filters track the contents and send the whole thing to main
         props.filterPostsByGrade(id);
 
-        grade().forEach((grade) => {
-            if (grade.id.toString() === id) {
-                if (grade.checked) {
-                    grade.checked = false;
-                } else {
-                    grade.checked = true;
+        setGrade((prevGrade) =>
+            prevGrade.map((grade) => {
+                if (grade.id.toString() === id) {
+                    if (grade.checked) {
+                        return { ...grade, checked: false };
+                    } else {
+                        return { ...grade, checked: true };
+                    }
                 }
-            }
-        });
+                return grade;
+            })
+        );
     };
 
     const setResourceTypesFilter = (id: string) => {
@@ -242,30 +290,34 @@ export const FiltersMobile: Component<Props> = (props) => {
             setResourceTypesFilters([...resourceTypesFilters(), id]);
             setResourceTypesFilterCount(resourceTypesFilters().length);
         }
+        //Refactor send the full list just let filters track the contents and send the whole thing to main
         props.filterPostsByResourceTypes(id);
 
-        resourceType().forEach((type) => {
-            if (type.id.toString() === id) {
-                if (type.checked) {
-                    type.checked = false;
-                } else {
-                    type.checked = true;
+        setResourceType((prevResourceType) =>
+            prevResourceType.map((type) => {
+                if (type.id.toString() === id) {
+                    if (type.checked) {
+                        return { ...type, checked: false };
+                    } else {
+                        return { ...type, checked: true };
+                    }
                 }
-            }
-        });
+                return type;
+            })
+        );
     };
 
     const clearAllFiltersMobile = () => {
         props.clearAllFilters();
-        grade().forEach((grade) => {
-            grade.checked = false;
-        });
-        subject().forEach((subject) => {
-            subject.checked = false;
-        });
-        resourceType().forEach((type) => {
-            type.checked = false;
-        });
+        setGrade((prevGrades) =>
+            prevGrades.map((grade) => ({ ...grade, checked: false }))
+        );
+        setResourceType((prevTypes) =>
+            prevTypes.map((type) => ({ ...type, checked: false }))
+        );
+        setSubject((prevSubjects) =>
+            prevSubjects.map((subject) => ({ ...subject, checked: false }))
+        );
         setGradeFilters([]);
         setSelectedSubjects([]);
         setResourceTypesFilters([]);
@@ -274,15 +326,19 @@ export const FiltersMobile: Component<Props> = (props) => {
         setResourceTypesFilterCount(0);
         setShowFilterNumber(false);
         setSelectedSecular(false);
+        localStorage.removeItem("selectedGrades");
+        localStorage.removeItem("selectedSubjects");
+        localStorage.removeItem("selectedResourceTypes");
     };
 
     const clearSubjectFiltersMobile = () => {
         props.clearSubjects();
-        subject().forEach((subject) => {
-            subject.checked = false;
-        });
+        setSubject((prevSubjects) =>
+            prevSubjects.map((subject) => ({ ...subject, checked: false }))
+        );
         setSelectedSubjects([]);
         setSubjectFilterCount(0);
+        localStorage.removeItem("selectedSubjects");
     };
 
     const clearSecularFilterMobile = () => {
@@ -293,18 +349,19 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     const clearGradeFiltersMobile = () => {
         props.clearGrade();
-        grade().forEach((grade) => {
-            grade.checked = false;
-        });
+        setGrade((prevGrades) =>
+            prevGrades.map((grade) => ({ ...grade, checked: false }))
+        );
         setGradeFilterCount(0);
         setGradeFilters([]);
+        localStorage.removeItem("selectedGrades");
     };
 
     const clearResourceTypesFiltersMobile = () => {
         props.clearResourceTypes();
-        resourceType().forEach((type) => {
-            type.checked = false;
-        });
+        setResourceType((prevResourceTypes) =>
+            prevResourceTypes.map((type) => ({ ...type, checked: false }))
+        );
         setResourceTypesFilterCount(0);
         setResourceTypesFilters([]);
     };
@@ -351,17 +408,21 @@ export const FiltersMobile: Component<Props> = (props) => {
             setSelectedSubjects([...selectedSubjects(), id]);
             setSubjectFilterCount(selectedSubjects().length);
         }
+        //Refactor send the full list just let filters track the contents and send the whole thing to main
         props.filterPostsBySubject(id);
 
-        subject().forEach((subject) => {
-            if (subject.id.toString() === id) {
-                if (subject.checked) {
-                    subject.checked = false;
-                } else {
-                    subject.checked = true;
+        setSubject((prevSubject) =>
+            prevSubject.map((subject) => {
+                if (subject.id.toString() === id) {
+                    if (subject.checked) {
+                        return { ...subject, checked: false };
+                    } else {
+                        return { ...subject, checked: true };
+                    }
                 }
-            }
-        });
+                return subject;
+            })
+        );
     }
 
     return (

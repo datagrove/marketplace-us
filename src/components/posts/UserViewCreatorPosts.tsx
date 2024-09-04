@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
+import type { FilterPostsParams, Post } from "@lib/types";
 import { createEffect, createSignal, Show } from "solid-js";
 import { ViewCard } from "../services/ViewCard";
 import supabase from "../../lib/supabaseClient";
@@ -13,10 +13,6 @@ import { MobileViewCard } from "@components/services/MobileViewCard";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
-
 interface Props {
     id: string | undefined;
 }
@@ -26,69 +22,37 @@ export const UserViewCreatorPosts: Component<Props> = (props) => {
     const screenSize = useStore(windowSize);
 
     createEffect(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("seller_id", props.id)
-            .eq("listing_status", true)
-            .eq("draft_status", false);
-        if (!data) {
+        let res = await fetchPosts();
+
+        if (res.body.length < 1) {
             alert("No posts available.");
-        }
-        if (error) {
-            console.log("supabase error: " + error.message);
         } else {
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            setPosts(data);
-            console.log("Posts");
-            console.log(posts());
+            setPosts(res.body);
         }
     });
+
+    async function fetchPosts() {
+        const response = await fetch("/api/fetchFilterPosts", {
+            method: "POST",
+            body: JSON.stringify({
+                lang: lang,
+                listing_status: true,
+                draft_status: false,
+                seller_id: props.id,
+            }),
+        });
+        const data = await response.json();
+
+        return data;
+    }
+
     return (
         <div class="">
             <Show when={screenSize() !== "sm"}>
                 <ViewCard posts={posts()} />
             </Show>
             <Show when={screenSize() === "sm"}>
-                <MobileViewCard posts={posts()} />
+                <MobileViewCard lang={lang} posts={posts()} />
             </Show>
         </div>
     );

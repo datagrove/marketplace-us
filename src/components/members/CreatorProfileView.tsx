@@ -19,7 +19,6 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { createStore } from "solid-js/store";
 import { StripeButton } from "@components/members/creator/StripeButton";
 import { PayoutButton } from "@components/members/creator/PayoutButton";
-import { MobileViewCard } from "@components/services/MobileViewCard";
 import type { Creator } from "@lib/types";
 import { TinyComp } from "@components/posts/TinyComp";
 import {
@@ -83,10 +82,6 @@ export const CreatorProfileView: Component = () => {
         if (typeof session() !== "undefined") {
             fetchCreator(session()?.user.id!);
         }
-    });
-
-    createEffect(() => {
-        console.log("creatorImage value:", creatorImage());
     });
 
     const resetPassword = () => {
@@ -330,7 +325,7 @@ export const CreatorProfileView: Component = () => {
                                     <img
                                         src={person.src}
                                         data-src={creatorImage().jpegUrl}
-                                        class="absolute left-1/2 top-1/2 block h-56 -translate-x-1/2 -translate-y-1/2 justify-center object-contain md:h-96"
+                                        class="absolute left-1/2 top-1/2 block h-[142px] w-[142px] -translate-x-1/2 -translate-y-1/2 justify-center object-contain"
                                         alt={`${t("postLabels.creatorProfileImage")} 1`}
                                         loading="lazy"
                                     />

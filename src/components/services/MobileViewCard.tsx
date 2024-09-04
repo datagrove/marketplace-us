@@ -23,6 +23,7 @@ export const MobileViewCard: Component<Props> = (props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
     const lang = props.lang;
+    console.log(lang);
     const t = useTranslations(lang);
 
     if (UserError) {
@@ -407,7 +408,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     </div>
                                     <div class="prose col-span-3 flex flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                         <div class="flex-wrap">
-                                            {post.resourceTypes!.join(", ")}
+                                            {post.resourceTypes?.join(", ")}
                                         </div>
                                     </div>
                                     {/* <h6 class="text-start text-[10px] font-bold">

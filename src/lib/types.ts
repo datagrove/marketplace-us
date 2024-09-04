@@ -72,5 +72,6 @@ export interface FilterPostsParams {
     listing_status?: boolean;
     orderAscending?: boolean;
     user_id?: string;
-    post_id?: number;
+    post_id?: number[];
+    seller_id?: string;
 }

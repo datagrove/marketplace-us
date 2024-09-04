@@ -32,6 +32,7 @@ export const SearchBar: Component = () => {
             searchString() !== "null"
         ) {
             localStorage.setItem("searchString", searchString());
+            console.log("Set Search to Local Storage", searchString());
         }
 
         // console.log(window.location.href)

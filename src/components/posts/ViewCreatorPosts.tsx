@@ -49,7 +49,7 @@ export const ViewCreatorPosts: Component = () => {
     createEffect(async () => {
         let res = await fetchPosts({ lang: lang });
 
-        if (!posts) {
+        if (res.body.length < 1) {
             alert("No posts available.");
         } else {
             setPosts(res.body);
@@ -65,7 +65,7 @@ export const ViewCreatorPosts: Component = () => {
 
             <Show when={screenSize() === "sm"}>
                 <div class="">
-                    <MobileViewCard posts={posts()} />
+                    <MobileViewCard lang={lang} posts={posts()} />
                 </div>
             </Show>
         </div>

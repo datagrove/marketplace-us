@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -24,6 +24,10 @@ export const ViewCard: Component<Props> = (props) => {
     const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
+
+    onMount(() => {
+        console.log(props.posts);
+    });
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -257,7 +261,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </div>
                                                 <div class="prose col-span-3 flex-wrap align-middle text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                     <div class="flex-wrap">
-                                                        {post.resourceTypes!.join(
+                                                        {post.resourceTypes?.join(
                                                             ", "
                                                         )}
                                                     </div>

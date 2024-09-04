@@ -20,6 +20,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         orderAscending,
         user_id,
         post_id,
+        seller_id
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
@@ -61,7 +62,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             query = query.eq("listing_status", listing_status);
         }
         if (post_id) {
-            query = query.eq("id", post_id);
+            query = query.in("id", post_id);
+        }
+        if (seller_id) {
+            query = query.eq("seller_id", seller_id);
         }
 
         const { data: posts, error } = await query;

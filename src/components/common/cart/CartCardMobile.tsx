@@ -127,7 +127,7 @@ export const CartCardMobile: Component<Props> = (props) => {
                                                     ? "User Image"
                                                     : "No image"
                                             }
-                                            class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            class="h-22 w-22 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                             loading="lazy"
                                             onload={(e) => {
                                                 lazyLoadImage(

@@ -25,6 +25,8 @@ export const CartCard: Component<Props> = (props) => {
     const [newItems, setNewItems] = createSignal<Array<Post>>([]);
     const [quantity, setQuantity] = createSignal<number>(0);
 
+    console.log(items);
+
     createEffect(async () => {
         if (props.items) {
             // const updatedItems = await Promise.all(
@@ -133,7 +135,7 @@ export const CartCard: Component<Props> = (props) => {
                                                         ? "User Image"
                                                         : "No image"
                                                 }
-                                                class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                                class="h-48 w-48 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                                 loading="lazy"
                                                 onload={(e) => {
                                                     lazyLoadImage(
