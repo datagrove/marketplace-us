@@ -130,8 +130,8 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                 return;
             }
             setPurchasedItems(productsInfo);
-            // console.log("Purchased Items");
-            // console.log(purchasedItems());
+            console.log("Purchased Items");
+            console.log(purchasedItems());
 
             // console.log("Checking purchased items");
 

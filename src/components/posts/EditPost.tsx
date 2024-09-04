@@ -1059,7 +1059,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 </div>
 
                 {/* Price Implementation */}
-                {/* <div class="justfify-evenly mt-6 flex flex-col ">
+                {/* <div class="justify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
                         <p>{t("formLabels.isResourceFree")}?</p>
                         <div>

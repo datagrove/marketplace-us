@@ -1,85 +1,35 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show, onMount } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import {
-    downloadPostImage,
-    downloadUserImage,
-    lazyLoadImage,
-} from "@lib/imageHelper";
+import { Show, createSignal } from "solid-js";
+import { useTranslations } from "../../i18n/utils";
+import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 import person from "@src/assets/person.svg";
-
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
-
-// const values = ui[lang] as uiObject
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
+    lang: "en" | "es" | "fr";
 }
 
 export const HomeCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
-    const [postImages, setPostImages] = createSignal<string[]>([]);
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
 
-    createEffect(async () => {
-        if (props.posts) {
-            console.log("props.posts");
-            console.log(props.posts);
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = undefined);
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data, error } = await supabase
-                        .from("sellerview")
-                        .select("*")
-                        .eq("seller_id", post.seller_id);
-
-                    if (error) {
-                        console.log(error);
-                    }
-
-                    if (data) {
-                        if (data[0].image_url) {
-                            post.seller_img = await downloadUserImage(
-                                data[0].image_url
-                            );
-                        }
-                    }
-
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
+    const t = useTranslations(lang());
 
     return (
         <div class="mb-4 flex justify-center">
             <ul class="flex flex-wrap justify-center md:flex-nowrap">
-                {newPosts().map((post: any) => (
+                {props.posts.map((post: any) => (
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
                         <div class="mx-2 mb-4 grid h-[275px] w-40 grid-cols-1 grid-rows-9 justify-between rounded border-2 border-border1 px-1 dark:border-border1-DM md:mx-1 md:mb-0 2xl:h-[324px]">
                             <div class="home-card-img-div row-span-6 flex w-full items-center justify-center pb-1 pt-1">
                                 <a
-                                    href={`/${lang}/posts/${post.id}`}
+                                    href={`/${lang()}/posts/${post.id}`}
                                     class="h-full w-full"
+                                    aria-label={`${t("ariaLabels.readMoreAbout")}${post.title}`}
                                 >
                                     <div
                                         id="homeCard-img"
@@ -149,7 +99,7 @@ export const HomeCard: Component<Props> = (props) => {
                                         onclick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
-                                            window.location.href = `/${lang}/posts/${post.id}`;
+                                            window.location.href = `/${lang()}/posts/${post.id}`;
                                         }}
                                     >
                                         <p class="line-clamp-2 pt-1 text-start text-sm font-bold">
@@ -162,7 +112,7 @@ export const HomeCard: Component<Props> = (props) => {
                                     onclick={(e) => {
                                         e.preventDefault();
                                         e.stopPropagation();
-                                        window.location.href = `/${lang}/creator/${post.seller_id}`;
+                                        window.location.href = `/${lang()}/creator/${post.seller_id}`;
                                     }}
                                 >
                                     <div class="my-1 flex items-center">

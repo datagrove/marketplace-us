@@ -27,6 +27,7 @@ export interface Post {
     resourceTypes: Array<string> | null; //Array of resourceTypes names
     image_url: {webpUrl: string, jpegUrl: string} | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
     seller_img: {webpUrl: string, jpegUrl: string} | undefined; //Profile Image of the seller
+    image_signedUrls: {webpUrl: string, jpegUrl: string}[];
     price: number; //Price of the post
     quantity: number; //Quantity to add to cart from post
 }
@@ -60,14 +61,17 @@ export interface Creator {
 }
 
 export interface FilterPostsParams {
-    subjectFilters: string[]; 
-    gradeFilters: string[];   
-    searchString: string;
-    resourceFilters: string[]; 
-    secularFilter: boolean;
+    subjectFilters?: string[]; 
+    gradeFilters?: string[];   
+    searchString?: string;
+    resourceFilters?: string[]; 
+    secularFilter?: boolean;
     lang: "en" | "es" | "fr";   
     limit?: number;
     draft_status?: boolean;
     listing_status?: boolean;
     orderAscending?: boolean;
+    user_id?: string;
+    post_id?: number[];
+    seller_id?: string;
 }

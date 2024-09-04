@@ -39,6 +39,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
             );
 
             setPurchasedItems(updatedPosts);
+            console.log(updatedPosts);
         }
     });
 

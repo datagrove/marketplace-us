@@ -25,44 +25,46 @@ export const CartCard: Component<Props> = (props) => {
     const [newItems, setNewItems] = createSignal<Array<Post>>([]);
     const [quantity, setQuantity] = createSignal<number>(0);
 
+    console.log(items);
+
     createEffect(async () => {
         if (props.items) {
-            const updatedItems = await Promise.all(
-                props.items.map(async (item: Post) => {
-                    const newItem = { ...item };
-                    newItem.image_urls
-                        ? (newItem.image_url = await downloadPostImage(
-                              newItem.image_urls.split(",")[0]
-                          ))
-                        : (newItem.image_url = undefined);
+            // const updatedItems = await Promise.all(
+            //     props.items.map(async (item: Post) => {
+            //         const newItem = { ...item };
+            //         newItem.image_urls
+            //             ? (newItem.image_url = await downloadPostImage(
+            //                   newItem.image_urls.split(",")[0]
+            //               ))
+            //             : (newItem.image_url = undefined);
 
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", newItem.seller_id);
+            //         const { data: sellerImg, error: sellerImgError } =
+            //             await supabase
+            //                 .from("sellerview")
+            //                 .select("*")
+            //                 .eq("seller_id", newItem.seller_id);
 
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
+            //         if (sellerImgError) {
+            //             console.log(sellerImgError);
+            //         }
 
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            newItem.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
-                    return newItem;
-                })
-            );
+            //         if (sellerImg) {
+            //             if (sellerImg[0].image_url) {
+            //                 newItem.seller_img = await downloadUserImage(
+            //                     sellerImg[0].image_url
+            //                 );
+            //             }
+            //         }
+            //         return newItem;
+            //     })
+            // );
 
-            setNewItems(updatedItems);
+            setNewItems(props.items);
         }
     });
 
     const updateQuantity = async (quantity: number, product_id?: string) => {
-        console.log("Card Card Update Quantity");
+        console.log("Cart Card Update Quantity");
         setQuantity(quantity);
         if (product_id) {
             const updatedItems: Array<Post> = await Promise.all(
@@ -133,7 +135,7 @@ export const CartCard: Component<Props> = (props) => {
                                                         ? "User Image"
                                                         : "No image"
                                                 }
-                                                class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                                class="h-48 w-48 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                                 loading="lazy"
                                                 onload={(e) => {
                                                     lazyLoadImage(
@@ -260,9 +262,11 @@ export const CartCard: Component<Props> = (props) => {
                                             {/* Remove All from Cart */}
                                             <button
                                                 class="rounded font-bold text-alert1 dark:text-alert1-DM"
-                                                onclick={() =>
-                                                    removeItem(item.product_id)
-                                                }
+                                                onclick={(e) => {
+                                                    e.stopPropagation();
+                                                    e.preventDefault();
+                                                    removeItem(item.product_id);
+                                                }}
                                                 aria-label={t(
                                                     "ariaLabels.removeFromCart"
                                                 )}

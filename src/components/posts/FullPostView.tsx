@@ -2,9 +2,6 @@ import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import { createSignal, createEffect, Show } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { DeletePostButton } from "../posts/DeletePostButton";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
@@ -12,40 +9,52 @@ import { Quantity } from "@components/common/cart/Quantity";
 import { EditPost } from "./EditPost";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
-import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
-
-import stripe from "@lib/stripe";
+import type { FilterPostsParams } from "@lib/types";
 import { ReportResource } from "./ReportResource";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 //get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Props {
     postId: string | undefined;
 }
 
+async function fetchPosts({
+    listing_status,
+    draft_status,
+    post_id,
+    user_id,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
+            post_id: post_id,
+            user_id: user_id,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
+
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ViewFullPost: Component<Props> = (props) => {
     const [post, setPost] = createSignal<Post>();
-    const [postData, setPostData] = createSignal<Array<Post>>([]);
+    // const [postData, setPostData] = createSignal<Array<Post>>([]);
     const [postImages, setPostImages] = createSignal<
         { webpUrl: string; jpegUrl: string }[]
     >([]);
-    const [testImages, setTestImages] = createSignal<string[]>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
 
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
     const [editRender, setEditRender] = createSignal<boolean>(false);
-    const [sellerImage, setSellerImage] = createSignal<{
-        webpUrl: string;
-        jpegUrl: string;
-    }>({ webpUrl: "", jpegUrl: "" });
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -69,147 +78,42 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const fetchPost = async (id: number) => {
         try {
-            const { data: notDraftData, error } = await supabase
-                .from("sellerposts")
-                .select("*")
-                .eq("id", id)
-                .eq("listing_status", true)
-                .eq("draft_status", false);
-            if (error) {
-                console.log(error);
-            } else if (notDraftData[0] === undefined && User.session) {
-                const { data: userData, error } = await supabase
-                    .from("sellerposts")
-                    .select("*")
-                    .eq("id", id)
-                    .eq("listing_status", true)
-                    .eq("user_id", User.session?.user.id);
+            const res = await fetchPosts({
+                lang: lang,
+                listing_status: true,
+                draft_status: false,
+                post_id: [id],
+            });
 
-                if (error) {
-                    console.log(error);
-                } else if (userData[0] === undefined) {
+            if (res.body.length < 1 && User.session) {
+                const userRes = await fetchPosts({
+                    lang: lang,
+                    listing_status: true,
+                    draft_status: false,
+                    post_id: [id],
+                    user_id: User.session?.user.id,
+                });
+
+                if (userRes.body.length < 1) {
                     alert(t("messages.noPost"));
                     location.href = `/${lang}/resources`;
                 } else {
-                    setPostData(userData);
-                    console.log(postData());
+                    setPost(userRes.body[0]);
+                    setPostImages(userRes.body[0].image_signedUrls);
+                    console.log(post());
                 }
-            } else if (notDraftData[0] === undefined && User.session === null) {
+            } else if (res.body.length < 1 && User.session === null) {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/resources`;
             } else {
-                setPostData(notDraftData);
-                console.log(postData());
+                setPost(res.body[0]);
+                setPostImages(res.body[0].image_signedUrls);
+                console.log(post());
             }
-
-            const newItem: Post[] = await Promise.all(
-                postData()?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject?.push(productCategories.name);
-                            }
-                        });
-                    });
-
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", item.seller_id);
-
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
-
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            item.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade?.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        sortResourceTypes(resourceTypeData);
-                        item.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            item.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        item.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-
-                    return item;
-                })
-            );
-            setPost(newItem[0]);
-            // console.log(post()?.product_subject)
-            // } else {
-            //     alert(t("messages.noPost"));
-            //     location.href = `/${lang}/resources`;
-            // }
         } catch (error) {
             console.log(error);
         }
     };
-
-    createEffect(async () => {
-        if (post() !== undefined) {
-            if (
-                post()?.image_urls === undefined ||
-                post()?.image_urls === null
-            ) {
-            } else {
-                const imageUrls = post()?.image_urls?.split(",");
-                imageUrls?.forEach(async (imageUrl: string) => {
-                    const url = await downloadPostImage(imageUrl);
-                    if (url) {
-                        setPostImages([...postImages(), url]);
-                    }
-                });
-            }
-        }
-    });
 
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
@@ -487,7 +391,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                             id="images-div"
                             class="col-span-3 mr-1 flex w-[300px] flex-col items-center justify-center lg:h-[400px] lg:w-[400px]"
                         >
-                            <Show when={postImages().length > 0}>
+                            <Show when={() => postImages().length > 0}>
                                 <Show when={postImages().length === 1}>
                                     <div class="relative flex h-[300px] w-[300px] items-center justify-center rounded">
                                         <picture>
@@ -576,7 +480,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                                         src={
                                                                             image.jpegUrl
                                                                         }
-                                                                        class="mb-2 h-full w-full rounded object-cover"
+                                                                        class="mb-2 h-12 w-12 rounded object-cover"
                                                                         alt={`${t("postLabels.image")} ${index + 2}`}
                                                                     />
                                                                 </picture>
@@ -601,7 +505,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                                         src={
                                                                             image.jpegUrl
                                                                         }
-                                                                        class="mb-2 h-full w-full rounded object-cover"
+                                                                        class="mb-2 h-12 w-12 rounded object-cover"
                                                                         alt={`${t("postLabels.image")} ${index + 2}`}
                                                                     />
                                                                 </picture>

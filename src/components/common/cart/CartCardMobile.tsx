@@ -27,38 +27,38 @@ export const CartCardMobile: Component<Props> = (props) => {
 
     createEffect(async () => {
         if (props.items) {
-            const updatedItems = await Promise.all(
-                props.items.map(async (item: Post) => {
-                    const newItem = { ...item };
-                    newItem.image_urls
-                        ? (newItem.image_url = await downloadPostImage(
-                              newItem.image_urls.split(",")[0]
-                          ))
-                        : (newItem.image_url = undefined);
+            // const updatedItems = await Promise.all(
+            //     props.items.map(async (item: Post) => {
+            //         const newItem = { ...item };
+            //         newItem.image_urls
+            //             ? (newItem.image_url = await downloadPostImage(
+            //                   newItem.image_urls.split(",")[0]
+            //               ))
+            //             : (newItem.image_url = undefined);
 
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", newItem.seller_id);
+            //         const { data: sellerImg, error: sellerImgError } =
+            //             await supabase
+            //                 .from("sellerview")
+            //                 .select("*")
+            //                 .eq("seller_id", newItem.seller_id);
 
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
+            //         if (sellerImgError) {
+            //             console.log(sellerImgError);
+            //         }
 
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            newItem.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
+            //         if (sellerImg) {
+            //             if (sellerImg[0].image_url) {
+            //                 newItem.seller_img = await downloadUserImage(
+            //                     sellerImg[0].image_url
+            //                 );
+            //             }
+            //         }
 
-                    return newItem;
-                })
-            );
+            //         return newItem;
+            //     })
+            // );
 
-            setNewItems(updatedItems);
+            setNewItems(props.items);
         }
     });
 
@@ -127,7 +127,7 @@ export const CartCardMobile: Component<Props> = (props) => {
                                                     ? "User Image"
                                                     : "No image"
                                             }
-                                            class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            class="h-22 w-22 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                             loading="lazy"
                                             onload={(e) => {
                                                 lazyLoadImage(

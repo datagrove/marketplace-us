@@ -1,18 +1,13 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import type { AuthSession } from "@supabase/supabase-js";
 import { FavoriteButton } from "@components/posts/AddFavorite";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
-import {
-    downloadPostImage,
-    downloadUserImage,
-    lazyLoadImage,
-} from "@lib/imageHelper";
+import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -30,6 +25,10 @@ export const ViewCard: Component<Props> = (props) => {
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
+    onMount(() => {
+        console.log(props.posts);
+    });
+
     if (UserError) {
         console.log("User Error: " + UserError.message);
     } else {
@@ -41,73 +40,6 @@ export const ViewCard: Component<Props> = (props) => {
         }
     }
 
-    createEffect(async () => {
-        if (props.posts) {
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = undefined);
-
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", post.seller_id);
-
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
-
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            post.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        sortResourceTypes(resourceTypeData);
-                        post.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            post.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        post.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
-
-    const updateQuantity = (quantity: number) => {
-        setQuantity(quantity);
-    };
-
     const resetQuantity = () => {
         setQuantity(1);
     };
@@ -115,12 +47,49 @@ export const ViewCard: Component<Props> = (props) => {
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
-                {newPosts().map((post: Post) => (
+                {props.posts.map((post: Post, index) => (
                     <li class="mb-3 w-[99%]">
-                        <a href={`/${lang}/posts/${post.id}`}>
+                        <a
+                            href={`/${lang}/posts/${post.id}`}
+                            aria-label={
+                                t("ariaLabels.readMoreAbout") + post.title
+                            }
+                        >
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="relative mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
-                                    {post.image_url ? (
+                                    {post.image_url && index <= 4 ? (
+                                        <div class="absolute top-0">
+                                            <picture>
+                                                <source
+                                                    type="image/webp"
+                                                    srcset={
+                                                        post.image_url.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={post.image_url.jpegUrl}
+                                                    alt={
+                                                        post.image_urls?.split(
+                                                            ","
+                                                        )[0]
+                                                            ? `User Image for Post ${post.title}`
+                                                            : "No image"
+                                                    }
+                                                    class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                    fetchpriority="high"
+                                                    loading="eager"
+                                                />
+                                            </picture>
+
+                                            <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                                <div class="inline-block">
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : post.image_url && index > 4 ? (
                                         <div class="absolute top-0">
                                             <picture>
                                                 <source
@@ -138,7 +107,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                         post.image_urls?.split(
                                                             ","
                                                         )[0]
-                                                            ? "User Image"
+                                                            ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
                                                     class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
@@ -292,7 +261,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </div>
                                                 <div class="prose col-span-3 flex-wrap align-middle text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                     <div class="flex-wrap">
-                                                        {post.resourceTypes!.join(
+                                                        {post.resourceTypes?.join(
                                                             ", "
                                                         )}
                                                     </div>

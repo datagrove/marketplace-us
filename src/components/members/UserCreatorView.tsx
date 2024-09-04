@@ -268,7 +268,7 @@ export const UserCreatorView: Component<Props> = (props) => {
                             <img
                                 src={creatorImage().jpegUrl}
                                 alt={`${t("postLabels.CreatorProfileImage")} 1`}
-                                class="absolute left-12 top-6 flex h-36 w-36 items-center justify-center rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM"
+                                class="absolute left-12 top-6 flex h-[142px] w-[142px] items-center justify-center rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM"
                             />
                         </picture>
                     </div>

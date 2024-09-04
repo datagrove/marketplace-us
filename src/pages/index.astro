@@ -1,12 +1,9 @@
 ---
 import Layout from "@layouts/PageLayout.astro";
-import { AuthMode } from "@components/common/AuthMode";
-import { SignUpBtn } from "@components/common/SignUpButton";
 import { Home } from "@components/home/Home";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import services from "@assets/services.png";
-import servicesDM from "@assets/servicesDM.png";
-import { postcss } from "tailwindcss";
+import { HomeStickyFilters } from "@components/home/HomeStickyFilters";
+import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -17,6 +14,18 @@ const t = useTranslations(lang);
     pageDescription={t("pageDescriptions.home")}
 >
     <div class="w-full">
-        <Home client:only="solid-js" />
+        <!-- @ts-ignore -->
+        <Home client:visible lang={lang}>
+            <HomeStickyFilters
+                lang={lang}
+                client:only="solid-js"
+                slot="stickyFilters"
+            />
+            <HomeSubjectCarousel
+                lang={lang}
+                client:only="solid-js"
+                slot={"subjectCarousel"}
+            />
+        </Home>
     </div>
 </Layout>

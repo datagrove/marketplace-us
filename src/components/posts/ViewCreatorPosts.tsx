@@ -11,15 +11,26 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import stripe from "@lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
+import type { FilterPostsParams } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
-
 // Get the user session
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
+async function fetchPosts({ lang }: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            lang: lang,
+            listing_status: true,
+            user_id: User.session?.user.id,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
 
 export const ViewCreatorPosts: Component = () => {
     // initialize posts and session
@@ -36,58 +47,12 @@ export const ViewCreatorPosts: Component = () => {
     // get posts from supabase that match with the user id and set them to posts. After that render them through ViewCard.
     // if there is a modification to the posts table, the page will refresh and the posts will be updated.
     createEffect(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: false })
-            .eq("user_id", session()!.user.id)
-            .eq("listing_status", true);
-        if (!data) {
+        let res = await fetchPosts({ lang: lang });
+
+        if (res.body.length < 1) {
             alert("No posts available.");
-        }
-        if (error) {
-            console.log("supabase error: " + error.message);
         } else {
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                                console.log(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            console.log(newItems.map((item) => item.price));
-            setPosts(newItems);
+            setPosts(res.body);
         }
     });
     return (
@@ -100,7 +65,7 @@ export const ViewCreatorPosts: Component = () => {
 
             <Show when={screenSize() === "sm"}>
                 <div class="">
-                    <MobileViewCard posts={posts()} />
+                    <MobileViewCard lang={lang} posts={posts()} />
                 </div>
             </Show>
         </div>

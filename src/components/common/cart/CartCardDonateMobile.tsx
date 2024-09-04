@@ -36,7 +36,7 @@ export const CartCardDonateMobile: Component<Props> = (props) => {
                                         src={LearnGroveCommunity.src}
                                         // TODO Internationalize
                                         alt="Build Your LearnGrove"
-                                        class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                        class="h-22 w-22 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                     />
                                 </div>
 

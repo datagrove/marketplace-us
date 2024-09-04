@@ -20,7 +20,6 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewUserPurchases: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [user, setUser] = createSignal<User>();
     const [purchasedItems, setPurchasedItems] = createSignal<
         Array<PurchasedPost>
     >([]);
@@ -34,7 +33,6 @@ export const ViewUserPurchases: Component = () => {
 
     onMount(async () => {
         setSession(User?.session);
-        await fetchUser(User?.session?.user.id!);
         await getPurchasedItems();
     });
 
@@ -86,6 +84,7 @@ export const ViewUserPurchases: Component = () => {
 
         const products = orderDetails?.map((item) => item.product_id);
         if (products !== undefined) {
+            //Refactor: Consider making an API call for all the calls to seller_post
             const { data: productsInfo, error: productsInfoError } =
                 await supabase
                     .from("seller_post")
@@ -179,28 +178,6 @@ export const ViewUserPurchases: Component = () => {
                 setLoading(false);
                 console.log(purchasedItems());
             }
-        }
-    };
-
-    const fetchUser = async (user_id: string) => {
-        try {
-            const { data, error } = await supabase
-                .from("user_view")
-                .select("*")
-                .eq("user_id", user_id);
-
-            if (error) {
-                console.log(error);
-            } else if (data[0] === undefined) {
-                alert(t("messages.noUser")); //TODO: Change alert message
-                location.href = `/${lang}`;
-            } else {
-                console.log(data);
-                setUser(data[0]);
-                console.log(user());
-            }
-        } catch (error) {
-            console.log(error);
         }
     };
 

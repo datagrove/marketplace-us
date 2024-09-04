@@ -361,6 +361,8 @@ export interface uiObject {
     increaseQuantity: string;
     decreaseQuantity: string;
     checkboxGrade: string;
+    checkbox: string;
+    readMoreAbout: string;
   };
 
   headerData: {

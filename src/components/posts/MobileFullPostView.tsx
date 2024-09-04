@@ -1,5 +1,5 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
+import type { FilterPostsParams, Post } from "@lib/types";
 import { createSignal, createEffect, Show, For, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { DeletePostButton } from "../posts/DeletePostButton";
@@ -19,12 +19,29 @@ import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const postSubjects = values.subjectCategoryInfo.subjects;
-
 interface Props {
     postId: string | undefined;
+}
+
+async function fetchPosts({
+    listing_status,
+    draft_status,
+    post_id,
+    user_id,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
+            post_id: post_id,
+            user_id: user_id,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -62,151 +79,44 @@ export const MobileViewFullPost: Component<Props> = (props) => {
         }
     });
 
-    //REFACTOR into a helper function for both Full post views
     const fetchPost = async (id: number) => {
         try {
-            const { data: notDraftData, error } = await supabase
-                .from("sellerposts")
-                .select("*")
-                .eq("id", id)
-                .eq("listing_status", true)
-                .eq("draft_status", false);
-            if (error) {
-                console.log(error);
-            } else if (notDraftData[0] === undefined && User.session) {
-                const { data: userData, error } = await supabase
-                    .from("sellerposts")
-                    .select("*")
-                    .eq("id", id)
-                    .eq("listing_status", true)
-                    .eq("user_id", User.session?.user.id);
+            const res = await fetchPosts({
+                lang: lang,
+                listing_status: true,
+                draft_status: false,
+                post_id: [id],
+            });
 
-                if (error) {
-                    console.log(error);
-                } else if (userData[0] === undefined) {
+            if (res.body.length < 1 && User.session) {
+                const userRes = await fetchPosts({
+                    lang: lang,
+                    listing_status: true,
+                    draft_status: false,
+                    post_id: [id],
+                    user_id: User.session?.user.id,
+                });
+
+                if (userRes.body.length < 1) {
                     alert(t("messages.noPost"));
                     location.href = `/${lang}/resources`;
                 } else {
-                    setPostData(userData);
-                    console.log(postData());
+                    setPost(userRes.body[0]);
+                    setPostImages(userRes.body[0].image_signedUrls);
+                    console.log(post());
                 }
-            } else if (notDraftData[0] === undefined && User.session === null) {
+            } else if (res.body.length < 1 && User.session === null) {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/resources`;
             } else {
-                setPostData(notDraftData);
-                console.log(postData());
+                setPost(res.body[0]);
+                setPostImages(res.body[0].image_signedUrls);
+                console.log(post());
             }
-
-            const newItem: Post[] = await Promise.all(
-                postData()?.map(async (item) => {
-                    item.subject = [];
-                    postSubjects.forEach((postSubject) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === postSubject.id) {
-                                item.subject?.push(postSubject.name);
-                                console.log(postSubject.name);
-                            }
-                        });
-                    });
-
-                    const { data: sellerImg, error: sellerImgError } =
-                        await supabase
-                            .from("sellerview")
-                            .select("*")
-                            .eq("seller_id", item.seller_id);
-
-                    if (sellerImgError) {
-                        console.log(sellerImgError);
-                    }
-
-                    if (sellerImg) {
-                        if (sellerImg[0].image_url) {
-                            item.seller_img = await downloadUserImage(
-                                sellerImg[0].image_url
-                            );
-                        }
-                    }
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade?.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        sortResourceTypes(resourceTypeData);
-                        item.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            item.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        item.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-
-                    return item;
-                })
-            );
-            setPost(newItem[0]);
-            // console.log(post()?.product_subject)
-            // } else {
-            //     alert(t("messages.noPost"));
-            //     location.href = `/${lang}/resources`;
-            // }
         } catch (error) {
             console.log(error);
         }
     };
-
-    createEffect(async () => {
-        if (post() !== undefined) {
-            if (
-                post()?.image_urls === undefined ||
-                post()?.image_urls === null
-            ) {
-            } else {
-                const imageUrls = post()?.image_urls?.split(",");
-                imageUrls?.forEach(async (imageUrl: string) => {
-                    const url = await downloadPostImage(imageUrl);
-                    if (url) {
-                        setPostImages([...postImages(), url]);
-                    }
-                });
-            }
-        }
-    });
 
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
@@ -639,7 +549,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                         <img
                                             src={postImages()[0].jpegUrl}
                                             id="mobile-main-image"
-                                            class="max-h-[370px] max-w-full rounded dark:bg-background1"
+                                            class="h-[370px] max-w-[370px] rounded dark:bg-background1"
                                             alt={`${t("postLabels.image")}`}
                                         />
                                     </picture>
@@ -682,7 +592,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                                                 src={
                                                                     image.jpegUrl
                                                                 }
-                                                                class="mb-2 h-full w-full rounded object-cover"
+                                                                class="mb-2 h-16 w-16 rounded object-cover"
                                                                 alt={`${t("postLabels.image")} ${index + 2}`}
                                                             />
                                                         </picture>
@@ -707,7 +617,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                                                 src={
                                                                     image.jpegUrl
                                                                 }
-                                                                class="mb-2 h-full w-full rounded object-cover dark:bg-background1"
+                                                                class="mb-2 h-16 w-16 rounded object-cover dark:bg-background1"
                                                                 alt={`${t("postLabels.image")} ${index + 2}`}
                                                             />
                                                         </picture>

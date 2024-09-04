@@ -15,6 +15,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const MobileProfileBtn = () => {
     const [isUser, setIsUser] = createSignal<boolean | null>(false);
 

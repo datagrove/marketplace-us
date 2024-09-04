@@ -5,8 +5,6 @@ import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
@@ -21,6 +19,8 @@ async function fetchPosts({
     searchString,
     resourceFilters,
     secularFilter,
+    listing_status,
+    draft_status,
 }: FilterPostsParams) {
     const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
@@ -31,6 +31,8 @@ async function fetchPosts({
             resourceFilters: resourceFilters,
             secularFilter: secularFilter,
             lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
         }),
     });
     const data = await response.json();
@@ -41,7 +43,6 @@ async function fetchPosts({
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
-    const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
     const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
     const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
@@ -53,43 +54,34 @@ export const ResourcesView: Component = () => {
     const [searchString, setSearchString] = createSignal<string>("");
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
+    const [clearFilters, setClearFilters] = createSignal<boolean>(false);
 
     const screenSize = useStore(windowSize);
 
     onMount(async () => {
-        if (
-            localStorage.getItem("selectedSubjects") !== null &&
-            localStorage.getItem("selectedSubjects")
-        ) {
+        const localSubjects = localStorage.getItem("selectedSubjects");
+        const localGrades = localStorage.getItem("selectedGrades");
+        const localSearch = localStorage.getItem("searchString");
+        const localResourceTypes = localStorage.getItem(
+            "selectedResourceTypes"
+        );
+        if (localSubjects !== null && localSubjects) {
             setSubjectFilters([
                 ...subjectFilters(),
-                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
+                ...JSON.parse(localSubjects),
             ]);
         }
-        if (
-            localStorage.getItem("selectedGrades") !== null &&
-            localStorage.getItem("selectedGrades")
-        ) {
-            setGradeFilters([
-                ...gradeFilters(),
-                ...JSON.parse(localStorage.getItem("selectedGrades")!),
-            ]);
+        if (localGrades !== null && localGrades) {
+            setGradeFilters([...gradeFilters(), ...JSON.parse(localGrades)]);
         }
-        if (
-            localStorage.getItem("searchString") !== null &&
-            localStorage.getItem("searchString") !== undefined
-        ) {
-            const searchStringValue =
-                localStorage.getItem("searchString") || "";
+        if (localSearch !== null && localSearch !== undefined) {
+            const searchStringValue = localSearch || "";
             setSearchString(searchStringValue);
         }
-        if (
-            localStorage.getItem("selectedResourceTypes") !== null &&
-            localStorage.getItem("selectedResourceTypes")
-        ) {
+        if (localResourceTypes !== null && localResourceTypes) {
             setResourceFilters([
                 ...resourceFilters(),
-                ...JSON.parse(localStorage.getItem("selectedResourceTypes")!),
+                ...JSON.parse(localResourceTypes),
             ]);
         }
         await filterPosts();
@@ -102,11 +94,10 @@ export const ResourcesView: Component = () => {
         localStorage.removeItem("selectedResourceTypes");
     });
 
-    const searchPosts = async () => {
-        if (localStorage.getItem("searchString") !== null) {
-            setSearchString(localStorage.getItem("searchString") as string);
+    const searchPosts = async (searchString: string) => {
+        if (searchString !== null) {
+            setSearchString(searchString);
         }
-
         filterPosts();
     };
 
@@ -119,7 +110,6 @@ export const ResourcesView: Component = () => {
         } else {
             setSubjectFilters([...subjectFilters(), currentCategory]);
         }
-
         filterPosts();
     };
 
@@ -136,6 +126,8 @@ export const ResourcesView: Component = () => {
             resourceFilters: resourceTypesFilters(),
             secularFilter: secularFilters(),
             lang: lang,
+            listing_status: true,
+            draft_status: false,
         });
 
         console.log(res);
@@ -151,7 +143,6 @@ export const ResourcesView: Component = () => {
             }, 3000);
 
             setPosts([]);
-            setCurrentPosts([]);
             console.error();
 
             timeouts.push(
@@ -168,10 +159,11 @@ export const ResourcesView: Component = () => {
                 resourceFilters: [],
                 secularFilter: false,
                 lang: lang,
+                listing_status: true,
+                draft_status: false,
             });
 
             setPosts(allPosts);
-            setCurrentPosts(allPosts);
             console.log(allPosts);
         } else {
             for (let i = 0; i < timeouts.length; i++) {
@@ -181,7 +173,6 @@ export const ResourcesView: Component = () => {
             timeouts = [];
 
             setPosts(res.body);
-            setCurrentPosts(res.body);
         }
     };
 
@@ -217,118 +208,43 @@ export const ResourcesView: Component = () => {
     };
 
     const clearAllFilters = () => {
-        let searchInput = document.getElementById("search") as HTMLInputElement;
-        const subjectCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].subject"
-        ) as NodeListOf<HTMLInputElement>;
-        const gradeCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].grade"
-        ) as NodeListOf<HTMLInputElement>;
-        const resourceTypesCheckoxes = document.querySelectorAll(
-            "input[type='checkbox'].resourceType"
-        ) as NodeListOf<HTMLInputElement>;
+        let searchInput = document.getElementById(
+            "headerSearch"
+        ) as HTMLInputElement;
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
         }
 
-        gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        resourceTypesCheckoxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedGrades");
-        localStorage.removeItem("selectedSubjects");
-        localStorage.removeItem("searchString");
-        localStorage.removeItem("selectedResourceTypes");
+        setClearFilters(true);
 
         setSearchPost([]);
         setSearchString("");
-        // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
         setResourceTypeFilters([]);
         setSecularFilters(false);
 
         filterPosts();
+        setClearFilters(false);
     };
 
     const clearSubjects = () => {
-        const subjectCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].subject"
-        ) as NodeListOf<HTMLInputElement>;
-
-        subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedSubjects");
         setSubjectFilters([]);
         filterPosts();
     };
 
     const clearGrade = () => {
-        const gradeCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].grade"
-        ) as NodeListOf<HTMLInputElement>;
-
-        console.log(gradeCheckboxes);
-
-        gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedGrades");
         setGradeFilters([]);
         filterPosts();
     };
 
     const clearResourceTypes = () => {
-        const resourceTypesCheckoxes = document.querySelectorAll(
-            "input[type='checkbox'].resourceType"
-        ) as NodeListOf<HTMLInputElement>;
-
-        console.log(resourceTypesCheckoxes);
-
-        resourceTypesCheckoxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        // localStorage.removeItem("selectedGrades");
         setResourceTypeFilters([]);
         filterPosts();
     };
 
     const clearSecular = () => {
-        const secularCheckbox = document.getElementById(
-            "secularCheck"
-        ) as HTMLInputElement;
-
-        console.log(secularCheckbox);
-
-        if (secularCheckbox && secularCheckbox.checked) {
-            secularCheckbox.checked = false;
-        }
-
         setSecularFilters(false);
         filterPosts();
     };
@@ -336,7 +252,7 @@ export const ResourcesView: Component = () => {
     return (
         <div class="">
             <div>
-                <SearchBar search={searchPosts} />
+                <SearchBar search={searchPosts} clearFilters={clearFilters()} />
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
@@ -345,6 +261,7 @@ export const ResourcesView: Component = () => {
                     clearSubjects={clearSubjects}
                     clearGrade={clearGrade}
                     clearAllFilters={clearAllFilters}
+                    clearFilters={clearFilters()}
                     filterPostsByGrade={filterPostsByGrade}
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
@@ -368,6 +285,7 @@ export const ResourcesView: Component = () => {
                         clearSubjects={clearSubjects}
                         clearGrade={clearGrade}
                         clearAllFilters={clearAllFilters}
+                        clearFilters={clearFilters()}
                         filterPostsByGrade={filterPostsByGrade}
                         filterPostsBySubject={setCategoryFilter}
                         secularFilter={filterPostsBySecular}
@@ -395,12 +313,12 @@ export const ResourcesView: Component = () => {
                     </Show>
                     <Show when={screenSize() !== "sm"}>
                         <div class="inline">
-                            <ViewCard posts={currentPosts()} />
+                            <ViewCard posts={posts()} />
                         </div>
                     </Show>
                     <Show when={screenSize() === "sm"}>
                         <div class="flex justify-center">
-                            <MobileViewCard posts={currentPosts()} />
+                            <MobileViewCard lang={lang} posts={posts()} />
                         </div>
                     </Show>
                 </div>
