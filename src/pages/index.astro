@@ -15,7 +15,7 @@ const t = useTranslations(lang);
 >
     <div class="w-full">
         <!-- @ts-ignore -->
-        <Home lang={lang}>
+        <Home client:visible lang={lang}>
             <HomeStickyFilters
                 lang={lang}
                 client:only="solid-js"
