@@ -146,6 +146,7 @@ export const FavoriteButton: Component<Props> = (props) => {
         }
     }
 
+    //REFACTOR: Improve the aria label for the favorites button maybe with the post title?
     return (
         <div class="relative z-20 w-full">
             <Show when={!isFavorited()}>
