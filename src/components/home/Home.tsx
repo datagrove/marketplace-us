@@ -156,7 +156,7 @@ export const Home: Component<Props> = (props) => {
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.popularResources")}
                     </h3>
-                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
+                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={popularPosts()} lang={lang()} />
                     </div>
                 </div>
@@ -186,7 +186,7 @@ export const Home: Component<Props> = (props) => {
                     <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.newResources")}
                     </h3>
-                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
+                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={newPosts()} lang={lang()} />
                     </div>
                 </div>
