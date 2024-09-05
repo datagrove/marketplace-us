@@ -74,4 +74,6 @@ export interface FilterPostsParams {
     user_id?: string;
     post_id?: number[];
     seller_id?: string;
+    from?: number;
+    to?: number;
 }

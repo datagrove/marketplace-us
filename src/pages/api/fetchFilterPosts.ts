@@ -20,11 +20,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         orderAscending,
         user_id,
         post_id,
-        seller_id
+        seller_id,
+        from,
+        to,
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
     const postSubjects = values.subjectCategoryInfo.subjects;
+    console.log("From: ", from);
+    console.log(" To: ", to);
 
     try {
         let query = supabase
@@ -49,9 +53,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         if (Array.isArray(resourceFilters) && resourceFilters.length !== 0) {
             query = query.overlaps("resource_types", resourceFilters);
         }
-        if (limit) {
-            query = query.limit(limit);
-        }
         if (user_id) {
             query = query.eq("user_id", user_id);
         }
@@ -66,6 +67,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         }
         if (seller_id) {
             query = query.eq("seller_id", seller_id);
+        }
+        if (from !== undefined && to !== undefined && from>=0 && to >=0) {
+            query = query.range(from, to);
+        }
+        if (limit) {
+            query = query.limit(limit);
         }
 
         const { data: posts, error } = await query;
@@ -155,23 +162,22 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                         const imageUrls = post.image_urls.split(",");
                         post.image_signedUrls = [];
 
-                         const urls = await Promise.all(
+                        const urls = await Promise.all(
                             imageUrls.map(async (imageUrl: string) => {
-                            const url = await downloadPostImage(imageUrl);
-                            if (url) {
-                                post.image_signedUrls = [
-                                    ...post.image_signedUrls,
-                                    url,
-                                ];
-                                return url;
-                            }
-                        }));
+                                const url = await downloadPostImage(imageUrl);
+                                if (url) {
+                                    post.image_signedUrls = [
+                                        ...post.image_signedUrls,
+                                        url,
+                                    ];
+                                    return url;
+                                }
+                            })
+                        );
 
-                        if(post.image_signedUrls.length > 0){
-                            post.image_url = post.image_signedUrls[0]
+                        if (post.image_signedUrls.length > 0) {
+                            post.image_url = post.image_signedUrls[0];
                         }
-
-
                     } else {
                         post.image_signedUrls = [];
                         post.image_url = undefined;
