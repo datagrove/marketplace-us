@@ -8,10 +8,10 @@
     "build": "astro build && workbox injectManifest workbox-config.cjs",
     "preview": "wrangler pages dev ./dist",
     "astro": "astro",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "9.2.1",
+    "@astrojs/cloudflare": "10.4.2",
     "@astrojs/mdx": "^3.1.3",
     "@astrojs/sitemap": "^3.1.6",
     "@astrojs/solid-js": "^4.4.0",
