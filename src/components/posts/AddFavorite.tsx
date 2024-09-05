@@ -153,7 +153,7 @@ export const FavoriteButton: Component<Props> = (props) => {
                     onclick={(e) => addToFavorites(e)}
                     class="absolute right-0 top-0"
                     id="addFavoriteBtn"
-                    aria-label="Add to Favorites"
+                    aria-label={`Add to Favorites ${props.id}`}
                 >
                     <svg
                         fill="none"
