@@ -25,7 +25,7 @@ export const ViewCard: Component<Props> = (props) => {
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
 
-    onMount(() => {
+    createEffect(() => {
         console.log(props.posts);
     });
 

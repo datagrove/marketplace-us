@@ -1,6 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, onMount, Show } from "solid-js";
+import { createSignal, createEffect, onMount, Show, onCleanup } from "solid-js";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
 import { FiltersMobile } from "./FiltersMobile";
@@ -21,6 +21,9 @@ async function fetchPosts({
     secularFilter,
     listing_status,
     draft_status,
+    lang,
+    from,
+    to,
 }: FilterPostsParams) {
     const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
@@ -33,6 +36,8 @@ async function fetchPosts({
             lang: lang,
             listing_status: listing_status,
             draft_status: draft_status,
+            from: from,
+            to: to,
         }),
     });
     const data = await response.json();
@@ -55,8 +60,17 @@ export const ResourcesView: Component = () => {
     const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
     const [clearFilters, setClearFilters] = createSignal<boolean>(false);
+    const [page, setPage] = createSignal<number>(1);
+    const [loading, setLoading] = createSignal<boolean>(false);
+    const [hasMore, setHasMore] = createSignal<boolean>(true);
+
+    let postsPerPage: number = 10;
 
     const screenSize = useStore(windowSize);
+
+    if (screenSize() === "sm") {
+        postsPerPage = 5;
+    }
 
     onMount(async () => {
         const localSubjects = localStorage.getItem("selectedSubjects");
@@ -84,7 +98,33 @@ export const ResourcesView: Component = () => {
                 ...JSON.parse(localResourceTypes),
             ]);
         }
-        await filterPosts();
+        fetchPaginatedPosts(page());
+
+        const loadMoreTrigger = document.getElementById("load-more-trigger");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !loading() && hasMore()) {
+                    setPage((prev) => prev + 1);
+                    fetchPaginatedPosts(page());
+                }
+            },
+            {
+                root: null,
+                rootMargin: "100px",
+                threshold: 1.0,
+            }
+        );
+
+        if (loadMoreTrigger) {
+            observer.observe(loadMoreTrigger);
+        }
+
+        onCleanup(() => {
+            if (loadMoreTrigger) {
+                observer.unobserve(loadMoreTrigger);
+            }
+        });
     });
 
     window.addEventListener("beforeunload", () => {
@@ -94,11 +134,60 @@ export const ResourcesView: Component = () => {
         localStorage.removeItem("selectedResourceTypes");
     });
 
+    const fetchPaginatedPosts = async (pageValue: number) => {
+        const noPostsMessage = document.getElementById("no-posts-message");
+
+        setLoading(true);
+        const from = (pageValue - 1) * postsPerPage;
+        const to = from + postsPerPage - 1;
+
+        const res = await fetchPosts({
+            subjectFilters: subjectFilters(),
+            gradeFilters: gradeFilters(),
+            searchString: searchString(),
+            resourceFilters: resourceTypesFilters(),
+            secularFilter: secularFilters(),
+            listing_status: true,
+            draft_status: false,
+            lang: lang,
+            from: from,
+            to: to,
+        });
+
+        if (res.body && res.body.length > 0) {
+            setPosts((prevPosts) => [...prevPosts, ...res.body]);
+            if (res.body.length < postsPerPage) {
+                setHasMore(false); // No more posts if fewer than the page size were fetched
+            }
+        } else {
+            if (pageValue === 1) {
+                noPostsMessage?.classList.remove("hidden"); // Show no-posts message on the first page
+                setTimeout(() => {
+                    noPostsMessage?.classList.add("hidden");
+                    clearAllFilters();
+                }, 3000);
+
+                // Clear posts if there are no results on the first page
+            } else {
+                setHasMore(false); // No more posts to load in subsequent pages
+            }
+        }
+
+        setLoading(false);
+    };
+
+    function triggerNewSearch() {
+        setPage(1); // Reset page to 1
+        setPosts([]); // Clear current posts
+        setHasMore(true);
+        fetchPaginatedPosts(page());
+    }
+
     const searchPosts = async (searchString: string) => {
         if (searchString !== null) {
             setSearchString(searchString);
         }
-        filterPosts();
+        triggerNewSearch();
     };
 
     const setCategoryFilter = (currentCategory: string) => {
@@ -110,71 +199,71 @@ export const ResourcesView: Component = () => {
         } else {
             setSubjectFilters([...subjectFilters(), currentCategory]);
         }
-        filterPosts();
+        triggerNewSearch();
     };
 
     let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
-    const filterPosts = async () => {
-        console.log("Filtering posts...");
-        const noPostsMessage = document.getElementById("no-posts-message");
+    // const filterPosts = async () => {
+    //     console.log("Filtering posts...");
+    //     const noPostsMessage = document.getElementById("no-posts-message");
 
-        const res = await fetchPosts({
-            subjectFilters: subjectFilters(),
-            gradeFilters: gradeFilters(),
-            searchString: searchString(),
-            resourceFilters: resourceTypesFilters(),
-            secularFilter: secularFilters(),
-            lang: lang,
-            listing_status: true,
-            draft_status: false,
-        });
+    //     const res = await fetchPosts({
+    //         subjectFilters: subjectFilters(),
+    //         gradeFilters: gradeFilters(),
+    //         searchString: searchString(),
+    //         resourceFilters: resourceTypesFilters(),
+    //         secularFilter: secularFilters(),
+    //         lang: lang,
+    //         listing_status: true,
+    //         draft_status: false,
+    //     });
 
-        console.log(res);
+    //     console.log(res);
 
-        if (
-            res.body === null ||
-            res.body === undefined ||
-            res.body.length < 1
-        ) {
-            noPostsMessage?.classList.remove("hidden");
-            setTimeout(() => {
-                noPostsMessage?.classList.add("hidden");
-            }, 3000);
+    //     if (
+    //         res.body === null ||
+    //         res.body === undefined ||
+    //         res.body.length < 1
+    //     ) {
+    //         noPostsMessage?.classList.remove("hidden");
+    //         setTimeout(() => {
+    //             noPostsMessage?.classList.add("hidden");
+    //         }, 3000);
 
-            setPosts([]);
-            console.error();
+    //         setPosts([]);
+    //         console.error();
 
-            timeouts.push(
-                setTimeout(() => {
-                    //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-                    clearAllFilters();
-                }, 3000)
-            );
+    //         timeouts.push(
+    //             setTimeout(() => {
+    //                 //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+    //                 clearAllFilters();
+    //             }, 3000)
+    //         );
 
-            let allPosts = await fetchPosts({
-                subjectFilters: [],
-                gradeFilters: [],
-                searchString: "",
-                resourceFilters: [],
-                secularFilter: false,
-                lang: lang,
-                listing_status: true,
-                draft_status: false,
-            });
+    //         let allPosts = await fetchPosts({
+    //             subjectFilters: [],
+    //             gradeFilters: [],
+    //             searchString: "",
+    //             resourceFilters: [],
+    //             secularFilter: false,
+    //             lang: lang,
+    //             listing_status: true,
+    //             draft_status: false,
+    //         });
 
-            setPosts(allPosts);
-            console.log(allPosts);
-        } else {
-            for (let i = 0; i < timeouts.length; i++) {
-                clearTimeout(timeouts[i]);
-            }
+    //         setPosts(allPosts);
+    //         console.log(allPosts);
+    //     } else {
+    //         for (let i = 0; i < timeouts.length; i++) {
+    //             clearTimeout(timeouts[i]);
+    //         }
 
-            timeouts = [];
+    //         timeouts = [];
 
-            setPosts(res.body);
-        }
-    };
+    //         setPosts(res.body);
+    //     }
+    // };
 
     const filterPostsByGrade = (grade: string) => {
         if (gradeFilters().includes(grade)) {
@@ -186,7 +275,7 @@ export const ResourcesView: Component = () => {
             setGradeFilters([...gradeFilters(), grade]);
         }
 
-        filterPosts();
+        triggerNewSearch();
     };
 
     const filterPostsByResourceTypes = (type: string) => {
@@ -199,12 +288,12 @@ export const ResourcesView: Component = () => {
             setResourceTypeFilters([...resourceTypesFilters(), type]);
         }
 
-        filterPosts();
+        triggerNewSearch();
     };
 
     const filterPostsBySecular = (secular: boolean) => {
         setSecularFilters(secular);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearAllFilters = () => {
@@ -225,28 +314,28 @@ export const ResourcesView: Component = () => {
         setResourceTypeFilters([]);
         setSecularFilters(false);
 
-        filterPosts();
+        triggerNewSearch();
         setClearFilters(false);
     };
 
     const clearSubjects = () => {
         setSubjectFilters([]);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearGrade = () => {
         setGradeFilters([]);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearResourceTypes = () => {
         setResourceTypeFilters([]);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearSecular = () => {
         setSecularFilters(false);
-        filterPosts();
+        triggerNewSearch();
     };
 
     return (
@@ -314,11 +403,19 @@ export const ResourcesView: Component = () => {
                     <Show when={screenSize() !== "sm"}>
                         <div class="inline">
                             <ViewCard posts={posts()} />
+                            <div
+                                id="load-more-trigger"
+                                class="h-10 w-full"
+                            ></div>
                         </div>
                     </Show>
                     <Show when={screenSize() === "sm"}>
-                        <div class="flex justify-center">
+                        <div class="flex flex-col justify-center">
                             <MobileViewCard lang={lang} posts={posts()} />
+                            <div
+                                id="load-more-trigger"
+                                class="h-10 w-full"
+                            ></div>
                         </div>
                     </Show>
                 </div>

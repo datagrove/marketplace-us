@@ -15,8 +15,6 @@ import { ReportResource } from "./ReportResource";
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-//get the categories from the language files so they translate with changes in the language picker
-
 interface Props {
     postId: string | undefined;
 }
@@ -172,92 +170,92 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
     }
 
-    const twitterUrl =
-        "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
-    const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
-    const whatsappUrl = "https://wa.me/?text=";
-    const linkTarget = "_top";
-    const windowOptions = "menubar=yes,status=no,height=300,width=600";
+    // const twitterUrl =
+    //     "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
+    // const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
+    // const whatsappUrl = "https://wa.me/?text=";
+    // const linkTarget = "_top";
+    // const windowOptions = "menubar=yes,status=no,height=300,width=600";
 
-    function extractTitleText() {
-        return document.querySelector("h2")?.innerText;
-    }
+    // function extractTitleText() {
+    //     return document.querySelector("h2")?.innerText;
+    // }
 
-    function extractAnchorLink() {
-        return document.querySelector("a")?.href;
-    }
+    // function extractAnchorLink() {
+    //     return document.querySelector("a")?.href;
+    // }
 
-    function extractWindowLink() {
-        const currLink = window.location.href;
-        return currLink;
-    }
+    // function extractWindowLink() {
+    //     const currLink = window.location.href;
+    //     return currLink;
+    // }
 
-    function openTwitterWindow(text: any, link: any) {
-        const twitterQuery = `${text} ${link}`;
-        return window.open(
-            `${twitterUrl} ${twitterQuery}&`,
-            linkTarget,
-            windowOptions
-        );
-    }
+    // function openTwitterWindow(text: any, link: any) {
+    //     const twitterQuery = `${text} ${link}`;
+    //     return window.open(
+    //         `${twitterUrl} ${twitterQuery}&`,
+    //         linkTarget,
+    //         windowOptions
+    //     );
+    // }
 
-    function registerShareButton() {
-        extractWindowLink();
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const twitterButton = document.querySelector("#button--twitter");
-        twitterButton?.addEventListener("click", () =>
-            openTwitterWindow(text, link)
-        );
-    }
+    // function registerShareButton() {
+    //     extractWindowLink();
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const twitterButton = document.querySelector("#button--twitter");
+    //     twitterButton?.addEventListener("click", () =>
+    //         openTwitterWindow(text, link)
+    //     );
+    // }
 
-    function openFacebookWindow(text: any, link: any) {
-        const currPage = extractWindowLink();
-        const testLink =
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-            encodeURIComponent(currPage);
-        window.open(
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-                encodeURIComponent(currPage) +
-                "&t=" +
-                text,
-            "",
-            "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-        );
-        // console.log("TestLink: ", testLink);
-        // return false;
-    }
+    // function openFacebookWindow(text: any, link: any) {
+    //     const currPage = extractWindowLink();
+    //     const testLink =
+    //         "https://www.facebook.com/sharer/sharer.php?u=" +
+    //         encodeURIComponent(currPage);
+    //     window.open(
+    //         "https://www.facebook.com/sharer/sharer.php?u=" +
+    //             encodeURIComponent(currPage) +
+    //             "&t=" +
+    //             text,
+    //         "",
+    //         "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+    //     );
+    //     // console.log("TestLink: ", testLink);
+    //     // return false;
+    // }
 
-    function registerFacebookButton() {
-        extractWindowLink();
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const facebookButton = document.querySelector("#button--facebook");
-        facebookButton?.addEventListener("click", () =>
-            openFacebookWindow(text, link)
-        );
-    }
+    // function registerFacebookButton() {
+    //     extractWindowLink();
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const facebookButton = document.querySelector("#button--facebook");
+    //     facebookButton?.addEventListener("click", () =>
+    //         openFacebookWindow(text, link)
+    //     );
+    // }
 
-    function openWhatsappWindow(text: any, link: any) {
-        const currPage = extractWindowLink();
-        const testLink =
-            whatsappUrl +
-            // TODO Update to LearnGrove
-            "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
-        window.open(
-            testLink + encodeURIComponent(currPage),
-            "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-        );
-    }
+    // function openWhatsappWindow(text: any, link: any) {
+    //     const currPage = extractWindowLink();
+    //     const testLink =
+    //         whatsappUrl +
+    //         // TODO Update to LearnGrove
+    //         "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
+    //     window.open(
+    //         testLink + encodeURIComponent(currPage),
+    //         "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+    //     );
+    // }
 
-    function registerWhatsAppButton() {
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const whatsAppButton = document.querySelector("#button--whatsapp");
-        whatsAppButton?.addEventListener("click", () =>
-            openWhatsappWindow(text, link)
-        );
-    }
+    // function registerWhatsAppButton() {
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const whatsAppButton = document.querySelector("#button--whatsapp");
+    //     whatsAppButton?.addEventListener("click", () =>
+    //         openWhatsappWindow(text, link)
+    //     );
+    // }
 
     function imageClick(e: Event) {
         e.preventDefault();
