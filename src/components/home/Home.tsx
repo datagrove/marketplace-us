@@ -153,18 +153,18 @@ export const Home: Component<Props> = (props) => {
                 </div>
 
                 <div id="popular-resources" class="my-1 w-full md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.popularResources")}
-                    </h3>
+                    </div>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={popularPosts()} lang={lang()} />
                     </div>
                 </div>
 
                 <div id="home-subject-filter" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopBySubject")}
-                    </h3>
+                    </div>
                     {props.subjectCarousel}
                 </div>
 
@@ -183,18 +183,18 @@ export const Home: Component<Props> = (props) => {
                 </a>
 
                 <div id="new-resources" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.newResources")}
-                    </h3>
+                    </div>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={newPosts()} lang={lang()} />
                     </div>
                 </div>
 
                 <div id="home-grade-filter" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopByGrade")}
-                    </h3>
+                    </div>
                     <HomeGradeCarousel lang={lang()} />
                 </div>
 

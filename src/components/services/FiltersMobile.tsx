@@ -504,7 +504,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                                 <Show when={gradeFilterCount() > 0}>
                                     <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
                                             {gradeFilterCount()}
                                         </p>
                                     </div>
@@ -558,7 +558,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                                 <Show when={resourceTypesFilterCount() > 0}>
                                     <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
                                             {resourceTypesFilterCount()}
                                         </p>
                                     </div>
@@ -610,7 +610,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
                                 <Show when={subjectFilterCount() > 0}>
                                     <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
                                             {subjectFilterCount()}
                                         </p>
                                     </div>
@@ -663,7 +663,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     }
                                 >
                                     <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-ptext2-DM">
+                                        <p class="dark:btn1Text-DM text-[10px] text-ptext2">
                                             {secularInNumber()}
                                         </p>
                                     </div>
@@ -700,7 +700,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </button>
                             <Show when={screenSize() === "sm"}>
                                 <button
-                                    class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-ptext2-DM"
+                                    class="w-32 rounded border border-border1 bg-btn1 py-1 font-light text-ptext2 dark:border-border1-DM dark:bg-btn2-DM dark:text-btn1Text-DM"
                                     onClick={() => {
                                         setShowFilters(false);
                                     }}

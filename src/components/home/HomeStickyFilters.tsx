@@ -218,18 +218,18 @@ export const HomeStickyFilters: Component<Props> = (props) => {
                 class="sticky top-0 flex w-full items-center justify-center bg-background2 py-1 dark:bg-background2-DM"
             >
                 <a onmouseover={hideFilterDivs} href={`/${language}/resources`}>
-                    <h3 class="mx-5 hidden text-xl text-ptext2 dark:text-ptext2-DM md:inline">
+                    <div class="mx-5 hidden text-xl text-ptext2 dark:text-ptext2-DM md:inline">
                         {t("buttons.browseCatalog")}
-                    </h3>
+                    </div>
                 </a>
 
                 <div>
-                    <h3
+                    <div
                         onclick={showGradeFilters}
                         class="relative mx-5 mt-3 min-h-[44px] min-w-[44px] text-xl text-ptext2 dark:text-ptext2-DM md:my-2 md:min-h-px md:min-w-px"
                     >
                         {t("formLabels.grades")}
-                    </h3>
+                    </div>
                     <div
                         onmouseleave={hideGradeFilters}
                         id="gradeDiv"
@@ -275,12 +275,12 @@ export const HomeStickyFilters: Component<Props> = (props) => {
                 </div>
 
                 <div class="flex">
-                    <h3
+                    <div
                         onclick={showSubjectFilters}
                         class="relative mx-5 mt-3 min-h-[44px] min-w-[44px] text-xl text-ptext2 dark:text-ptext2-DM md:my-2 md:min-h-px md:min-w-px"
                     >
                         {t("formLabels.subjects")}
-                    </h3>
+                    </div>
                     <div
                         onmouseleave={hideSubjectFilters}
                         id="subjectDiv"
