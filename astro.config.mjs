@@ -78,14 +78,14 @@ export default defineConfig({
     mdx(),
     compress()
   ],
-  // vite: {
-  //   // resolve: {
-  //   //   conditions: ["worker", "webworker"],
-  //   //   mainFields: ["module"],
-  //   // }
+  vite: {
+    resolve: {
+      conditions: !isDev ? ["worker", "webworker"] : [],
+      mainFields: !isDev ? ["module"] : [],
+    }
   //   //   define: {
   //   //     'process.env.PUBLIC_VITE_SUPABASE_URL': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_URL),
   //   //     'process.env.PUBLIC_VITE_SUPABASE_ANON_KEY': JSON.stringify(process.env.PUBLIC_VITE_SUPABASE_ANON_KEY),
   //   //   }
-  // },
+  },
 })
