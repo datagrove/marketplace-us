@@ -12,7 +12,6 @@ import {
 } from "solid-js";
 
 interface Props {
-    // Define the type for the filterPosts prop
     resourceId: number;
     userId: string;
     access: string;
@@ -71,6 +70,12 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         } catch (err) {
             console.error(err);
         } finally {
+            const arrayLength = () => reviewsData().length;
+            if (arrayLength() === 0) {
+                setShowReviewForm(true);
+                setLoading(false);
+                return;
+            }
             reviewsData().map((review: Review) => {
                 if (review.reviewer_id === props.userId) {
                     console.log("already has a review");
@@ -79,8 +84,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                     setShowReviewForm(true);
                 }
             });
-            setLoading(false); // Set loading to false after fetch is complete
-            const arrayLength = () => reviewsData().length;
+
+            // Set loading to false after fetch is complete
+            setLoading(false);
             setTotalReviews(arrayLength);
             if (arrayLength() > 0) {
                 reviewsData().map((review: Review) => {
@@ -92,10 +98,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                 setTotalRatingOfPost(Math.round(totalRatingOfPost() * 2) / 2);
             }
         }
-    });
-
-    createEffect(() => {
-        console.log(reviewsData(), "00000000000000000000000");
     });
 
     function submit(e: SubmitEvent) {
@@ -114,23 +116,21 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
     return (
         <div>
-            <Show when={showReviewForm() === true}>
-                <div>
-                    {loading() && <p>Loading reviews...</p>}
-                    {!loading() && (
-                        <>
-                            <h2>Total Reviews: {totalReviews()} </h2>
-                            <h2>
-                                Percentage of Reviews: {totalRatingOfPost()}{" "}
-                            </h2>
-                        </>
-                    )}
-                </div>
+            <div>
+                {loading() && <p>Loading reviews...</p>}
+                {!loading() && (
+                    <>
+                        <h2>Total Reviews: {totalReviews()} </h2>
+                        <h2>Percentage of Reviews: {totalRatingOfPost()}</h2>
+                    </>
+                )}
+            </div>
 
+            <Show when={showReviewForm() === true}>
                 <form onSubmit={submit}>
                     <div class="mb-4 mt-2 text-center text-xs">
                         <span class="text-alert1">* </span>
-                        {/* <span class="italic">{t("formLabels.required")}</span> */}
+                        <span class="italic">{t("formLabels.required")}</span>
                     </div>
 
                     <div class="">
@@ -140,7 +140,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 class="dark:text-ptext1-dm text-ptext1"
                             >
                                 overralRating
-                                {/* {t("formlabels.creatorname")}: */}
+                                {/* {t("")}: */}
                             </label>
                             <div class="group relative mr-2 flex items-center">
                                 <svg
@@ -169,7 +169,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                               rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible md:translate-x-1/4 md:translate-y-0"
                                 >
                                     overralRating
-                                    {/* {t("tooltips.displayname")} */}
+                                    {/* {t("")} */}
                                 </span>
                             </div>
                         </div>
@@ -189,7 +189,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 class="text-ptext1 dark:text-ptext1-DM"
                             >
                                 Review Title
-                                {/* {t("formLabels.creatorName")}: */}
+                                {/* {t("")}: */}
                             </label>
                             <div class="group relative mr-2 flex items-center">
                                 <svg
@@ -217,7 +217,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                 >
-                                    {/* {t("toolTips.displayName")} */}
+                                    {/* {t("")} */}
                                 </span>
                             </div>
                         </div>
@@ -236,7 +236,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 for="CreatorName"
                                 class="text-ptext1 dark:text-ptext1-DM"
                             >
-                                {/* {t("formLabels.creatorName")}: */}
+                                {/* {t("")}: */}
                             </label>
                             <div class="group relative mr-2 flex items-center">
                                 <svg
@@ -264,7 +264,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                 >
-                                    {/* {t("toolTips.displayName")} */}
+                                    {/* {t("")} */}
                                 </span>
                             </div>
                         </div>
@@ -277,7 +277,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                         />
                     </div>
                     <div>
-                        {/* <label>german</label> */}
                         <button>
                             <input type="submit" value={"Submit Review"} />
                         </button>

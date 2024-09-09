@@ -70,27 +70,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
-    //
-    //Check if creator profile exists and if it does sets a redirect in the json response to send the user to their creator profile
-
-    // const { data: creatorExists, error: creatorExistsError } = await supabase
-    //     .from("sellers")
-    //     .select("user_id")
-    //     .eq("user_id", user.id);
-    // if (creatorExistsError) {
-    //     console.log("supabase error: " + creatorExistsError.message);
-    // } else if (creatorExists[0] !== undefined) {
-    //     return new Response(
-    //         JSON.stringify({
-    //             message: t("apiErrors.creatorExists"),
-    //             redirect: "/creator/profile",
-    //         }),
-    //         { status: 302 }
-    //     );
-    // }
 
 
-    //Build our submission to the creators table including the location id from the select from the location table on line 158
     let submission = {
         resource_id : resourceId,
         reviewer_id: userId,
@@ -99,7 +80,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         overall_rating :overralRating,
     };
 
-    //submit to the creators table and select it back
     const { error, data } = await supabase
         .from("reviews")
         .insert([submission])
@@ -118,7 +98,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         return new Response(
             JSON.stringify({
                 // message: t("apiErrors.noProfileData"),
-                message: "fail data put",
+                message: "fail data fetch",
             }),
             { status: 500 }
         );
@@ -129,8 +109,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     // If everything works send a success response
     return new Response(
         JSON.stringify({
-            // message: t("apiErrors.success"),
-            message: "success",
+            message: t("apiErrors.success"),
         }),
         { status: 200 }
     );
