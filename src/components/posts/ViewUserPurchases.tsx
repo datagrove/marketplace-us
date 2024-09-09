@@ -8,6 +8,7 @@ import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource.tsx";
 import type { PurchasedPost } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));

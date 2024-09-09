@@ -7,6 +7,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
 import type { PurchasedPost } from "@lib/types";
 import { downloadPostImage } from "@lib/imageHelper";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -16,12 +17,18 @@ interface Props {
     posts: Array<PurchasedPost>;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ViewPurchaseCard: Component<Props> = (props) => {
     const [purchasedItems, setPurchasedItems] = createSignal<
         Array<PurchasedPost>
     >([]);
     const [review, setReview] = createSignal<string>("");
+    const [session, setSession] = createSignal<AuthSession | null>(null);
 
+    onMount(async () => {
+        setSession(User?.session);
+    });
     console.log("Card Purchases");
     console.log(props.posts);
 
@@ -234,6 +241,14 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
 
                         <div class="mr-0.5 flex items-center justify-end">
                             <DownloadBtn item={post} />
+                        </div>
+                        <div>
+                            <ReviewPurchasedResource
+                                resourceId={post.id}
+                                userId={session()?.user.id!}
+                                access={session()?.access_token}
+                                ref={session()?.refresh_token!}
+                            />
                         </div>
                     </div>
                 </div>

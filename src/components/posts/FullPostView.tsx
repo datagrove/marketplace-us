@@ -113,6 +113,18 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
     };
 
+    const fetchOwnedPost = async function (id: number) {
+        const { data, error } = supabase.from("orders").select("*");
+
+        if (error) {
+            console.error(error);
+        } else {
+            console.log(data, "0000000000000000000");
+        }
+    };
+
+    fetchOwnedPost(10);
+
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
     };
@@ -844,6 +856,18 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     }}
                                 >
                                     {t("buttons.editPost")}
+                                </button>
+                            </Show>
+
+                            <Show when={session()?.user.id === post()?.user_id}>
+                                <button
+                                    class="btn-primary"
+                                    onclick={() => {
+                                        setEditRender(!editRender());
+                                        //(editRender());
+                                    }}
+                                >
+                                    Reviews
                                 </button>
                             </Show>
 
