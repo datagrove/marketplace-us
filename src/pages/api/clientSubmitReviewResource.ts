@@ -23,7 +23,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   const reviewTitle = formData.get("review_title");
   const reviewText = formData.get("review_text");
-  const overralRating = formData.get("overall_rating");
+  const overallRating = formData.get("overall_rating");
   const resourceId = formData.get("resource_id");
   const userId = formData.get("user_id");
 
@@ -31,6 +31,21 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
 
+  if (
+    !reviewTitle ||
+    !reviewText ||
+    !overallRating ||
+    !resourceId ||
+    !userId ||
+    access_token === ""
+  ) {
+    return new Response(
+      JSON.stringify({
+        message: t("apiErrors.missingFields"),
+      }),
+      { status: 500 }
+    );
+  }
 
   //Get the session from supabase (for the server side) based on the access and refresh tokens
   const { data: sessionData, error: sessionError } =
@@ -42,9 +57,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     console.log("supabase error: " + sessionError.message);
     return new Response(
       JSON.stringify({
-        // message: t("apiErrors.noSession"),
-        message: "No session"
-        //    
+        message: t("apiErrors.noSession"),
       }),
       { status: 500 }
     );
@@ -68,8 +81,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   if (!user) {
     return new Response(
       JSON.stringify({
-        // message: t("apiErrors.noUser"),
-        message: "No user"
+        message: t("apiErrors.noUser"),
       }),
       { status: 500 }
     );
@@ -81,7 +93,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     reviewer_id: userId,
     review_title: reviewTitle,
     review_text: reviewText,
-    overall_rating: overralRating,
+    overall_rating: overallRating,
   };
 
   const { error, data } = await supabase
@@ -94,6 +106,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(
       JSON.stringify({
         // message: t("apiErrors.creatorCreateProfileError"),
+        //TODO: Internationalize
         message: "fail to insert "
       }),
       { status: 500 }
@@ -102,6 +115,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return new Response(
       JSON.stringify({
         // message: t("apiErrors.noProfileData"),
+        //TODO: Internationalize
         message: "fail data fetch",
       }),
       { status: 500 }
@@ -113,9 +127,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // If everything works send a success response
   return new Response(
     JSON.stringify({
-      // message: t("apiErrors.success"),
-      message: "Success"
-
+      message: t("apiErrors.success"),
     }),
     { status: 200 }
   );
