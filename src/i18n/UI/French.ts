@@ -129,6 +129,7 @@ export const French = {
     editPost: "Editer",
     getLinks: "Obtenir des Liens",
     checkoutAsGuest: "Passer en tant qu'invite",
+    reviewResource: "Critique",
   },
 
   messages: {
@@ -258,6 +259,8 @@ export const French = {
     secular: "Laïque",
     resourceLinks: "Liens vers les ressources",
     draft: "Brouillon",
+    whatDidYouThink: "Qu'en as-tu pensé?",
+    overallRating: "Note Globale",
   },
 
   postLabels: {

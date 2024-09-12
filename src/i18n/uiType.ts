@@ -116,6 +116,7 @@ export interface uiObject {
     editPost: string;
     getLinks: string;
     checkoutAsGuest: string;
+    reviewResource: string;
   };
 
   messages: {
@@ -229,6 +230,8 @@ export interface uiObject {
     secular: string;
     resourceLinks: string;
     draft: string;
+    whatDidYouThink: string;
+    overallRating: string;
   };
 
   postLabels: {

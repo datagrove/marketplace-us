@@ -132,6 +132,7 @@ export const English = {
     editPost: "Edit",
     getLinks: "Get Links",
     checkoutAsGuest: "Checkout As Guest",
+    reviewResource: "Review",
   },
 
   messages: {
@@ -257,6 +258,8 @@ export const English = {
     secular: "Secular",
     resourceLinks: "Resource Links",
     draft: "Draft",
+    whatDidYouThink: "What did you think?",
+    overallRating: "Overall Rating",
   },
 
   postLabels: {

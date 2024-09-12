@@ -132,6 +132,7 @@ export const Spanish = {
     editPost: "Editar",
     getLinks: "Obtener enlaces",
     checkoutAsGuest: "Comprar como Invitado",
+    reviewResource: "Reseña",
   },
 
   messages: {
@@ -261,6 +262,8 @@ export const Spanish = {
     secular: "Laico",
     resourceLinks: "Enlaces de Recurso",
     draft: "Borrador",
+    whatDidYouThink: "¿Qué pensó Ud?",
+    overallRating: "Calificación General",
   },
 
   postLabels: {

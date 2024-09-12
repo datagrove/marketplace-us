@@ -64,9 +64,9 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
     };
 
     return (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-2 border-green-700">
             {purchasedItems().map((post) => (
-                <div class="mb-4 flex max-w-max justify-self-center border-b-2 pb-2">
+                <div class="mb-4 flex max-w-max justify-self-center border-b-2 pb-2 border-2 border-red-500">
                     {/* { setProductID(post.id) } */}
                     <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">
@@ -140,6 +140,24 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                 ☆
                             </span>
                         </div> */}
+                        <div class="w-full mt-3 flex justify-center">
+                            {/* <button class="flex justify-center text-center w-[90%] bg-btn1 dark:bg-btn1-DM rounded-full">
+                                <p class="text-xs text-ptext1">{t("buttons.reviewResource")}</p>
+                            </button> */}
+                            <div>
+                                <ReviewPurchasedResource
+                                    resourceId={post.id}
+                                    userId={session()?.user.id!}
+                                    access={session()?.access_token}
+                                    ref={session()?.refresh_token!}
+                                    imgURL={post.image_url}
+                                    postTitle={post.title}
+                                    postCreator={post.seller_name}
+                                    purchaseDate={post.purchaseDate}
+                                    createdDate={post.created_at}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="purchased-item-text-buttons ml-2 w-full">
@@ -241,14 +259,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
 
                         <div class="mr-0.5 flex items-center justify-end">
                             <DownloadBtn item={post} />
-                        </div>
-                        <div>
-                            <ReviewPurchasedResource
-                                resourceId={post.id}
-                                userId={session()?.user.id!}
-                                access={session()?.access_token}
-                                ref={session()?.refresh_token!}
-                            />
                         </div>
                     </div>
                 </div>
