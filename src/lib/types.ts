@@ -12,9 +12,9 @@ export interface Post {
     email: string; //Email of the seller
     price_id: string; //Stripe Price ID of the post
     product_id: string; //Stripe Product ID of the post
-    product_subject: Array<string>; //Array of subject IDs, does not contain actual subject names
-    post_grade: Array<string>; //Array of grade IDs, does not contain actual grade names
-    resource_types: Array<string>; // Array of resource types IDs, does not contain actual resource_types names
+    subjects: Array<number>; //Array of subject IDs, does not contain actual subject names
+    grades: Array<number>; //Array of grade IDs, does not contain actual grade names
+    resource_types: Array<number>; // Array of resource types IDs, does not contain actual resource_types names
     listing_status: boolean; //Boolean of whether the post is listed or not
     secular: boolean;
     draft_status: boolean;
@@ -61,10 +61,10 @@ export interface Creator {
 }
 
 export interface FilterPostsParams {
-    subjectFilters?: string[]; 
-    gradeFilters?: string[];   
+    subjectFilters?: number[]; 
+    gradeFilters?: number[];   
     searchString?: string;
-    resourceFilters?: string[]; 
+    resourceFilters?: number[]; 
     secularFilter?: boolean;
     lang: "en" | "es" | "fr";   
     limit?: number;

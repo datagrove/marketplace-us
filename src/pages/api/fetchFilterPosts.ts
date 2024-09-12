@@ -39,10 +39,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             });
 
         if (Array.isArray(subjectFilters) && subjectFilters.length !== 0) {
-            query = query.overlaps("product_subject", subjectFilters);
+            query = query.overlaps("subjects", subjectFilters);
         }
         if (Array.isArray(gradeFilters) && gradeFilters.length !== 0) {
-            query = query.overlaps("post_grade", gradeFilters);
+            query = query.overlaps("grades", gradeFilters);
         }
         if (searchString && searchString.length !== 0) {
             query = query.textSearch("title_content", searchString);
@@ -85,7 +85,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 }),
                 { status: 500 }
             );
-        }
+        } else {console.log("Posts: ", posts)}
 
         const { data: gradeData, error: gradeError } = await supabase
             .from("grade_level")
@@ -115,12 +115,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         let formattedPosts: Post[] = [];
 
         if (posts && gradeData && resourceTypesData) {
+            console.log(posts)
             formattedPosts = await Promise.all(
                 posts.map(async (post: Post) => {
                     post.subject = [];
                     postSubjects.forEach((subject) => {
-                        post.product_subject.map((productSubject: string) => {
-                            if (productSubject === subject.id) {
+                        post.subjects.map((productSubject: number) => {
+                            if (productSubject === Number(subject.id)) {
                                 post.subject?.push(subject.name);
                             }
                         });
@@ -128,8 +129,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
                     post.grade = [];
                     gradeData.forEach((databaseGrade) => {
-                        post.post_grade.map((postGrade: string) => {
-                            if (postGrade === databaseGrade.id.toString()) {
+                        post.grades.map((postGrade: number) => {
+                            if (postGrade === databaseGrade.id) {
                                 post.grade?.push(databaseGrade.grade);
                             }
                         });
@@ -139,10 +140,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
                     post.resourceTypes = [];
                     resourceTypesData.forEach((databaseResourceTypes) => {
-                        post.resource_types.map((postResourceTypes: string) => {
+                        post.resource_types.map((postResourceTypes: number) => {
                             if (
                                 postResourceTypes ===
-                                databaseResourceTypes.id.toString()
+                                databaseResourceTypes.id
                             ) {
                                 post.resourceTypes?.push(
                                     databaseResourceTypes.type

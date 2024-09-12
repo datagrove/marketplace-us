@@ -166,13 +166,13 @@ export const CreateNewPost: Component = () => {
     const [subjects, setSubjects] = createSignal<
         Array<{ id: number; subject: string }>
     >([]);
-    const [subjectPick, setSubjectPick] = createSignal<Array<string>>([]);
+    const [subjectPick, setSubjectPick] = createSignal<Array<number>>([]);
     const [grades, setGrades] = createSignal<
         Array<{ id: number; grade: string }>
     >([]);
-    const [gradePick, setGradePick] = createSignal<Array<string>>([]);
+    const [gradePick, setGradePick] = createSignal<Array<number>>([]);
     const [resourceTypesPick, setResourceTypesPick] = createSignal<
-        Array<string>
+        Array<number>
     >([]);
     const [resourceTypes, setResourceTypes] = createSignal<
         Array<{ id: number; type: string }>
@@ -519,18 +519,14 @@ export const CreateNewPost: Component = () => {
         }
     }
     function setSubjectArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
-            setSubjectPick([
-                ...subjectPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (subjectPick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number((e.target as HTMLInputElement).value);
+        if (target.checked === true) {
+            setSubjectPick([...subjectPick(), targetValue]);
+        } else if (target.checked === false) {
+            if (subjectPick().includes(targetValue)) {
                 setSubjectPick(
-                    subjectPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    subjectPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -559,18 +555,13 @@ export const CreateNewPost: Component = () => {
     }
 
     function setGradeArray(e: Event) {
+        const targetValue = Number((e.target as HTMLInputElement).value);
         if ((e.target as HTMLInputElement).checked) {
-            setGradePick([
-                ...gradePick(),
-                (e.target as HTMLInputElement).value,
-            ]);
+            setGradePick([...gradePick(), targetValue]);
         } else if ((e.target as HTMLInputElement).checked === false) {
-            if (gradePick().includes((e.target as HTMLInputElement).value)) {
+            if (gradePick().includes(targetValue)) {
                 setGradePick(
-                    gradePick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    gradePick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -585,22 +576,13 @@ export const CreateNewPost: Component = () => {
     }
 
     function setResourceTypesArray(e: Event) {
+        const targetValue = Number((e.target as HTMLInputElement).value);
         if ((e.target as HTMLInputElement).checked) {
-            setResourceTypesPick([
-                ...resourceTypesPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
+            setResourceTypesPick([...resourceTypesPick(), targetValue]);
         } else if ((e.target as HTMLInputElement).checked === false) {
-            if (
-                resourceTypesPick().includes(
-                    (e.target as HTMLInputElement).value
-                )
-            ) {
+            if (resourceTypesPick().includes(targetValue)) {
                 setResourceTypesPick(
-                    resourceTypesPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    resourceTypesPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -776,9 +758,7 @@ export const CreateNewPost: Component = () => {
                                     {subjectPick().map((subject) =>
                                         subjects()
                                             .filter(
-                                                (item) =>
-                                                    item.id.toString() ===
-                                                    subject
+                                                (item) => item.id === subject
                                             )
                                             .map((item) => (
                                                 <span class="mr-1">
@@ -814,7 +794,7 @@ export const CreateNewPost: Component = () => {
                                         <input
                                             type="checkbox"
                                             id={subject.id.toString()}
-                                            value={subject.id.toString()}
+                                            value={subject.id}
                                             onchange={(e) => setSubjectArray(e)}
                                         />
                                         <span class="ml-2">
@@ -890,10 +870,7 @@ export const CreateNewPost: Component = () => {
                                 <Show when={gradePick().length > 0}>
                                     {gradePick().map((grade) =>
                                         grades()
-                                            .filter(
-                                                (item) =>
-                                                    item.id.toString() === grade
-                                            )
+                                            .filter((item) => item.id === grade)
                                             .map((item) => (
                                                 <span class="mr-1">
                                                     {item.grade},
@@ -928,7 +905,7 @@ export const CreateNewPost: Component = () => {
                                         <input
                                             type="checkbox"
                                             id={grade.id.toString()}
-                                            value={grade.id.toString()}
+                                            value={grade.id}
                                             onchange={(e) => setGradeArray(e)}
                                         />
                                         <span class="ml-2">{grade.grade}</span>
@@ -1006,7 +983,7 @@ export const CreateNewPost: Component = () => {
                                                 resourceTypes()
                                                     .filter(
                                                         (item) =>
-                                                            item.id.toString() ===
+                                                            item.id ===
                                                             resourceType
                                                     )
                                                     .map((item) => (
@@ -1046,7 +1023,7 @@ export const CreateNewPost: Component = () => {
                                         <input
                                             type="checkbox"
                                             id={type.id.toString()}
-                                            value={type.id.toString()}
+                                            value={type.id}
                                             onchange={(e) =>
                                                 setResourceTypesArray(e)
                                             }

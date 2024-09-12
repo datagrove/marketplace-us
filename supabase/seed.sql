@@ -278,4 +278,21 @@ SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
 -- PostgreSQL database dump complete
 --
 
+INSERT INTO public.seller_post_subject (post_id, subject_id)
+SELECT id, unnest(product_subject)::bigint  -- Unnest the subject array into individual rows
+FROM public.seller_post;
+
+INSERT INTO public.seller_post_grade (post_id, grade_id)
+SELECT id, unnest(post_grade)::bigint  -- Unnest the grade array into individual rows
+FROM public.seller_post;
+
+INSERT INTO public.seller_post_resource_types (post_id, resource_type_id)
+SELECT id, unnest(resource_types)::bigint  -- Unnest the resource_type array into individual rows
+FROM public.seller_post;
+
+ALTER TABLE public.seller_post
+DROP COLUMN product_subject,
+DROP COLUMN post_grade,
+DROP COLUMN resource_types;
+
 RESET ALL;

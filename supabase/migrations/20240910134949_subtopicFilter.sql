@@ -35,51 +35,6 @@ alter table "public"."seller_post_subtopic" add constraint "seller_post_subtopic
 
 alter table "public"."seller_post_subtopic" validate constraint "seller_post_subtopic_subtopic_id_fkey";
 
-create or replace view "public"."sellerposts" WITH ("security_invoker"='on') as  SELECT 
-    seller_post.id,
-    seller_post.title,
-    seller_post.content,
-    seller_post.user_id,
-    seller_post.image_urls,
-    seller_post.product_subject,
-    seller_post.post_grade,
-    sellers.seller_name,
-    sellers.seller_id,
-    profiles.email,
-    seller_post.stripe_price_id AS price_id,
-    seller_post.stripe_product_id AS product_id,
-    seller_post.resource_types,
-    seller_post.listing_status,
-    seller_post.secular,
-    seller_post.draft_status,
-    seller_post.resource_urls,
-    seller_post.resource_links,
-    ARRAY_AGG(DISTINCT post_subtopic.subtopic) AS subtopics  -- Aggregate subcategories
-   FROM ((seller_post
-     LEFT JOIN profiles ON ((seller_post.user_id = profiles.user_id)))
-     LEFT JOIN sellers ON ((seller_post.user_id = sellers.user_id)))
-     LEFT JOIN seller_post_subject ON seller_post.id = seller_post_subject.post_id  -- Join post and subjects
-     LEFT JOIN post_subcategory ON seller_post_subject.subject_id = post_subcategory.subject_id  -- Join subjects and subcategories
-    GROUP BY 
-        seller_post.id, 
-        seller_post.title, 
-        seller_post.content, 
-        seller_post.user_id, 
-        seller_post.image_urls, 
-        seller_post.product_subject, 
-        seller_post.post_grade, 
-        sellers.seller_name, 
-        sellers.seller_id, 
-        profiles.email, 
-        seller_post.stripe_price_id, 
-        seller_post.stripe_product_id, 
-        seller_post.resource_types, 
-        seller_post.listing_status, 
-        seller_post.secular, 
-        seller_post.draft_status, 
-        seller_post.resource_urls;
-
-
 grant delete on table "public"."post_subtopic" to "anon";
 
 grant insert on table "public"."post_subtopic" to "anon";
@@ -168,15 +123,15 @@ INSERT INTO "public"."post_subtopic" ("id", "subtopic", "subject_id") VALUES
 	(1, 'Art', 3),
     (2, 'Music', 3),
     (3, 'Vocal Music', 3),
-    (4, 'Dance', 1),
-    (5, 'Instrumental Music', 1),
-    (6, 'Music Composition', 1),
-    (7, 'Music History', 1),
-    (8, 'Art History', 1),
-    (9, 'Graphic Arts', 1),
-    (10, 'Visual Arts', 2),
-    (11, 'Other Performing Arts', 1),
-    (12, 'Other Art', 1),
+    (4, 'Dance', 3),
+    (5, 'Instrumental Music', 3),
+    (6, 'Music Composition', 3),
+    (7, 'Music History', 3),
+    (8, 'Art History', 3),
+    (9, 'Graphic Arts', 3),
+    (10, 'Visual Arts', 3),
+    (11, 'Other Performing Arts', 3),
+    (12, 'Other Art', 3),
     (13, 'Reading', 9),
     (14, 'Spelling', 9),
     (15, 'Vocabulary', 9),
@@ -201,4 +156,327 @@ INSERT INTO "public"."post_subtopic" ("id", "subtopic", "subject_id") VALUES
     (34, 'Summer', 4),
     (35, 'Fall', 4),
     (36, 'Winter', 4),
-    (37, 'Spring', 4);
+    (37, 'Spring', 4),
+    (38, 'Geography', 7),
+    (39, 'History', 7),
+    (40, 'African History', 7),
+    (41, 'U.S History', 7),
+    (42, 'British History', 7),
+    (43, 'Government', 7),
+    (44, 'European History', 7),
+    (45, 'Middle Ages', 7),
+    (46, 'Ancient Civilizations', 7),
+    (47, 'Economics', 7),
+    (48, 'Civics', 7),
+    (49, 'World History', 7),
+    (50, 'Criminal Justice & Law', 7),
+    (51, 'Native American History', 7),
+    (52, 'Australian History', 7),
+    (53, 'Algebra', 5),
+    (54, 'Geometry', 5),
+    (55, 'Trigonometry', 5),
+    (56, 'Statistics', 5),
+    (57, 'Precalculus', 5),
+    (58, 'Calculus', 5),
+    (59, 'Algebra II', 5),
+    (60, 'Arithmetic', 5),
+    (61, 'Basic Operations', 5),
+    (62, 'Decimals', 5),
+    (63, 'Fractions', 5),
+    (64, 'Graphing', 5),
+    (65, 'Measurement', 5),
+    (66, 'Numbers', 5),
+    (67, 'Order of Operations', 5),
+    (68, 'Place Value', 5),
+    (69, 'Word Problems', 5),
+    (70, 'Mental Math', 5),
+    (71, 'Anatomy', 6),
+    (72, 'Physiology', 6),
+    (73, 'Chemistry', 6),
+    (74, 'Biology', 6),
+    (75, 'Earth Science', 6),
+    (76, 'Astronomy', 6),
+    (77, 'Geology', 6),
+    (78, 'Life Science', 6),
+    (79, 'Physical Science', 6),
+    (80, 'Physics', 6),
+    (81, 'Computer Science', 6),
+    (82, 'Engineering', 6),
+    (83, 'Archaeology', 6),
+    (84, 'Environment', 6),
+    (85, 'Forensics', 6),
+    (86, 'Religion', 8),
+    (87, 'Business', 8),
+    (88, 'Law', 8),
+    (89, 'Pharmacy', 8),
+    (90, 'Continuing Professional Education', 8),
+    (91, 'Career & Technical Education', 8),
+    (92, 'Critical Thinking', 8),
+    (93, 'Homeschool Administration', 8),
+    (94, 'Coaching', 8),
+    (95, 'Child Care', 8),
+    (96, 'Cooking & Culinary Arts', 8),
+    (97, 'Physical Education', 8),
+    (98, 'Vocational', 8),
+    (99, 'Life Skills', 8),
+    (100, 'Library Skills', 8),
+    (101, 'Traffic & Bicycle Safety', 8),
+    (102, 'Fire Prevention & Safety', 8),
+    (103, 'Health', 6),
+    (104, 'Patriotism & Citizenship', 7);
+
+-- Add Join tables for grades, subjects, resource types
+
+create table "public"."seller_post_grade" (
+    "post_id" bigint not null,
+    "grade_id" bigint not null
+);
+
+
+alter table "public"."seller_post_grade" enable row level security;
+
+create table "public"."seller_post_subject" (
+    "post_id" bigint not null,
+    "subject_id" bigint not null
+);
+
+create table "public"."seller_post_resource_types" (
+    "post_id" bigint not null,
+    "resource_type_id" bigint not null
+);
+
+
+alter table "public"."seller_post_subject" enable row level security;
+
+CREATE UNIQUE INDEX seller_post_grade_pkey ON public.seller_post_grade USING btree (post_id, grade_id);
+
+CREATE UNIQUE INDEX seller_post_subject_pkey ON public.seller_post_subject USING btree (post_id, subject_id);
+
+alter table "public"."seller_post_grade" add constraint "seller_post_grade_pkey" PRIMARY KEY using index "seller_post_grade_pkey";
+
+alter table "public"."seller_post_subject" add constraint "seller_post_subject_pkey" PRIMARY KEY using index "seller_post_subject_pkey";
+
+alter table "public"."seller_post_grade" add constraint "seller_post_grade_grade_id_fkey" FOREIGN KEY (grade_id) REFERENCES grade_level(id) not valid;
+
+alter table "public"."seller_post_grade" validate constraint "seller_post_grade_grade_id_fkey";
+
+alter table "public"."seller_post_grade" add constraint "seller_post_grade_post_id_fkey" FOREIGN KEY (post_id) REFERENCES seller_post(id) ON DELETE CASCADE not valid;
+
+alter table "public"."seller_post_grade" validate constraint "seller_post_grade_post_id_fkey";
+
+alter table "public"."seller_post_subject" add constraint "seller_post_subject_post_id_fkey" FOREIGN KEY (post_id) REFERENCES seller_post(id) ON DELETE CASCADE not valid;
+
+alter table "public"."seller_post_subject" validate constraint "seller_post_subject_post_id_fkey";
+
+alter table "public"."seller_post_subject" add constraint "seller_post_subject_subject_id_fkey" FOREIGN KEY (subject_id) REFERENCES post_subject(id) not valid;
+
+alter table "public"."seller_post_subject" validate constraint "seller_post_subject_subject_id_fkey";
+
+grant delete on table "public"."seller_post_grade" to "anon";
+
+grant insert on table "public"."seller_post_grade" to "anon";
+
+grant references on table "public"."seller_post_grade" to "anon";
+
+grant select on table "public"."seller_post_grade" to "anon";
+
+grant trigger on table "public"."seller_post_grade" to "anon";
+
+grant truncate on table "public"."seller_post_grade" to "anon";
+
+grant update on table "public"."seller_post_grade" to "anon";
+
+grant delete on table "public"."seller_post_grade" to "authenticated";
+
+grant insert on table "public"."seller_post_grade" to "authenticated";
+
+grant references on table "public"."seller_post_grade" to "authenticated";
+
+grant select on table "public"."seller_post_grade" to "authenticated";
+
+grant trigger on table "public"."seller_post_grade" to "authenticated";
+
+grant truncate on table "public"."seller_post_grade" to "authenticated";
+
+grant update on table "public"."seller_post_grade" to "authenticated";
+
+grant delete on table "public"."seller_post_grade" to "service_role";
+
+grant insert on table "public"."seller_post_grade" to "service_role";
+
+grant references on table "public"."seller_post_grade" to "service_role";
+
+grant select on table "public"."seller_post_grade" to "service_role";
+
+grant trigger on table "public"."seller_post_grade" to "service_role";
+
+grant truncate on table "public"."seller_post_grade" to "service_role";
+
+grant update on table "public"."seller_post_grade" to "service_role";
+
+grant delete on table "public"."seller_post_subject" to "anon";
+
+grant insert on table "public"."seller_post_subject" to "anon";
+
+grant references on table "public"."seller_post_subject" to "anon";
+
+grant select on table "public"."seller_post_subject" to "anon";
+
+grant trigger on table "public"."seller_post_subject" to "anon";
+
+grant truncate on table "public"."seller_post_subject" to "anon";
+
+grant update on table "public"."seller_post_subject" to "anon";
+
+grant delete on table "public"."seller_post_subject" to "authenticated";
+
+grant insert on table "public"."seller_post_subject" to "authenticated";
+
+grant references on table "public"."seller_post_subject" to "authenticated";
+
+grant select on table "public"."seller_post_subject" to "authenticated";
+
+grant trigger on table "public"."seller_post_subject" to "authenticated";
+
+grant truncate on table "public"."seller_post_subject" to "authenticated";
+
+grant update on table "public"."seller_post_subject" to "authenticated";
+
+grant delete on table "public"."seller_post_subject" to "service_role";
+
+grant insert on table "public"."seller_post_subject" to "service_role";
+
+grant references on table "public"."seller_post_subject" to "service_role";
+
+grant select on table "public"."seller_post_subject" to "service_role";
+
+grant trigger on table "public"."seller_post_subject" to "service_role";
+
+grant truncate on table "public"."seller_post_subject" to "service_role";
+
+grant update on table "public"."seller_post_subject" to "service_role";
+
+alter table "public"."seller_post_resource_types" enable row level security;
+
+CREATE UNIQUE INDEX seller_post_resource_types_pkey ON public.seller_post_resource_types USING btree (post_id, resource_type_id);
+
+alter table "public"."seller_post_resource_types" add constraint "seller_post_resource_types_pkey" PRIMARY KEY using index "seller_post_resource_types_pkey";
+
+alter table "public"."seller_post_resource_types" add constraint "seller_post_resource_types_post_id_fkey" FOREIGN KEY (post_id) REFERENCES seller_post(id) ON DELETE CASCADE not valid;
+
+alter table "public"."seller_post_resource_types" validate constraint "seller_post_resource_types_post_id_fkey";
+
+alter table "public"."seller_post_resource_types" add constraint "seller_post_resource_types_resource_type_id_fkey" FOREIGN KEY (resource_type_id) REFERENCES resource_types(id) ON DELETE CASCADE not valid;
+
+alter table "public"."seller_post_resource_types" validate constraint "seller_post_resource_types_resource_type_id_fkey";
+
+grant delete on table "public"."seller_post_resource_types" to "anon";
+
+grant insert on table "public"."seller_post_resource_types" to "anon";
+
+grant references on table "public"."seller_post_resource_types" to "anon";
+
+grant select on table "public"."seller_post_resource_types" to "anon";
+
+grant trigger on table "public"."seller_post_resource_types" to "anon";
+
+grant truncate on table "public"."seller_post_resource_types" to "anon";
+
+grant update on table "public"."seller_post_resource_types" to "anon";
+
+grant delete on table "public"."seller_post_resource_types" to "authenticated";
+
+grant insert on table "public"."seller_post_resource_types" to "authenticated";
+
+grant references on table "public"."seller_post_resource_types" to "authenticated";
+
+grant select on table "public"."seller_post_resource_types" to "authenticated";
+
+grant trigger on table "public"."seller_post_resource_types" to "authenticated";
+
+grant truncate on table "public"."seller_post_resource_types" to "authenticated";
+
+grant update on table "public"."seller_post_resource_types" to "authenticated";
+
+grant delete on table "public"."seller_post_resource_types" to "service_role";
+
+grant insert on table "public"."seller_post_resource_types" to "service_role";
+
+grant references on table "public"."seller_post_resource_types" to "service_role";
+
+grant select on table "public"."seller_post_resource_types" to "service_role";
+
+grant trigger on table "public"."seller_post_resource_types" to "service_role";
+
+grant truncate on table "public"."seller_post_resource_types" to "service_role";
+
+grant update on table "public"."seller_post_resource_types" to "service_role";
+
+-- Convert current posts to use join tables for subject and grade
+
+INSERT INTO public.seller_post_subject (post_id, subject_id)
+SELECT id, unnest(product_subject)::bigint  -- Unnest the subject array into individual rows
+FROM public.seller_post;
+
+INSERT INTO public.seller_post_grade (post_id, grade_id)
+SELECT id, unnest(post_grade)::bigint  -- Unnest the grade array into individual rows
+FROM public.seller_post;
+
+INSERT INTO public.seller_post_resource_types (post_id, resource_type_id)
+SELECT id, unnest(resource_types)::bigint  -- Unnest the resource_type array into individual rows
+FROM public.seller_post;
+
+drop view if exists"public"."sellerposts" cascade;
+
+CREATE OR REPLACE VIEW "public"."sellerposts" WITH ("security_invoker"='on') AS 
+SELECT 
+    seller_post.id,
+    seller_post.title,
+    seller_post.content,
+    seller_post.user_id,
+    seller_post.image_urls,
+    sellers.seller_name,
+    sellers.seller_id,
+    profiles.email,
+    seller_post.stripe_price_id AS price_id,
+    seller_post.stripe_product_id AS product_id,
+    seller_post.listing_status,
+    seller_post.secular,
+    seller_post.draft_status,
+    seller_post.resource_urls,
+    ARRAY_AGG(DISTINCT post_subtopic.id) AS subtopics,  -- Aggregate subcategories
+    ARRAY_AGG(DISTINCT post_subject.id) AS subjects,               -- Aggregate subjects
+    ARRAY_AGG(DISTINCT grade_level.id) AS grades,                    -- Aggregate grades
+    ARRAY_AGG(DISTINCT resource_types.id) AS resource_types           -- Aggregate resource types
+FROM 
+    seller_post
+LEFT JOIN profiles ON seller_post.user_id = profiles.user_id
+LEFT JOIN sellers ON seller_post.user_id = sellers.user_id
+LEFT JOIN seller_post_subject ON seller_post.id = seller_post_subject.post_id  -- Join post and subjects
+LEFT JOIN post_subject ON seller_post_subject.subject_id = post_subject.id    -- Join subjects
+LEFT JOIN seller_post_subtopic ON seller_post.id = seller_post_subtopic.post_id   -- Join subcategories
+LEFT JOIN post_subtopic ON seller_post_subtopic.subtopic_id = post_subtopic.id   -- Join subcategories
+LEFT JOIN seller_post_grade ON seller_post.id = seller_post_grade.post_id     -- Join post and grades
+LEFT JOIN grade_level ON seller_post_grade.grade_id = grade_level.id            -- Join grades
+LEFT JOIN seller_post_resource_types ON seller_post.id = seller_post_resource_types.post_id 
+LEFT JOIN resource_types ON seller_post_resource_types.resource_type_id = resource_types.id  -- Join resource types
+GROUP BY 
+    seller_post.id, 
+    seller_post.title, 
+    seller_post.content, 
+    seller_post.user_id, 
+    seller_post.image_urls, 
+    sellers.seller_name, 
+    sellers.seller_id, 
+    profiles.email, 
+    seller_post.stripe_price_id, 
+    seller_post.stripe_product_id, 
+    seller_post.listing_status, 
+    seller_post.secular, 
+    seller_post.draft_status, 
+    seller_post.resource_urls;
+
+--ALTER TABLE public.seller_post
+--DROP COLUMN product_subject,
+--DROP COLUMN post_grade,
+--DROP COLUMN resource_types;

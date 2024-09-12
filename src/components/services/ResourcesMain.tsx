@@ -48,16 +48,12 @@ async function fetchPosts({
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
-    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
-    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
+    const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
     const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
-        Array<string>
+        Array<number>
     >([]);
-    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
-        []
-    );
     const [searchString, setSearchString] = createSignal<string>("");
-    const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
     const [clearFilters, setClearFilters] = createSignal<boolean>(false);
     const [page, setPage] = createSignal<number>(1);
@@ -79,23 +75,27 @@ export const ResourcesView: Component = () => {
         const localResourceTypes = localStorage.getItem(
             "selectedResourceTypes"
         );
+
         if (localSubjects !== null && localSubjects) {
             setSubjectFilters([
                 ...subjectFilters(),
-                ...JSON.parse(localSubjects),
+                ...JSON.parse(localSubjects).map(Number),
             ]);
         }
         if (localGrades !== null && localGrades) {
-            setGradeFilters([...gradeFilters(), ...JSON.parse(localGrades)]);
+            setGradeFilters([
+                ...gradeFilters(),
+                ...JSON.parse(localGrades).map(Number),
+            ]);
         }
         if (localSearch !== null && localSearch !== undefined) {
             const searchStringValue = localSearch || "";
             setSearchString(searchStringValue);
         }
         if (localResourceTypes !== null && localResourceTypes) {
-            setResourceFilters([
-                ...resourceFilters(),
-                ...JSON.parse(localResourceTypes),
+            setResourceTypeFilters([
+                ...resourceTypesFilters(),
+                ...JSON.parse(localResourceTypes).map(Number),
             ]);
         }
         fetchPaginatedPosts(page());
@@ -190,7 +190,7 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
-    const setCategoryFilter = (currentCategory: string) => {
+    const setCategoryFilter = (currentCategory: number) => {
         if (subjectFilters().includes(currentCategory)) {
             let currentFilters = subjectFilters().filter(
                 (el) => el !== currentCategory
@@ -265,7 +265,7 @@ export const ResourcesView: Component = () => {
     //     }
     // };
 
-    const filterPostsByGrade = (grade: string) => {
+    const filterPostsByGrade = (grade: number) => {
         if (gradeFilters().includes(grade)) {
             let currentGradeFilters = gradeFilters().filter(
                 (el) => el !== grade
@@ -278,7 +278,7 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
-    const filterPostsByResourceTypes = (type: string) => {
+    const filterPostsByResourceTypes = (type: number) => {
         if (resourceTypesFilters().includes(type)) {
             let currentResourceTypesFilter = resourceTypesFilters().filter(
                 (el) => el !== type
