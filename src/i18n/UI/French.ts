@@ -519,18 +519,6 @@ export const French = {
   subjectCategoryInfo: {
     subjects: [
       {
-        name: "Géographie",
-        description: "Description Géographie",
-        ariaLabel: "Géographie",
-        id: "1",
-      },
-      {
-        name: "Art et Musique",
-        description: "Description Musique",
-        ariaLabel: "Musique",
-        id: "3",
-      },
-      {
         name: "Histoire",
         description: "Description Histoire",
         ariaLabel: "Histoire",

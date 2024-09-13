@@ -514,18 +514,6 @@ export const English = {
   subjectCategoryInfo: {
     subjects: [
       {
-        name: "Geography",
-        description: "Geography description",
-        ariaLabel: "Geography",
-        id: "1",
-      },
-      {
-        name: "History",
-        description: "History description.",
-        ariaLabel: "History",
-        id: "2",
-      },
-      {
         name: "Art & Music",
         description: "Art & Music description",
         ariaLabel: "Art & Music",
