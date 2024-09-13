@@ -519,22 +519,22 @@ export const French = {
   subjectCategoryInfo: {
     subjects: [
       {
-        name: "Histoire",
-        description: "Description Histoire",
-        ariaLabel: "Histoire",
-        id: "2",
-      },
-      {
-        name: "Matematique",
-        description: "Description Matematique",
-        ariaLabel: "Matematique",
-        id: "5",
+        name: "Art et Musique",
+        description: "Description Musique",
+        ariaLabel: "Musique",
+        id: "3",
       },
       {
         name: "Vacances",
         description: "Description Vacances",
         ariaLabel: "Vacances",
         id: "4",
+      },
+      {
+        name: "Matematique",
+        description: "Description Matematique",
+        ariaLabel: "Matematique",
+        id: "5",
       },
       {
         name: "Science",

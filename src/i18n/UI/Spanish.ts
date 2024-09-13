@@ -525,16 +525,16 @@ export const Spanish = {
         id: "3",
       },
       {
-        name: "Matematica",
-        description: "Descripción Matematica",
-        ariaLabel: "Matematica",
-        id: "5",
-      },
-      {
         name: "Vacaciones",
         description: "Descripción Vacaciones",
         ariaLabel: "Vacaciones",
         id: "4",
+      },
+      {
+        name: "Matematica",
+        description: "Descripción Matematica",
+        ariaLabel: "Matematica",
+        id: "5",
       },
       {
         name: "Ciencia",
