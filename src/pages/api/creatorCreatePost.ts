@@ -96,7 +96,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         content: content,
         // product_subject: JSON.parse(subject as string),
         // post_grade: JSON.parse(gradeLevel as string),
-        image_urls: imageUrl,
+        // image_urls: imageUrl,
         user_id: user.id,
         resource_urls: resourceUrl,
         // resource_types: JSON.parse(resourceType as string),
@@ -134,6 +134,33 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     try {
         //Insert values into each join table
+
+        if (postId && imageUrl) {
+            console.log("imageUrl", (imageUrl as string).split(","))
+            const { error: imageError } = await supabase
+                .from("seller_post_image")
+                .insert(
+                    (imageUrl as string).split(",").map(
+                        (imageId: string) => ({
+                            post_id: postId,
+                            image_uuid: imageId,
+                        })
+                    )
+                );
+            if (imageError) {
+                console.log("image Error: ", imageError);
+                throw imageError;
+                // Thrown errors are not very specific so may want to return a response during testing
+                // return new Response(
+                //     JSON.stringify({
+                //         // TODO Internationalize
+                //         message: "image insert error",
+                //     }),
+                //     { status: 500 }
+                // );
+            }
+        }
+
         if (postId && subject) {
             const { error: subjectError } = await supabase
                 .from("seller_post_subject")

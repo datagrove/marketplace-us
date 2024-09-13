@@ -91,22 +91,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             .from("grade_level")
             .select("*");
 
-        if (gradeError) {
-            return new Response(
-                JSON.stringify({
-                    message: gradeError.message,
-                }),
-                { status: 500 }
-            );
-        }
-
         const { data: resourceTypesData, error: resourceTypesError } =
             await supabase.from("resource_types").select("*");
 
-        if (resourceTypesError) {
+        if (gradeError ||resourceTypesError) {
             return new Response(
                 JSON.stringify({
-                    message: resourceTypesError.message,
+                    message: gradeError?.message || resourceTypesError?.message,
                 }),
                 { status: 500 }
             );
@@ -160,11 +151,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                     }
 
                     if (post.image_urls) {
-                        const imageUrls = post.image_urls.split(",");
+                        // const imageUrls = post.image_urls.split(",");
                         post.image_signedUrls = [];
 
                         const urls = await Promise.all(
-                            imageUrls.map(async (imageUrl: string) => {
+                            post.image_urls.map(async (imageUrl: string) => {
                                 const url = await downloadPostImage(imageUrl);
                                 if (url) {
                                     post.image_signedUrls = [
@@ -246,23 +237,29 @@ const downloadPostImage = async (path: string) => {
     }
 
     try {
-        const { data: webpData, error: webpError } = await supabase.storage
-            .from("post.image")
-            .createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30);
-        if (webpError) {
-            throw webpError;
-        }
-        const webpUrl = webpData.signedUrl;
 
-        const { data: jpegData, error: jpegError } = await supabase.storage
-            .from("post.image")
-            .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30);
-        if (jpegError) {
-            throw jpegError;
-        }
-        const jpegUrl = jpegData.signedUrl;
+        const [webpData, jpegData] = await Promise.all([
+            supabase.storage.from("post.image").createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30),
+            supabase.storage.from("post.image").createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30)
+        ]);
 
-        const url = { webpUrl, jpegUrl };
+        // const { data: webpData, error: webpError } = await supabase.storage
+        //     .from("post.image")
+        //     .createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30);
+        if (webpData.error || jpegData.error) {
+            throw new Error(webpData.error?.message || jpegData.error?.message);
+        }
+        // const webpUrl = webpData.signedUrl;
+
+        // // const { data: jpegData, error: jpegError } = await supabase.storage
+        // //     .from("post.image")
+        // //     .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30);
+        // // if (jpegError) {
+        // //     throw jpegError;
+        // // }
+        // const jpegUrl = jpegData.signedUrl;
+
+        const url = { webpUrl: webpData.data.signedUrl, jpegUrl: jpegData.data.signedUrl };
         urlCache.set(path, url); // Cache the URL
         return url;
     } catch (error) {

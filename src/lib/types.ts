@@ -6,7 +6,7 @@ export interface Post {
     title: string; //Title of the post
     content: string; //Main body of the post (HTML)
     user_id: string; //User ID of the seller
-    image_urls: string | null; //Array of image URLs for the post
+    image_urls: Array<string>; //Array of image URLs for the post
     seller_name: string; //Name of the seller
     seller_id: string; //User ID of the seller, used for directing to the seller details page
     email: string; //Email of the seller
@@ -20,6 +20,7 @@ export interface Post {
     draft_status: boolean;
     resource_urls: string;
     unit_amount: number;
+    resource_links: string[];
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null; //Array of subject names

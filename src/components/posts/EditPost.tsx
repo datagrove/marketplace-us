@@ -35,7 +35,7 @@ async function updateFormData(formData: FormData) {
         body: formData,
     });
     const data = await response.json();
-    console.log(response, "response");
+    console.log("data", data);
     if (response.status === 200) {
         alert(data.message);
         location.reload();
@@ -52,18 +52,17 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [response] = createResource(formData, updateFormData);
     const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
     const [imageLength, setImageLength] = createSignal(0);
-    const [postImages, setPostImages] = createSignal<Array<string>>([]);
     //prettier-ignore
     const [mode, setMode] = createStore({theme: localStorage.getItem("theme"),});
     //prettier-ignore
     const [subjects, setSubjects] = createSignal<Array<{id: number; subject: string}>>([]);
     //prettier-ignore
-    const [subjectPick, setSubjectPick] = createSignal<Array<string>>(props.post?.product_subject!);
+    const [subjectPick, setSubjectPick] = createSignal<Array<number>>(props.post?.subjects!);
     //prettier-ignore
     const [grades, setGrades] = createSignal<Array<{id: number; grade: string}>>([]);
-    const [gradePick, setGradePick] = createSignal<Array<string>>([]);
+    const [gradePick, setGradePick] = createSignal<Array<number>>([]);
     //prettier-ignore
-    const [resourceTypesPick, setResourceTypesPick] = createSignal<Array<string>>([]);
+    const [resourceTypesPick, setResourceTypesPick] = createSignal<Array<number>>([]);
     //prettier-ignore
     const [resourceTypes, setResourceTypes] = createSignal<Array<{ id: number; type: string }>>([]);
     const [allRequirementsMet, setAllRequirementsMet] =
@@ -94,15 +93,15 @@ export const EditPost: Component<Props> = (props: Props) => {
             }
         });
 
-        setGradePick(props.post?.post_grade!);
-        setSubjectPick(props.post.product_subject);
-        setResourceTypesPick(props.post?.resource_types!);
+        setGradePick(props.post?.grades);
+        setSubjectPick(props.post.subjects);
+        setResourceTypesPick(props.post?.resource_types);
         setSecular(props.post.secular);
         setDraftStatus(props.post.draft_status);
         setStartDraftStatus(props.post.draft_status);
 
         if (props.post?.image_urls) {
-            setImageUrl(props.post?.image_urls.split(","));
+            setImageUrl(props.post?.image_urls);
             // console.log(imageUrl())
         }
         //Image_urls is a single string of urls comma separated
@@ -356,17 +355,14 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setSubjectArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
-            setSubjectPick([
-                ...subjectPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (subjectPick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
+            setSubjectPick([...subjectPick(), Number(target.value)]);
+        } else if (target.checked === false) {
+            if (subjectPick().includes(Number(target.value))) {
                 setSubjectPick(
                     subjectPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
+                        (value) => value !== Number(target.value)
                     )
                 );
             }
@@ -395,18 +391,14 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setGradeArray(e: Event) {
-        // console.log(gradePick());
-        if ((e.target as HTMLInputElement).checked) {
-            setGradePick([
-                ...gradePick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (gradePick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
+            setGradePick([...gradePick(), Number(target.value)]);
+        } else if (target.checked === false) {
+            if (gradePick().includes(Number(target.value))) {
                 setGradePick(
                     gradePick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
+                        (value) => value !== Number(target.value)
                     )
                 );
             }
@@ -422,21 +414,17 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setResourceTypesArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
             setResourceTypesPick([
                 ...resourceTypesPick(),
-                (e.target as HTMLInputElement).value,
+                Number(target.value),
             ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (
-                resourceTypesPick().includes(
-                    (e.target as HTMLInputElement).value
-                )
-            ) {
+        } else if (target.checked === false) {
+            if (resourceTypesPick().includes(Number(target.value))) {
                 setResourceTypesPick(
                     resourceTypesPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
+                        (value) => value !== Number(target.value)
                     )
                 );
             }
@@ -619,9 +607,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                     {subjectPick().map((subject) =>
                                         subjects()
                                             .filter(
-                                                (item) =>
-                                                    item.id.toString() ===
-                                                    subject
+                                                (item) => item.id === subject
                                             )
                                             .map((item) => (
                                                 <span class="mr-1">
@@ -663,7 +649,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 <input
                                                     type="checkbox"
                                                     id={subject.id.toString()}
-                                                    value={subject.id.toString()}
+                                                    value={subject.id}
                                                     onchange={(e) =>
                                                         setSubjectArray(e)
                                                     }
@@ -685,7 +671,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 <input
                                                     type="checkbox"
                                                     id={subject.id.toString()}
-                                                    value={subject.id.toString()}
+                                                    value={subject.id}
                                                     onchange={(e) =>
                                                         setSubjectArray(e)
                                                     }
@@ -757,10 +743,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                 <Show when={gradePick().length > 0}>
                                     {gradePick().map((grade) =>
                                         grades()
-                                            .filter(
-                                                (item) =>
-                                                    item.id.toString() === grade
-                                            )
+                                            .filter((item) => item.id === grade)
                                             .map((item) => (
                                                 <span class="mr-1">
                                                     {item.grade},
@@ -801,7 +784,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 checked
                                                 type="checkbox"
                                                 id={grade.id.toString()}
-                                                value={grade.id.toString()}
+                                                value={grade.id}
                                                 onchange={(e) =>
                                                     setGradeArray(e)
                                                 }
@@ -820,7 +803,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                             <input
                                                 type="checkbox"
                                                 id={grade.id.toString()}
-                                                value={grade.id.toString()}
+                                                value={grade.id}
                                                 onchange={(e) =>
                                                     setGradeArray(e)
                                                 }
@@ -895,7 +878,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 resourceTypes()
                                                     .filter(
                                                         (item) =>
-                                                            item.id.toString() ===
+                                                            item.id ===
                                                             resourceType
                                                     )
                                                     .map((item) => (
@@ -934,13 +917,13 @@ export const EditPost: Component<Props> = (props: Props) => {
                                     <label class="ml-2 block">
                                         <Show
                                             when={props.post?.resource_types!.includes(
-                                                type.id.toString()
+                                                type.id
                                             )}
                                         >
                                             <input
                                                 type="checkbox"
                                                 id={type.id.toString()}
-                                                value={type.id.toString()}
+                                                value={type.id}
                                                 onchange={(e) =>
                                                     setResourceTypesArray(e)
                                                 }
@@ -953,14 +936,14 @@ export const EditPost: Component<Props> = (props: Props) => {
                                         <Show
                                             when={
                                                 !props.post?.resource_types!.includes(
-                                                    type.id.toString()
+                                                    type.id
                                                 )
                                             }
                                         >
                                             <input
                                                 type="checkbox"
                                                 id={type.id.toString()}
-                                                value={type.id.toString()}
+                                                value={type.id}
                                                 onchange={(e) =>
                                                     setResourceTypesArray(e)
                                                 }

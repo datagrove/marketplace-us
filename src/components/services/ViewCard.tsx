@@ -69,9 +69,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                 <img
                                                     src={post.image_url.jpegUrl}
                                                     alt={
-                                                        post.image_urls?.split(
-                                                            ","
-                                                        )[0]
+                                                        post.image_urls?.[0]
                                                             ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
@@ -104,9 +102,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                         post.image_url.jpegUrl
                                                     }
                                                     alt={
-                                                        post.image_urls?.split(
-                                                            ","
-                                                        )[0]
+                                                        post.image_urls?.[0]
                                                             ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
@@ -308,7 +304,6 @@ export const ViewCard: Component<Props> = (props) => {
                                                 <DeletePostButton
                                                     id={post.id}
                                                     userId={post.user_id}
-                                                    postImage={post.image_urls}
                                                 />
                                             </div>
                                         </div>

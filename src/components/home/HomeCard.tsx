@@ -48,10 +48,8 @@ export const HomeCard: Component<Props> = (props) => {
                                                         post.image_url.jpegUrl
                                                     }
                                                     alt={
-                                                        post.image_urls?.split(
-                                                            ","
-                                                        )[0]
-                                                            ? `Post Image ${post.image_urls.split(",")[0]}.jpeg`
+                                                        post.image_urls?.[0]
+                                                            ? `Post Image ${post.image_urls[0]}.jpeg`
                                                             : "No Image"
                                                     }
                                                     class="h-40 w-40 rounded-lg object-contain"
