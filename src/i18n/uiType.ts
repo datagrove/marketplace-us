@@ -250,6 +250,7 @@ export interface uiObject {
     slide: string;
     creatorProfileImage: string;
     userProfileImage: string;
+    subtopics: string;
   };
 
   cartLabels: {

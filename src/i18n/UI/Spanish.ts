@@ -275,6 +275,7 @@ export const Spanish = {
     slide: "Diapositiva",
     creatorProfileImage: "Imagen de Perfil del Proveedor",
     userProfileImage: "Imagen de Perfil del Usere",
+    subtopics: "Temas",
   },
 
   cartLabels: {

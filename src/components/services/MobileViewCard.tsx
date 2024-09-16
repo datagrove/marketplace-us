@@ -386,6 +386,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </div>
                                     </div>
 
+                                    {/* Topics */}
+                                    <div
+                                        class={`col-span-2 mr-2 text-end text-[10px] font-bold ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        {t("postLabels.subtopics")}:
+                                    </div>
+                                    <div
+                                        class={`prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        <div class="flex-wrap">
+                                            {Array.from(post.subtopic!).join(
+                                                ", "
+                                            )}
+                                        </div>
+                                    </div>
+
                                     {/* GRADES */}
                                     <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
                                         <div class="">

@@ -271,6 +271,7 @@ export const English = {
     slide: "Slide",
     creatorProfileImage: "Creator Profile Image",
     userProfileImage: "User Profile Image",
+    subtopics: "Topics",
   },
 
   cartLabels: {

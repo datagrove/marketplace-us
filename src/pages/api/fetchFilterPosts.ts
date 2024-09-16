@@ -27,6 +27,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     const values = ui[lang] as uiObject;
     const postSubjects = values.subjectCategoryInfo.subjects;
+    const postSubtopics = values.subjectCategoryInfo.subtopics;
     console.log("From: ", from);
     console.log(" To: ", to);
 
@@ -114,6 +115,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                         post.subjects.map((productSubject: number) => {
                             if (productSubject === Number(subject.id)) {
                                 post.subject?.push(subject.name);
+                            }
+                        });
+                    });
+
+                    post.subtopic = [];
+                    postSubtopics.forEach((subtopic) => {
+                        post.subtopics.map((productSubtopic: number) => {
+                            if (productSubtopic === Number(subtopic.id)) {
+                                post.subtopic?.push(subtopic.name);
                             }
                         });
                     });

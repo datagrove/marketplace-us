@@ -757,6 +757,20 @@ export const ViewFullPost: Component<Props> = (props) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div
+                                        class={`my-2 grid w-full grid-cols-4 text-[10px] ${post() && post()!.subtopic && post()!.subtopic!.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        <div class="col-span-1 mr-2 text-end">
+                                            <div class="font-bold">
+                                                {t("postLabels.subtopics")}:
+                                            </div>
+                                        </div>
+                                        <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                            <div class="flex-wrap">
+                                                {post()?.subtopic?.join(", ")}
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="my-2 grid w-full grid-cols-4 text-[10px]">
                                         <div class="col-span-1 mr-2 text-end">
                                             <div class="font-bold">

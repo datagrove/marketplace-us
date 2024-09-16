@@ -15,6 +15,7 @@ export interface Post {
     subjects: Array<number>; //Array of subject IDs, does not contain actual subject names
     grades: Array<number>; //Array of grade IDs, does not contain actual grade names
     resource_types: Array<number>; // Array of resource types IDs, does not contain actual resource_types names
+    subtopics: Array<number>; //Array of subtopic IDs
     listing_status: boolean; //Boolean of whether the post is listed or not
     secular: boolean;
     draft_status: boolean;
@@ -23,7 +24,8 @@ export interface Post {
     resource_links: string[];
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
-    subject: Array<string> | null; //Array of subject names
+    subject: Array<string> | null;
+    subtopic: Array<string> | null; //Array of subject names
     grade: Array<string> | null; //Array of grade names
     resourceTypes: Array<string> | null; //Array of resourceTypes names
     image_url: {webpUrl: string, jpegUrl: string} | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
