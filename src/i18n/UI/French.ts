@@ -38,12 +38,16 @@ export const French = {
     marketplacetax: "Collecte des taxes de vente sur le marché",
   },
 
+  pageMetaTitle: {
+    home: "Page d'accueil Learngrove, le site où vous pouvez trouver toutes vos ressources d'apprentissage et d'enseignement",
+  },
+
   pageDescriptions: {
     services:
       "Trouvez les ressources dont vous avez besoin pour votre apprenant. Recherchez des mots-clés et filtrez par catégorie pour trouver ce dont vous avez besoin. Affichez les aperçus et cliquez sur une carte pour en savoir plus.",
     signUp: "Fournissez votre e-mail et créez un mot de passe pour vous inscrire et publier des ressources sur LearnGrove.",
     login: "Entrez votre e-mail et votre mot de passe pour vous connecter à LearnGrove.",
-    home: "LearnGrove, votre source d'apprentissage de qualité !",
+    home: "LearnGrove, votre source d'apprentissage de qualité, vous pouvez retrouver toutes vos ressources d'apprentissage et d'enseignement !",
     // signIn: string,
     createUserAccount:
       "Rejoignez LearnGrove et débloquez un monde de ressources d'apprentissage. Inscrivez-vous aujourd'hui pour trouver les ressources dont vous avez besoin pour votre parcours d'apprentissage.",
