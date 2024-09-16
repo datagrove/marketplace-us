@@ -203,9 +203,9 @@ export const Home: Component<Props> = (props) => {
                         id="home-image-1"
                         class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
                     >
-                        <h1 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
+                        <h2 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
                             {t("homePageText.contribute")}
-                        </h1>
+                        </h2>
                         <p class="mt-4 text-center text-sm italic text-ptext1 dark:text-ptext1-DM md:text-lg">
                             {t("homePageText.clickToContribute")}
                         </p>

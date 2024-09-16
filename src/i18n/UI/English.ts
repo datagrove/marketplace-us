@@ -38,12 +38,16 @@ export const English = {
     marketplacetax: "Marketplace Sales Tax Collection",
   },
 
+  pageMetaTitle: {
+    home: "Homepage Learngrove, the site that you can find all your learning and teaching resources"
+  },
+
   pageDescriptions: {
     services:
       "Find the resources you need to for your learner. Search for keywords, and filter by category to find what you need. View previews and click on a card to learn more.",
     signUp: "Provide your email and create a password to signup to post resources on LearnGrove.",
     login: "Enter your email and password to login to LearnGrove.",
-    home: "LearnGrove, your source for quality learning!",
+    home: "LearnGrove, your source for quality learning where you can find all the resources for learning and teaching!",
     // signIn: string,
     createUserAccount:
       "Join LearnGrove unlock a world of learning resources. Sign up today to find the resources you need for your learning journey.",
