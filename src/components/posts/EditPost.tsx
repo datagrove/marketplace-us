@@ -25,6 +25,7 @@ const values = ui[lang] as uiObject;
 
 //get the categories from the language files so they translate with changes in the language picker
 const productCategoryData = values.subjectCategoryInfo;
+const subtopicData = values.subjectCategoryInfo.subtopics;
 
 let uploadFilesRef: any;
 
@@ -56,8 +57,18 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [mode, setMode] = createStore({theme: localStorage.getItem("theme"),});
     //prettier-ignore
     const [subjects, setSubjects] = createSignal<Array<{id: number; subject: string}>>([]);
+    const [subtopics, setSubtopics] = createSignal<
+        Array<{
+            id: number;
+            subtopic: string;
+            subject_id: number;
+            ariaLabel: string;
+        }>
+    >([]);
     //prettier-ignore
     const [subjectPick, setSubjectPick] = createSignal<Array<number>>(props.post?.subjects!);
+    const [selectedSubjectId, setSelectedSubjectId] = createSignal<number>();
+    const [subtopicPick, setSubtopicPick] = createSignal<Array<number>>([]);
     //prettier-ignore
     const [grades, setGrades] = createSignal<Array<{id: number; grade: string}>>([]);
     const [gradePick, setGradePick] = createSignal<Array<number>>([]);
@@ -159,6 +170,19 @@ export const EditPost: Component<Props> = (props: Props) => {
                     { id: Number(subject.id), subject: subject.name },
                 ])
             );
+
+            subtopicData.map((subtopic) =>
+                setSubtopics([
+                    ...subtopics(),
+                    {
+                        id: subtopic.id,
+                        subtopic: subtopic.name,
+                        ariaLabel: subtopic.ariaLabel,
+                        subject_id: subtopic.subject_id,
+                    },
+                ])
+            );
+
             try {
                 const { data: gradeData, error } = await supabase
                     .from("grade_level")
@@ -253,6 +277,10 @@ export const EditPost: Component<Props> = (props: Props) => {
 
         if (subjectPick() !== undefined) {
             formData.append("subject", JSON.stringify(subjectPick()));
+        }
+
+        if (subtopicPick() !== undefined) {
+            formData.append("subtopics", JSON.stringify(subtopicPick()));
         }
 
         if (gradePick() !== undefined) {
@@ -356,14 +384,14 @@ export const EditPost: Component<Props> = (props: Props) => {
 
     function setSubjectArray(e: Event) {
         const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
         if (target.checked === true) {
-            setSubjectPick([...subjectPick(), Number(target.value)]);
+            setSubjectPick([...subjectPick(), targetValue]);
+            setSelectedSubjectId(targetValue);
         } else if (target.checked === false) {
-            if (subjectPick().includes(Number(target.value))) {
+            if (subjectPick().includes(targetValue)) {
                 setSubjectPick(
-                    subjectPick().filter(
-                        (value) => value !== Number(target.value)
-                    )
+                    subjectPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -378,6 +406,21 @@ export const EditPost: Component<Props> = (props: Props) => {
         //         .getElementById("subjectToolTip")
         //         ?.classList.remove("hidden");
         // }
+    }
+
+    function setSubtopicArray(e: Event) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
+        if (target.checked === true) {
+            setSubtopicPick([...subtopicPick(), targetValue]);
+        } else if (target.checked === false) {
+            if (subtopicPick().includes(targetValue)) {
+                setSubtopicPick(
+                    subtopicPick().filter((value) => value !== targetValue)
+                );
+            }
+        }
+        console.log(subtopicPick());
     }
 
     function formatPrice(resourcePrice: string) {
@@ -645,20 +688,55 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 subject.subject
                                             )}
                                         >
-                                            <label class="ml-2 block">
-                                                <input
-                                                    type="checkbox"
-                                                    id={subject.id.toString()}
-                                                    value={subject.id}
-                                                    onchange={(e) =>
-                                                        setSubjectArray(e)
-                                                    }
-                                                    checked
-                                                />
-                                                <span class="ml-2">
-                                                    {subject.subject}
-                                                </span>
-                                            </label>
+                                            <>
+                                                <label class="ml-2 block">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={subject.id.toString()}
+                                                        value={subject.id}
+                                                        onchange={(e) =>
+                                                            setSubjectArray(e)
+                                                        }
+                                                        checked
+                                                    />
+                                                    <span class="ml-2">
+                                                        {subject.subject}
+                                                    </span>
+                                                </label>
+                                                <div
+                                                    id="subtopicCheckboxes"
+                                                    class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                                >
+                                                    <For each={subtopics()}>
+                                                        {(subtopic) =>
+                                                            subtopic.subject_id ===
+                                                                subject.id && (
+                                                                <label class="ml-8 block">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id={subtopic.id.toString()}
+                                                                        value={
+                                                                            subtopic.id
+                                                                        }
+                                                                        onchange={(
+                                                                            e
+                                                                        ) =>
+                                                                            setSubtopicArray(
+                                                                                e
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                    <span class="ml-2">
+                                                                        {
+                                                                            subtopic.subtopic
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            )
+                                                        }
+                                                    </For>
+                                                </div>
+                                            </>
                                         </Show>
                                         <Show
                                             when={
@@ -667,19 +745,54 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 )
                                             }
                                         >
-                                            <label class="ml-2 block">
-                                                <input
-                                                    type="checkbox"
-                                                    id={subject.id.toString()}
-                                                    value={subject.id}
-                                                    onchange={(e) =>
-                                                        setSubjectArray(e)
-                                                    }
-                                                />
-                                                <span class="ml-2">
-                                                    {subject.subject}
-                                                </span>
-                                            </label>
+                                            <>
+                                                <label class="ml-2 block">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={subject.id.toString()}
+                                                        value={subject.id}
+                                                        onchange={(e) =>
+                                                            setSubjectArray(e)
+                                                        }
+                                                    />
+                                                    <span class="ml-2">
+                                                        {subject.subject}
+                                                    </span>
+                                                </label>
+                                                <div
+                                                    id="subtopicCheckboxes"
+                                                    class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                                >
+                                                    <For each={subtopics()}>
+                                                        {(subtopic) =>
+                                                            subtopic.subject_id ===
+                                                                subject.id && (
+                                                                <label class="ml-8 block">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id={subtopic.id.toString()}
+                                                                        value={
+                                                                            subtopic.id
+                                                                        }
+                                                                        onchange={(
+                                                                            e
+                                                                        ) =>
+                                                                            setSubtopicArray(
+                                                                                e
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                    <span class="ml-2">
+                                                                        {
+                                                                            subtopic.subtopic
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            )
+                                                        }
+                                                    </For>
+                                                </div>
+                                            </>
                                         </Show>
                                     </div>
                                 )}

@@ -174,7 +174,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 new_subjects: JSON.parse(subject as string).map(Number), // Array of subject IDs
                 new_grades: JSON.parse(gradeLevel as string).map(Number),  // Array of grade IDs
                 new_resource_types: JSON.parse(resourceType as string).map(Number), // Array of resource type IDs
-                new_subtopics: JSON.parse(subtopics as string)?.split(",").map(Number) || [], // Array of subtopic IDs
+                new_subtopics: JSON.parse(subtopics as string).map(Number) || [], // Array of subtopic IDs
                 new_resource_links: resourceLinksList || [], // Array of resourceLinks,
         }
 
