@@ -264,6 +264,14 @@ export const Spanish = {
     draft: "Borrador",
     whatDidYouThink: "¿Qué pensó Ud?",
     overallRating: "Calificación General",
+    reviewQ1: "Como se describe",
+    reviewQ2: "Apropiado para edad/grado",
+    reviewQ3: "Atractivo",
+    reviewQ4: "Alta calidad",
+    reviewQ5: "Fácil de usar/implementar",
+    reviewQ6: "Precio justo",
+    reviewTitle: "Títula de la Calificación",
+    reviewText: "Texto de la Calificación",
   },
 
   postLabels: {

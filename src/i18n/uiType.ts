@@ -232,6 +232,14 @@ export interface uiObject {
     draft: string;
     whatDidYouThink: string;
     overallRating: string;
+    reviewQ1: string;
+    reviewQ2: string;
+    reviewQ3: string;
+    reviewQ4: string;
+    reviewQ5: string;
+    reviewQ6: string;
+    reviewTitle: string;
+    reviewText: string;
   };
 
   postLabels: {

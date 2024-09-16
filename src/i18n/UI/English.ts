@@ -260,6 +260,14 @@ export const English = {
     draft: "Draft",
     whatDidYouThink: "What did you think?",
     overallRating: "Overall Rating",
+    reviewQ1: "As described",
+    reviewQ2: "Age/grade appropriate",
+    reviewQ3: "Engaging",
+    reviewQ4: "High quality",
+    reviewQ5: "Easy to use/implement",
+    reviewQ6: "Fair price",
+    reviewTitle: "Review Title",
+    reviewText: "Review Text",
   },
 
   postLabels: {

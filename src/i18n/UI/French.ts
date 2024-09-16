@@ -261,6 +261,14 @@ export const French = {
     draft: "Brouillon",
     whatDidYouThink: "Qu'en as-tu pensé?",
     overallRating: "Note Globale",
+    reviewQ1: "Comme décrit",
+    reviewQ2: "Adapté à l'âge",
+    reviewQ3: "Engageante",
+    reviewQ4: "Haute qualité",
+    reviewQ5: "Facile à utiliser/mettre en œuvre",
+    reviewQ6: "Juste prix",
+    reviewTitle: "Titre de la Revue",
+    reviewText: "Texte de le Revue",
   },
 
   postLabels: {

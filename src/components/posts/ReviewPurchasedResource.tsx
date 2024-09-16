@@ -2,6 +2,8 @@ import Modal from "@components/common/notices/modal";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import type { Review } from "@lib/types";
 import type { Session } from "@supabase/supabase-js";
+import { ReviewSlider } from "./ReviewSlider";
+
 import {
     createEffect,
     createResource,
@@ -132,11 +134,32 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         let selectedReviewIdEl = e.currentTarget as HTMLSpanElement;
         let selectedReviewID = selectedReviewIdEl.id;
 
-        setReview(selectedReviewID);
+        // setReview(selectedReviewID);
 
-        console.log(review());
+        console.log("Rate purchase:", selectedReviewID)
 
-        // alert(t("messages.comingSoon"));
+        switch(selectedReviewID) {
+            case "user-rating-1":
+                setOverallRating("1");
+                break;
+            case "user-rating-2":
+                setOverallRating("2");
+                break;
+            case "user-rating-3":
+                setOverallRating("3");
+                break;
+            case "user-rating-4":
+                setOverallRating("4");
+                break;
+            case "user-rating-5":
+                setOverallRating("5");
+                break;
+            default: 
+                setOverallRating("");
+        }
+
+        console.log("overallRating signal:", overallRating());
+
     };
 
     return (
@@ -158,6 +181,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                     buttonClass="btn-primary"
                     buttonContent={"Submit Review"}
                     buttonId="submitReview"
+                    classList="max-w-[200px]"
                     children={
                         <div class="border-2 border-purple-400">
                             <div class="flex">
@@ -255,9 +279,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 <div class="">
                                     <div class="mb-4 flex w-full justify-between">
                                         <div class="flex">
-                                            <h2 class="mr-1 text-lg">
-                                                {t("formLabels.overallRating")}
-                                            </h2>
+                                            <p class="mr-1 text-lg font-bold">
+                                                {t("formLabels.overallRating")}*
+                                            </p>
                                             <div class="group relative mr-2 flex items-center">
                                                 <svg
                                                     class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
@@ -339,14 +363,46 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     /> */}
                                 </div>
 
-                                <div class="">
-                                    <div class="flex flex-row justify-between">
+                                {/* <div id="slider-reviews" class="md:grid grid-cols-2 grid-rows-7 "> */}
+                                <div id="slider-reviews" class="md:flex md:flex-col">
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ1")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ2")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ3")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ4")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+                                    
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ5")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+
+                                    <div class="md:flex justify-between">
+                                        <p>{t("formLabels.reviewQ6")}</p>
+                                        <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
+                                    </div>
+                                </div>
+
+                                <div class="md:flex justify-between items-center mt-6 mb-2">
+                                    <div class="flex flex-row items-center justify-between md:justify-start md:w-1/3">
                                         <label
                                             for="Review Title"
                                             class="text-ptext1 dark:text-ptext1-DM"
                                         >
-                                            Review Title
-                                            {/* {t("")}: */}
+                                            <p class="mr-1 font-bold">{t("formLabels.reviewTitle")}: </p>
                                         </label>
                                         <div class="group relative mr-2 flex items-center">
                                             <svg
@@ -378,25 +434,26 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <input
-                                        type="text"
-                                        id="reviewTitle"
-                                        name="reviewTitle"
-                                        class="bg-background mb-4 w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        oninput={(e) =>
-                                            setReviewTitle(e.target.value)
-                                        }
-                                    />
+                                    <div class="flex items-center w-full">
+                                        <input
+                                            type="text"
+                                            id="reviewTitle"
+                                            name="reviewTitle"
+                                            class="bg-background w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                                            oninput={(e) =>
+                                                setReviewTitle(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 </div>
 
                                 <div class="">
                                     <div class="flex flex-row justify-between">
                                         <label
                                             for="reviewText"
-                                            class="text-ptext1 dark:text-ptext1-DM"
+                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
                                         >
-                                            Review Text
-                                            {/* {t("")}: */}
+                                            {t("formLabels.reviewText")}:
                                         </label>
                                         <div class="group relative mr-2 flex items-center">
                                             <svg
@@ -428,18 +485,19 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <input
-                                        type="text"
+                                    <textarea
                                         id="reviewText"
                                         name="reviewText"
+                                        maxlength="750"
+                                        rows="5"
                                         class="bg-background mb-4 w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                                         oninput={(e) =>
                                             setReviewText(e.target.value)
                                         }
                                     />
                                 </div>
-                                <div>
-                                    <button>
+                                <div class="w-ful flex justify-center items-center">
+                                    <button class="bg-btn1 dark:bg-btn1-DM p-2 my-2 rounded-sm w-[200px] text-white font-bold">
                                         <input
                                             type="submit"
                                             value={"Submit Review"}

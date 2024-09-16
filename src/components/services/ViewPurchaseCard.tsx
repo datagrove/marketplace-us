@@ -100,46 +100,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             )}
                         </div>
 
-                        {/* <div
-                            id="user-profile-ratings-div"
-                            class="purchased-item-stars flex w-full items-center justify-between"
-                        >
-                            <span
-                                id="user-rating-5"
-                                class="flex items-center justify-center"
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-4"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-3"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-2"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-1"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                        </div> */}
                         <div class="w-full mt-3 flex justify-center">
                             {/* <button class="flex justify-center text-center w-[90%] bg-btn1 dark:bg-btn1-DM rounded-full">
                                 <p class="text-xs text-ptext1">{t("buttons.reviewResource")}</p>
