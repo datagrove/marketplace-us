@@ -46,7 +46,7 @@ export const HomeGradeCarousel: Component<Props> = (props) => {
                         class="gradeHomeSelectBtn"
                         onclick={(e) => selectGradeCarousel(e.target)}
                     >
-                        <h1 class="text-2xl md:text-3xl">{grade.grade}</h1>
+                        <h3 class="text-2xl md:text-3xl">{grade.grade}</h3>
                     </button>
                 ))}
                 {/* <button

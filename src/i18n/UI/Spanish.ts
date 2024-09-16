@@ -38,12 +38,16 @@ export const Spanish = {
     marketplacetax: "Recaudación de impuestos sobre las ventas del mercado",
   },
 
+  pageMetaTitle: {
+    home: "Inicio Learngrove, el sitio donde podes encontrar todos los recursos para aprender y enseñar "
+  },
+
   pageDescriptions: {
     services:
       "Encuentre los recursos que necesita para su alumno. Busque palabras clave y filtre por categoría para encontrar lo que necesita. Vea vistas previas y haga clic en una tarjeta para obtener más información.",
     signUp: "Proporcione su correo electrónico y cree una contraseña para registrarse y publicar recursos en LearnGrove.",
     login: "Ingrese su correo electrónico y contraseña para iniciar sesión en LearnGrove.",
-    home: "LearnGrove, ¡su fuente de aprendizaje de calidad!",
+    home: "LearnGrove, ¡su fuente de aprendizaje de calidad, donde podras encontrar todos los recursos para aprender y enseñar!",
     // signIn: string,
     createUserAccount:
       "Únase a LearnGrove y desbloquee un mundo de recursos de aprendizaje. Regístrese hoy para encontrar los recursos que necesita para su viaje de aprendizaje.",

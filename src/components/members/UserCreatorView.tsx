@@ -311,11 +311,11 @@ export const UserCreatorView: Component<Props> = (props) => {
                 id="user-creator-view-username-reviews-follow"
                 class="mx-4 mt-10"
             >
-                <h2 class="text-2xl font-bold">
+                <h1 class="text-2xl font-bold">
                     {creator()?.seller_name == ""
                         ? creator()?.first_name + " " + creator()?.last_name
                         : creator()?.seller_name}
-                </h2>
+                </h1>
 
                 {/* <div
                     id="user-creator-view-reviews-div"

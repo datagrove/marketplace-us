@@ -38,6 +38,10 @@ export interface uiObject {
     marketplacetax: string;
   };
 
+  pageMetaTitle: {
+    home: string,
+  },
+
   pageDescriptions: {
     services: string;
     signUp: string;
