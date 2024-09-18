@@ -871,4 +871,9 @@ WHERE subject_id IN (1, 2);
 
 --Delete Geography and History as Subjects
 DELETE FROM post_subject
-WHERE id IN (1, 2)
+WHERE id IN (1, 2);
+
+ALTER TABLE public.seller_post
+DROP COLUMN product_subject,
+DROP COLUMN post_grade,
+DROP COLUMN resource_types;
