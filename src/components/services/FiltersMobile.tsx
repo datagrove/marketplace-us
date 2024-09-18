@@ -142,7 +142,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             "selectedResourceTypes"
         );
         if (localSubjects !== null && localSubjects) {
-            setSelectedSubjects([...JSON.parse(localSubjects)]);
+            setSelectedSubjects([...JSON.parse(localSubjects).map(Number)]);
             setSubjectFilterCount(selectedSubjects().length);
             checkSubjectBoxes();
         } else {
@@ -152,13 +152,15 @@ export const FiltersMobile: Component<Props> = (props) => {
             });
         }
         if (localGrades !== null && localGrades) {
-            setGradeFilters([...JSON.parse(localGrades)]);
+            setGradeFilters([...JSON.parse(localGrades).map(Number)]);
             setGradeFilterCount(gradeFilters().length);
             checkGradeBoxes();
         }
 
         if (localResourceTypes !== null && localResourceTypes) {
-            setResourceTypesFilters([...JSON.parse(localResourceTypes)]);
+            setResourceTypesFilters([
+                ...JSON.parse(localResourceTypes).map(Number),
+            ]);
             setResourceTypesFilterCount(resourceTypesFilters().length);
             checkResourceTypesBoxes();
         }
@@ -189,9 +191,17 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     function checkSubjectBoxes() {
         selectedSubjects().map((item) => {
+            // console.log(item);
+            // console.log(subject());
+            // subject().map((subject) => {
+            //     if (subject.id === item) {
+            //         console.log(subject, item, "matched");
+            //     }
+            //     console.log("no match");
+            // });
             setSubject((prevSubject) =>
                 prevSubject.map((subject) => {
-                    if (subject.id.toString() === item) {
+                    if (subject.id === item) {
                         return { ...subject, checked: true };
                     }
                     return subject;
@@ -386,7 +396,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
         setSubject((prevSubject) =>
             prevSubject.map((subject) => {
-                if (subject.id.toString() === id) {
+                if (subject.id === id) {
                     if (subject.checked) {
                         return { ...subject, checked: false };
                     } else {
@@ -950,7 +960,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         </button>
 
                         <div class="mb-2 pb-8">
-                            {allSubjectInfo?.map((item) => (
+                            {subject()?.map((item) => (
                                 <div class="flex flex-row pl-2">
                                     <div class="flex items-center">
                                         <input

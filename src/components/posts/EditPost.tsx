@@ -106,6 +106,7 @@ export const EditPost: Component<Props> = (props: Props) => {
 
         setGradePick(props.post?.grades);
         setSubjectPick(props.post.subjects);
+        setSubtopicPick(props.post?.subtopics);
         setResourceTypesPick(props.post?.resource_types);
         setSecular(props.post.secular);
         setDraftStatus(props.post.draft_status);
