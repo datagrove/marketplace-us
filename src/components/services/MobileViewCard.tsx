@@ -99,9 +99,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                             <img
                                                 src={post.image_url.jpegUrl}
                                                 alt={
-                                                    post.image_urls?.split(
-                                                        ","
-                                                    )[0]
+                                                    post.image_urls?.[0]
                                                         ? `User Image for Post ${post.title}`
                                                         : "No image"
                                                 }
@@ -131,9 +129,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                                     post.image_url.jpegUrl
                                                 }
                                                 alt={
-                                                    post.image_urls?.split(
-                                                        ","
-                                                    )[0]
+                                                    post.image_urls?.[0]
                                                         ? `User Image for Post ${post.title}`
                                                         : "No image"
                                                 }
@@ -390,6 +386,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </div>
                                     </div>
 
+                                    {/* Topics */}
+                                    <div
+                                        class={`col-span-2 mr-2 text-end text-[10px] font-bold ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        {t("postLabels.subtopics")}:
+                                    </div>
+                                    <div
+                                        class={`prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        <div class="flex-wrap">
+                                            {Array.from(post.subtopic!).join(
+                                                ", "
+                                            )}
+                                        </div>
+                                    </div>
+
                                     {/* GRADES */}
                                     <div class="col-span-2 mr-2 text-end text-[10px] font-bold">
                                         <div class="">
@@ -539,7 +551,6 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 <DeletePostButton
                                     id={post.id}
                                     userId={post.user_id}
-                                    postImage={post.image_urls}
                                 />
                             </div>
                         </div>

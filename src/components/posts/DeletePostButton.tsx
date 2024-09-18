@@ -12,7 +12,6 @@ interface Props {
     // (Id, UserId)
     id: number;
     userId: string;
-    postImage: string | null | undefined;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();

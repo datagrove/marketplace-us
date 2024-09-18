@@ -16,11 +16,6 @@ interface Props {
 }
 
 async function fetchPosts({
-    subjectFilters,
-    gradeFilters,
-    searchString,
-    resourceFilters,
-    secularFilter,
     lang,
     draft_status,
     listing_status,
@@ -29,11 +24,6 @@ async function fetchPosts({
     const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
         body: JSON.stringify({
-            subjectFilters: subjectFilters,
-            gradeFilters: gradeFilters,
-            searchString: searchString,
-            resourceFilters: resourceFilters,
-            secularFilter: secularFilter,
             lang: lang,
             limit: 8,
             draft_status: draft_status,
@@ -42,6 +32,10 @@ async function fetchPosts({
         }),
     });
     const data = await response.json();
+
+    if (response.status !== 200) {
+        alert(data.message);
+    }
 
     return data;
 }
@@ -53,11 +47,6 @@ export const Home: Component<Props> = (props) => {
 
     onMount(async () => {
         const res = await fetchPosts({
-            subjectFilters: [],
-            gradeFilters: [],
-            searchString: "",
-            resourceFilters: [],
-            secularFilter: false,
             lang: lang(),
             listing_status: true,
             draft_status: false,
@@ -75,11 +64,6 @@ export const Home: Component<Props> = (props) => {
         console.log("Pop posts", popularPosts());
 
         const newRes = await fetchPosts({
-            subjectFilters: [],
-            gradeFilters: [],
-            searchString: "",
-            resourceFilters: [],
-            secularFilter: false,
             lang: lang(),
             orderAscending: true,
             listing_status: true,

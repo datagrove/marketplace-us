@@ -129,9 +129,7 @@ export const CartCard: Component<Props> = (props) => {
                                                     item.image_url.jpegUrl
                                                 }
                                                 alt={
-                                                    item.image_urls?.split(
-                                                        ","
-                                                    )[0]
+                                                    item.image_urls?.[0]
                                                         ? "User Image"
                                                         : "No image"
                                                 }

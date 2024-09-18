@@ -1,3 +1,11 @@
+type Subtopic = {
+  name: string;
+  description: string;
+  ariaLabel: string;
+  id: number;
+  subject_id: number;
+};
+
 export interface uiObject {
   textDirection: string;
   siteDescription: string;
@@ -47,7 +55,7 @@ export interface uiObject {
     signUp: string;
     login: string;
     home: string;
-    signIn: string;
+    // signIn: string;
     createUserAccount: string;
     viewUserAccount: string;
     createPost: string;
@@ -201,7 +209,6 @@ export interface uiObject {
     enterPostContent: string;
     noValue: string;
     creatorInfo: string;
-    creatorPosts: string;
     posts: string;
     profileInfo: string;
     yourPosts: string;
@@ -243,6 +250,7 @@ export interface uiObject {
     slide: string;
     creatorProfileImage: string;
     userProfileImage: string;
+    subtopics: string;
   };
 
   cartLabels: {
@@ -370,17 +378,10 @@ export interface uiObject {
   };
 
   headerData: {
-    links: [
-      {
-        text: string;
-        href: string;
-      },
-      {
-        text: string;
-        href: string;
-      },
-    ];
-    actions: [];
+    links: {
+      text: string;
+      href: string;
+    }[];
   };
 
   footerData: {
@@ -445,8 +446,6 @@ export interface uiObject {
 
   subjectCategoryInfo: {
     subjects: [
-      { name: string; description: string; ariaLabel: string; id: "1" },
-      { name: string; description: string; ariaLabel: string; id: "2" },
       { name: string; description: string; ariaLabel: string; id: "3" },
       { name: string; description: string; ariaLabel: string; id: "4" },
       { name: string; description: string; ariaLabel: string; id: "5" },
@@ -463,6 +462,7 @@ export interface uiObject {
       // { name: string, description: string, ariaLabel: string, id: "16" },
       // Add more products as needed
     ];
+    subtopics: Subtopic[];
   };
 
   clearFilters: {

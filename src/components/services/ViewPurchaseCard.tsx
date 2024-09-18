@@ -31,7 +31,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                 props.posts.map(async (post: PurchasedPost) => {
                     post.image_urls
                         ? (post.image_url = await downloadPostImage(
-                              post.image_urls.split(",")[0]
+                              post.image_urls[0]
                           ))
                         : (post.image_url = undefined);
                     return post;
@@ -72,7 +72,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     <img
                                         src={post.image_url.jpegUrl}
                                         alt={
-                                            post.image_urls?.split(",")[0]
+                                            post.image_urls?.[0]
                                                 ? "User Image"
                                                 : "No image"
                                         }

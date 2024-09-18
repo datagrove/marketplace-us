@@ -6,23 +6,26 @@ export interface Post {
     title: string; //Title of the post
     content: string; //Main body of the post (HTML)
     user_id: string; //User ID of the seller
-    image_urls: string | null; //Array of image URLs for the post
+    image_urls: Array<string>; //Array of image URLs for the post
     seller_name: string; //Name of the seller
     seller_id: string; //User ID of the seller, used for directing to the seller details page
     email: string; //Email of the seller
     price_id: string; //Stripe Price ID of the post
     product_id: string; //Stripe Product ID of the post
-    product_subject: Array<string>; //Array of subject IDs, does not contain actual subject names
-    post_grade: Array<string>; //Array of grade IDs, does not contain actual grade names
-    resource_types: Array<string>; // Array of resource types IDs, does not contain actual resource_types names
+    subjects: Array<number>; //Array of subject IDs, does not contain actual subject names
+    grades: Array<number>; //Array of grade IDs, does not contain actual grade names
+    resource_types: Array<number>; // Array of resource types IDs, does not contain actual resource_types names
+    subtopics: Array<number>; //Array of subtopic IDs
     listing_status: boolean; //Boolean of whether the post is listed or not
     secular: boolean;
     draft_status: boolean;
     resource_urls: string;
     unit_amount: number;
+    resource_links: string[];
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
-    subject: Array<string> | null; //Array of subject names
+    subject: Array<string> | null;
+    subtopic: Array<string> | null; //Array of subject names
     grade: Array<string> | null; //Array of grade names
     resourceTypes: Array<string> | null; //Array of resourceTypes names
     image_url: {webpUrl: string, jpegUrl: string} | undefined; //Actual images for the post DOES NOT COME FROM DATABASE
@@ -61,10 +64,10 @@ export interface Creator {
 }
 
 export interface FilterPostsParams {
-    subjectFilters?: string[]; 
-    gradeFilters?: string[];   
+    subjectFilters?: number[]; 
+    gradeFilters?: number[];   
     searchString?: string;
-    resourceFilters?: string[]; 
+    resourceFilters?: number[]; 
     secularFilter?: boolean;
     lang: "en" | "es" | "fr";   
     limit?: number;
