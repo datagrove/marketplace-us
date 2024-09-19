@@ -101,13 +101,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         product: String(product_id),
     });
 
-    const default_price = price_info.id;
+    // const default_price = price_info.id;
 
-    const stripe_update = await stripe.products.update(String(product_id), {
-        name: String(title),
-        description: String(description),
-        default_price: default_price,
-    });
+    // const stripe_update = await stripe.products.update(String(product_id), {
+    //     name: String(title),
+    //     description: String(description),
+    //     default_price: default_price,
+    // });
 
     if (price) {
         const pricesToArchive = prices.data.map((item) => {
@@ -123,44 +123,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     const resourceLinksList = resourceLinks?.toString().split(",");
 
-    if (stripe_update.active) {
-        // let postSubmission = {
-        //     title: title,
-        //     content: content,
-        //     // product_subject: JSON.parse(subject as string),
-        //     // post_grade: JSON.parse(gradeLevel as string),
-        //     image_urls: imageUrl,
-        //     user_id: user.id,
-        //     stripe_price_id: default_price,
-        //     // resource_types: JSON.parse(resourceType as string),
-        //     secular: secular?.valueOf(),
-        //     resource_links: resourceLinksList,
-        //     draft_status: draft_status?.valueOf(),
-        // };
-        // const { data, error } = await supabase
-        //     .from("seller_post")
-        //     .update([postSubmission])
-        //     .eq("id", idSupabase)
-        //     .select();
-        // console.log(postSubmission);
-
-        // if (error) {
-        //     console.log(error);
-        //     return new Response(
-        //         JSON.stringify({
-        //             message: t("apiErrors.postError"),
-        //         }),
-        //         { status: 500 }
-        //     );
-        // } else if (!data) {
-        //     return new Response(
-        //         JSON.stringify({
-        //             message: t("apiErrors.noPost"),
-        //         }),
-        //         { status: 500 }
-        //     );
-        // }
-
+    if (price_info.active) {
         const postId = idSupabase;
 
         let postSubmission = {
@@ -168,7 +131,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 new_title: title,
                 new_content: content,
                 new_image_urls: (imageUrl as string).split(",") || [],
-                new_stripe_price_id: default_price,
                 new_secular: secular === "true" ? true : false,
                 new_draft_status: draft_status?.valueOf() === "true" ? true : false,
                 new_subjects: JSON.parse(subject as string).map(Number), // Array of subject IDs
@@ -199,134 +161,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                         { status: 200 }
                     );
               }
-            // await supabase
-            //     .from("seller_post_subject")
-            //     .delete()
-            //     .eq("post_id", postId);
-
-            // await supabase
-            //     .from("seller_post_grade")
-            //     .delete()
-            //     .eq("post_id", postId);
-
-            // await supabase
-            //     .from("seller_post_resource_types")
-            //     .delete()
-            //     .eq("post_id", postId);
-
-            // await supabase
-            //     .from("seller_post_subtopic")
-            //     .delete()
-            //     .eq("post_id", postId);
-            // //Insert values into each join table
-            // if (postId && subject) {
-            //     const { error: subjectError } = await supabase
-            //         .from("seller_post_subject")
-            //         .insert(
-            //             JSON.parse(subject as string).map(
-            //                 (subjectId: string) => ({
-            //                     post_id: postId,
-            //                     subject_id: parseInt(subjectId),
-            //                 })
-            //             )
-            //         );
-            //     if (subjectError) {
-            //         console.log(subjectError);
-            //         throw subjectError;
-            //         //Thrown errors are not very specific so may want to return a response during testing
-            //         // return new Response(
-            //         //     JSON.stringify({
-            //         //         //TODO Internationalize
-            //         //         message: "Error inserting subject",
-            //         //     }),
-            //         //     { status: 500 }
-            //         // );
-            //     }
-            // }
-
-            // if (postId && gradeLevel) {
-            //     const { error: gradeError } = await supabase
-            //         .from("seller_post_grade")
-            //         .insert(
-            //             JSON.parse(gradeLevel as string).map(
-            //                 (gradeId: string) => ({
-            //                     post_id: postId,
-            //                     grade_id: parseInt(gradeId),
-            //                 })
-            //             )
-            //         );
-            //     if (gradeError) {
-            //         console.log(gradeError);
-            //         throw gradeError;
-            //         //Thrown errors are not very specific so may want to return a response during testing
-            //         // return new Response(
-            //         //     JSON.stringify({
-            //         //         // TODO Internationalize
-            //         //         message: "Error inserting grade",
-            //         //     }),
-            //         //     { status: 500 }
-            //         // );
-            //     }
-            // }
-
-            // if (postId && resourceType) {
-            //     const { error: resourceTypeError } = await supabase
-            //         .from("seller_post_resource_types")
-            //         .insert(
-            //             JSON.parse(resourceType as string).map(
-            //                 (resourceTypeId: string) => ({
-            //                     post_id: postId,
-            //                     resource_type_id: parseInt(resourceTypeId),
-            //                 })
-            //             )
-            //         );
-            //     if (resourceTypeError) {
-            //         console.log(resourceTypeError);
-            //         throw resourceTypeError;
-            //         //Thrown errors are not very specific so may want to return a response during testing
-            //         //     return new Response(
-            //         //         JSON.stringify({
-            //         //             // TODO Internationalize
-            //         //             message: "resource type insert error",
-            //         //         }),
-            //         //         { status: 500 }
-            //         //     );
-            //     }
-            // }
-
-            // if (postId && subtopics) {
-            //     const { error: subtopicError } = await supabase
-            //         .from("seller_post_subtopic")
-            //         .insert(
-            //             JSON.parse(subtopics as string).map(
-            //                 (subtopicId: string) => ({
-            //                     post_id: postId,
-            //                     subtopic_id: parseInt(subtopicId),
-            //                 })
-            //             )
-            //         );
-            //     if (subtopicError) {
-            //         console.log("subtopicError: ", subtopicError);
-            //         throw subtopicError;
-            //         //Thrown errors are not very specific so may want to return a response during testing
-            //         // return new Response(
-            //         //     JSON.stringify({
-            //         //         // TODO Internationalize
-            //         //         message: "subtopic insert error",
-            //         //     }),
-            //         //     { status: 500 }
-            //         // );
-            //     }
-            // }
-
-            // //If all inserts are successful, return successful response
-            // return new Response(
-            //     JSON.stringify({
-            //         message: t("apiErrors.success"),
-            //         id: data[0].id,
-            //     }),
-            //     { status: 200 }
-            // );
         } catch (error) {
             console.log("Error updating Post: ", error);
 
