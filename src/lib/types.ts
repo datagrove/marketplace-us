@@ -79,4 +79,5 @@ export interface FilterPostsParams {
     seller_id?: string;
     from?: number;
     to?: number;
+    downloadable?: boolean;
 }

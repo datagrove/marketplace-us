@@ -261,6 +261,7 @@ export const English = {
     secular: "Secular",
     resourceLinks: "Resource Links",
     draft: "Draft",
+    downloadable: "Downloadable",
   },
 
   postLabels: {
@@ -672,23 +673,17 @@ export const English = {
 
   clearFilters: {
     filterButtons: [
-      { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
-      { text: "Clear Subjects", ariaLabel: "Clear Subjects" },
+      { id: "Clear-All", text: "Clear All Filters", ariaLabel: "Clear All Filters" },
+      { id: "Clear-Subjects", text: "Clear Subjects", ariaLabel: "Clear Subjects" },
       {
+        id: "Clear-Grade",
         text: "Clear Grade",
         ariaLabel: "Clear Grade",
       },
-      {
-        text: "Clear Minor Municipality",
-        ariaLabel: "Clear Minor Municipality",
-      },
-      {
-        text: "Clear Governing District",
-        ariaLabel: "Clear Governing District",
-      },
-      { text: "View Results", ariaLabel: "View Results" },
-      { text: "Clear Secular", ariaLabel: "Clear Secular" },
-      { text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
+      { id: "View-Results", text: "View Results", ariaLabel: "View Results" },
+      { id: "Clear-Secular", text: "Clear Secular", ariaLabel: "Clear Secular" },
+      { id: "Clear-Resource-Type", text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
+      { id: "Clear-Downloadable", text: "Clear Downloadable", ariaLabel: "Clear Downloadable Filter" },
     ],
   },
 

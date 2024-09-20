@@ -263,6 +263,7 @@ export const French = {
     secular: "Laïque",
     resourceLinks: "Liens vers les ressources",
     draft: "Brouillon",
+    downloadable: "Téléchargeable"
   },
 
   postLabels: {
@@ -678,29 +679,17 @@ export const French = {
 
   clearFilters: {
     filterButtons: [
+      { id: "Clear-All", text: "Effacer tous les filtres", ariaLabel: "Effacer tous les filtres" },
+      { id: "Clear-Subjects", text: "Effacer les sujets", ariaLabel: "Effacer les filtres de sujet" },
       {
-        text: "Effacer Tous Les Filtres",
-        ariaLabel: "Effacer Tous Les Filtres",
+        id: "Clear-Grade",
+        text: "Effacer la note",
+        ariaLabel: "Effacer le filtre de qualité",
       },
-      {
-        text: "Effacer le Filtre de Catégorie",
-        ariaLabel: "Effacer le Filtre de Catégorie",
-      },
-      {
-        text: "Effacer le Filtre des Grandes Municipalités",
-        ariaLabel: "Effacer le Filtre des Grandes Municipalités",
-      },
-      {
-        text: "Effacer le Filtre des Municipalités Mineures",
-        ariaLabel: "Effacer le Filtre des Municipalités Mineures",
-      },
-      {
-        text: "Effacer le Filtre de District de Gouvernement",
-        ariaLabel: "Effacer le Filtre de District de Gouvernement",
-      },
-      { text: "Voir les Résultats", ariaLabel: "Voir les Résultats" },
-      { text: "Propre Laïque", ariaLabel: "Propre Laïque" },
-      { text: "Propre Type de Ressource", ariaLabel: "Propre Type de Ressource" },
+      { id: "View-Results", text: "Afficher les résultats", ariaLabel: "Afficher les résultats" },
+      { id: "Clear-Secular", text: "Clair Laïque", ariaLabel: "Effacer le filtre laïque" },
+      { id: "Clear-Resource-Type", text: "Effacer le type de ressource", ariaLabel: "Effacer le filtre de type de ressource" },
+      { id: "Clear-Downloadable", text: "Effacer téléchargeable", ariaLabel: "Effacer le filtre téléchargeable" },
     ],
   },
 

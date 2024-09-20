@@ -265,6 +265,7 @@ export const Spanish = {
     secular: "Laico",
     resourceLinks: "Enlaces de Recurso",
     draft: "Borrador",
+    downloadable: "Descargable",
   },
 
   postLabels: {
@@ -678,16 +679,20 @@ export const Spanish = {
   clearFilters: {
     filterButtons: [
       {
+        id: "Clear-All",
         text: "Borrar Todos los Filtros",
         ariaLabel: "Borrar Todos los Filtros",
       },
-      { text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
-      { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
-      { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
-      { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
-      { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
-      { text: "Limpiar Laico", ariaLabel: "Limpiar Laico" },
-      { text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
+      { id: "Clear-Subjects", text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
+      {
+        id: "Clear-Grade",
+        text: "Borrar calificación",
+        ariaLabel: "Borrar calificación",
+      },
+      { id: "View-Results", text: "Ver Resultados", ariaLabel: "Ver Resultados" },
+      { id: "Clear-Secular", text: "Claro secular", ariaLabel: "Limpiar Laico" },
+      { id: "Clear-Resource-Type", text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
+      { id: "Clear-Downloadable", text: "Borrar descargable", ariaLabel: "Borrar filtro descargable" },
     ],
   },
 
