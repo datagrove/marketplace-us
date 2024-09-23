@@ -6,12 +6,15 @@ import { getCollection } from "astro:content";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("policies", ({ data }) => data.lang === lang && data.policyType === "sellerFeePayout");
+const policyPage = await getCollection(
+    "policies",
+    ({ data }) => data.lang === lang && data.policyType === "sellerFeePayout"
+);
 const { Content } = await policyPage[0].render();
 ---
 
 <Layout
-    pageTitle={t("pageTitles.sellerFeePayout")}
+    pageTitle={t("pageMetaTitles.sellerFeePayout")}
     pageDescription={t("pageDescriptions.sellerFeePayout")}
 >
     <div class="mx-6">

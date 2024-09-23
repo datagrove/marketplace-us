@@ -6,12 +6,15 @@ import { getCollection } from "astro:content";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("policies", ({ data }) => data.lang === lang && data.policyType === "marketplacetax");
+const policyPage = await getCollection(
+    "policies",
+    ({ data }) => data.lang === lang && data.policyType === "marketplacetax"
+);
 const { Content } = await policyPage[0].render();
 ---
 
 <Layout
-    pageTitle={t("pageTitles.marketplacetax")}
+    pageTitle={t("pageMetaTitles.marketplacetax")}
     pageDescription={t("pageDescriptions.marketplacetax")}
 >
     <div class="mx-6">

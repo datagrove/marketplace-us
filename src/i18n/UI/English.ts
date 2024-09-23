@@ -38,8 +38,35 @@ export const English = {
     marketplacetax: "Marketplace Sales Tax Collection",
   },
 
-  pageMetaTitle: {
-    home: "Homepage Learngrove, the site that you can find all your learning and teaching resources"
+  pageMetaTitles: {
+    services: "Resource Catalog of LearnGrove",
+    signUp: "Sign Up into your LearnGrove Account",
+    login: "Login into your LearnGrove Account",
+    home: "Home Learngrove a website where you can find your learning and teaching resources",
+    signIn: "Sign In into your LearnGrove Account",
+    createUserAccount: "Create User Profile in LearnGrove",
+    editUserAccount: "Edit your User Profile in LearnGrove ",
+    viewUserAccount: "My User Profile in LearnGrove",
+    createPost: "List Resource in LearnGrove",
+    createCreatorAccount: "Create Creator Profile in LearnGrove ",
+    editCreatorAccount: "Edit Creator Profile of your LearnGrove Account",
+    viewCreatorAccount: "My Creator Profile Account in LearnGrove",
+    userViewCreatorAccount: "Creator Profile in LearnGrove",
+    page404: "404 - Page Not Found",
+    requestPasswordReset: "Request Password Reset for your LearnGrove Account",
+    resetPassword: "Set New Password for your LearnGrove Account",
+    terms: "Terms and Conditions of LearnGrove",
+    privacy: "Privacy Policy of LearnGrove",
+    acceptableUse: "Acceptable Use Policy of Resources in LearnGrove",
+    about: "About Us, the LearnGrove Team",
+    impact: "Impact",
+    fullPost: "View Full Post",
+    offline: "Offline",
+    faq: "Frequently Asked Questions in LearnGrove",
+    community: "Community Guidelines of LearnGrove",
+    sellerFeePayout: "Seller Fees and Payout Rates of LearnGrove",
+    copyright: "Copyright and Trademark Policy of LearnGrove",
+    marketplacetax: "Marketplace Sales Tax Collection for your Resources in LearnGrove",
   },
 
   pageDescriptions: {

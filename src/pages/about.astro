@@ -1,5 +1,4 @@
 ---
-
 import Layout from "@layouts/PageLayout.astro";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { getCollection } from "astro:content";
@@ -8,12 +7,15 @@ import TeamAbout from "@src/components/common/TeamAbout.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("about", ({ data }) => data.lang === lang && data.type === "about");
+const policyPage = await getCollection(
+    "about",
+    ({ data }) => data.lang === lang && data.type === "about"
+);
 const { Content } = await policyPage[0].render();
 ---
 
 <Layout
-    pageTitle={t("pageTitles.about")}
+    pageTitle={t("pageMetaTitles.home")}
     pageDescription={t("pageDescriptions.about")}
 >
     <div class="mx-6">
@@ -25,7 +27,7 @@ const { Content } = await policyPage[0].render();
         <div class="prose dark:prose-invert">
             <Content />
         </div>
-        <br/>
+        <br />
         <!-- <div>
             <TeamAbout />
         </div> -->

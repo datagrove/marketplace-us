@@ -46,8 +46,35 @@ export interface uiObject {
     marketplacetax: string;
   };
 
-  pageMetaTitle: {
-    home: string,
+  pageMetaTitles: {
+    services: "Resource Catalog of LearnGrove",
+    signUp: "Sign Up into your LearnGrove Account",
+    login: "Login into your LearnGrove Account",
+    home: "Home Page of Learngrove, the website where you can find your learning and teaching resources",
+    signIn: "Sign In into your LearnGrove Account",
+    createUserAccount: "Create User Profile in LearnGrove",
+    editUserAccount: "Edit your User Profile in LearnGrove ",
+    viewUserAccount: "My User Profile in LearnGrove",
+    createPost: "List Resource in LearnGrove",
+    createCreatorAccount: "Create Creator Profile in LearnGrove ",
+    editCreatorAccount: "Edit Creator Profile of your LearnGrove Account",
+    viewCreatorAccount: "My Creator Profile Account in LearnGrove",
+    userViewCreatorAccount: "Creator Profile ",
+    page404: "404 - Page Not Found",
+    requestPasswordReset: "Request Password Reset",
+    resetPassword: "Set New Password for your LearnGrove Account",
+    terms: "Terms and Conditions of our Website",
+    privacy: "Privacy Policy of LearnGrove",
+    acceptableUse: "Acceptable Use Policy",
+    about: "About Use LearnGrove",
+    impact: "Impact",
+    fullPost: "View Full Post",
+    offline: "Offline",
+    faq: "Frequently Asked Questions",
+    community: "Community Guidelines",
+    sellerFeePayout: "Seller Fees and Payout Rates",
+    copyright: "Copyright and Trademark Policy",
+    marketplacetax: "Marketplace Sales Tax Collection for your Resources in LearnGrove",
   },
 
   pageDescriptions: {
