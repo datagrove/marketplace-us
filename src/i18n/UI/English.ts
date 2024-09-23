@@ -278,6 +278,7 @@ export const English = {
     slide: "Slide",
     creatorProfileImage: "Creator Profile Image",
     userProfileImage: "User Profile Image",
+    yourRating: "Your Rating",
   },
 
   cartLabels: {

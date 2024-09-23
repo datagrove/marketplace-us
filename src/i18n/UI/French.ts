@@ -279,6 +279,7 @@ export const French = {
     slide: "Diapositive",
     creatorProfileImage: "Image du profil du fournisseur",
     userProfileImage: "Image du profil du user",
+    yourRating: "Votre Note",
   },
 
   cartLabels: {

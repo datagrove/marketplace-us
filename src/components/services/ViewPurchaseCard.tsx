@@ -64,9 +64,9 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
     };
 
     return (
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-2 border-green-700">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {purchasedItems().map((post) => (
-                <div class="mb-4 flex max-w-max justify-self-center border-b-2 pb-2 border-2 border-red-500">
+                <div class="mb-4 flex max-w-max justify-self-center border-b-2 pb-2">
                     {/* { setProductID(post.id) } */}
                     <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">

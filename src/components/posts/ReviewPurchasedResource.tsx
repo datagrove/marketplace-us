@@ -71,8 +71,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [reviewsData, setReviewsData] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [totalRatingOfPost, setTotalRatingOfPost] = createSignal(0);
-    const [showReviewForm, setShowReviewForm] = createSignal(true);
-    const [review, setReview] = createSignal<string>("");
+    const [showReviewForm, setShowReviewForm] = createSignal(false);
+    const [dbReviewNum, setDbReviewNum] = createSignal<Number>(0);
 
     onMount(async () => {
         try {
@@ -91,7 +91,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             }
             reviewsData().map((review: Review) => {
                 if (review.reviewer_id === props.userId) {
-                    console.log("already has a review");
                     return;
                 } else {
                     setShowReviewForm(true);
@@ -119,6 +118,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     function submit(e: SubmitEvent) {
         e.preventDefault();
 
+        console.log(overallRating(), reviewTitle(), reviewText());
+
         const formData = new FormData(e.target as HTMLFormElement);
         formData.append("review_title", reviewTitle());
         formData.append("review_text", reviewText());
@@ -134,11 +135,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         let selectedReviewIdEl = e.currentTarget as HTMLSpanElement;
         let selectedReviewID = selectedReviewIdEl.id;
 
-        // setReview(selectedReviewID);
+        let reviewedDiv = document.getElementById("user-profile-ratings-div");
 
-        console.log("Rate purchase:", selectedReviewID)
-
-        switch(selectedReviewID) {
+        switch (selectedReviewID) {
             case "user-rating-1":
                 setOverallRating("1");
                 break;
@@ -154,25 +153,164 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             case "user-rating-5":
                 setOverallRating("5");
                 break;
-            default: 
+            default:
                 setOverallRating("");
         }
 
-        console.log("overallRating signal:", overallRating());
-
+        reviewedDiv?.setAttribute("id", "user-profile-ratings-div-reviewed");
     };
 
     return (
         <div>
-            <div>
-                {loading() && <p>Loading reviews...</p>}
-                {/* {!loading() && (
-                    <>
-                        <h2>Total Reviews: {totalReviews()} </h2>
-                        <h2>Percentage of Reviews: {totalRatingOfPost()}</h2>
-                    </>
-                )} */}
-            </div>
+            <div>{loading() && <p>Loading reviews...</p>}</div>
+
+            <Show when={dbReviewNum()}>
+                <div>{t("postLabels.yourRating")}:</div>
+                <div class="flex items-center justify-center">
+                    <Show
+                        when={
+                            dbReviewNum() === 1 ||
+                            dbReviewNum() === 2 ||
+                            dbReviewNum() === 3 ||
+                            dbReviewNum() === 4 ||
+                            dbReviewNum() === 5
+                        }
+                    >
+                        <svg
+                            id="star1"
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 stroke-icon1 stroke-1 dark:fill-icon2 dark:stroke-icon2"
+                        >
+                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                        </svg>
+                    </Show>
+
+                    <Show
+                        when={
+                            dbReviewNum() === 1 ||
+                            dbReviewNum() === 2 ||
+                            dbReviewNum() === 3 ||
+                            dbReviewNum() === 4 ||
+                            dbReviewNum() === 5
+                        }
+                        fallback={
+                            <div>
+                                <svg
+                                    fill="none"
+                                    width="20px"
+                                    height="20px"
+                                    viewBox="0 0 32 32"
+                                    class="emptyStar fill-none stroke-icon1 stroke-1 dark:stroke-icon2"
+                                >
+                                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                </svg>
+                            </div>
+                        }
+                    >
+                        <svg
+                            id="star2"
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 stroke-icon1 stroke-1 dark:fill-icon2 dark:stroke-icon2"
+                        >
+                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                        </svg>
+                    </Show>
+
+                    <Show
+                        when={
+                            dbReviewNum() === 3 ||
+                            dbReviewNum() === 4 ||
+                            dbReviewNum() === 5
+                        }
+                        fallback={
+                            <div>
+                                <svg
+                                    fill="none"
+                                    width="20px"
+                                    height="20px"
+                                    viewBox="0 0 32 32"
+                                    class="emptyStar fill-none stroke-icon1 stroke-1 dark:stroke-icon2"
+                                >
+                                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                </svg>
+                            </div>
+                        }
+                    >
+                        <svg
+                            id="star3"
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 stroke-icon1 stroke-1 dark:fill-icon2 dark:stroke-icon2"
+                        >
+                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                        </svg>
+                    </Show>
+
+                    <Show
+                        when={dbReviewNum() === 4 || dbReviewNum() === 5}
+                        fallback={
+                            <div>
+                                <svg
+                                    fill="none"
+                                    width="20px"
+                                    height="20px"
+                                    viewBox="0 0 32 32"
+                                    class="emptyStar fill-none stroke-icon1 stroke-1 dark:stroke-icon2"
+                                >
+                                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                </svg>
+                            </div>
+                        }
+                    >
+                        <svg
+                            id="star4"
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 stroke-icon1 stroke-1 dark:fill-icon2 dark:stroke-icon2"
+                        >
+                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                        </svg>
+                    </Show>
+
+                    <Show
+                        when={dbReviewNum() === 5}
+                        fallback={
+                            <div>
+                                <svg
+                                    fill="none"
+                                    width="20px"
+                                    height="20px"
+                                    viewBox="0 0 32 32"
+                                    class="emptyStar fill-none stroke-icon1 stroke-1 dark:stroke-icon2"
+                                >
+                                    <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                </svg>
+                            </div>
+                        }
+                    >
+                        <svg
+                            id="star5"
+                            fill="none"
+                            width="20px"
+                            height="20px"
+                            viewBox="0 0 32 32"
+                            class="fill-icon1 stroke-icon1 stroke-1 dark:fill-icon2 dark:stroke-icon2"
+                        >
+                            <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                        </svg>
+                    </Show>
+                </div>
+            </Show>
 
             <Show when={showReviewForm() === true}>
                 <Modal
@@ -199,7 +337,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         height="110px"
                                         viewBox="35 0 186 256"
                                         id="Flat"
-                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM dark:fill-icon1-DM"
+                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM "
                                     >
                                         <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z" />
                                     </svg>
@@ -249,7 +387,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             x="0px"
                                             y="0px"
                                             viewBox="0 0 50 50"
-                                            class="mr-1 h-4 w-4 fill-icon1 dark:fill-icon1-DM"
+                                            class="mr-1 h-4 w-4 fill-icon1 "
                                         >
                                             <path d="M 25 5 C 13.964844 5 5 13.964844 5 25 C 4.996094 25.359375 5.183594 25.695313 5.496094 25.878906 C 5.808594 26.058594 6.191406 26.058594 6.503906 25.878906 C 6.816406 25.695313 7.003906 25.359375 7 25 C 7 15.046875 15.046875 7 25 7 C 31.246094 7 36.726563 10.179688 39.957031 15 L 33 15 C 32.640625 14.996094 32.304688 15.183594 32.121094 15.496094 C 31.941406 15.808594 31.941406 16.191406 32.121094 16.503906 C 32.304688 16.816406 32.640625 17.003906 33 17 L 43 17 L 43 7 C 43.003906 6.730469 42.898438 6.46875 42.707031 6.277344 C 42.515625 6.085938 42.253906 5.980469 41.984375 5.984375 C 41.433594 5.996094 40.992188 6.449219 41 7 L 41 13.011719 C 37.347656 8.148438 31.539063 5 25 5 Z M 43.984375 23.984375 C 43.433594 23.996094 42.992188 24.449219 43 25 C 43 34.953125 34.953125 43 25 43 C 18.753906 43 13.269531 39.820313 10.042969 35 L 17 35 C 17.359375 35.007813 17.695313 34.816406 17.878906 34.507813 C 18.058594 34.195313 18.058594 33.808594 17.878906 33.496094 C 17.695313 33.1875 17.359375 32.996094 17 33 L 8.445313 33 C 8.316406 32.976563 8.1875 32.976563 8.058594 33 L 7 33 L 7 43 C 6.996094 43.359375 7.183594 43.695313 7.496094 43.878906 C 7.808594 44.058594 8.191406 44.058594 8.503906 43.878906 C 8.816406 43.695313 9.003906 43.359375 9 43 L 9 36.984375 C 12.648438 41.847656 18.460938 45 25 45 C 36.035156 45 45 36.035156 45 25 C 45.003906 24.730469 44.898438 24.46875 44.707031 24.277344 C 44.515625 24.085938 44.253906 23.980469 43.984375 23.984375 Z"></path>
                                         </svg>
@@ -320,35 +458,179 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 class="flex items-center justify-center"
                                                 onClick={(e) => ratePurchase(e)}
                                             >
-                                                ☆
+                                                <Show
+                                                    when={
+                                                        overallRating() === ""
+                                                    }
+                                                >
+                                                    ☆
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "1" ||
+                                                        overallRating() ===
+                                                            "2" ||
+                                                        overallRating() ===
+                                                            "3" ||
+                                                        overallRating() ===
+                                                            "4" ||
+                                                        overallRating() === "5"
+                                                    }
+                                                >
+                                                    <svg
+                                                        fill="none"
+                                                        width="20px"
+                                                        height="20px"
+                                                        viewBox="0 0 32 32"
+                                                        class="fill-icon1 dark:fill-icon2"
+                                                    >
+                                                        <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                                    </svg>
+                                                </Show>
                                             </span>
                                             <span
                                                 id="user-rating-4"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
-                                                ☆
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "" ||
+                                                        overallRating() === "1"
+                                                    }
+                                                >
+                                                    ☆
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "2" ||
+                                                        overallRating() ===
+                                                            "3" ||
+                                                        overallRating() ===
+                                                            "4" ||
+                                                        overallRating() === "5"
+                                                    }
+                                                >
+                                                    <svg
+                                                        fill="none"
+                                                        width="20px"
+                                                        height="20px"
+                                                        viewBox="0 0 32 32"
+                                                        class="fill-icon1 dark:fill-icon2"
+                                                    >
+                                                        <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                                    </svg>
+                                                </Show>
                                             </span>
                                             <span
                                                 id="user-rating-3"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
-                                                ☆
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "" ||
+                                                        overallRating() ===
+                                                            "1" ||
+                                                        overallRating() === "2"
+                                                    }
+                                                >
+                                                    ☆
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "3" ||
+                                                        overallRating() ===
+                                                            "4" ||
+                                                        overallRating() === "5"
+                                                    }
+                                                >
+                                                    <svg
+                                                        fill="none"
+                                                        width="20px"
+                                                        height="20px"
+                                                        viewBox="0 0 32 32"
+                                                        class="fill-icon1 dark:fill-icon2"
+                                                    >
+                                                        <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                                    </svg>
+                                                </Show>
                                             </span>
                                             <span
                                                 id="user-rating-2"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
-                                                ☆
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "" ||
+                                                        overallRating() ===
+                                                            "1" ||
+                                                        overallRating() ===
+                                                            "2" ||
+                                                        overallRating() === "3"
+                                                    }
+                                                >
+                                                    ☆
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "4" ||
+                                                        overallRating() === "5"
+                                                    }
+                                                >
+                                                    <svg
+                                                        fill="none"
+                                                        width="20px"
+                                                        height="20px"
+                                                        viewBox="0 0 32 32"
+                                                        class="fill-icon1 dark:fill-icon2"
+                                                    >
+                                                        <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                                    </svg>
+                                                </Show>
                                             </span>
                                             <span
                                                 id="user-rating-1"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
-                                                ☆
+                                                <Show
+                                                    when={
+                                                        overallRating() ===
+                                                            "" ||
+                                                        overallRating() !== "5"
+                                                    }
+                                                >
+                                                    ☆
+                                                </Show>
+
+                                                <Show
+                                                    when={
+                                                        overallRating() === "5"
+                                                    }
+                                                >
+                                                    <svg
+                                                        fill="none"
+                                                        width="20px"
+                                                        height="20px"
+                                                        viewBox="0 0 32 32"
+                                                        class="fill-icon1 dark:fill-icon2"
+                                                    >
+                                                        <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
+                                                    </svg>
+                                                </Show>
                                             </span>
                                         </div>
                                     </div>
@@ -364,7 +646,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 </div>
 
                                 {/* <div id="slider-reviews" class="md:grid grid-cols-2 grid-rows-7 "> */}
-                                <div id="slider-reviews" class="md:flex md:flex-col">
+                                {/* <div id="slider-reviews" class="md:flex md:flex-col">
                                     <div class="md:flex justify-between">
                                         <p>{t("formLabels.reviewQ1")}</p>
                                         <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
@@ -394,15 +676,17 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         <p>{t("formLabels.reviewQ6")}</p>
                                         <ReviewSlider resourceId={ props.resourceId } selectedReviewValue={ 3 }/>
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div class="md:flex justify-between items-center mt-6 mb-2">
-                                    <div class="flex flex-row items-center justify-between md:justify-start md:w-1/3">
+                                <div class="mb-2 mt-6 items-center justify-between md:flex">
+                                    <div class="flex flex-row items-center justify-between md:w-1/3 md:justify-start">
                                         <label
                                             for="Review Title"
                                             class="text-ptext1 dark:text-ptext1-DM"
                                         >
-                                            <p class="mr-1 font-bold">{t("formLabels.reviewTitle")}: </p>
+                                            <p class="mr-1 font-bold">
+                                                {t("formLabels.reviewTitle")}:{" "}
+                                            </p>
                                         </label>
                                         <div class="group relative mr-2 flex items-center">
                                             <svg
@@ -434,7 +718,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center w-full">
+                                    <div class="flex w-full items-center">
                                         <input
                                             type="text"
                                             id="reviewTitle"
@@ -451,7 +735,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     <div class="flex flex-row justify-between">
                                         <label
                                             for="reviewText"
-                                            class="text-ptext1 dark:text-ptext1-DM font-bold"
+                                            class="font-bold text-ptext1 dark:text-ptext1-DM"
                                         >
                                             {t("formLabels.reviewText")}:
                                         </label>
@@ -496,8 +780,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         }
                                     />
                                 </div>
-                                <div class="w-ful flex justify-center items-center">
-                                    <button class="bg-btn1 dark:bg-btn1-DM p-2 my-2 rounded-sm w-[200px] text-white font-bold">
+                                <div class="w-ful flex items-center justify-center">
+                                    <button class="my-2 w-[200px] rounded-sm bg-btn1 p-2 font-bold text-white dark:bg-btn1-DM">
                                         <input
                                             type="submit"
                                             value={"Submit Review"}
