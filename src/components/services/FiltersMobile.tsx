@@ -7,9 +7,7 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SecularFilter } from "./SecularFilter";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
-import type { FilterPostsParams, Post } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -669,7 +667,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
     return (
-        <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-[300px] md:px-0 md:pt-0">
+        <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-1/4 md:min-w-[210px] md:max-w-[300px] md:px-0 md:pt-0">
             <Show when={screenSize() === "sm"}>
                 <button
                     class="w-full"

@@ -1167,7 +1167,9 @@ export const CreateNewPost: Component = () => {
                             {t("formLabels.secular")}?
                         </div>
                         <div class="inline-block">
-                            <label class="ml-4">{t("formLabels.yes")}</label>
+                            <label for="secularCheckbox" class="ml-4">
+                                {t("formLabels.yes")}
+                            </label>
                             <input
                                 type="checkbox"
                                 id="secularCheckbox"

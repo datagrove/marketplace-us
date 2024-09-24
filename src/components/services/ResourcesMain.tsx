@@ -1,11 +1,12 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
 import { createSignal, createEffect, onMount, Show, onCleanup } from "solid-js";
-import { ViewCard } from "./ViewCard";
-import { MobileViewCard } from "./MobileViewCard";
-import { FiltersMobile } from "./FiltersMobile";
-import { SearchBar } from "./SearchBar";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import type { Post } from "@lib/types";
+import { ViewCard } from "@components/services/ViewCard";
+import { MobileViewCard } from "@components/services/MobileViewCard";
+import { FiltersMobile } from "@components/services/FiltersMobile";
+import { SearchBar } from "@components/services/SearchBar";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import type { FilterPostsParams } from "@lib/types";
