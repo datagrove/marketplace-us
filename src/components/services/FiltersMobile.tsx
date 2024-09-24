@@ -90,37 +90,10 @@ for (let i = 0; i < subjectData.length; i++) {
     });
 }
 
-async function fetchPosts({
-    subjectFilters,
-    gradeFilters,
-    searchString,
-    resourceFilters,
-    secularFilter,
-    listing_status,
-    draft_status,
-}: FilterPostsParams) {
-    const response = await fetch("/api/fetchFilterPosts", {
-        method: "POST",
-        body: JSON.stringify({
-            subjectFilters: subjectFilters,
-            gradeFilters: gradeFilters,
-            searchString: searchString,
-            resourceFilters: resourceFilters,
-            secularFilter: secularFilter,
-            lang: lang,
-            listing_status: listing_status,
-            draft_status: draft_status,
-        }),
-    });
-    const data = await response.json();
-
-    return data;
-}
-
 interface Props {
-    filterPostsByGrade: (grade: string) => void;
-    filterPostsBySubject: (currentSubject: string) => void;
-    filterPostsByResourceTypes: (type: string) => void;
+    filterPostsByGrade: (grade: number) => void;
+    filterPostsBySubject: (currentSubject: number) => void;
+    filterPostsByResourceTypes: (type: number) => void;
     clearSubjects: () => void;
     clearGrade: () => void;
     clearResourceTypes: () => void;
@@ -143,12 +116,12 @@ export const FiltersMobile: Component<Props> = (props) => {
         createSignal<Array<{ type: string; id: number; checked: boolean }>>(
             resourceTypes
         );
-    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
+    const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
     const [resourceTypesFilters, setResourceTypesFilters] = createSignal<
-        Array<string>
+        Array<number>
     >([]);
     const [subject, setSubject] = createSignal<Array<any>>(allSubjectInfo);
-    const [selectedSubjects, setSelectedSubjects] = createSignal<Array<string>>(
+    const [selectedSubjects, setSelectedSubjects] = createSignal<Array<number>>(
         []
     );
     const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
@@ -169,7 +142,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             "selectedResourceTypes"
         );
         if (localSubjects !== null && localSubjects) {
-            setSelectedSubjects([...JSON.parse(localSubjects)]);
+            setSelectedSubjects([...JSON.parse(localSubjects).map(Number)]);
             setSubjectFilterCount(selectedSubjects().length);
             checkSubjectBoxes();
         } else {
@@ -179,13 +152,15 @@ export const FiltersMobile: Component<Props> = (props) => {
             });
         }
         if (localGrades !== null && localGrades) {
-            setGradeFilters([...JSON.parse(localGrades)]);
+            setGradeFilters([...JSON.parse(localGrades).map(Number)]);
             setGradeFilterCount(gradeFilters().length);
             checkGradeBoxes();
         }
 
         if (localResourceTypes !== null && localResourceTypes) {
-            setResourceTypesFilters([...JSON.parse(localResourceTypes)]);
+            setResourceTypesFilters([
+                ...JSON.parse(localResourceTypes).map(Number),
+            ]);
             setResourceTypesFilterCount(resourceTypesFilters().length);
             checkResourceTypesBoxes();
         }
@@ -216,9 +191,17 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     function checkSubjectBoxes() {
         selectedSubjects().map((item) => {
+            // console.log(item);
+            // console.log(subject());
+            // subject().map((subject) => {
+            //     if (subject.id === item) {
+            //         console.log(subject, item, "matched");
+            //     }
+            //     console.log("no match");
+            // });
             setSubject((prevSubject) =>
                 prevSubject.map((subject) => {
-                    if (subject.id.toString() === item) {
+                    if (subject.id === item) {
                         return { ...subject, checked: true };
                     }
                     return subject;
@@ -231,7 +214,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         gradeFilters().map((item) => {
             setGrade((prevGrade) =>
                 prevGrade.map((grade) => {
-                    if (grade.id.toString() === item) {
+                    if (grade.id === item) {
                         return { ...grade, checked: true };
                     }
                     return grade;
@@ -244,7 +227,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         resourceTypesFilters().map((item) => {
             setResourceType((prevResourceType) =>
                 prevResourceType.map((type) => {
-                    if (type.id.toString() === item) {
+                    if (type.id === item) {
                         return { ...type, checked: true };
                     }
                     return type;
@@ -253,7 +236,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
     }
 
-    const setGradesFilter = (id: string) => {
+    const setGradesFilter = (id: number) => {
         if (gradeFilters().includes(id)) {
             let currentGradeFilters = gradeFilters().filter((el) => el !== id);
             setGradeFilters(currentGradeFilters);
@@ -267,7 +250,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
         setGrade((prevGrade) =>
             prevGrade.map((grade) => {
-                if (grade.id.toString() === id) {
+                if (grade.id === id) {
                     if (grade.checked) {
                         return { ...grade, checked: false };
                     } else {
@@ -279,7 +262,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         );
     };
 
-    const setResourceTypesFilter = (id: string) => {
+    const setResourceTypesFilter = (id: number) => {
         if (resourceTypesFilters().includes(id)) {
             let currentResourceTypesFilters = resourceTypesFilters().filter(
                 (el) => el !== id
@@ -295,7 +278,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
         setResourceType((prevResourceType) =>
             prevResourceType.map((type) => {
-                if (type.id.toString() === id) {
+                if (type.id === id) {
                     if (type.checked) {
                         return { ...type, checked: false };
                     } else {
@@ -368,21 +351,21 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = currCheckbox.id;
+        let currCheckboxID = Number(currCheckbox.id);
 
         setGradesFilter(currCheckboxID);
     };
 
     const resourceTypesCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = currCheckbox.id;
+        let currCheckboxID = Number(currCheckbox.id);
 
         setResourceTypesFilter(currCheckboxID);
     };
 
     const subjectCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = currCheckbox.id;
+        let currCheckboxID = Number(currCheckbox.id);
 
         setSubjectFilter(currCheckboxID);
     };
@@ -397,7 +380,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     };
 
-    function setSubjectFilter(id: string) {
+    function setSubjectFilter(id: number) {
         if (selectedSubjects().includes(id)) {
             let currentSubjectFilters = selectedSubjects().filter(
                 (el) => el !== id
@@ -413,7 +396,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
         setSubject((prevSubject) =>
             prevSubject.map((subject) => {
-                if (subject.id.toString() === id) {
+                if (subject.id === id) {
                     if (subject.checked) {
                         return { ...subject, checked: false };
                     } else {
@@ -977,7 +960,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                         </button>
 
                         <div class="mb-2 pb-8">
-                            {allSubjectInfo?.map((item) => (
+                            {subject()?.map((item) => (
                                 <div class="flex flex-row pl-2">
                                     <div class="flex items-center">
                                         <input

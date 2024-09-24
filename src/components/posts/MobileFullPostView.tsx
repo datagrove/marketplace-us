@@ -764,6 +764,17 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 </div>
                             </div>
 
+                            <div
+                                class={`${post() && post()!.subtopic && post()!.subtopic!.length > 0 ? "" : "hidden"}`}
+                            >
+                                <p class="mt-4 font-light uppercase">
+                                    {t("postLabels.subtopics")}
+                                </p>
+                                <div class="flex">
+                                    {post()?.subtopic?.join(", ")}
+                                </div>
+                            </div>
+
                             <div>
                                 <p class="mt-4 font-light uppercase">
                                     {t("formLabels.resourceTypes")}

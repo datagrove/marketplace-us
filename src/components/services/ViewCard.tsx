@@ -70,9 +70,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                 <img
                                                     src={post.image_url.jpegUrl}
                                                     alt={
-                                                        post.image_urls?.split(
-                                                            ","
-                                                        )[0]
+                                                        post.image_urls?.[0]
                                                             ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
@@ -105,9 +103,7 @@ export const ViewCard: Component<Props> = (props) => {
                                                         post.image_url.jpegUrl
                                                     }
                                                     alt={
-                                                        post.image_urls?.split(
-                                                            ","
-                                                        )[0]
+                                                        post.image_urls?.[0]
                                                             ? `User Image for Post ${post.title}`
                                                             : "No image"
                                                     }
@@ -238,6 +234,25 @@ export const ViewCard: Component<Props> = (props) => {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div
+                                                class={`grid w-full grid-cols-4 text-[10px] ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                            >
+                                                <div class="col-span-1">
+                                                    <div class="">
+                                                        {t(
+                                                            "postLabels.subtopics"
+                                                        )}
+                                                        :
+                                                    </div>
+                                                </div>
+                                                <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    <div class="flex-wrap">
+                                                        {Array.from(
+                                                            post.subtopic!
+                                                        ).join(", ")}
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="grid w-full grid-cols-4 text-[10px]">
                                                 <div class="col-span-1">
                                                     <div class="">
@@ -314,7 +329,6 @@ export const ViewCard: Component<Props> = (props) => {
                                                 <DeletePostButton
                                                     id={post.id}
                                                     userId={post.user_id}
-                                                    postImage={post.image_urls}
                                                 />
                                             </div>
                                         </div>

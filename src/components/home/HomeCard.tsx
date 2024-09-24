@@ -21,7 +21,7 @@ export const HomeCard: Component<Props> = (props) => {
     return (
         <div class="mb-4 flex justify-center">
             <ul class="flex flex-wrap justify-center md:flex-nowrap">
-                {props.posts.map((post: any) => (
+                {props.posts.map((post: Post) => (
                     <li>
                         {/* { post.id } */}
                         {/* {`/${lang}/posts/${post.id}`} */}
@@ -49,10 +49,8 @@ export const HomeCard: Component<Props> = (props) => {
                                                         post.image_url.jpegUrl
                                                     }
                                                     alt={
-                                                        post.image_urls.split(
-                                                            ","
-                                                        )[0]
-                                                            ? `Post Image ${post.image_urls.split(",")[0]}.jpeg`
+                                                        post.image_urls?.[0]
+                                                            ? `Post Image ${post.image_urls[0]}.jpeg`
                                                             : "No Image"
                                                     }
                                                     class="h-40 w-40 rounded-lg object-contain"
