@@ -8,6 +8,7 @@ import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource.tsx";
 import type { PurchasedPost } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
@@ -16,23 +17,19 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-const { data: User, error: UserError } = await supabase.auth.getSession();
+interface Props {
+    session: AuthSession | null;
+}
 
-export const ViewUserPurchases: Component = () => {
+export const ViewUserPurchases: Component<Props> = (props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [purchasedItems, setPurchasedItems] = createSignal<
         Array<PurchasedPost>
     >([]);
     const [loading, setLoading] = createSignal<boolean>(true);
 
-    if (UserError) {
-        console.log("User Error: " + UserError.message);
-    } else {
-        setSession(User.session);
-    }
-
     onMount(async () => {
-        setSession(User?.session);
+        setSession(props.session);
         await getPurchasedItems();
     });
 
