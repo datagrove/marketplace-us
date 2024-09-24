@@ -173,6 +173,7 @@ export const CreateNewPost: Component = () => {
             subtopic: string;
             subject_id: number;
             ariaLabel: string;
+            checked: boolean;
         }>
     >([]);
     const [subjectPick, setSubjectPick] = createSignal<Array<number>>([]);
@@ -331,6 +332,7 @@ export const CreateNewPost: Component = () => {
                         subtopic: subtopic.name,
                         ariaLabel: subtopic.ariaLabel,
                         subject_id: subtopic.subject_id,
+                        checked: false,
                     },
                 ])
             );
@@ -406,6 +408,11 @@ export const CreateNewPost: Component = () => {
         } else {
             setAllRequirementsMet(false);
         }
+    });
+
+    createEffect(() => {
+        console.log("SubjectPick: ", subjectPick());
+        console.log("SubtopicPick: ", subtopicPick());
     });
 
     function saveAsDraft(e: Event) {
@@ -559,19 +566,40 @@ export const CreateNewPost: Component = () => {
                     subjectPick().filter((value) => value !== targetValue)
                 );
             }
+            setSelectedSubjectId(undefined);
+            //Need to add something to keep subjects and subtopics in sync
         }
+
+        const subjectValid = document.getElementById("isSubjectValid");
+        const subjectToolTip = document.getElementById("subjectToolTip");
+
         if (subjectPick().length > 0) {
-            document
-                .getElementById("isSubjectValid")
-                ?.classList.remove("hidden");
-            document.getElementById("subjectToolTip")?.classList.add("hidden");
+            subjectValid?.classList.remove("hidden");
+            subjectToolTip?.classList.add("hidden");
         } else if (subjectPick().length === 0) {
-            document.getElementById("isSubjectValid")?.classList.add("hidden");
-            document
-                .getElementById("subjectToolTip")
-                ?.classList.remove("hidden");
+            subjectValid?.classList.add("hidden");
+            subjectToolTip?.classList.remove("hidden");
         }
-        console.log(subjectPick());
+
+        if (subjectPick().length === 0) {
+            setSubtopicPick([]);
+            setSubtopics((prev) =>
+                prev.map((subtopic) => ({ ...subtopic, checked: false }))
+            );
+        } else {
+            setSubtopics((prev) =>
+                prev.map((subtopic) => {
+                    if (subjectPick().indexOf(subtopic.subject_id) === -1) {
+                        setSubtopicPick((prev) =>
+                            prev.filter((item) => item !== subtopic.id)
+                        );
+                        return { ...subtopic, checked: false };
+                    } else {
+                        return { ...subtopic };
+                    }
+                })
+            );
+        }
     }
 
     function setSubtopicArray(e: Event) {
@@ -586,7 +614,6 @@ export const CreateNewPost: Component = () => {
                 );
             }
         }
-        console.log(subtopicPick());
     }
 
     function formatPrice(resourcePrice: string) {
@@ -693,7 +720,10 @@ export const CreateNewPost: Component = () => {
                     <span class="text-alert1">* </span>
                     <span class="italic">{t("formLabels.required")}</span>
                 </div>
-                <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
+                <label
+                    for="Title"
+                    class="text-lg text-ptext1 dark:text-ptext1-DM"
+                >
                     <span class="text-alert1">* </span>
                     {t("formLabels.title")}
                     <input
@@ -710,7 +740,7 @@ export const CreateNewPost: Component = () => {
                 <label
                     id="content-label"
                     for="Content"
-                    class="text-ptext1 dark:text-ptext1-DM"
+                    class="text-lg text-ptext1 dark:text-ptext1-DM"
                 >
                     <span class="text-alert1">* </span>
                     {t("menus.description")}
@@ -732,7 +762,7 @@ export const CreateNewPost: Component = () => {
                 </Show>
 
                 <div class="my-4 flex w-full flex-col justify-center">
-                    <div class="flex items-center">
+                    <div class="flex items-center text-lg">
                         <p>
                             {t("formLabels.images")} ({imageUrl().length}/5)
                         </p>
@@ -740,7 +770,7 @@ export const CreateNewPost: Component = () => {
                         <div class="ml-2 flex items-end justify-end">
                             <div class="group relative flex items-center">
                                 <svg
-                                    class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                    class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                     version="1.1"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 512 512"
@@ -780,7 +810,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Subject Picker */}
-                <div class="mt-2 flex justify-start">
+                <div class="mt-2 flex items-center justify-start">
                     <label
                         for="subject"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -790,27 +820,55 @@ export const CreateNewPost: Component = () => {
                     </label>
 
                     {/* Creates a list of checkboxes that drop down to multiple select */}
-                    <div class="flex-grow">
+                    <div class="flex-grow ">
                         <div
                             class="relative flex w-full items-center justify-between rounded border border-inputBorder1 focus-within:border-2 focus-within:border-highlight1 focus-within:outline-none dark:bg-background2-DM"
                             onClick={() => subjectCheckboxes()}
                         >
                             <div
                                 id="chooseSubject"
-                                class="bg-background w-11/12 px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
+                                class="flex min-h-[44px] items-center justify-between text-lg"
                             >
                                 <Show when={subjectPick().length > 0}>
-                                    {subjectPick().map((subject) =>
-                                        subjects()
-                                            .filter(
-                                                (item) => item.id === subject
-                                            )
-                                            .map((item) => (
-                                                <span class="mr-1">
-                                                    {item.subject},
-                                                </span>
-                                            ))
-                                    )}
+                                    <div class="flex flex-col">
+                                        <div class="py-2">
+                                            {t("formLabels.chooseSubject")}:
+                                            {subjectPick().map((subject) =>
+                                                subjects()
+                                                    .filter(
+                                                        (item) =>
+                                                            item.id === subject
+                                                    )
+                                                    .map((item) => (
+                                                        <span class="mr-1">
+                                                            {item.subject},
+                                                        </span>
+                                                    ))
+                                            )}
+                                        </div>
+                                        <Show when={subtopicPick().length > 0}>
+                                            <div>
+                                                {t("postLabels.subtopics")}:
+                                                {subtopicPick().map(
+                                                    (subtopic) =>
+                                                        subtopics()
+                                                            .filter(
+                                                                (item) =>
+                                                                    item.id ===
+                                                                    subtopic
+                                                            )
+                                                            .map((item) => (
+                                                                <span class="mr-1">
+                                                                    {
+                                                                        item.subtopic
+                                                                    }
+                                                                    ,
+                                                                </span>
+                                                            ))
+                                                )}
+                                            </div>
+                                        </Show>
+                                    </div>
                                 </Show>
                                 <Show when={subjectPick().length === 0}>
                                     <span class="text-alert1">* </span>
@@ -831,25 +889,58 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <div
                             id="subjectCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-48 overflow-y-auto bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={subjects()}>
                                 {(subject) => (
                                     <>
-                                        <div>
-                                            <label class="ml-2 block">
-                                                <input
-                                                    type="checkbox"
-                                                    id={subject.id.toString()}
-                                                    value={subject.id}
-                                                    onchange={(e) =>
-                                                        setSubjectArray(e)
-                                                    }
-                                                />
-                                                <span class="ml-2">
-                                                    {subject.subject}
-                                                </span>
-                                            </label>
+                                        <div class="flex flex-col items-start">
+                                            <div class="flex w-full flex-row justify-between py-1">
+                                                <div>
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`subjectCheckbox ${subject.id.toString()}`}
+                                                        value={subject.id}
+                                                        onchange={(e) =>
+                                                            setSubjectArray(e)
+                                                        }
+                                                    />
+                                                    <label
+                                                        for={`subjectCheckbox ${subject.id.toString()}`}
+                                                        class="ml-2 text-lg"
+                                                    >
+                                                        {subject.subject}
+                                                    </label>
+                                                </div>
+                                                <div
+                                                    class={`${subjectPick().includes(subject.id) ? "" : "hidden"} pr-8 text-xl`}
+                                                >
+                                                    <button
+                                                        class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            setSelectedSubjectId(
+                                                                undefined
+                                                            );
+                                                        }}
+                                                    >
+                                                        -
+                                                    </button>
+                                                    <button
+                                                        class={`${selectedSubjectId() === subject.id ? "hidden" : ""}`}
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            setSelectedSubjectId(
+                                                                subject.id
+                                                            );
+                                                        }}
+                                                    >
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <div
                                                 id="subtopicCheckboxes"
                                                 class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
@@ -858,10 +949,10 @@ export const CreateNewPost: Component = () => {
                                                     {(subtopic) =>
                                                         subtopic.subject_id ===
                                                             subject.id && (
-                                                            <label class="ml-8 block">
+                                                            <label class="ml-8 flex flex-row py-1">
                                                                 <input
                                                                     type="checkbox"
-                                                                    id={subtopic.id.toString()}
+                                                                    id={`subtopicCheckbox ${subtopic.id.toString()}`}
                                                                     value={
                                                                         subtopic.id
                                                                     }
@@ -873,7 +964,7 @@ export const CreateNewPost: Component = () => {
                                                                         )
                                                                     }
                                                                 />
-                                                                <span class="ml-2">
+                                                                <span class="ml-2 text-lg">
                                                                     {
                                                                         subtopic.subtopic
                                                                     }
@@ -896,7 +987,7 @@ export const CreateNewPost: Component = () => {
                             id="subjectToolTip"
                         >
                             <svg
-                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                 version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -922,7 +1013,7 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <svg
                             id="isSubjectValid"
-                            class="ml-1 mt-0.5 hidden h-4 w-4 fill-btn1 dark:fill-btn1-DM"
+                            class="ml-1 mt-0.5 hidden h-[30px] w-[30px] fill-btn1 dark:fill-btn1-DM"
                             viewBox="0 0 12 12"
                             xmlns="http://www.w3.org/2000/svg"
                         >
@@ -932,7 +1023,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* Grade Picker */}
-                <div class="mt-2 flex justify-start">
+                <div class="mt-2 flex items-center justify-start">
                     <label
                         for="grade"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -949,7 +1040,7 @@ export const CreateNewPost: Component = () => {
                         >
                             <div
                                 id="chooseGrade"
-                                class="bg-background flex w-11/12 flex-wrap px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
+                                class="flex min-h-[44px] items-center justify-between text-lg"
                             >
                                 <Show when={gradePick().length > 0}>
                                     {gradePick().map((grade) =>
@@ -981,7 +1072,7 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <div
                             id="gradeCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto  bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-48 grid-cols-2 overflow-y-auto  bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={grades()}>
                                 {(grade) => (
@@ -1005,7 +1096,7 @@ export const CreateNewPost: Component = () => {
                             id="gradeToolTip"
                         >
                             <svg
-                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                 version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -1031,7 +1122,7 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <svg
                             id="isGradeValid"
-                            class="ml-1 mt-0.5 hidden h-4 w-4 fill-btn1 dark:fill-btn1-DM"
+                            class="ml-1 mt-0.5 hidden h-[30px] w-[30px] fill-btn1 dark:fill-btn1-DM"
                             viewBox="0 0 12 12"
                             xmlns="http://www.w3.org/2000/svg"
                         >
@@ -1041,7 +1132,7 @@ export const CreateNewPost: Component = () => {
                 </div>
 
                 {/* resourceTypes Picker */}
-                <div class="mt-2 flex justify-start">
+                <div class="mt-2 flex items-center justify-start">
                     <label
                         for="resourceTypes"
                         class="hidden w-4/12 text-ptext1 dark:text-ptext1-DM"
@@ -1056,7 +1147,7 @@ export const CreateNewPost: Component = () => {
                             class="relative rounded border border-inputBorder1 dark:bg-background2-DM"
                             onClick={() => resourceTypesCheckboxes()}
                         >
-                            <div class="flex items-center justify-between">
+                            <div class="flex min-h-[44px] items-center justify-between text-lg">
                                 <div
                                     id="chooseResourceType"
                                     class="bg-background flex w-11/12 flex-wrap px-1 text-ptext1 dark:bg-background2-DM dark:text-ptext2-DM"
@@ -1099,7 +1190,7 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <div
                             id="resourceTypesCheckboxes"
-                            class="hidden max-h-28 grid-cols-2 overflow-y-auto rounded bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                            class="hidden max-h-48 grid-cols-2 overflow-y-auto rounded bg-background1 pt-2 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                         >
                             <For each={resourceTypes()}>
                                 {(type) => (
@@ -1125,7 +1216,7 @@ export const CreateNewPost: Component = () => {
                             id="resourceTypeToolTip"
                         >
                             <svg
-                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                 version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -1151,7 +1242,7 @@ export const CreateNewPost: Component = () => {
                         </div>
                         <svg
                             id="isResourceTypeValid"
-                            class="ml-1 mt-0.5 hidden h-4 w-4 fill-btn1 dark:fill-btn1-DM"
+                            class="ml-1 mt-0.5 hidden h-[30px] w-[30px] fill-btn1 dark:fill-btn1-DM"
                             viewBox="0 0 12 12"
                             xmlns="http://www.w3.org/2000/svg"
                         >
@@ -1163,11 +1254,11 @@ export const CreateNewPost: Component = () => {
                 {/* Secular Implementation */}
                 <div class="mt-2 flex items-center justify-center">
                     <div class="mt-2 flex flex-grow justify-between">
-                        <div class="inline-block">
+                        <div class="inline-block text-lg">
                             {t("formLabels.secular")}?
                         </div>
-                        <div class="inline-block">
-                            <label for="secularCheckbox" class="ml-4">
+                        <div class="flex items-center">
+                            <label for="secularCheckbox" class="ml-4 text-lg">
                                 {t("formLabels.yes")}
                             </label>
                             <input
@@ -1185,7 +1276,7 @@ export const CreateNewPost: Component = () => {
                             id="secularToolTip"
                         >
                             <svg
-                                class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1 dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                 version="1.1"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 512 512"
@@ -1215,9 +1306,9 @@ export const CreateNewPost: Component = () => {
                 {/* Hosted Implementation */}
                 <Show when={isAdmin()}>
                     <div class="mt-2 flex justify-between">
-                        <p>Hosted Resource?</p>
-                        <div>
-                            <label for="isHostedCheckbox" class="ml-4">
+                        <p class="text-lg">Hosted Resource?</p>
+                        <div class="flex items-center">
+                            <label for="isHostedCheckbox" class="ml-4 text-lg">
                                 {t("formLabels.yes")}
                             </label>
                             <input
@@ -1232,7 +1323,10 @@ export const CreateNewPost: Component = () => {
                                 }}
                             />
 
-                            <label for="isNotHostedCheckbox" class="ml-4">
+                            <label
+                                for="isNotHostedCheckbox"
+                                class="ml-4 text-lg"
+                            >
                                 {t("formLabels.no")}
                             </label>
                             <input
@@ -1246,11 +1340,11 @@ export const CreateNewPost: Component = () => {
                     </div>
                 </Show>
                 <Show when={isHosted()}>
-                    <p class="">Enter a comma separated list of links</p>
+                    <p class="text-lg">Enter a comma separated list of links</p>
                     <input
                         required
                         type="text"
-                        class="flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                        class="flex min-h-[44px] w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                         id="HostedLink"
                         name="HostedLink"
                         onInput={(e) => setHostedLinks(e.target.value)}
@@ -1258,14 +1352,14 @@ export const CreateNewPost: Component = () => {
                 </Show>
 
                 {/* Price Implementation */}
-                <div class="mt-2 flex flex-col justify-evenly ">
-                    <div class="mt-2 flex justify-between">
-                        <p>
+                <div class="mt-2 flex flex-col justify-evenly">
+                    <div class="mt-2 flex justify-between pr-6">
+                        <p class="text-lg">
                             <span class="text-alert1">* </span>
                             {t("formLabels.isResourceFree")}?
                         </p>
-                        <div>
-                            <label for="isFreeCheckbox" class="ml-4">
+                        <div class="flex items-center">
+                            <label for="isFreeCheckbox" class="ml-4 text-lg">
                                 {t("formLabels.yes")}
                             </label>
                             <input
@@ -1275,8 +1369,7 @@ export const CreateNewPost: Component = () => {
                                 checked={isFree()}
                                 onChange={() => setIsFree(true)}
                             />
-
-                            <label for="isNotFreeCheckbox" class="ml-4">
+                            <label for="isNotFreeCheckbox" class="ml-4 text-lg">
                                 {t("formLabels.no")}
                             </label>
                             <input
@@ -1292,7 +1385,7 @@ export const CreateNewPost: Component = () => {
                     <Show when={!isFree()}>
                         <div class="flex items-center">
                             <div class="mt-2 flex w-full flex-col">
-                                <p>
+                                <p class="text-lg">
                                     <span class="text-alert1">* </span>
                                     {t("formLabels.pricePost")}
                                 </p>
@@ -1303,7 +1396,7 @@ export const CreateNewPost: Component = () => {
                                         type="number"
                                         min={1}
                                         step={0.01}
-                                        class="flex w-full rounded border border-inputBorder1 bg-background1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
+                                        class="flex min-h-[44px] w-full rounded border border-inputBorder1 bg-background1 px-1 text-lg text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM  dark:focus:border-highlight1-DM "
                                         id="Price"
                                         name="Price"
                                         placeholder={"0.00"}
@@ -1314,7 +1407,7 @@ export const CreateNewPost: Component = () => {
 
                                     <div class="group relative flex items-center">
                                         <svg
-                                            class="peer ml-2 h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                            class="peer ml-2 h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                             version="1.1"
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 512 512"
@@ -1342,7 +1435,7 @@ export const CreateNewPost: Component = () => {
                             </div>
                         </div>
 
-                        <div class="mt-2 flex items-start justify-center">
+                        <div class="mt-2 flex items-center justify-center">
                             <div class="w-full">
                                 <Dropdown
                                     options={taxCodeOptions}
@@ -1354,7 +1447,7 @@ export const CreateNewPost: Component = () => {
                             <div class="flex h-7 items-center justify-center">
                                 <div class="group relative flex items-center">
                                     <svg
-                                        class="peer ml-2 h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                        class="peer ml-2 h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                         version="1.1"
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 512 512"
@@ -1383,7 +1476,7 @@ export const CreateNewPost: Component = () => {
 
                         <div>
                             <a href={`/${lang}/faq`}>
-                                <p class="mt-1 text-[10px] italic text-link1 dark:text-link1-DM md:text-xs">
+                                <p class="mt-1 text-[10px] italic text-link1 dark:text-link1-DM md:text-lg">
                                     {t("pageDescriptions.taxCodeLearnMore")}
                                 </p>
                             </a>
