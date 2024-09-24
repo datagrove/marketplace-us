@@ -362,7 +362,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                     buttonId="submitReview"
                     classList="max-w-[200px]"
                     children={
-                        <div class="border-2 border-purple-400">
+                        <div class="">
                             <div class="flex">
                                 {props.imgURL?.webpUrl ? (
                                     <picture>
