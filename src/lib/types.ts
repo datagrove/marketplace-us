@@ -80,4 +80,5 @@ export interface FilterPostsParams {
     from?: number;
     to?: number;
     downloadable?: boolean;
+    subtopics?: number[];
 }

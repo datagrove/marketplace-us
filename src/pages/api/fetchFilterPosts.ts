@@ -24,6 +24,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         from,
         to,
         downloadable,
+        subtopics,
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
@@ -31,6 +32,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const postSubtopics = values.subjectCategoryInfo.subtopics;
     console.log("From: ", from);
     console.log(" To: ", to);
+    console.log(subtopics);
 
     try {
         let query = supabase
@@ -42,6 +44,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
         if (Array.isArray(subjectFilters) && subjectFilters.length !== 0) {
             query = query.overlaps("subjects", subjectFilters);
+        }
+        if (Array.isArray(subtopics) && subtopics.length !== 0) {
+            query = query.overlaps("subtopics", subtopics);
         }
         if (Array.isArray(gradeFilters) && gradeFilters.length !== 0) {
             query = query.overlaps("grades", gradeFilters);
@@ -80,6 +85,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             query = query.not("resource_urls", "is", null);
         }
 
+        console.log(query)
+
         const { data: posts, error } = await query;
 
         if (error) {
@@ -91,7 +98,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 { status: 500 }
             );
         } else {
-            console.log("Posts: ", posts);
+            console.log("Posts: ", posts.length);
         }
 
         const { data: gradeData, error: gradeError } = await supabase
@@ -113,7 +120,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         let formattedPosts: Post[] = [];
 
         if (posts && gradeData && resourceTypesData) {
-            console.log(posts);
+            // console.log(posts);
             formattedPosts = await Promise.all(
                 posts.map(async (post: Post) => {
                     post.subject = [];

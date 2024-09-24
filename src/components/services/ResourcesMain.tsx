@@ -9,17 +9,19 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import type { FilterPostsParams } from "@lib/types";
+import { debounce } from "@lib/utils/debounce";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-async function fetchPosts({
+async function postRequest({
     subjectFilters,
     gradeFilters,
     searchString,
     resourceFilters,
     secularFilter,
     downloadable,
+    subtopics,
     listing_status,
     draft_status,
     lang,
@@ -35,6 +37,7 @@ async function fetchPosts({
             resourceFilters: resourceFilters,
             secularFilter: secularFilter,
             downloadable: downloadable,
+            subtopics: subtopics,
             lang: lang,
             listing_status: listing_status,
             draft_status: draft_status,
@@ -47,10 +50,15 @@ async function fetchPosts({
     return data;
 }
 
+const fetchPosts = debounce(postRequest, 500);
+
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
+    const [subtopicFilters, setSubtopicFilters] = createSignal<Array<number>>(
+        []
+    );
     const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
     const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
         Array<number>
@@ -137,9 +145,15 @@ export const ResourcesView: Component = () => {
         localStorage.removeItem("selectedResourceTypes");
     });
 
+    let noPostsMessageTimeout: NodeJS.Timeout;
+
     const fetchPaginatedPosts = async (pageValue: number) => {
         const noPostsMessage = document.getElementById("no-posts-message");
 
+        if (noPostsMessageTimeout) {
+            noPostsMessage?.classList.add("hidden");
+            clearTimeout(noPostsMessageTimeout);
+        }
         setLoading(true);
         const from = (pageValue - 1) * postsPerPage;
         const to = from + postsPerPage - 1;
@@ -151,6 +165,7 @@ export const ResourcesView: Component = () => {
             resourceFilters: resourceTypesFilters(),
             secularFilter: secularFilters(),
             downloadable: downloadFilter(),
+            subtopics: subtopicFilters(),
             listing_status: true,
             draft_status: false,
             lang: lang,
@@ -166,7 +181,7 @@ export const ResourcesView: Component = () => {
         } else {
             if (pageValue === 1) {
                 noPostsMessage?.classList.remove("hidden"); // Show no-posts message on the first page
-                setTimeout(() => {
+                noPostsMessageTimeout = setTimeout(() => {
                     noPostsMessage?.classList.add("hidden");
                     clearAllFilters();
                 }, 3000);
@@ -242,7 +257,13 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
+    const filterPostsBySubtopic = (subtopics: Array<number>) => {
+        setSubtopicFilters(subtopics);
+        triggerNewSearch();
+    };
+
     const clearAllFilters = () => {
+        console.log("clear all filters RM triggered");
         let searchInput = document.getElementById(
             "headerSearch"
         ) as HTMLInputElement;
@@ -260,6 +281,7 @@ export const ResourcesView: Component = () => {
         setResourceTypeFilters([]);
         setSecularFilters(false);
         setDownloadFilter(false);
+        setSubtopicFilters([]);
 
         triggerNewSearch();
         setClearFilters(false);
@@ -267,6 +289,7 @@ export const ResourcesView: Component = () => {
 
     const clearSubjects = () => {
         setSubjectFilters([]);
+        setSubtopicFilters([]);
         triggerNewSearch();
     };
 
@@ -287,6 +310,11 @@ export const ResourcesView: Component = () => {
 
     const clearDownloadFilter = () => {
         setDownloadFilter(false);
+        triggerNewSearch();
+    };
+
+    const clearSubtopicsFilter = () => {
+        setSubtopicFilters([]);
         triggerNewSearch();
     };
 
@@ -311,6 +339,8 @@ export const ResourcesView: Component = () => {
                     filterPostsByResourceTypes={filterPostsByResourceTypes}
                     clearDownloadFilter={clearDownloadFilter}
                     filterPostsByDownloadable={filterPostsByDownloadable}
+                    filterPostsBySubtopic={filterPostsBySubtopic}
+                    clearSubtopics={clearSubtopicsFilter}
                 />
 
                 <Show when={screenSize() === "sm"}>
