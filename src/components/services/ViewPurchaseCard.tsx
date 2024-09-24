@@ -100,7 +100,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             )}
                         </div>
 
-                        <div class="w-full mt-3 flex justify-center">
+                        <div class="mt-3 flex w-full justify-center">
                             {/* <button class="flex justify-center text-center w-[90%] bg-btn1 dark:bg-btn1-DM rounded-full">
                                 <p class="text-xs text-ptext1">{t("buttons.reviewResource")}</p>
                             </button> */}

@@ -11,6 +11,7 @@ import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
 import type { FilterPostsParams } from "@lib/types";
 import { ReportResource } from "./ReportResource";
+import { AverageRatingStars } from "../posts/AverageRatingStars";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -558,66 +559,18 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 </div>
                             </div>
 
-                            <div id="ratings-div" class="my-1 flex flex-col">
-                                {/* TODO: Add Ratings
-                        
-                        <div id="ratings-stars-div" class="mr-2 flex w-fit">
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
+                            <div
+                                id="ratings-div-desktop"
+                                class="my-1 flex justify-start"
                             >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-                        </div> */}
-
-                                {/* TODO: fix hard coding/add back reviews */}
-                                {/* <div id="ratings-text-div" class="flex">
-                            <p class="font-bold">4.9</p>
-                            <p>(30.3K ratings)</p>
-                        </div> */}
+                                {post() !== undefined ? (
+                                    <AverageRatingStars
+                                        resourceId={post()!.id}
+                                        page={"fullCard"}
+                                    />
+                                ) : (
+                                    <div></div>
+                                )}
                             </div>
 
                             <div

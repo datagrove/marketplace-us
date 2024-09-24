@@ -15,6 +15,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
 import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
+import { AverageRatingStars } from "./AverageRatingStars";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -635,7 +636,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         id="cart-price-div"
                         class="sticky top-0 my-4 flex flex-col bg-background1 dark:bg-background1-DM"
                     >
-                        <div class="mx-1 flex justify-end">
+                        <div class="mx-1 flex flex-col items-end">
                             <Show when={post()?.price! === 0}>
                                 <p class="text-2xl font-bold">
                                     {t("messages.free")}
@@ -646,6 +647,19 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                     ${post()?.price.toFixed(2)}
                                 </p>
                             </Show>
+                            <div
+                                id="ratings-div-desktop"
+                                class="my-1 flex justify-start"
+                            >
+                                {post() !== undefined ? (
+                                    <AverageRatingStars
+                                        resourceId={post()!.id}
+                                        page={"mobileFullDetails"}
+                                    />
+                                ) : (
+                                    <div></div>
+                                )}
+                            </div>
                         </div>
 
                         <div class="my-2 flex justify-between">

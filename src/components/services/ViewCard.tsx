@@ -9,6 +9,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
+import { AverageRatingStars } from "@components/posts/AverageRatingStars";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -284,7 +285,12 @@ export const ViewCard: Component<Props> = (props) => {
                                                 {t("messages.free")}
                                             </p>
                                         </Show>
-                                        <div class="reviews-div flex w-full items-center justify-end text-end"></div>
+                                        <div class="reviews-div my-1 flex w-full items-center justify-end text-end">
+                                            <AverageRatingStars
+                                                resourceId={post.id}
+                                                page={"viewCard"}
+                                            />
+                                        </div>
                                     </div>
 
                                     <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start"></div>

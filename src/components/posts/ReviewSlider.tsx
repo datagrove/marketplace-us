@@ -1,5 +1,5 @@
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
-import type { DragOptions } from '@neodrag/solid';
+import type { DragOptions } from "@neodrag/solid";
 import {
     createEffect,
     createResource,
@@ -9,7 +9,7 @@ import {
     Show,
     type Component,
 } from "solid-js";
-import { createDraggable } from '@neodrag/solid';
+import { createDraggable } from "@neodrag/solid";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -23,16 +23,19 @@ export const ReviewSlider: Component<Props> = (props) => {
     const { draggable } = createDraggable();
 
     const options: DragOptions = {
-        axis: 'x',
-        bounds: 'parent',
+        axis: "x",
+        bounds: "parent",
         grid: [40, 40],
     };
 
-
     return (
-        <div class="w-[210px] border border-green-500 my-2 flex items-center">
-            <div use:draggable={ options } id="thumb" class="w-2 h-4 border border-gray-500 rounded-sm bg-white cursor-pointer relative"></div>
-            <div class="w-[194px] h-2 rounded-sm bg-gray-200"></div>   
+        <div class="my-2 flex w-[210px] items-center border border-green-500">
+            <div
+                use:draggable={options}
+                id="thumb"
+                class="relative h-4 w-2 cursor-pointer rounded-sm border border-gray-500 bg-white"
+            ></div>
+            <div class="h-2 w-[194px] rounded-sm bg-gray-200"></div>
         </div>
-    )
-}
+    );
+};

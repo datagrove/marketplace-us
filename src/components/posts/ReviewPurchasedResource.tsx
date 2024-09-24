@@ -57,6 +57,24 @@ async function fetchPostReviews(resourceId: string) {
     return data;
 }
 
+async function fetchUserRating(reviewerId: string, resourceId: number) {
+    const response = await fetch("/api/getUserRating", {
+        method: "POST",
+        body: JSON.stringify({
+            reviewer_id: reviewerId,
+            resource_id: resourceId,
+        }),
+    });
+    const data = await response.json();
+    if (data.redirect) {
+        window.location.href = data.redirect;
+    }
+    if (response.status === 200) {
+        console.log(data);
+    }
+    return data;
+}
+
 //Refactor this should be a prop passed all the way from the Astro page
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -71,48 +89,72 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [reviewsData, setReviewsData] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [totalRatingOfPost, setTotalRatingOfPost] = createSignal(0);
-    const [showReviewForm, setShowReviewForm] = createSignal(false);
-    const [dbReviewNum, setDbReviewNum] = createSignal<Number>(0);
+    const [showReviewForm, setShowReviewForm] = createSignal(true);
+    const [dbReviewNum, setDbReviewNum] = createSignal<number>(0);
 
     onMount(async () => {
         try {
             //Refactor: We aren't going to want to load all the reviews every time, probably need pagination
             //So we will need to do checks like "has this been reviewed by this user" on the server/API call
-            const data = await fetchPostReviews(props.resourceId.toString());
+            const data = await fetchUserRating(props.userId, props.resourceId);
             setReviewsData(data.body);
+
+            let reviewerRating = data.body[0].overall_rating;
+            setDbReviewNum(reviewerRating);
+
+            if (reviewerRating) {
+                console.log("reviewerRating was true");
+                setShowReviewForm(false);
+            }
         } catch (err) {
             console.error(err);
         } finally {
-            const arrayLength = () => reviewsData().length;
-            if (arrayLength() === 0) {
-                setShowReviewForm(true);
-                setLoading(false);
-                return;
-            }
             reviewsData().map((review: Review) => {
                 if (review.reviewer_id === props.userId) {
                     return;
-                } else {
-                    setShowReviewForm(true);
                 }
             });
-
-            // Set loading to false after fetch is complete
             setLoading(false);
-            setTotalReviews(arrayLength);
-            // Refactor: I would like to see this done on the server as part of the fetch if possible I think it will probably be faster
-            // plus we won't want to return every single review but we will need to use them all to calculate this.
-            // Might need to use a SQL query of some kind to store the average for the post in the view? Calculating this continually will be slow.
-            if (arrayLength() > 0) {
-                reviewsData().map((review: Review) => {
-                    setTotalRatingOfPost(
-                        review.overall_rating + totalRatingOfPost()
-                    );
-                });
-                setTotalRatingOfPost(totalRatingOfPost() / totalReviews());
-                setTotalRatingOfPost(Math.round(totalRatingOfPost() * 2) / 2);
-            }
         }
+
+        // try {
+        //     //Refactor: We aren't going to want to load all the reviews every time, probably need pagination
+        //     //So we will need to do checks like "has this been reviewed by this user" on the server/API call
+        //     const data = await fetchPostReviews(props.resourceId.toString());
+        //     setReviewsData(data.body);
+        // } catch (err) {
+        //     console.error(err);
+        // } finally {
+        //     const arrayLength = () => reviewsData().length;
+        //     if (arrayLength() === 0) {
+        //         setShowReviewForm(true);
+        //         setLoading(false);
+        //         return;
+        //     }
+        //     reviewsData().map((review: Review) => {
+        //         if (review.reviewer_id === props.userId) {
+        //             return;
+        //         } else {
+        //             setShowReviewForm(true);
+        //         }
+        //     });
+
+        //     // Set loading to false after fetch is complete
+        //     setLoading(false);
+        //     setTotalReviews(arrayLength);
+        //     // Refactor: I would like to see this done on the server as part of the fetch if possible I think it will probably be faster
+        //     // plus we won't want to return every single review but we will need to use them all to calculate this.
+        //     // Might need to use a SQL query of some kind to store the average for the post in the view? Calculating this continually will be slow.
+        //     if (arrayLength() > 0) {
+        //         reviewsData().map((review: Review) => {
+        //             setTotalRatingOfPost(
+        //                 review.overall_rating + totalRatingOfPost()
+        //             );
+        //         });
+        //         setTotalRatingOfPost(totalRatingOfPost() / totalReviews());
+        //         setTotalRatingOfPost(Math.round(totalRatingOfPost() * 2) / 2);
+        //     }
+        // }
     });
 
     function submit(e: SubmitEvent) {
@@ -163,10 +205,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     return (
         <div>
             <div>{loading() && <p>Loading reviews...</p>}</div>
-
-            <Show when={dbReviewNum()}>
+            <Show when={dbReviewNum() > 0}>
                 <div>{t("postLabels.yourRating")}:</div>
-                <div class="flex items-center justify-center">
+                <div class="tester flex items-center justify-center">
                     <Show
                         when={
                             dbReviewNum() === 1 ||

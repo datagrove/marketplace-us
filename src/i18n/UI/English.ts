@@ -279,6 +279,7 @@ export const English = {
     creatorProfileImage: "Creator Profile Image",
     userProfileImage: "User Profile Image",
     yourRating: "Your Rating",
+    reviews: "Reviews",
   },
 
   cartLabels: {

@@ -283,6 +283,7 @@ export const Spanish = {
     creatorProfileImage: "Imagen de Perfil del Proveedor",
     userProfileImage: "Imagen de Perfil del Usere",
     yourRating: "Tu Calificatión",
+    reviews: "Críticas",
   },
 
   cartLabels: {

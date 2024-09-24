@@ -251,6 +251,7 @@ export interface uiObject {
     creatorProfileImage: string;
     userProfileImage: string;
     yourRating: string;
+    reviews: string;
   };
 
   cartLabels: {
