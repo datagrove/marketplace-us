@@ -38,8 +38,35 @@ export const Spanish = {
     marketplacetax: "Recaudación de impuestos sobre las ventas del mercado",
   },
 
-  pageMetaTitle: {
-    home: "Inicio Learngrove, el sitio donde podes encontrar todos los recursos para aprender y enseñar "
+  pageMetaTitles: {
+    services: "Catalogo de Recursos de LearnGrove",
+    signUp: "Registrarse y abrir una cuenta en LearnGrove ",
+    login: "Iniciar sesión en la cuenta de LearnGrove",
+    home: " Pagina Inicial de LearnGrove, el sitio web donde podes encontrar todos los recursos para aprender y enseñar",
+    signIn: "Iniciar Sesion en tu Cuenta de LearnGrove ",
+    createUserAccount: "Crear Perfil de Usuario en LearnGrove",
+    editUserAccount: "Editar tu Perfil de Usuario en LearnGrove",
+    viewUserAccount: "Mi Perfil de Usuario en Learngrove",
+    createPost: "Listar Recursos en LearnGrove",
+    createCreatorAccount: "Crear Perfil de Creador en LearnGrove",
+    editCreatorAccount: " Editar Perfil de Creador en LearnGrove",
+    viewCreatorAccount: " Mi Perfil de Creador en LearnGrove ",
+    userViewCreatorAccount: "Perfil del Creador ",
+    page404: "404 - Pagina No Encontrada",
+    requestPasswordReset: "Requerir una Nueva Contraseña para mi cuenta de LearnGrove",
+    resetPassword: "Requerir una Nueva Contraseña para mi cuenta de LearnGrove",
+    terms: "Terminos Y Condiciones de nuestro sitio Learngrove ",
+    privacy: " Política de Privacidad de LearnGrove",
+    acceptableUse: "Uso Aceptable de nuestro sitio LearnGrove",
+    about: "Sobre Nosotros, el equipo de LearnGrove",
+    impact: "Impacto",
+    fullPost: "Mirar el Post completo",
+    offline: "Fuera de Linea",
+    faq: "Frequently Asked Questions Preguntas Frecuentes dentro de LearnGrove",
+    community: "Guia de la Comunidad de LearnGrove",
+    sellerFeePayout: "Seller Fees and Payout Rates ",
+    copyright: "Política de derechos de autor y marcas comerciales de LearnGrove",
+    marketplacetax: "Recaudación de impuestos sobre las ventas de Recursos en LearnGrove",
   },
 
   pageDescriptions: {
