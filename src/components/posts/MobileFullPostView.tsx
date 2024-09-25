@@ -2,19 +2,13 @@ import type { Component } from "solid-js";
 import type { FilterPostsParams, Post } from "@lib/types";
 import { createSignal, createEffect, Show, For, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { DeletePostButton } from "../posts/DeletePostButton";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
-import stripe from "@lib/stripe";
-import { EditPost } from "./EditPost";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
-import { sortResourceTypes } from "@lib/utils/resourceSort";
-import { downloadPostImage, downloadUserImage } from "@lib/imageHelper";
+import { CreateEditPost } from "@components/posts/CreateEditPost";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -903,7 +897,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
             </Show>
             <Show when={editRender() && post()}>
                 <div class="p-2">
-                    <EditPost post={post()!} />
+                    <CreateEditPost mode="Edit" post={post()!} />
                 </div>
             </Show>
         </>

@@ -6,7 +6,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-import { EditPost } from "./EditPost";
+import { CreateEditPost } from "@components/posts/CreateEditPost";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
 import type { FilterPostsParams } from "@lib/types";
@@ -378,9 +378,9 @@ export const ViewFullPost: Component<Props> = (props) => {
     // console.log(postImages());
 
     return (
-        <div>
+        <div class="flex w-full justify-center">
             <Show when={!editRender()}>
-                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
+                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-3/4">
                     <div
                         id="image-title-details-cart-div"
                         class="grid grid-cols-7"
@@ -1054,7 +1054,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <EditPost post={post()!} />
+                <div class="flex w-full justify-center">
+                    <CreateEditPost mode="Edit" post={post()!} />
+                </div>
             </Show>
         </div>
     );

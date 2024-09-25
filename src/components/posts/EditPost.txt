@@ -550,7 +550,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     return (
-        <div>
+        <div class="w-2/3">
             <form onSubmit={submit}>
                 <label for="Title" class="text-ptext1 dark:text-ptext1-DM">
                     {t("formLabels.title")}
