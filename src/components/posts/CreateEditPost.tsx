@@ -414,7 +414,6 @@ export const CreateEditPost: Component<Props> = (props) => {
                             ? stripeProduct.tax_code.toString()
                             : ""
                     );
-                    console.log(taxCodeOptions.map((option) => option));
                     setSelectedTaxCode(
                         taxCodeOptions.find(
                             (option) => option.value === stripeProduct.tax_code
@@ -561,19 +560,6 @@ export const CreateEditPost: Component<Props> = (props) => {
         console.log("allRequirementsMet: ", allRequirementsMet());
 
         let title = document.getElementById("Title");
-
-        console.log("mode: ", props.mode);
-        console.log("title: ", title?.nodeValue);
-        console.log("description: ", description());
-        console.log("subjects: ", subjectPick());
-        console.log("grades: ", gradePick());
-        console.log("resourceTypes: ", resourceTypesPick());
-        console.log("isFree: ", isFree());
-        console.log("uploadFinished: ", uploadFinished());
-        console.log("imageUrl: ", imageUrl());
-        console.log("Price: ", price());
-        console.log("selectedTaxCode: ", selectedTaxCode());
-        console.log("resource Links: ", resourceLinks());
 
         if (
             //Create free resource
@@ -1041,7 +1027,7 @@ export const CreateEditPost: Component<Props> = (props) => {
     }
 
     return (
-        <div>
+        <div class="w-full px-2 md:w-auto md:px-0">
             <form onSubmit={submit}>
                 <div class="text-center text-xs">
                     <span class="text-alert1">* </span>
@@ -1127,7 +1113,7 @@ export const CreateEditPost: Component<Props> = (props) => {
                     </div>
                     <div class="w-full">
                         <PostImage
-                            url={imageUrl()[imageUrl().length - 1]}
+                            url={imageUrl()}
                             size={96}
                             onUpload={(e: Event, url: string) => {
                                 setImageUrl([...imageUrl(), url]);
@@ -1765,8 +1751,10 @@ export const CreateEditPost: Component<Props> = (props) => {
                             </div>
                         </div>
 
-                        <div class="mt-2 flex items-center justify-center">
-                            <div class="w-full">
+                        <div
+                            class={`mt-2 flex items-center justify-center ${props.mode === "Edit" ? "px-4 md:px-0" : ""}`}
+                        >
+                            <div class={`w-full pr-2`}>
                                 <Dropdown
                                     options={taxCodeOptions}
                                     selectedOption={selectedTaxCode()!}
@@ -1774,10 +1762,10 @@ export const CreateEditPost: Component<Props> = (props) => {
                                 />
                             </div>
 
-                            <div class="flex h-7 items-center justify-center">
+                            <div class="flex items-center justify-center">
                                 <div class="group relative flex items-center">
                                     <svg
-                                        class="peer ml-2 h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
+                                        class="peer h-[30px] w-[30px] rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                         version="1.1"
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 512 512"
@@ -1806,7 +1794,7 @@ export const CreateEditPost: Component<Props> = (props) => {
 
                         <div>
                             <a href={`/${lang}/faq`}>
-                                <p class="mt-1 text-[10px] italic text-link1 dark:text-link1-DM md:text-lg">
+                                <p class="mt-1 text-[20px] italic text-link1 dark:text-link1-DM md:text-lg">
                                     {t("pageDescriptions.taxCodeLearnMore")}
                                 </p>
                             </a>

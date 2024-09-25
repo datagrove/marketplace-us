@@ -510,7 +510,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                     >
                         <Show when={postImages().length > 0}>
                             <Show when={postImages().length === 1}>
-                                <div class="relative mt-2 flex h-[375px] w-[375px] items-center justify-center rounded p-1">
+                                <div class="relative mt-2 flex h-[375px] w-[375px] max-w-full items-center justify-center rounded p-1">
                                     <picture>
                                         <source
                                             srcset={postImages()[0].webpUrl}
@@ -519,7 +519,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                         <img
                                             src={postImages()[0].jpegUrl}
                                             id="one-image"
-                                            class="flex max-h-[370px] max-w-full items-center justify-center rounded dark:bg-background1"
+                                            class="flex max-h-[370px] max-w-full items-center justify-center rounded object-contain dark:bg-background1"
                                             alt={`${t("postLabels.image")}`}
                                         />
                                     </picture>
@@ -543,7 +543,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                         <img
                                             src={postImages()[0].jpegUrl}
                                             id="mobile-main-image"
-                                            class="h-[370px] max-w-[370px] rounded dark:bg-background1"
+                                            class="h-[370px] max-w-[370px] rounded object-contain dark:bg-background1"
                                             alt={`${t("postLabels.image")}`}
                                         />
                                     </picture>
@@ -896,7 +896,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <div class="p-2">
+                <div class="flex w-full justify-center">
                     <CreateEditPost mode="Edit" post={post()!} />
                 </div>
             </Show>

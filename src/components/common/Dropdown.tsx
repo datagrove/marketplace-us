@@ -33,9 +33,9 @@ const Dropdown: Component<Props> = (Props: Props) => {
                     setIsOpen(!isOpen());
                 }}
             >
-                <div class="ml-1 flex min-h-[44px] items-center text-lg">
+                <div class="ml-1 flex min-h-[44px] items-center overflow-hidden text-lg">
                     {/* TODO: This should take a prop to define whether it is required or not and what label to use */}
-                    <span class="text-alert1">* </span>
+                    <div class="text-alert1">* </div>
                     {Props.selectedOption ||
                         t("formLabels.chooseTaxCode") ||
                         t("formLabels.dropdownDefault")}
