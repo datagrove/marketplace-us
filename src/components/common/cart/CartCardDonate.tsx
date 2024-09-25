@@ -31,11 +31,12 @@ export const CartCardDonate: Component<Props> = (props) => {
                         <li class=" w-[90%] border-b border-border1 border-opacity-50 py-4 dark:border-border1-DM">
                             <div class="mb-2 box-content flex w-full flex-col items-center justify-center md:h-full md:flex-row  md:items-start md:justify-start">
                                 <div class="flex h-full w-full items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM md:mr-2 md:h-full md:w-48">
+                                    {/* Refactor: use picture element and webp images? */}
                                     <img
                                         src={LearnGroveCommunity.src}
                                         // TODO Internationalize
                                         alt="Build Your LearnGrove"
-                                        class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                        class="h-44 w-44 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
                                     />
                                 </div>
 
@@ -87,19 +88,6 @@ export const CartCardDonate: Component<Props> = (props) => {
                                             >
                                                 $50
                                             </button>
-                                            {/* <div class="inline-block">
-                                        <img
-                                            src={
-                                                "src/assets/LearnGroveLogoBWNoText.svg"
-                                            }
-                                            // TODO Internationalize
-                                            alt="LearnGrove Logo"
-                                            class="mr-2 h-8 w-8 rounded-full bg-background1 object-cover dark:bg-icon1-DM"
-                                        />
-                                    </div>
-                                    <p class="row-span-1 mb-1 inline-block overflow-hidden text-base text-ptext1 dark:text-ptext1-DM">
-                                        LearnGrove
-                                    </p> */}
                                         </div>
                                         <div class="col-span-4 col-start-1 row-span-2 row-start-3 flex items-center">
                                             <p class=" prose mb-2 line-clamp-3 max-h-[60px] overflow-hidden text-sm text-ptext1 dark:prose-invert dark:text-ptext1-DM">

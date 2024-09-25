@@ -9,59 +9,25 @@ import {
     Suspense,
 } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import type { AuthSession } from "@supabase/supabase-js";
-import UserImage from "./UserImage";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
-import { ViewCard } from "@components/services/ViewCard";
-import stripe from "@lib/stripe";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
 import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
+import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
-
-async function postFormData(formData: FormData) {
-    const response = await fetch("/api/userProfileEdit", {
-        method: "POST",
-        body: formData,
-    });
-    const data = await response.json();
-    //Checks the API response for the redirect and sends them to the redirect page if there is one
-    if (data.redirect) {
-        alert(data.message);
-        window.location.href = `/${lang}` + data.redirect;
-    }
-    return data;
-}
-
-const { data: User, error: UserError } = await supabase.auth.getSession();
-
-if (UserError) {
-    console.log("UserError: ", UserError.code + " " + UserError.message);
-}
-
 interface Props {
     user: User | null;
+    session: AuthSession | null;
     userImage: string | undefined;
     editMode: boolean;
     enableEditMode: () => void;
 }
 
 export const UserProfileViewMobile: Component<Props> = (props: Props) => {
-    // const [user, setUser] = createSignal<User>();
-    // const [session, setSession] = createSignal<AuthSession | null>(null);
-    // const [userImage, setUserImage] = createSignal<string>();
-    // const [editMode, setEditMode] = createSignal<boolean>(false); //TODO Set back to false
-    const [imageUrl, setImageUrl] = createSignal<string | null>(null);
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
     const [tabSelected, setTabSelected] = createSignal<string>("purchases");
 
     const resetPassword = () => {
@@ -393,7 +359,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
 
                 <Show when={tabSelected() === "purchases"}>
                     <div>
-                        <ViewUserPurchases />
+                        <ViewUserPurchases session={props.session} />
                     </div>
                 </Show>
 

@@ -32,6 +32,7 @@ export const SearchBar: Component = () => {
             searchString() !== "null"
         ) {
             localStorage.setItem("searchString", searchString());
+            console.log("Set Search to Local Storage", searchString());
         }
 
         // console.log(window.location.href)
@@ -67,13 +68,11 @@ export const SearchBar: Component = () => {
     return (
         <div class="search-form mx-4 mt-2 flex h-full w-full items-center justify-center">
             <div class="form flex h-full w-full items-center justify-between rounded-full border border-border1 px-1 text-ptext1  focus:border-2 focus:border-highlight1 focus:outline-none dark:border-border1-DM dark:focus:border-highlight1-DM">
-                <label class="sr-only" for="search">
-                    {t("formLabels.search")}
-                </label>
                 <input
                     type="text"
                     name="query"
                     id="headerSearch"
+                    aria-label={t("formLabels.search")}
                     class="ml-2 h-full w-full rounded-full bg-background1 py-3 dark:bg-background1-DM"
                     value={searchString() ? searchString() : ""}
                     oninput={(e) => setSearchString(e.target.value)}

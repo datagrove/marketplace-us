@@ -1,19 +1,9 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import supabase from "../../lib/supabaseClient";
-import type { AuthSession } from "@supabase/supabase-js";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import placeholderImg from "../../assets/userImagePlaceholder.svg";
-import dogLogo from "../../assets/dog-4-svgrepo-com (2).svg";
-import { windowPersistentEvents } from "@nanostores/persistent";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 const xUrl = "https://twitter.com/intent/tweet?text=Check%20this%20out!%20";
 const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
@@ -83,10 +73,8 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
 
         window.open(
             whatsappUrl +
-            // TODO Update to use SITE
-                encodeURIComponent(
-                    `learngrove.co/${lang}/posts/${props.id}`
-                ),
+                // TODO Update to use SITE
+                encodeURIComponent(`learngrove.co/${lang}/posts/${props.id}`),
             windowOptions
         );
     }
@@ -146,10 +134,10 @@ export const SocialMediaShares: Component<Partial<Post>> = (props) => {
                 </h1>
 
                 <div class="flex items-center pb-4">
-                    <img
+                    {/* <img
                         src={dogLogo.src}
                         class="mr-2 h-16 w-16 rounded border border-border2 bg-background1 p-1 text-icon2 dark:border-border2-DM dark:bg-border1-DM dark:text-icon2-DM"
-                    />
+                    /> */}
                     <p class="text-ptext2 dark:text-ptext2-DM">{props.title}</p>
                 </div>
             </div>

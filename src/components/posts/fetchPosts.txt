@@ -22,7 +22,8 @@ export async function fetchFilteredPosts(
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .eq("listing_status", true);
+            .eq("listing_status", true)
+            .eq("draft_status", false);
         if (subjectFilters.length !== 0) {
             query = query.overlaps("product_subject", subjectFilters);
         }
@@ -34,6 +35,9 @@ export async function fetchFilteredPosts(
         }
         if (secularFilter === true) {
           query = query.is("secular", true)
+        }
+        if (resourceFilters.length !== 0) {
+            query = query.overlaps("resource_types", resourceFilters);
         }
 
         try {
@@ -69,7 +73,8 @@ export async function fetchAllPosts() {
             .from("sellerposts")
             .select("*")
             .order("id", { ascending: false })
-            .eq("listing_status", true);
+            .eq("listing_status", true)
+            .eq("draft_status", false);
 
         if (error) {
             console.log("supabase error: " + error.message);

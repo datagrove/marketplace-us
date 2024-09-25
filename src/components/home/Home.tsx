@@ -1,137 +1,102 @@
-import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
-import { createEffect, createSignal, Show, onMount } from "solid-js";
+import type { Component, JSXElement } from "solid-js";
+import type { FilterPostsParams, Post } from "@lib/types";
+import { createSignal, Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import { HomeStickyFilters } from "./HomeStickyFilters";
 import { HomeCard } from "@components/home/HomeCard";
-import { HomeSubjectCarousel } from "@components/home/HomeSubjectCarousel";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
-import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import stripe from "@lib/stripe";
-import * as allFilters from "../posts/fetchPosts";
-import { IconH1 } from "@tabler/icons-solidjs";
+import { useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
-const values = ui[lang] as uiObject;
-const productSubjects = values.subjectCategoryInfo.subjects;
+// const lang = getLangFromUrl(new URL(window.location.href));
 
 interface Props {
-    id: string | undefined;
+    lang: "en" | "es" | "fr";
+    stickyFilters: JSXElement;
+    subjectCarousel: JSXElement;
 }
 
-function redirectToResourcesPage() {
-    window.location.href = `/${lang}/resources`;
+async function fetchPosts({
+    lang,
+    draft_status,
+    listing_status,
+    orderAscending,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            lang: lang,
+            limit: 8,
+            draft_status: draft_status,
+            listing_status: listing_status,
+            orderAscending: orderAscending,
+        }),
+    });
+    const data = await response.json();
+
+    if (response.status !== 200) {
+        alert(data.message);
+    }
+
+    return data;
 }
 
-export const Home: Component = () => {
-    const [posts, setPosts] = createSignal<Array<Post>>([]);
-    const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
+export const Home: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
     const [popularPosts, setPopularPosts] = createSignal<Array<Post>>([]);
     const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
-    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
-    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-    const [resourceTypeFilters, setResourceTypeFilters] = createSignal<
-        Array<string>
-    >([]);
-    const [fileTypeFilters, setFileTypeFilters] = createSignal<Array<string>>(
-        []
-    );
-    const [standardsFilters, setStandardsFilters] = createSignal<string>("");
-
-    let test: any;
 
     onMount(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .order("id", { ascending: true })
-            .eq("listing_status", true)
-            .limit(8);
-        if (!data) {
+        const res = await fetchPosts({
+            lang: lang(),
+            listing_status: true,
+            draft_status: false,
+        });
+
+        if (
+            res.body === null ||
+            res.body === undefined ||
+            res.body.length < 1
+        ) {
             alert("No posts available.");
         }
-        if (error) {
-            console.log("supabase error: " + error.message);
+
+        setPopularPosts(res.body);
+        console.log("Pop posts", popularPosts());
+
+        const newRes = await fetchPosts({
+            lang: lang(),
+            orderAscending: true,
+            listing_status: true,
+            draft_status: false,
+        });
+
+        if (
+            newRes.body === null ||
+            newRes.body === undefined ||
+            newRes.body.length < 1
+        ) {
+            alert("No posts available.");
         } else {
-            const newItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productSubjects.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            setPopularPosts(newItems);
-            console.log(popularPosts());
-        }
-    });
-
-    createEffect(async () => {
-        const { data, error } = await supabase
-            .from("sellerposts")
-            .select("*")
-            .eq("listing_status", true)
-            .order("id", { ascending: false })
-            .limit(8);
-
-        if (!data) {
-            alert("No posts available");
-        }
-
-        if (error) {
-            console.error("supabase error: " + error.message);
-        } else {
-            const popItems = await Promise.all(
-                data?.map(async (item) => {
-                    item.subject = [];
-                    productSubjects.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    if (item.price_id !== null) {
-                        const priceData = await stripe.prices.retrieve(
-                            item.price_id
-                        );
-                        item.price = priceData.unit_amount! / 100;
-                    }
-                    return item;
-                })
-            );
-            setNewPosts(popItems);
+            setNewPosts(newRes.body);
+            console.log("New Posts", newPosts());
         }
     });
 
     const screenSize = useStore(windowSize);
 
+    const t = useTranslations(props.lang);
+    function redirectToResourcesPage() {
+        window.location.href = `/${language}/resources`;
+    }
+
+    const language = lang();
+
     return (
         <div class="">
-            <HomeStickyFilters />
+            {props.stickyFilters}
 
             <div id="home-scrolling" class="scroll">
-                <a href={`/${lang}/creator/createaccount`}>
+                <a href={`/${language}/creator/createaccount`}>
                     <div
                         id="header-image"
                         class="flex h-24 items-center justify-center rounded-md bg-gradient-to-r from-highlight1 dark:from-[#3E8E3E] dark:via-highlight1-DM dark:to-[#3E8E3E]"
@@ -155,7 +120,7 @@ export const Home: Component = () => {
                             <h1 class="text-ptext1 dark:text-ptext1 md:text-2xl">
                                 {t("homePageText.becomeCreator")}
                             </h1>
-                            <p class="text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
+                            <p class="text-center text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
                                 {t("homePageText.clickToBecomeCreator")}
                             </p>
                         </div>
@@ -164,7 +129,7 @@ export const Home: Component = () => {
 
                 <div class="flex justify-center md:hidden">
                     <button
-                        class="mb-4 mt-6 rounded-full bg-btn2 px-16 py-1 shadow dark:bg-btn2-DM"
+                        class="btn-primary mb-2 mt-3 min-h-[44px] min-w-[44px] px-16 py-1"
                         onClick={redirectToResourcesPage}
                     >
                         {t("buttons.browseCatalog")}
@@ -172,22 +137,22 @@ export const Home: Component = () => {
                 </div>
 
                 <div id="popular-resources" class="my-1 w-full md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.popularResources")}
-                    </h3>
-                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
-                        <HomeCard posts={popularPosts()} />
+                    </div>
+                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
+                        <HomeCard posts={popularPosts()} lang={lang()} />
                     </div>
                 </div>
 
                 <div id="home-subject-filter" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopBySubject")}
-                    </h3>
-                    <HomeSubjectCarousel />
+                    </div>
+                    {props.subjectCarousel}
                 </div>
 
-                <a href={`/${lang}/about`}>
+                <a href={`/${language}/about`}>
                     <div
                         id="home-image-1"
                         class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM dark:via-black dark:to-inputBorder1-DM"
@@ -202,19 +167,19 @@ export const Home: Component = () => {
                 </a>
 
                 <div id="new-resources" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.newResources")}
-                    </h3>
-                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-scroll md:h-auto md:overflow-scroll">
-                        <HomeCard posts={newPosts()} />
+                    </div>
+                    <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
+                        <HomeCard posts={newPosts()} lang={lang()} />
                     </div>
                 </div>
 
                 <div id="home-grade-filter" class="md:mb-8">
-                    <h3 class="py-1 text-center text-lg md:my-4 md:text-2xl">
+                    <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
                         {t("pageTitles.shopByGrade")}
-                    </h3>
-                    <HomeGradeCarousel />
+                    </div>
+                    <HomeGradeCarousel lang={lang()} />
                 </div>
 
                 <a href="https://forms.gle/e1snHR7pnAFRTa1MA" target="_blank">
@@ -222,9 +187,9 @@ export const Home: Component = () => {
                         id="home-image-1"
                         class="my-8 flex h-36 flex-col items-center justify-center rounded-md bg-gradient-to-r from-inputBorder1 dark:from-inputBorder1-DM"
                     >
-                        <h1 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
+                        <h2 class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM md:text-4xl">
                             {t("homePageText.contribute")}
-                        </h1>
+                        </h2>
                         <p class="mt-4 text-center text-sm italic text-ptext1 dark:text-ptext1-DM md:text-lg">
                             {t("homePageText.clickToContribute")}
                         </p>

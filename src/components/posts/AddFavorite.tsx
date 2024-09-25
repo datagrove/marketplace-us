@@ -146,12 +146,15 @@ export const FavoriteButton: Component<Props> = (props) => {
         }
     }
 
+    //REFACTOR: Improve the aria label for the favorites button maybe with the post title?
     return (
         <div class="relative z-20 w-full">
             <Show when={!isFavorited()}>
                 <button
                     onclick={(e) => addToFavorites(e)}
                     class="absolute right-0 top-0"
+                    id="addFavoriteBtn"
+                    aria-label={`Add to Favorites ${props.id}`}
                 >
                     <svg
                         fill="none"
@@ -193,6 +196,8 @@ export const FavoriteButton: Component<Props> = (props) => {
                 <button
                     onclick={(e) => removeFromFavorites(e)}
                     class="absolute right-0 top-0"
+                    id="removeFavoriteBtn"
+                    aria-label="Remove from Favorites"
                 >
                     <svg
                         fill="none"

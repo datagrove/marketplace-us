@@ -10,15 +10,10 @@ import {
 } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
-import UserImage from "./UserImage";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
-import { ViewCard } from "@components/services/ViewCard";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
-import stripe from "@lib/stripe";
 import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
@@ -26,10 +21,6 @@ import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 async function postFormData(formData: FormData) {
     const response = await fetch("/api/userProfileEdit", {
@@ -60,7 +51,6 @@ export const UserProfileView: Component = () => {
     const screenSize = useStore(windowSize);
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
     const [tabSelected, setTabSelected] = createSignal<string>("purchases");
 
     onMount(async () => {
@@ -225,6 +215,7 @@ export const UserProfileView: Component = () => {
                         <Show when={screenSize() === "sm"}>
                             <UserProfileViewMobile
                                 user={user() ? user()! : null}
+                                session={session()}
                                 editMode={editMode()}
                                 enableEditMode={enableEditMode}
                                 userImage={userImage()}
@@ -497,7 +488,9 @@ export const UserProfileView: Component = () => {
                                     {/* <Show when={ purchasedItems() }> */}
                                     <div>
                                         {/* <ViewCard posts={purchasedItems()} /> */}
-                                        <ViewUserPurchases />
+                                        <ViewUserPurchases
+                                            session={session()}
+                                        />
                                     </div>
                                     {/* </Show>
 

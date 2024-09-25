@@ -5,31 +5,40 @@ import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
+import type { PurchasedPost } from "@lib/types";
+import { downloadPostImage } from "@lib/imageHelper";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 interface Props {
     // Define the type for the filterPosts prop
-    posts: Array<any>;
+    posts: Array<PurchasedPost>;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewPurchaseCard: Component<Props> = (props) => {
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
+    const [purchasedItems, setPurchasedItems] = createSignal<
+        Array<PurchasedPost>
+    >([]);
     const [review, setReview] = createSignal<string>("");
+    const [session, setSession] = createSignal<AuthSession | null>(null);
 
+    onMount(async () => {
+        setSession(User?.session);
+    });
     console.log("Card Purchases");
     console.log(props.posts);
 
     createEffect(async () => {
         if (props.posts) {
             const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
+                props.posts.map(async (post: PurchasedPost) => {
                     post.image_urls
-                        ? (post.image_url = await downloadImage(
-                              post.image_urls.split(",")[0]
+                        ? (post.image_url = await downloadPostImage(
+                              post.image_urls[0]
                           ))
                         : (post.image_url = undefined);
                     return post;
@@ -37,6 +46,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
             );
 
             setPurchasedItems(updatedPosts);
+            console.log(updatedPosts);
         }
     });
 
@@ -53,23 +63,6 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
         alert(t("messages.comingSoon"));
     };
 
-    const downloadImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
     return (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {purchasedItems().map((post) => (
@@ -78,15 +71,21 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                     <div class="purchased-item-image-reviews w-[110px]">
                         <div class="purchased-item-image w-fit">
                             {post.image_url ? (
-                                <img
-                                    src={post.image_url}
-                                    alt={
-                                        post.image_urls?.split(",")[0]
-                                            ? "User Image"
-                                            : "No image"
-                                    }
-                                    class="h-full w-full rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                />
+                                <picture>
+                                    <source
+                                        srcset={post.image_url.webpUrl}
+                                        type="image/webp"
+                                    />
+                                    <img
+                                        src={post.image_url.jpegUrl}
+                                        alt={
+                                            post.image_urls?.[0]
+                                                ? "User Image"
+                                                : "No image"
+                                        }
+                                        class="h-full w-full rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                    />
+                                </picture>
                             ) : (
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -101,45 +100,23 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             )}
                         </div>
 
-                        <div
-                            id="user-profile-ratings-div"
-                            class="purchased-item-stars flex w-full items-center justify-between"
-                        >
-                            <span
-                                id="user-rating-5"
-                                class="flex items-center justify-center"
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-4"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-3"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-2"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-1"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
+                        <div class="mt-3 flex w-full justify-center">
+                            {/* <button class="flex justify-center text-center w-[90%] bg-btn1 dark:bg-btn1-DM rounded-full">
+                                <p class="text-xs text-ptext1">{t("buttons.reviewResource")}</p>
+                            </button> */}
+                            <div>
+                                <ReviewPurchasedResource
+                                    resourceId={post.id}
+                                    userId={session()?.user.id!}
+                                    access={session()?.access_token}
+                                    ref={session()?.refresh_token!}
+                                    imgURL={post.image_url}
+                                    postTitle={post.title}
+                                    postCreator={post.seller_name}
+                                    purchaseDate={post.purchaseDate}
+                                    createdDate={post.created_at}
+                                />
+                            </div>
                         </div>
                     </div>
 
@@ -153,7 +130,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     {post.seller_name}
                                 </p>
                             </a>
-                            <button
+                            {/* <button
                                 class="dark:btn1-DM mr-0.5 flex w-1/3 items-center justify-center rounded-full bg-btn1 text-ptext2 dark:text-ptext2-DM"
                                 onClick={follow}
                             >
@@ -194,7 +171,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                 <p class="mx-0.5 text-[10px]">
                                     {t("buttons.follow")}
                                 </p>
-                            </button>
+                            </button> */}
                         </div>
 
                         <div class="mb-2 mt-4">

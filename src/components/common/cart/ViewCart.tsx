@@ -26,7 +26,6 @@ const t = useTranslations(lang);
 
 export const CartView = () => {
     const [totalItems, setTotalItems] = createSignal(0);
-    const [itemsDetails, setItemsDetails] = createSignal<Post[]>([]);
     const [cartTotal, setCartTotal] = createSignal(0);
     const [donation, setDonation] = createSignal(0);
     const screenSize = useStore(windowSize);
@@ -75,7 +74,6 @@ export const CartView = () => {
             let total = 0;
             {
                 console.log("items in cart: " + items.length);
-                console.log("Item Details: " + itemsDetails());
             }
             items.forEach((item: Post) => {
                 if (item.price) {

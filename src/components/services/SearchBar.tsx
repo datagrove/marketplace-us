@@ -11,25 +11,36 @@ const t = useTranslations(lang);
 interface Props {
     // Define the type for the filterPosts prop
     search: (searchString: string) => void;
+    clearFilters: boolean;
 }
 
 export const SearchBar: Component<Props> = (props) => {
     const [searchString, setSearchString] = createSignal<string>("");
 
-    onMount(() => {
-        if (localStorage.getItem("searchString")) {
-            setSearchString(localStorage.getItem("searchString")!);
-        }
-        // window.addEventListener("storage", onStorageChange);
-        // window.addEventListener("storage", logEvent);
-    });
+    // onMount(() => {
+    //     if (localStorage.getItem("searchString")) {
+    //         setSearchString(localStorage.getItem("searchString")!);
+    //         console.log("Set SearchBar to Local Storage", searchString());
+    //     }
+    //     // window.addEventListener("storage", onStorageChange);
+    //     // window.addEventListener("storage", logEvent);
+    // });
 
     const clickSearch = () => {
-        if (searchString() !== null && searchString() !== "") {
-            localStorage.setItem("searchString", searchString());
+        const searchInput = localStorage.getItem("searchString");
+        if (searchInput !== null) {
+            setSearchString(searchInput);
+            console.log("Sending Search to Resources Main", searchString());
             props.search(searchString());
         }
     };
+
+    createEffect(() => {
+        if (props.clearFilters) {
+            setSearchString("");
+            localStorage.removeItem("searchString");
+        }
+    });
 
     // function onStorageChange(event: StorageEvent) {
     //     if (event.key === "searchString") {

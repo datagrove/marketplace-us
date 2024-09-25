@@ -10,6 +10,7 @@ type ModalProps = {
     buttonContent: JSX.Element;
     heading: HeadingProps["heading"];
     headingLevel?: HeadingProps["headingLevel"];
+    classList?: string;
 };
 
 const Modal: Component<ModalProps> = (props) => {
@@ -70,6 +71,7 @@ const Modal: Component<ModalProps> = (props) => {
         e.stopPropagation();
         setIsOpen(false);
     }
+    
     return (
         <>
             <button

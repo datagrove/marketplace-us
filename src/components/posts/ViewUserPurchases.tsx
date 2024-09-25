@@ -8,6 +8,8 @@ import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
 import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource.tsx";
+import type { PurchasedPost } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -15,23 +17,19 @@ const t = useTranslations(lang);
 const values = ui[lang] as uiObject;
 const productCategories = values.subjectCategoryInfo.subjects;
 
-const { data: User, error: UserError } = await supabase.auth.getSession();
+interface Props {
+    session: AuthSession | null;
+}
 
-export const ViewUserPurchases: Component = () => {
+export const ViewUserPurchases: Component<Props> = (props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [user, setUser] = createSignal<User>();
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<any>>([]);
+    const [purchasedItems, setPurchasedItems] = createSignal<
+        Array<PurchasedPost>
+    >([]);
     const [loading, setLoading] = createSignal<boolean>(true);
 
-    if (UserError) {
-        console.log("User Error: " + UserError.message);
-    } else {
-        setSession(User.session);
-    }
-
     onMount(async () => {
-        setSession(User?.session);
-        await fetchUser(User?.session?.user.id!);
+        setSession(props.session);
         await getPurchasedItems();
     });
 
@@ -83,6 +81,7 @@ export const ViewUserPurchases: Component = () => {
 
         const products = orderDetails?.map((item) => item.product_id);
         if (products !== undefined) {
+            //Refactor: Consider making an API call for all the calls to seller_post
             const { data: productsInfo, error: productsInfoError } =
                 await supabase
                     .from("seller_post")
@@ -157,7 +156,7 @@ export const ViewUserPurchases: Component = () => {
                 console.log(itemsOrdered);
                 console.log(newItems);
 
-                const newItemsDates = newItems.map((item) => {
+                const newItemsDates: PurchasedPost[] = newItems.map((item) => {
                     const orderInfo = itemsOrdered?.find(
                         (order) => order.product_id === item.id
                     );
@@ -179,32 +178,13 @@ export const ViewUserPurchases: Component = () => {
         }
     };
 
-    const fetchUser = async (user_id: string) => {
-        try {
-            const { data, error } = await supabase
-                .from("user_view")
-                .select("*")
-                .eq("user_id", user_id);
-
-            if (error) {
-                console.log(error);
-            } else if (data[0] === undefined) {
-                alert(t("messages.noUser")); //TODO: Change alert message
-                location.href = `/${lang}`;
-            } else {
-                console.log(data);
-                setUser(data[0]);
-                console.log(user());
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     return (
         <div>
             <div id="Cards">
-                <Show when={!loading()} fallback={<div>{t("buttons.loading")}</div>}>
+                <Show
+                    when={!loading()}
+                    fallback={<div>{t("buttons.loading")}</div>}
+                >
                     <Show when={purchasedItems().length > 0}>
                         <ViewPurchaseCard posts={purchasedItems()} />
                     </Show>

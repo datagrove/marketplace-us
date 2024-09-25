@@ -17,6 +17,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { TinyComp } from "./TinyComp";
 import { createStore } from "solid-js/store";
 import type { Post } from "@lib/types";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -24,6 +25,7 @@ const values = ui[lang] as uiObject;
 
 //get the categories from the language files so they translate with changes in the language picker
 const productCategoryData = values.subjectCategoryInfo;
+const subtopicData = values.subjectCategoryInfo.subtopics;
 
 let uploadFilesRef: any;
 
@@ -34,7 +36,7 @@ async function updateFormData(formData: FormData) {
         body: formData,
     });
     const data = await response.json();
-    console.log(response, "response");
+    console.log("data", data);
     if (response.status === 200) {
         alert(data.message);
         location.reload();
@@ -51,18 +53,27 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [response] = createResource(formData, updateFormData);
     const [imageUrl, setImageUrl] = createSignal<Array<string>>([]);
     const [imageLength, setImageLength] = createSignal(0);
-    const [postImages, setPostImages] = createSignal<Array<string>>([]);
     //prettier-ignore
     const [mode, setMode] = createStore({theme: localStorage.getItem("theme"),});
     //prettier-ignore
     const [subjects, setSubjects] = createSignal<Array<{id: number; subject: string}>>([]);
+    const [subtopics, setSubtopics] = createSignal<
+        Array<{
+            id: number;
+            subtopic: string;
+            subject_id: number;
+            ariaLabel: string;
+        }>
+    >([]);
     //prettier-ignore
-    const [subjectPick, setSubjectPick] = createSignal<Array<string>>(props.post?.product_subject!);
+    const [subjectPick, setSubjectPick] = createSignal<Array<number>>(props.post?.subjects!);
+    const [selectedSubjectId, setSelectedSubjectId] = createSignal<number>();
+    const [subtopicPick, setSubtopicPick] = createSignal<Array<number>>([]);
     //prettier-ignore
     const [grades, setGrades] = createSignal<Array<{id: number; grade: string}>>([]);
-    const [gradePick, setGradePick] = createSignal<Array<string>>([]);
+    const [gradePick, setGradePick] = createSignal<Array<number>>([]);
     //prettier-ignore
-    const [resourceTypesPick, setResourceTypesPick] = createSignal<Array<string>>([]);
+    const [resourceTypesPick, setResourceTypesPick] = createSignal<Array<number>>([]);
     //prettier-ignore
     const [resourceTypes, setResourceTypes] = createSignal<Array<{ id: number; type: string }>>([]);
     const [allRequirementsMet, setAllRequirementsMet] =
@@ -74,6 +85,9 @@ export const EditPost: Component<Props> = (props: Props) => {
     const [resourceExpanded, setResourceExpanded] =
         createSignal<boolean>(false);
     const [secular, setSecular] = createSignal<boolean>(false);
+    const [draftStatus, setDraftStatus] = createSignal<boolean>(false);
+    const [startDraftStatus, setStartDraftStatus] =
+        createSignal<boolean>(false);
 
     onMount(async () => {
         console.log(props.post);
@@ -90,13 +104,16 @@ export const EditPost: Component<Props> = (props: Props) => {
             }
         });
 
-        setGradePick(props.post?.post_grade!);
-        setSubjectPick(props.post.product_subject);
-        setResourceTypesPick(props.post?.resource_types!);
+        setGradePick(props.post?.grades);
+        setSubjectPick(props.post.subjects);
+        setSubtopicPick(props.post?.subtopics);
+        setResourceTypesPick(props.post?.resource_types);
         setSecular(props.post.secular);
+        setDraftStatus(props.post.draft_status);
+        setStartDraftStatus(props.post.draft_status);
 
         if (props.post?.image_urls) {
-            setImageUrl(props.post?.image_urls.split(","));
+            setImageUrl(props.post?.image_urls);
             // console.log(imageUrl())
         }
         //Image_urls is a single string of urls comma separated
@@ -136,6 +153,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
+                    sortResourceTypes(resourceType);
                     resourceType.forEach((type) => {
                         setResourceTypes([
                             ...resourceTypes(),
@@ -153,6 +171,19 @@ export const EditPost: Component<Props> = (props: Props) => {
                     { id: Number(subject.id), subject: subject.name },
                 ])
             );
+
+            subtopicData.map((subtopic) =>
+                setSubtopics([
+                    ...subtopics(),
+                    {
+                        id: subtopic.id,
+                        subtopic: subtopic.name,
+                        ariaLabel: subtopic.ariaLabel,
+                        subject_id: subtopic.subject_id,
+                    },
+                ])
+            );
+
             try {
                 const { data: gradeData, error } = await supabase
                     .from("grade_level")
@@ -199,6 +230,32 @@ export const EditPost: Component<Props> = (props: Props) => {
         }
     });
 
+    function saveAsDraft(e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+        setDraftStatus(true);
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            form.requestSubmit();
+        }
+    }
+
+    function listResourcePost(e: Event) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            setDraftStatus(false);
+            form.requestSubmit();
+        }
+    }
+
     async function submit(e: SubmitEvent) {
         e.preventDefault();
 
@@ -217,9 +274,14 @@ export const EditPost: Component<Props> = (props: Props) => {
         tmpDiv.innerHTML = formData.get("Content") as string;
         let description = tmpDiv.textContent || tmpDiv.innerText || "";
         formData.append("description", description);
+        formData.append("draft_status", JSON.stringify(draftStatus()));
 
         if (subjectPick() !== undefined) {
             formData.append("subject", JSON.stringify(subjectPick()));
+        }
+
+        if (subtopicPick() !== undefined) {
+            formData.append("subtopics", JSON.stringify(subtopicPick()));
         }
 
         if (gradePick() !== undefined) {
@@ -322,18 +384,15 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setSubjectArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
-            setSubjectPick([
-                ...subjectPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (subjectPick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
+        if (target.checked === true) {
+            setSubjectPick([...subjectPick(), targetValue]);
+            setSelectedSubjectId(targetValue);
+        } else if (target.checked === false) {
+            if (subjectPick().includes(targetValue)) {
                 setSubjectPick(
-                    subjectPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    subjectPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -350,6 +409,21 @@ export const EditPost: Component<Props> = (props: Props) => {
         // }
     }
 
+    function setSubtopicArray(e: Event) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
+        if (target.checked === true) {
+            setSubtopicPick([...subtopicPick(), targetValue]);
+        } else if (target.checked === false) {
+            if (subtopicPick().includes(targetValue)) {
+                setSubtopicPick(
+                    subtopicPick().filter((value) => value !== targetValue)
+                );
+            }
+        }
+        console.log(subtopicPick());
+    }
+
     function formatPrice(resourcePrice: string) {
         if (resourcePrice.indexOf(".") === -1) {
             setPrice(resourcePrice + "00");
@@ -361,18 +435,14 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setGradeArray(e: Event) {
-        // console.log(gradePick());
-        if ((e.target as HTMLInputElement).checked) {
-            setGradePick([
-                ...gradePick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (gradePick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
+            setGradePick([...gradePick(), Number(target.value)]);
+        } else if (target.checked === false) {
+            if (gradePick().includes(Number(target.value))) {
                 setGradePick(
                     gradePick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
+                        (value) => value !== Number(target.value)
                     )
                 );
             }
@@ -388,21 +458,17 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function setResourceTypesArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
             setResourceTypesPick([
                 ...resourceTypesPick(),
-                (e.target as HTMLInputElement).value,
+                Number(target.value),
             ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (
-                resourceTypesPick().includes(
-                    (e.target as HTMLInputElement).value
-                )
-            ) {
+        } else if (target.checked === false) {
+            if (resourceTypesPick().includes(Number(target.value))) {
                 setResourceTypesPick(
                     resourceTypesPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
+                        (value) => value !== Number(target.value)
                     )
                 );
             }
@@ -437,6 +503,49 @@ export const EditPost: Component<Props> = (props: Props) => {
             imageArray.splice(index, 1);
             setImageUrl(imageArray);
             console.log(imageUrl());
+        }
+    }
+
+    function postButton() {
+        if (startDraftStatus() === false) {
+            return (
+                <>
+                    <button
+                        id="post"
+                        disabled={!allRequirementsMet()}
+                        class={`text-2xl ${
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
+                        }`}
+                    >
+                        {t("buttons.updateResource")}
+                    </button>
+                </>
+            );
+        } else if (startDraftStatus() === true) {
+            return (
+                <>
+                    <button
+                        id="post"
+                        disabled={!allRequirementsMet()}
+                        class={`text-2xl ${
+                            allRequirementsMet()
+                                ? "btn-primary"
+                                : "btn-disabled"
+                        }`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            listResourcePost(e);
+                        }}
+                    >
+                        {t("buttons.listResource")}
+                    </button>
+                </>
+            );
+        } else {
+            return <></>;
         }
     }
 
@@ -542,9 +651,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                     {subjectPick().map((subject) =>
                                         subjects()
                                             .filter(
-                                                (item) =>
-                                                    item.id.toString() ===
-                                                    subject
+                                                (item) => item.id === subject
                                             )
                                             .map((item) => (
                                                 <span class="mr-1">
@@ -582,20 +689,55 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 subject.subject
                                             )}
                                         >
-                                            <label class="ml-2 block">
-                                                <input
-                                                    type="checkbox"
-                                                    id={subject.id.toString()}
-                                                    value={subject.id.toString()}
-                                                    onchange={(e) =>
-                                                        setSubjectArray(e)
-                                                    }
-                                                    checked
-                                                />
-                                                <span class="ml-2">
-                                                    {subject.subject}
-                                                </span>
-                                            </label>
+                                            <>
+                                                <label class="ml-2 block">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={subject.id.toString()}
+                                                        value={subject.id}
+                                                        onchange={(e) =>
+                                                            setSubjectArray(e)
+                                                        }
+                                                        checked
+                                                    />
+                                                    <span class="ml-2">
+                                                        {subject.subject}
+                                                    </span>
+                                                </label>
+                                                <div
+                                                    id="subtopicCheckboxes"
+                                                    class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                                >
+                                                    <For each={subtopics()}>
+                                                        {(subtopic) =>
+                                                            subtopic.subject_id ===
+                                                                subject.id && (
+                                                                <label class="ml-8 block">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id={subtopic.id.toString()}
+                                                                        value={
+                                                                            subtopic.id
+                                                                        }
+                                                                        onchange={(
+                                                                            e
+                                                                        ) =>
+                                                                            setSubtopicArray(
+                                                                                e
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                    <span class="ml-2">
+                                                                        {
+                                                                            subtopic.subtopic
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            )
+                                                        }
+                                                    </For>
+                                                </div>
+                                            </>
                                         </Show>
                                         <Show
                                             when={
@@ -604,19 +746,54 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 )
                                             }
                                         >
-                                            <label class="ml-2 block">
-                                                <input
-                                                    type="checkbox"
-                                                    id={subject.id.toString()}
-                                                    value={subject.id.toString()}
-                                                    onchange={(e) =>
-                                                        setSubjectArray(e)
-                                                    }
-                                                />
-                                                <span class="ml-2">
-                                                    {subject.subject}
-                                                </span>
-                                            </label>
+                                            <>
+                                                <label class="ml-2 block">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={subject.id.toString()}
+                                                        value={subject.id}
+                                                        onchange={(e) =>
+                                                            setSubjectArray(e)
+                                                        }
+                                                    />
+                                                    <span class="ml-2">
+                                                        {subject.subject}
+                                                    </span>
+                                                </label>
+                                                <div
+                                                    id="subtopicCheckboxes"
+                                                    class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                                >
+                                                    <For each={subtopics()}>
+                                                        {(subtopic) =>
+                                                            subtopic.subject_id ===
+                                                                subject.id && (
+                                                                <label class="ml-8 block">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id={subtopic.id.toString()}
+                                                                        value={
+                                                                            subtopic.id
+                                                                        }
+                                                                        onchange={(
+                                                                            e
+                                                                        ) =>
+                                                                            setSubtopicArray(
+                                                                                e
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                    <span class="ml-2">
+                                                                        {
+                                                                            subtopic.subtopic
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            )
+                                                        }
+                                                    </For>
+                                                </div>
+                                            </>
                                         </Show>
                                     </div>
                                 )}
@@ -680,10 +857,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                 <Show when={gradePick().length > 0}>
                                     {gradePick().map((grade) =>
                                         grades()
-                                            .filter(
-                                                (item) =>
-                                                    item.id.toString() === grade
-                                            )
+                                            .filter((item) => item.id === grade)
                                             .map((item) => (
                                                 <span class="mr-1">
                                                     {item.grade},
@@ -724,7 +898,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 checked
                                                 type="checkbox"
                                                 id={grade.id.toString()}
-                                                value={grade.id.toString()}
+                                                value={grade.id}
                                                 onchange={(e) =>
                                                     setGradeArray(e)
                                                 }
@@ -743,7 +917,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                             <input
                                                 type="checkbox"
                                                 id={grade.id.toString()}
-                                                value={grade.id.toString()}
+                                                value={grade.id}
                                                 onchange={(e) =>
                                                     setGradeArray(e)
                                                 }
@@ -818,7 +992,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                                                 resourceTypes()
                                                     .filter(
                                                         (item) =>
-                                                            item.id.toString() ===
+                                                            item.id ===
                                                             resourceType
                                                     )
                                                     .map((item) => (
@@ -857,13 +1031,13 @@ export const EditPost: Component<Props> = (props: Props) => {
                                     <label class="ml-2 block">
                                         <Show
                                             when={props.post?.resource_types!.includes(
-                                                type.id.toString()
+                                                type.id
                                             )}
                                         >
                                             <input
                                                 type="checkbox"
                                                 id={type.id.toString()}
-                                                value={type.id.toString()}
+                                                value={type.id}
                                                 onchange={(e) =>
                                                     setResourceTypesArray(e)
                                                 }
@@ -876,14 +1050,14 @@ export const EditPost: Component<Props> = (props: Props) => {
                                         <Show
                                             when={
                                                 !props.post?.resource_types!.includes(
-                                                    type.id.toString()
+                                                    type.id
                                                 )
                                             }
                                         >
                                             <input
                                                 type="checkbox"
                                                 id={type.id.toString()}
-                                                value={type.id.toString()}
+                                                value={type.id}
                                                 onchange={(e) =>
                                                     setResourceTypesArray(e)
                                                 }
@@ -982,7 +1156,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 </div>
 
                 {/* Price Implementation */}
-                {/* <div class="justfify-evenly mt-6 flex flex-col ">
+                {/* <div class="justify-evenly mt-6 flex flex-col ">
                     <div class="mt-2 flex justify-between">
                         <p>{t("formLabels.isResourceFree")}?</p>
                         <div>
@@ -1064,16 +1238,17 @@ export const EditPost: Component<Props> = (props: Props) => {
                 <br />
                 <div class="flex justify-center">
                     <button
-                        id="post"
-                        disabled={!allRequirementsMet()}
-                        class={`text-2xl ${
-                            allRequirementsMet()
-                                ? "btn-primary"
-                                : "btn-disabled"
-                        }`}
+                        id="save-as-draft"
+                        class={`btn-primary text-2xl`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            saveAsDraft(e);
+                        }}
                     >
-                        {t("buttons.updateResource")}
+                        Save as Draft
                     </button>
+                    {postButton()}
                 </div>
             </form>
         </div>

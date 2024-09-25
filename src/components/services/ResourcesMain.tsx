@@ -1,91 +1,130 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, onMount, Show } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { CategoryCarousel } from "./CategoryCarousel";
+import { createSignal, createEffect, onMount, Show, onCleanup } from "solid-js";
 import { ViewCard } from "./ViewCard";
 import { MobileViewCard } from "./MobileViewCard";
-import { GradeFilter } from "./GradeFilter";
-import { SubjectFilter } from "./SubjectFilter";
-import { SecularFilter } from "./SecularFilter";
 import { FiltersMobile } from "./FiltersMobile";
 import { SearchBar } from "./SearchBar";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import * as allFilters from "../posts/fetchPosts";
-import stripe from "../../lib/stripe";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
-import useLocalStorage from "@lib/LocalStorageHook";
-import { IconX } from "@tabler/icons-solidjs";
+import type { FilterPostsParams } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
+async function fetchPosts({
+    subjectFilters,
+    gradeFilters,
+    searchString,
+    resourceFilters,
+    secularFilter,
+    listing_status,
+    draft_status,
+    lang,
+    from,
+    to,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            subjectFilters: subjectFilters,
+            gradeFilters: gradeFilters,
+            searchString: searchString,
+            resourceFilters: resourceFilters,
+            secularFilter: secularFilter,
+            lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
+            from: from,
+            to: to,
+        }),
+    });
+    const data = await response.json();
 
-// interface Props {
-//     subject: string | null;
-//     grade: string | null;
-//     searchString: string | null;
-//     resourceTypes: string | null;
-// }
+    return data;
+}
 
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
-    const [currentPosts, setCurrentPosts] = createSignal<Array<Post>>([]);
-    const [subjectFilters, setSubjectFilters] = createSignal<Array<string>>([]);
-    const [gradeFilters, setGradeFilters] = createSignal<Array<string>>([]);
-    const [resourceFilters, setResourceFilters] = createSignal<Array<string>>(
-        []
-    );
+    const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
+    const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
+    const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
+        Array<number>
+    >([]);
     const [searchString, setSearchString] = createSignal<string>("");
-    const [noPostsVisible, setNoPostsVisible] = createSignal<boolean>(false);
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
+    const [clearFilters, setClearFilters] = createSignal<boolean>(false);
+    const [page, setPage] = createSignal<number>(1);
+    const [loading, setLoading] = createSignal<boolean>(false);
+    const [hasMore, setHasMore] = createSignal<boolean>(true);
+
+    let postsPerPage: number = 10;
 
     const screenSize = useStore(windowSize);
 
+    if (screenSize() === "sm") {
+        postsPerPage = 5;
+    }
+
     onMount(async () => {
-        if (
-            localStorage.getItem("selectedSubjects") !== null &&
-            localStorage.getItem("selectedSubjects")
-        ) {
+        const localSubjects = localStorage.getItem("selectedSubjects");
+        const localGrades = localStorage.getItem("selectedGrades");
+        const localSearch = localStorage.getItem("searchString");
+        const localResourceTypes = localStorage.getItem(
+            "selectedResourceTypes"
+        );
+
+        if (localSubjects !== null && localSubjects) {
             setSubjectFilters([
                 ...subjectFilters(),
-                ...JSON.parse(localStorage.getItem("selectedSubjects")!),
+                ...JSON.parse(localSubjects).map(Number),
             ]);
         }
-        if (
-            localStorage.getItem("selectedGrades") !== null &&
-            localStorage.getItem("selectedGrades")
-        ) {
+        if (localGrades !== null && localGrades) {
             setGradeFilters([
                 ...gradeFilters(),
-                ...JSON.parse(localStorage.getItem("selectedGrades")!),
+                ...JSON.parse(localGrades).map(Number),
             ]);
         }
-        if (
-            localStorage.getItem("searchString") !== null &&
-            localStorage.getItem("searchString") !== undefined
-        ) {
-            const searchStringValue =
-                localStorage.getItem("searchString") || "";
+        if (localSearch !== null && localSearch !== undefined) {
+            const searchStringValue = localSearch || "";
             setSearchString(searchStringValue);
         }
-        if (
-            localStorage.getItem("selectedResourceTypes") !== null &&
-            localStorage.getItem("selectedResourceTypes")
-        ) {
-            setResourceFilters([
-                ...resourceFilters(),
-                ...JSON.parse(localStorage.getItem("selectedResourceTypes")!),
+        if (localResourceTypes !== null && localResourceTypes) {
+            setResourceTypeFilters([
+                ...resourceTypesFilters(),
+                ...JSON.parse(localResourceTypes).map(Number),
             ]);
         }
-        await filterPosts();
+        fetchPaginatedPosts(page());
+
+        const loadMoreTrigger = document.getElementById("load-more-trigger");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && !loading() && hasMore()) {
+                    setPage((prev) => prev + 1);
+                    fetchPaginatedPosts(page());
+                }
+            },
+            {
+                root: null,
+                rootMargin: "100px",
+                threshold: 1.0,
+            }
+        );
+
+        if (loadMoreTrigger) {
+            observer.observe(loadMoreTrigger);
+        }
+
+        onCleanup(() => {
+            if (loadMoreTrigger) {
+                observer.unobserve(loadMoreTrigger);
+            }
+        });
     });
 
     window.addEventListener("beforeunload", () => {
@@ -95,15 +134,63 @@ export const ResourcesView: Component = () => {
         localStorage.removeItem("selectedResourceTypes");
     });
 
-    const searchPosts = async () => {
-        if (localStorage.getItem("searchString") !== null) {
-            setSearchString(localStorage.getItem("searchString") as string);
+    const fetchPaginatedPosts = async (pageValue: number) => {
+        const noPostsMessage = document.getElementById("no-posts-message");
+
+        setLoading(true);
+        const from = (pageValue - 1) * postsPerPage;
+        const to = from + postsPerPage - 1;
+
+        const res = await fetchPosts({
+            subjectFilters: subjectFilters(),
+            gradeFilters: gradeFilters(),
+            searchString: searchString(),
+            resourceFilters: resourceTypesFilters(),
+            secularFilter: secularFilters(),
+            listing_status: true,
+            draft_status: false,
+            lang: lang,
+            from: from,
+            to: to,
+        });
+
+        if (res.body && res.body.length > 0) {
+            setPosts((prevPosts) => [...prevPosts, ...res.body]);
+            if (res.body.length < postsPerPage) {
+                setHasMore(false); // No more posts if fewer than the page size were fetched
+            }
+        } else {
+            if (pageValue === 1) {
+                noPostsMessage?.classList.remove("hidden"); // Show no-posts message on the first page
+                setTimeout(() => {
+                    noPostsMessage?.classList.add("hidden");
+                    clearAllFilters();
+                }, 3000);
+
+                // Clear posts if there are no results on the first page
+            } else {
+                setHasMore(false); // No more posts to load in subsequent pages
+            }
         }
 
-        filterPosts();
+        setLoading(false);
     };
 
-    const setCategoryFilter = (currentCategory: string) => {
+    function triggerNewSearch() {
+        setPage(1); // Reset page to 1
+        setPosts([]); // Clear current posts
+        setHasMore(true);
+        fetchPaginatedPosts(page());
+    }
+
+    const searchPosts = async (searchString: string) => {
+        if (searchString !== null) {
+            setSearchString(searchString);
+        }
+        triggerNewSearch();
+    };
+
+    const setCategoryFilter = (currentCategory: number) => {
         if (subjectFilters().includes(currentCategory)) {
             let currentFilters = subjectFilters().filter(
                 (el) => el !== currentCategory
@@ -112,139 +199,73 @@ export const ResourcesView: Component = () => {
         } else {
             setSubjectFilters([...subjectFilters(), currentCategory]);
         }
-
-        filterPosts();
+        triggerNewSearch();
     };
 
     let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
 
-    const filterPosts = async () => {
-        const noPostsMessage = document.getElementById("no-posts-message");
+    // const filterPosts = async () => {
+    //     console.log("Filtering posts...");
+    //     const noPostsMessage = document.getElementById("no-posts-message");
 
-        const res = await allFilters.fetchFilteredPosts(
-            subjectFilters(),
-            gradeFilters(),
-            searchString(),
-            resourceFilters(),
-            secularFilters()
-        );
+    //     const res = await fetchPosts({
+    //         subjectFilters: subjectFilters(),
+    //         gradeFilters: gradeFilters(),
+    //         searchString: searchString(),
+    //         resourceFilters: resourceTypesFilters(),
+    //         secularFilter: secularFilters(),
+    //         lang: lang,
+    //         listing_status: true,
+    //         draft_status: false,
+    //     });
 
-        if (res === null || res === undefined) {
-            noPostsMessage?.classList.remove("hidden");
-            setTimeout(() => {
-                noPostsMessage?.classList.add("hidden");
-            }, 3000);
+    //     console.log(res);
 
-            setPosts([]);
-            setCurrentPosts([]);
-            console.error();
-        } else if (Object.keys(res).length === 0) {
-            noPostsMessage?.classList.remove("hidden");
+    //     if (
+    //         res.body === null ||
+    //         res.body === undefined ||
+    //         res.body.length < 1
+    //     ) {
+    //         noPostsMessage?.classList.remove("hidden");
+    //         setTimeout(() => {
+    //             noPostsMessage?.classList.add("hidden");
+    //         }, 3000);
 
-            setTimeout(() => {
-                noPostsMessage?.classList.add("hidden");
-            }, 3000);
+    //         setPosts([]);
+    //         console.error();
 
-            timeouts.push(
-                setTimeout(() => {
-                    //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-                    clearAllFilters();
-                }, 3000)
-            );
+    //         timeouts.push(
+    //             setTimeout(() => {
+    //                 //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
+    //                 clearAllFilters();
+    //             }, 3000)
+    //         );
 
-            let allPosts = await allFilters.fetchAllPosts();
+    //         let allPosts = await fetchPosts({
+    //             subjectFilters: [],
+    //             gradeFilters: [],
+    //             searchString: "",
+    //             resourceFilters: [],
+    //             secularFilter: false,
+    //             lang: lang,
+    //             listing_status: true,
+    //             draft_status: false,
+    //         });
 
-            //Add the categories to the posts in the current language
-            const allUpdatedPosts = await Promise.all(
-                allPosts
-                    ? allPosts.map(async (item) => {
-                          item.subject = [];
-                          productCategories.forEach((productCategories) => {
-                              item.product_subject.map(
-                                  (productSubject: string) => {
-                                      if (
-                                          productSubject ===
-                                          productCategories.id
-                                      ) {
-                                          item.subject.push(
-                                              productCategories.name
-                                          );
-                                      }
-                                  }
-                              );
-                          });
-                          delete item.product_subject;
+    //         setPosts(allPosts);
+    //         console.log(allPosts);
+    //     } else {
+    //         for (let i = 0; i < timeouts.length; i++) {
+    //             clearTimeout(timeouts[i]);
+    //         }
 
-                          const { data: gradeData, error: gradeError } =
-                              await supabase.from("grade_level").select("*");
+    //         timeouts = [];
 
-                          if (gradeError) {
-                              console.log(
-                                  "supabase error: " + gradeError.message
-                              );
-                          } else {
-                              item.grade = [];
-                              gradeData.forEach((databaseGrade) => {
-                                  item.post_grade.map((itemGrade: string) => {
-                                      if (
-                                          itemGrade ===
-                                          databaseGrade.id.toString()
-                                      ) {
-                                          item.grade.push(databaseGrade.grade);
-                                      }
-                                  });
-                              });
-                          }
-                          return item;
-                      })
-                    : []
-            );
+    //         setPosts(res.body);
+    //     }
+    // };
 
-            setPosts(allUpdatedPosts!);
-            setCurrentPosts(allUpdatedPosts!);
-        } else {
-            for (let i = 0; i < timeouts.length; i++) {
-                clearTimeout(timeouts[i]);
-            }
-
-            timeouts = [];
-
-            let resPosts = await Promise.all(
-                res.map(async (item) => {
-                    item.subject = [];
-                    productCategories.forEach((productCategories) => {
-                        item.product_subject.map((productSubject: string) => {
-                            if (productSubject === productCategories.id) {
-                                item.subject.push(productCategories.name);
-                            }
-                        });
-                    });
-                    delete item.product_subject;
-
-                    const { data: gradeData, error: gradeError } =
-                        await supabase.from("grade_level").select("*");
-
-                    if (gradeError) {
-                        console.log("supabase error: " + gradeError.message);
-                    } else {
-                        item.grade = [];
-                        gradeData.forEach((databaseGrade) => {
-                            item.post_grade.map((itemGrade: string) => {
-                                if (itemGrade === databaseGrade.id.toString()) {
-                                    item.grade.push(databaseGrade.grade);
-                                }
-                            });
-                        });
-                    }
-                    return item;
-                })
-            );
-            setPosts(resPosts);
-            setCurrentPosts(resPosts);
-        }
-    };
-
-    const filterPostsByGrade = (grade: string) => {
+    const filterPostsByGrade = (grade: number) => {
         if (gradeFilters().includes(grade)) {
             let currentGradeFilters = gradeFilters().filter(
                 (el) => el !== grade
@@ -254,109 +275,73 @@ export const ResourcesView: Component = () => {
             setGradeFilters([...gradeFilters(), grade]);
         }
 
-        filterPosts();
+        triggerNewSearch();
     };
+
+    const filterPostsByResourceTypes = (type: number) => {
+        if (resourceTypesFilters().includes(type)) {
+            let currentResourceTypesFilter = resourceTypesFilters().filter(
+                (el) => el !== type
+            );
+            setResourceTypeFilters(currentResourceTypesFilter);
+        } else {
+            setResourceTypeFilters([...resourceTypesFilters(), type]);
+        }
+
+        triggerNewSearch();
+    };
+
     const filterPostsBySecular = (secular: boolean) => {
         setSecularFilters(secular);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearAllFilters = () => {
-        let searchInput = document.getElementById("search") as HTMLInputElement;
-        const subjectCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].subject"
-        ) as NodeListOf<HTMLInputElement>;
-        const gradeCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].grade"
-        ) as NodeListOf<HTMLInputElement>;
-
-        console.log(subjectCheckboxes);
-        console.log(gradeCheckboxes);
+        let searchInput = document.getElementById(
+            "headerSearch"
+        ) as HTMLInputElement;
 
         if (searchInput !== null && searchInput.value !== null) {
             searchInput.value = "";
         }
 
-        gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedGrades");
-        localStorage.removeItem("selectedSubjects");
-        localStorage.removeItem("searchString");
-        localStorage.removeItem("selectedResourceTypes");
+        setClearFilters(true);
 
         setSearchPost([]);
         setSearchString("");
-        // localStorage.setItem("searchString", "");
         setSubjectFilters([]);
         setGradeFilters([]);
+        setResourceTypeFilters([]);
         setSecularFilters(false);
 
-        filterPosts();
+        triggerNewSearch();
+        setClearFilters(false);
     };
 
     const clearSubjects = () => {
-        const subjectCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].subject"
-        ) as NodeListOf<HTMLInputElement>;
-
-        subjectCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedSubjects");
         setSubjectFilters([]);
-        filterPosts();
+        triggerNewSearch();
     };
 
     const clearGrade = () => {
-        const gradeCheckboxes = document.querySelectorAll(
-            "input[type='checkbox'].grade"
-        ) as NodeListOf<HTMLInputElement>;
-
-        console.log(gradeCheckboxes);
-
-        gradeCheckboxes.forEach((checkbox) => {
-            if (checkbox && checkbox.checked) {
-                checkbox.checked = false;
-            }
-        });
-
-        localStorage.removeItem("selectedGrades");
         setGradeFilters([]);
-        filterPosts();
+        triggerNewSearch();
+    };
+
+    const clearResourceTypes = () => {
+        setResourceTypeFilters([]);
+        triggerNewSearch();
     };
 
     const clearSecular = () => {
-        const secularCheckbox = document.getElementById(
-            "secularCheck"
-        ) as HTMLInputElement;
-
-        console.log(secularCheckbox);
-
-        if (secularCheckbox && secularCheckbox.checked) {
-            secularCheckbox.checked = false;
-        }
-
         setSecularFilters(false);
-        filterPosts();
+        triggerNewSearch();
     };
 
     return (
         <div class="">
             <div>
-                <SearchBar search={searchPosts} />
+                <SearchBar search={searchPosts} clearFilters={clearFilters()} />
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
@@ -365,16 +350,19 @@ export const ResourcesView: Component = () => {
                     clearSubjects={clearSubjects}
                     clearGrade={clearGrade}
                     clearAllFilters={clearAllFilters}
+                    clearFilters={clearFilters()}
                     filterPostsByGrade={filterPostsByGrade}
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
+                    filterPostsByResourceTypes={filterPostsByResourceTypes}
+                    clearResourceTypes={clearResourceTypes}
                 />
             </Show>
 
             <Show when={screenSize() === "sm"}>
                 <div class="mb-2 rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
-                    <h1 class="text-lg text-ptext1-DM dark:text-ptext1">
+                    <h1 class="text-lg text-btn1Text dark:text-ptext1">
                         {t("pageTitles.services")}
                     </h1>
                 </div>
@@ -386,75 +374,14 @@ export const ResourcesView: Component = () => {
                         clearSubjects={clearSubjects}
                         clearGrade={clearGrade}
                         clearAllFilters={clearAllFilters}
+                        clearFilters={clearFilters()}
                         filterPostsByGrade={filterPostsByGrade}
                         filterPostsBySubject={setCategoryFilter}
                         secularFilter={filterPostsBySecular}
                         clearSecular={clearSecular}
+                        clearResourceTypes={clearResourceTypes}
+                        filterPostsByResourceTypes={filterPostsByResourceTypes}
                     />
-                    {/* <div class="sticky top-0 w-3/12">
-                        <div class="clear-filters-btns mr-4 flex w-11/12 flex-wrap items-center justify-center rounded border border-border2 dark:border-border2-DM">
-                            <div class="flex w-full">
-                                <button
-                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                                    onclick={clearGrade}
-                                    aria-label={t(
-                                        "clearFilters.filterButtons.2.ariaLabel"
-                                    )}
-                                >
-                                    <div class="flex items-center">
-                                        <IconX stroke={"2"} class="h-3 w-3" />
-                                        <p class="text-xs">
-                                            {t(
-                                                "clearFilters.filterButtons.2.text"
-                                            )}
-                                        </p>
-                                    </div>
-                                </button>
-
-                                <button
-                                    class="clearBtnRectangle flex w-1/2 items-center justify-center"
-                                    onclick={clearSubjects}
-                                    aria-label={t(
-                                        "clearFilters.filterButtons.1.ariaLabel"
-                                    )}
-                                >
-                                    <div class="flex items-center">
-                                        <IconX stroke={"2"} class="h-3 w-3" />
-                                        <p class="text-xs">
-                                            {t(
-                                                "clearFilters.filterButtons.1.text"
-                                            )}
-                                        </p>
-                                    </div>
-                                </button>
-                            </div>
-
-                            <button
-                                class="clearBtnRectangle flex w-full justify-center"
-                                onclick={clearAllFilters}
-                                aria-label={t(
-                                    "clearFilters.filterButtons.0.ariaLabel"
-                                )}
-                            >
-                                <div class="flex items-center">
-                                    <IconX stroke={"2"} class="h-3 w-3" />
-                                    <p class="text-xs">
-                                        {t("clearFilters.filterButtons.0.text")}
-                                    </p>
-                                </div>
-                            </button>
-                        </div>
-
-                        <div class="mr-4 w-11/12">
-                            <GradeFilter
-                                filterPostsByGrade={filterPostsByGrade}
-                            />
-                        </div>
-
-                        <div class="w-11/12 md:mr-4">
-                            <SubjectFilter filterPosts={setCategoryFilter} />
-                        </div>
-                    </div> */}
                 </Show>
 
                 <div class="w-11/12 items-center md:w-8/12 md:flex-1">
@@ -475,12 +402,20 @@ export const ResourcesView: Component = () => {
                     </Show>
                     <Show when={screenSize() !== "sm"}>
                         <div class="inline">
-                            <ViewCard posts={currentPosts()} />
+                            <ViewCard posts={posts()} />
+                            <div
+                                id="load-more-trigger"
+                                class="h-10 w-full"
+                            ></div>
                         </div>
                     </Show>
                     <Show when={screenSize() === "sm"}>
-                        <div class="flex justify-center">
-                            <MobileViewCard posts={currentPosts()} />
+                        <div class="flex flex-col justify-center">
+                            <MobileViewCard lang={lang} posts={posts()} />
+                            <div
+                                id="load-more-trigger"
+                                class="h-10 w-full"
+                            ></div>
                         </div>
                     </Show>
                 </div>

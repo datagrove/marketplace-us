@@ -21,6 +21,7 @@ import stripe from "../../lib/stripe";
 import Dropdown from "@components/common/Dropdown";
 import { UploadFiles } from "@components/posts/UploadResource";
 import tinymce from "tinymce";
+import { sortResourceTypes } from "@lib/utils/resourceSort";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -28,6 +29,7 @@ const values = ui[lang] as uiObject;
 
 //get the categories from the language files so they translate with changes in the language picker
 const productCategoryData = values.subjectCategoryInfo;
+const subtopicData = values.subjectCategoryInfo.subtopics;
 
 const excludeTaxCodes = new Set([
     //Website/online dating products
@@ -165,13 +167,23 @@ export const CreateNewPost: Component = () => {
     const [subjects, setSubjects] = createSignal<
         Array<{ id: number; subject: string }>
     >([]);
-    const [subjectPick, setSubjectPick] = createSignal<Array<string>>([]);
+    const [subtopics, setSubtopics] = createSignal<
+        Array<{
+            id: number;
+            subtopic: string;
+            subject_id: number;
+            ariaLabel: string;
+        }>
+    >([]);
+    const [subjectPick, setSubjectPick] = createSignal<Array<number>>([]);
+    const [selectedSubjectId, setSelectedSubjectId] = createSignal<number>();
+    const [subtopicPick, setSubtopicPick] = createSignal<Array<number>>([]);
     const [grades, setGrades] = createSignal<
         Array<{ id: number; grade: string }>
     >([]);
-    const [gradePick, setGradePick] = createSignal<Array<string>>([]);
+    const [gradePick, setGradePick] = createSignal<Array<number>>([]);
     const [resourceTypesPick, setResourceTypesPick] = createSignal<
-        Array<string>
+        Array<number>
     >([]);
     const [resourceTypes, setResourceTypes] = createSignal<
         Array<{ id: number; type: string }>
@@ -194,6 +206,7 @@ export const CreateNewPost: Component = () => {
     const [isAdmin, setIsAdmin] = createSignal<boolean>(false);
     const [isHosted, setIsHosted] = createSignal<boolean>(false);
     const [resourceLinks, setResourceLinks] = createSignal<string>("");
+    const [draftStatus, setDraftStatus] = createSignal<boolean>(false);
 
     onMount(() => {
         window.addEventListener("storage", (event) => {
@@ -290,6 +303,7 @@ export const CreateNewPost: Component = () => {
                 if (error) {
                     console.log("supabase error: " + error.message);
                 } else {
+                    sortResourceTypes(resourceType);
                     resourceType.forEach((type) => {
                         setResourceTypes([
                             ...resourceTypes(),
@@ -301,12 +315,26 @@ export const CreateNewPost: Component = () => {
                 console.log("Other error: " + error);
             }
 
+            //Refactor why does this need to be in an effect?
             productCategoryData.subjects.map((subject) =>
                 setSubjects([
                     ...subjects(),
                     { id: Number(subject.id), subject: subject.name },
                 ])
             );
+
+            subtopicData.map((subtopic) =>
+                setSubtopics([
+                    ...subtopics(),
+                    {
+                        id: subtopic.id,
+                        subtopic: subtopic.name,
+                        ariaLabel: subtopic.ariaLabel,
+                        subject_id: subtopic.subject_id,
+                    },
+                ])
+            );
+
             try {
                 const { data: gradeData, error } = await supabase
                     .from("grade_level")
@@ -380,12 +408,25 @@ export const CreateNewPost: Component = () => {
         }
     });
 
+    function saveAsDraft(e: Event) {
+        e.preventDefault();
+        setDraftStatus(true);
+
+        const button = e.currentTarget as HTMLFormElement;
+        const form = button.closest("form") as HTMLFormElement;
+
+        if (form) {
+            form.requestSubmit();
+        }
+    }
+
     async function submit(e: SubmitEvent) {
         e.preventDefault();
 
         const formData = new FormData(e.target as HTMLFormElement);
         formData.append("access_token", session()?.access_token!);
         formData.append("refresh_token", session()?.refresh_token!);
+        formData.append("draft_status", JSON.stringify(draftStatus()));
         formData.append("lang", lang);
         if (isFree()) {
             setPrice("0");
@@ -402,6 +443,10 @@ export const CreateNewPost: Component = () => {
 
         if (subjectPick() !== undefined) {
             formData.append("subject", JSON.stringify(subjectPick()));
+        }
+
+        if (subtopicPick() !== undefined) {
+            formData.append("subtopics", JSON.stringify(subtopicPick()));
         }
 
         if (gradePick() !== undefined) {
@@ -503,18 +548,15 @@ export const CreateNewPost: Component = () => {
         }
     }
     function setSubjectArray(e: Event) {
-        if ((e.target as HTMLInputElement).checked) {
-            setSubjectPick([
-                ...subjectPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
-        } else if ((e.target as HTMLInputElement).checked === false) {
-            if (subjectPick().includes((e.target as HTMLInputElement).value)) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
+        if (target.checked === true) {
+            setSubjectPick([...subjectPick(), targetValue]);
+            setSelectedSubjectId(targetValue);
+        } else if (target.checked === false) {
+            if (subjectPick().includes(targetValue)) {
                 setSubjectPick(
-                    subjectPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    subjectPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -532,6 +574,21 @@ export const CreateNewPost: Component = () => {
         console.log(subjectPick());
     }
 
+    function setSubtopicArray(e: Event) {
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.value);
+        if (target.checked === true) {
+            setSubtopicPick([...subtopicPick(), targetValue]);
+        } else if (target.checked === false) {
+            if (subtopicPick().includes(targetValue)) {
+                setSubtopicPick(
+                    subtopicPick().filter((value) => value !== targetValue)
+                );
+            }
+        }
+        console.log(subtopicPick());
+    }
+
     function formatPrice(resourcePrice: string) {
         if (resourcePrice.indexOf(".") === -1) {
             setPrice(resourcePrice + "00");
@@ -543,18 +600,13 @@ export const CreateNewPost: Component = () => {
     }
 
     function setGradeArray(e: Event) {
+        const targetValue = Number((e.target as HTMLInputElement).value);
         if ((e.target as HTMLInputElement).checked) {
-            setGradePick([
-                ...gradePick(),
-                (e.target as HTMLInputElement).value,
-            ]);
+            setGradePick([...gradePick(), targetValue]);
         } else if ((e.target as HTMLInputElement).checked === false) {
-            if (gradePick().includes((e.target as HTMLInputElement).value)) {
+            if (gradePick().includes(targetValue)) {
                 setGradePick(
-                    gradePick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    gradePick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -569,22 +621,13 @@ export const CreateNewPost: Component = () => {
     }
 
     function setResourceTypesArray(e: Event) {
+        const targetValue = Number((e.target as HTMLInputElement).value);
         if ((e.target as HTMLInputElement).checked) {
-            setResourceTypesPick([
-                ...resourceTypesPick(),
-                (e.target as HTMLInputElement).value,
-            ]);
+            setResourceTypesPick([...resourceTypesPick(), targetValue]);
         } else if ((e.target as HTMLInputElement).checked === false) {
-            if (
-                resourceTypesPick().includes(
-                    (e.target as HTMLInputElement).value
-                )
-            ) {
+            if (resourceTypesPick().includes(targetValue)) {
                 setResourceTypesPick(
-                    resourceTypesPick().filter(
-                        (value) =>
-                            value !== (e.target as HTMLInputElement).value
-                    )
+                    resourceTypesPick().filter((value) => value !== targetValue)
                 );
             }
         }
@@ -629,6 +672,17 @@ export const CreateNewPost: Component = () => {
         } else {
             setDescription(false);
             console.log("Description: " + description());
+        }
+    }
+
+    function removeImage(imageId: string) {
+        console.log(imageUrl());
+        const index = imageUrl().indexOf(imageId);
+        const imageArray = [...imageUrl()];
+        if (index > -1) {
+            imageArray.splice(index, 1);
+            setImageUrl(imageArray);
+            console.log(imageUrl());
         }
     }
 
@@ -718,7 +772,9 @@ export const CreateNewPost: Component = () => {
                             size={96}
                             onUpload={(e: Event, url: string) => {
                                 setImageUrl([...imageUrl(), url]);
+                                console.log(imageUrl());
                             }}
+                            removeImage={(imageId) => removeImage(imageId)}
                         />
                     </div>
                 </div>
@@ -747,9 +803,7 @@ export const CreateNewPost: Component = () => {
                                     {subjectPick().map((subject) =>
                                         subjects()
                                             .filter(
-                                                (item) =>
-                                                    item.id.toString() ===
-                                                    subject
+                                                (item) => item.id === subject
                                             )
                                             .map((item) => (
                                                 <span class="mr-1">
@@ -781,17 +835,56 @@ export const CreateNewPost: Component = () => {
                         >
                             <For each={subjects()}>
                                 {(subject) => (
-                                    <label class="ml-2 block">
-                                        <input
-                                            type="checkbox"
-                                            id={subject.id.toString()}
-                                            value={subject.id.toString()}
-                                            onchange={(e) => setSubjectArray(e)}
-                                        />
-                                        <span class="ml-2">
-                                            {subject.subject}
-                                        </span>
-                                    </label>
+                                    <>
+                                        <div>
+                                            <label class="ml-2 block">
+                                                <input
+                                                    type="checkbox"
+                                                    id={subject.id.toString()}
+                                                    value={subject.id}
+                                                    onchange={(e) =>
+                                                        setSubjectArray(e)
+                                                    }
+                                                />
+                                                <span class="ml-2">
+                                                    {subject.subject}
+                                                </span>
+                                            </label>
+                                            <div
+                                                id="subtopicCheckboxes"
+                                                class={`${selectedSubjectId() === subject.id ? "" : "hidden"}`}
+                                            >
+                                                <For each={subtopics()}>
+                                                    {(subtopic) =>
+                                                        subtopic.subject_id ===
+                                                            subject.id && (
+                                                            <label class="ml-8 block">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id={subtopic.id.toString()}
+                                                                    value={
+                                                                        subtopic.id
+                                                                    }
+                                                                    onchange={(
+                                                                        e
+                                                                    ) =>
+                                                                        setSubtopicArray(
+                                                                            e
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <span class="ml-2">
+                                                                    {
+                                                                        subtopic.subtopic
+                                                                    }
+                                                                </span>
+                                                            </label>
+                                                        )
+                                                    }
+                                                </For>
+                                            </div>
+                                        </div>
+                                    </>
                                 )}
                             </For>
                         </div>
@@ -861,10 +954,7 @@ export const CreateNewPost: Component = () => {
                                 <Show when={gradePick().length > 0}>
                                     {gradePick().map((grade) =>
                                         grades()
-                                            .filter(
-                                                (item) =>
-                                                    item.id.toString() === grade
-                                            )
+                                            .filter((item) => item.id === grade)
                                             .map((item) => (
                                                 <span class="mr-1">
                                                     {item.grade},
@@ -899,7 +989,7 @@ export const CreateNewPost: Component = () => {
                                         <input
                                             type="checkbox"
                                             id={grade.id.toString()}
-                                            value={grade.id.toString()}
+                                            value={grade.id}
                                             onchange={(e) => setGradeArray(e)}
                                         />
                                         <span class="ml-2">{grade.grade}</span>
@@ -977,7 +1067,7 @@ export const CreateNewPost: Component = () => {
                                                 resourceTypes()
                                                     .filter(
                                                         (item) =>
-                                                            item.id.toString() ===
+                                                            item.id ===
                                                             resourceType
                                                     )
                                                     .map((item) => (
@@ -1017,7 +1107,7 @@ export const CreateNewPost: Component = () => {
                                         <input
                                             type="checkbox"
                                             id={type.id.toString()}
-                                            value={type.id.toString()}
+                                            value={type.id}
                                             onchange={(e) =>
                                                 setResourceTypesArray(e)
                                             }
@@ -1325,6 +1415,17 @@ export const CreateNewPost: Component = () => {
 
                 <br />
                 <div class="flex justify-center">
+                    <button
+                        id="save-as-draft"
+                        class={`btn-primary text-2xl`}
+                        onclick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            saveAsDraft(e);
+                        }}
+                    >
+                        Save as Draft
+                    </button>
                     <button
                         id="post"
                         disabled={!allRequirementsMet()}
