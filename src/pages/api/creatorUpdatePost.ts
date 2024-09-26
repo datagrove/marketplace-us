@@ -21,6 +21,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const title = formData.get("Title");
     const subject = formData.get("subject");
     const content = formData.get("Content");
+    const tax_code = formData.get("TaxCode");
     const product_id = formData.get("product_id");
     const description = formData.get("description");
     const price = formData.get("Price");
@@ -103,11 +104,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     // const default_price = price_info.id;
 
-    // const stripe_update = await stripe.products.update(String(product_id), {
-    //     name: String(title),
-    //     description: String(description),
-    //     default_price: default_price,
-    // });
+    const stripe_update = await stripe.products.update(String(product_id), {
+        name: String(title),
+        description: String(description),
+        default_price: default_price,
+        tax_code: tax_code?.toString() || "txcd_10000000",
+    });
 
     if (price) {
         const pricesToArchive = prices.data.map((item) => {
@@ -123,7 +125,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     const resourceLinksList = resourceLinks?.toString().split(",");
 
-    if (price_info.active) {
+    if (stripe_update.active) {
+
         const postId = idSupabase;
 
         let postSubmission = {
@@ -161,6 +164,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                         { status: 200 }
                     );
               }
+            
         } catch (error) {
             console.log("Error updating Post: ", error);
 

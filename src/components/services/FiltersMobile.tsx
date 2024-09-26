@@ -7,9 +7,7 @@ import supabase from "../../lib/supabaseClient";
 import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SecularFilter } from "./SecularFilter";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
-import type { FilterPostsParams, Post } from "@lib/types";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -17,8 +15,34 @@ const values = ui[lang] as uiObject;
 const productCategoryData = values.subjectCategoryInfo;
 
 let grades: Array<{ grade: string; id: number; checked: boolean }> = [];
-let subjects: Array<any> = [];
+let subjects: Array<{
+    name?: string;
+    subject: string;
+    description?: string;
+    ariaLabel?: string;
+    id: number;
+    checked?: boolean;
+}> = [];
+let subtopics: Array<{
+    subtopic: string;
+    id: number;
+    checked: boolean;
+    subject_id: number;
+}> = [];
 let resourceTypes: Array<{ type: string; id: number; checked: boolean }> = [];
+
+function getFilterButtonIndexById(id: string) {
+    console.log(
+        values.clearFilters.filterButtons.findIndex(
+            (button) => button.id === id
+        )
+    );
+    return (
+        values.clearFilters.filterButtons.findIndex(
+            (button) => button.id === id
+        ) || -1
+    );
+}
 
 const { data: gradeData, error: gradeError } = await supabase
     .from("grade_level")
@@ -35,6 +59,23 @@ if (gradeError) {
         });
     });
     grades.sort((a, b) => (a.id > b.id ? 0 : -1));
+}
+
+const { data: subTopicData, error: subTopicError } = await supabase
+    .from("post_subtopic")
+    .select("*");
+
+if (subTopicError) {
+    console.log("supabase error: " + subTopicError.message);
+} else {
+    subTopicData.forEach((subtopic) => {
+        subtopics.push({
+            subtopic: subtopic.subtopic,
+            id: subtopic.id,
+            checked: false,
+            subject_id: subtopic.subject_id,
+        });
+    });
 }
 
 const { data: resourceTypesData, error: resourceTypesError } = await supabase
@@ -76,7 +117,7 @@ let allSubjectInfo: Array<{
     name: string;
     description: string;
     ariaLabel: string;
-    id: string;
+    id: number;
     checked: boolean;
 }> = [];
 
@@ -84,7 +125,7 @@ for (let i = 0; i < subjectData.length; i++) {
     allSubjectInfo.push({
         ...subjectData[i],
         ...subjects.find(
-            (itmInner) => itmInner.id.toString() === subjectData[i].id
+            (itmInner) => itmInner.id === Number(subjectData[i].id)
         ),
         checked: false,
     });
@@ -101,41 +142,107 @@ interface Props {
     clearFilters: boolean;
     secularFilter: (secular: boolean) => void;
     clearSecular: () => void;
+    filterPostsByDownloadable: (downloadable: boolean) => void;
+    clearDownloadFilter: () => void;
+    filterPostsBySubtopic: (subtopics: Array<number>) => void;
+    clearSubtopics: () => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
+    //Grades
+    //Whether to show the grades window or not
     const [showGrades, setShowGrades] = createSignal(false);
-    const [showResourceTypes, setShowResourceTypes] = createSignal(false);
-    const [showSubjects, setShowSubjects] = createSignal(false);
-    const [showFilters, setShowFilters] = createSignal(false);
+    //The list of all grades
     const [grade, setGrade] =
         createSignal<Array<{ grade: string; id: number; checked: boolean }>>(
             grades
         );
+    //The list of selected grades
+    const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
+    //The number of selected grades
+    const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
+
+    //Resource Types
+    //Whether to show the resource types window or not
+    const [showResourceTypes, setShowResourceTypes] = createSignal(false);
+    //The list of all resource types
     const [resourceType, setResourceType] =
         createSignal<Array<{ type: string; id: number; checked: boolean }>>(
             resourceTypes
         );
-    const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
+    //The list of selected resource types
     const [resourceTypesFilters, setResourceTypesFilters] = createSignal<
         Array<number>
     >([]);
-    const [subject, setSubject] = createSignal<Array<any>>(allSubjectInfo);
+    //The number of selected resource types
+    const [resourceTypesFilterCount, setResourceTypesFilterCount] =
+        createSignal<number>(0);
+
+    //Whether to show the filters window or not (for mobile)
+    const [showFilters, setShowFilters] = createSignal(false);
+    //Whether to show the filter number or not
+    const [showFilterNumber, setShowFilterNumber] = createSignal(false);
+
+    //Subjects
+    //Whether to show the subjects window or not
+    const [showSubjects, setShowSubjects] = createSignal(false);
+    //The list of all subjects
+    const [subject, setSubject] = createSignal<
+        Array<{
+            name: string;
+            description: string;
+            ariaLabel: string;
+            id: number;
+            checked: boolean;
+        }>
+    >(allSubjectInfo);
+    //The list of all subtopics
+    const [subtopic, setSubtopic] = createSignal<
+        Array<{
+            subtopic: string;
+            id: number;
+            checked: boolean;
+            subject_id: number;
+        }>
+    >(subtopics);
+    //The expanded subject
+    const [expandedSubject, setExpandedSubject] = createSignal<number | null>(
+        null
+    );
+    //The list of selected subjects
     const [selectedSubjects, setSelectedSubjects] = createSignal<Array<number>>(
         []
     );
-    const [gradeFilterCount, setGradeFilterCount] = createSignal<number>(0);
-    const [resourceTypesFilterCount, setResourceTypesFilterCount] =
-        createSignal<number>(0);
+    //The list of selected subtopics
+    const [selectedSubtopics, setSelectedSubtopics] = createSignal<
+        Array<number>
+    >([]);
+    //The number of selected subjects
     const [subjectFilterCount, setSubjectFilterCount] = createSignal<number>(0);
-    const [showFilterNumber, setShowFilterNumber] = createSignal(false);
+
+    //Secular
+    //Whether to show the secular window or not
     const [showSecular, setShowSecular] = createSignal<boolean>(false);
+    //Whether to filter for secular or not
     const [selectedSecular, setSelectedSecular] = createSignal<boolean>(false);
+    //The number of selected secular filers (1 or 0)
     const [secularInNumber, setSecularInNumber] = createSignal<number>(0);
+
+    //Downloadable vs External Resources
+    //Whether to show the downloadable window or not
+    const [showDownloadable, setShowDownloadable] =
+        createSignal<boolean>(false);
+    //Whether to filter for downloadable or not
+    const [selectDownloadable, setSelectDownloadable] =
+        createSignal<boolean>(false);
+    //The number of selected downloadable filers (1 or 0)
+    const [downloadableFilterNumber, setDownloadableFilterNumber] =
+        createSignal<number>(0);
 
     const screenSize = useStore(windowSize);
 
     onMount(() => {
+        console.log("Subtopics", subtopic());
         const localSubjects = localStorage.getItem("selectedSubjects");
         const localGrades = localStorage.getItem("selectedGrades");
         const localResourceTypes = localStorage.getItem(
@@ -143,7 +250,9 @@ export const FiltersMobile: Component<Props> = (props) => {
         );
         if (localSubjects !== null && localSubjects) {
             setSelectedSubjects([...JSON.parse(localSubjects).map(Number)]);
-            setSubjectFilterCount(selectedSubjects().length);
+            setSubjectFilterCount(
+                selectedSubjects().length + selectedSubtopics().length
+            );
             checkSubjectBoxes();
         } else {
             setSelectedSubjects([]);
@@ -171,11 +280,29 @@ export const FiltersMobile: Component<Props> = (props) => {
     });
 
     createEffect(() => {
+        if (screenSize() !== "sm") {
+            setShowFilters(true);
+            setShowGrades(false);
+            setShowSubjects(false);
+            setShowResourceTypes(false);
+            setShowDownloadable(false);
+        } else {
+            setShowFilters(false);
+        }
+    });
+
+    createEffect(() => {
+        console.log("expanded subject", expandedSubject());
+    });
+
+    //Check if any filters are selected
+    createEffect(() => {
         if (
             gradeFilterCount() === 0 &&
             subjectFilterCount() === 0 &&
             resourceTypesFilterCount() === 0 &&
-            selectedSecular() === false
+            selectedSecular() === false &&
+            selectDownloadable() === false
         ) {
             setShowFilterNumber(false);
         } else {
@@ -183,22 +310,8 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     });
 
-    createEffect(() => {
-        if (props.clearFilters) {
-            clearAllFiltersMobile();
-        }
-    });
-
     function checkSubjectBoxes() {
         selectedSubjects().map((item) => {
-            // console.log(item);
-            // console.log(subject());
-            // subject().map((subject) => {
-            //     if (subject.id === item) {
-            //         console.log(subject, item, "matched");
-            //     }
-            //     console.log("no match");
-            // });
             setSubject((prevSubject) =>
                 prevSubject.map((subject) => {
                     if (subject.id === item) {
@@ -291,6 +404,7 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
     const clearAllFiltersMobile = () => {
+        console.log("clear all filters mobile");
         props.clearAllFilters();
         setGrade((prevGrades) =>
             prevGrades.map((grade) => ({ ...grade, checked: false }))
@@ -303,15 +417,26 @@ export const FiltersMobile: Component<Props> = (props) => {
         );
         setGradeFilters([]);
         setSelectedSubjects([]);
+        setSelectedSubtopics([]);
         setResourceTypesFilters([]);
         setGradeFilterCount(0);
         setSubjectFilterCount(0);
         setResourceTypesFilterCount(0);
         setShowFilterNumber(false);
         setSelectedSecular(false);
+        setSelectDownloadable(false);
         localStorage.removeItem("selectedGrades");
         localStorage.removeItem("selectedSubjects");
         localStorage.removeItem("selectedResourceTypes");
+    };
+
+    const clearSubtopics = () => {
+        if (selectedSubtopics().length === 0) {
+            return;
+        } else {
+            setSelectedSubtopics([]);
+            props.filterPostsBySubtopic(selectedSubtopics());
+        }
     };
 
     const clearSubjectFiltersMobile = () => {
@@ -319,7 +444,11 @@ export const FiltersMobile: Component<Props> = (props) => {
         setSubject((prevSubjects) =>
             prevSubjects.map((subject) => ({ ...subject, checked: false }))
         );
+        setSubtopic((prevSubtopics) =>
+            prevSubtopics.map((subtopic) => ({ ...subtopic, checked: false }))
+        );
         setSelectedSubjects([]);
+        setSelectedSubtopics([]);
         setSubjectFilterCount(0);
         localStorage.removeItem("selectedSubjects");
     };
@@ -349,34 +478,54 @@ export const FiltersMobile: Component<Props> = (props) => {
         setResourceTypesFilters([]);
     };
 
+    const clearDownloadableFilter = () => {
+        props.clearDownloadFilter();
+        setSelectDownloadable(false);
+        setDownloadableFilterNumber(0);
+    };
+
     const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = Number(currCheckbox.id);
+        let currCheckboxID = Number(currCheckbox.getAttribute("data-id"));
 
         setGradesFilter(currCheckboxID);
     };
 
     const resourceTypesCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = Number(currCheckbox.id);
+        let currCheckboxID = Number(currCheckbox.getAttribute("data-id"));
 
         setResourceTypesFilter(currCheckboxID);
     };
 
     const subjectCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
-        let currCheckboxID = Number(currCheckbox.id);
+        let currCheckboxID = Number(currCheckbox.getAttribute("data-id"));
 
         setSubjectFilter(currCheckboxID);
     };
 
     const secularCheckboxClick = (e: Event) => {
-        if ((e.target as HTMLInputElement)?.checked !== null) {
-            setSelectedSecular((e.target as HTMLInputElement)?.checked);
+        const target = e.target as HTMLInputElement;
+        if (target?.checked !== null) {
+            setSelectedSecular(target?.checked);
             props.secularFilter(selectedSecular());
         }
         if (selectedSecular() === true) {
             setSecularInNumber(1);
+        }
+    };
+
+    const downloadableCheckboxClick = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        if (target.checked !== null) {
+            setSelectDownloadable(target.checked);
+            props.filterPostsByDownloadable(selectDownloadable());
+        }
+        if (selectDownloadable() === true) {
+            setDownloadableFilterNumber(1);
+        } else {
+            setDownloadableFilterNumber(0);
         }
     };
 
@@ -386,11 +535,12 @@ export const FiltersMobile: Component<Props> = (props) => {
                 (el) => el !== id
             );
             setSelectedSubjects(currentSubjectFilters);
-            setSubjectFilterCount(selectedSubjects().length);
         } else {
             setSelectedSubjects([...selectedSubjects(), id]);
-            setSubjectFilterCount(selectedSubjects().length);
         }
+        setSubjectFilterCount(
+            selectedSubjects().length + selectedSubtopics().length
+        );
         //Refactor send the full list just let filters track the contents and send the whole thing to main
         props.filterPostsBySubject(id);
 
@@ -406,10 +556,118 @@ export const FiltersMobile: Component<Props> = (props) => {
                 return subject;
             })
         );
+        syncSubTopicsWithSubjects();
     }
 
+    function updateSubtopicArray(e: Event) {
+        console.log("updating subtopic array");
+        const target = e.target as HTMLInputElement;
+        const targetValue = Number(target.getAttribute("data-id"));
+        if (target.checked === true) {
+            setSelectedSubtopics([...selectedSubtopics(), targetValue]);
+        } else if (target.checked === false) {
+            if (selectedSubtopics().includes(targetValue)) {
+                setSelectedSubtopics(
+                    selectedSubtopics().filter((value) => value !== targetValue)
+                );
+            }
+        }
+        setSubjectFilterCount(
+            selectedSubjects().length + selectedSubtopics().length
+        );
+
+        props.filterPostsBySubtopic(selectedSubtopics());
+
+        setSubtopic((prevSubtopics) =>
+            prevSubtopics.map((subtopic) => {
+                if (subtopic.id === Number(target.getAttribute("data-id"))) {
+                    if (target.checked) {
+                        return { ...subtopic, checked: true };
+                    } else {
+                        return { ...subtopic, checked: false };
+                    }
+                }
+                return subtopic;
+            })
+        );
+
+        syncSubjectsWithSubtopics();
+        console.log(selectedSubtopics());
+    }
+
+    //Track changes in selected subjects and remove subtopics if the subject is removed from the list
+
+    const syncSubTopicsWithSubjects = () => {
+        console.log("Sync subtopics with subjects");
+
+        if (selectedSubjects().length === 0) {
+            setSubtopic((prevSubtopics) =>
+                prevSubtopics.map((subtopic) => ({
+                    ...subtopic,
+                    checked: false,
+                }))
+            );
+            setSelectedSubtopics([]);
+            props.filterPostsBySubtopic([]);
+        } else {
+            setSubtopic((prevSubtopics) =>
+                prevSubtopics.map((subtopic) => {
+                    if (
+                        selectedSubjects().indexOf(subtopic.subject_id) ===
+                            -1 &&
+                        subtopic.checked === true
+                    ) {
+                        setSelectedSubtopics((prev) =>
+                            prev.filter((item) => item !== subtopic.id)
+                        );
+                        return { ...subtopic, checked: false };
+                    } else {
+                        return { ...subtopic };
+                    }
+                })
+            );
+        }
+    };
+
+    createEffect(() => {
+        console.log("Subjects", selectedSubjects());
+    });
+
+    createEffect(() => {
+        console.log("Subtopics", selectedSubtopics());
+    });
+
+    const syncSubjectsWithSubtopics = () => {
+        console.log("Sync subjects with subtopics");
+
+        selectedSubtopics().forEach((subtopicId) => {
+            const subtopicInfo = subtopic().find(
+                (item) => item.id === subtopicId
+            );
+            if (
+                subtopicInfo !== undefined &&
+                selectedSubjects().indexOf(subtopicInfo.subject_id) === -1
+            ) {
+                setSelectedSubjects((prev) => [
+                    ...prev,
+                    subtopicInfo.subject_id,
+                ]);
+                props.filterPostsBySubject(subtopicInfo.subject_id);
+                setSubject((prevSubject) => {
+                    return prevSubject.map((subject) => {
+                        if (subject.id === subtopicInfo.subject_id) {
+                            return { ...subject, checked: true };
+                        } else {
+                            return subject;
+                        }
+                    });
+                });
+            }
+        });
+    };
+
     return (
-        <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-[300px] md:px-0 md:pt-0">
+        <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-1/4 md:min-w-[210px] md:max-w-[300px] md:px-0 md:pt-0">
             <Show when={screenSize() === "sm"}>
                 <button
                     class="w-full"
@@ -419,12 +677,14 @@ export const FiltersMobile: Component<Props> = (props) => {
                             showGrades() === true ||
                             showSubjects() === true ||
                             showSecular() === true ||
-                            showResourceTypes() === true
+                            showResourceTypes() === true ||
+                            showDownloadable() === true
                         ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
                             setShowResourceTypes(false);
+                            setShowDownloadable(false);
                         } else if (showFilters() === true) {
                             setShowFilters(false);
                         } else {
@@ -449,7 +709,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                     {gradeFilterCount() +
                                         subjectFilterCount() +
                                         resourceTypesFilterCount() +
-                                        secularInNumber()}
+                                        secularInNumber() +
+                                        downloadableFilterNumber()}
                                 </p>
                             </div>
                         </Show>
@@ -474,9 +735,9 @@ export const FiltersMobile: Component<Props> = (props) => {
                             onClick={() => {
                                 setShowFilters(false);
 
-                                if (showSubjects() === true) {
-                                    setShowSubjects(false);
-                                }
+                                // if (showSubjects() === true) {
+                                //     setShowSubjects(false);
+                                // }
                                 setShowGrades(!showGrades());
                             }}
                         >
@@ -674,12 +935,65 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
+                        <button
+                            class="w-full"
+                            aria-label={
+                                t("formLabels.downloadable") +
+                                " " +
+                                t("buttons.filters")
+                            }
+                            onClick={() => {
+                                setShowFilters(false);
+                                setShowDownloadable(!showDownloadable());
+                            }}
+                        >
+                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                    {t("formLabels.downloadable")}
+                                </h2>
+
+                                <Show
+                                    when={
+                                        downloadableFilterNumber() > 0 &&
+                                        selectDownloadable() === true
+                                    }
+                                >
+                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                        <p class="dark:btn1Text-DM text-[10px] text-ptext2">
+                                            {downloadableFilterNumber()}
+                                        </p>
+                                    </div>
+                                </Show>
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowRightIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M15 18l6-6-6-6" />
+                                    <path
+                                        stroke-linecap="round"
+                                        d="M21 12h-1"
+                                    />
+                                </svg>
+                            </div>
+                        </button>
+                        {/* Add Additional filter menu buttons here */}
+
                         <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
                             <button
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearAllFiltersMobile}
                             >
-                                {t("clearFilters.filterButtons.0.text")}
+                                {t(`clearFilters.filterButtons.0.text`)}
                             </button>
                             <Show when={screenSize() === "sm"}>
                                 <button
@@ -688,15 +1002,20 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         setShowFilters(false);
                                     }}
                                 >
-                                    {t("clearFilters.filterButtons.5.text")}
+                                    {t(
+                                        `clearFilters.filterButtons.${getFilterButtonIndexById("View-Results")}.text`
+                                    )}
                                 </button>
                             </Show>
                         </div>
                     </div>
                 </Show>
 
+                {/* Individual filter menus */}
+
+                {/* Resource Types */}
                 <Show when={showResourceTypes() === true}>
-                    <div class=" absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <div class="max-h-96 rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:max-h-max">
                         <button
                             class="w-full"
                             onClick={() => {
@@ -731,7 +1050,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
-                        <div class="ml-8 flex flex-wrap">
+                        <div class="ml-8 mt-2 flex max-h-60 flex-wrap overflow-y-auto md:max-h-max">
                             <For each={resourceType()}>
                                 {(item, index) => (
                                     <div class="flex w-5/6 flex-row flex-wrap py-1">
@@ -742,9 +1061,10 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                     t("ariaLabels.checkbox")
                                                 }
                                                 type="checkbox"
-                                                id={item.id.toString()}
+                                                id={`resource-checkbox ${item.id.toString()}`}
+                                                data-id={item.id}
                                                 checked={item.checked}
-                                                class="resourceType mr-4 scale-125 leading-tight"
+                                                class="resourceType mr-4"
                                                 onClick={(e) =>
                                                     resourceTypesCheckboxClick(
                                                         e
@@ -752,27 +1072,33 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 }
                                             />
                                         </div>
-                                        <div class="flex items-center">
+                                        <label
+                                            for={`resource-checkbox ${item.id.toString()}`}
+                                            class="flex items-center"
+                                        >
                                             <span class="text-lg text-ptext1 dark:text-ptext1-DM">
                                                 {item.type}
                                             </span>
-                                        </div>
+                                        </label>
                                     </div>
                                 )}
                             </For>
                         </div>
 
-                        <div class="my-2">
+                        <div class="my-2 mt-2">
                             <button
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearResourceTypesFiltersMobile}
                             >
-                                {t("clearFilters.filterButtons.7.text")}
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Resource-Type")}.text`
+                                )}
                             </button>
                         </div>
                     </div>
                 </Show>
 
+                {/* Grades */}
                 <Show when={showGrades() === true}>
                     <div class="grades-pop-out absolute rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
                         <button
@@ -822,7 +1148,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                     ) + item.grade
                                                 }
                                                 type="checkbox"
-                                                id={item.id.toString()}
+                                                id={`grade-checkbox ${item.id.toString()}`}
+                                                data-id={item.id}
                                                 checked={item.checked}
                                                 class="grade mr-4 scale-125 leading-tight"
                                                 // onClick={() => {
@@ -836,11 +1163,14 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 }
                                             />
                                         </div>
-                                        <div class="flex items-center">
+                                        <label
+                                            for={`grade-checkbox ${item.id.toString()}`}
+                                            class="flex items-center"
+                                        >
                                             <span class="text-lg text-ptext1 dark:text-ptext1-DM">
                                                 {item.grade}
                                             </span>
-                                        </div>
+                                        </label>
                                     </div>
                                 )}
                             </For>
@@ -851,7 +1181,9 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearGradeFiltersMobile}
                             >
-                                {t("clearFilters.filterButtons.2.text")}
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Grade")}.text`
+                                )}
                             </button>
                         </div>
                     </div>
@@ -893,23 +1225,27 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
-                        <div>
-                            <div class="flex flex-row pl-2">
-                                <div class="flex flex-wrap justify-between">
-                                    <div class="w-4/5 px-2 ">
-                                        {t("formLabels.secular")}
-                                    </div>
-                                </div>
-                                <div>
+                        <div class="ml-8 mt-2 flex flex-wrap">
+                            <div class="flex w-5/6 flex-row flex-wrap py-1">
+                                <div class="flex items-center">
                                     <input
                                         type="checkbox"
-                                        class={`mr-2 leading-tight`}
+                                        class={`secular mr-2 scale-125 leading-tight`}
+                                        id="secular-checkbox"
                                         checked={selectedSecular()}
                                         onClick={(e) => {
                                             secularCheckboxClick(e);
                                         }}
                                     />
                                 </div>
+                                <label
+                                    for="secular-checkbox"
+                                    class="flex flex-wrap justify-between"
+                                >
+                                    <div class="w-4/5 px-2 ">
+                                        {t("formLabels.secular")}
+                                    </div>
+                                </label>
                             </div>
                         </div>
 
@@ -918,14 +1254,17 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearSecularFilterMobile}
                             >
-                                {t("clearFilters.filterButtons.6.text")}
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Secular")}.text`
+                                )}
                             </button>
                         </div>
                     </div>
                 </Show>
 
+                {/* Subjects */}
                 <Show when={showSubjects() === true}>
-                    <div class="subjects-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                    <div class="subjects-pop-out max-h-96 rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:max-h-[75svh]">
                         <button
                             class="w-full"
                             onClick={() => {
@@ -959,30 +1298,106 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
-                        <div class="mb-2 pb-8">
-                            {subject()?.map((item) => (
-                                <div class="flex flex-row pl-2">
-                                    <div class="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            id={item.id}
-                                            checked={item.checked}
-                                            class={`subject ${item.id.toString()} mr-2 scale-125 leading-tight`}
-                                            onClick={(e) =>
-                                                subjectCheckboxClick(e)
-                                            }
-                                        />
-                                    </div>
+                        <div class="max-h-[60svh] w-full overflow-y-auto pb-8 pl-2 pt-2">
+                            <For each={subject()}>
+                                {(subject) => (
+                                    <div class="flex flex-col pb-2 pl-2">
+                                        <div class="flex flex-row justify-between">
+                                            <div class="mt-1 flex flex-row">
+                                                <div class="flex items-center">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={`subject-checkbox ${subject.id.toString()}`}
+                                                        data-id={subject.id}
+                                                        checked={
+                                                            subject.checked
+                                                        }
+                                                        class={`mr-2 scale-125 leading-tight`}
+                                                        onClick={(e) =>
+                                                            subjectCheckboxClick(
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
 
-                                    <div class="flex w-full items-center text-start">
-                                        <span class="w-full text-ptext1 dark:text-ptext1-DM">
-                                            <p class="ml-4 border-b border-border1 py-2 text-lg text-ptext1 dark:border-border1-DM dark:text-ptext1-DM ">
-                                                {item.name}
-                                            </p>
-                                        </span>
+                                                <label
+                                                    for={`subject-checkbox ${subject.id.toString()}`}
+                                                    class="flex items-center"
+                                                >
+                                                    <span class="text-lg text-ptext1 dark:text-ptext1-DM">
+                                                        {subject.name}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <button
+                                                class={`mr-2 ${expandedSubject() === subject.id ? "hidden" : ""}`}
+                                                onclick={() =>
+                                                    setExpandedSubject(
+                                                        subject.id
+                                                    )
+                                                }
+                                            >
+                                                +
+                                            </button>
+                                            <button
+                                                class={`mr-2 ${expandedSubject() === subject.id ? "" : "hidden"}`}
+                                                onclick={() =>
+                                                    setExpandedSubject(null)
+                                                }
+                                            >
+                                                -
+                                            </button>
+                                        </div>
+                                        <div
+                                            id="subtopicCheckboxes"
+                                            class={`flex w-full flex-col items-start pb-4 pl-4 ${expandedSubject() === subject.id ? "" : "hidden"}`}
+                                        >
+                                            <For each={subtopic()}>
+                                                {(subtopic) =>
+                                                    subtopic.subject_id ===
+                                                        subject.id && (
+                                                        <>
+                                                            <div class="mt-1 flex flex-row py-1">
+                                                                <div class="flex items-center">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        class="block"
+                                                                        id={`subtopic-checkbox ${subtopic.id.toString()}`}
+                                                                        data-id={
+                                                                            subtopic.id
+                                                                        }
+                                                                        checked={
+                                                                            subtopic.checked
+                                                                        }
+                                                                        onClick={(
+                                                                            e
+                                                                        ) =>
+                                                                            updateSubtopicArray(
+                                                                                e
+                                                                            )
+                                                                        }
+                                                                    />
+                                                                </div>
+                                                                <label
+                                                                    for={`subtopic-checkbox ${subtopic.id.toString()}`}
+                                                                    class="flex items-center"
+                                                                >
+                                                                    <span class=" pl-2 text-start">
+                                                                        {
+                                                                            subtopic.subtopic
+                                                                        }
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                        </>
+                                                    )
+                                                }
+                                            </For>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                )}
+                            </For>
                         </div>
 
                         <div class="my-2">
@@ -990,11 +1405,93 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearSubjectFiltersMobile}
                             >
-                                {t("clearFilters.filterButtons.1.text")}
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Subjects")}.text`
+                                )}
                             </button>
                         </div>
                     </div>
                 </Show>
+
+                {/* Downloadable */}
+                <Show when={showDownloadable() === true}>
+                    <div class="downloadable-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                if (showFilters() === false) {
+                                    setShowDownloadable(false);
+                                    setShowFilters(true);
+                                }
+                            }}
+                        >
+                            <div class="flex items-center border-b border-border1 pb-1 pl-2 dark:border-border1-DM">
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowLeftIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M9 6l-6 6 6 6" />
+                                    <path stroke-linecap="round" d="M3 12h1" />
+                                </svg>
+                                <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {t("formLabels.downloadable")}
+                                </h2>
+                            </div>
+                        </button>
+
+                        <div class="ml-8 mt-2 flex flex-wrap">
+                            <div class="flex w-5/6 flex-row flex-wrap py-1">
+                                <div class="flex items-center">
+                                    <input
+                                        aria-label={
+                                            t("formLabels.downloadable") +
+                                            " " +
+                                            t("ariaLabels.checkbox")
+                                        }
+                                        type="checkbox"
+                                        id="downloadable"
+                                        class={`secular mr-2 scale-125 leading-tight`}
+                                        checked={selectDownloadable()}
+                                        onClick={(e) => {
+                                            downloadableCheckboxClick(e);
+                                        }}
+                                    />
+                                </div>
+                                <label
+                                    for="downloadable"
+                                    class="flex flex-wrap justify-between"
+                                >
+                                    <div class="w-4/5 px-2 ">
+                                        {t("formLabels.downloadable")}
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="my-2">
+                            <button
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={clearDownloadableFilter}
+                            >
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Downloadable")}.text`
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </Show>
+
+                {/* Add new filter rendering here */}
             </div>
         </div>
     );

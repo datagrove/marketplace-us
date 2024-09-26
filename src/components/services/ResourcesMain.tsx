@@ -1,24 +1,28 @@
 import type { Component } from "solid-js";
-import type { Post } from "@lib/types";
 import { createSignal, createEffect, onMount, Show, onCleanup } from "solid-js";
-import { ViewCard } from "./ViewCard";
-import { MobileViewCard } from "./MobileViewCard";
-import { FiltersMobile } from "./FiltersMobile";
-import { SearchBar } from "./SearchBar";
-import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import type { Post } from "@lib/types";
+import { ViewCard } from "@components/services/ViewCard";
+import { MobileViewCard } from "@components/services/MobileViewCard";
+import { FiltersMobile } from "@components/services/FiltersMobile";
+import { SearchBar } from "@components/services/SearchBar";
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import type { FilterPostsParams } from "@lib/types";
+import { debounce } from "@lib/utils/debounce";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
-async function fetchPosts({
+async function postRequest({
     subjectFilters,
     gradeFilters,
     searchString,
     resourceFilters,
     secularFilter,
+    downloadable,
+    subtopics,
     listing_status,
     draft_status,
     lang,
@@ -33,6 +37,8 @@ async function fetchPosts({
             searchString: searchString,
             resourceFilters: resourceFilters,
             secularFilter: secularFilter,
+            downloadable: downloadable,
+            subtopics: subtopics,
             lang: lang,
             listing_status: listing_status,
             draft_status: draft_status,
@@ -45,16 +51,22 @@ async function fetchPosts({
     return data;
 }
 
+const fetchPosts = debounce(postRequest, 500);
+
 export const ResourcesView: Component = () => {
     const [posts, setPosts] = createSignal<Array<Post>>([]);
     const [searchPost, setSearchPost] = createSignal<Array<Post>>([]);
     const [subjectFilters, setSubjectFilters] = createSignal<Array<number>>([]);
+    const [subtopicFilters, setSubtopicFilters] = createSignal<Array<number>>(
+        []
+    );
     const [gradeFilters, setGradeFilters] = createSignal<Array<number>>([]);
     const [resourceTypesFilters, setResourceTypeFilters] = createSignal<
         Array<number>
     >([]);
     const [searchString, setSearchString] = createSignal<string>("");
     const [secularFilters, setSecularFilters] = createSignal<boolean>(false);
+    const [downloadFilter, setDownloadFilter] = createSignal<boolean>(false);
     const [clearFilters, setClearFilters] = createSignal<boolean>(false);
     const [page, setPage] = createSignal<number>(1);
     const [loading, setLoading] = createSignal<boolean>(false);
@@ -134,9 +146,15 @@ export const ResourcesView: Component = () => {
         localStorage.removeItem("selectedResourceTypes");
     });
 
+    let noPostsMessageTimeout: NodeJS.Timeout;
+
     const fetchPaginatedPosts = async (pageValue: number) => {
         const noPostsMessage = document.getElementById("no-posts-message");
 
+        if (noPostsMessageTimeout) {
+            noPostsMessage?.classList.add("hidden");
+            clearTimeout(noPostsMessageTimeout);
+        }
         setLoading(true);
         const from = (pageValue - 1) * postsPerPage;
         const to = from + postsPerPage - 1;
@@ -147,6 +165,8 @@ export const ResourcesView: Component = () => {
             searchString: searchString(),
             resourceFilters: resourceTypesFilters(),
             secularFilter: secularFilters(),
+            downloadable: downloadFilter(),
+            subtopics: subtopicFilters(),
             listing_status: true,
             draft_status: false,
             lang: lang,
@@ -162,7 +182,7 @@ export const ResourcesView: Component = () => {
         } else {
             if (pageValue === 1) {
                 noPostsMessage?.classList.remove("hidden"); // Show no-posts message on the first page
-                setTimeout(() => {
+                noPostsMessageTimeout = setTimeout(() => {
                     noPostsMessage?.classList.add("hidden");
                     clearAllFilters();
                 }, 3000);
@@ -202,69 +222,6 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
-    let timeouts: (string | number | NodeJS.Timeout | undefined)[] = [];
-
-    // const filterPosts = async () => {
-    //     console.log("Filtering posts...");
-    //     const noPostsMessage = document.getElementById("no-posts-message");
-
-    //     const res = await fetchPosts({
-    //         subjectFilters: subjectFilters(),
-    //         gradeFilters: gradeFilters(),
-    //         searchString: searchString(),
-    //         resourceFilters: resourceTypesFilters(),
-    //         secularFilter: secularFilters(),
-    //         lang: lang,
-    //         listing_status: true,
-    //         draft_status: false,
-    //     });
-
-    //     console.log(res);
-
-    //     if (
-    //         res.body === null ||
-    //         res.body === undefined ||
-    //         res.body.length < 1
-    //     ) {
-    //         noPostsMessage?.classList.remove("hidden");
-    //         setTimeout(() => {
-    //             noPostsMessage?.classList.add("hidden");
-    //         }, 3000);
-
-    //         setPosts([]);
-    //         console.error();
-
-    //         timeouts.push(
-    //             setTimeout(() => {
-    //                 //Clear all filters after the timeout otherwise the message immediately disappears (probably not a perfect solution)
-    //                 clearAllFilters();
-    //             }, 3000)
-    //         );
-
-    //         let allPosts = await fetchPosts({
-    //             subjectFilters: [],
-    //             gradeFilters: [],
-    //             searchString: "",
-    //             resourceFilters: [],
-    //             secularFilter: false,
-    //             lang: lang,
-    //             listing_status: true,
-    //             draft_status: false,
-    //         });
-
-    //         setPosts(allPosts);
-    //         console.log(allPosts);
-    //     } else {
-    //         for (let i = 0; i < timeouts.length; i++) {
-    //             clearTimeout(timeouts[i]);
-    //         }
-
-    //         timeouts = [];
-
-    //         setPosts(res.body);
-    //     }
-    // };
-
     const filterPostsByGrade = (grade: number) => {
         if (gradeFilters().includes(grade)) {
             let currentGradeFilters = gradeFilters().filter(
@@ -296,7 +253,18 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
+    const filterPostsByDownloadable = (downloadable: boolean) => {
+        setDownloadFilter(downloadable);
+        triggerNewSearch();
+    };
+
+    const filterPostsBySubtopic = (subtopics: Array<number>) => {
+        setSubtopicFilters(subtopics);
+        triggerNewSearch();
+    };
+
     const clearAllFilters = () => {
+        console.log("clear all filters RM triggered");
         let searchInput = document.getElementById(
             "headerSearch"
         ) as HTMLInputElement;
@@ -313,6 +281,8 @@ export const ResourcesView: Component = () => {
         setGradeFilters([]);
         setResourceTypeFilters([]);
         setSecularFilters(false);
+        setDownloadFilter(false);
+        setSubtopicFilters([]);
 
         triggerNewSearch();
         setClearFilters(false);
@@ -320,6 +290,7 @@ export const ResourcesView: Component = () => {
 
     const clearSubjects = () => {
         setSubjectFilters([]);
+        setSubtopicFilters([]);
         triggerNewSearch();
     };
 
@@ -338,6 +309,16 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
+    const clearDownloadFilter = () => {
+        setDownloadFilter(false);
+        triggerNewSearch();
+    };
+
+    const clearSubtopicsFilter = () => {
+        setSubtopicFilters([]);
+        triggerNewSearch();
+    };
+
     return (
         <div class="">
             <div>
@@ -345,7 +326,7 @@ export const ResourcesView: Component = () => {
                 {/* <SearchBar search={ searchString } /> */}
             </div>
 
-            <Show when={screenSize() === "sm"}>
+            <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
                 <FiltersMobile
                     clearSubjects={clearSubjects}
                     clearGrade={clearGrade}
@@ -355,33 +336,20 @@ export const ResourcesView: Component = () => {
                     filterPostsBySubject={setCategoryFilter}
                     secularFilter={filterPostsBySecular}
                     clearSecular={clearSecular}
-                    filterPostsByResourceTypes={filterPostsByResourceTypes}
                     clearResourceTypes={clearResourceTypes}
+                    filterPostsByResourceTypes={filterPostsByResourceTypes}
+                    clearDownloadFilter={clearDownloadFilter}
+                    filterPostsByDownloadable={filterPostsByDownloadable}
+                    filterPostsBySubtopic={filterPostsBySubtopic}
+                    clearSubtopics={clearSubtopicsFilter}
                 />
-            </Show>
 
-            <Show when={screenSize() === "sm"}>
-                <div class="mb-2 rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
-                    <h1 class="text-lg text-btn1Text dark:text-ptext1">
-                        {t("pageTitles.services")}
-                    </h1>
-                </div>
-            </Show>
-
-            <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
-                <Show when={screenSize() !== "sm"}>
-                    <FiltersMobile
-                        clearSubjects={clearSubjects}
-                        clearGrade={clearGrade}
-                        clearAllFilters={clearAllFilters}
-                        clearFilters={clearFilters()}
-                        filterPostsByGrade={filterPostsByGrade}
-                        filterPostsBySubject={setCategoryFilter}
-                        secularFilter={filterPostsBySecular}
-                        clearSecular={clearSecular}
-                        clearResourceTypes={clearResourceTypes}
-                        filterPostsByResourceTypes={filterPostsByResourceTypes}
-                    />
+                <Show when={screenSize() === "sm"}>
+                    <div class="mb-2 w-full rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
+                        <h1 class="text-lg text-btn1Text dark:text-ptext1">
+                            {t("pageTitles.services")}
+                        </h1>
+                    </div>
                 </Show>
 
                 <div class="w-11/12 items-center md:w-8/12 md:flex-1">

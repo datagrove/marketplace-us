@@ -263,6 +263,7 @@ export const French = {
     secular: "Laïque",
     resourceLinks: "Liens vers les ressources",
     draft: "Brouillon",
+    downloadable: "Téléchargeable"
   },
 
   postLabels: {
@@ -527,43 +528,43 @@ export const French = {
         name: "Art et Musique",
         description: "Description Musique",
         ariaLabel: "Musique",
-        id: "3",
+        id: 3,
       },
       {
         name: "Vacances",
         description: "Description Vacances",
         ariaLabel: "Vacances",
-        id: "4",
+        id: 4,
       },
       {
         name: "Matematique",
         description: "Description Matematique",
         ariaLabel: "Matematique",
-        id: "5",
+        id: 5,
       },
       {
         name: "Science",
         description: "Description Science",
         ariaLabel: "Science",
-        id: "6",
+        id: 6,
       },
       {
         name: "Etudes sociale",
         description: "Description Etude Sociale",
         ariaLabel: "Etudes Sociale",
-        id: "7",
+        id: 7,
       },
       {
         name: "Spécialité",
         description: "Description Spécialité",
         ariaLabel: "Spécialité",
-        id: "8",
+        id: 8,
       },
       {
         name: "Arts de la langue anglaise",
         description: "Description Arts de la langue anglaise",
         ariaLabel: "Arts de la langue anglaise",
-        id: "9",
+        id: 9,
       },
       // Add more products as needed
     ],
@@ -678,29 +679,17 @@ export const French = {
 
   clearFilters: {
     filterButtons: [
+      { id: "Clear-All", text: "Effacer tous les filtres", ariaLabel: "Effacer tous les filtres" },
+      { id: "Clear-Subjects", text: "Effacer les sujets", ariaLabel: "Effacer les filtres de sujet" },
       {
-        text: "Effacer Tous Les Filtres",
-        ariaLabel: "Effacer Tous Les Filtres",
+        id: "Clear-Grade",
+        text: "Effacer la note",
+        ariaLabel: "Effacer le filtre de qualité",
       },
-      {
-        text: "Effacer le Filtre de Catégorie",
-        ariaLabel: "Effacer le Filtre de Catégorie",
-      },
-      {
-        text: "Effacer le Filtre des Grandes Municipalités",
-        ariaLabel: "Effacer le Filtre des Grandes Municipalités",
-      },
-      {
-        text: "Effacer le Filtre des Municipalités Mineures",
-        ariaLabel: "Effacer le Filtre des Municipalités Mineures",
-      },
-      {
-        text: "Effacer le Filtre de District de Gouvernement",
-        ariaLabel: "Effacer le Filtre de District de Gouvernement",
-      },
-      { text: "Voir les Résultats", ariaLabel: "Voir les Résultats" },
-      { text: "Propre Laïque", ariaLabel: "Propre Laïque" },
-      { text: "Propre Type de Ressource", ariaLabel: "Propre Type de Ressource" },
+      { id: "View-Results", text: "Afficher les résultats", ariaLabel: "Afficher les résultats" },
+      { id: "Clear-Secular", text: "Clair Laïque", ariaLabel: "Effacer le filtre laïque" },
+      { id: "Clear-Resource-Type", text: "Effacer le type de ressource", ariaLabel: "Effacer le filtre de type de ressource" },
+      { id: "Clear-Downloadable", text: "Effacer téléchargeable", ariaLabel: "Effacer le filtre téléchargeable" },
     ],
   },
 
