@@ -108,6 +108,7 @@ export const French = {
     filters: "Filtres",
     faq: "Centre d'Aide",
     addToCart: "Ajouter au panier",
+    addAllToCart: "Ajouter tout panier",
     stripeSetup: "Configuration de Stripe",
     stripeLogin: "Connexion à Stripe",
     proceedToCheckout: "Passer à la caisse",

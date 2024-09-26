@@ -103,6 +103,7 @@ export interface uiObject {
     filters: string;
     faq: string;
     addToCart: string;
+    addAllToCart: string;
     stripeSetup: string;
     stripeLogin: string;
     proceedToCheckout: string;

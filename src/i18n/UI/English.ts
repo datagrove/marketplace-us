@@ -111,6 +111,7 @@ export const English = {
     filters: "Filters",
     faq: "Help Center",
     addToCart: "Add to Cart",
+    addAllToCart: "Add All to Cart",
     stripeSetup: "Stripe Setup",
     stripeLogin: "Stripe Login",
     proceedToCheckout: "Proceed to Checkout",

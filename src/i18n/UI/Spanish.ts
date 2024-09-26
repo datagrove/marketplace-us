@@ -1,3 +1,5 @@
+import { AddAllToCart } from "@components/common/cart/AddAllToCart";
+
 export const Spanish = {
   textDirection: "ltr",
   siteDescription: "Su comunidad para recursos de aprendizaje de calidad.",
@@ -112,6 +114,7 @@ export const Spanish = {
     filters: "Filtros",
     faq: "Centro de Ayuda",
     addToCart: "añadir a la cesta",
+    AddAllToCart: "añadir todo a la cesta",
     stripeSetup: "Configuración de Stripe",
     stripeLogin: "Iniciar sesión Stripe",
     proceedToCheckout: "Pasar por la caja",
