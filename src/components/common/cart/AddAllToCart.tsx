@@ -73,7 +73,7 @@ export const AddAllToCart: Component<Props> = (props: Props) => {
             <button
                 onclick={(e) => clickHandler(e)}
                 class="btn-cart"
-                // aria-label={t("buttons.addToCart") + " " + props.item.title}
+                aria-label={t("buttons.addAllToCart")}
                 id={"addAllToCart"}
                 onAnimationEnd={(elem) => {
                     elem.target.classList.remove("animate-click");
