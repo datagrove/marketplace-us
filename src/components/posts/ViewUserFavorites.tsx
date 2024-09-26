@@ -14,6 +14,7 @@ import { MobileViewCard } from "@components/services/MobileViewCard.tsx";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { downloadPostImage, downloadUserImage } from "@lib/imageHelper.tsx";
+import { AddAllToCart } from "@components/common/cart/AddAllToCart.tsx";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -107,6 +108,7 @@ export const ViewUserFavorites: Component = () => {
                     >
                         {/* <ViewPurchaseCard posts={favoritedItems()} /> */}
                         <ViewCard posts={favoritedItems()} />
+                        <AddAllToCart favorites={favoritedItems()} />
                     </Show>
 
                     <Show
@@ -115,6 +117,7 @@ export const ViewUserFavorites: Component = () => {
                         }
                     >
                         <MobileViewCard lang={lang} posts={favoritedItems()} />
+                        <AddAllToCart favorites={favoritedItems()} />
                     </Show>
                     <Show when={favoritedItems().length === 0}>
                         <p class="mb-6 italic">
