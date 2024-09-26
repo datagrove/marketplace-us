@@ -136,6 +136,7 @@ export const Spanish = {
     editPost: "Editar",
     getLinks: "Obtener enlaces",
     checkoutAsGuest: "Comprar como Invitado",
+    reviewResource: "Reseña",
   },
 
   messages: {
@@ -266,6 +267,16 @@ export const Spanish = {
     resourceLinks: "Enlaces de Recurso",
     draft: "Borrador",
     downloadable: "Descargable",
+    whatDidYouThink: "¿Qué pensó Ud?",
+    overallRating: "Calificación General",
+    reviewQ1: "Como se describe",
+    reviewQ2: "Apropiado para edad/grado",
+    reviewQ3: "Atractivo",
+    reviewQ4: "Alta calidad",
+    reviewQ5: "Fácil de usar/implementar",
+    reviewQ6: "Precio justo",
+    reviewTitle: "Títula de la Calificación",
+    reviewText: "Texto de la Calificación",
   },
 
   postLabels: {
@@ -276,6 +287,8 @@ export const Spanish = {
     slide: "Diapositiva",
     creatorProfileImage: "Imagen de Perfil del Proveedor",
     userProfileImage: "Imagen de Perfil del Usere",
+    yourRating: "Tu Calificatión",
+    reviews: "Críticas",
     subtopics: "Temas",
   },
 

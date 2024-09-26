@@ -133,6 +133,7 @@ export const French = {
     editPost: "Editer",
     getLinks: "Obtenir des Liens",
     checkoutAsGuest: "Passer en tant qu'invite",
+    reviewResource: "Critique",
   },
 
   messages: {
@@ -263,7 +264,17 @@ export const French = {
     secular: "Laïque",
     resourceLinks: "Liens vers les ressources",
     draft: "Brouillon",
-    downloadable: "Téléchargeable"
+    downloadable: "Téléchargeable",
+    whatDidYouThink: "Qu'en as-tu pensé?",
+    overallRating: "Note Globale",
+    reviewQ1: "Comme décrit",
+    reviewQ2: "Adapté à l'âge",
+    reviewQ3: "Engageante",
+    reviewQ4: "Haute qualité",
+    reviewQ5: "Facile à utiliser/mettre en œuvre",
+    reviewQ6: "Juste prix",
+    reviewTitle: "Titre de la Revue",
+    reviewText: "Texte de le Revue",
   },
 
   postLabels: {
@@ -274,6 +285,8 @@ export const French = {
     slide: "Diapositive",
     creatorProfileImage: "Image du profil du fournisseur",
     userProfileImage: "Image du profil du user",
+    yourRating: "Votre Note",
+    reviews: "Critiques",
     subtopics: "Sous-thèmes",
   },
 

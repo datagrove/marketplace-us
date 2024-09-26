@@ -215,6 +215,7 @@ export const UserProfileView: Component = () => {
                         <Show when={screenSize() === "sm"}>
                             <UserProfileViewMobile
                                 user={user() ? user()! : null}
+                                session={session()}
                                 editMode={editMode()}
                                 enableEditMode={enableEditMode}
                                 userImage={userImage()}
@@ -487,7 +488,9 @@ export const UserProfileView: Component = () => {
                                     {/* <Show when={ purchasedItems() }> */}
                                     <div>
                                         {/* <ViewCard posts={purchasedItems()} /> */}
-                                        <ViewUserPurchases />
+                                        <ViewUserPurchases
+                                            session={session()}
+                                        />
                                     </div>
                                     {/* </Show>
 

@@ -7,7 +7,6 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils.ts";
 import { ui } from "../../i18n/ui.ts";
 import type { uiObject } from "../../i18n/uiType.ts";
 import type { AuthSession } from "@supabase/supabase-js";
-import { ViewPurchaseCard } from "@components/services/ViewPurchaseCard.tsx";
 import { ViewCard } from "@components/services/ViewCard.tsx";
 import { MobileViewCard } from "@components/services/MobileViewCard.tsx";
 
@@ -105,7 +104,6 @@ export const ViewUserFavorites: Component = () => {
                             favoritedItems().length > 0 && screenSize() !== "sm"
                         }
                     >
-                        {/* <ViewPurchaseCard posts={favoritedItems()} /> */}
                         <ViewCard posts={favoritedItems()} />
                     </Show>
 

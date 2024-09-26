@@ -139,6 +139,17 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 	(13, '2024-03-27 15:53:32.278633+00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a');
 
 
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+--INSERT INTO "public"."orders" ("order_number", "order_date", "customer_id", "order_status") VALUES
+--	('51d1f510-f3e7-48c3-913d-05a1b499cc41', '2024-09-10 14:50:12.592153+00', 'a23376db-215d-49c4-9d9d-791c26579543', true);
+
+
+--
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
 --
 -- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -318,6 +329,30 @@ INSERT INTO "public"."users" ("user_id", "created_at", "display_name", "image_ur
 
 
 --
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."orders" ("order_number", "order_date", "customer_id", "order_status") VALUES
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', '2024-09-10 14:50:12.592153+00', 'a23376db-215d-49c4-9d9d-791c26579543', true);
+
+
+--
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."order_details" ("order_number", "product_id", "quantity") VALUES
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 12, 2),
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 10, 2),
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 5, 1);
+
+
+-- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."reviews" ("id", "created_at", "resource_id", "reviewer_id", "review_title", "review_text", "overall_rating") VALUES
+	(3, '2024-09-10 14:48:24.267324+00', 12, 'a23376db-215d-49c4-9d9d-791c26579543', 'test title', 'test review text', 4);
+
+--
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -428,6 +463,9 @@ SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
 
 SELECT pg_catalog.setval('"supabase_functions"."hooks_id_seq"', 1, true);
 
+--
+
+SELECT pg_catalog.setval('"public"."reviews_id_seq"', 4, true);
 
 --
 -- PostgreSQL database dump complete

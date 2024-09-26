@@ -136,6 +136,7 @@ export const English = {
     editPost: "Edit",
     getLinks: "Get Links",
     checkoutAsGuest: "Checkout As Guest",
+    reviewResource: "Review",
   },
 
   messages: {
@@ -262,6 +263,16 @@ export const English = {
     resourceLinks: "Resource Links",
     draft: "Draft",
     downloadable: "Downloadable",
+    whatDidYouThink: "What did you think?",
+    overallRating: "Overall Rating",
+    reviewQ1: "As described",
+    reviewQ2: "Age/grade appropriate",
+    reviewQ3: "Engaging",
+    reviewQ4: "High quality",
+    reviewQ5: "Easy to use/implement",
+    reviewQ6: "Fair price",
+    reviewTitle: "Review Title",
+    reviewText: "Review Text",
   },
 
   postLabels: {
@@ -272,6 +283,8 @@ export const English = {
     slide: "Slide",
     creatorProfileImage: "Creator Profile Image",
     userProfileImage: "User Profile Image",
+    yourRating: "Your Rating",
+    reviews: "Reviews",
     subtopics: "Topics",
   },
 
