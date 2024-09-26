@@ -96,6 +96,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         setSession(data.session);
 
         setIsFree(props.post?.price === 0);
+        console.log("Is Free on Mount", isFree());
 
         window.addEventListener("storage", (event) => {
             if (event.key === "theme") {
@@ -104,6 +105,11 @@ export const EditPost: Component<Props> = (props: Props) => {
             }
         });
 
+        if (isFree()) {
+            setPrice("0");
+        } else {
+            setPrice((props.post?.price * 100).toString());
+        }
         setGradePick(props.post?.grades);
         setSubjectPick(props.post.subjects);
         setSubtopicPick(props.post?.subtopics);
@@ -213,7 +219,7 @@ export const EditPost: Component<Props> = (props: Props) => {
     });
 
     createEffect(async () => {
-        console.log("allRequirementsMet: ", allRequirementsMet());
+        // console.log("allRequirementsMet: ", allRequirementsMet());
 
         let title = document.getElementById("Title");
 
@@ -252,6 +258,7 @@ export const EditPost: Component<Props> = (props: Props) => {
 
         if (form) {
             setDraftStatus(false);
+            // console.log(form);
             form.requestSubmit();
         }
     }
@@ -264,6 +271,7 @@ export const EditPost: Component<Props> = (props: Props) => {
         formData.append("refresh_token", session()?.refresh_token!);
         formData.append("lang", lang);
         if (isFree()) {
+            console.log("item is free");
             setPrice("0");
             formData.set("Price", price());
         } else {
@@ -310,8 +318,12 @@ export const EditPost: Component<Props> = (props: Props) => {
         if (props.post?.id! !== undefined) {
             formData.append("idSupabase", props.post!.id.toString());
         }
+
+        for (let pair of formData.entries()) {
+            console.log(pair[0] + ", " + pair[1]);
+        }
         setFormData(formData);
-        console.log(formData);
+        // console.log(formData);
     }
 
     function subjectCheckboxes() {
@@ -421,14 +433,17 @@ export const EditPost: Component<Props> = (props: Props) => {
                 );
             }
         }
-        console.log(subtopicPick());
+        // console.log(subtopicPick());
     }
 
     function formatPrice(resourcePrice: string) {
+        console.log(resourcePrice);
         if (resourcePrice.indexOf(".") === -1) {
             setPrice(resourcePrice + "00");
+            console.log(price());
         } else if (resourcePrice.indexOf(".") >= 0) {
             setPrice(resourcePrice.replace(".", ""));
+            console.log(price());
         } else {
             console.log("Price error");
         }
@@ -496,13 +511,13 @@ export const EditPost: Component<Props> = (props: Props) => {
     }
 
     function removeImage(imageId: string) {
-        console.log(imageUrl());
+        // console.log(imageUrl());
         const index = imageUrl().indexOf(imageId);
         const imageArray = [...imageUrl()];
         if (index > -1) {
             imageArray.splice(index, 1);
             setImageUrl(imageArray);
-            console.log(imageUrl());
+            // console.log(imageUrl());
         }
     }
 
@@ -1158,7 +1173,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                 </div>
 
                 {/* Price Implementation */}
-                {/* <div class="justify-evenly mt-6 flex flex-col ">
+                <div class="mt-6 flex flex-col justify-evenly ">
                     <div class="mt-2 flex justify-between">
                         <p>{t("formLabels.isResourceFree")}?</p>
                         <div>
@@ -1235,7 +1250,7 @@ export const EditPost: Component<Props> = (props: Props) => {
                             </div>
                         </div>
                     </Show>
-                </div> */}
+                </div>
 
                 <br />
                 <div class="flex justify-center">

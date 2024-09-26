@@ -102,7 +102,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         product: String(product_id),
     });
 
-    const default_price = price_info.id;
+    // const default_price = price_info.id;
 
     const stripe_update = await stripe.products.update(String(product_id), {
         name: String(title),
@@ -134,7 +134,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 new_title: title,
                 new_content: content,
                 new_image_urls: (imageUrl as string).split(",") || [],
-                new_stripe_price_id: default_price,
                 new_secular: secular === "true" ? true : false,
                 new_draft_status: draft_status?.valueOf() === "true" ? true : false,
                 new_subjects: JSON.parse(subject as string).map(Number), // Array of subject IDs
