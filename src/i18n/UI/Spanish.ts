@@ -277,6 +277,8 @@ export const Spanish = {
     reviewQ6: "Precio justo",
     reviewTitle: "Títula de la Calificación",
     reviewText: "Texto de la Calificación",
+    priceFilter: "Precio",
+    freeResources: "Recursos gratuitos",
   },
 
   postLabels: {
@@ -706,6 +708,7 @@ export const Spanish = {
       { id: "Clear-Secular", text: "Claro secular", ariaLabel: "Limpiar Laico" },
       { id: "Clear-Resource-Type", text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
       { id: "Clear-Downloadable", text: "Borrar descargable", ariaLabel: "Borrar filtro descargable" },
+      { id: "Clear-Price-Filter", text: "Borrar filtro de precio", ariaLabel: "Borrar filtro de precio" },
     ],
   },
 

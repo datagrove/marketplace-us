@@ -273,6 +273,8 @@ export const English = {
     reviewQ6: "Fair price",
     reviewTitle: "Review Title",
     reviewText: "Review Text",
+    priceFilter: "Price",
+    freeResources: "Free Resources",
   },
 
   postLabels: {
@@ -697,6 +699,7 @@ export const English = {
       { id: "Clear-Secular", text: "Clear Secular", ariaLabel: "Clear Secular" },
       { id: "Clear-Resource-Type", text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
       { id: "Clear-Downloadable", text: "Clear Downloadable", ariaLabel: "Clear Downloadable Filter" },
+      { id: "Clear-Price-Filter", text: "Clear Price Filter", ariaLabel: "Clear Price Filter" },
     ],
   },
 

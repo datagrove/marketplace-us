@@ -1,4 +1,4 @@
-drop policy "Allow Read Access for Everyone" on "public"."post_subtopic"
+drop policy "Allow Read Access for Everyone" on "public"."post_subtopic";
 
 create policy "Allow Read Access for Everyone"
 on "public"."post_subtopic"

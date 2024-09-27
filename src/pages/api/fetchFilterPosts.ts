@@ -25,14 +25,16 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         to,
         downloadable,
         subtopics,
+        priceMin,
+        priceMax,
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
     const postSubjects = values.subjectCategoryInfo.subjects;
     const postSubtopics = values.subjectCategoryInfo.subtopics;
-    console.log("From: ", from);
-    console.log(" To: ", to);
-    console.log(subtopics);
+    // console.log("From: ", from);
+    // console.log(" To: ", to);
+    // console.log(subtopics);
 
     try {
         let query = supabase
@@ -83,6 +85,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         }
         if (downloadable === true) {
             query = query.not("resource_urls", "is", null);
+        }
+        if (typeof priceMin === "number") {
+            query = query.gte("price_value", priceMin);
+        }
+        if (typeof priceMax === "number") {
+            query = query.lte("price_value", priceMax);
         }
 
         console.log(query)

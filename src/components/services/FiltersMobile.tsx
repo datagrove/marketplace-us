@@ -1,5 +1,12 @@
 import type { Accessor, Component, Setter } from "solid-js";
-import { createEffect, createSignal, For, Show, onMount } from "solid-js";
+import {
+    createEffect,
+    createSignal,
+    For,
+    Show,
+    onMount,
+    createMemo,
+} from "solid-js";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 
@@ -32,11 +39,6 @@ let subtopics: Array<{
 let resourceTypes: Array<{ type: string; id: number; checked: boolean }> = [];
 
 function getFilterButtonIndexById(id: string) {
-    console.log(
-        values.clearFilters.filterButtons.findIndex(
-            (button) => button.id === id
-        )
-    );
     return (
         values.clearFilters.filterButtons.findIndex(
             (button) => button.id === id
@@ -146,6 +148,8 @@ interface Props {
     clearDownloadFilter: () => void;
     filterPostsBySubtopic: (subtopics: Array<number>) => void;
     clearSubtopics: () => void;
+    filterPostsByPrice: (min: number, max: number) => void;
+    clearPriceFilter: () => void;
 }
 
 export const FiltersMobile: Component<Props> = (props) => {
@@ -239,10 +243,18 @@ export const FiltersMobile: Component<Props> = (props) => {
     const [downloadableFilterNumber, setDownloadableFilterNumber] =
         createSignal<number>(0);
 
+    //Price Filter
+    const [showPriceFilter, setShowPriceFilter] = createSignal<boolean>(false);
+    const [priceFilterMin, setPriceFilterMin] = createSignal<number | null>(0);
+    const [priceFilterMax, setPriceFilterMax] = createSignal<number | null>(
+        500
+    );
+    const [priceFilterCount, setPriceFilterCount] = createSignal<0 | 1>(0);
+    let progressRef!: HTMLDivElement;
+
     const screenSize = useStore(windowSize);
 
     onMount(() => {
-        console.log("Subtopics", subtopic());
         const localSubjects = localStorage.getItem("selectedSubjects");
         const localGrades = localStorage.getItem("selectedGrades");
         const localResourceTypes = localStorage.getItem(
@@ -291,9 +303,10 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     });
 
-    createEffect(() => {
-        console.log("expanded subject", expandedSubject());
-    });
+    // createEffect(() => {
+    //     console.log("progressRef", progressRef)
+    //     console.log("showPriceFilter", showPriceFilter())
+    // });
 
     //Check if any filters are selected
     createEffect(() => {
@@ -302,7 +315,8 @@ export const FiltersMobile: Component<Props> = (props) => {
             subjectFilterCount() === 0 &&
             resourceTypesFilterCount() === 0 &&
             selectedSecular() === false &&
-            selectDownloadable() === false
+            selectDownloadable() === false &&
+            priceFilterCount() === 0
         ) {
             setShowFilterNumber(false);
         } else {
@@ -404,7 +418,6 @@ export const FiltersMobile: Component<Props> = (props) => {
     };
 
     const clearAllFiltersMobile = () => {
-        console.log("clear all filters mobile");
         props.clearAllFilters();
         setGrade((prevGrades) =>
             prevGrades.map((grade) => ({ ...grade, checked: false }))
@@ -425,6 +438,8 @@ export const FiltersMobile: Component<Props> = (props) => {
         setShowFilterNumber(false);
         setSelectedSecular(false);
         setSelectDownloadable(false);
+        setPriceFilterCount(0);
+        setShowPriceFilter(false);
         localStorage.removeItem("selectedGrades");
         localStorage.removeItem("selectedSubjects");
         localStorage.removeItem("selectedResourceTypes");
@@ -484,6 +499,13 @@ export const FiltersMobile: Component<Props> = (props) => {
         setDownloadableFilterNumber(0);
     };
 
+    const clearPriceFilter = () => {
+        props.clearPriceFilter();
+        setPriceFilterCount(0);
+        setPriceFilterMin(null);
+        setPriceFilterMax(null);
+    };
+
     const gradeCheckboxClick = (e: Event) => {
         let currCheckbox = e.currentTarget as HTMLInputElement;
         let currCheckboxID = Number(currCheckbox.getAttribute("data-id"));
@@ -529,6 +551,16 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     };
 
+    function freeResourcesOnlyCheckboxClick(e: Event) {
+        const target = e.target as HTMLInputElement;
+        if (target.checked === true) {
+            setPriceFilterMax(0);
+        }
+        if (target.checked === false) {
+            setPriceFilterMax(null);
+        }
+    }
+
     function setSubjectFilter(id: number) {
         if (selectedSubjects().includes(id)) {
             let currentSubjectFilters = selectedSubjects().filter(
@@ -560,7 +592,6 @@ export const FiltersMobile: Component<Props> = (props) => {
     }
 
     function updateSubtopicArray(e: Event) {
-        console.log("updating subtopic array");
         const target = e.target as HTMLInputElement;
         const targetValue = Number(target.getAttribute("data-id"));
         if (target.checked === true) {
@@ -592,14 +623,11 @@ export const FiltersMobile: Component<Props> = (props) => {
         );
 
         syncSubjectsWithSubtopics();
-        console.log(selectedSubtopics());
     }
 
     //Track changes in selected subjects and remove subtopics if the subject is removed from the list
 
     const syncSubTopicsWithSubjects = () => {
-        console.log("Sync subtopics with subjects");
-
         if (selectedSubjects().length === 0) {
             setSubtopic((prevSubtopics) =>
                 prevSubtopics.map((subtopic) => ({
@@ -629,17 +657,7 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     };
 
-    createEffect(() => {
-        console.log("Subjects", selectedSubjects());
-    });
-
-    createEffect(() => {
-        console.log("Subtopics", selectedSubtopics());
-    });
-
     const syncSubjectsWithSubtopics = () => {
-        console.log("Sync subjects with subtopics");
-
         selectedSubtopics().forEach((subtopicId) => {
             const subtopicInfo = subtopic().find(
                 (item) => item.id === subtopicId
@@ -666,6 +684,61 @@ export const FiltersMobile: Component<Props> = (props) => {
         });
     };
 
+    const priceFilter = (e: Event) => {
+        const target = e.target as HTMLInputElement;
+        //TODO: Fix this
+    };
+
+    function setPriceMinValue(e: Event) {
+        const value = Math.min(
+            Number(e.currentTarget.value),
+            priceFilterMax() - 1
+        );
+        setPriceFilterMin(value);
+        props.filterPostsByPrice(priceFilterMin(), priceFilterMax());
+        if (priceFilterMin() > 0 && priceFilterCount() === 0) {
+            setPriceFilterCount(1);
+        } else if (
+            priceFilterMin() === 0 &&
+            priceFilterCount() === 1 &&
+            priceFilterMax() >= 500
+        ) {
+            setPriceFilterCount(0);
+        }
+    }
+
+    function setPriceMaxValue(e: Event) {
+        const value = Math.min(
+            Math.max(Number(e.currentTarget.value), priceFilterMin() + 1),
+            500
+        );
+        setPriceFilterMax(value);
+        props.filterPostsByPrice(priceFilterMin(), priceFilterMax());
+        if (priceFilterMax() < 500 && priceFilterCount() === 0) {
+            setPriceFilterCount(1);
+        } else if (
+            priceFilterMax() >= 500 &&
+            priceFilterCount() === 1 &&
+            priceFilterMin() === 0
+        ) {
+            setPriceFilterCount(0);
+        }
+    }
+
+    createEffect(() => {
+        const isVisible = showPriceFilter();
+        if (progressRef && isVisible) {
+            progressRef.style.left = `${priceFilterMin() / 5}%`;
+            progressRef.style.right = `${(1 - priceFilterMax() / 500) * 100}%`;
+        }
+    });
+
+    // const progressClass = createMemo(() => {
+    //     const widthPercentage = (priceFilterMax() - priceFilterMin()) / 5;
+    //     const leftPercentage = priceFilterMin() / 5;
+    //     return `progress absolute h-1 rounded bg-purple-600 w-[${widthPercentage}%] left-[${leftPercentage}%]`;
+    //   });
+
     return (
         <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-1/4 md:min-w-[210px] md:max-w-[300px] md:px-0 md:pt-0">
             <Show when={screenSize() === "sm"}>
@@ -678,13 +751,15 @@ export const FiltersMobile: Component<Props> = (props) => {
                             showSubjects() === true ||
                             showSecular() === true ||
                             showResourceTypes() === true ||
-                            showDownloadable() === true
+                            showDownloadable() === true ||
+                            showPriceFilter() === true
                         ) {
                             setShowGrades(false);
                             setShowSubjects(false);
                             setShowFilters(false);
                             setShowResourceTypes(false);
                             setShowDownloadable(false);
+                            setShowPriceFilter(false);
                         } else if (showFilters() === true) {
                             setShowFilters(false);
                         } else {
@@ -710,7 +785,8 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         subjectFilterCount() +
                                         resourceTypesFilterCount() +
                                         secularInNumber() +
-                                        downloadableFilterNumber()}
+                                        downloadableFilterNumber() +
+                                        priceFilterCount()}
                                 </p>
                             </div>
                         </Show>
@@ -724,271 +800,319 @@ export const FiltersMobile: Component<Props> = (props) => {
 
             <div class="absolute h-full w-11/12">
                 <Show when={showFilters() === true}>
-                    <div class="main-pop-out relative h-96 w-full rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:shadow-none">
-                        <button
-                            class="w-full"
-                            aria-label={
-                                t("formLabels.grades") +
-                                " " +
-                                t("buttons.filters")
-                            }
-                            onClick={() => {
-                                setShowFilters(false);
-
-                                // if (showSubjects() === true) {
-                                //     setShowSubjects(false);
-                                // }
-                                setShowGrades(!showGrades());
-                            }}
-                        >
-                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
-                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {t("formLabels.grades")}
-                                </h2>
-
-                                <Show when={gradeFilterCount() > 0}>
-                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
-                                            {gradeFilterCount()}
-                                        </p>
-                                    </div>
-                                </Show>
-
-                                <svg
-                                    width="30px"
-                                    height="30px"
-                                    viewBox="0 0 24 24"
-                                    role="img"
-                                    aria-labelledby="arrowRightIconTitle"
-                                    stroke="none"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    fill="none"
-                                    color="#000000"
-                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
-                                >
-                                    <path d="M15 18l6-6-6-6" />
-                                    <path
-                                        stroke-linecap="round"
-                                        d="M21 12h-1"
-                                    />
-                                </svg>
-                            </div>
-                        </button>
-
-                        {/* Resource Type Filter Outside */}
-
-                        <button
-                            class="w-full"
-                            aria-label={
-                                t("formLabels.resourceTypes") +
-                                " " +
-                                t("buttons.filters")
-                            }
-                            onClick={() => {
-                                setShowFilters(false);
-
-                                if (showResourceTypes() === true) {
-                                    setShowResourceTypes(false);
+                    <div class="main-pop-out relative h-96 w-full rounded border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:h-auto md:shadow-none">
+                        <div class="h-[283px] w-full overflow-y-scroll md:h-full md:overflow-auto">
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.grades") +
+                                    " " +
+                                    t("buttons.filters")
                                 }
-                                setShowResourceTypes(!showResourceTypes());
-                            }}
-                        >
-                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
-                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {t("formLabels.resourceTypes")}
-                                </h2>
+                                onClick={() => {
+                                    setShowFilters(false);
 
-                                <Show when={resourceTypesFilterCount() > 0}>
-                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
-                                            {resourceTypesFilterCount()}
-                                        </p>
-                                    </div>
-                                </Show>
+                                    // if (showSubjects() === true) {
+                                    //     setShowSubjects(false);
+                                    // }
+                                    setShowGrades(!showGrades());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.grades")}
+                                    </h2>
 
-                                <svg
-                                    width="30px"
-                                    height="30px"
-                                    viewBox="0 0 24 24"
-                                    role="img"
-                                    aria-labelledby="arrowRightIconTitle"
-                                    stroke="none"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    fill="none"
-                                    color="#000000"
-                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
-                                >
-                                    <path d="M15 18l6-6-6-6" />
-                                    <path
+                                    <Show when={gradeFilterCount() > 0}>
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
+                                                {gradeFilterCount()}
+                                            </p>
+                                        </div>
+                                    </Show>
+
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
                                         stroke-linecap="round"
-                                        d="M21 12h-1"
-                                    />
-                                </svg>
-                            </div>
-                        </button>
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
 
-                        <button
-                            class="w-full"
-                            aria-label={
-                                t("formLabels.subjects") +
-                                " " +
-                                t("buttons.filters")
-                            }
-                            onClick={() => {
-                                setShowFilters(false);
+                            {/* Resource Type Filter Outside */}
 
-                                if (showGrades() === true) {
-                                    setShowGrades(false);
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.resourceTypes") +
+                                    " " +
+                                    t("buttons.filters")
                                 }
-                                setShowSubjects(!showSubjects());
-                            }}
-                        >
-                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
-                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {t("formLabels.subjects")}
-                                </h2>
+                                onClick={() => {
+                                    setShowFilters(false);
 
-                                <Show when={subjectFilterCount() > 0}>
-                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
-                                            {subjectFilterCount()}
-                                        </p>
-                                    </div>
-                                </Show>
-
-                                <svg
-                                    width="30px"
-                                    height="30px"
-                                    viewBox="0 0 24 24"
-                                    role="img"
-                                    aria-labelledby="arrowRightIconTitle"
-                                    stroke="none"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    fill="none"
-                                    color="#000000"
-                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
-                                >
-                                    <path d="M15 18l6-6-6-6" />
-                                    <path
-                                        stroke-linecap="round"
-                                        d="M21 12h-1"
-                                    />
-                                </svg>
-                            </div>
-                        </button>
-
-                        <button
-                            class="w-full"
-                            aria-label={
-                                t("formLabels.secular") +
-                                " " +
-                                t("buttons.filters")
-                            }
-                            onClick={() => {
-                                setShowFilters(false);
-                                setShowSecular(!showSecular());
-                            }}
-                        >
-                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
-                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {t("formLabels.secular")}
-                                </h2>
-
-                                <Show
-                                    when={
-                                        secularInNumber() > 0 &&
-                                        selectedSecular() === true
+                                    if (showResourceTypes() === true) {
+                                        setShowResourceTypes(false);
                                     }
-                                >
-                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="dark:btn1Text-DM text-[10px] text-ptext2">
-                                            {secularInNumber()}
-                                        </p>
-                                    </div>
-                                </Show>
-                                <svg
-                                    width="30px"
-                                    height="30px"
-                                    viewBox="0 0 24 24"
-                                    role="img"
-                                    aria-labelledby="arrowRightIconTitle"
-                                    stroke="none"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    fill="none"
-                                    color="#000000"
-                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
-                                >
-                                    <path d="M15 18l6-6-6-6" />
-                                    <path
+                                    setShowResourceTypes(!showResourceTypes());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.resourceTypes")}
+                                    </h2>
+
+                                    <Show when={resourceTypesFilterCount() > 0}>
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
+                                                {resourceTypesFilterCount()}
+                                            </p>
+                                        </div>
+                                    </Show>
+
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
                                         stroke-linecap="round"
-                                        d="M21 12h-1"
-                                    />
-                                </svg>
-                            </div>
-                        </button>
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
 
-                        <button
-                            class="w-full"
-                            aria-label={
-                                t("formLabels.downloadable") +
-                                " " +
-                                t("buttons.filters")
-                            }
-                            onClick={() => {
-                                setShowFilters(false);
-                                setShowDownloadable(!showDownloadable());
-                            }}
-                        >
-                            <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
-                                <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
-                                    {t("formLabels.downloadable")}
-                                </h2>
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.subjects") +
+                                    " " +
+                                    t("buttons.filters")
+                                }
+                                onClick={() => {
+                                    setShowFilters(false);
 
-                                <Show
-                                    when={
-                                        downloadableFilterNumber() > 0 &&
-                                        selectDownloadable() === true
+                                    if (showGrades() === true) {
+                                        setShowGrades(false);
                                     }
-                                >
-                                    <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
-                                        <p class="dark:btn1Text-DM text-[10px] text-ptext2">
-                                            {downloadableFilterNumber()}
-                                        </p>
-                                    </div>
-                                </Show>
-                                <svg
-                                    width="30px"
-                                    height="30px"
-                                    viewBox="0 0 24 24"
-                                    role="img"
-                                    aria-labelledby="arrowRightIconTitle"
-                                    stroke="none"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    fill="none"
-                                    color="#000000"
-                                    class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
-                                >
-                                    <path d="M15 18l6-6-6-6" />
-                                    <path
-                                        stroke-linecap="round"
-                                        d="M21 12h-1"
-                                    />
-                                </svg>
-                            </div>
-                        </button>
-                        {/* Add Additional filter menu buttons here */}
+                                    setShowSubjects(!showSubjects());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.subjects")}
+                                    </h2>
 
-                        <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around">
+                                    <Show when={subjectFilterCount() > 0}>
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="text-[10px] text-ptext2 dark:text-btn1Text-DM">
+                                                {subjectFilterCount()}
+                                            </p>
+                                        </div>
+                                    </Show>
+
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.secular") +
+                                    " " +
+                                    t("buttons.filters")
+                                }
+                                onClick={() => {
+                                    setShowFilters(false);
+                                    setShowSecular(!showSecular());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.secular")}
+                                    </h2>
+
+                                    <Show
+                                        when={
+                                            secularInNumber() > 0 &&
+                                            selectedSecular() === true
+                                        }
+                                    >
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="dark:btn1Text-DM text-[10px] text-ptext2">
+                                                {secularInNumber()}
+                                            </p>
+                                        </div>
+                                    </Show>
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.downloadable") +
+                                    " " +
+                                    t("buttons.filters")
+                                }
+                                onClick={() => {
+                                    setShowFilters(false);
+                                    setShowDownloadable(!showDownloadable());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.downloadable")}
+                                    </h2>
+
+                                    <Show
+                                        when={
+                                            downloadableFilterNumber() > 0 &&
+                                            selectDownloadable() === true
+                                        }
+                                    >
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="dark:btn1Text-DM text-[10px] text-ptext2">
+                                                {downloadableFilterNumber()}
+                                            </p>
+                                        </div>
+                                    </Show>
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
+
+                            <button
+                                class="w-full"
+                                aria-label={
+                                    t("formLabels.priceFilter") +
+                                    " " +
+                                    t("buttons.filters")
+                                }
+                                onClick={() => {
+                                    setShowFilters(false);
+                                    setShowPriceFilter(!showPriceFilter());
+                                }}
+                            >
+                                <div class="flex items-center justify-between border-b border-border1 dark:border-border1-DM">
+                                    <h2 class="mx-2 my-4 flex flex-1 text-xl text-ptext1 dark:text-ptext1-DM">
+                                        {t("formLabels.priceFilter")}
+                                    </h2>
+
+                                    <Show when={priceFilterCount() > 0}>
+                                        <div class="flex h-5 w-5 items-center justify-center rounded-full bg-btn1 dark:bg-btn1-DM">
+                                            <p class="dark:btn1Text-DM text-[10px] text-ptext2">
+                                                {priceFilterCount()}
+                                            </p>
+                                        </div>
+                                    </Show>
+                                    <svg
+                                        width="30px"
+                                        height="30px"
+                                        viewBox="0 0 24 24"
+                                        role="img"
+                                        aria-labelledby="arrowRightIconTitle"
+                                        stroke="none"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"
+                                        color="#000000"
+                                        class="mr-2 stroke-icon1 dark:stroke-icon1-DM"
+                                    >
+                                        <path d="M15 18l6-6-6-6" />
+                                        <path
+                                            stroke-linecap="round"
+                                            d="M21 12h-1"
+                                        />
+                                    </svg>
+                                </div>
+                            </button>
+                            {/* Add Additional filter menu buttons here */}
+                        </div>
+                        <div class="absolute bottom-0 my-4 mt-4 flex w-full justify-around md:-bottom-16">
                             <button
                                 class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
                                 onClick={clearAllFiltersMobile}
@@ -1151,7 +1275,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                 id={`grade-checkbox ${item.id.toString()}`}
                                                 data-id={item.id}
                                                 checked={item.checked}
-                                                class="grade mr-4 scale-125 leading-tight"
+                                                class="grade mr-4 leading-tight"
                                                 // onClick={() => {
                                                 //     setGradesFilter(item);
                                                 //     setGradeFilterCount(
@@ -1230,7 +1354,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                 <div class="flex items-center">
                                     <input
                                         type="checkbox"
-                                        class={`secular mr-2 scale-125 leading-tight`}
+                                        class={`secular mr-2 leading-tight`}
                                         id="secular-checkbox"
                                         checked={selectedSecular()}
                                         onClick={(e) => {
@@ -1312,7 +1436,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                                         checked={
                                                             subject.checked
                                                         }
-                                                        class={`mr-2 scale-125 leading-tight`}
+                                                        class={`mr-2 leading-tight`}
                                                         onClick={(e) =>
                                                             subjectCheckboxClick(
                                                                 e
@@ -1460,7 +1584,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                                         }
                                         type="checkbox"
                                         id="downloadable"
-                                        class={`secular mr-2 scale-125 leading-tight`}
+                                        class={`secular mr-2 leading-tight`}
                                         checked={selectDownloadable()}
                                         onClick={(e) => {
                                             downloadableCheckboxClick(e);
@@ -1485,6 +1609,161 @@ export const FiltersMobile: Component<Props> = (props) => {
                             >
                                 {t(
                                     `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Downloadable")}.text`
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </Show>
+
+                {/* Price Filter*/}
+                <Show when={showPriceFilter() === true}>
+                    <div class="price-pop-out rounded-b border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600">
+                        <button
+                            class="w-full"
+                            onClick={() => {
+                                if (showFilters() === false) {
+                                    setShowPriceFilter(false);
+                                    setShowFilters(true);
+                                }
+                            }}
+                        >
+                            <div class="flex items-center border-b border-border1 pb-1 pl-2 dark:border-border1-DM">
+                                <svg
+                                    width="30px"
+                                    height="30px"
+                                    viewBox="0 0 24 24"
+                                    role="img"
+                                    aria-labelledby="arrowLeftIconTitle"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    fill="none"
+                                    color="#000000"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <path d="M9 6l-6 6 6 6" />
+                                    <path stroke-linecap="round" d="M3 12h1" />
+                                </svg>
+                                <h2 class="flex flex-1 py-2 text-xl font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {t("formLabels.priceFilter")}
+                                </h2>
+                            </div>
+                        </button>
+
+                        <div class="flex flex-col border border-blue-500">
+                            <div
+                                class="flex flex-row justify-around"
+                                id="price-inputs"
+                            >
+                                <div class="flex flex-col items-center">
+                                    <label for="priceFilterMin">Min</label>
+                                    <input
+                                        class="flex rounded border border-border1 bg-background1 text-center text-ptext1 dark:border-border1-DM dark:bg-background1-DM dark:text-ptext1-DM"
+                                        type="number"
+                                        min={0}
+                                        step={0.01}
+                                        max={500}
+                                        value={priceFilterMin()}
+                                        placeholder="0"
+                                        id="priceFilterMin"
+                                        oninput={(e) => setPriceMinValue(e)}
+                                    />
+                                </div>
+                                <div class="self-end"> - </div>
+                                <div class="flex flex-col items-center">
+                                    <label for="priceFilterMax">Max</label>
+                                    <input
+                                        class="flex rounded border border-border1 bg-background1 text-center text-ptext1 dark:border-border1-DM dark:bg-background1-DM dark:text-ptext1-DM"
+                                        type="number"
+                                        min={0}
+                                        step={0.01}
+                                        max={500}
+                                        value={priceFilterMax()}
+                                        placeholder="500"
+                                        id="priceFilterMax"
+                                        oninput={(e) => setPriceMaxValue(e)}
+                                    />
+                                </div>
+                            </div>
+                            {/* Slider */}
+                            <div class="m-4 block">
+                                <div class="slider relative h-2 rounded-md bg-gray-400">
+                                    <div
+                                        class="progress absolute h-2 rounded bg-btn1 dark:bg-btn1-DM"
+                                        ref={progressRef}
+                                    ></div>
+                                </div>
+                                <div class="range-input relative w-full">
+                                    <input
+                                        class="range-min pointer-events-none absolute -top-4 left-0 w-full appearance-none bg-transparent"
+                                        type="range"
+                                        min={0}
+                                        max={500}
+                                        step={0.01}
+                                        value={
+                                            priceFilterMin()
+                                                ? priceFilterMin()
+                                                : 0
+                                        }
+                                        onchange={(e) => {
+                                            setPriceMinValue(e);
+                                        }}
+                                    />
+                                    <input
+                                        class="range-max pointer-events-none absolute -top-4 right-0 w-full appearance-none bg-transparent"
+                                        type="range"
+                                        min={0}
+                                        max={500}
+                                        step={0.01}
+                                        value={
+                                            priceFilterMax()
+                                                ? priceFilterMax()
+                                                : 500
+                                        }
+                                        onchange={(e) => {
+                                            setPriceMaxValue(e);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-8 mt-2 flex flex-wrap">
+                            <div class="flex w-5/6 flex-row">
+                                <div class="flex items-center">
+                                    <input
+                                        aria-label={
+                                            t("formLabels.priceFilter") +
+                                            " " +
+                                            t("ariaLabels.checkbox")
+                                        }
+                                        type="checkbox"
+                                        id="priceFilter"
+                                        class={`secular mr-2 leading-tight`}
+                                        checked={priceFilterMax() === 0}
+                                        onClick={(e) => {
+                                            freeResourcesOnlyCheckboxClick(e);
+                                        }}
+                                    />
+                                </div>
+                                <label
+                                    for="priceFilter"
+                                    class="flex flex-wrap justify-between"
+                                >
+                                    <div class="w-full px-2">
+                                        {t("formLabels.freeResources")}
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="my-2">
+                            <button
+                                class="w-32 rounded border border-border1 py-1 font-light dark:border-border1-DM"
+                                onClick={clearPriceFilter}
+                            >
+                                {t(
+                                    `clearFilters.filterButtons.${getFilterButtonIndexById("Clear-Price-Filter")}.text`
                                 )}
                             </button>
                         </div>

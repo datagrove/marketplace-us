@@ -28,6 +28,8 @@ async function postRequest({
     lang,
     from,
     to,
+    priceMin,
+    priceMax,
 }: FilterPostsParams) {
     const response = await fetch("/api/fetchFilterPosts", {
         method: "POST",
@@ -44,6 +46,8 @@ async function postRequest({
             draft_status: draft_status,
             from: from,
             to: to,
+            priceMin: priceMin,
+            priceMax: priceMax,
         }),
     });
     const data = await response.json();
@@ -71,6 +75,12 @@ export const ResourcesView: Component = () => {
     const [page, setPage] = createSignal<number>(1);
     const [loading, setLoading] = createSignal<boolean>(false);
     const [hasMore, setHasMore] = createSignal<boolean>(true);
+    const [priceFilterMin, setPriceFilterMin] = createSignal<number | null>(
+        null
+    );
+    const [priceFilterMax, setPriceFilterMax] = createSignal<number | null>(
+        null
+    );
 
     let postsPerPage: number = 10;
 
@@ -172,6 +182,8 @@ export const ResourcesView: Component = () => {
             lang: lang,
             from: from,
             to: to,
+            priceMin: priceFilterMin(),
+            priceMax: priceFilterMax(),
         });
 
         if (res.body && res.body.length > 0) {
@@ -263,6 +275,12 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
+    const filterPostsByPrice = (min: number, max: number) => {
+        setPriceFilterMin(min);
+        setPriceFilterMax(max);
+        triggerNewSearch();
+    };
+
     const clearAllFilters = () => {
         console.log("clear all filters RM triggered");
         let searchInput = document.getElementById(
@@ -283,6 +301,8 @@ export const ResourcesView: Component = () => {
         setSecularFilters(false);
         setDownloadFilter(false);
         setSubtopicFilters([]);
+        setPriceFilterMax(null);
+        setPriceFilterMin(null);
 
         triggerNewSearch();
         setClearFilters(false);
@@ -319,6 +339,12 @@ export const ResourcesView: Component = () => {
         triggerNewSearch();
     };
 
+    const clearPriceFilter = () => {
+        setPriceFilterMin(null);
+        setPriceFilterMax(null);
+        triggerNewSearch();
+    };
+
     return (
         <div class="">
             <div>
@@ -342,6 +368,8 @@ export const ResourcesView: Component = () => {
                     filterPostsByDownloadable={filterPostsByDownloadable}
                     filterPostsBySubtopic={filterPostsBySubtopic}
                     clearSubtopics={clearSubtopicsFilter}
+                    filterPostsByPrice={filterPostsByPrice}
+                    clearPriceFilter={clearPriceFilter}
                 />
 
                 <Show when={screenSize() === "sm"}>

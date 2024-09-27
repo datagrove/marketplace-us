@@ -266,6 +266,8 @@ export interface uiObject {
         reviewQ6: string;
         reviewTitle: string;
         reviewText: string; 
+        priceFilter: string;
+        freeResources: string;
     };
 
     postLabels: {

@@ -81,6 +81,8 @@ export interface FilterPostsParams {
     to?: number;
     downloadable?: boolean;
     subtopics?: number[];
+    priceMin?: number;
+    priceMax?: number;
 }
 
 export interface Orders{

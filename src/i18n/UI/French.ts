@@ -275,6 +275,8 @@ export const French = {
     reviewQ6: "Juste prix",
     reviewTitle: "Titre de la Revue",
     reviewText: "Texte de le Revue",
+    priceFilter: "Prix",
+    freeResources: "Ressources gratuites",
   },
 
   postLabels: {
@@ -703,6 +705,7 @@ export const French = {
       { id: "Clear-Secular", text: "Clair Laïque", ariaLabel: "Effacer le filtre laïque" },
       { id: "Clear-Resource-Type", text: "Effacer le type de ressource", ariaLabel: "Effacer le filtre de type de ressource" },
       { id: "Clear-Downloadable", text: "Effacer téléchargeable", ariaLabel: "Effacer le filtre téléchargeable" },
+      { id: "Clear-Price-Filter", text: "Effacer le filtre de prix", ariaLabel: "Effacer le filtre de prix" },
     ],
   },
 
