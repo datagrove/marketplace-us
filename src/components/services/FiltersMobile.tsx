@@ -502,8 +502,8 @@ export const FiltersMobile: Component<Props> = (props) => {
     const clearPriceFilter = () => {
         props.clearPriceFilter();
         setPriceFilterCount(0);
-        setPriceFilterMin(null);
-        setPriceFilterMax(null);
+        setPriceFilterMin(0);
+        setPriceFilterMax(500);
     };
 
     const gradeCheckboxClick = (e: Event) => {
@@ -555,9 +555,12 @@ export const FiltersMobile: Component<Props> = (props) => {
         const target = e.target as HTMLInputElement;
         if (target.checked === true) {
             setPriceFilterMax(0);
+            setPriceFilterMin(0);
+            setPriceFilterCount(1);
         }
         if (target.checked === false) {
-            setPriceFilterMax(null);
+            setPriceFilterMax(500);
+            setPriceFilterMin(0);
         }
     }
 
@@ -733,11 +736,16 @@ export const FiltersMobile: Component<Props> = (props) => {
         }
     });
 
-    // const progressClass = createMemo(() => {
-    //     const widthPercentage = (priceFilterMax() - priceFilterMin()) / 5;
-    //     const leftPercentage = priceFilterMin() / 5;
-    //     return `progress absolute h-1 rounded bg-purple-600 w-[${widthPercentage}%] left-[${leftPercentage}%]`;
-    //   });
+    createEffect(() => {
+        const maxPrice = priceFilterMax();
+        const minPrice = priceFilterMin();
+        if (maxPrice > 500) {
+            setPriceFilterMax(500);
+        }
+        if (minPrice < 0) {
+            setPriceFilterMin(0);
+        }
+    });
 
     return (
         <div class="sticky top-0 z-40 h-full w-full bg-background1 px-4 pt-4 dark:bg-background1-DM md:z-0 md:w-1/4 md:min-w-[210px] md:max-w-[300px] md:px-0 md:pt-0">
