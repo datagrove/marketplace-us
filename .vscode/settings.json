@@ -1,3 +1,5 @@
 {
-    "prettier.printWidth": 250
+    "prettier.printWidth": 250,
+    "deno.enable": true,
+    "deno.lint": true,
 }
