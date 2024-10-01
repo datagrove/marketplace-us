@@ -116,6 +116,7 @@ export interface uiObject {
         filters: string;
         faq: string;
         addToCart: string;
+        addAllToCart: string;
         stripeSetup: string;
         stripeLogin: string;
         proceedToCheckout: string;
@@ -143,6 +144,7 @@ export interface uiObject {
         checkoutAsGuest: string;
         reviewResource: string;
     };
+
 
 
     messages: {
