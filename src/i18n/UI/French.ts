@@ -401,7 +401,8 @@ export const French = {
       "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "Aucune liste de favoris trouvée",
+    },
 
   socialModal: {
     shareService: "Partager ce ressource",

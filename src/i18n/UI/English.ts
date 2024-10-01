@@ -398,7 +398,8 @@ export const English = {
       "Error creating user, please try again or contact us for assistance.",
     emailNotConfirmed:
       "Email not registered. If you previously registered this email address please use the forgot password option below, otherwise please use the sign up option below.",
-  },
+    noFavoriteLists: "No Favorite Lists found",
+    },
 
   socialModal: {
     shareService: "Share this resource",

@@ -25,7 +25,7 @@ const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewUserFavorites: Component = () => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
-    const [favoritedItems, setFavoritedItems] = createSignal<Array<any>>([]);
+    const [favoritedItems, setFavoritedItems] = createSignal<Array<Post>>([]);
     const [loading, setLoading] = createSignal<boolean>(true);
 
     const screenSize = useStore(windowSize);
@@ -58,38 +58,29 @@ export const ViewUserFavorites: Component = () => {
 
     const getFavorites = async () => {
         setLoading(true);
-        const { data: favorites, error } = await supabase
-            .from("favorites")
-            .select("*")
-            .eq("customer_id", session()?.user.id);
-        if (error) {
-            console.log("Favorite Error: " + error.code + " " + error.message);
-            return;
+        const response = await fetch("/api/getUserFavorites", {
+            method: "POST",
+            body: JSON.stringify({
+                access_token: session()?.access_token,
+                refresh_token: session()?.refresh_token,
+                lang: lang,
+                customer_id: session()?.user.id,
+            }),
+        });
+
+        const data = await response.json();
+        if (data) {
+            if (data.type === "single") {
+                console.log(data);
+                setFavoritedItems(data.posts.body);
+                setLoading(false);
+            }
+            if (data.type === "multiple") {
+                console.log(data);
+            }
         }
-
-        const favoritesListIds = favorites?.map(
-            (favorite) => favorite.list_number
-        );
-
-        const { data: favoritesProducts, error: favoritesProductsError } =
-            await supabase
-                .from("favorites_products")
-                .select("product_id, list_number")
-                .in("list_number", favoritesListIds);
-        if (favoritesProductsError) {
-            console.log(
-                "Favorite Details Error: " +
-                    favoritesProductsError.code +
-                    " " +
-                    favoritesProductsError.message
-            );
-        }
-
-        const products = favoritesProducts?.map((item) => item.product_id);
-        if (products !== undefined) {
-            const res = await fetchPosts({ post_id: products, lang: lang });
-            setFavoritedItems(res.body);
-            setLoading(false);
+        if (response.status !== 200) {
+            alert(data.message);
         }
     };
 

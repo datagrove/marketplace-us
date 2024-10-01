@@ -401,7 +401,8 @@ export const Spanish = {
       "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "No se encontraron lista de favoritos",
+    },
 
   socialModal: {
     shareService: "Comparte este recurso",

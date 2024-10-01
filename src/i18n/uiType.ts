@@ -373,6 +373,7 @@ export interface uiObject {
         userEditProfileError: string;
         createUserError: string;
         emailNotConfirmed: string;
+        noFavoriteLists: string;
     };
 
     socialModal: {
