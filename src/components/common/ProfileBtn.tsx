@@ -115,7 +115,7 @@ export const ProfileBtn = () => {
                 </div>
                 <div class="mt-2">
                     <div>
-                        <a href={`/${lang}`}>{t("pageTitles.home")}</a>
+                        <a href={`/${lang}`}>{t("buttons.home")}</a>
                     </div>
                     <div>
                         <a href={`mailto:MAIL@.com`}>{t("menus.contactUs")}</a>

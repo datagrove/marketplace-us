@@ -38,6 +38,10 @@ export const Spanish = {
     marketplacetax: "Recaudación de impuestos sobre las ventas del mercado",
   },
 
+  h1Titles: {
+    services: "Resource Catalog",
+  },
+
   pageMetaTitles: {
     services: "Catalogo de Recursos de LearnGrove",
     signUp: "Registrarse y abrir una cuenta en LearnGrove ",
@@ -66,7 +70,6 @@ export const Spanish = {
     community: "Guia de la Comunidad de LearnGrove",
     sellerFeePayout: "Seller Fees and Payout Rates ",
     copyright: "Política de derechos de autor y marcas comerciales de LearnGrove",
-    marketplacetax: "Recaudación de impuestos sobre las ventas de Recursos en LearnGrove",
   },
 
   pageDescriptions: {
@@ -163,6 +166,8 @@ export const Spanish = {
     editPost: "Editar",
     getLinks: "Obtener enlaces",
     checkoutAsGuest: "Comprar como Invitado",
+    home: "Home",
+    signInTitle: "Sign in",
   },
 
   messages: {

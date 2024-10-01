@@ -155,6 +155,8 @@ export interface uiObject {
     editPost: string;
     getLinks: string;
     checkoutAsGuest: string;
+    home: string;
+    signInTitle: string,
   };
 
   messages: {

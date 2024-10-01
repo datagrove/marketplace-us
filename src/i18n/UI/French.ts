@@ -38,6 +38,10 @@ export const French = {
     marketplacetax: "Collecte des taxes de vente sur le marché",
   },
 
+  h1Titles: {
+    services: "Resource Catalog",
+  },
+
   pageMetaTitles: {
     services: "Catalogue de ressources de LearnGrove",
     signUp: "Inscrivez-vous à votre compte LearnGrove",
@@ -108,7 +112,6 @@ export const French = {
     community: "Lisez nos directives communautaires pour comprendre les principes qui favorisent le respect, la collaboration et un environnement favorable pour tous les membres.",
     sellerFeePayout: "Découvrez nos frais de vente et nos processus de paiement, y compris des informations détaillées sur les frais de transaction, les frais de paiement et les calendriers.",
     copyright: "Comprenez notre politique en matière de droits d'auteur et de marques déposées pour protéger vos droits de propriété intellectuelle et garantir le respect de nos directives pour l'utilisation de documents protégés par des droits d'auteur et des marques déposées.",
-    marketplacetax: "Découvrez notre collection de taxes de vente sur le marché et les implications fiscales.",
     taxCodeLearnMore: "En savoir plus sur les codes fiscaux pour les ressources LearnGrove",
   },
 
@@ -160,6 +163,8 @@ export const French = {
     editPost: "Editer",
     getLinks: "Obtenir des Liens",
     checkoutAsGuest: "Passer en tant qu'invite",
+    home: "Home",
+    signInTitle: "Sign in",
   },
 
   messages: {
@@ -212,8 +217,8 @@ export const French = {
       "Aucun article ne correspond à cette recherche spécifique - veuillez essayer un autre filtre ou un autre mot clé",
     noStripeAccount:
       "Vous devez terminer votre inscription auprès de Stripe avant de publier des ressources.",
-      noUser: "Utilisateur non trouvé",
-      selectSubject: "Veuillez sélectionner au moins un sujet",
+    noUser: "Utilisateur non trouvé",
+    selectSubject: "Veuillez sélectionner au moins un sujet",
     emailNotProvided: "Email non fourni",
     comingSoon: "À venir!",
     report: "Signaler cette ressource à LearnGrove",
@@ -699,7 +704,7 @@ export const French = {
       { id: 102, name: 'Prévention et Sécurité Incendie', description: 'Prévention et Sécurité Incendie', ariaLabel: 'Prévention et Sécurité Incendie', subject_id: 8 },
       { id: 103, name: 'Santé', description: 'Santé', ariaLabel: 'Santé', subject_id: 6 },
       { id: 104, name: 'Patriotisme et Citoyenneté', description: 'Patriotisme et Citoyenneté', ariaLabel: 'Patriotisme et Citoyenneté', subject_id: 7 },
-            // Add more subtopics as needed
+      // Add more subtopics as needed
     ],
   },
 

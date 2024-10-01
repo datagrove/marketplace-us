@@ -30,7 +30,7 @@ export const CreatorRegistrationRouting = () => {
 
             setIsUserCreator(true);
             if (data![0]) {
-                setCreateText(t("pageTitles.viewCreatorAccount"));
+                setCreateText(t("buttons.viewCreatorAccount"));
                 setCreatorRouting(`/${lang}/creator/profile`);
             }
         } catch (error) {

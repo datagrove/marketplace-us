@@ -37,7 +37,7 @@ export const CreatePostsRouting = () => {
     return (
         <Show when={isUserCreator()}>
             <a href={`/${lang}/posts/createpost`} class=" " id="createPostLink">
-                {t("pageTitles.createPost")}
+                {t("buttons.createPost")}
             </a>
         </Show>
     );
