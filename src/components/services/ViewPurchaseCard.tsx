@@ -7,6 +7,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { DownloadBtn } from "@components/members/user/DownloadBtn.tsx";
 import type { PurchasedPost } from "@lib/types";
 import { downloadPostImage } from "@lib/imageHelper";
+import { ReviewPurchasedResource } from "@components/posts/ReviewPurchasedResource";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -16,12 +17,18 @@ interface Props {
     posts: Array<PurchasedPost>;
 }
 
+const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ViewPurchaseCard: Component<Props> = (props) => {
     const [purchasedItems, setPurchasedItems] = createSignal<
         Array<PurchasedPost>
     >([]);
     const [review, setReview] = createSignal<string>("");
+    const [session, setSession] = createSignal<AuthSession | null>(null);
 
+    onMount(async () => {
+        setSession(User?.session);
+    });
     console.log("Card Purchases");
     console.log(props.posts);
 
@@ -93,46 +100,24 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                             )}
                         </div>
 
-                        {/* <div
-                            id="user-profile-ratings-div"
-                            class="purchased-item-stars flex w-full items-center justify-between"
-                        >
-                            <span
-                                id="user-rating-5"
-                                class="flex items-center justify-center"
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-4"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-3"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-2"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                            <span
-                                id="user-rating-1"
-                                class=""
-                                onClick={(e) => ratePurchase(e)}
-                            >
-                                ☆
-                            </span>
-                        </div> */}
+                        <div class="mt-3 flex w-full justify-center">
+                            {/* <button class="flex justify-center text-center w-[90%] bg-btn1 dark:bg-btn1-DM rounded-full">
+                                <p class="text-xs text-ptext1">{t("buttons.reviewResource")}</p>
+                            </button> */}
+                            <div>
+                                <ReviewPurchasedResource
+                                    resourceId={post.id}
+                                    userId={session()?.user.id!}
+                                    access={session()?.access_token}
+                                    ref={session()?.refresh_token!}
+                                    imgURL={post.image_url}
+                                    postTitle={post.title}
+                                    postCreator={post.seller_name}
+                                    purchaseDate={post.purchaseDate}
+                                    createdDate={post.created_at}
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="purchased-item-text-buttons ml-2 w-full">

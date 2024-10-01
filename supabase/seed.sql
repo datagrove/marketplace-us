@@ -102,20 +102,20 @@ INSERT INTO "public"."favorites" ("list_number", "created_date", "list_name", "c
 -- Data for Name: seller_post; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "public"."seller_post" ("id", "created_at", "title", "content", "user_id", "image_urls", "stripe_price_id", "stripe_product_id", "resource_urls", "listing_status", "secular", "resource_links", "draft_status") VALUES
-	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala', NULL, true, true, NULL, false),
-	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU', NULL, true, false, NULL, false),
-	(3, '2024-03-05 21:52:06.919336+00', 'Math course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J', NULL, true, true, NULL, false),
-	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo', NULL, true, false, NULL, false),
-	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', '<p>test learn programming</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp', NULL, true, false, NULL, false),
-	(7, '2024-03-27 14:25:37.137856+00', 'Test', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', NULL, 'price_1OyxQ5BRZLMDvS4RJ1oWeAIj', 'prod_PoabbRuN1tqxj0', NULL, true, false, NULL, false),
-	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK', NULL, true, true, NULL, false),
-	(11, '2024-03-27 15:50:36.102267+00', 'New Test', '<p>Test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR', NULL, true, true, NULL, false),
-	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89', NULL, true, true, NULL, false),
-	(13, '2024-05-17 16:10:12.692569+00', 'Free Post Test', '<p>Test free post</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PMZvBBRZLMDvS4RcPyxuTRL', 'prod_QCzvzVmGr9GP84', NULL, true, true, NULL, false),
-	(20, '2024-09-13 19:04:07.751644+00', 'test', '<p>etest</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PzmJ0BRZLMDvS4RZXrUWXBE', 'prod_QqLT7NqggoKdOi', 'b37341b5-ecd9-4349-9bba-dc4542ce6530', true, false, '{}', false),
-	(22, '2024-09-16 22:13:52.087191+00', 'More subtopics', '<p>test</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PznGHBRZLMDvS4RNAKvrtAv', 'prod_QrWDzqiNcIe5dO', '4c7b13a1-338f-4583-86e7-842e627cbc2e', true, false, '{}', false),
-	(21, '2024-09-16 21:19:13.958564+00', 'test subtopics', '<p>test</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PznKqBRZLMDvS4RyP4tve7n', 'prod_QrVKviVznbhXaE', '95757a2c-e4f8-4c32-a402-a5286388edab', true, false, '{}', false);
+INSERT INTO "public"."seller_post" ("id", "created_at", "title", "content", "user_id", "image_urls", "stripe_price_id", "stripe_product_id", "resource_urls", "listing_status", "secular", "resource_links", "draft_status", "price_value") VALUES
+	(1, '2024-03-05 15:38:02.509065+00', 'Test Post 1', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtG6cBRZLMDvS4Ri22IpzGq', 'prod_PihVI0liGFkala', NULL, true, true, NULL, false, 20.00),
+	(5, '2024-03-05 21:53:47.560102+00', 'Geography course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFqrBRZLMDvS4RK5Ajf7na', 'prod_PihF0aDvvT4PeU', NULL, true, false, NULL, false, 20),
+	(3, '2024-03-05 21:52:06.919336+00', 'Math course', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFmkBRZLMDvS4RJ8TNXGrH', 'prod_PihB8lq2HWY15J', NULL, true, true, NULL, false, 20),
+	(2, '2024-03-05 15:40:05.243892+00', 'Test Post 2', '<p>test</p>', '84a298b6-9caf-4305-9bfe-3ea325df9188', NULL, 'price_1OtFjpBRZLMDvS4RPoOg78AS', 'prod_Pih8Qrjfpr0Zmo', NULL, true, false, NULL, false, 20),
+	(6, '2024-03-05 21:54:44.695358+00', 'programming course ', '<p>test learn programming</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1OtFmFBRZLMDvS4RsYXD3Q3C', 'prod_PihAqPK24WxqZp', NULL, true, false, NULL, false, 20),
+	(7, '2024-03-27 14:25:37.137856+00', 'Test', '<p>This post is for testing provider images in the cart and also longer post content so here is some more content to see if the cards properly cut off after three lines like we expect? Is this working? Test Test Test TESt testing Test</p>', 'b78eab21-c34e-41ef-9a72-64ee49f4cbc0', NULL, 'price_1OyxQ5BRZLMDvS4RJ1oWeAIj', 'prod_PoabbRuN1tqxj0', NULL, true, false, NULL, false, 20),
+	(10, '2024-03-27 15:49:08.243995+00', 'Testing testing', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyyiuBRZLMDvS4Rpb0hhUK3', 'prod_PobwysGlI4L0OK', NULL, true, true, NULL, false, 20),
+	(11, '2024-03-27 15:50:36.102267+00', 'New Test', '<p>Test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyykKBRZLMDvS4RC4SRSDLb', 'prod_PobyNSYyDLZArR', NULL, true, true, NULL, false, 20),
+	(12, '2024-03-27 15:53:32.292584+00', 'Another test', '<p>test</p>', 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a', NULL, 'price_1OyynABRZLMDvS4RMi5Z83UK', 'prod_Poc1Kl6ObNXQ89', NULL, true, true, NULL, false, 20),
+	(13, '2024-05-17 16:10:12.692569+00', 'Free Post Test', '<p>Test free post</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PMZvBBRZLMDvS4RcPyxuTRL', 'prod_QCzvzVmGr9GP84', NULL, true, true, NULL, false, 0),
+	(20, '2024-09-13 19:04:07.751644+00', 'test', '<p>etest</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PzmJ0BRZLMDvS4RZXrUWXBE', 'prod_QqLT7NqggoKdOi', 'b37341b5-ecd9-4349-9bba-dc4542ce6530', true, false, '{}', false, 0),
+	(22, '2024-09-16 22:13:52.087191+00', 'More subtopics', '<p>test</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PznGHBRZLMDvS4RNAKvrtAv', 'prod_QrWDzqiNcIe5dO', '4c7b13a1-338f-4583-86e7-842e627cbc2e', true, false, '{}', false, 0),
+	(21, '2024-09-16 21:19:13.958564+00', 'test subtopics', '<p>test</p>', 'a23376db-215d-49c4-9d9d-791c26579543', NULL, 'price_1PznKqBRZLMDvS4RyP4tve7n', 'prod_QrVKviVznbhXaE', '95757a2c-e4f8-4c32-a402-a5286388edab', true, false, '{}', false, 0);
 
 
 
@@ -138,6 +138,17 @@ INSERT INTO "public"."location" ("id", "created_at", "street_number", "street_nu
 	(12, '2024-03-27 15:50:36.084493+00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a'),
 	(13, '2024-03-27 15:53:32.278633+00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 'b00f3d62-4eb1-40ba-b73e-e3dc78eff08a');
 
+
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+--INSERT INTO "public"."orders" ("order_number", "order_date", "customer_id", "order_status") VALUES
+--	('51d1f510-f3e7-48c3-913d-05a1b499cc41', '2024-09-10 14:50:12.592153+00', 'a23376db-215d-49c4-9d9d-791c26579543', true);
+
+
+--
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
 
 --
 -- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -318,6 +329,30 @@ INSERT INTO "public"."users" ("user_id", "created_at", "display_name", "image_ur
 
 
 --
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."orders" ("order_number", "order_date", "customer_id", "order_status") VALUES
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', '2024-09-10 14:50:12.592153+00', 'a23376db-215d-49c4-9d9d-791c26579543', true);
+
+
+--
+-- Data for Name: order_details; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."order_details" ("order_number", "product_id", "quantity") VALUES
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 12, 2),
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 10, 2),
+	('51d1f510-f3e7-48c3-913d-05a1b499cc41', 5, 1);
+
+
+-- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "public"."reviews" ("id", "created_at", "resource_id", "reviewer_id", "review_title", "review_text", "overall_rating") VALUES
+	(3, '2024-09-10 14:48:24.267324+00', 12, 'a23376db-215d-49c4-9d9d-791c26579543', 'test title', 'test review text', 4);
+
+--
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
@@ -428,6 +463,9 @@ SELECT pg_catalog.setval('"public"."sellers_seller_id_seq"', 8, true);
 
 SELECT pg_catalog.setval('"supabase_functions"."hooks_id_seq"', 1, true);
 
+--
+
+SELECT pg_catalog.setval('"public"."reviews_id_seq"', 4, true);
 
 --
 -- PostgreSQL database dump complete

@@ -137,6 +137,7 @@ export const English = {
     editPost: "Edit",
     getLinks: "Get Links",
     checkoutAsGuest: "Checkout As Guest",
+    reviewResource: "Review",
   },
 
   messages: {
@@ -262,6 +263,19 @@ export const English = {
     secular: "Secular",
     resourceLinks: "Resource Links",
     draft: "Draft",
+    downloadable: "Downloadable",
+    whatDidYouThink: "What did you think?",
+    overallRating: "Overall Rating",
+    reviewQ1: "As described",
+    reviewQ2: "Age/grade appropriate",
+    reviewQ3: "Engaging",
+    reviewQ4: "High quality",
+    reviewQ5: "Easy to use/implement",
+    reviewQ6: "Fair price",
+    reviewTitle: "Review Title",
+    reviewText: "Review Text",
+    priceFilter: "Price",
+    freeResources: "Free Resources",
   },
 
   postLabels: {
@@ -272,6 +286,8 @@ export const English = {
     slide: "Slide",
     creatorProfileImage: "Creator Profile Image",
     userProfileImage: "User Profile Image",
+    yourRating: "Your Rating",
+    reviews: "Reviews",
     subtopics: "Topics",
   },
 
@@ -522,43 +538,43 @@ export const English = {
         name: "Art & Music",
         description: "Art & Music description",
         ariaLabel: "Art & Music",
-        id: "3",
+        id: 3,
       },
       {
         name: "Holiday",
         description: "Holiday description",
         ariaLabel: "Holiday",
-        id: "4",
+        id: 4,
       },
       {
         name: "Math",
         description: "Math description",
         ariaLabel: "Math",
-        id: "5",
+        id: 5,
       },
       {
         name: "Science",
         description: "Description Science",
         ariaLabel: "Science",
-        id: "6",
+        id: 6,
       },
       {
         name: "Social Studies",
         description: "Social Studies Description",
         ariaLabel: "Social Studies",
-        id: "7",
+        id: 7,
       },
       {
         name: "Specialty",
         description: "Specialty description",
         ariaLabel: "Specialty",
-        id: "8",
+        id: 8,
       },
       {
         name: "English Language Arts",
         description: "English Language Arts description",
         ariaLabel: "English Language Arts",
-        id: "9",
+        id: 9,
       },
       // Add more products as needed
     ],
@@ -673,23 +689,18 @@ export const English = {
 
   clearFilters: {
     filterButtons: [
-      { text: "Clear All Filters", ariaLabel: "Clear All Filters" },
-      { text: "Clear Subjects", ariaLabel: "Clear Subjects" },
+      { id: "Clear-All", text: "Clear All Filters", ariaLabel: "Clear All Filters" },
+      { id: "Clear-Subjects", text: "Clear Subjects", ariaLabel: "Clear Subjects" },
       {
+        id: "Clear-Grade",
         text: "Clear Grade",
         ariaLabel: "Clear Grade",
       },
-      {
-        text: "Clear Minor Municipality",
-        ariaLabel: "Clear Minor Municipality",
-      },
-      {
-        text: "Clear Governing District",
-        ariaLabel: "Clear Governing District",
-      },
-      { text: "View Results", ariaLabel: "View Results" },
-      { text: "Clear Secular", ariaLabel: "Clear Secular" },
-      { text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
+      { id: "View-Results", text: "View Results", ariaLabel: "View Results" },
+      { id: "Clear-Secular", text: "Clear Secular", ariaLabel: "Clear Secular" },
+      { id: "Clear-Resource-Type", text: "Clear Resource Type", ariaLabel: "Clear Resource Type" },
+      { id: "Clear-Downloadable", text: "Clear Downloadable", ariaLabel: "Clear Downloadable Filter" },
+      { id: "Clear-Price-Filter", text: "Clear Price Filter", ariaLabel: "Clear Price Filter" },
     ],
   },
 

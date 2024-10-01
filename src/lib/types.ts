@@ -79,4 +79,30 @@ export interface FilterPostsParams {
     seller_id?: string;
     from?: number;
     to?: number;
+    downloadable?: boolean;
+    subtopics?: number[];
+    priceMin?: number;
+    priceMax?: number;
 }
+
+export interface Orders{
+    order_number: number;
+    order_date: number;
+    customer_id: number;
+    order_status: boolean;
+}
+
+export interface Order_Details{
+    order_number: number;
+    product_id: number;
+    quantity: number;
+}
+
+export interface Review{
+        resource_id : string,
+        reviewer_id: string,
+        review_title: string,
+        review_text: string,
+        overall_rating :number,
+}
+
