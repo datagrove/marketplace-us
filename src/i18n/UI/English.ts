@@ -2,28 +2,6 @@ export const English = {
   textDirection: "ltr",
   siteDescription: "Your community for quality learning resources.",
 
-  pageTitles: {
-    services: "Resource Catalog",
-    home: "Home",
-    signIn: "Sign In",
-    createUserAccount: "Create User Profile",
-    editUserAccount: "Edit User Profile",
-    viewUserAccount: "My User Profile",
-    createCreatorAccount: "Create Creator Profile",
-    editCreatorAccount: "Edit Creator Profile",
-    viewCreatorAccount: "My Creator Profile",
-    userViewCreatorAccount: "Creator Profile",
-    page404: "404 - Page Not Found",
-    resetPassword: "Set New Password",
-    acceptableUse: "Acceptable Use Policy",
-    about: "About Us",
-    impact: "Impact",
-    fullPost: "View Full Post",
-    faq: "Frequently Asked Questions",
-    viewCart: "My Cart",
-    sellerFeePayout: "Seller Fees and Payout Rates",
-    copyright: "Copyright and Trademark Policy",
-  },
 
   h1ElementText: {
     services: "Resource Catalog",
@@ -41,9 +19,6 @@ export const English = {
     requestPasswordReset: "Request Password Reset",
     page404: "404 - Page Not Found",
     createPost: "List Resource in LearnGrove",
-  },
-
-  h2ElementText: {
   },
 
   pageMetaTitles: {
