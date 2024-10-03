@@ -98,7 +98,7 @@ export interface Order_Details{
     quantity: number;
 }
 
-export interface Review{
+export interface Review {
         resource_id : string,
         reviewer_id: string,
         review_title: string,
@@ -106,3 +106,12 @@ export interface Review{
         overall_rating :number,
 }
 
+export interface ListData {
+    count: number;
+    created_date: string;
+    customer_id: string;
+    default_list: boolean;
+    list_name: string;
+    list_number: string;
+    posts: Post[];
+}

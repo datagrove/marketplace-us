@@ -245,10 +245,8 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     //Price Filter
     const [showPriceFilter, setShowPriceFilter] = createSignal<boolean>(false);
-    const [priceFilterMin, setPriceFilterMin] = createSignal<number | null>(0);
-    const [priceFilterMax, setPriceFilterMax] = createSignal<number | null>(
-        500
-    );
+    const [priceFilterMin, setPriceFilterMin] = createSignal<number>(0);
+    const [priceFilterMax, setPriceFilterMax] = createSignal<number>(500);
     const [priceFilterCount, setPriceFilterCount] = createSignal<0 | 1>(0);
     let progressRef!: HTMLDivElement;
 
@@ -694,7 +692,7 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     function setPriceMinValue(e: Event) {
         const value = Math.min(
-            Number(e.currentTarget.value),
+            Number((e.currentTarget as HTMLInputElement).value),
             priceFilterMax() - 1
         );
         setPriceFilterMin(value);
@@ -712,7 +710,10 @@ export const FiltersMobile: Component<Props> = (props) => {
 
     function setPriceMaxValue(e: Event) {
         const value = Math.min(
-            Math.max(Number(e.currentTarget.value), priceFilterMin() + 1),
+            Math.max(
+                Number((e.currentTarget as HTMLInputElement).value),
+                priceFilterMin() + 1
+            ),
             500
         );
         setPriceFilterMax(value);

@@ -138,6 +138,8 @@ export const English = {
     getLinks: "Get Links",
     checkoutAsGuest: "Checkout As Guest",
     reviewResource: "Review",
+    createFavoriteList: "Create New Favorite List",
+    createList: "Create List",
   },
 
   messages: {
@@ -276,6 +278,7 @@ export const English = {
     reviewText: "Review Text",
     priceFilter: "Price",
     freeResources: "Free Resources",
+    listName: "List Name",
   },
 
   postLabels: {
@@ -289,6 +292,7 @@ export const English = {
     yourRating: "Your Rating",
     reviews: "Reviews",
     subtopics: "Topics",
+    resources: "Resources",
   },
 
   cartLabels: {

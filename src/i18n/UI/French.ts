@@ -135,6 +135,8 @@ export const French = {
     getLinks: "Obtenir des Liens",
     checkoutAsGuest: "Passer en tant qu'invite",
     reviewResource: "Critique",
+    createFavoriteList: "Ajouter une nouvelle liste de favoris",
+    createList: "Ajouter une liste",
   },
 
   messages: {
@@ -278,6 +280,7 @@ export const French = {
     reviewText: "Texte de le Revue",
     priceFilter: "Prix",
     freeResources: "Ressources gratuites",
+    listName: "Nom de la Liste",
   },
 
   postLabels: {
@@ -291,6 +294,7 @@ export const French = {
     yourRating: "Votre Note",
     reviews: "Critiques",
     subtopics: "Sous-thèmes",
+    resources: "Ressources",
   },
 
   cartLabels: {

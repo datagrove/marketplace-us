@@ -2,12 +2,11 @@ import supabase from "../../lib/supabaseClientServer";
 import type { APIRoute } from "astro";
 import type { APIContext } from "astro";
 import { useTranslations } from "@i18n/utils";
+import type { ListData } from "@lib/types";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const requestBody = await request.json();
     const url = new URL(request.url);
-
-    console.log("GetUserFavorites Request", requestBody);
 
     //Set internationalization values
     const lang = requestBody.lang;
@@ -32,8 +31,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     }
 
     async function getItems(list_number: string, limit?: number) {
-        let response: ReadableStream;
-        if(limit){
+        let response: Response;
+        if (limit) {
             response = await fetch(`${url.origin}/api/getFavoritesOnList`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -44,7 +43,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                     limit: limit,
                 }),
             });
-    
         } else {
             response = await fetch(`${url.origin}/api/getFavoritesOnList`, {
                 method: "POST",
@@ -55,9 +53,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                     lang: lang,
                 }),
             });
-
         }
-        
 
         const data = await response.json();
         return data;
@@ -144,55 +140,82 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     } else if (data.length === 1) {
-        // Make favorites Items call here
-        const response = await getItems(data[0].list_number);
-        
-        if (response) {
+        try {
+            
+            // Make favorites Items call here
+            const response = await getItems(data[0].list_number);
+
+            if (response) {
+                let listData: Partial<ListData>[] = data;
+                listData[0].count = response.count;
+                listData[0].posts = response.posts.body || [];
+
+                return new Response(
+                    JSON.stringify({
+                        message: t("apiErrors.success"),
+                        type: "single",
+                        lists: listData,
+                        posts: response.posts,
+                    }),
+                    { status: 200 }
+                );
+            } else {
+                return new Response(
+                    JSON.stringify({
+                        // TODO Internationalize
+                        message: "Error Getting User Favorites from Single List",
+                    }),
+                    { status: 500 }
+                );
+            }
+        } catch (error) {
+            console.error("Error handling single list:", error);
+                return new Response(
+                    //TODO Internationalize
+                    JSON.stringify({
+                        message: "Error handling single list",
+                    }),
+                    { status: 500 }
+                );
+        }
+    } else if (data.length > 1) {
+        try {
+            // Return a list of lists with information
+            let listData = data;
+            const updatedListData = await Promise.all(
+                listData.map(async (list) => {
+                    const response = await getItems(list.list_number, 1);
+                    list.count = response.count;
+                    list.posts = response.posts.body || [];
+                    return list;
+                })
+            );
+            // Need the image from the first item on each list
             return new Response(
                 JSON.stringify({
                     message: t("apiErrors.success"),
-                    type: "single",
-                    posts: response.posts,
+                    lists: updatedListData,
+                    type: "multiple",
                 }),
-                { status: 200 },
+                { status: 200 }
             );
-        } else {
+        } catch (error) {
+            console.error("Error handling multiple lists:", error);
             return new Response(
+                //TODO Internationalize
                 JSON.stringify({
-                    // TODO Internationalize
-                    message: "Error Getting User Favorites",
+                    message: "Error handling multiple lists",
                 }),
                 { status: 500 }
             );
         }
-        
-    } else {
-        // Return a list of lists with information
-        let listData = data;
-        listData.map(async (list) => {
-            const response = await getItems(list.list_number);
-            list.count = response.count
-            list.image = response.posts[0].image_urls[0]
-            return list
-        })
-        console.log(listData);
-        // Need the image from the first item on each list
-        return new Response(
-            JSON.stringify({
-                message: t("apiErrors.success"),
-                id: data,
-                type: "list",
-            }),
-            { status: 200 }
-        );
     }
 
     return new Response(
         JSON.stringify({
             // TODO Internationalize
-            message: "Error Getting User Favorites",
+            message: "GeneralError Getting User Favorites",
         }),
         { status: 500 }
     );
 };
-

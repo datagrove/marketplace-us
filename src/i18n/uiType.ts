@@ -19,6 +19,21 @@ type Subject = {
     id: number;
 };
 
+type Link = {
+    text: string;
+    href: string;
+};
+
+type LinkList = {
+    links: Array<Link>;
+};
+
+type SocialLink = {
+    ariaLabel: string;
+    icon: string;
+    href: string;
+};
+
 export interface uiObject {
     textDirection: string;
     siteDescription: string;
@@ -143,9 +158,9 @@ export interface uiObject {
         getLinks: string;
         checkoutAsGuest: string;
         reviewResource: string;
+        createFavoriteList: string;
+        createList: string;
     };
-
-
 
     messages: {
         noAccount: string;
@@ -267,9 +282,10 @@ export interface uiObject {
         reviewQ5: string;
         reviewQ6: string;
         reviewTitle: string;
-        reviewText: string; 
+        reviewText: string;
         priceFilter: string;
         freeResources: string;
+        listName: string;
     };
 
     postLabels: {
@@ -281,6 +297,7 @@ export interface uiObject {
         creatorProfileImage: string;
         userProfileImage: string;
         subtopics: string;
+        resources: string;
     };
 
     cartLabels: {
@@ -416,62 +433,9 @@ export interface uiObject {
     };
 
     footerData: {
-        links: [
-            // {
-            //   title: string,
-            //   links: [
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //   ],
-            // },
-            // {
-            //   title: string,
-            //   links: [
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //   ],
-            // },
-            {
-                // title: string,
-                links: [
-                    { text: string; href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                ];
-            },
-            {
-                // title: string,
-                links: [
-                    { text: string; href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                ];
-            },
-        ];
-        secondaryLinks: [
-            { text: string; href: string },
-            { text: string; href: string },
-        ];
-        socialLinks: [
-            // { ariaLabel: string, icon: string, href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-            // { ariaLabel: string, icon: string, href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-        ];
+        links: LinkList[];
+        secondaryLinks: Link[];
+        socialLinks: SocialLink [];
         footNote: string;
     };
 

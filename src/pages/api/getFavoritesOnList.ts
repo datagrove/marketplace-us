@@ -7,8 +7,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const requestData = await request.json();
     const url = new URL(request.url);
 
-    console.log("GetFavoritesOnList Request", requestData);
-
     //Set internationalization values
     const lang = requestData.lang;
     //@ts-ignore
@@ -81,11 +79,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         .select("product_id", { count: "exact" })
         .eq("list_number", list_number);
 
-    console.log("GetFavoritesOnList Count", count);
 
     const { data, error } = await query;
-
-    console.log("GetFavoritesOnList Query Response", data);
 
     //data:[{
     //  list_number: uuid
@@ -101,13 +96,22 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             }),
             { status: 500 }
         );
-    } else if (!data || data.length === 0) {
+    } else if (!data) {
         return new Response(
             JSON.stringify({
                 //TODO  Internationalize
                 message: "Error No favorite items found",
             }),
             { status: 500 }
+        );
+    } else if (data.length === 0 && count === 0) {
+        return new Response(
+            JSON.stringify({
+                message: t("apiErrors.success"),
+                posts: data,
+                count: count,
+            }),
+            { status: 200 }
         );
     }
 

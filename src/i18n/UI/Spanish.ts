@@ -138,6 +138,8 @@ export const Spanish = {
     getLinks: "Obtener enlaces",
     checkoutAsGuest: "Comprar como Invitado",
     reviewResource: "Reseña",
+    createFavoriteList: "Crear Nueva Lista de Favoritos",
+    createList: "Crear Lista",
   },
 
   messages: {
@@ -280,6 +282,7 @@ export const Spanish = {
     reviewText: "Texto de la Calificación",
     priceFilter: "Precio",
     freeResources: "Recursos gratuitos",
+    listName: "Nombre de la lista",
   },
 
   postLabels: {
@@ -293,6 +296,7 @@ export const Spanish = {
     yourRating: "Tu Calificatión",
     reviews: "Críticas",
     subtopics: "Temas",
+    resources: "Recursos",
   },
 
   cartLabels: {
