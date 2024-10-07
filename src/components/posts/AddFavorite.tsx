@@ -5,6 +5,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import Modal, { closeModal } from "@components/common/notices/modal";
 import type { ListData } from "@lib/types";
+import { CreateFavoriteList } from "@components/members/user/createFavoriteList";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -36,36 +37,25 @@ export const FavoriteButton: Component<Props> = (props) => {
         } else {
             console.log("User: ", User.session);
             if (User.session === null) {
-                console.log("User Session: " + User.session);
                 setSession(null);
                 setNotUser(true);
+                console.log("NotUser: ", notUser());
+                console.log("Is Favorited: ", isFavorited());
             } else {
                 setSession(User.session);
             }
         }
 
         if (session() !== null) {
-            // const { data, error } = await supabase
-            //     .from("favorites")
-            //     .select("list_number")
-            //     .eq("default_list", true);
-            // if (error) {
-            //     console.log("supabase errror: " + error.message);
-            // }
-
-            // if (data) {
-            //     if (data.length > 0) {
-            //         setListNumber(data[0].list_number);
-            //     }
-            // }
             getFavorites();
             getLists();
         }
     });
 
-    // createEffect(() => {
-    //     if()
-    // });
+    createEffect(() => {
+        const favoriteLists = favoritesLists();
+        console.log("Favorite Lists: ", favoriteLists);
+    });
     //Refactor so we aren't fetching all the favorite ids for every instance of the button
     const getFavorites = async () => {
         const response = await fetch("/api/getUserFavoriteIds", {
@@ -239,44 +229,56 @@ export const FavoriteButton: Component<Props> = (props) => {
                 <Show when={!notUser()}>
                     <Modal
                         children={
-                            <>
-                                <Show
-                                    when={
-                                        favoritesLists().length > 0 &&
-                                        !loading()
-                                    }
+                            <div>
+                                <div
+                                    id="holder"
+                                    class="flex flex-row flex-wrap justify-start"
                                 >
-                                    {favoritesLists().map((list) => (
-                                        <button
-                                            class="flex w-40 flex-col p-2"
-                                            onclick={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
+                                    <Show
+                                        when={
+                                            favoritesLists().length > 0 &&
+                                            !loading()
+                                        }
+                                    >
+                                        {favoritesLists().map((list) => (
+                                            <button
+                                                class="flex w-40 flex-col p-2"
+                                                onclick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
 
-                                                addToFavorites(
-                                                    e,
-                                                    list.list_number,
-                                                    `addFavoriteBtn ${props.id}`
-                                                );
-                                            }}
-                                        >
-                                            {listImages(list)}
-                                            <div class="mt-2 line-clamp-2 font-bold">
-                                                {list.list_name}
-                                            </div>
-                                            <div class="">
-                                                {list.count +
-                                                    " " +
-                                                    t("postLabels.resources")}
-                                            </div>
-                                        </button>
-                                    ))}
-                                </Show>
-                            </>
+                                                    addToFavorites(
+                                                        e,
+                                                        list.list_number,
+                                                        `addFavoriteBtn ${props.id}`
+                                                    );
+                                                }}
+                                            >
+                                                {listImages(list)}
+                                                <div class="mt-2 line-clamp-2 font-bold">
+                                                    {list.list_name}
+                                                </div>
+                                                <div class="">
+                                                    {list.count +
+                                                        " " +
+                                                        t(
+                                                            "postLabels.resources"
+                                                        )}
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </Show>
+                                </div>
+                                <CreateFavoriteList
+                                    lang={lang}
+                                    user_id={session()?.user.id || ""}
+                                    onListCreated={getFavoriteLists}
+                                />
+                            </div>
                         }
                         heading={"Save To"}
                         buttonId={`addFavoriteBtn ${props.id}`}
-                        buttonClass="absolute right-0 top-0"
+                        buttonClass="absolute right-0 top-0 z-30"
                         // TODO Internationalize
                         buttonAriaLabel={`Add to Favorites ${props.id}`}
                         buttonContent={
@@ -324,42 +326,98 @@ export const FavoriteButton: Component<Props> = (props) => {
                         class="absolute right-0 top-0"
                         id="addFavoriteBtn"
                         aria-label={`Add to Favorites ${props.id}`}
-                    ></button>
+                    >
+                        <svg
+                            fill="none"
+                            stroke="none"
+                            viewBox="0 0 512.00 512.00"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-8 w-8 rounded-full border border-inputBorder1 bg-icon1 fill-icon1 dark:border-inputBorder1-DM dark:bg-icon1-DM dark:fill-icon1-DM"
+                        >
+                            <g
+                                id="SVGRepo_bgCarrier"
+                                stroke-width="0"
+                                transform="translate(58.879999999999995,58.879999999999995), scale(0.77)"
+                            >
+                                <rect
+                                    x="0"
+                                    y="0"
+                                    width="512.00"
+                                    height="512.00"
+                                    rx="256"
+                                    fill="none"
+                                    class="fill-icon2 dark:fill-icon1"
+                                ></rect>
+                            </g>
+                            <g
+                                id="SVGRepo_tracerCarrier"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            ></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path
+                                    class=""
+                                    d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm74.69,252.82c-9.38,11.44-26.4,29.73-65.7,56.41a15.93,15.93,0,0,1-18,0c-39.3-26.68-56.32-45-65.7-56.41-20-24.37-29.58-49.4-29.3-76.5.31-31.06,25.22-56.33,55.53-56.33,20.4,0,35,10.63,44.1,20.41a6,6,0,0,0,8.72,0c9.11-9.78,23.7-20.41,44.1-20.41,30.31,0,55.22,25.27,55.53,56.33C360.27,251.42,350.68,276.45,330.69,300.82Z"
+                                ></path>
+                            </g>
+                        </svg>
+                    </button>
                 </Show>
             </Show>
             <Show when={isFavorited()}>
                 <Modal
                     children={
                         <>
-                            <Show
-                                when={favoritesLists().length > 0 && !loading()}
-                            >
-                                {favoritesLists().map((list) => (
-                                    <button
-                                        class="flex w-40 flex-col p-2"
-                                        onclick={(e) => {
-                                            e.preventDefault();
-                                            e.stopPropagation();
-
-                                            addToFavorites(
-                                                e,
-                                                list.list_number,
-                                                `addFavoriteBtn ${props.id}`
-                                            );
-                                        }}
+                            <div>
+                                <div
+                                    id="holder"
+                                    class="flex flex-row flex-wrap justify-start"
+                                >
+                                    <Show
+                                        when={
+                                            favoritesLists().length > 0 &&
+                                            !loading()
+                                        }
                                     >
-                                        {listImages(list)}
-                                        <div class="mt-2 line-clamp-2 font-bold">
-                                            {list.list_name}
-                                        </div>
-                                        <div class="">
-                                            {list.count +
-                                                " " +
-                                                t("postLabels.resources")}
-                                        </div>
-                                    </button>
-                                ))}
-                            </Show>
+                                        {favoritesLists().map((list) => (
+                                            <button
+                                                class="flex w-40 flex-col p-2"
+                                                onclick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+
+                                                    addToFavorites(
+                                                        e,
+                                                        list.list_number,
+                                                        `addFavoriteBtn ${props.id}`
+                                                    );
+                                                }}
+                                            >
+                                                {listImages(list)}
+                                                <div class="mt-2 line-clamp-2 font-bold">
+                                                    {list.list_name}
+                                                </div>
+                                                <div class="">
+                                                    {list.count +
+                                                        " " +
+                                                        t(
+                                                            "postLabels.resources"
+                                                        )}
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </Show>
+                                </div>
+                                <div class="sticky -bottom-4 bg-background1 py-4 dark:bg-background1-DM">
+                                    <CreateFavoriteList
+                                        lang={lang}
+                                        user_id={session()?.user.id || ""}
+                                        onListCreated={getFavoriteLists}
+                                        //TODO Internationalize
+                                        buttonContent={"+ Create New List"}
+                                    />
+                                </div>
+                            </div>
                         </>
                     }
                     heading={"Save To"}

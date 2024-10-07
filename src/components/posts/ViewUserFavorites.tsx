@@ -176,6 +176,7 @@ export const ViewUserFavorites: Component = () => {
                 <CreateFavoriteList
                     lang={lang}
                     user_id={session()?.user.id || ""}
+                    onListCreated={getFavorites}
                 />
             </div>
             <Show
@@ -203,7 +204,7 @@ export const ViewUserFavorites: Component = () => {
                                 }}
                             >
                                 {listImages(list)}
-                                <div class="mt-2 line-clamp-2 font-bold">
+                                <div class="mt-2 line-clamp-2 text-start font-bold">
                                     {list.list_name}
                                 </div>
                                 <div class="">
@@ -222,18 +223,18 @@ export const ViewUserFavorites: Component = () => {
                     fallback={<div>{t("buttons.loading")}</div>}
                 >
                     <Show when={favoritedItems().length > 0}>
-                        <div class="relative mb-4 flex w-full justify-center text-2xl font-bold">
+                        <div class="relative mb-4 flex w-full flex-row justify-start text-2xl font-bold">
                             <button
-                                class="absolute left-0"
+                                class="mr-2 flex items-start"
                                 onclick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     setFavoritedItems([]);
                                 }}
                             >
-                                &lt;
+                                &larr;
                             </button>
-                            <div>{listName()}</div>
+                            <div class="w-full text-center">{listName()}</div>
                         </div>
                         <Show when={screenSize() !== "sm"}>
                             <ViewCard posts={favoritedItems()} />

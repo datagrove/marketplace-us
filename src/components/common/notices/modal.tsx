@@ -3,6 +3,7 @@ import { createSignal, createEffect, onCleanup, Show } from "solid-js";
 import { getHeading } from "./utils";
 import type { HeadingProps } from "./utils";
 import { createStore } from "solid-js/store";
+import { Portal } from "solid-js/web";
 
 type ModalProps = {
     children: JSX.Element;
@@ -103,36 +104,38 @@ const Modal: Component<ModalProps> = (props) => {
                 {props.buttonContent}
             </button>
             <Show when={isModalOpen(props.buttonId)}>
-                <div
-                    role="presentation"
-                    class="modal__backdrop min-h-100vh min-w-100vw fixed inset-0  z-[55] bg-background1-DM bg-opacity-50 dark:bg-background1 dark:bg-opacity-30"
-                    onClick={(e) => closeModal(props.buttonId, e)}
-                    onKeyPress={(e) =>
-                        (e.key || e.code) === "Escape"
-                            ? closeModal(props.buttonId, e)
-                            : null
-                    }
-                />
-                <section
-                    role="dialog"
-                    class="modal min-h-100vh w-100vw fixed inset-0 z-[60] overflow-y-auto bg-background1 p-4 dark:bg-background1-DM md:left-1/2 md:top-1/2 md:max-h-[calc(100vh-4rem)] md:min-h-fit md:w-[calc(100vw-4rem)] md:max-w-[768px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl"
-                    ref={setModal}
-                >
-                    <header class="sticky flex flex-row flex-nowrap items-center justify-between gap-[2rem] border-b-[1px]">
-                        {getHeading({
-                            heading: props.heading,
-                            headingLevel: props?.headingLevel,
-                        })}
-                        <button
-                            aria-label="Close Dialog"
-                            class="modal__close text-xl"
-                            onClick={(e) => closeModal(props.buttonId, e)}
-                        >
-                            &times;
-                        </button>
-                    </header>
-                    <div class="modal__body pt-2">{props.children}</div>
-                </section>
+                <Portal>
+                    <div
+                        role="presentation"
+                        class="modal__backdrop min-h-100vh min-w-100vw fixed inset-0  z-[55] bg-background1-DM bg-opacity-50 dark:bg-background1 dark:bg-opacity-30"
+                        onClick={(e) => closeModal(props.buttonId, e)}
+                        onKeyPress={(e) =>
+                            (e.key || e.code) === "Escape"
+                                ? closeModal(props.buttonId, e)
+                                : null
+                        }
+                    />
+                    <section
+                        role="dialog"
+                        class="modal min-h-100vh w-100vw fixed inset-0 z-[60] overflow-y-auto bg-background1 p-4 dark:bg-background1-DM md:left-1/2 md:top-1/2 md:max-h-[calc(100vh-4rem)] md:min-h-fit md:w-[calc(100vw-4rem)] md:max-w-[768px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl"
+                        ref={setModal}
+                    >
+                        <header class="sticky flex flex-row flex-nowrap items-center justify-between gap-[2rem] border-b-[1px]">
+                            {getHeading({
+                                heading: props.heading,
+                                headingLevel: props?.headingLevel,
+                            })}
+                            <button
+                                aria-label="Close Dialog"
+                                class="modal__close text-xl"
+                                onClick={(e) => closeModal(props.buttonId, e)}
+                            >
+                                &times;
+                            </button>
+                        </header>
+                        <div class="modal__body pt-2">{props.children}</div>
+                    </section>
+                </Portal>
             </Show>
         </>
     );

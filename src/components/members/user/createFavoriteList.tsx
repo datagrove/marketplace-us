@@ -1,13 +1,14 @@
 import { createSignal, createEffect, onMount } from "solid-js";
 import type { Component } from "solid-js";
 import { useTranslations } from "@i18n/utils";
-import Modal from "@components/common/notices/modal";
+import Modal, { closeModal } from "@components/common/notices/modal";
 import supabase from "@lib/supabaseClient";
-import { isOpen, setIsOpen } from "@components/common/notices/modal";
 
 interface Props {
     user_id: string;
     lang: "en" | "es" | "fr";
+    onListCreated: () => void;
+    buttonContent?: string;
 }
 
 export const CreateFavoriteList: Component<Props> = (props) => {
@@ -25,7 +26,7 @@ export const CreateFavoriteList: Component<Props> = (props) => {
         console.log(listName());
     });
 
-    function createListMenu() {
+    function createListMenu(buttonId: string) {
         return (
             <div class="flex flex-col p-4">
                 <label for="listName">{t("formLabels.listName")}</label>
@@ -39,7 +40,7 @@ export const CreateFavoriteList: Component<Props> = (props) => {
                     <button
                         class="btn-primary mt-4 w-fit"
                         onclick={(e) => {
-                            createList(e);
+                            createList(e, buttonId);
                         }}
                     >
                         {t("buttons.createList")}
@@ -49,7 +50,7 @@ export const CreateFavoriteList: Component<Props> = (props) => {
         );
     }
 
-    async function createList(e: Event) {
+    async function createList(e: Event, buttonId: string) {
         e.preventDefault();
         console.log(listName());
 
@@ -61,17 +62,18 @@ export const CreateFavoriteList: Component<Props> = (props) => {
             });
         if (favoriteError) {
             console.log(favoriteError.message);
+        } else {
+            closeModal(buttonId, e);
+            props.onListCreated();
         }
-
-        setIsOpen(false);
     }
 
     return (
         <Modal
-            children={<>{createListMenu()}</>}
+            children={<>{createListMenu("createFavoriteListMenu")}</>}
             buttonClass={`btn-primary text-2xl`}
             buttonId="createFavoriteListMenu"
-            buttonContent={"+"}
+            buttonContent={props.buttonContent ? props.buttonContent : "+"}
             heading={t("buttons.createFavoriteList")}
             headingLevel={3}
         ></Modal>
