@@ -91,16 +91,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         console.log(error);
         return new Response(
             JSON.stringify({
-                //TODO  Internationalize
-                message: "Error fetching favorites",
+                message: t("apiErrors.errorFavoriteFetch"),
             }),
             { status: 500 }
         );
     } else if (!data) {
         return new Response(
             JSON.stringify({
-                //TODO  Internationalize
-                message: "Error No favorite items found",
+                message: t("apiErrors.noFavoriteItems"),
             }),
             { status: 500 }
         );
@@ -143,8 +141,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     return new Response(
         JSON.stringify({
-            // TODO Internationalize
-            message: "Error Getting User Favorites",
+            message: t("apiErrors.generalErrorFavorite"),
         }),
         { status: 500 }
     );

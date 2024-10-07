@@ -162,18 +162,15 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             } else {
                 return new Response(
                     JSON.stringify({
-                        // TODO Internationalize
-                        message: "Error Getting User Favorites from Single List",
+                        message: t("apiErrors.singleListFavoriteError"),
                     }),
                     { status: 500 }
                 );
             }
         } catch (error) {
-            console.error("Error handling single list:", error);
                 return new Response(
-                    //TODO Internationalize
                     JSON.stringify({
-                        message: "Error handling single list",
+                        message: t("apiErrors.singleListFavoriteError"),
                     }),
                     { status: 500 }
                 );
@@ -202,9 +199,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         } catch (error) {
             console.error("Error handling multiple lists:", error);
             return new Response(
-                //TODO Internationalize
                 JSON.stringify({
-                    message: "Error handling multiple lists",
+                    message: t("apiErrors.multipleListFavoriteError"),
                 }),
                 { status: 500 }
             );
@@ -213,8 +209,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     return new Response(
         JSON.stringify({
-            // TODO Internationalize
-            message: "GeneralError Getting User Favorites",
+            message: t("apiErrors.generalErrorFavorite"),
         }),
         { status: 500 }
     );

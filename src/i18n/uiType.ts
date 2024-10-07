@@ -391,6 +391,12 @@ export interface uiObject {
         createUserError: string;
         emailNotConfirmed: string;
         noFavoriteLists: string;
+        noFavoriteItems: string;
+        errorFavoriteFetch: string;
+        generalErrorFavorite: string;
+        singleListFavoriteError: string;
+        favoriteListError: string;
+        multipleListFavoriteError: string;
     };
 
     socialModal: {
@@ -423,6 +429,7 @@ export interface uiObject {
         checkboxGrade: string;
         checkbox: string;
         readMoreAbout: string;
+        addToFavorites: string;
     };
 
     headerData: {

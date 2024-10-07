@@ -403,6 +403,12 @@ export const English = {
     emailNotConfirmed:
       "Email not registered. If you previously registered this email address please use the forgot password option below, otherwise please use the sign up option below.",
     noFavoriteLists: "No Favorite Lists found",
+    noFavoriteItems: "Error: No favorite items found",
+    errorFavoriteFetch: "Error fetching favorites",
+    generalErrorFavorite: "Error Getting User Favorites",
+    singleListFavoriteError: "Error getting single list favorites",
+    favoriteListError: "Error fetching favorite list",
+    multipleListFavoriteError: "Error handling multiple lists",
     },
 
   socialModal: {
@@ -436,6 +442,7 @@ export const English = {
     checkboxGrade: "Checkbox for selecting grade level",
     checkbox: "Checkbox",
     readMoreAbout: "Read more about ",
+    addToFavorites: "Add to Favorites",
   },
 
   headerData: {

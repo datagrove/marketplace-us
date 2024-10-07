@@ -37,8 +37,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (error) {
         return new Response(
             JSON.stringify({
-                //TODO Fix error message
-                message: t("apiErrors.postError"),
+                message: t("apiErrors.favoriteListError"),
             }),
             { status: 500 }
         );
@@ -55,8 +54,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (favoritesProductsError) {
         return new Response(
             JSON.stringify({
-                // TODO Internationalize
-                message: "Error Getting User Favorites from Single List",
+                message: t("apiErrors.singleListFavoriteError"),
             }),
             { status: 500 }
         );
@@ -74,8 +72,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     return new Response(
         JSON.stringify({
-            // TODO Internationalize
-            message: "GeneralError Getting User Favorites",
+            message: t("apiErrors.generalErrorFavorite"),
         }),
         { status: 500 }
     );

@@ -443,6 +443,13 @@ export const Spanish = {
       "Casilla de verificación para seleccionar el nivel de grado",
     checkbox: "Caja",
     readMoreAbout: "Leer más sobre",
+    addToFavorites: "Añadir a favoritos",
+    noFavoriteItems: "No hay elementos favoritos",
+    errorFavoriteFetch: "Error al obtener favoritos",
+    generalErrorFavorite: "Error al obtener favoritos",
+    singleListFavoriteError: "Error al obtener favoritos de lista única",
+    favoriteListError: "Error al obtener lista de favoritos",
+    multipleListFavoriteError: "Error al manejar varias listas",
   },
 
   headerData: {

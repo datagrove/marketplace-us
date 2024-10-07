@@ -118,8 +118,7 @@ export const ViewUserFavorites: Component = () => {
             setListName(list_name);
             setListNumber(list_id);
         } else {
-            //TODO Internationalize
-            alert("No posts to display");
+            alert(t("messages.noPosts"));
             setFavoritedItems([]);
             setLoading(false);
         }

@@ -442,6 +442,13 @@ export const French = {
     checkboxGrade: "Case à cocher pour sélectionner le niveau scolaire",
     checkbox: "Case à cocher",
     readMoreAbout: "En savoir plus sur",
+    addToFavorites: "Ajouter aux favoris",
+    noFavoriteItems: "Aucun favori",
+    errorFavoriteFetch: "Erreur lors de la recuperation des favoris",
+    generalErrorFavorite: "Erreur lors de la recuperation des favoris",
+    singleListFavoriteError: "Erreur lors de l'obtention d'une seule liste de favoris",
+    favoriteListError: "Erreur lors de l'obtention de la liste de favoris",
+    multipleListFavoriteError: "Erreur lors de l'analyse de plusieurs listes de favoris",
   },
 
   headerData: {

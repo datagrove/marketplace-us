@@ -275,8 +275,9 @@ export const FavoriteButton: Component<Props> = (props) => {
                         heading={"Save To"}
                         buttonId={`addFavoriteBtn ${props.id}`}
                         buttonClass="absolute right-0 top-0 z-30"
-                        // TODO Internationalize
-                        buttonAriaLabel={`Add to Favorites ${props.id}`}
+                        buttonAriaLabel={
+                            t("ariaLabels.addToFavorites") + " " + props.id
+                        }
                         buttonContent={
                             <svg
                                 fill="none"
@@ -321,7 +322,9 @@ export const FavoriteButton: Component<Props> = (props) => {
                         onclick={(e) => notSignedInAdd(e)}
                         class="absolute right-0 top-0"
                         id="addFavoriteBtn"
-                        aria-label={`Add to Favorites ${props.id}`}
+                        aria-label={
+                            t("ariaLabels.addToFavorites") + " " + props.id
+                        }
                     >
                         <svg
                             fill="none"
@@ -409,8 +412,9 @@ export const FavoriteButton: Component<Props> = (props) => {
                                         lang={lang}
                                         user_id={session()?.user.id || ""}
                                         onListCreated={getFavoriteLists}
-                                        //TODO Internationalize
-                                        buttonContent={"+ Create New List"}
+                                        buttonContent={
+                                            "+ " + t("buttons.createList")
+                                        }
                                     />
                                 </div>
                             </div>
@@ -419,8 +423,9 @@ export const FavoriteButton: Component<Props> = (props) => {
                     heading={"Save To"}
                     buttonId={`addFavoriteBtn ${props.id}`}
                     buttonClass="absolute right-0 top-0"
-                    // TODO Internationalize
-                    buttonAriaLabel={`Add to Favorites ${props.id}`}
+                    buttonAriaLabel={
+                        t("ariaLabels.addToFavorites") + " " + props.id
+                    }
                     buttonContent={
                         <svg
                             fill="none"
@@ -456,12 +461,6 @@ export const FavoriteButton: Component<Props> = (props) => {
                     }
                     headingLevel={6}
                 ></Modal>
-                {/* <button
-                    onclick={(e) => removeFromFavorites(e)}
-                    class="absolute right-0 top-0"
-                    id="removeFavoriteBtn"
-                    aria-label="Remove from Favorites"
-                ></button> */}
             </Show>
             <Show when={added() === true}>
                 <div class="absolute -right-1 top-24 z-0 w-[190px] rounded-lg bg-background1 py-0.5 text-black shadow-md dark:bg-background1-DM md:w-[194px] lg:w-[240px]">
