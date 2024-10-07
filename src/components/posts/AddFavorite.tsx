@@ -52,10 +52,6 @@ export const FavoriteButton: Component<Props> = (props) => {
         }
     });
 
-    createEffect(() => {
-        const favoriteLists = favoritesLists();
-        console.log("Favorite Lists: ", favoriteLists);
-    });
     //Refactor so we aren't fetching all the favorite ids for every instance of the button
     const getFavorites = async () => {
         const response = await fetch("/api/getUserFavoriteIds", {

@@ -10,11 +10,14 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { lazyLoadImage } from "@lib/imageHelper";
 import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 import { AverageRatingStars } from "@components/posts/AverageRatingStars";
+import { RemoveFavoriteButton } from "@components/posts/RemoveFavorite";
 
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
     lang: "en" | "es" | "fr";
+    favoriteList?: string;
+    onRemoveFavorite?: () => void;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -111,7 +114,44 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                             <div class="inline-block">
-                                                <FavoriteButton id={post.id} />
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +185,44 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                             <div class="inline-block">
-                                                <FavoriteButton id={post.id} />
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +239,44 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                                         <div class="absolute right-0.5 top-10 col-span-1 flex justify-end">
                                             <div class="inline-block">
-                                                <FavoriteButton id={post.id} />
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +299,10 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </Show>
 
                                         <div class="reviews-div flex w-full items-center justify-end text-end">
-                                            <AverageRatingStars resourceId={post.id} page={"viewCard"} />
+                                            <AverageRatingStars
+                                                resourceId={post.id}
+                                                page={"viewCard"}
+                                            />
                                         </div>
                                     </div>
                                 </div>

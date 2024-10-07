@@ -31,6 +31,7 @@ export const ViewUserFavorites: Component = () => {
     const [multipleLists, setMultipleLists] = createSignal<boolean>(false);
     const [favoriteLists, setFavoriteLists] = createSignal<Array<ListData>>([]);
     const [listName, setListName] = createSignal<string>("");
+    const [listNumber, setListNumber] = createSignal<string>("");
 
     const screenSize = useStore(windowSize);
 
@@ -78,6 +79,7 @@ export const ViewUserFavorites: Component = () => {
                 console.log(data);
                 setFavoritedItems(data.posts.body);
                 setListName(data.list_name);
+                setListNumber(data.list_number);
                 setLoading(false);
             }
             if (data.type === "multiple") {
@@ -114,6 +116,7 @@ export const ViewUserFavorites: Component = () => {
             setFavoritedItems(data.posts.body);
             setLoading(false);
             setListName(list_name);
+            setListNumber(list_id);
         } else {
             //TODO Internationalize
             alert("No posts to display");
@@ -237,12 +240,28 @@ export const ViewUserFavorites: Component = () => {
                             <div class="w-full text-center">{listName()}</div>
                         </div>
                         <Show when={screenSize() !== "sm"}>
-                            <ViewCard posts={favoritedItems()} />
+                            <ViewCard
+                                posts={favoritedItems()}
+                                favoriteList={listNumber()}
+                                onRemoveFavorite={() =>
+                                    getCurrentListFavorites(
+                                        listNumber(),
+                                        listName()
+                                    )
+                                }
+                            />
                         </Show>
                         <Show when={screenSize() === "sm"}>
                             <MobileViewCard
                                 lang={lang}
                                 posts={favoritedItems()}
+                                favoriteList={listNumber()}
+                                onRemoveFavorite={() =>
+                                    getCurrentListFavorites(
+                                        listNumber(),
+                                        listName()
+                                    )
+                                }
                             />
                         </Show>
                         <AddAllToCart favorites={favoritedItems()} />
