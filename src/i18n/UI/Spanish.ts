@@ -138,6 +138,8 @@ export const Spanish = {
     getLinks: "Obtener enlaces",
     checkoutAsGuest: "Comprar como Invitado",
     reviewResource: "Reseña",
+    createFavoriteList: "Crear Nueva Lista de Favoritos",
+    createList: "Crear Lista",
   },
 
   messages: {
@@ -280,6 +282,7 @@ export const Spanish = {
     reviewText: "Texto de la Calificación",
     priceFilter: "Precio",
     freeResources: "Recursos gratuitos",
+    listName: "Nombre de la lista",
   },
 
   postLabels: {
@@ -293,6 +296,7 @@ export const Spanish = {
     yourRating: "Tu Calificatión",
     reviews: "Críticas",
     subtopics: "Temas",
+    resources: "Recursos",
   },
 
   cartLabels: {
@@ -401,7 +405,8 @@ export const Spanish = {
       "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "No se encontraron lista de favoritos",
+    },
 
   socialModal: {
     shareService: "Comparte este recurso",
@@ -438,6 +443,13 @@ export const Spanish = {
       "Casilla de verificación para seleccionar el nivel de grado",
     checkbox: "Caja",
     readMoreAbout: "Leer más sobre",
+    addToFavorites: "Añadir a favoritos",
+    noFavoriteItems: "No hay elementos favoritos",
+    errorFavoriteFetch: "Error al obtener favoritos",
+    generalErrorFavorite: "Error al obtener favoritos",
+    singleListFavoriteError: "Error al obtener favoritos de lista única",
+    favoriteListError: "Error al obtener lista de favoritos",
+    multipleListFavoriteError: "Error al manejar varias listas",
   },
 
   headerData: {

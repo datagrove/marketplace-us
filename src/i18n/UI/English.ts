@@ -138,6 +138,8 @@ export const English = {
     getLinks: "Get Links",
     checkoutAsGuest: "Checkout As Guest",
     reviewResource: "Review",
+    createFavoriteList: "Create New Favorite List",
+    createList: "Create List",
   },
 
   messages: {
@@ -276,6 +278,7 @@ export const English = {
     reviewText: "Review Text",
     priceFilter: "Price",
     freeResources: "Free Resources",
+    listName: "List Name",
   },
 
   postLabels: {
@@ -289,6 +292,7 @@ export const English = {
     yourRating: "Your Rating",
     reviews: "Reviews",
     subtopics: "Topics",
+    resources: "Resources",
   },
 
   cartLabels: {
@@ -398,7 +402,14 @@ export const English = {
       "Error creating user, please try again or contact us for assistance.",
     emailNotConfirmed:
       "Email not registered. If you previously registered this email address please use the forgot password option below, otherwise please use the sign up option below.",
-  },
+    noFavoriteLists: "No Favorite Lists found",
+    noFavoriteItems: "Error: No favorite items found",
+    errorFavoriteFetch: "Error fetching favorites",
+    generalErrorFavorite: "Error Getting User Favorites",
+    singleListFavoriteError: "Error getting single list favorites",
+    favoriteListError: "Error fetching favorite list",
+    multipleListFavoriteError: "Error handling multiple lists",
+    },
 
   socialModal: {
     shareService: "Share this resource",
@@ -431,6 +442,7 @@ export const English = {
     checkboxGrade: "Checkbox for selecting grade level",
     checkbox: "Checkbox",
     readMoreAbout: "Read more about ",
+    addToFavorites: "Add to Favorites",
   },
 
   headerData: {

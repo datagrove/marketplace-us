@@ -93,7 +93,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             query = query.lte("price_value", priceMax);
         }
 
-        console.log(query)
+        // console.log(query)
 
         const { data: posts, error } = await query;
 
@@ -105,9 +105,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 }),
                 { status: 500 }
             );
-        } else {
-            console.log("Posts: ", posts.length);
         }
+        // else {
+        //     console.log("Posts: ", posts.length);
+        // }
 
         const { data: gradeData, error: gradeError } = await supabase
             .from("grade_level")

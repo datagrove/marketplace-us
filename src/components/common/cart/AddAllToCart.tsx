@@ -69,7 +69,7 @@ export const AddAllToCart: Component<Props> = (props: Props) => {
     }
 
     return (
-        <div class="relative z-10 w-full">
+        <div class="">
             <button
                 onclick={(e) => clickHandler(e)}
                 class="btn-cart"

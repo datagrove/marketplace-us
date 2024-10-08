@@ -55,8 +55,12 @@ export const UserProfileView: Component = () => {
 
     onMount(async () => {
         console.log(User);
-        setSession(User?.session);
-        await fetchUser(User?.session?.user.id!);
+        if (typeof User?.session === "undefined") {
+            alert(t("messages.signIn"));
+        } else {
+            setSession(User?.session);
+            await fetchUser(User?.session?.user.id!);
+        }
         // await getPurchasedItems();
     });
 

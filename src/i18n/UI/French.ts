@@ -135,6 +135,8 @@ export const French = {
     getLinks: "Obtenir des Liens",
     checkoutAsGuest: "Passer en tant qu'invite",
     reviewResource: "Critique",
+    createFavoriteList: "Ajouter une nouvelle liste de favoris",
+    createList: "Ajouter une liste",
   },
 
   messages: {
@@ -278,6 +280,7 @@ export const French = {
     reviewText: "Texte de le Revue",
     priceFilter: "Prix",
     freeResources: "Ressources gratuites",
+    listName: "Nom de la Liste",
   },
 
   postLabels: {
@@ -291,6 +294,7 @@ export const French = {
     yourRating: "Votre Note",
     reviews: "Critiques",
     subtopics: "Sous-thèmes",
+    resources: "Ressources",
   },
 
   cartLabels: {
@@ -401,7 +405,8 @@ export const French = {
       "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "Aucune liste de favoris trouvée",
+    },
 
   socialModal: {
     shareService: "Partager ce ressource",
@@ -437,6 +442,13 @@ export const French = {
     checkboxGrade: "Case à cocher pour sélectionner le niveau scolaire",
     checkbox: "Case à cocher",
     readMoreAbout: "En savoir plus sur",
+    addToFavorites: "Ajouter aux favoris",
+    noFavoriteItems: "Aucun favori",
+    errorFavoriteFetch: "Erreur lors de la recuperation des favoris",
+    generalErrorFavorite: "Erreur lors de la recuperation des favoris",
+    singleListFavoriteError: "Erreur lors de l'obtention d'une seule liste de favoris",
+    favoriteListError: "Erreur lors de l'obtention de la liste de favoris",
+    multipleListFavoriteError: "Erreur lors de l'analyse de plusieurs listes de favoris",
   },
 
   headerData: {
