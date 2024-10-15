@@ -3,6 +3,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
+    "types": ["vite/client", "vite-plugin-pwa/client", "@testing-library/jest-dom"],
     "baseUrl": ".",
     "paths": {
         "@components/*": ["src/components/*"],
@@ -14,7 +15,6 @@
         "@lib/*" : ["src/lib/*"],
         "@src/*": ["src/*"]
     },
-    "types": ["vite-plugin-pwa/client"],
     "lib": [
       "dom.iterable"
     ]
