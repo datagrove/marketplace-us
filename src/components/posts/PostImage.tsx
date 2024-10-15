@@ -27,8 +27,8 @@ const PostImage: Component<Props> = (props) => {
     const [imageIds, setImageIds] = createSignal<Array<string>>([]);
 
     createEffect(() => {
-        console.log("Mounting", props.url);
-        console.log("Has Run", hasRun());
+        // console.log("Mounting", props.url);
+        // console.log("Has Run", hasRun());
         if (props.url && !hasRun()) {
             if (Array.isArray(props.url) && props.url.length > 0) {
                 updateImages();
@@ -41,14 +41,14 @@ const PostImage: Component<Props> = (props) => {
     });
 
     const updateImages = async () => {
-        console.log("Update Images", props.url);
-        console.log("Image Ids", imageIds());
+        // console.log("Update Images", props.url);
+        // console.log("Image Ids", imageIds());
         if (props.url) {
             if (Array.isArray(props.url)) {
                 const urlsToDownload = props.url.filter(
                     (url) => !imageIds().includes(url)
                 );
-                console.log("Urls to download", urlsToDownload);
+                // console.log("Urls to download", urlsToDownload);
                 await Promise.all(
                     urlsToDownload.map(async (url) => {
                         await downloadImage(url);
@@ -100,7 +100,7 @@ const PostImage: Component<Props> = (props) => {
             }
 
             const file = target.files[0];
-            console.log("File", file);
+            // console.log("File", file);
 
             let jpegFile = file;
             let webpFile = file;
@@ -114,9 +114,9 @@ const PostImage: Component<Props> = (props) => {
                 img.onload = async () => {
                     const formatFiles = await resizeImage(img);
                     webpFile = formatFiles.webpFile;
-                    console.log("New File", webpFile);
+                    // console.log("New File", webpFile);
                     jpegFile = formatFiles.jpegFile;
-                    console.log("New File", jpegFile);
+                    // console.log("New File", jpegFile);
 
                     if (webpFile && jpegFile) {
                         const filePath = `${webpFile.name.split(".")[0]}`;
@@ -225,9 +225,9 @@ const PostImage: Component<Props> = (props) => {
         index: number,
         image: { webpUrl: string; jpegUrl: string }
     ) => {
-        console.log(imageIds());
+        // console.log(imageIds());
         const imageId = imageIds()[index];
-        console.log(imageId);
+        // console.log(imageId);
         if (props.removeImage) {
             props.removeImage(imageId);
         }
@@ -238,7 +238,7 @@ const PostImage: Component<Props> = (props) => {
         if (blobIndex > -1) {
             imageArray.splice(blobIndex, 1);
             setImageUrl(imageArray);
-            console.log(imageUrl());
+            // console.log(imageUrl());
         }
 
         const imageIdArray = [...imageIds()];
@@ -246,7 +246,7 @@ const PostImage: Component<Props> = (props) => {
         if (index > -1) {
             imageIdArray.splice(index, 1);
             setImageIds(imageIdArray);
-            console.log(imageIds());
+            // console.log(imageIds());
         }
     };
 

@@ -6,11 +6,12 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-import { EditPost } from "./EditPost";
+import { CreateEditPost } from "@components/posts/CreateEditPost";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
 import type { FilterPostsParams } from "@lib/types";
 import { ReportResource } from "./ReportResource";
+import { AverageRatingStars } from "../posts/AverageRatingStars";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -112,6 +113,18 @@ export const ViewFullPost: Component<Props> = (props) => {
             console.log(error);
         }
     };
+
+    const fetchOwnedPost = async function (id: number) {
+        const { data, error } = supabase.from("orders").select("*");
+
+        if (error) {
+            console.error(error);
+        } else {
+            console.log(data, "0000000000000000000");
+        }
+    };
+
+    fetchOwnedPost(10);
 
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
@@ -378,9 +391,9 @@ export const ViewFullPost: Component<Props> = (props) => {
     // console.log(postImages());
 
     return (
-        <div>
+        <div class="flex w-full justify-center">
             <Show when={!editRender()}>
-                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
+                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-3/4">
                     <div
                         id="image-title-details-cart-div"
                         class="grid grid-cols-7"
@@ -546,66 +559,18 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 </div>
                             </div>
 
-                            <div id="ratings-div" class="my-1 flex flex-col">
-                                {/* TODO: Add Ratings
-                        
-                        <div id="ratings-stars-div" class="mr-2 flex w-fit">
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
+                            <div
+                                id="ratings-div-desktop"
+                                class="my-1 flex justify-start"
                             >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-                        </div> */}
-
-                                {/* TODO: fix hard coding/add back reviews */}
-                                {/* <div id="ratings-text-div" class="flex">
-                            <p class="font-bold">4.9</p>
-                            <p>(30.3K ratings)</p>
-                        </div> */}
+                                {post() !== undefined ? (
+                                    <AverageRatingStars
+                                        resourceId={post()!.id}
+                                        page={"fullCard"}
+                                    />
+                                ) : (
+                                    <div></div>
+                                )}
                             </div>
 
                             <div
@@ -861,6 +826,18 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 </button>
                             </Show>
 
+                            <Show when={session()?.user.id === post()?.user_id}>
+                                <button
+                                    class="btn-primary"
+                                    onclick={() => {
+                                        setEditRender(!editRender());
+                                        //(editRender());
+                                    }}
+                                >
+                                    Reviews
+                                </button>
+                            </Show>
+
                             {/* </Show> */}
                             {/* NOTE: Quantity and AddToCart styles updated/correct in mobile merge */}
                             <div class="price-div mx-2 mb-4 flex justify-end">
@@ -1054,7 +1031,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <EditPost post={post()!} />
+                <div class="flex w-full justify-center">
+                    <CreateEditPost mode="Edit" post={post()!} />
+                </div>
             </Show>
         </div>
     );

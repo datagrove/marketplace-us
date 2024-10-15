@@ -24,7 +24,7 @@ export const DeletePostButton: Component<Props> = (props) => {
         console.log("User Error: " + UserError.message);
     } else {
         if (User.session === null) {
-            console.log("User Session: " + User.session);
+            // console.log("User Session: " + User.session);
             setSession(null);
         } else {
             setSession(User.session);

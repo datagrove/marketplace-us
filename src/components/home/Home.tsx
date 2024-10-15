@@ -6,6 +6,7 @@ import { windowSize } from "@components/common/WindowSizeStore";
 import { HomeCard } from "@components/home/HomeCard";
 import { HomeGradeCarousel } from "./HomeGradeCarousel";
 import { useTranslations } from "../../i18n/utils";
+import { debounce } from "@lib/utils/debounce";
 
 // const lang = getLangFromUrl(new URL(window.location.href));
 
@@ -15,7 +16,7 @@ interface Props {
     subjectCarousel: JSXElement;
 }
 
-async function fetchPosts({
+async function postRequest({
     lang,
     draft_status,
     listing_status,
@@ -39,6 +40,8 @@ async function fetchPosts({
 
     return data;
 }
+
+const fetchPosts = debounce(postRequest, 500);
 
 export const Home: Component<Props> = (props) => {
     const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);

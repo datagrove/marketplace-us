@@ -119,7 +119,8 @@ export const Spanish = {
     saveProfile: "Guardar Perfil",
     filters: "Filtros",
     faq: "Centro de Ayuda",
-    addToCart: "añadir a la cesta",
+    addToCart: "Añadir a la cesta",
+    addAllToCart: "Añadir todo a la cesta",
     stripeSetup: "Configuración de Stripe",
     stripeLogin: "Iniciar sesión Stripe",
     proceedToCheckout: "Pasar por la caja",
@@ -149,6 +150,9 @@ export const Spanish = {
     privacy: "Política de privacidad",
     terms: "Términos y Condiciones",
     createPost: "Listar Recursos",
+    reviewResource: "Reseña",
+    createFavoriteList: "Crear Nueva Lista de Favoritos",
+    createList: "Crear Lista",
   },
 
   messages: {
@@ -278,6 +282,20 @@ export const Spanish = {
     secular: "Laico",
     resourceLinks: "Enlaces de Recurso",
     draft: "Borrador",
+    downloadable: "Descargable",
+    whatDidYouThink: "¿Qué pensó Ud?",
+    overallRating: "Calificación General",
+    reviewQ1: "Como se describe",
+    reviewQ2: "Apropiado para edad/grado",
+    reviewQ3: "Atractivo",
+    reviewQ4: "Alta calidad",
+    reviewQ5: "Fácil de usar/implementar",
+    reviewQ6: "Precio justo",
+    reviewTitle: "Títula de la Calificación",
+    reviewText: "Texto de la Calificación",
+    priceFilter: "Precio",
+    freeResources: "Recursos gratuitos",
+    listName: "Nombre de la lista",
   },
 
   postLabels: {
@@ -288,7 +306,10 @@ export const Spanish = {
     slide: "Diapositiva",
     creatorProfileImage: "Imagen de Perfil del Proveedor",
     userProfileImage: "Imagen de Perfil del Usere",
+    yourRating: "Tu Calificatión",
+    reviews: "Críticas",
     subtopics: "Temas",
+    resources: "Recursos",
   },
 
   cartLabels: {
@@ -401,7 +422,8 @@ export const Spanish = {
       "Error al crear usuario, inténtelo nuevamente o contáctenos para obtener ayuda.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "No se encontraron lista de favoritos",
+    },
 
   socialModal: {
     shareService: "Comparte este recurso",
@@ -438,6 +460,13 @@ export const Spanish = {
       "Casilla de verificación para seleccionar el nivel de grado",
     checkbox: "Caja",
     readMoreAbout: "Leer más sobre",
+    addToFavorites: "Añadir a favoritos",
+    noFavoriteItems: "No hay elementos favoritos",
+    errorFavoriteFetch: "Error al obtener favoritos",
+    generalErrorFavorite: "Error al obtener favoritos",
+    singleListFavoriteError: "Error al obtener favoritos de lista única",
+    favoriteListError: "Error al obtener lista de favoritos",
+    multipleListFavoriteError: "Error al manejar varias listas",
   },
 
   headerData: {
@@ -543,43 +572,43 @@ export const Spanish = {
         name: "Arte y Musica",
         description: "Descripción arte y musica.",
         ariaLabel: "Arte y Musica",
-        id: "3",
+        id: 3,
       },
       {
         name: "Vacaciones",
         description: "Descripción Vacaciones",
         ariaLabel: "Vacaciones",
-        id: "4",
+        id: 4,
       },
       {
         name: "Matematica",
         description: "Descripción Matematica",
         ariaLabel: "Matematica",
-        id: "5",
+        id: 5,
       },
       {
         name: "Ciencia",
         description: "Descripción Ciencia",
         ariaLabel: "Ciencia",
-        id: "6",
+        id: 6,
       },
       {
         name: "Sociales",
         description: "Descripción Sociales",
         ariaLabel: "Sociales",
-        id: "7",
+        id: 7,
       },
       {
         name: "Especilidad",
         description: "Descripcion especialidad",
         ariaLabel: "Especilidad",
-        id: "8",
+        id: 8,
       },
       {
         name: "Artes del lenguaje inglés",
         description: "Descripcion eArtes del lenguaje inglés",
         ariaLabel: "Artes del lenguaje inglés",
-        id: "9",
+        id: 9,
       },
       // Add more products as needed
     ],
@@ -695,16 +724,21 @@ export const Spanish = {
   clearFilters: {
     filterButtons: [
       {
+        id: "Clear-All",
         text: "Borrar Todos los Filtros",
         ariaLabel: "Borrar Todos los Filtros",
       },
-      { text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
-      { text: "Borrar Provincia", ariaLabel: "Borrar Provincia" },
-      { text: "Borrar Cantón", ariaLabel: "Borrar Cantón" },
-      { text: "Borrar Distrito", ariaLabel: "Borrar Distrito" },
-      { text: "Ver Resultados", ariaLabel: "Ver Resultados" },
-      { text: "Limpiar Laico", ariaLabel: "Limpiar Laico" },
-      { text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
+      { id: "Clear-Subjects", text: "Borrar Categorías", ariaLabel: "Borrar Categorías" },
+      {
+        id: "Clear-Grade",
+        text: "Borrar calificación",
+        ariaLabel: "Borrar calificación",
+      },
+      { id: "View-Results", text: "Ver Resultados", ariaLabel: "Ver Resultados" },
+      { id: "Clear-Secular", text: "Claro secular", ariaLabel: "Limpiar Laico" },
+      { id: "Clear-Resource-Type", text: "Limpiar Tipo de Recurso", ariaLabel: "Limpiar Tipo de Recurso" },
+      { id: "Clear-Downloadable", text: "Borrar descargable", ariaLabel: "Borrar filtro descargable" },
+      { id: "Clear-Price-Filter", text: "Borrar filtro de precio", ariaLabel: "Borrar filtro de precio" },
     ],
   },
 

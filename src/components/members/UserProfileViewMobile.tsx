@@ -14,12 +14,14 @@ import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
 import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
+import type { AuthSession } from "@supabase/supabase-js";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 interface Props {
     user: User | null;
+    session: AuthSession | null;
     userImage: string | undefined;
     editMode: boolean;
     enableEditMode: () => void;
@@ -357,7 +359,7 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
 
                 <Show when={tabSelected() === "purchases"}>
                     <div>
-                        <ViewUserPurchases />
+                        <ViewUserPurchases session={props.session} />
                     </div>
                 </Show>
 

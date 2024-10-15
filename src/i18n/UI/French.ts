@@ -116,6 +116,7 @@ export const French = {
     filters: "Filtres",
     faq: "Centre d'Aide",
     addToCart: "Ajouter au panier",
+    addAllToCart: "Ajouter tout panier",
     stripeSetup: "Configuration de Stripe",
     stripeLogin: "Connexion à Stripe",
     proceedToCheckout: "Passer à la caisse",
@@ -146,6 +147,9 @@ export const French = {
     privacy: "Politique de Confidentialité",
     terms: "Termes et Conditions",
     createPost: "Liste des Ressources",
+    reviewResource: "Critique",
+    createFavoriteList: "Ajouter une nouvelle liste de favoris",
+    createList: "Ajouter une liste",
   },
 
   messages: {
@@ -276,6 +280,20 @@ export const French = {
     secular: "Laïque",
     resourceLinks: "Liens vers les ressources",
     draft: "Brouillon",
+    downloadable: "Téléchargeable",
+    whatDidYouThink: "Qu'en as-tu pensé?",
+    overallRating: "Note Globale",
+    reviewQ1: "Comme décrit",
+    reviewQ2: "Adapté à l'âge",
+    reviewQ3: "Engageante",
+    reviewQ4: "Haute qualité",
+    reviewQ5: "Facile à utiliser/mettre en œuvre",
+    reviewQ6: "Juste prix",
+    reviewTitle: "Titre de la Revue",
+    reviewText: "Texte de le Revue",
+    priceFilter: "Prix",
+    freeResources: "Ressources gratuites",
+    listName: "Nom de la Liste",
   },
 
   postLabels: {
@@ -286,7 +304,10 @@ export const French = {
     slide: "Diapositive",
     creatorProfileImage: "Image du profil du fournisseur",
     userProfileImage: "Image du profil du user",
+    yourRating: "Votre Note",
+    reviews: "Critiques",
     subtopics: "Sous-thèmes",
+    resources: "Ressources",
   },
 
   cartLabels: {
@@ -401,7 +422,8 @@ export const French = {
       "Erreur lors de la création de l'utilisateur, veuillez réessayer ou contactez-nous pour obtenir de l'aide.",
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
-  },
+    noFavoriteLists: "Aucune liste de favoris trouvée",
+    },
 
   socialModal: {
     shareService: "Partager ce ressource",
@@ -437,6 +459,13 @@ export const French = {
     checkboxGrade: "Case à cocher pour sélectionner le niveau scolaire",
     checkbox: "Case à cocher",
     readMoreAbout: "En savoir plus sur",
+    addToFavorites: "Ajouter aux favoris",
+    noFavoriteItems: "Aucun favori",
+    errorFavoriteFetch: "Erreur lors de la recuperation des favoris",
+    generalErrorFavorite: "Erreur lors de la recuperation des favoris",
+    singleListFavoriteError: "Erreur lors de l'obtention d'une seule liste de favoris",
+    favoriteListError: "Erreur lors de l'obtention de la liste de favoris",
+    multipleListFavoriteError: "Erreur lors de l'analyse de plusieurs listes de favoris",
   },
 
   headerData: {
@@ -544,43 +573,43 @@ export const French = {
         name: "Art et Musique",
         description: "Description Musique",
         ariaLabel: "Musique",
-        id: "3",
+        id: 3,
       },
       {
         name: "Vacances",
         description: "Description Vacances",
         ariaLabel: "Vacances",
-        id: "4",
+        id: 4,
       },
       {
         name: "Matematique",
         description: "Description Matematique",
         ariaLabel: "Matematique",
-        id: "5",
+        id: 5,
       },
       {
         name: "Science",
         description: "Description Science",
         ariaLabel: "Science",
-        id: "6",
+        id: 6,
       },
       {
         name: "Etudes sociale",
         description: "Description Etude Sociale",
         ariaLabel: "Etudes Sociale",
-        id: "7",
+        id: 7,
       },
       {
         name: "Spécialité",
         description: "Description Spécialité",
         ariaLabel: "Spécialité",
-        id: "8",
+        id: 8,
       },
       {
         name: "Arts de la langue anglaise",
         description: "Description Arts de la langue anglaise",
         ariaLabel: "Arts de la langue anglaise",
-        id: "9",
+        id: 9,
       },
       // Add more products as needed
     ],
@@ -695,29 +724,18 @@ export const French = {
 
   clearFilters: {
     filterButtons: [
+      { id: "Clear-All", text: "Effacer tous les filtres", ariaLabel: "Effacer tous les filtres" },
+      { id: "Clear-Subjects", text: "Effacer les sujets", ariaLabel: "Effacer les filtres de sujet" },
       {
-        text: "Effacer Tous Les Filtres",
-        ariaLabel: "Effacer Tous Les Filtres",
+        id: "Clear-Grade",
+        text: "Effacer la note",
+        ariaLabel: "Effacer le filtre de qualité",
       },
-      {
-        text: "Effacer le Filtre de Catégorie",
-        ariaLabel: "Effacer le Filtre de Catégorie",
-      },
-      {
-        text: "Effacer le Filtre des Grandes Municipalités",
-        ariaLabel: "Effacer le Filtre des Grandes Municipalités",
-      },
-      {
-        text: "Effacer le Filtre des Municipalités Mineures",
-        ariaLabel: "Effacer le Filtre des Municipalités Mineures",
-      },
-      {
-        text: "Effacer le Filtre de District de Gouvernement",
-        ariaLabel: "Effacer le Filtre de District de Gouvernement",
-      },
-      { text: "Voir les Résultats", ariaLabel: "Voir les Résultats" },
-      { text: "Propre Laïque", ariaLabel: "Propre Laïque" },
-      { text: "Propre Type de Ressource", ariaLabel: "Propre Type de Ressource" },
+      { id: "View-Results", text: "Afficher les résultats", ariaLabel: "Afficher les résultats" },
+      { id: "Clear-Secular", text: "Clair Laïque", ariaLabel: "Effacer le filtre laïque" },
+      { id: "Clear-Resource-Type", text: "Effacer le type de ressource", ariaLabel: "Effacer le filtre de type de ressource" },
+      { id: "Clear-Downloadable", text: "Effacer téléchargeable", ariaLabel: "Effacer le filtre téléchargeable" },
+      { id: "Clear-Price-Filter", text: "Effacer le filtre de prix", ariaLabel: "Effacer le filtre de prix" },
     ],
   },
 

@@ -23,13 +23,18 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         seller_id,
         from,
         to,
+        downloadable,
+        subtopics,
+        priceMin,
+        priceMax,
     }: FilterPostsParams = await request.json();
 
     const values = ui[lang] as uiObject;
     const postSubjects = values.subjectCategoryInfo.subjects;
     const postSubtopics = values.subjectCategoryInfo.subtopics;
-    console.log("From: ", from);
-    console.log(" To: ", to);
+    // console.log("From: ", from);
+    // console.log(" To: ", to);
+    // console.log(subtopics);
 
     try {
         let query = supabase
@@ -41,6 +46,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
         if (Array.isArray(subjectFilters) && subjectFilters.length !== 0) {
             query = query.overlaps("subjects", subjectFilters);
+        }
+        if (Array.isArray(subtopics) && subtopics.length !== 0) {
+            query = query.overlaps("subtopics", subtopics);
         }
         if (Array.isArray(gradeFilters) && gradeFilters.length !== 0) {
             query = query.overlaps("grades", gradeFilters);
@@ -69,12 +77,23 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         if (seller_id) {
             query = query.eq("seller_id", seller_id);
         }
-        if (from !== undefined && to !== undefined && from>=0 && to >=0) {
+        if (from !== undefined && to !== undefined && from >= 0 && to >= 0) {
             query = query.range(from, to);
         }
         if (limit) {
             query = query.limit(limit);
         }
+        if (downloadable === true) {
+            query = query.not("resource_urls", "is", null);
+        }
+        if (typeof priceMin === "number") {
+            query = query.gte("price_value", priceMin);
+        }
+        if (typeof priceMax === "number") {
+            query = query.lte("price_value", priceMax);
+        }
+
+        // console.log(query)
 
         const { data: posts, error } = await query;
 
@@ -86,7 +105,10 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 }),
                 { status: 500 }
             );
-        } else {console.log("Posts: ", posts)}
+        }
+        // else {
+        //     console.log("Posts: ", posts.length);
+        // }
 
         const { data: gradeData, error: gradeError } = await supabase
             .from("grade_level")
@@ -95,7 +117,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         const { data: resourceTypesData, error: resourceTypesError } =
             await supabase.from("resource_types").select("*");
 
-        if (gradeError ||resourceTypesError) {
+        if (gradeError || resourceTypesError) {
             return new Response(
                 JSON.stringify({
                     message: gradeError?.message || resourceTypesError?.message,
@@ -107,7 +129,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         let formattedPosts: Post[] = [];
 
         if (posts && gradeData && resourceTypesData) {
-            console.log(posts)
+            // console.log(posts);
             formattedPosts = await Promise.all(
                 posts.map(async (post: Post) => {
                     post.subject = [];
@@ -143,8 +165,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                     resourceTypesData.forEach((databaseResourceTypes) => {
                         post.resource_types.map((postResourceTypes: number) => {
                             if (
-                                postResourceTypes ===
-                                databaseResourceTypes.id
+                                postResourceTypes === databaseResourceTypes.id
                             ) {
                                 post.resourceTypes?.push(
                                     databaseResourceTypes.type
@@ -247,29 +268,23 @@ const downloadPostImage = async (path: string) => {
     }
 
     try {
-
         const [webpData, jpegData] = await Promise.all([
-            supabase.storage.from("post.image").createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30),
-            supabase.storage.from("post.image").createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30)
+            supabase.storage
+                .from("post.image")
+                .createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30),
+            supabase.storage
+                .from("post.image")
+                .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30),
         ]);
 
-        // const { data: webpData, error: webpError } = await supabase.storage
-        //     .from("post.image")
-        //     .createSignedUrl(`webp/${path}.webp`, 60 * 60 * 24 * 30);
         if (webpData.error || jpegData.error) {
             throw new Error(webpData.error?.message || jpegData.error?.message);
         }
-        // const webpUrl = webpData.signedUrl;
 
-        // // const { data: jpegData, error: jpegError } = await supabase.storage
-        // //     .from("post.image")
-        // //     .createSignedUrl(`jpeg/${path}.jpeg`, 60 * 60 * 24 * 30);
-        // // if (jpegError) {
-        // //     throw jpegError;
-        // // }
-        // const jpegUrl = jpegData.signedUrl;
-
-        const url = { webpUrl: webpData.data.signedUrl, jpegUrl: jpegData.data.signedUrl };
+        const url = {
+            webpUrl: webpData.data.signedUrl,
+            jpegUrl: jpegData.data.signedUrl,
+        };
         urlCache.set(path, url); // Cache the URL
         return url;
     } catch (error) {
