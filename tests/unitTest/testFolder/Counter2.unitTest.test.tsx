@@ -1,7 +1,7 @@
 import { test, expect } from "vitest";
 import { render } from "@solidjs/testing-library";
-import { Counter } from "@components/home/Counter";
 import userEvent from "@testing-library/user-event";
+import { Counter } from "@components/home/Counter";
 
 const user = userEvent.setup();
 

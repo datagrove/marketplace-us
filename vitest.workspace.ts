@@ -1,18 +1,23 @@
 // vitest.workspace.ts
+import solidPlugin from "vite-plugin-solid"
 import { defineWorkspace } from 'vitest/config'
 import path from 'path'
+
 export default defineWorkspace([
+
   {
+    plugins: [solidPlugin()],
     test: {
       // an example of file based convention,
       // you don't have to follow it
+
+      name: 'Unit',
       environment: 'jsdom',
       globals: true,
       include: [
         'tests/unitTest/**/*.{test,spec}.tsx',
         'tests/**/*.unit.{test,spec}.tsx',
       ],
-      name: 'unit',
 
       alias: {
         '@components': path.resolve(__dirname, 'src/components'),
@@ -23,11 +28,11 @@ export default defineWorkspace([
     test: {
       // an example of file based convention,
       // you don't have to follow it
+      name: 'End to End',
       include: [
-        'tests/browser/**/*.{test,spec}.ts',
-        'tests/**/*.browser.{test,spec}.ts',
+        'tests/e2e/**/*.{test,spec}.js',
+        'tests/**/*.e2e.{test,spec}.js',
       ],
-      name: 'browser',
       browser: {
         enabled: true,
         name: 'chrome',
