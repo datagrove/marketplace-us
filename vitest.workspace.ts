@@ -16,7 +16,7 @@ export default defineWorkspace([
       globals: true,
       include: [
         'tests/unitTest/**/*.{test,spec}.tsx',
-        'tests/**/*.unit.{test,spec}.tsx',
+        'tests/**/*.unitTest.{test,spec}.tsx',
       ],
 
       alias: {
