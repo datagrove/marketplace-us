@@ -1660,7 +1660,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                             </div>
                         </button>
 
-                        <div class="flex flex-col border border-blue-500">
+                        <div class="flex flex-col">
                             <div
                                 class="flex flex-row justify-around"
                                 id="price-inputs"
