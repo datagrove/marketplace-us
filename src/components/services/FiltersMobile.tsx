@@ -807,7 +807,7 @@ export const FiltersMobile: Component<Props> = (props) => {
                 </button>
             </Show>
 
-            <div class="absolute h-full w-11/12">
+            <div class="absolute w-11/12">
                 <Show when={showFilters() === true}>
                     <div class="main-pop-out relative h-96 w-full rounded border border-border1 bg-background1 shadow-2xl dark:border-border1-DM dark:bg-background1-DM dark:shadow-gray-600 md:h-auto md:shadow-none">
                         <div class="h-[283px] w-full overflow-y-scroll md:h-full md:overflow-auto">

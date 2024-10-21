@@ -117,7 +117,7 @@ const Modal: Component<ModalProps> = (props) => {
                     />
                     <section
                         role="dialog"
-                        class="modal min-h-100vh w-100vw fixed inset-0 z-[60] overflow-y-auto bg-background1 p-4 dark:bg-background1-DM md:left-1/2 md:top-1/2 md:max-h-[calc(100vh-4rem)] md:min-h-fit md:w-[calc(100vw-4rem)] md:max-w-[768px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl"
+                        class="modal min-h-100vh w-100vw md:min-h-auto fixed inset-0 z-[60] overflow-y-auto bg-background1 p-4 dark:bg-background1-DM md:left-1/2 md:top-1/2 md:max-h-[calc(100vh-4rem)] md:w-[calc(100vw-4rem)] md:max-w-[768px] md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-xl"
                         ref={setModal}
                     >
                         <header class="sticky flex flex-row flex-nowrap items-center justify-between gap-[2rem] border-b-[1px]">

@@ -220,7 +220,7 @@ export const FavoriteButton: Component<Props> = (props) => {
     //REFACTOR: Improve the aria label for the favorites button maybe with the post title?
     return (
         //This has to be z-50 so that the modal will render above the Filter menu on mobile which is z-40
-        <div class="relative z-50 w-full">
+        <div class="relative z-30 w-full">
             <Show when={!isFavorited()}>
                 <Show when={!notUser()}>
                     <Modal
