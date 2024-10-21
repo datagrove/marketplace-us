@@ -38,45 +38,39 @@ export interface uiObject {
     textDirection: string;
     siteDescription: string;
 
-    pageTitles: {
-        services: string;
-        signUp: string;
-        login: string;
-        home: string;
-        signIn: string;
-        createUserAccount: string;
-        editUserAccount: string;
-        viewUserAccount: string;
-        createPost: string;
-        createCreatorAccount: string;
-        editCreatorAccount: string;
-        viewCreatorAccount: string;
-        userViewCreatorAccount: string;
-        page404: string;
-        requestPasswordReset: string;
-        resetPassword: string;
-        terms: string;
-        privacy: string;
-        acceptableUse: string;
-        about: string;
-        impact: string;
-        fullPost: string;
-        offline: string;
-        faq: string;
-        viewCart: string;
-        popularResources: string;
-        shopBySubject: string;
-        newResources: string;
-        shopByGrade: string;
-        community: string;
-        sellerFeePayout: string;
-        copyright: string;
-        marketplacetax: string;
-    };
 
-    pageMetaTitle: {
-        home: string;
-    };
+
+  pageMetaTitles: {
+    services: string,
+    signUp: string,
+    login: string,
+    home: string,
+    signIn: string,
+    createUserAccount: string,
+    editUserAccount: string,
+    viewUserAccount: string,
+    createPost: string,
+    createCreatorAccount: string,
+    editCreatorAccount: string,
+    viewCreatorAccount: string,
+    userViewCreatorAccount: string,
+    page404: string,
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
+    acceptableUse: string,
+    about: string,
+    impact: string,
+    fullPost: string,
+    offline: string,
+    faq: string,
+    community: string,
+    sellerFeePayout: string,
+    copyright: string,
+    marketplacetax: string,
+  },
+
 
     pageDescriptions: {
         services: string;
@@ -108,59 +102,63 @@ export interface uiObject {
         taxCodeLearnMore: string;
     };
 
-    buttons: {
-        creatorProfile: string;
-        editProfile: string;
-        register: string;
-        uploadImage: string;
-        uploading: string;
-        loading: string;
-        login: string;
-        signUp: string;
-        signIn: string;
-        signOut: string;
-        returnHome: string;
-        reset: string;
-        post: string;
-        next: string;
-        previous: string;
-        delete: string;
-        contact: string;
-        phone: string;
-        saveProfile: string;
-        filters: string;
-        faq: string;
-        addToCart: string;
-        addAllToCart: string;
-        stripeSetup: string;
-        stripeLogin: string;
-        proceedToCheckout: string;
-        viewCart: string;
-        showMore: string;
-        showLess: string;
-        browseCatalog: string;
-        findResources: string;
-        download: string;
-        follow: string;
-        following: string;
-        top: string;
-        downloadResources: string;
-        addedToCart: string;
-        resetPassword: string;
-        finishStripeSetup: string;
-        requestStripePayout: string;
-        listResource: string;
-        continueShopping: string;
-        viewOrders: string;
-        reportResource: string;
-        updateResource: string;
-        editPost: string;
-        getLinks: string;
-        checkoutAsGuest: string;
-        reviewResource: string;
-        createFavoriteList: string;
-        createList: string;
-    };
+  buttons: {
+    creatorProfile: string;
+    editProfile: string;
+    register: string;
+    uploadImage: string;
+    uploading: string;
+    loading: string;
+    login: string;
+    signUp: string;
+    signIn: string;
+    signOut: string;
+    returnHome: string;
+    reset: string;
+    post: string;
+    next: string;
+    previous: string;
+    delete: string;
+    contact: string;
+    phone: string;
+    saveProfile: string;
+    filters: string;
+    faq: string;
+    addToCart: string;
+    stripeSetup: string;
+    stripeLogin: string;
+    proceedToCheckout: string;
+    viewCart: string;
+    showMore: string;
+    showLess: string;
+    browseCatalog: string;
+    findResources: string;
+    download: string;
+    follow: string;
+    following: string;
+    top: string;
+    downloadResources: string;
+    addedToCart: string;
+    resetPassword: string;
+    finishStripeSetup: string;
+    requestStripePayout: string;
+    listResource: string;
+    continueShopping: string;
+    viewOrders: string;
+    reportResource: string;
+    updateResource: string;
+    editPost: string;
+    getLinks: string;
+    checkoutAsGuest: string;
+    home: string;
+    signInTitle: string,
+    privacy: string,
+    terms: string,
+    createPost: string,
+    reviewResource: string,
+    createFavoriteList: string,
+    createList: string,
+  };
 
     messages: {
         noAccount: string;

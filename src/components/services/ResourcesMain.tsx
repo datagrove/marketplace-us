@@ -372,12 +372,30 @@ export const ResourcesView: Component = () => {
                     clearPriceFilter={clearPriceFilter}
                 />
 
-                <Show when={screenSize() === "sm"}>
-                    <div class="mb-2 w-full rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
-                        <h1 class="text-lg text-btn1Text dark:text-ptext1">
-                            {t("pageTitles.services")}
-                        </h1>
-                    </div>
+
+            <Show when={screenSize() === "sm"}>
+                <div class="mb-2 rounded-lg bg-btn1 py-2 dark:bg-btn1-DM">
+                    <h1 class="text-lg text-btn1Text dark:text-ptext1">
+                        {t("hElementText.services")}
+                    </h1>
+                </div>
+            </Show>
+
+            <div class="flex w-full flex-col items-center md:h-full md:w-auto md:flex-row md:items-start">
+                <Show when={screenSize() !== "sm"}>
+                    <FiltersMobile
+                        clearSubjects={clearSubjects}
+                        clearGrade={clearGrade}
+                        clearAllFilters={clearAllFilters}
+                        clearFilters={clearFilters()}
+                        filterPostsByGrade={filterPostsByGrade}
+                        filterPostsBySubject={setCategoryFilter}
+                        secularFilter={filterPostsBySecular}
+                        clearSecular={clearSecular}
+                        clearResourceTypes={clearResourceTypes}
+                        filterPostsByResourceTypes={filterPostsByResourceTypes}
+                    />
+
                 </Show>
 
                 <div class="w-11/12 items-center md:w-8/12 md:flex-1">
@@ -392,7 +410,7 @@ export const ResourcesView: Component = () => {
                     <Show when={screenSize() !== "sm"}>
                         <div class="mb-2 flex w-full items-center justify-center rounded-lg bg-btn1 opacity-80 dark:bg-btn1-DM md:h-24">
                             <h1 class="text-center text-lg text-ptext1-DM dark:text-ptext1 md:text-3xl">
-                                {t("pageTitles.services")}
+                                {t("hElementText.services")}
                             </h1>
                         </div>
                     </Show>

@@ -120,9 +120,9 @@ export const Home: Component<Props> = (props) => {
                         </Show>
 
                         <div class="ml-1">
-                            <h1 class="text-ptext1 dark:text-ptext1 md:text-2xl">
+                            <h2 class="text-ptext1 dark:text-ptext1 md:text-2xl">
                                 {t("homePageText.becomeCreator")}
-                            </h1>
+                            </h2>
                             <p class="text-center text-sm italic text-ptext2 dark:text-ptext1 md:text-lg">
                                 {t("homePageText.clickToBecomeCreator")}
                             </p>
@@ -141,7 +141,7 @@ export const Home: Component<Props> = (props) => {
 
                 <div id="popular-resources" class="my-1 w-full md:mb-8">
                     <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
-                        {t("pageTitles.popularResources")}
+                        {t("homePagetext.popularResources")}
                     </div>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={popularPosts()} lang={lang()} />
@@ -150,7 +150,7 @@ export const Home: Component<Props> = (props) => {
 
                 <div id="home-subject-filter" class="md:mb-8">
                     <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
-                        {t("pageTitles.shopBySubject")}
+                        {t("homePageText.shopBySubject")}
                     </div>
                     {props.subjectCarousel}
                 </div>
@@ -171,7 +171,7 @@ export const Home: Component<Props> = (props) => {
 
                 <div id="new-resources" class="md:mb-8">
                     <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
-                        {t("pageTitles.newResources")}
+                        {t("homePageText.newResources")}
                     </div>
                     <div class="md:max-w-auto flex h-[515px] max-w-full justify-start overflow-x-auto md:h-auto md:overflow-x-auto">
                         <HomeCard posts={newPosts()} lang={lang()} />
@@ -180,7 +180,7 @@ export const Home: Component<Props> = (props) => {
 
                 <div id="home-grade-filter" class="md:mb-8">
                     <div class="py-1 text-center text-lg md:my-4 md:text-2xl">
-                        {t("pageTitles.shopByGrade")}
+                        {t("homePageText.shopByGrade")}
                     </div>
                     <HomeGradeCarousel lang={lang()} />
                 </div>

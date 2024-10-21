@@ -408,7 +408,7 @@ export const Auth: Component = (props) => {
                             <div class="px-10">
                                 {t("messages.clickWrap1")}{" "}
                                 <span class="font-medium">
-                                    {t("pageTitles.signUp")}
+                                    {t("hElementText.signUp")}
                                 </span>{" "}
                                 {t("messages.clickWrap2")}{" "}
                                 <a
@@ -416,7 +416,7 @@ export const Auth: Component = (props) => {
                                     target="_blank"
                                     class="text-link2-DM hover:underline"
                                 >
-                                    {t("pageTitles.terms")}
+                                    {t("buttons.terms")}
                                 </a>{" "}
                                 &{" "}
                                 <a
@@ -424,7 +424,7 @@ export const Auth: Component = (props) => {
                                     target="_blank"
                                     class="text-link2-DM hover:underline"
                                 >
-                                    {t("pageTitles.privacy")}
+                                    {t("buttons.privacy")}
                                 </a>
                             </div>
                             <div class="mb-4 flex justify-center">
@@ -437,7 +437,7 @@ export const Auth: Component = (props) => {
                                     {loading() ? (
                                         <span>{t("buttons.loading")}</span>
                                     ) : (
-                                        <span>{t("pageTitles.signUp")}</span>
+                                        <span>{t("buttons.signUp")}</span>
                                     )}
                                 </button>
                             </div>
