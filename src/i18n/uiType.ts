@@ -40,7 +40,7 @@ export interface uiObject {
 
 
 
-  pageMetaTitles: {
+  pageTitles: {
     services: string,
     signUp: string,
     login: string,
@@ -158,6 +158,9 @@ export interface uiObject {
     reviewResource: string,
     createFavoriteList: string,
     createList: string,
+    createUserAccount: string,
+    viewUserProfile: string,
+    viewCreatorAccount: string,
   };
 
     messages: {

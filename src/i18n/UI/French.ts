@@ -20,7 +20,7 @@ export const French = {
     createPost: "Répertorier les ressources dans LearnGrove",
   },
 
-  pageMetaTitles: {
+  pageTitles: {
     services: "Catalogue de ressources de LearnGrove",
     signUp: "Inscrivez-vous à votre compte LearnGrove",
     login: "Connectez-vous à votre compte LearnGrove",
@@ -150,6 +150,9 @@ export const French = {
     reviewResource: "Critique",
     createFavoriteList: "Ajouter une nouvelle liste de favoris",
     createList: "Ajouter une liste",
+    createUserAccount: "Créer un profil utilisateur",
+    viewUserProfile: "Mon profil utilisateur",
+    viewCreatorAccount: "Mon profil de créateur",
   },
 
   messages: {

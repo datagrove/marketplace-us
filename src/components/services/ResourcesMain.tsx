@@ -392,7 +392,7 @@ export const ResourcesView: Component = () => {
                     <Show when={screenSize() !== "sm"}>
                         <div class="mb-2 flex w-full items-center justify-center rounded-lg bg-btn1 opacity-80 dark:bg-btn1-DM md:h-24">
                             <h1 class="text-center text-lg text-ptext1-DM dark:text-ptext1 md:text-3xl">
-                                {t("pageTitles.services")}
+                                {t("h1ElementText.services")}
                             </h1>
                         </div>
                     </Show>

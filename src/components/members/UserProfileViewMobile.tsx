@@ -359,7 +359,10 @@ export const UserProfileViewMobile: Component<Props> = (props: Props) => {
 
                 <Show when={tabSelected() === "purchases"}>
                     <div>
-                        <ViewUserPurchases session={props.session} />
+                        <ViewUserPurchases
+                            session={props.session}
+                            lang={lang}
+                        />
                     </div>
                 </Show>
 

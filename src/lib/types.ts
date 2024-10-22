@@ -22,6 +22,7 @@ export interface Post {
     resource_urls: string;
     unit_amount: number;
     resource_links: string[];
+    created_at: number;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null;
@@ -33,11 +34,11 @@ export interface Post {
     image_signedUrls: {webpUrl: string, jpegUrl: string}[];
     price: number; //Price of the post
     quantity: number; //Quantity to add to cart from post
+    created_date: string; //Just the date created vs the timestamp
 }
 
 export interface PurchasedPost extends Post {
-    purchaseDate: string;
-    created_at: string;
+    purchaseDate?: string;
 }
 
 export interface User {

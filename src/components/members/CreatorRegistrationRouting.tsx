@@ -15,7 +15,7 @@ export const CreatorRegistrationRouting = () => {
         `/${lang}/creator/createaccount`
     );
     const [createText, setCreateText] = createSignal<string>(
-        t("pageTitles.createCreatorAccount")
+        t("h1ElementText.createCreatorAccount")
     );
 
     const createCreatorProfileLink = document.getElementById(

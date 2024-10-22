@@ -115,12 +115,12 @@ export const ViewFullPost: Component<Props> = (props) => {
     };
 
     const fetchOwnedPost = async function (id: number) {
-        const { data, error } = supabase.from("orders").select("*");
+        const { data, error } = await supabase.from("orders").select("*");
 
         if (error) {
             console.error(error);
         } else {
-            console.log(data, "0000000000000000000");
+            console.log(data);
         }
     };
 
