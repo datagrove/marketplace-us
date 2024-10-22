@@ -13,11 +13,9 @@ export const UserRouting = () => {
     const [isUser, setIsUser] = createSignal<boolean>(false);
     const [isUserUser, setIsUserUser] = createSignal<boolean>(false);
     const [createText, setCreateText] = createSignal<string>(
-        t("pageTitles.createUserAccount")
+        t("buttons.createUserAccount")
     );
-    const [routing, setRouting] = createSignal<string>(
-        `/${lang}/user/profile`
-    );
+    const [routing, setRouting] = createSignal<string>(`/${lang}/user/profile`);
 
     const CreateEditUserProfilelink = document.getElementById(
         "createEditUserProfileLink"
@@ -39,7 +37,7 @@ export const UserRouting = () => {
             if (data![0] === undefined) {
                 // console.log("user is not a user");
             } else {
-                setCreateText(t("pageTitles.viewUserAccount"));
+                setCreateText(t("buttons.viewUserProfile"));
                 setRouting(`/${lang}/user/profile`);
                 setIsUserUser(true);
             }

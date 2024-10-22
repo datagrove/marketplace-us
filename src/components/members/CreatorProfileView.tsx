@@ -444,7 +444,7 @@ export const CreatorProfileView: Component = () => {
                                     />
                                 </svg>
                                 <p class="pl-1 text-lg font-light">
-                                    {t("pageTitles.createPost")}
+                                    {t("buttons.createPost")}
                                 </p>
                             </button>
                         </div>
@@ -544,7 +544,7 @@ export const CreatorProfileView: Component = () => {
                                     />
                                 </svg>
                                 <p class="pl-1 text-lg font-light ">
-                                    {t("pageTitles.createPost")}
+                                    {t("buttons.createPost")}
                                 </p>
                             </button>
                         </div>

@@ -360,7 +360,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                     buttonClass="btn-primary"
                     buttonContent={"Submit Review"}
                     buttonId="submitReview"
-                    classList="max-w-[200px]"
                     children={
                         <div class="">
                             <div class="flex">

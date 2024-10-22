@@ -494,6 +494,7 @@ export const UserProfileView: Component = () => {
                                         {/* <ViewCard posts={purchasedItems()} /> */}
                                         <ViewUserPurchases
                                             session={session()}
+                                            lang={lang}
                                         />
                                     </div>
                                     {/* </Show>

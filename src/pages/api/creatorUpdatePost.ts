@@ -107,7 +107,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const stripe_update = await stripe.products.update(String(product_id), {
         name: String(title),
         description: String(description),
-        default_price: default_price,
         tax_code: tax_code?.toString() || "txcd_10000000",
     });
 

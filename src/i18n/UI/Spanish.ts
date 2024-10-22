@@ -20,7 +20,7 @@ export const Spanish = {
     createPost: "Listar un Recurso en LearnGrove",
   },
 
-  pageMetaTitles: {
+  pageTitles: {
     services: "Catalogo de Recursos de LearnGrove",
     signUp: "Registrarse y abrir una cuenta en LearnGrove ",
     login: "Iniciar sesión en la cuenta de LearnGrove",
@@ -153,6 +153,9 @@ export const Spanish = {
     reviewResource: "Reseña",
     createFavoriteList: "Crear Nueva Lista de Favoritos",
     createList: "Crear Lista",
+    createUserAccount: "Crear perfil de usuario",
+    viewUserProfile: "Mi perfil de usuario",
+    viewCreatorAccount: "Mi perfil de creador",
   },
 
   messages: {

@@ -132,6 +132,11 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             // console.log(posts);
             formattedPosts = await Promise.all(
                 posts.map(async (post: Post) => {
+                    
+                    const createdDate = new Date(post.created_at);
+                    const formattedDate = createdDate.toISOString().split("T")[0];
+                    post.created_date = formattedDate;
+
                     post.subject = [];
                     postSubjects.forEach((subject) => {
                         post.subjects.map((productSubject: number) => {
