@@ -168,7 +168,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         formData.append("overall_rating", overallRating());
         formData.append("resource_id", props.resourceId.toString());
         formData.append("user_id", props.userId);
-        formData.append("refresh_token", props.ref);
+        formData.append("refresh_token", props?.ref);
         formData.append("access_token", props.access ? props.access : "");
         setFormData(formData);
     }
@@ -203,7 +203,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     };
 
     return (
-        <div>
+        <div class="border-2 border-purple-500">
             <div>{loading() && <p>Loading reviews...</p>}</div>
             <Show when={dbReviewNum() > 0}>
                 <div>{t("postLabels.yourRating")}:</div>
@@ -455,7 +455,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="">
-                                    <div class="mb-4 flex w-full justify-between">
+                                    <div class="mb-4 flex w-full justify-between border-2 border-blue-400">
                                         <div class="flex">
                                             <p class="mr-1 text-lg font-bold">
                                                 {t("formLabels.overallRating")}*
@@ -491,11 +491,11 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         </div>
                                         <div
                                             id="user-profile-ratings-div"
-                                            class="purchased-item-stars flex w-1/3 items-center justify-between md:w-1/4"
+                                            class="purchased-item-stars flex w-1/2 items-center justify-between border-2 border-yellow-500 md:w-1/4"
                                         >
                                             <span
                                                 id="user-rating-5"
-                                                class="flex items-center justify-center"
+                                                class="border-5 flex items-center justify-center border-green-200"
                                                 onClick={(e) => ratePurchase(e)}
                                             >
                                                 <Show

@@ -13,7 +13,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const { error, data } = await supabase
         .from("reviews")
         .select("*")
-        .eq("resource_id",resource_id)
+        .eq("resource_id", resource_id)
 
     if (error) {
         console.log(error);

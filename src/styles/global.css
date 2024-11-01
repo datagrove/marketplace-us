@@ -63,18 +63,22 @@
         direction: rtl;
     }
 
-    #user-profile-ratings-div > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
+    #user-profile-ratings-div > * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        margin: 0px 2px;
         font-size: 18px;
+        border: solid;
+        border-color: red;
     }
-
+    /* 
     #user-profile-ratings-div > span:hover:before,
     #user-profile-ratings-div > span:hover ~ span:before {
         content: "\2605";
         position: absolute;
-    }
+    } */
 }
 
 @layer utilities {

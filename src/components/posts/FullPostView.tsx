@@ -1,5 +1,6 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
+import type { Review } from "@lib/types";
 import { createSignal, createEffect, Show } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
@@ -12,6 +13,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import type { FilterPostsParams } from "@lib/types";
 import { ReportResource } from "./ReportResource";
 import { AverageRatingStars } from "../posts/AverageRatingStars";
+import { ViewPostReviews } from "./ViewPostReviews";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -41,6 +43,30 @@ async function fetchPosts({
     return data;
 }
 
+async function fetchReviews({
+    created_at,
+    resource_id,
+    reviewer_id,
+    review_title,
+    review_text,
+    overall_rating,
+}: Review) {
+    const response = await fetch("/api/getRatings", {
+        method: "POST",
+        body: JSON.stringify({
+            created_at: created_at,
+            resource_id: resource_id,
+            reviewer_id: reviewer_id,
+            review_title: review_title,
+            review_text: review_text,
+            overall_rating: overall_rating,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
+
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewFullPost: Component<Props> = (props) => {
@@ -50,10 +76,9 @@ export const ViewFullPost: Component<Props> = (props) => {
         { webpUrl: string; jpegUrl: string }[]
     >([]);
     const [quantity, setQuantity] = createSignal<number>(1);
-
     const [session, setSession] = createSignal<AuthSession | null>(null);
-
     const [editRender, setEditRender] = createSignal<boolean>(false);
+    const [review, setReview] = createSignal<Review>();
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -99,7 +124,7 @@ export const ViewFullPost: Component<Props> = (props) => {
                 } else {
                     setPost(userRes.body[0]);
                     setPostImages(userRes.body[0].image_signedUrls);
-                    console.log(post());
+                    console.log("this is the post:", post());
                 }
             } else if (res.body.length < 1 && User.session === null) {
                 alert(t("messages.noPost"));
@@ -107,7 +132,7 @@ export const ViewFullPost: Component<Props> = (props) => {
             } else {
                 setPost(res.body[0]);
                 setPostImages(res.body[0].image_signedUrls);
-                console.log(post());
+                console.log("post() in FullPostView:", post());
             }
         } catch (error) {
             console.log(error);
@@ -391,7 +416,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     // console.log(postImages());
 
     return (
-        <div class="flex w-full justify-center">
+        <div class="flex w-full justify-center border-2 border-red-400">
             <Show when={!editRender()}>
                 <div id="large-full-card-div" class="mx-2 mb-2 h-full w-3/4">
                     <div
@@ -896,23 +921,24 @@ export const ViewFullPost: Component<Props> = (props) => {
                             >
                                 <p class="text-xl">{t("menus.description")}</p>
                             </a>
-                            {/* TODO : Add back for reviews and Q&A
-                     <a
-                        href="#reviewsLg"
-                        id="reviewsLgLink"
-                        class="tabLinkLg mr-10"
-                        onClick={lgTabLinkClick}
-                    >
-                        <p class="text-xl">{t("menus.reviews")}</p>
-                    </a>
-                    <a
-                        href="#qaLg"
-                        id="qaLgLink"
-                        class="tabLinkLg mr-10"
-                        onClick={lgTabLinkClick}
-                    >
-                        <p class="text-xl">{t("menus.qA")}</p>
-                    </a> */}
+
+                            <a
+                                href="#reviewsLg"
+                                id="reviewsLgLink"
+                                class="tabLinkLg mr-10"
+                                onClick={lgTabLinkClick}
+                            >
+                                <p class="text-xl">{t("menus.reviews")}</p>
+                            </a>
+                            {/* TODO: Add Q&A section */}
+                            {/* <a
+                                href="#qaLg"
+                                id="qaLgLink"
+                                class="tabLinkLg mr-10"
+                                onClick={lgTabLinkClick}
+                            >
+                                <p class="text-xl">{t("menus.qA")}</p>
+                            </a> */}
                         </div>
 
                         <div id="lg-details-div" class="inline">
@@ -998,9 +1024,13 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
                                 {/* <p class="text-lg">{t("menus.reviews")}Reviews</p> */}
                             </div>
+                            {post()?.title}
                             <p id="" class="italic">
                                 {t("messages.comingSoon")}
                             </p>
+                            {typeof post()?.id}: {post()?.id}
+                            <ViewPostReviews resourceID={post()!.id} />
+                            <ViewPostReviews resourceID={10} />
                         </div>
 
                         <div id="lg-qa-div" class="hidden">

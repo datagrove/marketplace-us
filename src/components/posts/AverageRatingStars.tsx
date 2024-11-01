@@ -65,8 +65,14 @@ export const AverageRatingStars: Component<Props> = (props) => {
     });
 
     return (
-        <div>
-            <Show when={props.page === "home" || props.page === "mobileFullDetails" || props.page === "viewCard"}>
+        <div class="border-2 border-blue-400">
+            <Show
+                when={
+                    props.page === "home" ||
+                    props.page === "mobileFullDetails" ||
+                    props.page === "viewCard"
+                }
+            >
                 <div class="flex items-center justify-start">
                     <svg
                         id="star1"
@@ -242,9 +248,13 @@ export const AverageRatingStars: Component<Props> = (props) => {
                             <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
                         </svg>
                     </Show>
-                    <div class="flex ml-1">
-                        <p class="mr-1 text-xs md:text-lg font-bold">{averageRating()}</p>
-                        <p class="text-xs md:text-lg font-light">({totalRatings()}) {t("postLabels.reviews")}</p>
+                    <div class="ml-1 flex">
+                        <p class="mr-1 text-xs font-bold md:text-lg">
+                            {averageRating()}
+                        </p>
+                        <p class="text-xs font-light md:text-lg">
+                            ({totalRatings()}) {t("postLabels.reviews")}
+                        </p>
                     </div>
                 </div>
             </Show>
