@@ -37,6 +37,8 @@ export const ViewPostReviews: Component<Props> = (props) => {
 
         setReviewsArray(data.body);
 
+        console.log("ReviewsArray: ", reviewsArray());
+
         return data;
     }
 

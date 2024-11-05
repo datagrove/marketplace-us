@@ -1029,8 +1029,10 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {t("messages.comingSoon")}
                             </p>
                             {typeof post()?.id}: {post()?.id}
-                            <ViewPostReviews resourceID={post()!.id} />
-                            <ViewPostReviews resourceID={10} />
+                            <Show when={post()}>
+                                <ViewPostReviews resourceID={post()!.id} />
+                            </Show>
+                            {/* <ViewPostReviews resourceID={10} /> */}
                         </div>
 
                         <div id="lg-qa-div" class="hidden">
