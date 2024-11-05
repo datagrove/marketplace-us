@@ -65,7 +65,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
     });
 
     return (
-        <div class="border-2 border-blue-400">
+        <div class="">
             <Show
                 when={
                     props.page === "home" ||

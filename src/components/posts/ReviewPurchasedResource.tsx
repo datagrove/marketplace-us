@@ -203,7 +203,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     };
 
     return (
-        <div class="border-2 border-purple-500">
+        <div class="">
             <div>{loading() && <p>Loading reviews...</p>}</div>
             <Show when={dbReviewNum() > 0}>
                 <div>{t("postLabels.yourRating")}:</div>

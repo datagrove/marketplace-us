@@ -416,7 +416,7 @@ export const ViewFullPost: Component<Props> = (props) => {
     // console.log(postImages());
 
     return (
-        <div class="flex w-full justify-center border-2 border-red-400">
+        <div class="flex w-full justify-center">
             <Show when={!editRender()}>
                 <div id="large-full-card-div" class="mx-2 mb-2 h-full w-3/4">
                     <div
@@ -1024,15 +1024,10 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
                                 {/* <p class="text-lg">{t("menus.reviews")}Reviews</p> */}
                             </div>
-                            {post()?.title}
-                            <p id="" class="italic">
-                                {t("messages.comingSoon")}
-                            </p>
-                            {typeof post()?.id}: {post()?.id}
+
                             <Show when={post()}>
                                 <ViewPostReviews resourceID={post()!.id} />
                             </Show>
-                            {/* <ViewPostReviews resourceID={10} /> */}
                         </div>
 
                         <div id="lg-qa-div" class="hidden">
