@@ -15,7 +15,7 @@ export const CreatorRegistrationRouting = () => {
         `/${lang}/creator/createaccount`
     );
     const [createText, setCreateText] = createSignal<string>(
-        t("pageTitles.createCreatorAccount")
+        t("h1ElementText.createCreatorAccount")
     );
 
     const createCreatorProfileLink = document.getElementById(
@@ -30,7 +30,7 @@ export const CreatorRegistrationRouting = () => {
 
             setIsUserCreator(true);
             if (data![0]) {
-                setCreateText(t("pageTitles.viewCreatorAccount"));
+                setCreateText(t("buttons.viewCreatorAccount"));
                 setCreatorRouting(`/${lang}/creator/profile`);
             }
         } catch (error) {

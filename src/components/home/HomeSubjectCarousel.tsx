@@ -100,11 +100,12 @@ export const HomeSubjectCarousel: Component<Props> = (props) => {
             allCategoryInfo.push({
                 ...categoriesData[i],
                 ...categories.find(
-                    (itmInner) =>
-                        itmInner.id.toString() === categoriesData[i].id
+                    (itmInner) => itmInner.id === categoriesData[i].id
                 ),
             });
         }
+
+        allCategoryInfo.sort((a, b) => a.name.localeCompare(b.name));
 
         setSubjectData(allCategoryInfo);
         console.log(allCategoryInfo);

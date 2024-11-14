@@ -6,7 +6,10 @@ import { getCollection } from "astro:content";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const policyPage = await getCollection("policies", ({ data }) => data.lang === lang && data.policyType === "terms");
+const policyPage = await getCollection(
+    "policies",
+    ({ data }) => data.lang === lang && data.policyType === "terms"
+);
 const { Content } = await policyPage[0].render();
 ---
 
@@ -17,7 +20,7 @@ const { Content } = await policyPage[0].render();
     <div class="mx-6">
         <div class="mb-8">
             <h1 class="font-bold text-3xl mb-2 text-ptext1 dark:text-ptext1-DM">
-                {t("pageTitles.terms")}
+                {t("h1ElementText.terms")}
             </h1>
             <!-- <p>
                 {t("messages.translations")}

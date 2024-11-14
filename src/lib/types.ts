@@ -22,6 +22,7 @@ export interface Post {
     resource_urls: string;
     unit_amount: number;
     resource_links: string[];
+    created_at: number;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null;
@@ -33,11 +34,11 @@ export interface Post {
     image_signedUrls: {webpUrl: string, jpegUrl: string}[];
     price: number; //Price of the post
     quantity: number; //Quantity to add to cart from post
+    created_date: string; //Just the date created vs the timestamp
 }
 
 export interface PurchasedPost extends Post {
-    purchaseDate: string;
-    created_at: string;
+    purchaseDate?: string;
 }
 
 export interface User {
@@ -79,6 +80,10 @@ export interface FilterPostsParams {
     seller_id?: string;
     from?: number;
     to?: number;
+    downloadable?: boolean;
+    subtopics?: number[];
+    priceMin?: number;
+    priceMax?: number;
 }
 
 export interface Orders{
@@ -94,11 +99,20 @@ export interface Order_Details{
     quantity: number;
 }
 
-export interface Review{
-
+export interface Review {
         resource_id : string,
         reviewer_id: string,
         review_title: string,
         review_text: string,
         overall_rating :number,
+}
+
+export interface ListData {
+    count: number;
+    created_date: string;
+    customer_id: string;
+    default_list: boolean;
+    list_name: string;
+    list_number: string;
+    posts: Post[];
 }

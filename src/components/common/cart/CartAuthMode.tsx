@@ -60,7 +60,7 @@ export const CartAuthMode: Component<Props> = (props) => {
                             type="submit"
                             formaction={`/${lang}/login`}
                         >
-                            {t("pageTitles.signIn")}
+                            {t("buttons.signIn")}
                         </button>
                     </form>
                 </div>

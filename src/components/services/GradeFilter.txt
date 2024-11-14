@@ -104,9 +104,9 @@ export const GradeFilter: Component<Props> = (props) => {
                                         }}
                                         id={"grade " + item.id.toString()}
                                     />
-                                    <div class="inline-block text-ptext1 dark:text-ptext1-DM">
+                                    <label for={"grade " + item.id.toString()} class="inline-block text-ptext1 dark:text-ptext1-DM">
                                         {item.grade}
-                                    </div>
+                                    </label>
                                 </div>
                             )}
                         </For>

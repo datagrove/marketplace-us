@@ -27,21 +27,21 @@ const Dropdown: Component<Props> = (Props: Props) => {
         <div class="relative inline-block w-full">
             {/* Dropdown button */}
             <button
-                class="flex w-full justify-between rounded border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
+                class="flex w-full items-center justify-between rounded border border-inputBorder1 bg-background1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
                 onClick={(e) => {
                     e.preventDefault();
                     setIsOpen(!isOpen());
                 }}
             >
-                <div class="ml-1 inline-block">
+                <div class="ml-1 flex min-h-[44px] items-center overflow-hidden text-lg">
                     {/* TODO: This should take a prop to define whether it is required or not and what label to use */}
-                    <span class="text-alert1">* </span>
+                    <div class="text-alert1">* </div>
                     {Props.selectedOption ||
                         t("formLabels.chooseTaxCode") ||
                         t("formLabels.dropdownDefault")}
                 </div>
                 {/* Dropdown icon */}
-                <div class="inline-block">
+                <div class="">
                     <svg
                         class={`inline-block h-5 w-5 transform transition-transform dark:fill-white 
                         ${isOpen() ? "rotate-180" : ""}`}

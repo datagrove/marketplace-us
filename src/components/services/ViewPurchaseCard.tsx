@@ -113,8 +113,16 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     imgURL={post.image_url}
                                     postTitle={post.title}
                                     postCreator={post.seller_name}
-                                    purchaseDate={post.purchaseDate}
-                                    createdDate={post.created_at}
+                                    purchaseDate={
+                                        post.purchaseDate
+                                            ? post.purchaseDate
+                                            : "N/A"
+                                    }
+                                    createdDate={
+                                        post.created_date
+                                            ? post.created_date
+                                            : "N/A"
+                                    }
                                 />
                             </div>
                         </div>
@@ -195,7 +203,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     {t("menus.purchased")} &nbsp{" "}
                                 </p>
                                 <p class="text-xs font-light">
-                                    {post.purchaseDate.slice(0, 10)}
+                                    {post.purchaseDate?.slice(0, 10)}
                                 </p>
                             </div>
 
@@ -212,7 +220,7 @@ export const ViewPurchaseCard: Component<Props> = (props) => {
                                     {t("menus.updated")} &nbsp
                                 </p>
                                 <p class="text-xs font-light">
-                                    {post.created_at.slice(0, 10)}
+                                    {post.created_date}
                                 </p>
                             </div>
                         </div>

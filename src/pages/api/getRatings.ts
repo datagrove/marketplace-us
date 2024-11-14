@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     } else {
-        console.log("Review Data: ", JSON.stringify(data));
+        //console.log("Review Data: ", JSON.stringify(data));
     }
 
     return new Response(
