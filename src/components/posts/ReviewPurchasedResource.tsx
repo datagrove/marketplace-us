@@ -433,7 +433,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         href={`/${lang}/creator/${props.userId}`}
                                     >
                                         <p class="mb-2 text-xs">
-                                            {props.postCreator}Fix Creator Name
+                                            {props.postCreator}
                                         </p>
                                     </a>
 
