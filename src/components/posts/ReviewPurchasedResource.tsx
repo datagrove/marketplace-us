@@ -403,6 +403,11 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             srcset={props.imgURL?.webpUrl}
                                             type="image/webp"
                                         />
+                                        <img
+                                            src={props.imgURL?.jpegUrl}
+                                            alt={`Post Image ${props.imgURL?.jpegUrl}.jpeg`}
+                                            class="h-40 w-40 rounded object-contain"
+                                        />
                                     </picture>
                                 ) : (
                                     <svg
@@ -411,7 +416,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         height="110px"
                                         viewBox="35 0 186 256"
                                         id="Flat"
-                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM "
+                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM dark:fill-icon1-DM"
                                     >
                                         <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z" />
                                     </svg>
@@ -824,14 +829,14 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="">
-                                    <div class="flex flex-row justify-between">
+                                    <div class="flex flex-row justify-start">
                                         <label
                                             for="reviewText"
                                             class="font-bold text-ptext1 dark:text-ptext1-DM"
                                         >
                                             {t("formLabels.reviewText")}:
                                         </label>
-                                        <div class="group relative mr-2 flex items-center">
+                                        <div class="group relative ml-2 flex items-center">
                                             <svg
                                                 class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                                 version="1.1"
@@ -858,7 +863,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
                                                 {t(
-                                                    "formLabels.revieTextDescription"
+                                                    "formLabels.reviwTextDescription"
                                                 )}
                                             </span>
                                         </div>
