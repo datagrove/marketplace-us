@@ -38,6 +38,7 @@ async function postFormData(formData: FormData) {
     }
     if (response.status === 200) {
         console.log("Submitted Review");
+        console.log(data);
     }
     return data;
 }
@@ -84,7 +85,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [reviewTitle, setReviewTitle] = createSignal<string>("");
     const [reviewText, setReviewText] = createSignal<string>("");
     const [formData, setFormData] = createSignal<FormData>();
-    const [response] = createResource(formData, postFormData);
+    const [response, { refetch }] = createResource(formData, postFormData);
     const [totalReviews, setTotalReviews] = createSignal(0);
     const [reviewsData, setReviewsData] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
@@ -158,7 +159,23 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         // }
     });
 
-    function submit(e: SubmitEvent) {
+    createEffect(async () => {
+        if (response.state === "ready" && response() !== undefined) {
+            console.log("New Response (reactive):", response());
+            const data = await fetchUserRating(props.userId, props.resourceId);
+            setReviewsData(data.body);
+
+            let reviewerRating = data.body[0].overall_rating;
+            setDbReviewNum(reviewerRating);
+
+            if (reviewerRating) {
+                console.log("reviewerRating was true");
+                setShowReviewForm(false);
+            }
+        }
+    });
+
+    async function submit(e: SubmitEvent, buttonId: string) {
         e.preventDefault();
 
         console.log(overallRating(), reviewTitle(), reviewText());
@@ -184,7 +201,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         formData.append("lang", lang);
         setFormData(formData);
 
-        // closeModal(buttonId, e)
+        closeModal(buttonId, e);
     }
 
     const ratePurchase = (e: Event) => {
@@ -373,7 +390,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                     heading={t("buttons.submitReview")}
                     buttonClass="btn-primary"
                     buttonContent={t("buttons.submitReview")}
-                    buttonId="submitReview"
+                    buttonId={"submitReview" + props.resourceId}
                     children={
                         <div class="">
                             <div class="flex">
@@ -460,7 +477,11 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     {t("formLabels.whatDidYouThink")}
                                 </h1>
                             </div>
-                            <form onSubmit={submit}>
+                            <form
+                                onSubmit={(e) =>
+                                    submit(e, "submitReview" + props.resourceId)
+                                }
+                            >
                                 <div class="mb-4 mt-2 text-center text-xs">
                                     <Show
                                         when={showReviewFieldAlert() === true}
