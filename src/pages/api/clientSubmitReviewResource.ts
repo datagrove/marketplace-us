@@ -32,8 +32,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   // Validate the formData makes sure none of the fields are blank. Could probably do more than this like check for invalid phone numbers, blank strings, unselected location info etc.
 
   if (
-    !reviewTitle ||
-    !reviewText ||
+    // !reviewTitle ||
+    // !reviewText ||
     !overallRating ||
     !resourceId ||
     !userId ||
@@ -91,8 +91,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   let submission = {
     resource_id: resourceId,
     reviewer_id: userId,
-    review_title: reviewTitle,
-    review_text: reviewText,
+    review_title: reviewTitle || null,
+    review_text: reviewText || null,
     overall_rating: overallRating,
   };
 
@@ -107,7 +107,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       JSON.stringify({
         // message: t("apiErrors.creatorCreateProfileError"),
         //TODO: Internationalize
-        message: "fail to insert "
+        message: t("apiErrors.problemPostingReview")
       }),
       { status: 500 }
     );
@@ -116,7 +116,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
       JSON.stringify({
         // message: t("apiErrors.noProfileData"),
         //TODO: Internationalize
-        message: "fail data fetch",
+        message: t("apiErrors.noDataFound"),
       }),
       { status: 500 }
     );

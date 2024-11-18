@@ -124,7 +124,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                 } else {
                     setPost(userRes.body[0]);
                     setPostImages(userRes.body[0].image_signedUrls);
-                    console.log("this is the post:", post());
                 }
             } else if (res.body.length < 1 && User.session === null) {
                 alert(t("messages.noPost"));
@@ -132,7 +131,6 @@ export const ViewFullPost: Component<Props> = (props) => {
             } else {
                 setPost(res.body[0]);
                 setPostImages(res.body[0].image_signedUrls);
-                console.log("post() in FullPostView:", post());
             }
         } catch (error) {
             console.log(error);
@@ -173,7 +171,6 @@ export const ViewFullPost: Component<Props> = (props) => {
     function showSlide(n: number) {
         let i;
         const slides = document.getElementsByClassName("slide");
-        // console.log(slides)
         const dots = document.getElementsByClassName("dot");
 
         if (n > slides.length) {
@@ -413,7 +410,6 @@ export const ViewFullPost: Component<Props> = (props) => {
             qa.classList.add("hidden");
         }
     }
-    // console.log(postImages());
 
     return (
         <div class="flex w-full justify-center">

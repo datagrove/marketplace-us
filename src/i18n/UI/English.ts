@@ -288,7 +288,6 @@ export const English = {
     downloadable: "Downloadable",
     whatDidYouThink: "What did you think?",
     overallRating: "Overall Rating",
-    overallRatingDescription: "Please rate this resource on a scale of one to five, with one being the lowest rating and five being the highest.",
     reviewQ1: "As described",
     reviewQ2: "Age/grade appropriate",
     reviewQ3: "Engaging",
@@ -296,9 +295,7 @@ export const English = {
     reviewQ5: "Easy to use/implement",
     reviewQ6: "Fair price",
     reviewTitle: "Review Title",
-    reviewTitleDescription: "The review title will appear at the top of your review. A short and specific description is recommended for the review title.",
     reviewText: "Review Text",
-    reviwTextDescription: "The review text field provides more space for you to further explain your overall rating. We recommend one to three paragraphs.",
     priceFilter: "Price",
     freeResources: "Free Resources",
     listName: "List Name",
@@ -399,7 +396,10 @@ export const English = {
       "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
     resourceTypes: "Please select all applicable resource types.",
     price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
-    secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc."
+    secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc.",
+    overallRatingDescription: "Please rate this resource on a scale of one to five, with one being the lowest rating and five being the highest.",
+    reviewTitleDescription: "The review title will appear at the top of your review. A short and specific description is recommended for the review title.",
+    reviewTextDescription: "The review text field provides more space for you to further explain your overall rating. We recommend one to three paragraphs.",
   },
 
   apiErrors: {
@@ -436,7 +436,9 @@ export const English = {
     singleListFavoriteError: "Error getting single list favorites",
     favoriteListError: "Error fetching favorite list",
     multipleListFavoriteError: "Error handling multiple lists",
-    },
+    problemPostingReview: "We're sorry, there was an issue posting your review. Please try again or contact LearnGrove support.",
+    noDataFound: "No data found",  
+  },
 
   socialModal: {
     shareService: "Share this resource",

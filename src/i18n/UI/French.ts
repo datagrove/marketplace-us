@@ -289,7 +289,6 @@ export const French = {
     downloadable: "Téléchargeable",
     whatDidYouThink: "Qu'en as-tu pensé?",
     overallRating: "Note Globale",
-    overallRatingDescription: "Veuillez évaluer cette ressource sur une échelle de un à cinq, un étant la note la plus basse et cinq la plus élevée.",
     reviewQ1: "Comme décrit",
     reviewQ2: "Adapté à l'âge",
     reviewQ3: "Engageante",
@@ -297,9 +296,7 @@ export const French = {
     reviewQ5: "Facile à utiliser/mettre en œuvre",
     reviewQ6: "Juste prix",
     reviewTitle: "Titre de la Revue",
-    reviewTitleDescription: "Le titre de votre avis apparaîtra en haut de votre avis. Une description courte et précise est recommandée pour le titre de votre avis.",
     reviewText: "Texte de le Revue",
-    reviewTextDescription: "Le champ de texte de l'avis vous offre plus d'espace pour expliquer plus en détail votre note globale. Nous vous recommandons d'écrire un à trois paragraphes.",
     priceFilter: "Prix",
     freeResources: "Ressources gratuites",
     listName: "Nom de la Liste",
@@ -399,6 +396,9 @@ export const French = {
     resourceTypes: "Veuillez sélectionner tous les types de ressources applicables.",
     price: "Le prix saisi est le prix facturé au client. Le créateur recevra le montant restant après frais. Consultez les conditions pour plus d'informations sur la structure tarifaire LearnGrove.",
     secular: "LearnGrove reconnaît qu'un programme ou une ressource laïque peut signifier différentes choses pour différents créateurs, apprenants et facilitateurs d'apprentissage. Chez LearnGrove, nous utilisons ce terme pour désigner à la fois les ressources neutres en matière de foi ainsi que celles qui peuvent enseigner une vision du monde qui n'est pas conforme à une religion particulière, mais qui peuvent enseigner des concepts qui sont en conflit direct avec une religion particulière. Nous laissons à nos créateurs le soin de déterminer s'ils estiment que leurs ressources sont adaptées à un environnement laïc. Nous vous recommandons fortement d'inclure des détails supplémentaires dans votre description pour détailler la manière dont votre ressource aborde divers sujets tels que la création par rapport à l'évolution, les textes littéraires religieux, etc.",
+    overallRatingDescription: "Veuillez évaluer cette ressource sur une échelle de un à cinq, un étant la note la plus basse et cinq la plus élevée.",
+    reviewTitleDescription: "Le titre de votre avis apparaîtra en haut de votre avis. Une description courte et précise est recommandée pour le titre de votre avis.",
+    reviewTextDescription: "Le champ de texte de l'avis vous offre plus d'espace pour expliquer plus en détail votre note globale. Nous vous recommandons d'écrire un à trois paragraphes.",
   },
 
   apiErrors: {
@@ -432,7 +432,9 @@ export const French = {
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
     noFavoriteLists: "Aucune liste de favoris trouvée",
-    },
+    problemPostingReview: "Nous sommes désolés, un problème est survenu lors de la publication de votre avis. Veuillez réessayer ou contacter le support LearnGrove.",  
+    noDataFound: "Aucune donnée trouvée",
+  },
 
   socialModal: {
     shareService: "Partager ce ressource",

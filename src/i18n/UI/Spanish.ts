@@ -291,7 +291,6 @@ export const Spanish = {
     downloadable: "Descargable",
     whatDidYouThink: "¿Qué pensó Ud?",
     overallRating: "Calificación General",
-    overallRatingDescription: "Califique este recurso en una escala del uno al cinco, siendo uno la calificación más baja y cinco la más alta.",
     reviewQ1: "Como se describe",
     reviewQ2: "Apropiado para edad/grado",
     reviewQ3: "Atractivo",
@@ -299,9 +298,7 @@ export const Spanish = {
     reviewQ5: "Fácil de usar/implementar",
     reviewQ6: "Precio justo",
     reviewTitle: "Títula de la Calificación",
-    reviewTitleDescription: "El título de la reseña aparecerá en la parte superior de la misma. Se recomienda incluir una descripción breve y específica para el título de la reseña.",
     reviewText: "Texto de la Calificación",
-    reviewTextDescription: "El campo de texto de la reseña le ofrece más espacio para explicar con más detalle su calificación general. Recomendamos que incluya entre uno y tres párrafos.",
     priceFilter: "Precio",
     freeResources: "Recursos gratuitos",
     listName: "Nombre de la lista",
@@ -402,6 +399,9 @@ export const Spanish = {
     resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
     price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
     secular: "LearnGrove reconoce que un plan de estudios o recurso secular podría significar cosas diferentes para diferentes creadores, estudiantes y facilitadores de aprendizaje. En LearnGrove utilizamos este término para referirnos tanto a los recursos neutrales a la fe como a aquellos que pueden enseñar una visión del mundo que no está alineada con ninguna religión en particular, pero que pueden enseñar conceptos que están en conflicto directo con una religión en particular. Dejamos en manos de nuestros creadores determinar si creen que sus recursos son adecuados para un entorno secular. Le recomendamos encarecidamente que incluya detalles adicionales en su descripción para detallar cómo su recurso aborda diversos temas, como creación versus evolución, textos literarios religiosos, etc.",
+    overallRatingDescription: "Califique este recurso en una escala del uno al cinco, siendo uno la calificación más baja y cinco la más alta.",
+    reviewTitleDescription: "El título de la reseña aparecerá en la parte superior de la misma. Se recomienda incluir una descripción breve y específica para el título de la reseña.",
+    reviewTextDescription: "El campo de texto de la reseña le ofrece más espacio para explicar con más detalle su calificación general. Recomendamos que incluya entre uno y tres párrafos.",
   },
 
   apiErrors: {
@@ -432,7 +432,9 @@ export const Spanish = {
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
     noFavoriteLists: "No se encontraron lista de favoritos",
-    },
+    problemPostingReview: "Lo sentimos, se produjo un problema al publicar tu reseña. Vuelve a intentarlo o ponte en contacto con el servicio de asistencia de LearnGrove.",
+    noDataFound: "No se encontraron datos",  
+  },
 
   socialModal: {
     shareService: "Comparte este recurso",

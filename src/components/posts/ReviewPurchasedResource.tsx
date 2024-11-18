@@ -24,7 +24,6 @@ interface Props {
     postCreator: string;
     purchaseDate: string;
     createdDate: string;
-    // review: string;
 }
 
 async function postFormData(formData: FormData) {
@@ -105,7 +104,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             setDbReviewNum(reviewerRating);
 
             if (reviewerRating) {
-                console.log("reviewerRating was true");
                 setShowReviewForm(false);
             }
         } catch (err) {
@@ -118,45 +116,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             });
             setLoading(false);
         }
-
-        // try {
-        //     //Refactor: We aren't going to want to load all the reviews every time, probably need pagination
-        //     //So we will need to do checks like "has this been reviewed by this user" on the server/API call
-        //     const data = await fetchPostReviews(props.resourceId.toString());
-        //     setReviewsData(data.body);
-        // } catch (err) {
-        //     console.error(err);
-        // } finally {
-        //     const arrayLength = () => reviewsData().length;
-        //     if (arrayLength() === 0) {
-        //         setShowReviewForm(true);
-        //         setLoading(false);
-        //         return;
-        //     }
-        //     reviewsData().map((review: Review) => {
-        //         if (review.reviewer_id === props.userId) {
-        //             return;
-        //         } else {
-        //             setShowReviewForm(true);
-        //         }
-        //     });
-
-        //     // Set loading to false after fetch is complete
-        //     setLoading(false);
-        //     setTotalReviews(arrayLength);
-        //     // Refactor: I would like to see this done on the server as part of the fetch if possible I think it will probably be faster
-        //     // plus we won't want to return every single review but we will need to use them all to calculate this.
-        //     // Might need to use a SQL query of some kind to store the average for the post in the view? Calculating this continually will be slow.
-        //     if (arrayLength() > 0) {
-        //         reviewsData().map((review: Review) => {
-        //             setTotalRatingOfPost(
-        //                 review.overall_rating + totalRatingOfPost()
-        //             );
-        //         });
-        //         setTotalRatingOfPost(totalRatingOfPost() / totalReviews());
-        //         setTotalRatingOfPost(Math.round(totalRatingOfPost() * 2) / 2);
-        //     }
-        // }
     });
 
     createEffect(async () => {
@@ -166,7 +125,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             let reviewerRating = data.body[0].overall_rating;
             setDbReviewNum(reviewerRating);
             if (reviewerRating) {
-                console.log("reviewerRating was true");
                 setShowReviewForm(false);
             }
         }
@@ -174,8 +132,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
     async function submit(e: SubmitEvent, buttonId: string) {
         e.preventDefault();
-
-        console.log(overallRating(), reviewTitle(), reviewText());
 
         if (overallRating() === "") {
             setShowReviewFieldAlert(true);
@@ -542,7 +498,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
                                                 <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
                                                     {t(
-                                                        "formLabels.overallRatingDescription"
+                                                        "toolTips.overallRatingDescription"
                                                     )}
                                                 </span>
                                             </div>
@@ -732,15 +688,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    {/* <input
-                                        type="number"
-                                        id=""
-                                        name="overallRating"
-                                        class="bg-background mb-4 w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        oninput={(e) =>
-                                            setOverallRating(e.target.value)
-                                        }
-                                    /> */}
                                 </div>
 
                                 {/* <div id="slider-reviews" class="md:grid grid-cols-2 grid-rows-7 "> */}
@@ -813,7 +760,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
                                                 {t(
-                                                    "formLabels.reviewTitleDescription"
+                                                    "toolTips.reviewTitleDescription"
                                                 )}
                                             </span>
                                         </div>
@@ -866,7 +813,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
                                                 {t(
-                                                    "formLabels.reviwTextDescription"
+                                                    "toolTips.reviewTextDescription"
                                                 )}
                                             </span>
                                         </div>
@@ -896,7 +843,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     {response() && (
                                         <p class="mt-2 text-center font-bold text-alert1 dark:text-alert1-DM">
                                             {response().message}
-                                            {/* {t("messages.submitted")} */}
                                         </p>
                                     )}
                                 </Suspense>

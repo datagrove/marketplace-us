@@ -32,9 +32,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const values = ui[lang] as uiObject;
     const postSubjects = values.subjectCategoryInfo.subjects;
     const postSubtopics = values.subjectCategoryInfo.subtopics;
-    // console.log("From: ", from);
-    // console.log(" To: ", to);
-    // console.log(subtopics);
 
     try {
         let query = supabase
@@ -93,8 +90,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             query = query.lte("price_value", priceMax);
         }
 
-        // console.log(query)
-
         const { data: posts, error } = await query;
 
         if (error) {
@@ -106,9 +101,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
                 { status: 500 }
             );
         }
-        // else {
-        //     console.log("Posts: ", posts.length);
-        // }
 
         const { data: gradeData, error: gradeError } = await supabase
             .from("grade_level")
@@ -129,7 +121,6 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         let formattedPosts: Post[] = [];
 
         if (posts && gradeData && resourceTypesData) {
-            // console.log(posts);
             formattedPosts = await Promise.all(
                 posts.map(async (post: Post) => {
                     

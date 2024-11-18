@@ -24,7 +24,6 @@ export const ViewPostReviews: Component<Props> = (props) => {
     );
 
     onMount(async () => {
-        console.log("props.resourceID: ", props.resourceID);
         await fetchReviews(props.resourceID);
     });
 
@@ -39,8 +38,6 @@ export const ViewPostReviews: Component<Props> = (props) => {
         const data = await response.json();
 
         setReviewsArray(data.body);
-
-        console.log("ReviewsArray: ", reviewsArray());
 
         return data;
     }
