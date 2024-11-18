@@ -158,6 +158,7 @@ export const English = {
     createUserAccount: "Create User Profile",
     viewUserProfile: "My User Profile",
     viewCreatorAccount: "My Creator Profile",
+    submitReview: "Submit Review"
   },
 
   messages: {
@@ -229,7 +230,8 @@ export const English = {
     signIntoAddToFavorites: "Sign in to add to favorites",
     resourceLinks: "Thanks for using LearnGrove! Here are your links:",
     externalResourceDisclaimer: "LearnGrove provides links to these external resources as a convenience. LearnGrove is not responsible for and has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site. In no event shall LearnGrove be responsible for your use of a linked site. Many of these external sites are funded through advertising which may make use of cookies and other tracking technology to target your interests for that advertising. Please be careful when clicking on any links on an external site to ensure you are only accessing links you intend to.",
-
+    submitted: "Submitted",
+    overallReviewRequired: "Please include an overall rating for your review"
   },
 
   formLabels: {
@@ -286,6 +288,7 @@ export const English = {
     downloadable: "Downloadable",
     whatDidYouThink: "What did you think?",
     overallRating: "Overall Rating",
+    overallRatingDescription: "Please rate this resource on a scale of one to five, with one being the lowest rating and five being the highest.",
     reviewQ1: "As described",
     reviewQ2: "Age/grade appropriate",
     reviewQ3: "Engaging",
@@ -293,7 +296,9 @@ export const English = {
     reviewQ5: "Easy to use/implement",
     reviewQ6: "Fair price",
     reviewTitle: "Review Title",
+    reviewTitleDescription: "The review title will appear at the top of your review. A short and specific description is recommended for the review title.",
     reviewText: "Review Text",
+    reviwTextDescription: "The review text field provides more space for you to further explain your overall rating. We recommend one to three paragraphs.",
     priceFilter: "Price",
     freeResources: "Free Resources",
     listName: "List Name",

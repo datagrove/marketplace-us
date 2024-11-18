@@ -1,4 +1,4 @@
-import Modal from "@components/common/notices/modal";
+import Modal, { closeModal } from "@components/common/notices/modal";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import type { Review } from "@lib/types";
 import type { Session } from "@supabase/supabase-js";
@@ -91,6 +91,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [totalRatingOfPost, setTotalRatingOfPost] = createSignal(0);
     const [showReviewForm, setShowReviewForm] = createSignal(true);
     const [dbReviewNum, setDbReviewNum] = createSignal<number>(0);
+    const [showReviewFieldAlert, setShowReviewFieldAlert] = createSignal(false);
 
     onMount(async () => {
         try {
@@ -162,6 +163,16 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
         console.log(overallRating(), reviewTitle(), reviewText());
 
+        if (overallRating() === "") {
+            setShowReviewFieldAlert(true);
+
+            setTimeout(() => {
+                setShowReviewFieldAlert(false);
+            }, 3000);
+
+            return false;
+        }
+
         const formData = new FormData(e.target as HTMLFormElement);
         formData.append("review_title", reviewTitle());
         formData.append("review_text", reviewText());
@@ -170,7 +181,10 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         formData.append("user_id", props.userId);
         formData.append("refresh_token", props?.ref);
         formData.append("access_token", props.access ? props.access : "");
+        formData.append("lang", lang);
         setFormData(formData);
+
+        // closeModal(buttonId, e)
     }
 
     const ratePurchase = (e: Event) => {
@@ -356,9 +370,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             <Show when={showReviewForm() === true}>
                 <Modal
                     // TODO Internationalize Heading and button content
-                    heading={"Submit Review"}
+                    heading={t("buttons.submitReview")}
                     buttonClass="btn-primary"
-                    buttonContent={"Submit Review"}
+                    buttonContent={t("buttons.submitReview")}
                     buttonId="submitReview"
                     children={
                         <div class="">
@@ -448,14 +462,26 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                             </div>
                             <form onSubmit={submit}>
                                 <div class="mb-4 mt-2 text-center text-xs">
-                                    <span class="text-alert1">* </span>
-                                    <span class="italic">
-                                        {t("formLabels.required")}
-                                    </span>
+                                    <Show
+                                        when={showReviewFieldAlert() === true}
+                                    >
+                                        <p class="text-lg text-alert1 dark:text-alert1-DM">
+                                            {t(
+                                                "messages.overallReviewRequired"
+                                            )}
+                                        </p>
+                                    </Show>
+
+                                    <div>
+                                        <span class="text-alert1">* </span>
+                                        <span class="italic">
+                                            {t("formLabels.required")}
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="">
-                                    <div class="mb-4 flex w-full justify-between border-2 border-blue-400">
+                                    <div class="mb-4 flex w-full justify-between">
                                         <div class="flex">
                                             <p class="mr-1 text-lg font-bold">
                                                 {t("formLabels.overallRating")}*
@@ -484,18 +510,18 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
                                                 <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
                                                     {t(
-                                                        "formLabels.overallRating"
+                                                        "formLabels.overallRatingDescription"
                                                     )}
                                                 </span>
                                             </div>
                                         </div>
                                         <div
                                             id="user-profile-ratings-div"
-                                            class="purchased-item-stars flex w-1/2 items-center justify-between border-2 border-yellow-500 md:w-1/4"
+                                            class="purchased-item-stars flex w-1/2 items-center justify-between md:w-1/4"
                                         >
                                             <span
-                                                id="user-rating-5"
-                                                class="border-5 flex items-center justify-center border-green-200"
+                                                id="user-rating-1"
+                                                class="flex items-center justify-center"
                                                 onClick={(e) => ratePurchase(e)}
                                             >
                                                 <Show
@@ -531,7 +557,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-4"
+                                                id="user-rating-2"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -605,7 +631,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-2"
+                                                id="user-rating-4"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -642,7 +668,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-1"
+                                                id="user-rating-5"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -754,7 +780,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
-                                                {/* {t("")} */}
+                                                {t(
+                                                    "formLabels.reviewTitleDescription"
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -805,7 +833,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
-                                                {/* {t("")} */}
+                                                {t(
+                                                    "formLabels.revieTextDescription"
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -824,7 +854,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     <button class="my-2 w-[200px] rounded-sm bg-btn1 p-2 font-bold text-white dark:bg-btn1-DM">
                                         <input
                                             type="submit"
-                                            value={"Submit Review"}
+                                            // value={"Submit Review"}
+                                            value={t("buttons.submitReview")}
                                         />
                                     </button>
                                 </div>
@@ -833,7 +864,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     {response() && (
                                         <p class="mt-2 text-center font-bold text-alert1 dark:text-alert1-DM">
                                             {/* {response().message} */}
-                                            Submitted
+                                            {t("messages.submitted")}
                                         </p>
                                     )}
                                 </Suspense>

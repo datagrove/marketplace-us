@@ -396,10 +396,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             </a>
                         </div>
 
-                        <div
-                            id="creator-follower-text-div"
-                            class="border-red- ml-1 w-4/6"
-                        >
+                        <div id="creator-follower-text-div" class="ml-1 w-4/6">
                             <div>
                                 <a
                                     href={`/${lang}/creator/${post()?.seller_id}`}

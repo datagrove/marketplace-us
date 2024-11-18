@@ -156,6 +156,7 @@ export const Spanish = {
     createUserAccount: "Crear perfil de usuario",
     viewUserProfile: "Mi perfil de usuario",
     viewCreatorAccount: "Mi perfil de creador",
+    submitReview: "Enviar Reseña",
   },
 
   messages: {
@@ -232,6 +233,8 @@ export const Spanish = {
     signIntoAddToFavorites: "Inicie sesión para agregar a favoritos",
     resourceLinks: "¡Gracias por usar LearnGrove! Aquí están sus enlaces:",
     externalResourceDisclaimer: "LearnGrove proporciona enlaces a estos recursos externos para su comodidad. LearnGrove no es responsable ni tiene control sobre la información contenida en ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado. Muchos de estos sitios externos se financian a través de publicidad que puede utilizar cookies y otras tecnologías de seguimiento para orientar sus intereses para esa publicidad. Tenga cuidado al hacer clic en cualquier enlace de un sitio externo para asegurarse de acceder solo a los enlaces que desea.",
+    submitted: "Enviada",
+    overallReviewRequired: "Incluya una calificación general para su revisión",
   },
 
   formLabels: {
@@ -288,6 +291,7 @@ export const Spanish = {
     downloadable: "Descargable",
     whatDidYouThink: "¿Qué pensó Ud?",
     overallRating: "Calificación General",
+    overallRatingDescription: "Califique este recurso en una escala del uno al cinco, siendo uno la calificación más baja y cinco la más alta.",
     reviewQ1: "Como se describe",
     reviewQ2: "Apropiado para edad/grado",
     reviewQ3: "Atractivo",
@@ -295,7 +299,9 @@ export const Spanish = {
     reviewQ5: "Fácil de usar/implementar",
     reviewQ6: "Precio justo",
     reviewTitle: "Títula de la Calificación",
+    reviewTitleDescription: "El título de la reseña aparecerá en la parte superior de la misma. Se recomienda incluir una descripción breve y específica para el título de la reseña.",
     reviewText: "Texto de la Calificación",
+    reviewTextDescription: "El campo de texto de la reseña le ofrece más espacio para explicar con más detalle su calificación general. Recomendamos que incluya entre uno y tres párrafos.",
     priceFilter: "Precio",
     freeResources: "Recursos gratuitos",
     listName: "Nombre de la lista",

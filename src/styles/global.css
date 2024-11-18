@@ -58,10 +58,10 @@
         @apply my-2 mr-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-border1 text-ptext1 dark:border-border1-DM dark:text-ptext1-DM md:h-24 md:w-24 md:border-4;
     }
 
-    #user-profile-ratings-div {
+    /* #user-profile-ratings-div {
         unicode-bidi: bidi-override;
         direction: rtl;
-    }
+    } */
 
     #user-profile-ratings-div > * {
         display: flex;
@@ -70,8 +70,6 @@
         width: 48px;
         margin: 0px 2px;
         font-size: 18px;
-        border: solid;
-        border-color: red;
     }
     /* 
     #user-profile-ratings-div > span:hover:before,

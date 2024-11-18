@@ -153,6 +153,7 @@ export const French = {
     createUserAccount: "Créer un profil utilisateur",
     viewUserProfile: "Mon profil utilisateur",
     viewCreatorAccount: "Mon profil de créateur",
+    submitReview: "Soumettre Critique",
   },
 
   messages: {
@@ -230,6 +231,8 @@ export const French = {
     signIntoAddToFavorites: "Connectez-vous pour ajouter aux favoris",
     resourceLinks: "Merci d'utiliser LearnGrove ! Voici vos liens:",
     externalResourceDisclaimer: "LearnGrove fournit des liens vers ces ressources externes pour plus de commodité. LearnGrove n'est pas responsable et n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié. En aucun cas LearnGrove ne sera responsable de votre utilisation d’un site lié. Beaucoup de ces sites externes sont financés par la publicité qui peut utiliser des cookies et d'autres technologies de suivi pour cibler vos intérêts pour cette publicité. Veuillez être prudent lorsque vous cliquez sur des liens sur un site externe pour vous assurer que vous accédez uniquement aux liens auxquels vous avez l'intention d'accéder.",
+    submitted: "Soumise",
+    overallReviewRequired: "Veuillez inclure une note globale pour votre avis",
   },
 
   formLabels: {
@@ -286,6 +289,7 @@ export const French = {
     downloadable: "Téléchargeable",
     whatDidYouThink: "Qu'en as-tu pensé?",
     overallRating: "Note Globale",
+    overallRatingDescription: "Veuillez évaluer cette ressource sur une échelle de un à cinq, un étant la note la plus basse et cinq la plus élevée.",
     reviewQ1: "Comme décrit",
     reviewQ2: "Adapté à l'âge",
     reviewQ3: "Engageante",
@@ -293,7 +297,9 @@ export const French = {
     reviewQ5: "Facile à utiliser/mettre en œuvre",
     reviewQ6: "Juste prix",
     reviewTitle: "Titre de la Revue",
+    reviewTitleDescription: "Le titre de votre avis apparaîtra en haut de votre avis. Une description courte et précise est recommandée pour le titre de votre avis.",
     reviewText: "Texte de le Revue",
+    reviewTextDescription: "Le champ de texte de l'avis vous offre plus d'espace pour expliquer plus en détail votre note globale. Nous vous recommandons d'écrire un à trois paragraphes.",
     priceFilter: "Prix",
     freeResources: "Ressources gratuites",
     listName: "Nom de la Liste",
