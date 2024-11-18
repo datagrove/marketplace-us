@@ -513,7 +513,10 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     <div class="mb-4 flex w-full justify-between">
                                         <div class="flex">
                                             <p class="mr-1 text-lg font-bold">
-                                                {t("formLabels.overallRating")}*
+                                                {t("formLabels.overallRating")}
+                                                <span class="text-alert1">
+                                                    *
+                                                </span>
                                             </p>
                                             <div class="group relative mr-2 flex items-center">
                                                 <svg
