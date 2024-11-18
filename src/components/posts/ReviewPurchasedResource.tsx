@@ -161,13 +161,10 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
     createEffect(async () => {
         if (response.state === "ready" && response() !== undefined) {
-            console.log("New Response (reactive):", response());
             const data = await fetchUserRating(props.userId, props.resourceId);
             setReviewsData(data.body);
-
             let reviewerRating = data.body[0].overall_rating;
             setDbReviewNum(reviewerRating);
-
             if (reviewerRating) {
                 console.log("reviewerRating was true");
                 setShowReviewForm(false);
@@ -201,7 +198,13 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         formData.append("lang", lang);
         setFormData(formData);
 
-        closeModal(buttonId, e);
+        while (response.loading) {
+            await new Promise((resolve) => setTimeout(resolve, 50)); // Small delay to let the response update
+        }
+
+        if (response.state === "ready" && response().message === "Success!") {
+            closeModal(buttonId, e);
+        }
     }
 
     const ratePurchase = (e: Event) => {
@@ -884,8 +887,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 <Suspense>
                                     {response() && (
                                         <p class="mt-2 text-center font-bold text-alert1 dark:text-alert1-DM">
-                                            {/* {response().message} */}
-                                            {t("messages.submitted")}
+                                            {response().message}
+                                            {/* {t("messages.submitted")} */}
                                         </p>
                                     )}
                                 </Suspense>
