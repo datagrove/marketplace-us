@@ -74,10 +74,11 @@ export const ViewUserFavorites: Component = () => {
         });
 
         const data = await response.json();
+        console.log("Get user favorites: ", data);
         if (data) {
             if (data.type === "single") {
                 console.log(data);
-                setFavoritedItems(data.posts.body);
+                setFavoritedItems(data.posts);
                 setListName(data.list_name);
                 setListNumber(data.list_number);
                 setLoading(false);

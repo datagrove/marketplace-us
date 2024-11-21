@@ -161,6 +161,7 @@ export interface uiObject {
     createUserAccount: string,
     viewUserProfile: string,
     viewCreatorAccount: string,
+    submitReview: string,
   };
 
     messages: {
@@ -220,6 +221,8 @@ export interface uiObject {
         signIntoAddToFavorites: string;
         resourceLinks: string;
         externalResourceDisclaimer: string;
+        submitted: string,
+        overallReviewRequired: string,
     };
 
     formLabels: {
@@ -276,6 +279,7 @@ export interface uiObject {
         downloadable: string;
         whatDidYouThink: string;
         overallRating: string;
+
         reviewQ1: string;
         reviewQ2: string;
         reviewQ3: string;
@@ -283,7 +287,9 @@ export interface uiObject {
         reviewQ5: string;
         reviewQ6: string;
         reviewTitle: string;
+        
         reviewText: string;
+        
         priceFilter: string;
         freeResources: string;
         listName: string;
@@ -364,6 +370,9 @@ export interface uiObject {
         resourceTypes: string;
         price: string;
         secular: string;
+        overallRatingDescription: string,
+        reviewTitleDescription: string;
+        reviewTextDescription: string;
     };
 
     apiErrors: {
@@ -398,6 +407,8 @@ export interface uiObject {
         singleListFavoriteError: string;
         favoriteListError: string;
         multipleListFavoriteError: string;
+        problemPostingReview: string;
+        noDataFound: string;
     };
 
     socialModal: {

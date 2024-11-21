@@ -1,4 +1,4 @@
-import Modal from "@components/common/notices/modal";
+import Modal, { closeModal } from "@components/common/notices/modal";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import type { Review } from "@lib/types";
 import type { Session } from "@supabase/supabase-js";
@@ -24,7 +24,6 @@ interface Props {
     postCreator: string;
     purchaseDate: string;
     createdDate: string;
-    // review: string;
 }
 
 async function postFormData(formData: FormData) {
@@ -38,6 +37,7 @@ async function postFormData(formData: FormData) {
     }
     if (response.status === 200) {
         console.log("Submitted Review");
+        console.log(data);
     }
     return data;
 }
@@ -84,13 +84,14 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [reviewTitle, setReviewTitle] = createSignal<string>("");
     const [reviewText, setReviewText] = createSignal<string>("");
     const [formData, setFormData] = createSignal<FormData>();
-    const [response] = createResource(formData, postFormData);
+    const [response, { refetch }] = createResource(formData, postFormData);
     const [totalReviews, setTotalReviews] = createSignal(0);
     const [reviewsData, setReviewsData] = createSignal([]);
     const [loading, setLoading] = createSignal(true);
     const [totalRatingOfPost, setTotalRatingOfPost] = createSignal(0);
     const [showReviewForm, setShowReviewForm] = createSignal(true);
     const [dbReviewNum, setDbReviewNum] = createSignal<number>(0);
+    const [showReviewFieldAlert, setShowReviewFieldAlert] = createSignal(false);
 
     onMount(async () => {
         try {
@@ -103,7 +104,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             setDbReviewNum(reviewerRating);
 
             if (reviewerRating) {
-                console.log("reviewerRating was true");
                 setShowReviewForm(false);
             }
         } catch (err) {
@@ -116,51 +116,32 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             });
             setLoading(false);
         }
-
-        // try {
-        //     //Refactor: We aren't going to want to load all the reviews every time, probably need pagination
-        //     //So we will need to do checks like "has this been reviewed by this user" on the server/API call
-        //     const data = await fetchPostReviews(props.resourceId.toString());
-        //     setReviewsData(data.body);
-        // } catch (err) {
-        //     console.error(err);
-        // } finally {
-        //     const arrayLength = () => reviewsData().length;
-        //     if (arrayLength() === 0) {
-        //         setShowReviewForm(true);
-        //         setLoading(false);
-        //         return;
-        //     }
-        //     reviewsData().map((review: Review) => {
-        //         if (review.reviewer_id === props.userId) {
-        //             return;
-        //         } else {
-        //             setShowReviewForm(true);
-        //         }
-        //     });
-
-        //     // Set loading to false after fetch is complete
-        //     setLoading(false);
-        //     setTotalReviews(arrayLength);
-        //     // Refactor: I would like to see this done on the server as part of the fetch if possible I think it will probably be faster
-        //     // plus we won't want to return every single review but we will need to use them all to calculate this.
-        //     // Might need to use a SQL query of some kind to store the average for the post in the view? Calculating this continually will be slow.
-        //     if (arrayLength() > 0) {
-        //         reviewsData().map((review: Review) => {
-        //             setTotalRatingOfPost(
-        //                 review.overall_rating + totalRatingOfPost()
-        //             );
-        //         });
-        //         setTotalRatingOfPost(totalRatingOfPost() / totalReviews());
-        //         setTotalRatingOfPost(Math.round(totalRatingOfPost() * 2) / 2);
-        //     }
-        // }
     });
 
-    function submit(e: SubmitEvent) {
+    createEffect(async () => {
+        if (response.state === "ready" && response() !== undefined) {
+            const data = await fetchUserRating(props.userId, props.resourceId);
+            setReviewsData(data.body);
+            let reviewerRating = data.body[0].overall_rating;
+            setDbReviewNum(reviewerRating);
+            if (reviewerRating) {
+                setShowReviewForm(false);
+            }
+        }
+    });
+
+    async function submit(e: SubmitEvent, buttonId: string) {
         e.preventDefault();
 
-        console.log(overallRating(), reviewTitle(), reviewText());
+        if (overallRating() === "") {
+            setShowReviewFieldAlert(true);
+
+            setTimeout(() => {
+                setShowReviewFieldAlert(false);
+            }, 3000);
+
+            return false;
+        }
 
         const formData = new FormData(e.target as HTMLFormElement);
         formData.append("review_title", reviewTitle());
@@ -168,9 +149,18 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
         formData.append("overall_rating", overallRating());
         formData.append("resource_id", props.resourceId.toString());
         formData.append("user_id", props.userId);
-        formData.append("refresh_token", props.ref);
+        formData.append("refresh_token", props?.ref);
         formData.append("access_token", props.access ? props.access : "");
+        formData.append("lang", lang);
         setFormData(formData);
+
+        while (response.loading) {
+            await new Promise((resolve) => setTimeout(resolve, 50)); // Small delay to let the response update
+        }
+
+        if (response.state === "ready" && response().message === "Success!") {
+            closeModal(buttonId, e);
+        }
     }
 
     const ratePurchase = (e: Event) => {
@@ -203,7 +193,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     };
 
     return (
-        <div>
+        <div class="">
             <div>{loading() && <p>Loading reviews...</p>}</div>
             <Show when={dbReviewNum() > 0}>
                 <div>{t("postLabels.yourRating")}:</div>
@@ -356,10 +346,10 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
             <Show when={showReviewForm() === true}>
                 <Modal
                     // TODO Internationalize Heading and button content
-                    heading={"Submit Review"}
+                    heading={t("buttons.submitReview")}
                     buttonClass="btn-primary"
-                    buttonContent={"Submit Review"}
-                    buttonId="submitReview"
+                    buttonContent={t("buttons.submitReview")}
+                    buttonId={"submitReview" + props.resourceId}
                     children={
                         <div class="">
                             <div class="flex">
@@ -369,6 +359,11 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             srcset={props.imgURL?.webpUrl}
                                             type="image/webp"
                                         />
+                                        <img
+                                            src={props.imgURL?.jpegUrl}
+                                            alt={`Post Image ${props.imgURL?.jpegUrl}.jpeg`}
+                                            class="h-40 w-40 rounded object-contain"
+                                        />
                                     </picture>
                                 ) : (
                                     <svg
@@ -377,7 +372,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         height="110px"
                                         viewBox="35 0 186 256"
                                         id="Flat"
-                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM "
+                                        class="rounded border border-border1 fill-icon1 dark:border-border1-DM dark:fill-icon1-DM"
                                     >
                                         <path d="M208,36H48A12.01312,12.01312,0,0,0,36,48V208a12.01312,12.01312,0,0,0,12,12H208a12.01312,12.01312,0,0,0,12-12V48A12.01312,12.01312,0,0,0,208,36Zm4,172a4.004,4.004,0,0,1-4,4H48a4.004,4.004,0,0,1-4-4V177.65631l33.17187-33.171a4.00208,4.00208,0,0,1,5.65723,0l20.68652,20.68652a12.011,12.011,0,0,0,16.96973,0l44.68652-44.68652a4.00208,4.00208,0,0,1,5.65723,0L212,161.65625Zm0-57.65625L176.48535,114.8291a11.99916,11.99916,0,0,0-16.96973,0L114.8291,159.51562a4.00681,4.00681,0,0,1-5.65723,0L88.48535,138.8291a12.01009,12.01009,0,0,0-16.96973,0L44,166.34393V48a4.004,4.004,0,0,1,4-4H208a4.004,4.004,0,0,1,4,4ZM108.001,92v.00195a8.001,8.001,0,1,1,0-.00195Z" />
                                     </svg>
@@ -394,7 +389,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         href={`/${lang}/creator/${props.userId}`}
                                     >
                                         <p class="mb-2 text-xs">
-                                            {props.postCreator}Fix Creator Name
+                                            {props.postCreator}
                                         </p>
                                     </a>
 
@@ -446,19 +441,38 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     {t("formLabels.whatDidYouThink")}
                                 </h1>
                             </div>
-                            <form onSubmit={submit}>
+                            <form
+                                onSubmit={(e) =>
+                                    submit(e, "submitReview" + props.resourceId)
+                                }
+                            >
                                 <div class="mb-4 mt-2 text-center text-xs">
-                                    <span class="text-alert1">* </span>
-                                    <span class="italic">
-                                        {t("formLabels.required")}
-                                    </span>
+                                    <Show
+                                        when={showReviewFieldAlert() === true}
+                                    >
+                                        <p class="text-lg text-alert1 dark:text-alert1-DM">
+                                            {t(
+                                                "messages.overallReviewRequired"
+                                            )}
+                                        </p>
+                                    </Show>
+
+                                    <div>
+                                        <span class="text-alert1">* </span>
+                                        <span class="italic">
+                                            {t("formLabels.required")}
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="">
                                     <div class="mb-4 flex w-full justify-between">
                                         <div class="flex">
                                             <p class="mr-1 text-lg font-bold">
-                                                {t("formLabels.overallRating")}*
+                                                {t("formLabels.overallRating")}
+                                                <span class="text-alert1">
+                                                    *
+                                                </span>
                                             </p>
                                             <div class="group relative mr-2 flex items-center">
                                                 <svg
@@ -484,17 +498,17 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
                                                 <span class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0">
                                                     {t(
-                                                        "formLabels.overallRating"
+                                                        "toolTips.overallRatingDescription"
                                                     )}
                                                 </span>
                                             </div>
                                         </div>
                                         <div
                                             id="user-profile-ratings-div"
-                                            class="purchased-item-stars flex w-1/3 items-center justify-between md:w-1/4"
+                                            class="purchased-item-stars flex w-1/2 items-center justify-between md:w-1/4"
                                         >
                                             <span
-                                                id="user-rating-5"
+                                                id="user-rating-1"
                                                 class="flex items-center justify-center"
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -531,7 +545,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-4"
+                                                id="user-rating-2"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -605,7 +619,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-2"
+                                                id="user-rating-4"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -642,7 +656,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 </Show>
                                             </span>
                                             <span
-                                                id="user-rating-1"
+                                                id="user-rating-5"
                                                 class=""
                                                 onClick={(e) => ratePurchase(e)}
                                             >
@@ -674,15 +688,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                             </span>
                                         </div>
                                     </div>
-                                    {/* <input
-                                        type="number"
-                                        id=""
-                                        name="overallRating"
-                                        class="bg-background mb-4 w-full rounded border border-inputBorder1 px-1 text-ptext1 focus:border-2 focus:border-highlight1 focus:outline-none dark:border-inputBorder1-DM dark:bg-background2-DM dark:text-ptext2-DM dark:focus:border-highlight1-DM"
-                                        oninput={(e) =>
-                                            setOverallRating(e.target.value)
-                                        }
-                                    /> */}
                                 </div>
 
                                 {/* <div id="slider-reviews" class="md:grid grid-cols-2 grid-rows-7 "> */}
@@ -754,7 +759,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
-                                                {/* {t("")} */}
+                                                {t(
+                                                    "toolTips.reviewTitleDescription"
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -772,14 +779,14 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="">
-                                    <div class="flex flex-row justify-between">
+                                    <div class="flex flex-row justify-start">
                                         <label
                                             for="reviewText"
                                             class="font-bold text-ptext1 dark:text-ptext1-DM"
                                         >
                                             {t("formLabels.reviewText")}:
                                         </label>
-                                        <div class="group relative mr-2 flex items-center">
+                                        <div class="group relative ml-2 flex items-center">
                                             <svg
                                                 class="peer h-4 w-4 rounded-full border-2 border-border1 bg-icon1 fill-iconbg1  dark:border-none dark:bg-background1-DM dark:fill-iconbg1-DM"
                                                 version="1.1"
@@ -805,7 +812,9 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                                 class="invisible absolute m-4 mx-auto w-48 -translate-x-full -translate-y-2/3 rounded-md bg-background2 
                                 p-2 text-sm text-ptext2 transition-opacity peer-hover:visible dark:bg-background2-DM dark:text-ptext2-DM md:translate-x-1/4 md:translate-y-0"
                                             >
-                                                {/* {t("")} */}
+                                                {t(
+                                                    "toolTips.reviewTextDescription"
+                                                )}
                                             </span>
                                         </div>
                                     </div>
@@ -824,7 +833,8 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                     <button class="my-2 w-[200px] rounded-sm bg-btn1 p-2 font-bold text-white dark:bg-btn1-DM">
                                         <input
                                             type="submit"
-                                            value={"Submit Review"}
+                                            // value={"Submit Review"}
+                                            value={t("buttons.submitReview")}
                                         />
                                     </button>
                                 </div>
@@ -832,8 +842,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                 <Suspense>
                                     {response() && (
                                         <p class="mt-2 text-center font-bold text-alert1 dark:text-alert1-DM">
-                                            {/* {response().message} */}
-                                            Submitted
+                                            {response().message}
                                         </p>
                                     )}
                                 </Suspense>
