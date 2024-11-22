@@ -23,6 +23,8 @@ import { UploadFiles } from "@components/posts/UploadResource";
 import tinymce from "tinymce";
 import { sortResourceTypes } from "@lib/utils/resourceSort";
 import type { Post } from "@lib/types";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -1028,6 +1030,44 @@ export const CreateEditPost: Component<Props> = (props) => {
 
     return (
         <div class="w-full px-2 md:w-auto md:px-0">
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass=""
+                            buttonId="scavenger3"
+                            buttonContent="Click to reveal your discount!"
+                            buttonAriaLabel="Click to reveal your discount!"
+                            heading="Scavenger Hunt Stop 3"
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="text-lg font-bold">
+                                    You Solved the last Clue!
+                                </div>
+                                <div class="text-lg">
+                                    Don't forget to post your resource for a
+                                    chance to win a free CAT! Every resource
+                                    posted is another entry. For every 25
+                                    resources posted we will give away another
+                                    free CAT!
+                                </div>
+                                <br />
+                                <div class="font-bold">Discount Code: </div>
+                                <div class="text-2xl font-normal italic">
+                                    SHAREYOURRESOURCE25
+                                </div>
+                                <br />
+                                <div class="font-bold">
+                                    Thanks for playing!{" "}
+                                </div>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <form onSubmit={submit}>
                 <div class="text-center text-xs">
                     <span class="text-alert1">* </span>

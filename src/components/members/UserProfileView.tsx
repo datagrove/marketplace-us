@@ -18,6 +18,8 @@ import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -204,6 +206,49 @@ export const UserProfileView: Component = () => {
 
     return (
         <div class="">
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass=""
+                            buttonId="scavenger2"
+                            buttonContent="Click to reveal your coupon and the next clue!"
+                            buttonAriaLabel="Click to reveal your coupon and the next clue!"
+                            heading="Scavenger Hunt Stop 2"
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="text-lg font-bold">
+                                    You Solved the second Clue!
+                                </div>
+                                <div class="text-lg">
+                                    Can you solve them all to get 25% off and
+                                    the chance to win a free CAT?
+                                </div>
+                                <br />
+                                <div class="font-bold">Discount Code: </div>
+                                <div class="text-2xl font-normal italic">
+                                    PROFILE20
+                                </div>
+                                <br />
+                                <div class="font-bold">Next Clue:</div>
+                                <div>
+                                    On LearnGrove’s site, where ideas grow,
+                                    <br />
+                                    Share what you've crafted, let others know.
+                                    <br />
+                                    For learners seeking something new,
+                                    <br />
+                                    Your knowledge here can guide them through!
+                                    <br />
+                                </div>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <div class="text-center text-xl font-bold italic text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">

@@ -11,6 +11,8 @@ import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import type { FilterPostsParams } from "@lib/types";
 import { debounce } from "@lib/utils/debounce";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -347,6 +349,60 @@ export const ResourcesView: Component = () => {
 
     return (
         <div class="">
+            {/* <!-- 
+    For best experience keep banner content to <90 characters 
+    linkLocation and linkLabel are optional but make sure to include both if used
+    possible banner props are:
+    content: string | JSX.Element
+    linkLocation?: string
+    linkLabel?: string
+    startDate?: string YYYY-MM-DD
+    endDate?: string YYYY-MM-DD
+     --> */}
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass=""
+                            buttonId="scavenger1"
+                            buttonContent="Click to reveal your coupon and the next clue!"
+                            buttonAriaLabel="Click to reveal your coupon and the next clue!"
+                            heading="Scavenger Hunt Stop 1"
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="text-lg font-bold">
+                                    You Solved the first Clue!
+                                </div>
+                                <div class="text-lg">
+                                    Can you solve them all to get 25% off and
+                                    the chance to win a free CAT?
+                                </div>
+                                <br />
+                                <div class="font-bold">Discount Code: </div>
+                                <div class="text-2xl font-normal italic">
+                                    BROWSEANDSAVE10
+                                </div>
+                                <br />
+                                <div class="font-bold">Next Clue:</div>
+                                <div>
+                                    At LearnGrove’s site, create your own space,
+                                    <br />
+                                    Your homeschooling needs all in one neat
+                                    place.
+                                    <br />
+                                    Share a bit, then start to find,
+                                    <br />
+                                    Resources crafted to inspire your mind!
+                                    <br />
+                                </div>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <div>
                 <SearchBar search={searchPosts} clearFilters={clearFilters()} />
                 {/* <SearchBar search={ searchString } /> */}
