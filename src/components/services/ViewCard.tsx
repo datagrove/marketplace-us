@@ -7,8 +7,8 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { AddToCart } from "../common/cart/AddToCartButton";
 import type { AuthSession } from "@supabase/supabase-js";
 import { FavoriteButton } from "@components/posts/AddFavorite";
-import { lazyLoadImage } from "@lib/imageHelper";
-import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
+// import { lazyLoadImage } from "@lib/imageHelper";
+// import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
 import { AverageRatingStars } from "@components/posts/AverageRatingStars";
 import { RemoveFavoriteButton } from "@components/posts/RemoveFavorite";
 

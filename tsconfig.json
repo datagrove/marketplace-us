@@ -13,7 +13,8 @@
         "@utils/*" : ["src/utils/*"],
         "@assets/*" : ["src/assets/*"],
         "@lib/*" : ["src/lib/*"],
-        "@src/*": ["src/*"]
+        "@src/*": ["src/*"],
+        "@pages/*": ["src/pages/*"],
     },
     "lib": [
       "dom.iterable"
