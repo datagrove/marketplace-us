@@ -156,6 +156,7 @@ export const Spanish = {
     createUserAccount: "Crear perfil de usuario",
     viewUserProfile: "Mi perfil de usuario",
     viewCreatorAccount: "Mi perfil de creador",
+    submitReview: "Enviar Reseña",
   },
 
   messages: {
@@ -232,6 +233,9 @@ export const Spanish = {
     signIntoAddToFavorites: "Inicie sesión para agregar a favoritos",
     resourceLinks: "¡Gracias por usar LearnGrove! Aquí están sus enlaces:",
     externalResourceDisclaimer: "LearnGrove proporciona enlaces a estos recursos externos para su comodidad. LearnGrove no es responsable ni tiene control sobre la información contenida en ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado. Muchos de estos sitios externos se financian a través de publicidad que puede utilizar cookies y otras tecnologías de seguimiento para orientar sus intereses para esa publicidad. Tenga cuidado al hacer clic en cualquier enlace de un sitio externo para asegurarse de acceder solo a los enlaces que desea.",
+    submitted: "Enviada",
+    overallReviewRequired: "Incluya una calificación general para su revisión",
+    titleRequiredIfTextEntered: "Incluya un título para su reseña si ingresa una descripción de la reseña",
   },
 
   formLabels: {
@@ -396,6 +400,9 @@ export const Spanish = {
     resourceTypes: "Seleccione todos los tipos de recursos aplicables.",
     price: "El precio introducido es el precio cobrado al cliente. El creador recibirá el importe restante después de las tarifas. Consulte los Términos para obtener más información sobre la estructura de tarifas de LearnGrove.",
     secular: "LearnGrove reconoce que un plan de estudios o recurso secular podría significar cosas diferentes para diferentes creadores, estudiantes y facilitadores de aprendizaje. En LearnGrove utilizamos este término para referirnos tanto a los recursos neutrales a la fe como a aquellos que pueden enseñar una visión del mundo que no está alineada con ninguna religión en particular, pero que pueden enseñar conceptos que están en conflicto directo con una religión en particular. Dejamos en manos de nuestros creadores determinar si creen que sus recursos son adecuados para un entorno secular. Le recomendamos encarecidamente que incluya detalles adicionales en su descripción para detallar cómo su recurso aborda diversos temas, como creación versus evolución, textos literarios religiosos, etc.",
+    overallRatingDescription: "Califique este recurso en una escala del uno al cinco, siendo uno la calificación más baja y cinco la más alta.",
+    reviewTitleDescription: "El título de la reseña aparecerá en la parte superior de la misma. Se recomienda incluir una descripción breve y específica para el título de la reseña.",
+    reviewTextDescription: "El campo de texto de la reseña le ofrece más espacio para explicar con más detalle su calificación general. Recomendamos que incluya entre uno y tres párrafos.",
   },
 
   apiErrors: {
@@ -426,7 +433,9 @@ export const Spanish = {
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
     noFavoriteLists: "No se encontraron lista de favoritos",
-    },
+    problemPostingReview: "Lo sentimos, se produjo un problema al publicar tu reseña. Vuelve a intentarlo o ponte en contacto con el servicio de asistencia de LearnGrove.",
+    noDataFound: "No se encontraron datos",  
+  },
 
   socialModal: {
     shareService: "Comparte este recurso",
@@ -441,6 +450,28 @@ export const Spanish = {
       "LearnGrove no tiene control sobre la información de ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado y le proporciona este vínculo únicamente para su conveniencia. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado.",
     shareButton: "Botón de compartir",
     closeShareMenu: "Cerrar menú Compartir",
+  },
+
+  huntModal: {
+    buttonContent: "¡Haz clic para revelar tu cupón y la siguiente pista!",
+    buttonAria: "¡Haz clic para revelar tu cupón y la siguiente pista!",
+    solvedClue1: "¡Resolviste la primera pista!",
+    stop1: "Parada 1 de la Búsqueda del Tesoro",
+    solveAll: "¿Podrás resolverlos todos para obtener un 25% de descuento y la oportunidad de ganar un CAT gratis?",
+    clue1Lang: "¿Sabías que? ¡Registrarte para obtener un perfil de usuario gratuito te permite guardar tus recursos favoritos!",
+    clue2Lang: "¡Comparte tu recurso educativo en LearnGrove hoy mismo! Los creadores de recursos de LearnGrove se quedan con hasta el 95 % del precio de venta, en comparación con el 55 % de las ventas que los creadores se llevan a casa utilizando otras plataformas. Además, no hay tarifas de inscripción ni de membresía para convertirse en creador de LearnGrove, ¡lo que supone un ahorro de hasta $59,95 por año en comparación con otras plataformas!",
+    clue3Lang: "",
+    stop2: "Parada 2 de la Búsqueda del Tesoro",
+    solvedClue2: "¡Resolviste la segunda pista!",
+    buttonContentDiscount: "¡Haga clic para revelar su descuento!",
+    buttonAriaDiscount: "¡Haga clic para revelar su descuento!",
+    stop3: "¡Resolviste la última pista!",
+    postToWin1: "¡No olvides publicar tu recurso para tener la oportunidad de ganar un CAT gratis!",
+    postToWin2: "Cada recurso publicado es una nueva participación.",
+    postToWin3: "¡Por cada 25 recursos publicados regalaremos otro CAT gratis!",
+    thanks: "¡Gracias por jugar!",
+    discountCode: "Código de descuento",
+    nextClue: "Aquí está tu siguiente pista:",
   },
 
   ariaLabels: {

@@ -10,6 +10,7 @@ import type { AuthSession } from "@supabase/supabase-js";
 import { ReportResource } from "./ReportResource";
 import { CreateEditPost } from "@components/posts/CreateEditPost";
 import { AverageRatingStars } from "./AverageRatingStars";
+import { ViewPostReviews } from "./ViewPostReviews";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -395,10 +396,7 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                             </a>
                         </div>
 
-                        <div
-                            id="creator-follower-text-div"
-                            class="border-red- ml-1 w-4/6"
-                        >
+                        <div id="creator-follower-text-div" class="ml-1 w-4/6">
                             <div>
                                 <a
                                     href={`/${lang}/creator/${post()?.seller_id}`}
@@ -691,17 +689,18 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                                 {t("menus.description")}
                             </p>
                         </a>
-                        {/* TODO: Add back for reviews and Q&A
-                <a
-                    href="#reviews"
-                    id="reviewsLink"
-                    class="tabLink mr-6"
-                    onClick={tabLinkClick}
-                >
-                    <p id="reviews-text" class="">
-                        {t("menus.reviews")}
-                    </p>
-                </a>
+                        <a
+                            href="#reviews"
+                            id="reviewsLink"
+                            class="tabLink mr-6"
+                            onClick={tabLinkClick}
+                        >
+                            <p id="reviews-text" class="">
+                                {t("menus.reviews")}
+                            </p>
+                        </a>
+                        {/* TODO: Add back for Q&A
+                
                 <a
                     href="#qa"
                     id="qaLink"
@@ -829,35 +828,40 @@ export const MobileViewFullPost: Component<Props> = (props) => {
                         ></div>
                     </div>
 
-                    {/* TODO: Add back for Reviews
-            <div
-                id="reviews"
-                class="mb-2 border-t border-border1 dark:border-border1-DM"
-            >
-                <div class="flex justify-between">
-                    <p class="text-lg">{t("menus.reviews")}</p>
-                    <button onClick={changeReviews}>
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="none"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            id="reviews-arrow"
-                            class="stroke-icon1 dark:stroke-icon1-DM"
-                        >
-                            <polyline points="19 12 12 19 5 12" />
-                        </svg>
-                    </button>
-                </div>
+                    <div
+                        id="reviews"
+                        class="mb-2 border-t border-border1 dark:border-border1-DM"
+                    >
+                        <div class="flex justify-between">
+                            <p class="text-lg">{t("menus.reviews")}</p>
+                            <button onClick={changeReviews}>
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="none"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    id="reviews-arrow"
+                                    class="stroke-icon1 dark:stroke-icon1-DM"
+                                >
+                                    <polyline points="19 12 12 19 5 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        {/* <p>{ post()?.grade.join(", ") }</p> */}
 
-                <p id="post-reviews-div" class="hidden italic">
-                    {t("messages.comingSoon")}
-                </p>
-            </div> */}
+                        <div
+                            id="post-reviews-div"
+                            class="prose hidden dark:prose-invert"
+                        >
+                            <Show when={post()}>
+                                <ViewPostReviews resourceID={post()!.id} />
+                            </Show>
+                        </div>
+                    </div>
 
                     {/* TODO: Add back for Q&A
             <div

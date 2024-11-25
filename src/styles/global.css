@@ -58,22 +58,13 @@
         @apply my-2 mr-2 flex h-20 w-20 items-center justify-center rounded-full border-2 border-border1 text-ptext1 dark:border-border1-DM dark:text-ptext1-DM md:h-24 md:w-24 md:border-4;
     }
 
-    #user-profile-ratings-div {
-        unicode-bidi: bidi-override;
-        direction: rtl;
-    }
-
-    #user-profile-ratings-div > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
+    #user-profile-ratings-div > * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        margin: 0px 2px;
         font-size: 18px;
-    }
-
-    #user-profile-ratings-div > span:hover:before,
-    #user-profile-ratings-div > span:hover ~ span:before {
-        content: "\2605";
-        position: absolute;
     }
 }
 

@@ -158,6 +158,7 @@ export const English = {
     createUserAccount: "Create User Profile",
     viewUserProfile: "My User Profile",
     viewCreatorAccount: "My Creator Profile",
+    submitReview: "Submit Review"
   },
 
   messages: {
@@ -229,7 +230,9 @@ export const English = {
     signIntoAddToFavorites: "Sign in to add to favorites",
     resourceLinks: "Thanks for using LearnGrove! Here are your links:",
     externalResourceDisclaimer: "LearnGrove provides links to these external resources as a convenience. LearnGrove is not responsible for and has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site. In no event shall LearnGrove be responsible for your use of a linked site. Many of these external sites are funded through advertising which may make use of cookies and other tracking technology to target your interests for that advertising. Please be careful when clicking on any links on an external site to ensure you are only accessing links you intend to.",
-
+    submitted: "Submitted",
+    overallReviewRequired: "Please include an overall rating for your review",
+    titleRequiredIfTextEntered: "Please include a title for your review if you enter a review description",
   },
 
   formLabels: {
@@ -394,7 +397,10 @@ export const English = {
       "Tax category determines how sales tax will be calculated in states where LearnGrove collects and remits tax on your behalf. As stated in the Terms you are responsible for choosing the appropriate tax category for each resource you list. Click the link below to learn more.",
     resourceTypes: "Please select all applicable resource types.",
     price: "The price entered is the price charged to the customer. The creator will receive the remaining amount after fees. See Terms for more information about the LearnGrove fee structure.",
-    secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc."
+    secular: "LearnGrove acknowledges that a secular curriculum or resource could mean different things to different creators, learners and learning facilitators. At LearnGrove we use this term to refer to both faith-neutral resources as well as those that may teach a world view that is not in alignment with any particular religion but may teach concepts that are in direct conflict with particular religion. We leave it up to our creators to determine if they feel their resources are suitable for a secular environment. We strongly recommend that you include additional detail in your description to detail how your resource addresses various topics such as creation vs evolution, religious literary texts, etc.",
+    overallRatingDescription: "Please rate this resource on a scale of one to five, with one being the lowest rating and five being the highest.",
+    reviewTitleDescription: "The review title will appear at the top of your review. A short and specific description is recommended for the review title.",
+    reviewTextDescription: "The review text field provides more space for you to further explain your overall rating. We recommend one to three paragraphs.",
   },
 
   apiErrors: {
@@ -431,7 +437,9 @@ export const English = {
     singleListFavoriteError: "Error getting single list favorites",
     favoriteListError: "Error fetching favorite list",
     multipleListFavoriteError: "Error handling multiple lists",
-    },
+    problemPostingReview: "We're sorry, there was an issue posting your review. Please try again or contact LearnGrove support.",
+    noDataFound: "No data found",  
+  },
 
   socialModal: {
     shareService: "Share this resource",
@@ -446,6 +454,28 @@ export const English = {
       "LearnGrove has no control over information at any external site. LearnGrove is not responsible for the quality, content, privacy, or reliability of any linked site and is providing this link to you only as a convenience. In no event shall LearnGrove be responsible for your use of a linked site.",
     shareButton: "Share Button",
     closeShareMenu: "Close Share Menu",
+  },
+
+  huntModal: {
+    buttonContent: "Click to reveal your coupon and the next clue!",
+    buttonAria: "Click to reveal your coupon and the next clue!",
+    solvedClue1: "You solved the first clue!",
+    stop1: "Scavenger Hunt Stop 1",
+    solveAll: "Can you solve them all to get 25% off and the chance to win a free CAT?",
+    clue1Lang: "",
+    clue2Lang: "",
+    clue3Lang: "",
+    stop2: "Scavenger Hunt Stop 2",
+    solvedClue2: "You solved the second clue!",
+    buttonContentDiscount: "Click to reveal your discount!",
+    buttonAriaDiscount: "Click to reveal your discount!",
+    stop3: "You solved the Last Clue!",
+    postToWin1: "Don't forget to post your resource for a chance to win a free CAT!",
+    postToWin2: "Every resource posted is another entry.",
+    postToWin3: "For every 25 resources posted we will give away another free CAT!",
+    thanks: "Thanks for playing!",
+    discountCode: "DiscountCode",
+    nextClue: "Here's your next clue:",
   },
 
   ariaLabels: {

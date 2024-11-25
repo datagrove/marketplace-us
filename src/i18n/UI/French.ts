@@ -153,6 +153,7 @@ export const French = {
     createUserAccount: "Créer un profil utilisateur",
     viewUserProfile: "Mon profil utilisateur",
     viewCreatorAccount: "Mon profil de créateur",
+    submitReview: "Soumettre Critique",
   },
 
   messages: {
@@ -230,6 +231,9 @@ export const French = {
     signIntoAddToFavorites: "Connectez-vous pour ajouter aux favoris",
     resourceLinks: "Merci d'utiliser LearnGrove ! Voici vos liens:",
     externalResourceDisclaimer: "LearnGrove fournit des liens vers ces ressources externes pour plus de commodité. LearnGrove n'est pas responsable et n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié. En aucun cas LearnGrove ne sera responsable de votre utilisation d’un site lié. Beaucoup de ces sites externes sont financés par la publicité qui peut utiliser des cookies et d'autres technologies de suivi pour cibler vos intérêts pour cette publicité. Veuillez être prudent lorsque vous cliquez sur des liens sur un site externe pour vous assurer que vous accédez uniquement aux liens auxquels vous avez l'intention d'accéder.",
+    submitted: "Soumise",
+    overallReviewRequired: "Veuillez inclure une note globale pour votre avis",
+    titleRequiredIfTextEntered: "Veuillez inclure un titre pour votre avis si vous saisissez une description d'avis",
   },
 
   formLabels: {
@@ -393,6 +397,9 @@ export const French = {
     resourceTypes: "Veuillez sélectionner tous les types de ressources applicables.",
     price: "Le prix saisi est le prix facturé au client. Le créateur recevra le montant restant après frais. Consultez les conditions pour plus d'informations sur la structure tarifaire LearnGrove.",
     secular: "LearnGrove reconnaît qu'un programme ou une ressource laïque peut signifier différentes choses pour différents créateurs, apprenants et facilitateurs d'apprentissage. Chez LearnGrove, nous utilisons ce terme pour désigner à la fois les ressources neutres en matière de foi ainsi que celles qui peuvent enseigner une vision du monde qui n'est pas conforme à une religion particulière, mais qui peuvent enseigner des concepts qui sont en conflit direct avec une religion particulière. Nous laissons à nos créateurs le soin de déterminer s'ils estiment que leurs ressources sont adaptées à un environnement laïc. Nous vous recommandons fortement d'inclure des détails supplémentaires dans votre description pour détailler la manière dont votre ressource aborde divers sujets tels que la création par rapport à l'évolution, les textes littéraires religieux, etc.",
+    overallRatingDescription: "Veuillez évaluer cette ressource sur une échelle de un à cinq, un étant la note la plus basse et cinq la plus élevée.",
+    reviewTitleDescription: "Le titre de votre avis apparaîtra en haut de votre avis. Une description courte et précise est recommandée pour le titre de votre avis.",
+    reviewTextDescription: "Le champ de texte de l'avis vous offre plus d'espace pour expliquer plus en détail votre note globale. Nous vous recommandons d'écrire un à trois paragraphes.",
   },
 
   apiErrors: {
@@ -426,7 +433,9 @@ export const French = {
     emailNotConfirmed:
       "Correo electrónico no registrado. Si registró previamente esta dirección de correo electrónico, utilice la opción de olvidé mi contraseña que aparece a continuación; de lo contrario, utilice la opción de registro que aparece a continuación.",
     noFavoriteLists: "Aucune liste de favoris trouvée",
-    },
+    problemPostingReview: "Nous sommes désolés, un problème est survenu lors de la publication de votre avis. Veuillez réessayer ou contacter le support LearnGrove.",  
+    noDataFound: "Aucune donnée trouvée",
+  },
 
   socialModal: {
     shareService: "Partager ce ressource",
@@ -441,6 +450,28 @@ export const French = {
       "LearnGrove n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié et vous fournit ce lien uniquement à titre de commodité. En aucun cas LearnGrove ne sera responsable de votre utilisation d'un site lié.",
     shareButton: "Bouton Partager",
     closeShareMenu: "Fermer le menu Partager",
+  },
+
+  huntModal: {
+    buttonContent: "Cliquez pour révéler votre coupon et le prochain indice!",
+    buttonAria: "Cliquez pour révéler votre coupon et le prochain indice!",
+    solvedClue1: "Vous avez résolu le premier indice!",
+    stop1: "Chasse au Trésor Arrêt 1",
+    solveAll: "Pouvez-vous tous les résoudre pour obtenir 25% de réduction et la chance de gagner un CAT gratuit?",
+    clue1Lang: "Le saviez-vous? En créant un profil utilisateur gratuit, vous pouvez sauvegarder vos ressources préférées!",
+    clue2Lang: "Partagez votre ressource pédagogique sur LearnGrove dès aujourd'hui! Les créateurs de ressources LearnGrove conservent jusqu'à 95 % du prix de vente, contre 55 % des ventes que les créateurs remportent sur d'autres plateformes. Il n'y a pas non plus de frais d'inscription ou d'adhésion pour devenir créateur LearnGrove, soit une économie pouvant atteindre 59,95 $ par an par rapport aux autres plateformes!",
+    clue3Lang: "",
+    stop2: "Chasse au Trésor Arrêt 2",
+    solvedClue2: "Vous avez résolu le deuxième indice!",
+    buttonContentDiscount: "Cliquez pour révéler votre remise !",
+    buttonAriaDiscount: "Cliquez pour révéler votre remise !",
+    stop3: "Vous avez résolu le dernier indice!",
+    postToWin1: "N'oubliez pas de publier votre ressource pour avoir une chance de gagner un CAT gratuit!",
+    postToWin2: "Chaque ressource publiée est une autre participation.",
+    postToWin3: "Pour chaque 25 ressources publiées, nous offrirons un autre CAT gratuit!",
+    thanks: "Merci d'avoir joué!",
+    discountCode: "Code de réduction",
+    nextClue: "Voici votre prochain indice:",
   },
 
   ariaLabels: {

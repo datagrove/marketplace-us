@@ -11,6 +11,8 @@ import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import type { FilterPostsParams } from "@lib/types";
 import { debounce } from "@lib/utils/debounce";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -347,6 +349,70 @@ export const ResourcesView: Component = () => {
 
     return (
         <div class="">
+            {/* <!-- 
+    For best experience keep banner content to <90 characters 
+    linkLocation and linkLabel are optional but make sure to include both if used
+    possible banner props are:
+    content: string | JSX.Element
+    linkLocation?: string
+    linkLabel?: string
+    startDate?: string YYYY-MM-DD
+    endDate?: string YYYY-MM-DD
+     --> */}
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass=""
+                            buttonId="scavenger1"
+                            buttonContent={t("huntModal.buttonContent")}
+                            buttonAriaLabel={t("huntModal.buttonAria")}
+                            heading={t("huntModal.stop1")}
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="flex justify-center text-lg font-bold">
+                                    🎉 {t("huntModal.solvedClue1")} 🎉
+                                </div>
+                                <div class="text-center text-lg italic">
+                                    {t("huntModal.solveAll")}
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.discountCode")}:{" "}
+                                </div>
+                                <div class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM">
+                                    BROWSEANDSAVE10
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.nextClue")}
+                                </div>
+
+                                <Show
+                                    when={lang === "en"}
+                                    fallback={t("huntModal.clue1Lang")}
+                                >
+                                    <div class="flex justify-center text-center italic leading-loose">
+                                        At LearnGrove’s site, create your own
+                                        space,
+                                        <br />
+                                        Your homeschooling needs all in one neat
+                                        place.
+                                        <br />
+                                        Share a bit, then start to find,
+                                        <br />
+                                        Resources crafted to inspire your mind!
+                                        <br />
+                                    </div>
+                                </Show>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <div>
                 <SearchBar search={searchPosts} clearFilters={clearFilters()} />
                 {/* <SearchBar search={ searchString } /> */}

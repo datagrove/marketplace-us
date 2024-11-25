@@ -161,6 +161,7 @@ export interface uiObject {
     createUserAccount: string,
     viewUserProfile: string,
     viewCreatorAccount: string,
+    submitReview: string,
   };
 
     messages: {
@@ -220,6 +221,9 @@ export interface uiObject {
         signIntoAddToFavorites: string;
         resourceLinks: string;
         externalResourceDisclaimer: string;
+        submitted: string,
+        overallReviewRequired: string,
+        titleRequiredIfTextEntered: string,
     };
 
     formLabels: {
@@ -276,6 +280,7 @@ export interface uiObject {
         downloadable: string;
         whatDidYouThink: string;
         overallRating: string;
+
         reviewQ1: string;
         reviewQ2: string;
         reviewQ3: string;
@@ -283,7 +288,9 @@ export interface uiObject {
         reviewQ5: string;
         reviewQ6: string;
         reviewTitle: string;
+        
         reviewText: string;
+        
         priceFilter: string;
         freeResources: string;
         listName: string;
@@ -364,6 +371,9 @@ export interface uiObject {
         resourceTypes: string;
         price: string;
         secular: string;
+        overallRatingDescription: string,
+        reviewTitleDescription: string;
+        reviewTextDescription: string;
     };
 
     apiErrors: {
@@ -398,6 +408,8 @@ export interface uiObject {
         singleListFavoriteError: string;
         favoriteListError: string;
         multipleListFavoriteError: string;
+        problemPostingReview: string;
+        noDataFound: string;
     };
 
     socialModal: {
@@ -412,6 +424,27 @@ export interface uiObject {
         disclaimer: string;
         shareButton: string;
         closeShareMenu: string;
+    };
+
+    huntModal: {
+        buttonContent: string;
+        buttonAria: string;
+        solvedClue1: string;
+        stop1: string;
+        solveAll: string;
+        clue1Lang: string;
+        clue2Lang: string;
+        clue3Lang: string;
+        stop2: string;
+        solvedClue2: string;
+        buttonContentDiscount: string;
+        buttonAriaDiscount: string;
+        stop3: string;
+        postToWin1: string;
+        postToWin2: string;
+        postToWin3: string;
+        discountCode: string;
+        nextClue: string;
     };
 
     ariaLabels: {

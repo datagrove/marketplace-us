@@ -65,11 +65,17 @@ export const AverageRatingStars: Component<Props> = (props) => {
     });
 
     return (
-        <div>
-            <Show when={props.page === "home" || props.page === "mobileFullDetails" || props.page === "viewCard"}>
+        <div class="">
+            <Show
+                when={
+                    props.page === "home" ||
+                    props.page === "mobileFullDetails" ||
+                    props.page === "viewCard"
+                }
+            >
                 <div class="flex items-center justify-start">
                     <svg
-                        id="star1"
+                        id="star1AverageRatings"
                         fill="none"
                         width="16px"
                         height="16px"
@@ -107,7 +113,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star1"
+                            id="star1overall"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -120,11 +126,12 @@ export const AverageRatingStars: Component<Props> = (props) => {
 
                     <Show
                         when={
-                            (averageRating() >= 1 && averageRating() < 2) ||
-                            (averageRating() >= 2 && averageRating() < 3) ||
-                            (averageRating() >= 3 && averageRating() < 4) ||
-                            (averageRating() >= 4 && averageRating() < 5) ||
-                            averageRating() === 5
+                            averageRating() >= 2
+                            // (averageRating() >= 1 && averageRating() < 2) ||
+                            // (averageRating() >= 2 && averageRating() < 3) ||
+                            // (averageRating() >= 3 && averageRating() < 4) ||
+                            // (averageRating() >= 4 && averageRating() < 5) ||
+                            // averageRating() === 5
                         }
                         fallback={
                             <div>
@@ -141,7 +148,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star2"
+                            id="star2Average"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -242,9 +249,13 @@ export const AverageRatingStars: Component<Props> = (props) => {
                             <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
                         </svg>
                     </Show>
-                    <div class="flex ml-1">
-                        <p class="mr-1 text-xs md:text-lg font-bold">{averageRating()}</p>
-                        <p class="text-xs md:text-lg font-light">({totalRatings()}) {t("postLabels.reviews")}</p>
+                    <div class="ml-1 flex">
+                        <p class="mr-1 text-xs font-bold md:text-lg">
+                            {averageRating()}
+                        </p>
+                        <p class="text-xs font-light md:text-lg">
+                            ({totalRatings()}) {t("postLabels.reviews")}
+                        </p>
                     </div>
                 </div>
             </Show>

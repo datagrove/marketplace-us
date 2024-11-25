@@ -23,6 +23,7 @@ export interface Post {
     unit_amount: number;
     resource_links: string[];
     created_at: number;
+    overall_review: number;
 
     //These fields are not stored in the database and must be fetched from stripe (price) or set by the code
     subject: Array<string> | null;
@@ -84,6 +85,7 @@ export interface FilterPostsParams {
     subtopics?: number[];
     priceMin?: number;
     priceMax?: number;
+    overallReview?: number;
 }
 
 export interface Orders{
@@ -100,11 +102,12 @@ export interface Order_Details{
 }
 
 export interface Review {
-        resource_id : string,
-        reviewer_id: string,
-        review_title: string,
-        review_text: string,
-        overall_rating :number,
+    created_at: Date,    
+    resource_id : string,
+    reviewer_id: string,
+    review_title: string,
+    review_text: string,
+    overall_rating :number,
 }
 
 export interface ListData {
