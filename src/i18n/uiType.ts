@@ -223,6 +223,7 @@ export interface uiObject {
         externalResourceDisclaimer: string;
         submitted: string,
         overallReviewRequired: string,
+        titleRequiredIfTextEntered: string,
     };
 
     formLabels: {

@@ -50,7 +50,7 @@ export const ViewPostReviews: Component<Props> = (props) => {
             >
                 <div>
                     {reviewsArray()?.map((review) => (
-                        <div class="one-review">
+                        <div class="one-review border border-x-0 border-t-0 border-border1 border-opacity-25 pb-2 dark:border-border1-DM">
                             <div class="flex h-8 items-center">
                                 {/* <p>{ review.overall_rating }</p> */}
                                 <div class="mr-2 flex items-center">

@@ -235,6 +235,7 @@ export const Spanish = {
     externalResourceDisclaimer: "LearnGrove proporciona enlaces a estos recursos externos para su comodidad. LearnGrove no es responsable ni tiene control sobre la información contenida en ningún sitio externo. LearnGrove no es responsable de la calidad, el contenido, la privacidad o la confiabilidad de ningún sitio vinculado. En ningún caso LearnGrove será responsable del uso que usted haga de un sitio vinculado. Muchos de estos sitios externos se financian a través de publicidad que puede utilizar cookies y otras tecnologías de seguimiento para orientar sus intereses para esa publicidad. Tenga cuidado al hacer clic en cualquier enlace de un sitio externo para asegurarse de acceder solo a los enlaces que desea.",
     submitted: "Enviada",
     overallReviewRequired: "Incluya una calificación general para su revisión",
+    titleRequiredIfTextEntered: "Incluya un título para su reseña si ingresa una descripción de la reseña",
   },
 
   formLabels: {
