@@ -92,6 +92,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
     const [showReviewForm, setShowReviewForm] = createSignal(true);
     const [dbReviewNum, setDbReviewNum] = createSignal<number>(0);
     const [showReviewFieldAlert, setShowReviewFieldAlert] = createSignal(false);
+    const [showTitleAlert, setShowTitleAlert] = createSignal(false);
 
     onMount(async () => {
         try {
@@ -138,6 +139,16 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
             setTimeout(() => {
                 setShowReviewFieldAlert(false);
+            }, 3000);
+
+            return false;
+        }
+
+        if (reviewText() !== "" && reviewTitle() === "") {
+            setShowTitleAlert(true);
+
+            setTimeout(() => {
+                setShowTitleAlert(false);
             }, 3000);
 
             return false;
@@ -208,7 +219,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star1"
+                            id="star1ReviewPurchasedResources"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -221,7 +232,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
                     <Show
                         when={
-                            dbReviewNum() === 1 ||
                             dbReviewNum() === 2 ||
                             dbReviewNum() === 3 ||
                             dbReviewNum() === 4 ||
@@ -242,7 +252,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star2"
+                            id="star2Purchase"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -453,6 +463,14 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                                         <p class="text-lg text-alert1 dark:text-alert1-DM">
                                             {t(
                                                 "messages.overallReviewRequired"
+                                            )}
+                                        </p>
+                                    </Show>
+
+                                    <Show when={showTitleAlert() === true}>
+                                        <p class="text-lg text-alert1 dark:text-alert1-DM">
+                                            {t(
+                                                "messages.titleRequiredIfTextEntered"
                                             )}
                                         </p>
                                     </Show>

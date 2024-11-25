@@ -1,7 +1,7 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
 import type { Review } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
@@ -64,6 +64,8 @@ async function fetchReviews({
     });
     const data = await response.json();
 
+    console.log("data from fetchReviews function: ", data);
+
     return data;
 }
 
@@ -79,6 +81,10 @@ export const ViewFullPost: Component<Props> = (props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [editRender, setEditRender] = createSignal<boolean>(false);
     const [review, setReview] = createSignal<Review>();
+    const [resourceReviews, setResourceReviews] = createSignal<Array<object>>(
+        []
+    );
+    const [loading, setLoading] = createSignal<boolean>(true);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -91,6 +97,10 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
     }
     // setTestImages(test2);
+
+    onMount(async () => {
+        await getResourceReviews(props.postId);
+    });
 
     createEffect(() => {
         if (props.postId === undefined) {
@@ -135,6 +145,27 @@ export const ViewFullPost: Component<Props> = (props) => {
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const getResourceReviews = async (postID: any) => {
+        setLoading(true);
+
+        const { data: reviews, error } = await supabase
+            .from("reviews")
+            .select("*")
+            .eq("resource_id", postID);
+
+        if (error) {
+            console.log("Reviews Error: " + error.code + " " + error.message);
+            return;
+        }
+
+        console.log("reviews data: ", reviews);
+
+        setResourceReviews(reviews);
+        console.log("resourceReviews signal: ", resourceReviews());
+
+        setLoading(false);
     };
 
     const fetchOwnedPost = async function (id: number) {
@@ -844,18 +875,6 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     }}
                                 >
                                     {t("buttons.editPost")}
-                                </button>
-                            </Show>
-
-                            <Show when={session()?.user.id === post()?.user_id}>
-                                <button
-                                    class="btn-primary"
-                                    onclick={() => {
-                                        setEditRender(!editRender());
-                                        //(editRender());
-                                    }}
-                                >
-                                    Reviews
                                 </button>
                             </Show>
 

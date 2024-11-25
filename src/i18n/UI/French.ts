@@ -233,6 +233,7 @@ export const French = {
     externalResourceDisclaimer: "LearnGrove fournit des liens vers ces ressources externes pour plus de commodité. LearnGrove n'est pas responsable et n'a aucun contrôle sur les informations contenues dans aucun site externe. LearnGrove n'est pas responsable de la qualité, du contenu, de la confidentialité ou de la fiabilité de tout site lié. En aucun cas LearnGrove ne sera responsable de votre utilisation d’un site lié. Beaucoup de ces sites externes sont financés par la publicité qui peut utiliser des cookies et d'autres technologies de suivi pour cibler vos intérêts pour cette publicité. Veuillez être prudent lorsque vous cliquez sur des liens sur un site externe pour vous assurer que vous accédez uniquement aux liens auxquels vous avez l'intention d'accéder.",
     submitted: "Soumise",
     overallReviewRequired: "Veuillez inclure une note globale pour votre avis",
+    titleRequiredIfTextEntered: "Veuillez inclure un titre pour votre avis si vous saisissez une description d'avis",
   },
 
   formLabels: {
