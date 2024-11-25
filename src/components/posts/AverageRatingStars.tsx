@@ -75,7 +75,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
             >
                 <div class="flex items-center justify-start">
                     <svg
-                        id="star1"
+                        id="star1AverageRatings"
                         fill="none"
                         width="16px"
                         height="16px"
@@ -113,7 +113,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star1"
+                            id="star1overall"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -126,11 +126,12 @@ export const AverageRatingStars: Component<Props> = (props) => {
 
                     <Show
                         when={
-                            (averageRating() >= 1 && averageRating() < 2) ||
-                            (averageRating() >= 2 && averageRating() < 3) ||
-                            (averageRating() >= 3 && averageRating() < 4) ||
-                            (averageRating() >= 4 && averageRating() < 5) ||
-                            averageRating() === 5
+                            averageRating() >= 2
+                            // (averageRating() >= 1 && averageRating() < 2) ||
+                            // (averageRating() >= 2 && averageRating() < 3) ||
+                            // (averageRating() >= 3 && averageRating() < 4) ||
+                            // (averageRating() >= 4 && averageRating() < 5) ||
+                            // averageRating() === 5
                         }
                         fallback={
                             <div>
@@ -147,7 +148,7 @@ export const AverageRatingStars: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star2"
+                            id="star2Average"
                             fill="none"
                             width="20px"
                             height="20px"

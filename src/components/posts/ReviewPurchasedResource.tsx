@@ -208,7 +208,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star1"
+                            id="star1ReviewPurchasedResources"
                             fill="none"
                             width="20px"
                             height="20px"
@@ -221,7 +221,6 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
 
                     <Show
                         when={
-                            dbReviewNum() === 1 ||
                             dbReviewNum() === 2 ||
                             dbReviewNum() === 3 ||
                             dbReviewNum() === 4 ||
@@ -242,7 +241,7 @@ export const ReviewPurchasedResource: Component<Props> = (props) => {
                         }
                     >
                         <svg
-                            id="star2"
+                            id="star2Purchase"
                             fill="none"
                             width="20px"
                             height="20px"
