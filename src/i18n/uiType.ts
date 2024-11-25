@@ -439,7 +439,11 @@ export interface uiObject {
         buttonContentDiscount: string;
         buttonAriaDiscount: string;
         stop3: string;
-        postToWin: string;
+        postToWin1: string;
+        postToWin2: string;
+        postToWin3: string;
+        discountCode: string;
+        nextClue: string;
     };
 
     ariaLabels: {

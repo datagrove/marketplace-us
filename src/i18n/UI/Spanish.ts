@@ -465,8 +465,12 @@ export const Spanish = {
     buttonContentDiscount: "¡Haga clic para revelar su descuento!",
     buttonAriaDiscount: "¡Haga clic para revelar su descuento!",
     stop3: "¡Resolviste la última pista!",
-    postToWin: "¡No olvides publicar tu recurso para tener la oportunidad de ganar un CAT gratis! Cada recurso publicado es una nueva participación. ¡Por cada 25 recursos publicados regalaremos otro CAT gratis!",
-    thanks: "¡Gracias por jugar!"
+    postToWin1: "¡No olvides publicar tu recurso para tener la oportunidad de ganar un CAT gratis!",
+    postToWin2: "Cada recurso publicado es una nueva participación.",
+    postToWin3: "¡Por cada 25 recursos publicados regalaremos otro CAT gratis!",
+    thanks: "¡Gracias por jugar!",
+    discountCode: "Código de descuento",
+    nextClue: "Aquí está tu siguiente pista:",
   },
 
   ariaLabels: {

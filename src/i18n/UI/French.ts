@@ -465,8 +465,12 @@ export const French = {
     buttonContentDiscount: "Cliquez pour révéler votre remise !",
     buttonAriaDiscount: "Cliquez pour révéler votre remise !",
     stop3: "Vous avez résolu le dernier indice!",
-    postToWin: "N'oubliez pas de publier votre ressource pour avoir une chance de gagner un CAT gratuit ! Chaque ressource publiée est une autre participation. Pour chaque 25 ressources publiées, nous offrirons un autre CAT gratuit!",
-    thanks: "Merci d'avoir joué!"
+    postToWin1: "N'oubliez pas de publier votre ressource pour avoir une chance de gagner un CAT gratuit!",
+    postToWin2: "Chaque ressource publiée est une autre participation.",
+    postToWin3: "Pour chaque 25 ressources publiées, nous offrirons un autre CAT gratuit!",
+    thanks: "Merci d'avoir joué!",
+    discountCode: "Code de réduction",
+    nextClue: "Voici votre prochain indice:",
   },
 
   ariaLabels: {

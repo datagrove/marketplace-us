@@ -1042,19 +1042,23 @@ export const CreateEditPost: Component<Props> = (props) => {
                             headingLevel={3}
                         >
                             <>
-                                <div class="text-lg font-bold">
-                                    {t("huntModal.stop3")}
+                                <div class="flex justify-center text-lg font-bold">
+                                    🏅 {t("huntModal.stop3")} 🏅
                                 </div>
-                                <div class="text-lg">
-                                    {t("huntModal.postToWin")}
+                                <div class="flex flex-col pt-4 text-center text-lg italic">
+                                    <p>{t("huntModal.postToWin1")}</p>
+                                    <p>{t("huntModal.postToWin2")}</p>
+                                    <p>{t("huntModal.postToWin3")}</p>
                                 </div>
                                 <br />
-                                <div class="font-bold">Discount Code: </div>
-                                <div class="text-2xl font-normal italic">
+                                <div class="text-center font-bold">
+                                    {t("huntModal.discountCode")}:{" "}
+                                </div>
+                                <div class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM">
                                     SHAREYOURRESOURCE25
                                 </div>
                                 <br />
-                                <div class="font-bold">
+                                <div class="text-center font-bold">
                                     {t("huntModal.thanks")}
                                 </div>
                             </>

@@ -469,8 +469,12 @@ export const English = {
     buttonContentDiscount: "Click to reveal your discount!",
     buttonAriaDiscount: "Click to reveal your discount!",
     stop3: "You solved the Last Clue!",
-    postToWin: "Don't forget to post your resource for a chance to win a free CAT! Every resource posted is another entry. For every 25 resources posted we will give away another free CAT!",
-    thanks: "Thanks for playing!"
+    postToWin1: "Don't forget to post your resource for a chance to win a free CAT!",
+    postToWin2: "Every resource posted is another entry.",
+    postToWin3: "For every 25 resources posted we will give away another free CAT!",
+    thanks: "Thanks for playing!",
+    discountCode: "DiscountCode",
+    nextClue: "Here's your next clue:",
   },
 
   ariaLabels: {

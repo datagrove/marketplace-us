@@ -371,25 +371,29 @@ export const ResourcesView: Component = () => {
                             headingLevel={3}
                         >
                             <>
-                                <div class="text-lg font-bold">
-                                    {t("huntModal.solvedClue1")}
+                                <div class="flex justify-center text-lg font-bold">
+                                    🎉 {t("huntModal.solvedClue1")} 🎉
                                 </div>
-                                <div class="text-lg">
+                                <div class="text-center text-lg italic">
                                     {t("huntModal.solveAll")}
                                 </div>
                                 <br />
-                                <div class="font-bold">Discount Code: </div>
-                                <div class="text-2xl font-normal italic">
+                                <div class="text-center font-bold">
+                                    {t("huntModal.discountCode")}:{" "}
+                                </div>
+                                <div class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM">
                                     BROWSEANDSAVE10
                                 </div>
                                 <br />
-                                <div class="font-bold">Next Clue:</div>
+                                <div class="text-center font-bold">
+                                    {t("huntModal.nextClue")}
+                                </div>
 
                                 <Show
                                     when={lang === "en"}
                                     fallback={t("huntModal.clue1Lang")}
                                 >
-                                    <div>
+                                    <div class="flex justify-center text-center italic leading-loose">
                                         At LearnGrove’s site, create your own
                                         space,
                                         <br />
