@@ -1036,21 +1036,17 @@ export const CreateEditPost: Component<Props> = (props) => {
                         <Modal
                             buttonClass=""
                             buttonId="scavenger3"
-                            buttonContent="Click to reveal your discount!"
-                            buttonAriaLabel="Click to reveal your discount!"
-                            heading="Scavenger Hunt Stop 3"
+                            buttonContent={t("huntModal.buttonContentDiscount")}
+                            buttonAriaLabel={t("huntModal.buttonAriaDiscount")}
+                            heading={t("huntModal.stop3")}
                             headingLevel={3}
                         >
                             <>
                                 <div class="text-lg font-bold">
-                                    You Solved the last Clue!
+                                    {t("huntModal.stop3")}
                                 </div>
                                 <div class="text-lg">
-                                    Don't forget to post your resource for a
-                                    chance to win a free CAT! Every resource
-                                    posted is another entry. For every 25
-                                    resources posted we will give away another
-                                    free CAT!
+                                    {t("huntModal.postToWin")}
                                 </div>
                                 <br />
                                 <div class="font-bold">Discount Code: </div>
@@ -1059,7 +1055,7 @@ export const CreateEditPost: Component<Props> = (props) => {
                                 </div>
                                 <br />
                                 <div class="font-bold">
-                                    Thanks for playing!{" "}
+                                    {t("huntModal.thanks")}
                                 </div>
                             </>
                         </Modal>

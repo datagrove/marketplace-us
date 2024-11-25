@@ -212,18 +212,17 @@ export const UserProfileView: Component = () => {
                         <Modal
                             buttonClass=""
                             buttonId="scavenger2"
-                            buttonContent="Click to reveal your coupon and the next clue!"
-                            buttonAriaLabel="Click to reveal your coupon and the next clue!"
-                            heading="Scavenger Hunt Stop 2"
+                            buttonContent={t("huntModal.buttonContent")}
+                            buttonAriaLabel={t("huntModal.buttonAria")}
+                            heading={t("huntModal.stop2")}
                             headingLevel={3}
                         >
                             <>
                                 <div class="text-lg font-bold">
-                                    You Solved the second Clue!
+                                    {t("huntModal.solvedClue2")}
                                 </div>
                                 <div class="text-lg">
-                                    Can you solve them all to get 25% off and
-                                    the chance to win a free CAT?
+                                    {t("huntModal.solveAll")}
                                 </div>
                                 <br />
                                 <div class="font-bold">Discount Code: </div>
@@ -232,16 +231,23 @@ export const UserProfileView: Component = () => {
                                 </div>
                                 <br />
                                 <div class="font-bold">Next Clue:</div>
-                                <div>
-                                    On LearnGrove’s site, where ideas grow,
-                                    <br />
-                                    Share what you've crafted, let others know.
-                                    <br />
-                                    For learners seeking something new,
-                                    <br />
-                                    Your knowledge here can guide them through!
-                                    <br />
-                                </div>
+                                <Show
+                                    when={lang == "en"}
+                                    fallback={t("huntModal.clue2Lang")}
+                                >
+                                    <div>
+                                        On LearnGrove’s site, where ideas grow,
+                                        <br />
+                                        Share what you've crafted, let others
+                                        know.
+                                        <br />
+                                        For learners seeking something new,
+                                        <br />
+                                        Your knowledge here can guide them
+                                        through!
+                                        <br />
+                                    </div>
+                                </Show>
                             </>
                         </Modal>
                     }

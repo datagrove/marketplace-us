@@ -451,6 +451,24 @@ export const French = {
     closeShareMenu: "Fermer le menu Partager",
   },
 
+  huntModal: {
+    buttonContent: "Cliquez pour révéler votre coupon et le prochain indice!",
+    buttonAria: "Cliquez pour révéler votre coupon et le prochain indice!",
+    solvedClue1: "Vous avez résolu le premier indice!",
+    stop1: "Chasse au Trésor Arrêt 1",
+    solveAll: "Pouvez-vous tous les résoudre pour obtenir 25% de réduction et la chance de gagner un CAT gratuit?",
+    clue1Lang: "Le saviez-vous? En créant un profil utilisateur gratuit, vous pouvez sauvegarder vos ressources préférées!",
+    clue2Lang: "Partagez votre ressource pédagogique sur LearnGrove dès aujourd'hui! Les créateurs de ressources LearnGrove conservent jusqu'à 95 % du prix de vente, contre 55 % des ventes que les créateurs remportent sur d'autres plateformes. Il n'y a pas non plus de frais d'inscription ou d'adhésion pour devenir créateur LearnGrove, soit une économie pouvant atteindre 59,95 $ par an par rapport aux autres plateformes!",
+    clue3Lang: "",
+    stop2: "Chasse au Trésor Arrêt 2",
+    solvedClue2: "Vous avez résolu le deuxième indice!",
+    buttonContentDiscount: "Cliquez pour révéler votre remise !",
+    buttonAriaDiscount: "Cliquez pour révéler votre remise !",
+    stop3: "Vous avez résolu le dernier indice!",
+    postToWin: "N'oubliez pas de publier votre ressource pour avoir une chance de gagner un CAT gratuit ! Chaque ressource publiée est une autre participation. Pour chaque 25 ressources publiées, nous offrirons un autre CAT gratuit!",
+    thanks: "Merci d'avoir joué!"
+  },
+
   ariaLabels: {
     todo: "LearnGrove Logo Retour à la page d'accueil",
     logo: "Logo LearnGrove",

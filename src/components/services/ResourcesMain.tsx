@@ -365,18 +365,17 @@ export const ResourcesView: Component = () => {
                         <Modal
                             buttonClass=""
                             buttonId="scavenger1"
-                            buttonContent="Click to reveal your coupon and the next clue!"
-                            buttonAriaLabel="Click to reveal your coupon and the next clue!"
-                            heading="Scavenger Hunt Stop 1"
+                            buttonContent={t("huntModal.buttonContent")}
+                            buttonAriaLabel={t("huntModal.buttonAria")}
+                            heading={t("huntModal.stop1")}
                             headingLevel={3}
                         >
                             <>
                                 <div class="text-lg font-bold">
-                                    You Solved the first Clue!
+                                    {t("huntModal.solvedClue1")}
                                 </div>
                                 <div class="text-lg">
-                                    Can you solve them all to get 25% off and
-                                    the chance to win a free CAT?
+                                    {t("huntModal.solveAll")}
                                 </div>
                                 <br />
                                 <div class="font-bold">Discount Code: </div>
@@ -385,17 +384,24 @@ export const ResourcesView: Component = () => {
                                 </div>
                                 <br />
                                 <div class="font-bold">Next Clue:</div>
-                                <div>
-                                    At LearnGrove’s site, create your own space,
-                                    <br />
-                                    Your homeschooling needs all in one neat
-                                    place.
-                                    <br />
-                                    Share a bit, then start to find,
-                                    <br />
-                                    Resources crafted to inspire your mind!
-                                    <br />
-                                </div>
+
+                                <Show
+                                    when={lang === "en"}
+                                    fallback={t("huntModal.clue1Lang")}
+                                >
+                                    <div>
+                                        At LearnGrove’s site, create your own
+                                        space,
+                                        <br />
+                                        Your homeschooling needs all in one neat
+                                        place.
+                                        <br />
+                                        Share a bit, then start to find,
+                                        <br />
+                                        Resources crafted to inspire your mind!
+                                        <br />
+                                    </div>
+                                </Show>
                             </>
                         </Modal>
                     }
