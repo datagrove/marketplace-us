@@ -18,6 +18,8 @@ import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -204,6 +206,59 @@ export const UserProfileView: Component = () => {
 
     return (
         <div class="">
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass=""
+                            buttonId="scavenger2"
+                            buttonContent={t("huntModal.buttonContent")}
+                            buttonAriaLabel={t("huntModal.buttonAria")}
+                            heading={t("huntModal.stop2")}
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="flex justify-center text-lg font-bold">
+                                    🥳 {t("huntModal.solvedClue2")} 🥳
+                                </div>
+                                <div class="text-center text-lg italic">
+                                    {t("huntModal.solveAll")}
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.discountCode")}:{" "}
+                                </div>
+                                <div class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM">
+                                    PROFILE20
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.nextClue")}
+                                </div>
+                                <Show
+                                    when={lang == "en"}
+                                    fallback={t("huntModal.clue2Lang")}
+                                >
+                                    <div class="flex justify-center text-center italic leading-loose">
+                                        On LearnGrove’s site, where ideas grow,
+                                        <br />
+                                        Share what you've crafted, let others
+                                        know.
+                                        <br />
+                                        For learners seeking something new,
+                                        <br />
+                                        Your knowledge here can guide them
+                                        through!
+                                        <br />
+                                    </div>
+                                </Show>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <div class="text-center text-xl font-bold italic text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">

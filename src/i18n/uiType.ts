@@ -425,6 +425,27 @@ export interface uiObject {
         closeShareMenu: string;
     };
 
+    huntModal: {
+        buttonContent: string;
+        buttonAria: string;
+        solvedClue1: string;
+        stop1: string;
+        solveAll: string;
+        clue1Lang: string;
+        clue2Lang: string;
+        clue3Lang: string;
+        stop2: string;
+        solvedClue2: string;
+        buttonContentDiscount: string;
+        buttonAriaDiscount: string;
+        stop3: string;
+        postToWin1: string;
+        postToWin2: string;
+        postToWin3: string;
+        discountCode: string;
+        nextClue: string;
+    };
+
     ariaLabels: {
         todo: string;
         logo: string;

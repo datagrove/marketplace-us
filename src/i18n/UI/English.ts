@@ -455,6 +455,28 @@ export const English = {
     closeShareMenu: "Close Share Menu",
   },
 
+  huntModal: {
+    buttonContent: "Click to reveal your coupon and the next clue!",
+    buttonAria: "Click to reveal your coupon and the next clue!",
+    solvedClue1: "You solved the first clue!",
+    stop1: "Scavenger Hunt Stop 1",
+    solveAll: "Can you solve them all to get 25% off and the chance to win a free CAT?",
+    clue1Lang: "",
+    clue2Lang: "",
+    clue3Lang: "",
+    stop2: "Scavenger Hunt Stop 2",
+    solvedClue2: "You solved the second clue!",
+    buttonContentDiscount: "Click to reveal your discount!",
+    buttonAriaDiscount: "Click to reveal your discount!",
+    stop3: "You solved the Last Clue!",
+    postToWin1: "Don't forget to post your resource for a chance to win a free CAT!",
+    postToWin2: "Every resource posted is another entry.",
+    postToWin3: "For every 25 resources posted we will give away another free CAT!",
+    thanks: "Thanks for playing!",
+    discountCode: "DiscountCode",
+    nextClue: "Here's your next clue:",
+  },
+
   ariaLabels: {
     todo: "LearnGrove Logo Return to Homepage",
     logo: "LearnGrove Logo",

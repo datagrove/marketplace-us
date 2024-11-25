@@ -451,6 +451,28 @@ export const Spanish = {
     closeShareMenu: "Cerrar menú Compartir",
   },
 
+  huntModal: {
+    buttonContent: "¡Haz clic para revelar tu cupón y la siguiente pista!",
+    buttonAria: "¡Haz clic para revelar tu cupón y la siguiente pista!",
+    solvedClue1: "¡Resolviste la primera pista!",
+    stop1: "Parada 1 de la Búsqueda del Tesoro",
+    solveAll: "¿Podrás resolverlos todos para obtener un 25% de descuento y la oportunidad de ganar un CAT gratis?",
+    clue1Lang: "¿Sabías que? ¡Registrarte para obtener un perfil de usuario gratuito te permite guardar tus recursos favoritos!",
+    clue2Lang: "¡Comparte tu recurso educativo en LearnGrove hoy mismo! Los creadores de recursos de LearnGrove se quedan con hasta el 95 % del precio de venta, en comparación con el 55 % de las ventas que los creadores se llevan a casa utilizando otras plataformas. Además, no hay tarifas de inscripción ni de membresía para convertirse en creador de LearnGrove, ¡lo que supone un ahorro de hasta $59,95 por año en comparación con otras plataformas!",
+    clue3Lang: "",
+    stop2: "Parada 2 de la Búsqueda del Tesoro",
+    solvedClue2: "¡Resolviste la segunda pista!",
+    buttonContentDiscount: "¡Haga clic para revelar su descuento!",
+    buttonAriaDiscount: "¡Haga clic para revelar su descuento!",
+    stop3: "¡Resolviste la última pista!",
+    postToWin1: "¡No olvides publicar tu recurso para tener la oportunidad de ganar un CAT gratis!",
+    postToWin2: "Cada recurso publicado es una nueva participación.",
+    postToWin3: "¡Por cada 25 recursos publicados regalaremos otro CAT gratis!",
+    thanks: "¡Gracias por jugar!",
+    discountCode: "Código de descuento",
+    nextClue: "Aquí está tu siguiente pista:",
+  },
+
   ariaLabels: {
     todo: "Logotipo de LearnGrove Volver a la página de inicio",
     logo: "Logotipo de LearnGrove",

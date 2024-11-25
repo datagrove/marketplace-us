@@ -89,7 +89,7 @@ const Banner: Component<BannerProps> = (props) => {
                         target="_blank"
                     >
                         <div class="relative flex w-full bg-btn1 text-center text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM">
-                            <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)]">
+                            <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)] text-ptext2 dark:text-ptext2-DM">
                                 {props.content}
                             </div>
                             <button
@@ -103,13 +103,13 @@ const Banner: Component<BannerProps> = (props) => {
                     </a>
                 </Show>
                 <Show when={!props.linkLocation}>
-                    <div class="w-full bg-btn1 text-center text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM">
-                        <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)]">
+                    <div class="flex w-full bg-btn1 text-center text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM">
+                        <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)] text-ptext2 dark:text-ptext2-DM">
                             {props.content}
                         </div>
                         <button
                             aria-label="Close Banner"
-                            class="banner__close text-xl"
+                            class="banner__close pr-4 text-xl"
                             onClick={(e) => closeBanner(e)}
                         >
                             &times;
