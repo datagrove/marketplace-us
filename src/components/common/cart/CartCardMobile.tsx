@@ -5,6 +5,12 @@ import supabase from "@lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "@i18n/utils";
 import { Quantity } from "@components/common/cart/Quantity";
 import { items, setItems } from "@components/common/cart/AddToCartButton";
+import {
+    downloadPostImage,
+    downloadUserImage,
+    lazyLoadImage,
+} from "@lib/imageHelper";
+import userPlaceHolder from "@src/assets/userImagePlaceholder.svg";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -21,26 +27,38 @@ export const CartCardMobile: Component<Props> = (props) => {
 
     createEffect(async () => {
         if (props.items) {
-            const updatedItems = await Promise.all(
-                props.items.map(async (item: any) => {
-                    item.image_urls
-                        ? (item.image_url = await downloadImage(
-                              item.image_urls.split(",")[0]
-                          ))
-                        : null;
+            // const updatedItems = await Promise.all(
+            //     props.items.map(async (item: Post) => {
+            //         const newItem = { ...item };
+            //         newItem.image_urls
+            //             ? (newItem.image_url = await downloadPostImage(
+            //                   newItem.image_urls.split(",")[0]
+            //               ))
+            //             : (newItem.image_url = undefined);
 
-                    item.seller_img
-                        ? (item.seller_img = await downloadSellerImage(
-                              item.seller_img
-                          ))
-                        : null;
-                    // Set the default quantity to 1 This should be replaced with the quantity from the quantity counter in the future
-                    // item.quantity = 1;
-                    return item;
-                })
-            );
+            //         const { data: sellerImg, error: sellerImgError } =
+            //             await supabase
+            //                 .from("sellerview")
+            //                 .select("*")
+            //                 .eq("seller_id", newItem.seller_id);
 
-            setNewItems(updatedItems);
+            //         if (sellerImgError) {
+            //             console.log(sellerImgError);
+            //         }
+
+            //         if (sellerImg) {
+            //             if (sellerImg[0].image_url) {
+            //                 newItem.seller_img = await downloadUserImage(
+            //                     sellerImg[0].image_url
+            //                 );
+            //             }
+            //         }
+
+            //         return newItem;
+            //     })
+            // );
+
+            setNewItems(props.items);
         }
     });
 
@@ -88,57 +106,36 @@ export const CartCardMobile: Component<Props> = (props) => {
         props.deleteItem();
     };
 
-    const downloadImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    const downloadSellerImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("user.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap">
-                {newItems().map((item: any) => (
-                    <li class=" w-full mx-4 border-b border-border1 border-opacity-50 py-4 dark:border-border1-DM">
-                        <div class=" box-content flex w-full h-full flex-row  items-start justify-start">
-                            <div class="flex items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM mr-2 h-full w-24">
+                {newItems().map((item: Post) => (
+                    <li class=" mx-4 w-full border-b border-border1 border-opacity-50 py-4 dark:border-border1-DM">
+                        <div class=" box-content flex h-full w-full flex-row  items-start justify-start">
+                            <div class="mr-2 flex h-full w-24 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
                                 {item.image_url ? (
-                                    <img
-                                        src={item.image_url}
-                                        alt={
-                                            item.image_urls.split(",")[0]
-                                                ? "User Image"
-                                                : "No image"
-                                        }
-                                        class="h-full w-full rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
-                                    />
+                                    <picture>
+                                        <source
+                                            data-srcset={item.image_url.webpUrl}
+                                            type="image/webp"
+                                        />
+                                        <img
+                                            src={userPlaceHolder.src}
+                                            data-src={item.image_url.jpegUrl}
+                                            alt={
+                                                item.image_urls?.[0]
+                                                    ? "User Image"
+                                                    : "No image"
+                                            }
+                                            class="h-22 w-22 rounded-lg bg-background1 object-cover dark:bg-icon1-DM"
+                                            loading="lazy"
+                                            onload={(e) => {
+                                                lazyLoadImage(
+                                                    e.currentTarget as HTMLImageElement
+                                                );
+                                            }}
+                                        />
+                                    </picture>
                                 ) : (
                                     <svg
                                         viewBox="0 0 512 512"
@@ -166,11 +163,11 @@ export const CartCardMobile: Component<Props> = (props) => {
 
                             <div
                                 id="cardContent"
-                                class="flex justify-between pt-1 text-left h-full w-full"
+                                class="flex h-full w-full justify-between pt-1 text-left"
                             >
                                 <div class="grid h-full w-full grid-cols-7">
                                     <div class="col-span-5">
-                                        <p class="w-full overflow-hidden truncate text-md font-bold text-ptext1 dark:text-ptext1-DM">
+                                        <p class="text-md w-full overflow-hidden truncate font-bold text-ptext1 dark:text-ptext1-DM">
                                             <a
                                                 href={`/${lang}/posts/${item.id}`}
                                             >
@@ -180,17 +177,38 @@ export const CartCardMobile: Component<Props> = (props) => {
                                     </div>
                                     <div class="col-span-4 col-start-1 flex items-center">
                                         <div class="inline-block">
-                                            {item.seller_image ? (
-                                                <img
-                                                    src={item.seller_image}
-                                                    alt={
-                                                        item.seller_image
-                                                            ? // TODO Internationalize
-                                                              "Seller Image"
-                                                            : "No image"
-                                                    }
-                                                    class="mr-2 h-6 w-6 rounded-full bg-background1 object-cover dark:bg-icon1-DM"
-                                                />
+                                            {item.seller_img ? (
+                                                <picture>
+                                                    <source
+                                                        data-srcset={
+                                                            item.seller_img
+                                                                .webpUrl
+                                                        }
+                                                        type="image/webp"
+                                                    />
+                                                    <img
+                                                        src={
+                                                            userPlaceHolder.src
+                                                        }
+                                                        data-src={
+                                                            item.seller_img
+                                                                .jpegUrl
+                                                        }
+                                                        alt={
+                                                            item.seller_img
+                                                                ? // TODO Internationalize
+                                                                  "Seller Image"
+                                                                : "No image"
+                                                        }
+                                                        class="mr-2 h-8 w-8 rounded-full bg-background1 object-cover dark:bg-icon1-DM"
+                                                        loading="lazy"
+                                                        onload={(e) => {
+                                                            lazyLoadImage(
+                                                                e.currentTarget as HTMLImageElement
+                                                            );
+                                                        }}
+                                                    />
+                                                </picture>
                                             ) : (
                                                 <svg
                                                     viewBox="0 0 512 512"
@@ -218,7 +236,8 @@ export const CartCardMobile: Component<Props> = (props) => {
                                     <div class="col-span-1 col-start-7 row-start-1 flex justify-end pl-2">
                                         {/* Price */}
                                         <Show when={item.price > 0}>
-                                            ${(
+                                            $
+                                            {(
                                                 item.price * item.quantity
                                             ).toFixed(2)}
                                         </Show>

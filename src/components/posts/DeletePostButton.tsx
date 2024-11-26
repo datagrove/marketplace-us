@@ -12,7 +12,6 @@ interface Props {
     // (Id, UserId)
     id: number;
     userId: string;
-    postImage: string | null | undefined;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
@@ -25,7 +24,7 @@ export const DeletePostButton: Component<Props> = (props) => {
         console.log("User Error: " + UserError.message);
     } else {
         if (User.session === null) {
-            console.log("User Session: " + User.session);
+            // console.log("User Session: " + User.session);
             setSession(null);
         } else {
             setSession(User.session);

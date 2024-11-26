@@ -4,28 +4,31 @@ import { createSignal, createEffect, Show } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SocialMediaShares } from "../posts/SocialMediaShares";
-import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
-import { Quantity } from "@components/common/cart/Quantity";
 import { FavoriteButton } from "@components/posts/AddFavorite";
-import { doc } from "prettier";
 import type { AuthSession } from "@supabase/supabase-js";
-
-const lang = getLangFromUrl(new URL(window.location.href));
-const t = useTranslations(lang);
+import { lazyLoadImage } from "@lib/imageHelper";
+import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
+import { AverageRatingStars } from "@components/posts/AverageRatingStars";
+import { RemoveFavoriteButton } from "@components/posts/RemoveFavorite";
 
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
+    lang: "en" | "es" | "fr";
+    favoriteList?: string;
+    onRemoveFavorite?: () => void;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const MobileViewCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
+
+    const lang = props.lang;
+    console.log(lang);
+    const t = useTranslations(lang);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -33,97 +36,8 @@ export const MobileViewCard: Component<Props> = (props) => {
         setSession(User.session);
     }
 
-    createEffect(async () => {
-        if (props.posts) {
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: any) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = null);
-
-                    post.seller_img
-                        ? (post.seller_img = await downloadSellerImage(
-                              post.seller_img
-                          ))
-                        : null;
-
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        post.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            post.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        post.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
-
-    const updateQuantity = (quantity: number) => {
-        setQuantity(quantity);
-    };
-
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    const downloadSellerImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("user.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     function changeShowBtn(e: Event, postId: number) {
@@ -170,27 +84,145 @@ export const MobileViewCard: Component<Props> = (props) => {
     }
 
     return (
-        <div class="border-2">
-            {newPosts().map((post: Post) => (
-                <div class="mb-4 rounded border border-border1 dark:border-border1-DM">
-                    <a href={`/${lang}/posts/${post.id}`}>
+        <div class="w-full">
+            {props.posts.map((post: Post, index) => (
+                <div class="mb-4 rounded-lg border border-border1 dark:border-border1-DM">
+                    <a
+                        href={`/${lang}/posts/${post.id}`}
+                        aria-label={t("ariaLabels.readMoreAbout") + post.title}
+                    >
                         <div class="photo-price flex h-48 w-full justify-between rounded-lg bg-background1 dark:bg-background1-DM">
                             <div class="relative flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
-                                {post.image_url ? (
+                                {post.image_url && index <= 1 ? (
                                     <div class="absolute top-0">
-                                        <img
-                                            src={post.image_url}
-                                            alt={
-                                                post.image_urls!.split(",")[0]
-                                                    ? "User Image"
-                                                    : "No image"
-                                            }
-                                            class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                        />
-
+                                        <picture>
+                                            <source
+                                                type="image/webp"
+                                                srcset={post.image_url.webpUrl}
+                                            />
+                                            <img
+                                                src={post.image_url.jpegUrl}
+                                                alt={
+                                                    post.image_urls?.[0]
+                                                        ? `User Image for Post ${post.title}`
+                                                        : "No image"
+                                                }
+                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                fetchpriority="high"
+                                                loading="eager"
+                                            />
+                                        </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                             <div class="inline-block">
-                                                <FavoriteButton id={post.id} />
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : post.image_url && index > 1 ? (
+                                    <div class="absolute top-0">
+                                        <picture>
+                                            <source
+                                                type="image/webp"
+                                                data-srcset={
+                                                    post.image_url.webpUrl
+                                                }
+                                            />
+                                            <img
+                                                src={postPlaceHolder.src}
+                                                data-src={
+                                                    post.image_url.jpegUrl
+                                                }
+                                                alt={
+                                                    post.image_urls?.[0]
+                                                        ? `User Image for Post ${post.title}`
+                                                        : "No image"
+                                                }
+                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                loading="lazy"
+                                                onload={(e) => {
+                                                    lazyLoadImage(
+                                                        e.currentTarget as HTMLImageElement
+                                                    );
+                                                }}
+                                            />
+                                        </picture>
+                                        <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                            <div class="inline-block">
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +239,44 @@ export const MobileViewCard: Component<Props> = (props) => {
 
                                         <div class="absolute right-0.5 top-10 col-span-1 flex justify-end">
                                             <div class="inline-block">
-                                                <FavoriteButton id={post.id} />
+                                                <Show
+                                                    when={
+                                                        props.favoriteList ===
+                                                            undefined ||
+                                                        props.favoriteList ===
+                                                            null ||
+                                                        props.favoriteList ===
+                                                            ""
+                                                    }
+                                                >
+                                                    <FavoriteButton
+                                                        id={post.id}
+                                                    />
+                                                </Show>
+                                                <Show
+                                                    when={
+                                                        props.favoriteList !==
+                                                            undefined &&
+                                                        props.favoriteList !==
+                                                            null &&
+                                                        props.favoriteList !==
+                                                            ""
+                                                    }
+                                                >
+                                                    <RemoveFavoriteButton
+                                                        product_id={post.id}
+                                                        list_number={
+                                                            props.favoriteList
+                                                                ? props.favoriteList
+                                                                : ""
+                                                        }
+                                                        onRemoveFavorite={
+                                                            props.onRemoveFavorite
+                                                                ? props.onRemoveFavorite
+                                                                : () => {}
+                                                        }
+                                                    />
+                                                </Show>
                                             </div>
                                         </div>
                                     </div>
@@ -230,28 +299,18 @@ export const MobileViewCard: Component<Props> = (props) => {
                                         </Show>
 
                                         <div class="reviews-div flex w-full items-center justify-end text-end">
-                                            {/* <svg
-                                                width="12px"
-                                                height="12px"
-                                                viewBox="0 0 32 32"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <script />
-                                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                                                <script />
-                                            </svg>
-
-                                            <p class="ml-1 text-xs">
-                                                4.9 (30.3K)
-                                            </p> */}
+                                            <AverageRatingStars
+                                                resourceId={post.id}
+                                                page={"viewCard"}
+                                            />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[12px] font-bold">
+                                    <div class="text-[12px] font-bold">
                                         {t("formLabels.subjects")}
-                                    </h6>
+                                    </div>
                                     {post
                                         .subject!.slice(0, 3)
                                         .map((subject: string) => {
@@ -269,9 +328,9 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 </div>
 
                                 <div class="flex flex-col items-end justify-end py-1">
-                                    <h6 class="text-[12px] font-bold">
+                                    <div class="text-[12px] font-bold">
                                         {t("formLabels.grades")}
-                                    </h6>
+                                    </div>
                                     {post
                                         .grade!.slice(0, 3)
                                         .map((grade: string) => {
@@ -291,34 +350,63 @@ export const MobileViewCard: Component<Props> = (props) => {
                         </div>
                     </a>
 
-                    <div class="title-creator mb-1 ml-1">
-                        <a href={`/${lang}/posts/${post.id}`}>
-                            <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
-                                {post.title}
+                    <div class="title-creator mb-1 ml-1 flex flex-row justify-between">
+                        <div class="w-full">
+                            <a
+                                href={`/${lang}/posts/${post.id}`}
+                                aria-label={
+                                    t("ariaLabels.readMoreAbout") + post.title
+                                }
+                            >
+                                <div class="mr-1 line-clamp-2 py-0.5 pt-4 text-start text-lg font-bold text-ptext1 dark:text-ptext1-DM">
+                                    {post.title}
+                                </div>
+                            </a>
+                            <a
+                                href={`/${lang}/creator/${post?.seller_id}`}
+                                aria-label={
+                                    t("ariaLabels.readMoreAbout") +
+                                    post.seller_name
+                                }
+                            >
+                                <div class="flex w-fit items-center py-1 pr-4">
+                                    {post.seller_img ? (
+                                        <picture>
+                                            <source
+                                                srcset={post.seller_img.webpUrl}
+                                                type="image/webp"
+                                            />
+                                            <img
+                                                src={post.seller_img.jpegUrl}
+                                                alt="Seller image"
+                                                class="mr-1 h-8 w-8 rounded-full object-cover"
+                                            />
+                                        </picture>
+                                    ) : (
+                                        <svg
+                                            width="24px"
+                                            height="24px"
+                                            class="mr-1 h-8 w-8 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
+                                            viewBox="0 0 32 32"
+                                        >
+                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                        </svg>
+                                    )}
+                                    <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
+                                        {post.seller_name}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                        <Show when={post.draft_status}>
+                            <div class="w-1/4">
+                                <Show when={post.draft_status}>
+                                    <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                        {t("formLabels.draft")}
+                                    </div>
+                                </Show>
                             </div>
-                        </a>
-                        <a href={`/${lang}/creator/${post?.seller_id}`}>
-                            <div class="flex w-fit items-center py-1 pr-4">
-                                {post.seller_img ? (
-                                    <img
-                                        src={post.seller_img}
-                                        alt="Seller image"
-                                    />
-                                ) : (
-                                    <svg
-                                        width="24px"
-                                        height="24px"
-                                        class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
-                                        viewBox="0 0 32 32"
-                                    >
-                                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                    </svg>
-                                )}
-                                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM">
-                                    {post.seller_name}
-                                </p>
-                            </div>
-                        </a>
+                        </Show>
                     </div>
 
                     <div
@@ -375,7 +463,12 @@ export const MobileViewCard: Component<Props> = (props) => {
                             </svg>
                         </button>
 
-                        <a href={`/${lang}/posts/${post.id}`}>
+                        <a
+                            href={`/${lang}/posts/${post.id}`}
+                            aria-label={
+                                t("ariaLabels.readMoreAbout") + post.title
+                            }
+                        >
                             <div
                                 id={`${post.id}content`}
                                 class="hidden w-full flex-col justify-start"
@@ -393,6 +486,22 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     <div class="prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                         <div class="flex-wrap">
                                             {Array.from(post.subject!).join(
+                                                ", "
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Topics */}
+                                    <div
+                                        class={`col-span-2 mr-2 text-end text-[10px] font-bold ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        {t("postLabels.subtopics")}:
+                                    </div>
+                                    <div
+                                        class={`prose col-span-3 grid flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        <div class="flex-wrap">
+                                            {Array.from(post.subtopic!).join(
                                                 ", "
                                             )}
                                         </div>
@@ -416,7 +525,7 @@ export const MobileViewCard: Component<Props> = (props) => {
                                     </div>
                                     <div class="prose col-span-3 flex flex-wrap text-start text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                         <div class="flex-wrap">
-                                            {post.resourceTypes!.join(", ")}
+                                            {post.resourceTypes?.join(", ")}
                                         </div>
                                     </div>
                                     {/* <h6 class="text-start text-[10px] font-bold">
@@ -547,7 +656,6 @@ export const MobileViewCard: Component<Props> = (props) => {
                                 <DeletePostButton
                                     id={post.id}
                                     userId={post.user_id}
-                                    postImage={post.image_urls}
                                 />
                             </div>
                         </div>

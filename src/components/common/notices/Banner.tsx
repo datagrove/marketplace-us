@@ -13,30 +13,38 @@ const Banner: Component<BannerProps> = (props) => {
     const [isInDateRange, setIsInDateRange] = createSignal(false);
     const [bannerState, setBannerState] = createSignal<boolean>(false);
     const [bannerStateTimestamp, setBannerStateTimestamp] =
-        createSignal<number>(Date.parse('01 Jan 1970 00:00:00 GMT'));
+        createSignal<number>(Date.parse("01 Jan 1970 00:00:00 GMT"));
 
     onMount(() => {
         //Check if the banner was last dismissed more than  30 days ago, if so clear the local storage for banner
-        const todayLess30Days = new Date().getTime() - (30 * 24 * 60 * 60 * 1000);
-        if(localStorage.getItem("bannerDismissedTimestamp") !== null) {
-            if (parseInt(localStorage.getItem("bannerDismissedTimestamp")!) < todayLess30Days) {
+        const todayLess30Days = new Date().getTime() - 30 * 24 * 60 * 60 * 1000;
+        if (localStorage.getItem("bannerDismissedTimestamp") !== null) {
+            if (
+                parseInt(localStorage.getItem("bannerDismissedTimestamp")!) <
+                todayLess30Days
+            ) {
                 localStorage.removeItem("bannerDismissedTimestamp");
             }
         }
 
         //If the banner is dismissed and the timestamp is set in local storage then set bannerState to true and set timestamp
-        if (localStorage.getItem("bannerDismissed") !== null && localStorage.getItem("bannerDismissedTimestamp") !== null) {
+        if (
+            localStorage.getItem("bannerDismissed") !== null &&
+            localStorage.getItem("bannerDismissedTimestamp") !== null
+        ) {
             setBannerState(localStorage.getItem("bannerDismissed") === "true");
-            setBannerStateTimestamp(parseInt(localStorage.getItem("bannerDismissedTimestamp")!));
+            setBannerStateTimestamp(
+                parseInt(localStorage.getItem("bannerDismissedTimestamp")!)
+            );
         }
 
         //If there is a start date for this banner and it is after the last time the banner was dismissed then remove the local storage for banner
-        if(props.startDate) {
+        if (props.startDate) {
             const startDate = new Date(`${props.startDate}T00:00:00`);
             const startIndex = Date.parse(startDate.toString());
             if (startIndex > bannerStateTimestamp()) {
                 setBannerState(false);
-                setBannerStateTimestamp(Date.parse('01 Jan 1970 00:00:00 GMT'));
+                setBannerStateTimestamp(Date.parse("01 Jan 1970 00:00:00 GMT"));
                 localStorage.removeItem("bannerDismissed");
                 localStorage.removeItem("bannerDismissedTimestamp");
             }
@@ -80,29 +88,28 @@ const Banner: Component<BannerProps> = (props) => {
                         aria-label={props.linkLabel}
                         target="_blank"
                     >
-                        <div class="w-full bg-btn1-DM text-center flex relative">
+                        <div class="relative flex w-full bg-btn1 text-center text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM">
                             <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)]">
                                 {props.content}
                             </div>
                             <button
                                 aria-label="Close Banner"
-                                class="banner__close text-xl inline-block absolute right-3 top-1/2 -translate-y-1/2 -translate-x-1/2"
+                                class="banner__close absolute right-3 top-1/2 inline-block -translate-x-1/2 -translate-y-1/2 text-xl"
                                 onClick={(e) => closeBanner(e)}
                             >
                                 &times;
                             </button>
                         </div>
-                        
                     </a>
                 </Show>
                 <Show when={!props.linkLocation}>
-                    <div class="w-full bg-btn1-DM text-center">
+                    <div class="flex w-full bg-btn1 text-center text-btn1Text dark:bg-btn1-DM dark:text-btn1Text-DM">
                         <div class="prose mx-auto line-clamp-2 max-w-[calc(100vw-4rem)]">
                             {props.content}
                         </div>
                         <button
                             aria-label="Close Banner"
-                            class="banner__close text-xl"
+                            class="banner__close pr-4 text-xl"
                             onClick={(e) => closeBanner(e)}
                         >
                             &times;

@@ -15,6 +15,7 @@ const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const MobileProfileBtn = () => {
     const [isUser, setIsUser] = createSignal<boolean | null>(false);
 
@@ -110,11 +111,17 @@ export const MobileProfileBtn = () => {
             >
                 {renderWhenUser()}
                 <div class="mt-2 border-b-2 border-border1 pb-2 dark:border-border1-DM">
-                    <a href={`/${lang}/faq`}>{t("buttons.faq")}</a>
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`/${lang}/faq`}
+                    >
+                        {t("buttons.faq")}
+                    </a>
                 </div>
                 <div class="mt-2">
                     <div>
-                        <a href={`/${lang}`}>{t("pageTitles.home")}</a>
+                        <a href={`/${lang}`}>{t("buttons.home")}</a>
                     </div>
                     <div>
                         <a href={`mailto:MAIL@.com`}>{t("menus.contactUs")}</a>

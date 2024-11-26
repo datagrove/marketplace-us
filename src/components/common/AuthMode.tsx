@@ -41,7 +41,7 @@ export const AuthMode: Component = () => {
                             type="submit"
                             formaction={`/${lang}/login`}
                         >
-                            {t("pageTitles.signIn")}
+                            {t("buttons.signInTitle")}
                         </button>
                     </form>
                 </div>

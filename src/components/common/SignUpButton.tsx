@@ -16,7 +16,7 @@ export const SignUpBtn: Component = () => {
     return (
         <div>
             <button class="btn-primary ml-2" type="submit" onclick={signup}>
-                {t("pageTitles.signUp")}
+                {t("buttons.signUp")}
             </button>
         </div>
     );

@@ -235,7 +235,7 @@ export const CheckoutStatus: Component = () => {
                         </button>
 
                         <button
-                            class="dark:bg-btn1-DM, my-1 w-64 rounded bg-btn1 py-1 text-ptext2 dark:text-ptext2-DM md:mx-4"
+                            class="my-1 w-64 rounded bg-btn1 py-1 text-ptext2 dark:bg-btn1-DM dark:text-btn1Text-DM md:mx-4"
                             onClick={returnToResources}
                         >
                             {t("buttons.continueShopping")}

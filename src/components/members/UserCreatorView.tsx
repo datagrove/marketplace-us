@@ -7,6 +7,7 @@ import { ui } from "../../i18n/ui";
 import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { Creator } from "@lib/types";
+import { downloadUserImage } from "@lib/imageHelper";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -21,7 +22,10 @@ interface Props {
 
 export const UserCreatorView: Component<Props> = (props) => {
     const [creator, setCreator] = createSignal<Creator>();
-    const [creatorImage, setCreatorImage] = createSignal<string>();
+    const [creatorImage, setCreatorImage] = createSignal<{
+        webpUrl: string;
+        jpegUrl: string;
+    }>({ webpUrl: "", jpegUrl: "" });
     const [languageSpoken, setLanguageSpoken] = createSignal<string[]>([]);
     const [largeScreen, setLargeScreen] = createSignal<boolean>(false);
 
@@ -49,6 +53,7 @@ export const UserCreatorView: Component<Props> = (props) => {
     //   }
     // })
 
+    //REFACTOR: Refactor to use screenSize store
     window.onresize = function () {
         if (window.screen.width >= 768) {
             setLargeScreen(true);
@@ -59,51 +64,51 @@ export const UserCreatorView: Component<Props> = (props) => {
 
     const fetchCreator = async (id: number) => {
         try {
-          const { data, error } = await supabase
-            .from("sellerview")
-            .select("*")
-            .eq("seller_id", id);
-  
-          if (error) {
-            console.log(error);
-          } else if (data[0] === undefined) {
-            alert(t("messages.noCreator"));
-            location.href = `/${lang}/resources`;
-          } else {
-            let languageArray = data[0].language_spoken;
-            console.log("Languages Array: " + languageArray);
-            languageArray?.map((language: number) => {
-              if (language == 1) {
-                setLanguageSpoken([...languageSpoken(), "English"]);
-              }
-  
-              if (language == 2) {
-                setLanguageSpoken([...languageSpoken(), "Español"]);
-              }
-  
-              if (language == 3) {
-                setLanguageSpoken([...languageSpoken(), "Français"]);
-              }
-  
-              if (language == 4) {
-                setLanguageSpoken([...languageSpoken(), "Chinese"]);
-              }
-  
-              if (language == 5) {
-                setLanguageSpoken([...languageSpoken(), "German"]);
-              }
-  
-              if (language == 6) {
-                setLanguageSpoken([...languageSpoken(), "French"]);
-              }
-            });
-  
-            //set display list of languages for creator
-            data[0].languages = languageSpoken().join(", ");
+            const { data, error } = await supabase
+                .from("sellerview")
+                .select("*")
+                .eq("seller_id", id);
 
-            setCreator(data[0]);
-            console.log("test")
-          }
+            if (error) {
+                console.log(error);
+            } else if (data[0] === undefined) {
+                alert(t("messages.noCreator"));
+                location.href = `/${lang}/resources`;
+            } else {
+                let languageArray = data[0].language_spoken;
+                console.log("Languages Array: " + languageArray);
+                languageArray?.map((language: number) => {
+                    if (language == 1) {
+                        setLanguageSpoken([...languageSpoken(), "English"]);
+                    }
+
+                    if (language == 2) {
+                        setLanguageSpoken([...languageSpoken(), "Español"]);
+                    }
+
+                    if (language == 3) {
+                        setLanguageSpoken([...languageSpoken(), "Français"]);
+                    }
+
+                    if (language == 4) {
+                        setLanguageSpoken([...languageSpoken(), "Chinese"]);
+                    }
+
+                    if (language == 5) {
+                        setLanguageSpoken([...languageSpoken(), "German"]);
+                    }
+
+                    if (language == 6) {
+                        setLanguageSpoken([...languageSpoken(), "French"]);
+                    }
+                });
+
+                //set display list of languages for creator
+                data[0].languages = languageSpoken().join(", ");
+
+                setCreator(data[0]);
+                console.log("test");
+            }
         } catch (error) {
             console.log(error);
         }
@@ -119,44 +124,29 @@ export const UserCreatorView: Component<Props> = (props) => {
                 console.log("No Image");
                 console.log(creatorImage());
             } else {
-                await downloadImage(creator()?.image_url!);
+                const imageUrls = await downloadUserImage(
+                    creator()?.image_url!
+                );
+                if (imageUrls) {
+                    setCreatorImage(imageUrls);
+                }
             }
         }
     });
-
-    const downloadImage = async (image_Url: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("user.image")
-                .download(image_Url);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            setCreatorImage(url);
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     function creatorViewTabClick(e: Event) {
         e.preventDefault();
 
         let currLinkId = (e!.currentTarget as HTMLAnchorElement)!.id;
         let currEl = document.getElementById(currLinkId);
-        let allUserViewLinks = document.getElementsByClassName(
-            "userViewtabLinkLg"
-        );
+        let allUserViewLinks =
+            document.getElementsByClassName("userViewtabLinkLg");
 
-        let userViewProfile = document.getElementById(
-            "userCreatorViewProfile"
-        );
+        let userViewProfile = document.getElementById("userCreatorViewProfile");
         let userViewResources = document.getElementById(
             "userCreatorViewResources"
         );
-        let userViewRatings = document.getElementById(
-            "userCreatorViewRatings"
-        );
+        let userViewRatings = document.getElementById("userCreatorViewRatings");
         let userViewQuestions = document.getElementById(
             "userCreatorViewQuestions"
         );
@@ -270,11 +260,17 @@ export const UserCreatorView: Component<Props> = (props) => {
             >
                 <Show when={creatorImage()}>
                     <div class="relative">
-                        <img
-                            src={creatorImage()}
-                            alt={`${t("postLabels.CreatorProfileImage")} 1`}
-                            class="absolute top-12 h-40 w-40 rounded-full border-2 border-gray-400"
-                        />
+                        <picture>
+                            <source
+                                srcset={creatorImage().webpUrl}
+                                type="image/webp"
+                            />
+                            <img
+                                src={creatorImage().jpegUrl}
+                                alt={`${t("postLabels.CreatorProfileImage")} 1`}
+                                class="absolute left-12 top-6 flex h-[142px] w-[142px] items-center justify-center rounded-full border-2 border-gray-400 bg-background2 object-contain dark:bg-background2-DM"
+                            />
+                        </picture>
                     </div>
                 </Show>
 
@@ -315,13 +311,13 @@ export const UserCreatorView: Component<Props> = (props) => {
                 id="user-creator-view-username-reviews-follow"
                 class="mx-4 mt-10"
             >
-                <h2 class="text-2xl font-bold">
+                <h1 class="text-2xl font-bold">
                     {creator()?.seller_name == ""
                         ? creator()?.first_name + " " + creator()?.last_name
                         : creator()?.seller_name}
-                </h2>
+                </h1>
 
-               {/* <div
+                {/* <div
                     id="user-creator-view-reviews-div"
                     class="flex items-center"
                 >
@@ -460,12 +456,12 @@ export const UserCreatorView: Component<Props> = (props) => {
                                     class="stroke-icon2 dark:stroke-icon2-DM"
                                 />
                             </svg> */}
-                            {/* TODO: language file updated in mobile version */}
-                            {/* <p class="mx-0.5 text-sm">
+                {/* TODO: language file updated in mobile version */}
+                {/* <p class="mx-0.5 text-sm">
                                 {t("buttons.following")}
                             </p>
                         </button> */}
-                    {/* </div> */}
+                {/* </div> */}
                 {/* </div> */}
 
                 {/* <div class="my-4 flex items-center justify-center">
@@ -476,10 +472,7 @@ export const UserCreatorView: Component<Props> = (props) => {
             </div>
 
             <div id="user-creator-view-tabs-content-div" class="mx-4 mt-8">
-                <div
-                    id="user-creator-view-tabs"
-                    class="mb-4 mt-8 flex md:mt-0"
-                >
+                <div id="user-creator-view-tabs" class="mb-4 mt-8 flex md:mt-0">
                     <a
                         href="#profileUserView"
                         id="userCreatorViewProfileLink"
@@ -531,8 +524,6 @@ export const UserCreatorView: Component<Props> = (props) => {
                 </div>
 
                 <div id="userCreatorViewProfile" class="inline">
-
-                        
                     <Show when={creator()?.email}>
                         <div class="flex">
                             <p class="font-bold">
@@ -556,20 +547,17 @@ export const UserCreatorView: Component<Props> = (props) => {
                     </Show>
 
                     <div class="about flex">
-                            <label
-                                for="about"
-                                class="font-bold text-ptext1 dark:text-ptext1-DM"
-                            >
-                                {t("formLabels.about")}: &nbsp;
-                            </label>
+                        <label
+                            for="about"
+                            class="font-bold text-ptext1 dark:text-ptext1-DM"
+                        >
+                            {t("formLabels.about")}: &nbsp;
+                        </label>
 
-                            
-                                <p
-                                    class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
-                                    innerHTML={creator()?.seller_about}
-                                ></p>
-
-                            
+                        <p
+                            class="prose mr-1 line-clamp-3 text-xs text-ptext1 dark:prose-invert dark:text-ptext1-DM"
+                            innerHTML={creator()?.seller_about}
+                        ></p>
                     </div>
                 </div>
 

@@ -50,11 +50,9 @@ export const CartAuthMode: Component<Props> = (props) => {
                     <button
                         class="btn-secondary max-w-1/2 inline"
                         onclick={props.checkoutAsGuest}
-                        // TODO: INTERNATIONALIZE
-                        aria-label="checkout as guest"
+                        aria-label={t("buttons.checkoutAsGuest")}
                     >
-                        {/* TODO: Internationalize*/}
-                        Checkout as Guest
+                        {t("buttons.checkoutAsGuest")}
                     </button>
                     <form class="max-w-1/2 inline">
                         <button
@@ -62,7 +60,7 @@ export const CartAuthMode: Component<Props> = (props) => {
                             type="submit"
                             formaction={`/${lang}/login`}
                         >
-                            {t("pageTitles.signIn")}
+                            {t("buttons.signIn")}
                         </button>
                     </form>
                 </div>

@@ -10,26 +10,19 @@ import {
 } from "solid-js";
 import supabase from "../../lib/supabaseClient";
 import type { AuthSession } from "@supabase/supabase-js";
-import UserImage from "./UserImage";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import type { User } from "@lib/types";
 import type { Post } from "@lib/types";
-import { ViewCard } from "@components/services/ViewCard";
 import { ViewUserPurchases } from "@components/posts/ViewUserPurchases";
-import stripe from "@lib/stripe";
 import { UserProfileViewMobile } from "@components/members/UserProfileViewMobile";
 import { useStore } from "@nanostores/solid";
 import { windowSize } from "@components/common/WindowSizeStore";
 import { ViewUserFavorites } from "@components/posts/ViewUserFavorites";
+import Banner from "@components/common/notices/Banner";
+import Modal from "@components/common/notices/modal";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 async function postFormData(formData: FormData) {
     const response = await fetch("/api/userProfileEdit", {
@@ -60,13 +53,16 @@ export const UserProfileView: Component = () => {
     const screenSize = useStore(windowSize);
     const [formData, setFormData] = createSignal<FormData>();
     const [response] = createResource(formData, postFormData);
-    const [purchasedItems, setPurchasedItems] = createSignal<Array<Post>>([]);
     const [tabSelected, setTabSelected] = createSignal<string>("purchases");
 
     onMount(async () => {
         console.log(User);
-        setSession(User?.session);
-        await fetchUser(User?.session?.user.id!);
+        if (typeof User?.session === "undefined") {
+            alert(t("messages.signIn"));
+        } else {
+            setSession(User?.session);
+            await fetchUser(User?.session?.user.id!);
+        }
         // await getPurchasedItems();
     });
 
@@ -210,6 +206,59 @@ export const UserProfileView: Component = () => {
 
     return (
         <div class="">
+            <div class="mb-4">
+                <Banner
+                    content={
+                        <Modal
+                            buttonClass="text-btn1Text dark:text-btn1Text-DM"
+                            buttonId="scavenger2"
+                            buttonContent={t("huntModal.buttonContent")}
+                            buttonAriaLabel={t("huntModal.buttonAria")}
+                            heading={t("huntModal.stop2")}
+                            headingLevel={3}
+                        >
+                            <>
+                                <div class="flex justify-center text-lg font-bold">
+                                    🥳 {t("huntModal.solvedClue2")} 🥳
+                                </div>
+                                <div class="text-center text-lg italic">
+                                    {t("huntModal.solveAll")}
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.discountCode")}:{" "}
+                                </div>
+                                <div class="text-center text-2xl font-bold text-htext1 dark:text-htext1-DM">
+                                    PROFILE20
+                                </div>
+                                <br />
+                                <div class="text-center font-bold">
+                                    {t("huntModal.nextClue")}
+                                </div>
+                                <Show
+                                    when={lang == "en"}
+                                    fallback={t("huntModal.clue2Lang")}
+                                >
+                                    <div class="flex justify-center text-center italic leading-loose">
+                                        On LearnGrove’s site, where ideas grow,
+                                        <br />
+                                        Share what you've crafted, let others
+                                        know.
+                                        <br />
+                                        For learners seeking something new,
+                                        <br />
+                                        Your knowledge here can guide them
+                                        through!
+                                        <br />
+                                    </div>
+                                </Show>
+                            </>
+                        </Modal>
+                    }
+                    startDate="2024-11-17"
+                    endDate="2024-12-31"
+                />
+            </div>
             <div class="text-center text-xl font-bold italic text-alert1 dark:text-alert1-DM">
                 <Show when={editMode() === true}>
                     <h1 class="text-alert1 dark:text-alert1-DM">
@@ -225,6 +274,7 @@ export const UserProfileView: Component = () => {
                         <Show when={screenSize() === "sm"}>
                             <UserProfileViewMobile
                                 user={user() ? user()! : null}
+                                session={session()}
                                 editMode={editMode()}
                                 enableEditMode={enableEditMode}
                                 userImage={userImage()}
@@ -497,7 +547,10 @@ export const UserProfileView: Component = () => {
                                     {/* <Show when={ purchasedItems() }> */}
                                     <div>
                                         {/* <ViewCard posts={purchasedItems()} /> */}
-                                        <ViewUserPurchases />
+                                        <ViewUserPurchases
+                                            session={session()}
+                                            lang={lang}
+                                        />
                                     </div>
                                     {/* </Show>
 

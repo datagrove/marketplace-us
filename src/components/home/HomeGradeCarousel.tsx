@@ -1,21 +1,16 @@
 import type { Component } from "solid-js";
 import { createSignal, onMount } from "solid-js";
-import supabase from "../../lib/supabaseClient";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
+import supabase from "../../lib/supabaseClientServer";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-const lang = getLangFromUrl(new URL(window.location.href));
-const values = ui[lang] as uiObject;
-const productCategoryData = values.subjectCategoryInfo;
+// const lang = getLangFromUrl(new URL(window.location.href));
 
-function selectGradeCarousel(gradeBtn: any) {
-    localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
-    console.log(JSON.stringify([gradeBtn.id]))
-    window.location.href = `/${lang}/resources`;
+interface Props {
+    lang: "en" | "es" | "fr";
 }
 
-export const HomeGradeCarousel: Component = () => {
+export const HomeGradeCarousel: Component<Props> = (props) => {
+    const [lang, setLang] = createSignal<"en" | "es" | "fr">(props.lang);
     const [grades, setGrades] = createSignal<
         Array<{ grade: string; id: number }>
     >([]);
@@ -32,6 +27,12 @@ export const HomeGradeCarousel: Component = () => {
         }
     });
 
+    function selectGradeCarousel(gradeBtn: any) {
+        localStorage.setItem("selectedGrades", JSON.stringify([gradeBtn.id]));
+        console.log(JSON.stringify([gradeBtn.id]));
+        window.location.href = `/${lang()}/resources`;
+    }
+
     return (
         <div class="w-full overflow-x-scroll">
             {/* <svg width="80px" height="80px" viewBox="0 0 256 256" id="Flat" class="fill-icon1 dark:fill-icon1-DM">
@@ -40,13 +41,13 @@ export const HomeGradeCarousel: Component = () => {
             <div class="flex w-fit">
                 {grades().map((grade) => (
                     <button
-                    id={grade.id.toString()}
-                    aria-label= {grade.grade}
-                    class="gradeHomeSelectBtn"
-                    onclick={(e) => selectGradeCarousel(e.target)}
-                >
-                    <h1 class="text-2xl md:text-3xl">{grade.grade}</h1>
-                </button>
+                        id={grade.id.toString()}
+                        aria-label={grade.grade}
+                        class="gradeHomeSelectBtn"
+                        onclick={(e) => selectGradeCarousel(e.target)}
+                    >
+                        <h3 class="text-2xl md:text-3xl">{grade.grade}</h3>
+                    </button>
                 ))}
                 {/* <button
                     id="PK"

@@ -1,16 +1,16 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import { DeletePostButton } from "../posts/DeletePostButton";
 import supabase from "../../lib/supabaseClient";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
-import { SocialMediaShares } from "../posts/SocialMediaShares";
-import SocialModal from "../posts/SocialModal";
 import { AddToCart } from "../common/cart/AddToCartButton";
-import { Quantity } from "@components/common/cart/Quantity";
 import type { AuthSession } from "@supabase/supabase-js";
-import { DownloadBtn } from "@components/members/user/DownloadBtn";
 import { FavoriteButton } from "@components/posts/AddFavorite";
+import { lazyLoadImage } from "@lib/imageHelper";
+import postPlaceHolder from "@src/assets/postPlaceHolder.svg";
+import { AverageRatingStars } from "@components/posts/AverageRatingStars";
+import { RemoveFavoriteButton } from "@components/posts/RemoveFavorite";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -18,14 +18,22 @@ const t = useTranslations(lang);
 interface Props {
     // Define the type for the filterPosts prop
     posts: Array<Post>;
+    favoriteList?: string;
+    onRemoveFavorite?: () => void;
 }
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
 export const ViewCard: Component<Props> = (props) => {
-    const [newPosts, setNewPosts] = createSignal<Array<any>>([]);
+    const [newPosts, setNewPosts] = createSignal<Array<Post>>([]);
     const [quantity, setQuantity] = createSignal<number>(1);
     const [session, setSession] = createSignal<AuthSession | null>(null);
+
+    createEffect(() => {
+        const list = props.favoriteList;
+        console.log(props.posts);
+        console.log(props.favoriteList);
+    });
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -38,126 +46,157 @@ export const ViewCard: Component<Props> = (props) => {
         }
     }
 
-    createEffect(async () => {
-        console.log("View Card Posts");
-        console.log(props.posts);
-        if (props.posts) {
-            const updatedPosts = await Promise.all(
-                props.posts.map(async (post: Post) => {
-                    post.image_urls
-                        ? (post.image_url = await downloadImage(
-                              post.image_urls.split(",")[0]
-                          ))
-                        : (post.image_url = undefined);
-
-                    post.seller_img
-                        ? (post.seller_img = await downloadSellerImage(
-                              post.seller_img
-                          ))
-                        : null;
-                    // Set the default quantity to 1
-                    post.quantity = 1;
-
-                    const { data: resourceTypeData, error } = await supabase
-                        .from("resource_types")
-                        .select("*");
-
-                    if (error) {
-                        console.log("supabase error: " + error.message);
-                    } else {
-                        post.resourceTypes = [];
-                        resourceTypeData.forEach((databaseResourceTypes) => {
-                            post.resource_types.map(
-                                (itemResourceType: string) => {
-                                    if (
-                                        itemResourceType ===
-                                        databaseResourceTypes.id.toString()
-                                    ) {
-                                        post.resourceTypes!.push(
-                                            databaseResourceTypes.type
-                                        );
-                                    }
-                                }
-                            );
-                        });
-                    }
-                    return post;
-                })
-            );
-
-            setNewPosts(updatedPosts);
-        }
-    });
-
-    const updateQuantity = (quantity: number) => {
-        setQuantity(quantity);
-    };
-
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("post.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
-    };
-
-    const downloadSellerImage = async (path: string) => {
-        try {
-            const { data, error } = await supabase.storage
-                .from("user.image")
-                .download(path);
-            if (error) {
-                throw error;
-            }
-            const url = URL.createObjectURL(data);
-            return url;
-        } catch (error) {
-            if (error instanceof Error) {
-                console.log("Error downloading image: ", error.message);
-            }
-        }
     };
 
     return (
         <div class="flex w-full justify-center">
             <ul class="flex w-full flex-wrap justify-center">
-                {newPosts().map((post: Post) => (
+                {props.posts.map((post: Post, index) => (
                     <li class="mb-3 w-[99%]">
-                        <a href={`/${lang}/posts/${post.id}`}>
+                        <a
+                            href={`/${lang}/posts/${post.id}`}
+                            aria-label={
+                                t("ariaLabels.readMoreAbout") + post.title
+                            }
+                        >
                             <div class="mb-2 box-content flex h-full w-full flex-grow flex-row items-start justify-start rounded-lg border border-border1 border-opacity-25 shadow-md shadow-shadow-LM dark:border-border1-DM dark:border-opacity-25 dark:shadow-shadow-DM">
                                 <div class="relative mr-2 flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-background1 dark:bg-background1-DM">
-                                    {post.image_url ? (
+                                    {post.image_url && index <= 4 ? (
                                         <div class="absolute top-0">
-                                            <img
-                                                src={post.image_url}
-                                                alt={
-                                                    post.image_urls?.split(
-                                                        ","
-                                                    )[0]
-                                                        ? "User Image"
-                                                        : "No image"
-                                                }
-                                                class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
-                                            />
+                                            <picture>
+                                                <source
+                                                    type="image/webp"
+                                                    srcset={
+                                                        post.image_url.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={post.image_url.jpegUrl}
+                                                    alt={
+                                                        post.image_urls?.[0]
+                                                            ? `User Image for Post ${post.title}`
+                                                            : "No image"
+                                                    }
+                                                    class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                    fetchpriority="high"
+                                                    loading="eager"
+                                                />
+                                            </picture>
 
                                             <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                                 <div class="inline-block">
-                                                    <FavoriteButton
-                                                        id={post.id}
-                                                    />
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList ===
+                                                                undefined ||
+                                                            props.favoriteList ===
+                                                                null ||
+                                                            props.favoriteList ===
+                                                                ""
+                                                        }
+                                                    >
+                                                        <FavoriteButton
+                                                            id={post.id}
+                                                        />
+                                                    </Show>
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList !==
+                                                                undefined &&
+                                                            props.favoriteList !==
+                                                                null &&
+                                                            props.favoriteList !==
+                                                                ""
+                                                        }
+                                                    >
+                                                        <RemoveFavoriteButton
+                                                            product_id={post.id}
+                                                            list_number={
+                                                                props.favoriteList
+                                                                    ? props.favoriteList
+                                                                    : ""
+                                                            }
+                                                            onRemoveFavorite={
+                                                                props.onRemoveFavorite
+                                                                    ? props.onRemoveFavorite
+                                                                    : () => {}
+                                                            }
+                                                        />
+                                                    </Show>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : post.image_url && index > 4 ? (
+                                        <div class="absolute top-0">
+                                            <picture>
+                                                <source
+                                                    type="image/webp"
+                                                    data-srcset={
+                                                        post.image_url.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={postPlaceHolder.src}
+                                                    data-src={
+                                                        post.image_url.jpegUrl
+                                                    }
+                                                    alt={
+                                                        post.image_urls?.[0]
+                                                            ? `User Image for Post ${post.title}`
+                                                            : "No image"
+                                                    }
+                                                    class="h-48 w-48 rounded-lg bg-background1 object-contain dark:bg-background1-DM"
+                                                    loading="lazy"
+                                                    onload={(e) => {
+                                                        lazyLoadImage(
+                                                            e.currentTarget as HTMLImageElement
+                                                        );
+                                                    }}
+                                                />
+                                            </picture>
+
+                                            <div class="absolute right-2 top-2 col-span-1 flex justify-end">
+                                                <div class="inline-block">
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList ===
+                                                                undefined ||
+                                                            props.favoriteList ===
+                                                                null ||
+                                                            props.favoriteList ===
+                                                                ""
+                                                        }
+                                                    >
+                                                        <FavoriteButton
+                                                            id={post.id}
+                                                        />
+                                                    </Show>
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList !==
+                                                                undefined &&
+                                                            props.favoriteList !==
+                                                                null &&
+                                                            props.favoriteList !==
+                                                                ""
+                                                        }
+                                                    >
+                                                        <RemoveFavoriteButton
+                                                            product_id={post.id}
+                                                            list_number={
+                                                                props.favoriteList
+                                                                    ? props.favoriteList
+                                                                    : ""
+                                                            }
+                                                            onRemoveFavorite={
+                                                                props.onRemoveFavorite
+                                                                    ? props.onRemoveFavorite
+                                                                    : () => {}
+                                                            }
+                                                        />
+                                                    </Show>
                                                 </div>
                                             </div>
                                         </div>
@@ -174,9 +213,44 @@ export const ViewCard: Component<Props> = (props) => {
 
                                             <div class="absolute right-2 top-10 col-span-1 flex justify-end align-top">
                                                 <div class="inline-block">
-                                                    <FavoriteButton
-                                                        id={post.id}
-                                                    />
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList ===
+                                                                undefined ||
+                                                            props.favoriteList ===
+                                                                null ||
+                                                            props.favoriteList ===
+                                                                ""
+                                                        }
+                                                    >
+                                                        <FavoriteButton
+                                                            id={post.id}
+                                                        />
+                                                    </Show>
+                                                    <Show
+                                                        when={
+                                                            props.favoriteList !==
+                                                                undefined &&
+                                                            props.favoriteList !==
+                                                                null &&
+                                                            props.favoriteList !==
+                                                                ""
+                                                        }
+                                                    >
+                                                        <RemoveFavoriteButton
+                                                            product_id={post.id}
+                                                            list_number={
+                                                                props.favoriteList
+                                                                    ? props.favoriteList
+                                                                    : ""
+                                                            }
+                                                            onRemoveFavorite={
+                                                                props.onRemoveFavorite
+                                                                    ? props.onRemoveFavorite
+                                                                    : () => {}
+                                                            }
+                                                        />
+                                                    </Show>
                                                 </div>
                                             </div>
                                         </div>
@@ -188,31 +262,61 @@ export const ViewCard: Component<Props> = (props) => {
                                     class="flex min-h-48 w-5/6 flex-col place-content-between px-1 pt-1 text-left"
                                 >
                                     <div class="flex h-full min-h-48 flex-col place-content-between">
-                                        <div class="flex flex-col">
-                                            <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
-                                                {post.title}
-                                            </p>
-
-                                            <div class="flex items-center">
-                                                {post.seller_img ? (
-                                                    <img
-                                                        src={post.seller_img}
-                                                        alt="Seller image"
-                                                    />
-                                                ) : (
-                                                    <svg
-                                                        width="24px"
-                                                        height="24px"
-                                                        class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
-                                                        viewBox="0 0 32 32"
-                                                    >
-                                                        <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                                    </svg>
-                                                )}
-                                                <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM md:text-base">
-                                                    {post.seller_name}
+                                        <div class="flex flex-row justify-between">
+                                            <div class="flex w-full flex-col">
+                                                <p class="prose mr-1 line-clamp-2 text-lg font-bold text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    {post.title}
                                                 </p>
+
+                                                <div class="flex items-center">
+                                                    {post.seller_img ? (
+                                                        <picture>
+                                                            <source
+                                                                srcset={
+                                                                    post
+                                                                        .seller_img
+                                                                        .webpUrl
+                                                                }
+                                                                type="image/webp"
+                                                            />
+                                                            <img
+                                                                src={
+                                                                    post
+                                                                        .seller_img
+                                                                        .jpegUrl
+                                                                }
+                                                                alt="Seller image"
+                                                                class="mr-1 h-8 w-8 rounded-full"
+                                                            />
+                                                        </picture>
+                                                    ) : (
+                                                        <svg
+                                                            width="24px"
+                                                            height="24px"
+                                                            class="mr-1 h-4 w-4 rounded-full border-2 border-border1 fill-icon1 dark:border-border1-DM dark:bg-icon1-DM md:h-auto md:w-auto"
+                                                            viewBox="0 0 32 32"
+                                                        >
+                                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                                        </svg>
+                                                    )}
+                                                    <p class="overflow-hidden text-xs font-light text-ptext1 dark:text-ptext1-DM md:text-base">
+                                                        {post.seller_name}
+                                                    </p>
+                                                </div>
                                             </div>
+                                            <Show when={post.draft_status}>
+                                                <div class="w-1/4">
+                                                    <Show
+                                                        when={post.draft_status}
+                                                    >
+                                                        <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                                            {t(
+                                                                "formLabels.draft"
+                                                            )}
+                                                        </div>
+                                                    </Show>
+                                                </div>
+                                            </Show>
                                         </div>
 
                                         <div class="my-1 flex">
@@ -236,6 +340,25 @@ export const ViewCard: Component<Props> = (props) => {
                                                     <div class="flex-wrap">
                                                         {Array.from(
                                                             post.subject!
+                                                        ).join(", ")}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class={`grid w-full grid-cols-4 text-[10px] ${post.subtopic && post.subtopic.length > 0 ? "" : "hidden"}`}
+                                            >
+                                                <div class="col-span-1">
+                                                    <div class="">
+                                                        {t(
+                                                            "postLabels.subtopics"
+                                                        )}
+                                                        :
+                                                    </div>
+                                                </div>
+                                                <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                                    <div class="flex-wrap">
+                                                        {Array.from(
+                                                            post.subtopic!
                                                         ).join(", ")}
                                                     </div>
                                                 </div>
@@ -264,56 +387,17 @@ export const ViewCard: Component<Props> = (props) => {
                                                 </div>
                                                 <div class="prose col-span-3 flex-wrap align-middle text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                                     <div class="flex-wrap">
-                                                        {post.resourceTypes!.join(
+                                                        {post.resourceTypes?.join(
                                                             ", "
                                                         )}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* <div class="details-div grid h-1/3 grid-cols-[85px_1fr] grid-rows-4">
-                                            <div class="text-[10px]">
-                                                <h6>
-                                                    {t("formLabels.subjects")}:{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t("formLabels.grades")}:{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t(
-                                                        "formLabels.resourceTypes"
-                                                    )}
-                                                    :{" "}
-                                                </h6>
-                                                <h6>
-                                                    {t("formLabels.standards")}:{" "}
-                                                </h6>
-                                            </div>
-
-                                            <div class="text-[10px]">
-                                                <p class="truncate">
-                                                    {Array.from(
-                                                        post.subject!
-                                                    ).join(", ")}
-                                                </p>
-                                                <p class="truncate">
-                                                    {post.grade!.join(", ")}
-                                                </p>
-                                                <p class="truncate">
-                                                    {post.resourceTypes!.join(
-                                                        ", "
-                                                    )}
-                                                </p>
-                                                <p class="truncate">
-                                                    1NBT.C.4, K.OA.A.2
-                                                </p>
-                                            </div>
-                                        </div> */}
                                     </div>
                                 </div>
 
-                                <div class="mt-2 flex h-full min-h-48 w-1/5 min-w-[88px] flex-col justify-start pr-1">
+                                <div class="mt-2 flex h-full min-h-48 w-1/6 min-w-[88px] flex-col justify-start pr-1">
                                     <div class="price-reviews-div inline-block w-full text-end">
                                         <Show when={post.price > 0}>
                                             <p class="text-lg font-bold">
@@ -326,124 +410,15 @@ export const ViewCard: Component<Props> = (props) => {
                                                 {t("messages.free")}
                                             </p>
                                         </Show>
-                                        <div class="reviews-div flex w-full items-center justify-end text-end">
-                                            {/* <svg
-                                                width="12px"
-                                                height="12px"
-                                                viewBox="0 0 32 32"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <script />
-                                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                                                <script />
-                                            </svg>
-
-                                            <p class="ml-1 text-xs">
-                                                4.9 (30.3K)
-                                            </p> */}
+                                        <div class="reviews-div my-1 flex w-full items-center justify-end text-end">
+                                            <AverageRatingStars
+                                                resourceId={post.id}
+                                                page={"viewCard"}
+                                            />
                                         </div>
                                     </div>
 
-                                    <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start">
-                                        {/* <div class="flex w-full items-start justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                File Type 1
-                                            </p>
-                                        </div> */}
-
-                                        {/* <div class="flex w-full items-center justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                Short
-                                            </p>
-                                        </div> */}
-
-                                        {/* <div class="flex w-full items-center justify-start">
-                                            <svg
-                                                width="16px"
-                                                height="16px"
-                                                viewBox="0 0 28 28"
-                                                version="1.1"
-                                                class="fill-icon1 dark:fill-icon1-DM"
-                                            >
-                                                <g
-                                                    id="🔍-Product-Icons"
-                                                    stroke="none"
-                                                    stroke-width="1"
-                                                    fill="none"
-                                                    fill-rule="evenodd"
-                                                    class="fill-icon1 dark:fill-icon1-DM"
-                                                >
-                                                    <g
-                                                        id="ic_fluent_checkmark_28_filled"
-                                                        fill-rule="nonzero"
-                                                    >
-                                                        <path
-                                                            d="M10.5,19.5857864 L4.20710678,13.2928932 C3.81658249,12.9023689 3.18341751,12.9023689 2.79289322,13.2928932 C2.40236893,13.6834175 2.40236893,14.3165825 2.79289322,14.7071068 L9.79289322,21.7071068 C10.1834175,22.0976311 10.8165825,22.0976311 11.2071068,21.7071068 L25.2071068,7.70710678 C25.5976311,7.31658249 25.5976311,6.68341751 25.2071068,6.29289322 C24.8165825,5.90236893 24.1834175,5.90236893 23.7928932,6.29289322 L10.5,19.5857864 Z"
-                                                            id="🎨-Color"
-                                                        ></path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-
-                                            <p class="my-0.5 ml-1 text-xs">
-                                                Longer File Type
-                                            </p>
-                                        </div> */}
-                                    </div>
+                                    <div class="fileTypes-div mt-1 flex h-fit w-full flex-col items-start justify-start"></div>
 
                                     <div class="mb-1 flex w-full flex-col text-end">
                                         <Show
@@ -464,7 +439,6 @@ export const ViewCard: Component<Props> = (props) => {
                                                 <DeletePostButton
                                                     id={post.id}
                                                     userId={post.user_id}
-                                                    postImage={post.image_urls}
                                                 />
                                             </div>
                                         </div>

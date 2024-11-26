@@ -1,49 +1,83 @@
+type Subtopic = {
+    name: string;
+    description: string;
+    ariaLabel: string;
+    id: number;
+    subject_id: number;
+};
+
+type FilterLabel = {
+    id: string;
+    text: string;
+    ariaLabel: string;
+};
+
+type Subject = {
+    name: string;
+    description: string;
+    ariaLabel: string;
+    id: number;
+};
+
+type Link = {
+    text: string;
+    href: string;
+};
+
+type LinkList = {
+    links: Array<Link>;
+};
+
+type SocialLink = {
+    ariaLabel: string;
+    icon: string;
+    href: string;
+};
+
 export interface uiObject {
     textDirection: string;
     siteDescription: string;
 
-    pageTitles: {
-        services: string;
-        signUp: string;
-        login: string;
-        home: string;
-        signIn: string;
-        createUserAccount: string;
-        editUserAccount: string;
-        viewUserAccount: string;
-        createPost: string;
-        createCreatorAccount: string;
-        editCreatorAccount: string;
-        viewCreatorAccount: string;
-        userViewCreatorAccount: string;
-        page404: string;
-        requestPasswordReset: string;
-        resetPassword: string;
-        terms: string;
-        privacy: string;
-        acceptableUse: string;
-        about: string;
-        impact: string;
-        fullPost: string;
-        offline: string;
-        faq: string;
-        viewCart: string;
-        popularResources: string;
-        shopBySubject: string;
-        newResources: string;
-        shopByGrade: string;
-        community: string;
-        sellerFeePayout: string;
-        copyright: string;
-        marketplacetax: string;
-    };
+
+
+  pageTitles: {
+    services: string,
+    signUp: string,
+    login: string,
+    home: string,
+    signIn: string,
+    createUserAccount: string,
+    editUserAccount: string,
+    viewUserAccount: string,
+    createPost: string,
+    createCreatorAccount: string,
+    editCreatorAccount: string,
+    viewCreatorAccount: string,
+    userViewCreatorAccount: string,
+    page404: string,
+    requestPasswordReset: string,
+    resetPassword: string,
+    terms: string,
+    privacy: string,
+    acceptableUse: string,
+    about: string,
+    impact: string,
+    fullPost: string,
+    offline: string,
+    faq: string,
+    community: string,
+    sellerFeePayout: string,
+    copyright: string,
+    marketplacetax: string,
+  },
+
 
     pageDescriptions: {
         services: string;
         signUp: string;
         login: string;
         home: string;
-        signIn: string;
+        // signIn: string;
         createUserAccount: string;
         viewUserAccount: string;
         createPost: string;
@@ -68,54 +102,67 @@ export interface uiObject {
         taxCodeLearnMore: string;
     };
 
-    buttons: {
-        creatorProfile: string;
-        editProfile: string;
-        register: string;
-        uploadImage: string;
-        uploading: string;
-        loading: string;
-        login: string;
-        signUp: string;
-        signIn: string;
-        signOut: string;
-        returnHome: string;
-        reset: string;
-        post: string;
-        next: string;
-        previous: string;
-        delete: string;
-        contact: string;
-        phone: string;
-        saveProfile: string;
-        filters: string;
-        faq: string;
-        addToCart: string;
-        stripeSetup: string;
-        stripeLogin: string;
-        proceedToCheckout: string;
-        viewCart: string;
-        showMore: string;
-        showLess: string;
-        browseCatalog: string;
-        findResources: string;
-        download: string;
-        follow: string;
-        following: string;
-        top: string;
-        downloadResources: string;
-        addedToCart: string;
-        resetPassword: string;
-        finishStripeSetup: string;
-        requestStripePayout: string;
-        listResource: string;
-        continueShopping: string;
-        viewOrders: string;
-        reportResource: string;
-        updateResource: string;
-        editPost: string;
-        getLinks: string;
-    };
+  buttons: {
+    creatorProfile: string;
+    editProfile: string;
+    register: string;
+    uploadImage: string;
+    uploading: string;
+    loading: string;
+    login: string;
+    signUp: string;
+    signIn: string;
+    signOut: string;
+    returnHome: string;
+    reset: string;
+    post: string;
+    next: string;
+    previous: string;
+    delete: string;
+    contact: string;
+    phone: string;
+    saveProfile: string;
+    filters: string;
+    faq: string;
+    addToCart: string;
+    stripeSetup: string;
+    stripeLogin: string;
+    proceedToCheckout: string;
+    viewCart: string;
+    showMore: string;
+    showLess: string;
+    browseCatalog: string;
+    findResources: string;
+    download: string;
+    follow: string;
+    following: string;
+    top: string;
+    downloadResources: string;
+    addedToCart: string;
+    resetPassword: string;
+    finishStripeSetup: string;
+    requestStripePayout: string;
+    listResource: string;
+    continueShopping: string;
+    viewOrders: string;
+    reportResource: string;
+    updateResource: string;
+    editPost: string;
+    getLinks: string;
+    checkoutAsGuest: string;
+    home: string;
+    signInTitle: string,
+    privacy: string,
+    terms: string,
+    createPost: string,
+    reviewResource: string,
+    createFavoriteList: string,
+    createList: string,
+    createUserAccount: string,
+    viewUserProfile: string,
+    viewCreatorAccount: string,
+    submitReview: string,
+  };
 
     messages: {
         noAccount: string;
@@ -174,6 +221,9 @@ export interface uiObject {
         signIntoAddToFavorites: string;
         resourceLinks: string;
         externalResourceDisclaimer: string;
+        submitted: string,
+        overallReviewRequired: string,
+        titleRequiredIfTextEntered: string,
     };
 
     formLabels: {
@@ -196,7 +246,6 @@ export interface uiObject {
         enterPostContent: string;
         noValue: string;
         creatorInfo: string;
-        creatorPosts: string;
         posts: string;
         profileInfo: string;
         yourPosts: string;
@@ -227,6 +276,24 @@ export interface uiObject {
         more: string;
         secular: string;
         resourceLinks: string;
+        draft: string;
+        downloadable: string;
+        whatDidYouThink: string;
+        overallRating: string;
+
+        reviewQ1: string;
+        reviewQ2: string;
+        reviewQ3: string;
+        reviewQ4: string;
+        reviewQ5: string;
+        reviewQ6: string;
+        reviewTitle: string;
+        
+        reviewText: string;
+        
+        priceFilter: string;
+        freeResources: string;
+        listName: string;
     };
 
     postLabels: {
@@ -237,6 +304,8 @@ export interface uiObject {
         slide: string;
         creatorProfileImage: string;
         userProfileImage: string;
+        subtopics: string;
+        resources: string;
     };
 
     cartLabels: {
@@ -302,6 +371,9 @@ export interface uiObject {
         resourceTypes: string;
         price: string;
         secular: string;
+        overallRatingDescription: string,
+        reviewTitleDescription: string;
+        reviewTextDescription: string;
     };
 
     apiErrors: {
@@ -329,6 +401,15 @@ export interface uiObject {
         userEditProfileError: string;
         createUserError: string;
         emailNotConfirmed: string;
+        noFavoriteLists: string;
+        noFavoriteItems: string;
+        errorFavoriteFetch: string;
+        generalErrorFavorite: string;
+        singleListFavoriteError: string;
+        favoriteListError: string;
+        multipleListFavoriteError: string;
+        problemPostingReview: string;
+        noDataFound: string;
     };
 
     socialModal: {
@@ -345,6 +426,27 @@ export interface uiObject {
         closeShareMenu: string;
     };
 
+    huntModal: {
+        buttonContent: string;
+        buttonAria: string;
+        solvedClue1: string;
+        stop1: string;
+        solveAll: string;
+        clue1Lang: string;
+        clue2Lang: string;
+        clue3Lang: string;
+        stop2: string;
+        solvedClue2: string;
+        buttonContentDiscount: string;
+        buttonAriaDiscount: string;
+        stop3: string;
+        postToWin1: string;
+        postToWin2: string;
+        postToWin3: string;
+        discountCode: string;
+        nextClue: string;
+    };
+
     ariaLabels: {
         todo: string;
         logo: string;
@@ -359,114 +461,32 @@ export interface uiObject {
         increaseQuantity: string;
         decreaseQuantity: string;
         checkboxGrade: string;
+        checkbox: string;
+        readMoreAbout: string;
+        addToFavorites: string;
     };
 
     headerData: {
-        links: [
-            {
-                text: string;
-                href: string;
-            },
-            {
-                text: string;
-                href: string;
-            },
-        ];
-        actions: [];
+        links: {
+            text: string;
+            href: string;
+        }[];
     };
 
     footerData: {
-        links: [
-            // {
-            //   title: string,
-            //   links: [
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //   ],
-            // },
-            // {
-            //   title: string,
-            //   links: [
-            //     { text: string, href: string },
-            //     { text: string, href: string },
-            //   ],
-            // },
-            {
-                // title: string,
-                links: [
-                    { text: string; href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                ];
-            },
-            {
-                // title: string,
-                links: [
-                    { text: string; href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                    // { text: string, href: string },
-                ];
-            },
-        ];
-        secondaryLinks: [
-            { text: string; href: string },
-            { text: string; href: string },
-        ];
-        socialLinks: [
-            // { ariaLabel: string, icon: string, href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-            // { ariaLabel: string, icon: string, href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-            { ariaLabel: string; icon: string; href: string },
-        ];
+        links: LinkList[];
+        secondaryLinks: Link[];
+        socialLinks: SocialLink [];
         footNote: string;
     };
 
     subjectCategoryInfo: {
-        subjects: [
-            { name: string; description: string; ariaLabel: string; id: "1" },
-            { name: string; description: string; ariaLabel: string; id: "2" },
-            { name: string; description: string; ariaLabel: string; id: "3" },
-            { name: string; description: string; ariaLabel: string; id: "4" },
-            { name: string; description: string; ariaLabel: string; id: "5" },
-            { name: string; description: string; ariaLabel: string; id: "6" },
-            { name: string; description: string; ariaLabel: string; id: "7" },
-            { name: string; description: string; ariaLabel: string; id: "8" },
-            { name: string, description: string, ariaLabel: string, id: "9" },
-            // { name: string, description: string, ariaLabel: string, id: "10" },
-            // { name: string, description: string, ariaLabel: string, id: "11" },
-            // { name: string, description: string, ariaLabel: string, id: "12" },
-            // { name: string, description: string, ariaLabel: string, id: "13" },
-            // { name: string, description: string, ariaLabel: string, id: "14" },
-            // { name: string, description: string, ariaLabel: string, id: "15" },
-            // { name: string, description: string, ariaLabel: string, id: "16" },
-            // Add more products as needed
-        ];
+        subjects: Subject[];
+        subtopics: Subtopic[];
     };
 
     clearFilters: {
-        filterButtons: [
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-            { text: string; ariaLabel: string },
-        ];
+        filterButtons: FilterLabel[];
     };
 
     checkout: {

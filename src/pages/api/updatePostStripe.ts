@@ -17,12 +17,13 @@ export const POST: APIRoute = async ({ request, redirect }) => {
 
     const stripeProductId = formData.get("product_id");
     const stripePriceId = formData.get("price_id");
+    const stripePriceValue = formData.get("price_value");
     const postId = formData.get("id");
     const access_token = formData.get("access_token");
     const refresh_token = formData.get("refresh_token");
 
     // Validate the formData - you'll probably want to do more than this
-    if (!stripeProductId || !stripePriceId || !postId) {
+    if (!stripeProductId || !stripePriceId || !postId || !stripePriceValue) {
         return new Response(
             JSON.stringify({
                 message: t("apiErrors.missingFields"),
@@ -70,6 +71,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     let stripeUpdate = {
         stripe_product_id: stripeProductId,
         stripe_price_id: stripePriceId,
+        price_value: parseInt(stripePriceValue as string) / 100,
     };
 
     const { error, data } = await supabase

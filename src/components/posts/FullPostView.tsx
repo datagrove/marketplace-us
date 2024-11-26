@@ -1,51 +1,90 @@
 import type { Component } from "solid-js";
 import type { Post } from "@lib/types";
-import { createSignal, createEffect, Show } from "solid-js";
+import type { Review } from "@lib/types";
+import { createSignal, createEffect, Show, onMount } from "solid-js";
 import supabase from "../../lib/supabaseClient";
-import { DeletePostButton } from "../posts/DeletePostButton";
-import { ui } from "../../i18n/ui";
-import type { uiObject } from "../../i18n/uiType";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import SocialModal from "./SocialModal";
 import { AddToCart } from "@components/common/cart/AddToCartButton";
 import { Quantity } from "@components/common/cart/Quantity";
-import { EditPost } from "./EditPost";
+import { CreateEditPost } from "@components/posts/CreateEditPost";
 import { FavoriteButton } from "@components/posts/AddFavorite";
 import type { AuthSession } from "@supabase/supabase-js";
-
-import stripe from "@lib/stripe";
+import type { FilterPostsParams } from "@lib/types";
 import { ReportResource } from "./ReportResource";
+import { AverageRatingStars } from "../posts/AverageRatingStars";
+import { ViewPostReviews } from "./ViewPostReviews";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
-
-//get the categories from the language files so they translate with changes in the language picker
-const values = ui[lang] as uiObject;
-const productCategories = values.subjectCategoryInfo.subjects;
 
 interface Props {
     postId: string | undefined;
 }
 
+async function fetchPosts({
+    listing_status,
+    draft_status,
+    post_id,
+    user_id,
+}: FilterPostsParams) {
+    const response = await fetch("/api/fetchFilterPosts", {
+        method: "POST",
+        body: JSON.stringify({
+            lang: lang,
+            listing_status: listing_status,
+            draft_status: draft_status,
+            post_id: post_id,
+            user_id: user_id,
+        }),
+    });
+    const data = await response.json();
+
+    return data;
+}
+
+async function fetchReviews({
+    created_at,
+    resource_id,
+    reviewer_id,
+    review_title,
+    review_text,
+    overall_rating,
+}: Review) {
+    const response = await fetch("/api/getRatings", {
+        method: "POST",
+        body: JSON.stringify({
+            created_at: created_at,
+            resource_id: resource_id,
+            reviewer_id: reviewer_id,
+            review_title: review_title,
+            review_text: review_text,
+            overall_rating: overall_rating,
+        }),
+    });
+    const data = await response.json();
+
+    console.log("data from fetchReviews function: ", data);
+
+    return data;
+}
+
 const { data: User, error: UserError } = await supabase.auth.getSession();
+
 export const ViewFullPost: Component<Props> = (props) => {
-    const test1 = ["../../../src/assets/services.png"];
-    const test2 = [
-        "../../../src/assets/services.png",
-        "../../../src/assets/question.svg",
-        "../../../src/assets/servicesDM.png",
-        "../../../src/assets/userImagePlaceholder.svg",
-        "../../../src/assets/attention-mark.svg",
-    ];
-
     const [post, setPost] = createSignal<Post>();
-    const [postImages, setPostImages] = createSignal<string[]>([]);
-    const [testImages, setTestImages] = createSignal<string[]>([]);
+    // const [postData, setPostData] = createSignal<Array<Post>>([]);
+    const [postImages, setPostImages] = createSignal<
+        { webpUrl: string; jpegUrl: string }[]
+    >([]);
     const [quantity, setQuantity] = createSignal<number>(1);
-
     const [session, setSession] = createSignal<AuthSession | null>(null);
-
     const [editRender, setEditRender] = createSignal<boolean>(false);
+    const [review, setReview] = createSignal<Review>();
+    const [resourceReviews, setResourceReviews] = createSignal<Array<object>>(
+        []
+    );
+    const [loading, setLoading] = createSignal<boolean>(true);
 
     if (UserError) {
         console.log("User Error: " + UserError.message);
@@ -59,6 +98,10 @@ export const ViewFullPost: Component<Props> = (props) => {
     }
     // setTestImages(test2);
 
+    onMount(async () => {
+        await getResourceReviews(props.postId);
+    });
+
     createEffect(() => {
         if (props.postId === undefined) {
             location.href = `/${lang}/404`;
@@ -69,110 +112,73 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const fetchPost = async (id: number) => {
         try {
-            const { data, error } = await supabase
-                .from("sellerposts")
-                .select("*")
-                .eq("id", id)
-                .eq("listing_status", true);
+            const res = await fetchPosts({
+                lang: lang,
+                listing_status: true,
+                draft_status: false,
+                post_id: [id],
+            });
 
-            if (error) {
-                console.log(error);
-            } else if (data[0] === undefined) {
+            if (res.body.length < 1 && User.session) {
+                const userRes = await fetchPosts({
+                    lang: lang,
+                    listing_status: true,
+                    draft_status: false,
+                    post_id: [id],
+                    user_id: User.session?.user.id,
+                });
+
+                if (userRes.body.length < 1) {
+                    alert(t("messages.noPost"));
+                    location.href = `/${lang}/resources`;
+                } else {
+                    setPost(userRes.body[0]);
+                    setPostImages(userRes.body[0].image_signedUrls);
+                }
+            } else if (res.body.length < 1 && User.session === null) {
                 alert(t("messages.noPost"));
                 location.href = `/${lang}/resources`;
             } else {
-                const newItem: Post[] = await Promise.all(
-                    data?.map(async (item) => {
-                        item.subject = [];
-                        productCategories.forEach((productCategories) => {
-                            item.product_subject.map(
-                                (productSubject: string) => {
-                                    if (
-                                        productSubject === productCategories.id
-                                    ) {
-                                        item.subject.push(
-                                            productCategories.name
-                                        );
-                                    }
-                                }
-                            );
-                        });
-
-                        const { data: gradeData, error: gradeError } =
-                            await supabase.from("grade_level").select("*");
-
-                        if (gradeError) {
-                            console.log(
-                                "supabase error: " + gradeError.message
-                            );
-                        } else {
-                            item.grade = [];
-                            gradeData.forEach((databaseGrade) => {
-                                item.post_grade.map((itemGrade: string) => {
-                                    if (
-                                        itemGrade ===
-                                        databaseGrade.id.toString()
-                                    ) {
-                                        item.grade.push(databaseGrade.grade);
-                                    }
-                                });
-                            });
-                        }
-
-                        const { data: resourceTypeData, error } = await supabase
-                            .from("resource_types")
-                            .select("*");
-
-                        if (error) {
-                            console.log("supabase error: " + error.message);
-                        } else {
-                            item.resourceTypes = [];
-                            resourceTypeData.forEach(
-                                (databaseResourceTypes) => {
-                                    item.resource_types.map(
-                                        (itemResourceType: string) => {
-                                            if (
-                                                itemResourceType ===
-                                                databaseResourceTypes.id.toString()
-                                            ) {
-                                                item.resourceTypes!.push(
-                                                    databaseResourceTypes.type
-                                                );
-                                            }
-                                        }
-                                    );
-                                }
-                            );
-                        }
-
-                        if (item.price_id !== null) {
-                            const priceData = await stripe.prices.retrieve(
-                                item.price_id
-                            );
-                            item.price = priceData.unit_amount! / 100;
-                        }
-                        return item;
-                    })
-                );
-                setPost(newItem[0]);
-                // console.log(post()?.product_subject)
+                setPost(res.body[0]);
+                setPostImages(res.body[0].image_signedUrls);
             }
         } catch (error) {
             console.log(error);
         }
     };
 
-    createEffect(async () => {
-        if (post() !== undefined) {
-            if (
-                post()?.image_urls === undefined ||
-                post()?.image_urls === null
-            ) {
-            } else {
-                await downloadImages(post()?.image_urls!);
-            }
+    const getResourceReviews = async (postID: any) => {
+        setLoading(true);
+
+        const { data: reviews, error } = await supabase
+            .from("reviews")
+            .select("*")
+            .eq("resource_id", postID);
+
+        if (error) {
+            console.log("Reviews Error: " + error.code + " " + error.message);
+            return;
         }
-    });
+
+        console.log("reviews data: ", reviews);
+
+        setResourceReviews(reviews);
+        console.log("resourceReviews signal: ", resourceReviews());
+
+        setLoading(false);
+    };
+
+    const fetchOwnedPost = async function (id: number) {
+        const { data, error } = await supabase.from("orders").select("*");
+
+        if (error) {
+            console.error(error);
+        } else {
+            console.log(data);
+        }
+    };
+
+    fetchOwnedPost(10);
 
     const updateQuantity = (quantity: number) => {
         setQuantity(quantity);
@@ -180,24 +186,6 @@ export const ViewFullPost: Component<Props> = (props) => {
 
     const resetQuantity = () => {
         setQuantity(1);
-    };
-
-    const downloadImages = async (image_Urls: string) => {
-        try {
-            const imageUrls = image_Urls.split(",");
-            imageUrls.forEach(async (imageUrl: string) => {
-                const { data, error } = await supabase.storage
-                    .from("post.image")
-                    .download(imageUrl);
-                if (error) {
-                    throw error;
-                }
-                const url = URL.createObjectURL(data);
-                setPostImages([...postImages(), url]);
-            });
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     let slideIndex = 1;
@@ -214,7 +202,6 @@ export const ViewFullPost: Component<Props> = (props) => {
     function showSlide(n: number) {
         let i;
         const slides = document.getElementsByClassName("slide");
-        // console.log(slides)
         const dots = document.getElementsByClassName("dot");
 
         if (n > slides.length) {
@@ -249,92 +236,92 @@ export const ViewFullPost: Component<Props> = (props) => {
         }
     }
 
-    const twitterUrl =
-        "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
-    const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
-    const whatsappUrl = "https://wa.me/?text=";
-    const linkTarget = "_top";
-    const windowOptions = "menubar=yes,status=no,height=300,width=600";
+    // const twitterUrl =
+    //     "https://twitter.com/intent/tweet?text=Check%20this%20out%20!";
+    // const facebookUrl = "https://www.facebook.com/sharer/sharer.php?u=";
+    // const whatsappUrl = "https://wa.me/?text=";
+    // const linkTarget = "_top";
+    // const windowOptions = "menubar=yes,status=no,height=300,width=600";
 
-    function extractTitleText() {
-        return document.querySelector("h2")?.innerText;
-    }
+    // function extractTitleText() {
+    //     return document.querySelector("h2")?.innerText;
+    // }
 
-    function extractAnchorLink() {
-        return document.querySelector("a")?.href;
-    }
+    // function extractAnchorLink() {
+    //     return document.querySelector("a")?.href;
+    // }
 
-    function extractWindowLink() {
-        const currLink = window.location.href;
-        return currLink;
-    }
+    // function extractWindowLink() {
+    //     const currLink = window.location.href;
+    //     return currLink;
+    // }
 
-    function openTwitterWindow(text: any, link: any) {
-        const twitterQuery = `${text} ${link}`;
-        return window.open(
-            `${twitterUrl} ${twitterQuery}&`,
-            linkTarget,
-            windowOptions
-        );
-    }
+    // function openTwitterWindow(text: any, link: any) {
+    //     const twitterQuery = `${text} ${link}`;
+    //     return window.open(
+    //         `${twitterUrl} ${twitterQuery}&`,
+    //         linkTarget,
+    //         windowOptions
+    //     );
+    // }
 
-    function registerShareButton() {
-        extractWindowLink();
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const twitterButton = document.querySelector("#button--twitter");
-        twitterButton?.addEventListener("click", () =>
-            openTwitterWindow(text, link)
-        );
-    }
+    // function registerShareButton() {
+    //     extractWindowLink();
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const twitterButton = document.querySelector("#button--twitter");
+    //     twitterButton?.addEventListener("click", () =>
+    //         openTwitterWindow(text, link)
+    //     );
+    // }
 
-    function openFacebookWindow(text: any, link: any) {
-        const currPage = extractWindowLink();
-        const testLink =
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-            encodeURIComponent(currPage);
-        window.open(
-            "https://www.facebook.com/sharer/sharer.php?u=" +
-                encodeURIComponent(currPage) +
-                "&t=" +
-                text,
-            "",
-            "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-        );
-        // console.log("TestLink: ", testLink);
-        // return false;
-    }
+    // function openFacebookWindow(text: any, link: any) {
+    //     const currPage = extractWindowLink();
+    //     const testLink =
+    //         "https://www.facebook.com/sharer/sharer.php?u=" +
+    //         encodeURIComponent(currPage);
+    //     window.open(
+    //         "https://www.facebook.com/sharer/sharer.php?u=" +
+    //             encodeURIComponent(currPage) +
+    //             "&t=" +
+    //             text,
+    //         "",
+    //         "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+    //     );
+    //     // console.log("TestLink: ", testLink);
+    //     // return false;
+    // }
 
-    function registerFacebookButton() {
-        extractWindowLink();
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const facebookButton = document.querySelector("#button--facebook");
-        facebookButton?.addEventListener("click", () =>
-            openFacebookWindow(text, link)
-        );
-    }
+    // function registerFacebookButton() {
+    //     extractWindowLink();
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const facebookButton = document.querySelector("#button--facebook");
+    //     facebookButton?.addEventListener("click", () =>
+    //         openFacebookWindow(text, link)
+    //     );
+    // }
 
-    function openWhatsappWindow(text: any, link: any) {
-        const currPage = extractWindowLink();
-        const testLink =
-            whatsappUrl +
-            // TODO Update to LearnGrove
-            "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
-        window.open(
-            testLink + encodeURIComponent(currPage),
-            "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
-        );
-    }
+    // function openWhatsappWindow(text: any, link: any) {
+    //     const currPage = extractWindowLink();
+    //     const testLink =
+    //         whatsappUrl +
+    //         // TODO Update to LearnGrove
+    //         "Check%20out%20this%20awesome%20resource%20on%20LearnGrove! ";
+    //     window.open(
+    //         testLink + encodeURIComponent(currPage),
+    //         "menubar=yes,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600"
+    //     );
+    // }
 
-    function registerWhatsAppButton() {
-        const text = extractTitleText();
-        const link = extractWindowLink();
-        const whatsAppButton = document.querySelector("#button--whatsapp");
-        whatsAppButton?.addEventListener("click", () =>
-            openWhatsappWindow(text, link)
-        );
-    }
+    // function registerWhatsAppButton() {
+    //     const text = extractTitleText();
+    //     const link = extractWindowLink();
+    //     const whatsAppButton = document.querySelector("#button--whatsapp");
+    //     whatsAppButton?.addEventListener("click", () =>
+    //         openWhatsappWindow(text, link)
+    //     );
+    // }
 
     function imageClick(e: Event) {
         e.preventDefault();
@@ -344,6 +331,7 @@ export const ViewFullPost: Component<Props> = (props) => {
         let currImage = document.getElementById(currImageID);
         let allImages = document.getElementsByClassName("imageLink");
         let mainImage = document.getElementById("main-image");
+        let mainPicture = mainImage?.parentElement as HTMLPictureElement;
         let arrayIndex = Number(currImageID.slice(-1));
 
         if (!currImage?.classList.contains("border-b-2")) {
@@ -356,7 +344,12 @@ export const ViewFullPost: Component<Props> = (props) => {
             currImage?.classList.add("border-green-500");
         }
 
-        mainImage?.setAttribute("src", postImages()[arrayIndex]);
+        mainImage?.setAttribute("src", postImages()[arrayIndex].jpegUrl);
+
+        let sourceElement = mainPicture?.querySelector(
+            "source[type='image/webp']"
+        );
+        sourceElement?.setAttribute("srcset", postImages()[arrayIndex].webpUrl);
     }
 
     function lgTabLinkClick(e: Event) {
@@ -448,12 +441,11 @@ export const ViewFullPost: Component<Props> = (props) => {
             qa.classList.add("hidden");
         }
     }
-    // console.log(postImages());
 
     return (
-        <div>
+        <div class="flex w-full justify-center">
             <Show when={!editRender()}>
-                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-full">
+                <div id="large-full-card-div" class="mx-2 mb-2 h-full w-3/4">
                     <div
                         id="image-title-details-cart-div"
                         class="grid grid-cols-7"
@@ -462,15 +454,21 @@ export const ViewFullPost: Component<Props> = (props) => {
                             id="images-div"
                             class="col-span-3 mr-1 flex w-[300px] flex-col items-center justify-center lg:h-[400px] lg:w-[400px]"
                         >
-                            <Show when={postImages().length > 0}>
+                            <Show when={() => postImages().length > 0}>
                                 <Show when={postImages().length === 1}>
                                     <div class="relative flex h-[300px] w-[300px] items-center justify-center rounded">
-                                        <img
-                                            src={postImages()[0]}
-                                            id="one-image"
-                                            class="flex h-[300px] w-[300px] items-center justify-center rounded object-contain dark:bg-background1-DM"
-                                            alt={`${t("postLabels.image")}`}
-                                        />
+                                        <picture>
+                                            <source
+                                                srcset={postImages()[0].webpUrl}
+                                                type="image/webp"
+                                            />
+                                            <img
+                                                src={postImages()[0].jpegUrl}
+                                                id="one-image"
+                                                class="flex h-[300px] w-[300px] items-center justify-center rounded object-contain dark:bg-background1-DM"
+                                                alt={`${t("postLabels.image")}`}
+                                            />
+                                        </picture>
                                         <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                             <div class="inline-block">
                                                 <FavoriteButton
@@ -485,12 +483,24 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     <div class="flex h-full w-full flex-col items-center justify-center">
                                         <div class="relative flex h-[290px] w-[290px] items-center justify-center lg:h-[330px] lg:w-[330px]">
                                             <div class="top-4.5 absolute">
-                                                <img
-                                                    src={postImages()[0]}
-                                                    id="main-image"
-                                                    class="h-[290px] w-[290px] rounded object-contain dark:bg-background1-DM"
-                                                    alt={`${t("postLabels.image")}`}
-                                                />
+                                                <picture>
+                                                    <source
+                                                        srcset={
+                                                            postImages()[0]
+                                                                .webpUrl
+                                                        }
+                                                        type="image/webp"
+                                                    />
+                                                    <img
+                                                        src={
+                                                            postImages()[0]
+                                                                .jpegUrl
+                                                        }
+                                                        id="main-image"
+                                                        class="h-[290px] w-[290px] rounded object-contain dark:bg-background1-DM"
+                                                        alt={`${t("postLabels.image")}`}
+                                                    />
+                                                </picture>
                                                 <div class="absolute right-2 top-2 col-span-1 flex justify-end">
                                                     <div class="inline-block">
                                                         <FavoriteButton
@@ -506,24 +516,37 @@ export const ViewFullPost: Component<Props> = (props) => {
                                         <div class="mt-1 flex w-full justify-around px-1">
                                             {postImages().map(
                                                 (
-                                                    image: string,
+                                                    image: {
+                                                        webpUrl: string;
+                                                        jpegUrl: string;
+                                                    },
                                                     index: number
                                                 ) => (
                                                     <div class="flex h-12 w-12 items-center justify-center md:mt-2">
                                                         {index === 0 ? (
                                                             <div
                                                                 // id={ index.toString() }
-                                                                id={`img${index.toString()}`}
+                                                                id={`img ${index.toString()}`}
                                                                 class="imageLink flex h-full w-full items-center justify-center"
                                                                 onClick={
                                                                     imageClick
                                                                 }
                                                             >
-                                                                <img
-                                                                    src={image}
-                                                                    class="mb-2 h-full w-full rounded object-cover"
-                                                                    alt={`${t("postLabels.image")} ${index + 2}`}
-                                                                />
+                                                                <picture>
+                                                                    <source
+                                                                        srcset={
+                                                                            image.webpUrl
+                                                                        }
+                                                                        type="image/webp"
+                                                                    />
+                                                                    <img
+                                                                        src={
+                                                                            image.jpegUrl
+                                                                        }
+                                                                        class="mb-2 h-12 w-12 rounded object-cover"
+                                                                        alt={`${t("postLabels.image")} ${index + 2}`}
+                                                                    />
+                                                                </picture>
                                                             </div>
                                                         ) : (
                                                             <div
@@ -534,11 +557,21 @@ export const ViewFullPost: Component<Props> = (props) => {
                                                                     imageClick
                                                                 }
                                                             >
-                                                                <img
-                                                                    src={image}
-                                                                    class="mb-2 h-full w-full rounded object-cover"
-                                                                    alt={`${t("postLabels.image")} ${index + 2}`}
-                                                                />
+                                                                <picture>
+                                                                    <source
+                                                                        srcset={
+                                                                            image.webpUrl
+                                                                        }
+                                                                        type="image/webp"
+                                                                    />
+                                                                    <img
+                                                                        src={
+                                                                            image.jpegUrl
+                                                                        }
+                                                                        class="mb-2 h-12 w-12 rounded object-cover"
+                                                                        alt={`${t("postLabels.image")} ${index + 2}`}
+                                                                    />
+                                                                </picture>
                                                             </div>
                                                         )}
                                                     </div>
@@ -556,72 +589,40 @@ export const ViewFullPost: Component<Props> = (props) => {
                         >
                             <div id="title-div">
                                 <div>
-                                    <h3 class="w-full text-2xl font-bold">
+                                    <div class="flex w-full flex-row justify-between pr-2 text-2xl font-bold">
                                         {post()?.title}
-                                    </h3>
+                                        <Show
+                                            when={post()?.draft_status === true}
+                                        >
+                                            <div class="w-1/4">
+                                                <Show
+                                                    when={
+                                                        post()?.draft_status ===
+                                                        true
+                                                    }
+                                                >
+                                                    <div class="rounded-full bg-black text-center text-white dark:bg-white dark:text-black">
+                                                        {t("formLabels.draft")}
+                                                    </div>
+                                                </Show>
+                                            </div>
+                                        </Show>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div id="ratings-div" class="my-1 flex flex-col">
-                                {/* TODO: Add Ratings
-                        
-                        <div id="ratings-stars-div" class="mr-2 flex w-fit">
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
+                            <div
+                                id="ratings-div-desktop"
+                                class="my-1 flex justify-start"
                             >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-
-                            <svg
-                                fill="none"
-                                width="20px"
-                                height="20px"
-                                viewBox="0 0 32 32"
-                                class="fill-icon1 dark:fill-icon1-DM"
-                            >
-                                <path d="M 30.335938 12.546875 L 20.164063 11.472656 L 16 2.132813 L 11.835938 11.472656 L 1.664063 12.546875 L 9.261719 19.394531 L 7.140625 29.398438 L 16 24.289063 L 24.859375 29.398438 L 22.738281 19.394531 Z" />
-                            </svg>
-                        </div> */}
-
-                                {/* TODO: fix hard coding/add back reviews */}
-                                {/* <div id="ratings-text-div" class="flex">
-                            <p class="font-bold">4.9</p>
-                            <p>(30.3K ratings)</p>
-                        </div> */}
+                                {post() !== undefined ? (
+                                    <AverageRatingStars
+                                        resourceId={post()!.id}
+                                        page={"fullCard"}
+                                    />
+                                ) : (
+                                    <div></div>
+                                )}
                             </div>
 
                             <div
@@ -635,15 +636,35 @@ export const ViewFullPost: Component<Props> = (props) => {
                                     <a
                                         href={`/${lang}/creator/${post()?.seller_id}`}
                                     >
-                                        <svg
-                                            fill="none"
-                                            width="40px"
-                                            height="40px"
-                                            viewBox="0 0 32 32"
-                                            class="fill-icon1 dark:fill-icon1-DM"
-                                        >
-                                            <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                                        </svg>
+                                        {post()?.seller_img ? (
+                                            <picture>
+                                                <source
+                                                    type="image/webp"
+                                                    srcset={
+                                                        post()?.seller_img
+                                                            ?.webpUrl
+                                                    }
+                                                />
+                                                <img
+                                                    src={
+                                                        post()?.seller_img
+                                                            ?.jpegUrl
+                                                    }
+                                                    alt="Seller image"
+                                                    class="h-16 w-16 rounded-full object-cover"
+                                                />
+                                            </picture>
+                                        ) : (
+                                            <svg
+                                                fill="none"
+                                                width="40px"
+                                                height="40px"
+                                                viewBox="0 0 32 32"
+                                                class="fill-icon1 dark:fill-icon1-DM"
+                                            >
+                                                <path d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                                            </svg>
+                                        )}
                                     </a>
                                 </div>
 
@@ -750,6 +771,20 @@ export const ViewFullPost: Component<Props> = (props) => {
                                         <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
                                             <div class="flex-wrap">
                                                 {post()?.subject?.join(", ")}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class={`my-2 grid w-full grid-cols-4 text-[10px] ${post() && post()!.subtopic && post()!.subtopic!.length > 0 ? "" : "hidden"}`}
+                                    >
+                                        <div class="col-span-1 mr-2 text-end">
+                                            <div class="font-bold">
+                                                {t("postLabels.subtopics")}:
+                                            </div>
+                                        </div>
+                                        <div class="prose col-span-3 flex-wrap text-[10px] text-ptext1 dark:prose-invert dark:text-ptext1-DM">
+                                            <div class="flex-wrap">
+                                                {post()?.subtopic?.join(", ")}
                                             </div>
                                         </div>
                                     </div>
@@ -901,23 +936,24 @@ export const ViewFullPost: Component<Props> = (props) => {
                             >
                                 <p class="text-xl">{t("menus.description")}</p>
                             </a>
-                            {/* TODO : Add back for reviews and Q&A
-                     <a
-                        href="#reviewsLg"
-                        id="reviewsLgLink"
-                        class="tabLinkLg mr-10"
-                        onClick={lgTabLinkClick}
-                    >
-                        <p class="text-xl">{t("menus.reviews")}</p>
-                    </a>
-                    <a
-                        href="#qaLg"
-                        id="qaLgLink"
-                        class="tabLinkLg mr-10"
-                        onClick={lgTabLinkClick}
-                    >
-                        <p class="text-xl">{t("menus.qA")}</p>
-                    </a> */}
+
+                            <a
+                                href="#reviewsLg"
+                                id="reviewsLgLink"
+                                class="tabLinkLg mr-10"
+                                onClick={lgTabLinkClick}
+                            >
+                                <p class="text-xl">{t("menus.reviews")}</p>
+                            </a>
+                            {/* TODO: Add Q&A section */}
+                            {/* <a
+                                href="#qaLg"
+                                id="qaLgLink"
+                                class="tabLinkLg mr-10"
+                                onClick={lgTabLinkClick}
+                            >
+                                <p class="text-xl">{t("menus.qA")}</p>
+                            </a> */}
                         </div>
 
                         <div id="lg-details-div" class="inline">
@@ -1003,9 +1039,10 @@ export const ViewFullPost: Component<Props> = (props) => {
                                 {/* TODO: Language file in mobile component merge is updated, delete hardcoding upon merging */}
                                 {/* <p class="text-lg">{t("menus.reviews")}Reviews</p> */}
                             </div>
-                            <p id="" class="italic">
-                                {t("messages.comingSoon")}
-                            </p>
+
+                            <Show when={post()}>
+                                <ViewPostReviews resourceID={post()!.id} />
+                            </Show>
                         </div>
 
                         <div id="lg-qa-div" class="hidden">
@@ -1036,7 +1073,9 @@ export const ViewFullPost: Component<Props> = (props) => {
                 </div>
             </Show>
             <Show when={editRender() && post()}>
-                <EditPost post={post()!} />
+                <div class="flex w-full justify-center">
+                    <CreateEditPost mode="Edit" post={post()!} />
+                </div>
             </Show>
         </div>
     );
