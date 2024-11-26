@@ -363,7 +363,7 @@ export const ResourcesView: Component = () => {
                 <Banner
                     content={
                         <Modal
-                            buttonClass=""
+                            buttonClass="text-btn1Text dark:text-btn1Text-DM"
                             buttonId="scavenger1"
                             buttonContent={t("huntModal.buttonContent")}
                             buttonAriaLabel={t("huntModal.buttonAria")}
