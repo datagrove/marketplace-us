@@ -560,6 +560,7 @@ export const FiltersMobile: Component<Props> = (props) => {
             setPriceFilterMax(500);
             setPriceFilterMin(0);
         }
+        props.filterPostsByPrice(priceFilterMin(), priceFilterMax());
     }
 
     function setSubjectFilter(id: number) {

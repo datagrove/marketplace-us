@@ -122,6 +122,7 @@ export const ViewUserFavorites: Component = () => {
             alert(t("messages.noPosts"));
             setFavoritedItems([]);
             setLoading(false);
+            await getFavorites();
         }
     };
 
@@ -229,9 +230,10 @@ export const ViewUserFavorites: Component = () => {
                         <div class="relative mb-4 flex w-full flex-row justify-start text-2xl font-bold">
                             <button
                                 class="mr-2 flex items-start"
-                                onclick={(e) => {
+                                onclick={async (e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
+                                    await getFavorites();
                                     setFavoritedItems([]);
                                 }}
                             >

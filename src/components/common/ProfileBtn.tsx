@@ -111,7 +111,13 @@ export const ProfileBtn = () => {
             >
                 {renderWhenUser()}
                 <div class="mt-2 border-b-2 border-border1 pb-2 dark:border-border1-DM">
-                    <a href={`/${lang}/faq`}>{t("buttons.faq")}</a>
+                    <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href={`/${lang}/faq`}
+                    >
+                        {t("buttons.faq")}
+                    </a>
                 </div>
                 <div class="mt-2">
                     <div>

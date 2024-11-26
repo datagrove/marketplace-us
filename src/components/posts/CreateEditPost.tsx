@@ -1034,7 +1034,7 @@ export const CreateEditPost: Component<Props> = (props) => {
                 <Banner
                     content={
                         <Modal
-                            buttonClass=""
+                            buttonClass="text-btn1Text dark:text-btn1Text-DM"
                             buttonId="scavenger3"
                             buttonContent={t("huntModal.buttonContentDiscount")}
                             buttonAriaLabel={t("huntModal.buttonAriaDiscount")}
@@ -1120,6 +1120,7 @@ export const CreateEditPost: Component<Props> = (props) => {
                     <div class="flex items-center text-lg">
                         <p>
                             {t("formLabels.images")} ({imageUrl().length}/5)
+                            <span class="text-alert1">* </span>
                         </p>
 
                         <div class="ml-2 flex items-end justify-end">

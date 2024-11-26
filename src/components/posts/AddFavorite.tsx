@@ -6,6 +6,7 @@ import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import Modal, { closeModal } from "@components/common/notices/modal";
 import type { ListData } from "@lib/types";
 import { CreateFavoriteList } from "@components/members/user/createFavoriteList";
+import { createStore } from "solid-js/store";
 
 const lang = getLangFromUrl(new URL(window.location.href));
 const t = useTranslations(lang);
@@ -18,6 +19,8 @@ interface Props {
 
 const { data: User, error: UserError } = await supabase.auth.getSession();
 
+export const [favoritesLists, setFavoritesLists] = createSignal<ListData[]>([]);
+
 export const FavoriteButton: Component<Props> = (props) => {
     const [session, setSession] = createSignal<AuthSession | null>(null);
     const [listNumber, setListNumber] = createSignal<string>("");
@@ -29,7 +32,7 @@ export const FavoriteButton: Component<Props> = (props) => {
     const [notUser, setNotUser] = createSignal<boolean>(false);
     const [loading, setLoading] = createSignal<boolean>(false);
     const [signInToAdd, setSignInToAdd] = createSignal<boolean>(false);
-    const [favoritesLists, setFavoritesLists] = createSignal<ListData[]>([]);
+    // const [favoritesLists, setFavoritesLists] = createSignal<ListData[]>([]);
 
     onMount(async () => {
         if (UserError) {
@@ -47,8 +50,8 @@ export const FavoriteButton: Component<Props> = (props) => {
         }
 
         if (session() !== null) {
-            getFavorites();
-            getLists();
+            await getFavorites();
+            await getLists();
         }
     });
 
@@ -127,6 +130,7 @@ export const FavoriteButton: Component<Props> = (props) => {
 
     const getFavoriteLists = async () => {
         setLoading(true);
+        console.log("Updating lists");
 
         if (notUser() === false) {
             const response = await fetch("/api/getUserFavorites", {
@@ -143,6 +147,7 @@ export const FavoriteButton: Component<Props> = (props) => {
             if (data) {
                 console.log(data);
                 setFavoritesLists(data.lists);
+                console.log(favoritesLists());
             }
             if (response.status !== 200) {
                 alert(data.message);
@@ -177,8 +182,9 @@ export const FavoriteButton: Component<Props> = (props) => {
             console.log(data);
             closeModal(buttonId, e);
             setAdded(true);
-            getFavoriteLists();
-            getFavorites();
+            console.log("Please update lists");
+            await getFavoriteLists();
+            await getFavorites();
             setTimeout(() => setAdded(false), 3000);
         }
     }
@@ -224,54 +230,6 @@ export const FavoriteButton: Component<Props> = (props) => {
             <Show when={!isFavorited()}>
                 <Show when={!notUser()}>
                     <Modal
-                        children={
-                            <div>
-                                <div
-                                    id="holder"
-                                    class="flex flex-row flex-wrap justify-start"
-                                >
-                                    <Show
-                                        when={
-                                            favoritesLists().length > 0 &&
-                                            !loading()
-                                        }
-                                    >
-                                        {favoritesLists().map((list) => (
-                                            <button
-                                                class="flex w-40 flex-col p-2"
-                                                onclick={(e) => {
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-
-                                                    addToFavorites(
-                                                        e,
-                                                        list.list_number,
-                                                        `addFavoriteBtn ${props.id}`
-                                                    );
-                                                }}
-                                            >
-                                                {listImages(list)}
-                                                <div class="mt-2 line-clamp-2 font-bold">
-                                                    {list.list_name}
-                                                </div>
-                                                <div class="">
-                                                    {list.count +
-                                                        " " +
-                                                        t(
-                                                            "postLabels.resources"
-                                                        )}
-                                                </div>
-                                            </button>
-                                        ))}
-                                    </Show>
-                                </div>
-                                <CreateFavoriteList
-                                    lang={lang}
-                                    user_id={session()?.user.id || ""}
-                                    onListCreated={getFavoriteLists}
-                                />
-                            </div>
-                        }
                         heading={"Save To"}
                         buttonId={`addFavoriteBtn ${props.id}`}
                         buttonClass="absolute right-0 top-0 z-30"
@@ -315,7 +273,52 @@ export const FavoriteButton: Component<Props> = (props) => {
                             </svg>
                         }
                         headingLevel={6}
-                    ></Modal>
+                    >
+                        <div>
+                            <div
+                                id="holder"
+                                class="flex flex-row flex-wrap justify-start"
+                            >
+                                <Show
+                                    when={
+                                        favoritesLists().length > 0 &&
+                                        !loading()
+                                    }
+                                >
+                                    {favoritesLists().map((list) => (
+                                        <button
+                                            class="flex w-40 flex-col p-2"
+                                            onclick={(e) => {
+                                                e.preventDefault();
+                                                e.stopPropagation();
+
+                                                addToFavorites(
+                                                    e,
+                                                    list.list_number,
+                                                    `addFavoriteBtn ${props.id}`
+                                                );
+                                            }}
+                                        >
+                                            {listImages(list)}
+                                            <div class="mt-2 line-clamp-2 font-bold">
+                                                {list.list_name}
+                                            </div>
+                                            <div class="">
+                                                {list.count +
+                                                    " " +
+                                                    t("postLabels.resources")}
+                                            </div>
+                                        </button>
+                                    ))}
+                                </Show>
+                            </div>
+                            <CreateFavoriteList
+                                lang={lang}
+                                user_id={session()?.user.id || ""}
+                                onListCreated={getFavoriteLists}
+                            />
+                        </div>
+                    </Modal>
                 </Show>
                 <Show when={notUser()}>
                     <button

@@ -210,7 +210,7 @@ export const UserProfileView: Component = () => {
                 <Banner
                     content={
                         <Modal
-                            buttonClass=""
+                            buttonClass="text-btn1Text dark:text-btn1Text-DM"
                             buttonId="scavenger2"
                             buttonContent={t("huntModal.buttonContent")}
                             buttonAriaLabel={t("huntModal.buttonAria")}
