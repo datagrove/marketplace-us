@@ -216,7 +216,7 @@ export const DownloadBtn: Component<Props> = (props: Props) => {
                 <Show when={!resourceURLs()}>
                     <Modal
                         buttonClass={`${downloadEnabled() ? "btn-cart" : "btn-cart-disabled"} my-2 w-full shadow-none`}
-                        buttonId=""
+                        buttonId={"getLinks" + props.item.id}
                         buttonContent={t("buttons.getLinks")}
                         heading={t("formLabels.resourceLinks")}
                         headingLevel={2}
