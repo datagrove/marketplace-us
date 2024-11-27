@@ -7,7 +7,7 @@ const stripe = new Stripe(import.meta.env.PUBLIC_VITE_STRIPE_PRIVATE_KEY, {
     apiVersion: "2023-10-16",
 });
 
-const endpointSecret = import.meta.env.PUBLIC_VITE_STRIPE_ENDPOINT_SECRET;
+const endpointSecret = import.meta.env.PUBLIC_VITE_STRIPE_ENDPOINT_PRICES_SECRET;
 
 export const POST: APIRoute = async function ({ request }: any) {
     // console.log("Post triggered");
