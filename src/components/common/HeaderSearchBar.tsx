@@ -73,7 +73,7 @@ export const SearchBar: Component = () => {
                     name="query"
                     id="headerSearch"
                     aria-label={t("formLabels.search")}
-                    class="ml-2 h-full w-full rounded-full bg-background1 py-3 dark:bg-background1-DM"
+                    class="ml-2 h-full w-full rounded-full bg-background1 py-3 dark:bg-background1-DM dark:text-white"
                     value={searchString() ? searchString() : ""}
                     oninput={(e) => setSearchString(e.target.value)}
                 />
